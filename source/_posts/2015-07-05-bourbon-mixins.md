@@ -20,9 +20,9 @@ categories: [ Sass, Mixins, Bourbon, Neat, Semantics, Thoughtbot, CSS, Design ]
 + **transition mixin**
 + **font-face mixin**
 
-Let's take a look at these mixins in more detail.
-
 <!-- more -->
+
+Let's take a look at these mixins in more detail.
 
 *The examples below represent not necessarily best design practices but are chosen for exploring the basic functionality of these mixins*.
 
@@ -79,9 +79,9 @@ You can use a shorthand notation for **background-image** like this:
 //    @include background(url("bourbon-logo@2x.png"), url("thoughtbot-logo.png")); 
 ```
 
-##### With gradients
+#### With gradients
 
-You can use of Bourbon's **linear-gradient function** inside the background-image mixin.
+You can make use of Bourbon’s **linear-gradient function** inside the background-image mixin.
 
 ``` html 
 <section class='super-duper-gradient'>
@@ -111,18 +111,23 @@ You can use of Bourbon's **linear-gradient function** inside the background-imag
 
 + ### linear-gradient mixin
 
+This little fella can take up to 10 color stops and takes percent values if you want to fine tune the color distribution. 
+
 ``` html 
 <section class='simple-gradient'>
 ```
 
 ``` sass linear-gradient mixin
+$start-gradient-color: #268BD2
+$end-gradient-color: #7229d1
+
 .simple-gradient
-  +linear-gradient(#268BD2, #7229d1)
+  +linear-gradient($start-gradient-color, $end-gradient-color)
   height: 200px
 
 //  SCSS syntax
 //  .simple-gradient {
-      @include linear-gradient(#268BD2, #7229d1);
+      @include linear-gradient($start-gradient-color, $end-gradient-color)
       height: 200px;
 //  }
 ```
@@ -133,7 +138,32 @@ You can use of Bourbon's **linear-gradient function** inside the background-imag
 
 ##  
 
+You can also provide an optional first argument to control the direction (in degrees) of the gradient.
+
+``` sass linear-gradient mixin
+$start-gradient-color: #268BD2
+$end-gradient-color: #7229d1
+
+.simple-gradient
+  +linear-gradient(-90deg, $start-gradient-color, $end-gradient-color)
+  height: 200px
+
+//  SCSS syntax
+//  .simple-gradient {
+      @include linear-gradient($start-gradient-color, $end-gradient-color)
+      height: 200px;
+//  }
+```
+
+#### Screenshot
+
+{% img /images/bourbon-mixins/linear-gradient-mixin-direction.png %}
+
+##  
+
 + ### border-radius mixin
+
+This handy mixin makes it straightforward to target every corner individually.
 
 ``` html 
 <section class='super-duper-borders'>
@@ -173,6 +203,40 @@ You can use of Bourbon's **linear-gradient function** inside the background-imag
 {% img /images/bourbon-mixins/border-radius-mixin.png %}
 
 Compare both gradients and focus your attention on the lower gradient which now has very subtle **3px rounded corners**. Too much rounding lets designs often look comical. Keep it simple!
+
+##  
+
+Of course you are right, it would be tedious to write 4 lines of code if you want the same border-radius for every corner. There is an option to write this more compact by targeting the top, bottom , left or right part of the box together. If you put some time into it, you can build some crazy things with it. 
+
+``` sass border-radius mixin
+.super-duper-borders
+  +linear-gradient($start-gradient-color, $end-gradient-color)
+
+  // border-radii for top & bottom corners
+  +border-top-radius(600px)
+  +border-bottom-radius(100px)
+  height: 200px
+```
+
+#### Screenshot
+
+{% img /images/bourbon-mixins/border-radius-mixin-crazy.png %}
+
+##  
+
+``` sass border-radius mixin
+.super-duper-borders
+  +linear-gradient($start-gradient-color, $end-gradient-color)
+
+  // border-radii for right & left corners
+  +border-right-radius(600px)
+  +border-left-radius(100px)
+  height: 200px
+```
+
+#### Screenshot
+
+{% img /images/bourbon-mixins/border-radius-mixin-crazy2.png %}
 
 ##  
 
@@ -246,7 +310,7 @@ You attach the transition mixin to the default state of the selector that is to 
       }
 //  }
 ```
-#### Screenshots
+### Screenshots
 
 #### Normal state
 

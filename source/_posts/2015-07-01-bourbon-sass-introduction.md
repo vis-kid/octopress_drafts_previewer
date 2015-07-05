@@ -20,13 +20,13 @@ categories: [ Sass, Mixins, Bourbon, Neat, Semantics, Thoughtbot, CSS, Design ]
 + [**Add-ons**](#addons)
 + [**Conclusion**](#conclusion)
 
+<!--more-->
+
 ## An Introduction
 
 [Bourbon](http://bourbon.io) is a top-notch Sass **library for designers**. It has a minimalistic approach and is serious about creating quality code that cares about **semantics**. I like it especially because it encourages best practices for developing great code that scales.
 
 This gem helps **designers** to write their code faster and manages a lot of the nitty-gritty details like annoying **vendor prefixes**. It’s mixins often act as wrappers for outputting quality CSS but stay as vanilla as possible by being close to the original CSS syntax. 
-
-<!--more-->
 
 Big heavyweight frameworks like [Bootstrap](http://getbootstrap.com) certainly have their charms. Developers like them because most design decisions are already made and reasonably decent looking websites come out pretty much prefabricated. Nothing wrong with that - given that you want to bootstrap your project without a designer who values **semantic markup**. I should mention though that once designers are involved, they might not be happy with that choice. Having to manually rip out unsemantic styles that are intermingled with your markup might give them ideas for putting funny stuff in your coffee.
 
