@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Bourbon - Connoisseurs’s Choice Sass Mixins - Drafts Previewer</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="What’s ahead? Introduction
+Setup
+Mixins Overview
+Functions Overview
+Add-ons
+Conclusion An Introduction Bourbon is a top-notch Sass library for &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/07/01/bourbon-sass-introduction/">
+  <link href="/octopress_drafts_previewer/favicon.png" rel="icon">
+  <link href="/octopress_drafts_previewer/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/octopress_drafts_previewer/atom.xml" rel="alternate" title="Drafts Previewer" type="application/atom+xml">
+  <script src="/octopress_drafts_previewer/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/octopress_drafts_previewer/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/octopress_drafts_previewer/">Drafts Previewer</a></h1>
+  
+    <h2>Simple way to share my drafts for feedback</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/octopress_drafts_previewer/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="vis-kid.github.io/octopress_drafts_previewer">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/octopress_drafts_previewer/">Blog</a></li>
+  <li><a href="/octopress_drafts_previewer/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Bourbon - Connoisseurs’s Choice Sass Mixins</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-07-01T19:34:54+02:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>7:34 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img src="/octopress_drafts_previewer/images/bourbon-mixins/david_niven.jpg" width="600" height="360" title="" ></p>
+
+<p><a href="http://bourbon.io/"><img src="/octopress_drafts_previewer/images/bourbon-mixins/bourbon-logo@2x.png" width="250" height="450"></a></p>
+
+<h2>What’s ahead?</h2>
+
+<ul>
+<li><strong>Introduction</strong></li>
+<li><a href="#setup"><strong>Setup</strong></a></li>
+<li><a href="#mixins"><strong>Mixins Overview</strong></a></li>
+<li><a href="#functions"><strong>Functions Overview</strong></a></li>
+<li><a href="#addons"><strong>Add-ons</strong></a></li>
+<li><a href="#conclusion"><strong>Conclusion</strong></a></li>
+</ul>
+
+
+<h2>An Introduction</h2>
+
+<p><a href="http://bourbon.io">Bourbon</a> is a top-notch Sass <strong>library for designers</strong>. It has a minimalistic approach and is serious about creating quality code that cares about <strong>semantics</strong>. I like it especially because it encourages best practices for developing great code that scales.</p>
+
+<p>This gem helps <strong>designers</strong> to write their code faster and manages a lot of the nitty-gritty details like annoying <strong>vendor prefixes</strong>. It’s mixins often act as wrappers for outputting quality CSS but stay as vanilla as possible by being close to the original CSS syntax.</p>
+
+<!--more-->
+
+
+<p>Big heavyweight frameworks like <a href="http://getbootstrap.com">Bootstrap</a> certainly have their charms. Developers like them because most design decisions are already made and reasonably decent looking websites come out pretty much prefabricated. Nothing wrong with that - given that you want to bootstrap your project without a designer who values <strong>semantic markup</strong>. I should mention though that once designers are involved, they might not be happy with that choice. Having to manually rip out unsemantic styles that are intermingled with your markup might give them ideas for putting funny stuff in your coffee.</p>
+
+<h3>Worth Pointing Out</h3>
+
+<ul>
+<li>Bourbon is <strong>pure Sass &amp; platform agnostic</strong> -> works with any Sass project</li>
+<li>Very close to actual CSS syntax -> Vanilla</li>
+<li>Not tied to Ruby ( unlike Compass )</li>
+<li>Includes awesome <strong>functions</strong></li>
+<li>Outsources <strong>vendor prefixes</strong></li>
+<li>It’s super lightweight</li>
+<li>It’s <strong>Semantic</strong></li>
+</ul>
+
+
+<h2><a name='setup'></a>Setup</h2>
+
+<ul>
+<li>Fire up your terminal, change into your project’s directory and install Bourbon via RubyGems</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>Terminal</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>gem install bourbon
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Change into your project’s stylesheets directory and generate your <strong>bourbon folder</strong></li>
+</ul>
+
+
+<figure class='code'><figcaption><span>Terminal</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bourbon install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>This command generates a bourbon folder that contains the functions, mixins, helpers, settings, etc that you need. Do yourself a favor and don’t touch this folder. You will have a much better experience updating Bourbon in the future.</h6>
+
+<h4>Screenshot</h4>
+
+<p><img src="/octopress_drafts_previewer/images/bourbon-introduction/bourbon-install-generated-folder.png"></p>
+
+<ul>
+<li>You need to finish the setup by importing the generated sass files in your stylesheets. Import Bourbon on top of your <strong>application.sass</strong> file and make sure you only import other Sass files below.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>application.sass</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="k">@import</span> <span class="s">&#39;bourbon/bourbon&#39;</span>
+</span><span class='line'><span class="k">@import</span> <span class="s">&#39;other-sass-partials-below&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2><a name='mixins'></a>Mixins Overview</h2>
+
+<p>Bourbon has a wide range of super useful mixins to speed up your work. In terms of design, it’s safe to say that they want to support your own design decisions without forcing a particular style on you. You are basically encouraged to mix your own awesomesauce. You can use these mixins as a stable and relatively neutral basis.
+Here are a couple of mixins you might wanna check out first:</p>
+
+<ul>
+<li><strong>background-image</strong></li>
+<li><strong>border-radius</strong></li>
+<li><strong>box-sizing</strong></li>
+<li><strong>linear-gradient</strong></li>
+<li><strong>transitions</strong></li>
+<li><strong>animations</strong></li>
+<li><strong>font-face</strong></li>
+<li><strong>button</strong></li>
+<li><strong>triangle</strong></li>
+<li><strong>retina-image</strong></li>
+<li><strong>position</strong></li>
+<li><strong>size</strong></li>
+<li><strong>clearfix</strong></li>
+<li><strong>inline-block</strong></li>
+</ul>
+
+
+<p>Learn more about individual Bourbon mixins in my other articles here:</p>
+
+<p><a href="/octopress_drafts_previewer/blog/2014/01/17/bourbon-mixins/">Bourbon: Mixins #01</a></p>
+
+<p><a href="/octopress_drafts_previewer/blog/2014/01/27/bourbon-mixins-02/">Bourbon: Mixins #02</a></p>
+
+<h2><a name='functions'></a>Functions Overview</h2>
+
+<p>Sass already has a ton of built-in functions, from manipulating strings to messing with opacity and colors. Bourbon adds a couple of selected enhancements and provides very handy Sass functions for a variety of use cases. Take a look a this selection:</p>
+
+<ul>
+<li><h3><strong>golden-ratio()</strong></h3></li>
+</ul>
+
+
+<p>Want to calculate the golden ratio of a certain number? (slowly depricated though)</p>
+
+<ul>
+<li><h3><strong>linear-gradient()</strong> &amp; <strong>radial-gradient()</strong></h3></li>
+</ul>
+
+
+<p>Need a linear- or radial-gradient for your background-image mixin?</p>
+
+<p>You might already be familiar with Sass&rsquo;s built in functions for colors like <strong>lighten()</strong> and <strong>darken()</strong> which do exactly what you&rsquo;d expect.
+Bourbon provides two additional awesome color functions for your convenience:</p>
+
+<ul>
+<li><h3><strong>tint()</strong> &amp; <strong>shade()</strong></h3></li>
+</ul>
+
+
+<p>The tint function changes a color by mixing it with <strong>white</strong>.
+The shade function changes a color by mixing it with <strong>black</strong>.
+Both functions take a <strong>color</strong> and <strong>percentage</strong> parameter to fine-tune the color mix.</p>
+
+<ul>
+<li><h3><strong>modular-scale()</strong></h3></li>
+</ul>
+
+
+<p>If you are into &ldquo;<em>more meaningful typography</em>&rdquo; and want to calculate a modular scale for varying font sizes that have some sort of numerical relationship, <strong>modular-scale()</strong> might become your new best friend.</p>
+
+<ul>
+<li><h3><strong>em()</strong></h3></li>
+</ul>
+
+
+<p>Calculates <strong>pixels to ems</strong> for you.</p>
+
+<p>I have prepared a more detailed look at functions here:
+<a href="/octopress_drafts_previewer/blog/2014/01/29/bourbon-functions/">Bourbon: Functions</a></p>
+
+<h2><a name='addons'></a>Add-ons</h2>
+
+<p>A small collection of useful variables:</p>
+
+<ul>
+<li><h3><strong>font-family variables</strong></h3>
+
+<ul>
+<li>font-family: $helvetica;</li>
+<li>font-family: $georgia;</li>
+<li>font-family: $lucida-grande;</li>
+<li>font-family: $monospace;</li>
+<li>font-family: $verdana;</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Bourbon defines a set of default variables for font-families.
+Instead of typing —</p>
+
+<figure class='code'><figcaption><span>traditional way of defining fonts</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="na">font-family</span><span class="o">:</span> <span class="s2">&quot;Helvetica Neue&quot;</span><span class="o">,</span> <span class="n">Helvetica</span><span class="o">,</span> <span class="n">Arial</span><span class="o">,</span> <span class="no">sans-serif</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>— you just use one of the font-family variables.</p>
+
+<figure class='code'><figcaption><span>font-family variable</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="na">font-family</span><span class="o">:</span> <span class="nv">$helvetica</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><h3><strong>timing variables</strong></h3></li>
+</ul>
+
+
+<p>A mixin like <strong>transition</strong> has the following syntax:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nc">.some-element</span>
+</span><span class='line'>  <span class="nd">+transition</span><span class="p">(</span><span class="n">all</span> <span class="mi">5</span><span class="kt">s</span> <span class="nv">$ease-in-circ</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  SCSS syntax</span>
+</span><span class='line'><span class="c1">//  .some-element {</span>
+</span><span class='line'>      <span class="c1">@include transition(all 5s $ease-in-circ);</span>
+</span><span class='line'><span class="c1">//  }</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The last parameter defines it’s <strong>timing</strong>. You can fine-tune the transitional behaviour by providing one of 24 variables to control timing. The GIF belows illustrates the options best:</p>
+
+<p><img src="/octopress_drafts_previewer/images/bourbon-mixins/timing-functions.gif"></p>
+
+<h2><a name='conclusion'></a>Conclusion</h2>
+
+<p>Do your future self and your colleagues a favor and give <a href="http://bourbon.io">Bourbon</a> a shot. This gem puts a high value on <strong>semantic markup</strong> while being <strong>lightweight &amp; simple</strong>. It will serve you well with your design and CSS architecture plus it aids cultivating best practices for creating superb code.</p>
+
+<p><img src="/octopress_drafts_previewer/images/bourbon-mixins/LaForge.gif" width="600"></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-07-01T19:34:54+02:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>7:34 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/octopress_drafts_previewer/blog/categories/bourbon/'>bourbon</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/css/'>css</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/design/'>design</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/mixins/'>mixins</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/neat/'>neat</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/sass/'>sass</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/semantics/'>semantics</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/thoughtbot/'>thoughtbot</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/07/01/bourbon-sass-introduction/" data-via="" data-counturl="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/07/01/bourbon-sass-introduction/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/octopress_drafts_previewer/blog/2015/07/05/bourbon-mixins/" title="Next Post: Bourbon - Mixins #01">Bourbon - Mixins #01 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/octopress_drafts_previewer/blog/2015/07/05/bourbon-mixins/">Bourbon - Mixins #01</a>
+      </li>
+    
+      <li class="post">
+        <a href="/octopress_drafts_previewer/blog/2015/07/01/bourbon-sass-introduction/">Bourbon - Connoisseurs’s Choice Sass Mixins</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
