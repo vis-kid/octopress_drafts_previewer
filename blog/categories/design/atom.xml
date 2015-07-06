@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Design | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/design/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-07-06T22:16:49+02:00</updated>
+  <updated>2015-07-06T22:19:28+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -1112,9 +1112,9 @@ Here are a couple of mixins you might wanna check out first:</p>
 
 <p>Learn more about individual Bourbon mixins in my other articles here:</p>
 
-<p><a href="/blog/2014/01/17/bourbon-mixins/">Bourbon: Mixins #01</a></p>
+<p><a href="/blog/2015/07/05/bourbon-mixins/">Bourbon: Mixins #01</a></p>
 
-<p><a href="/blog/2014/01/27/bourbon-mixins-02/">Bourbon: Mixins #02</a></p>
+<p><a href="/blog/2015/07/10/bourbon-mixins-02k/">Bourbon: Mixins #02</a></p>
 
 <h2><a name='functions'></a>Functions Overview</h2>
 
