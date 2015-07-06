@@ -13,12 +13,12 @@ categories: [ Sass, Mixins, Bourbon, Neat, Semantics, Thoughtbot, CSS, Design ]
 
 ## A Short List Of Goodies
 
-+ **background-image mixin**
-+ **linear-gradient mixin**
-+ **border-radius mixin**
-+ **box-sizing mixin**
-+ **transition mixin**
-+ **font-face mixin**
++ [**background-image mixin**](#background-image)
++ [**linear-gradient mixin**](#linear-gradient)
++ [**border-radius mixin**](#border-radius)
++ [**box-sizing mixin**](#box-sizing)
++ [**transition mixin**](#transition)
++ [**font-face mixin**](#font-face)
 
 <!-- more -->
 
@@ -28,7 +28,7 @@ Let's take a look at these mixins in more detail.
 
 ##  
 
-+ ### background-image mixin
++ ## <a name='background-image'></a>background-image mixin 
 
 Creates a background-image property comprised out of multiple ( 1 up to 10 ) comma delimited **background images** and / or **linear- / radial-gradients**.
 
@@ -109,7 +109,7 @@ You can make use of Bourbon’s **linear-gradient function** inside the backgrou
 
 ##  
 
-+ ### linear-gradient mixin
++ ## <a name='linear-gradient'></a>linear-gradient mixin 
 
 This little fella can take up to 10 color stops and takes percent values if you want to fine tune the color distribution. 
 
@@ -161,7 +161,7 @@ $end-gradient-color: #7229d1
 
 ##  
 
-+ ### border-radius mixin
++ ## <a name='border-radius'></a>border-radius mixin 
 
 This handy mixin makes it straightforward to target the corners of a box in pairs: top, bottom, right and left corners basically. If you want rounded corners and avoid typing repetitive declarations, this one is your friend.
 
@@ -236,7 +236,7 @@ Of course you can go crazy with border radii. If you put some time into it, you 
 
 ##  
 
-+ ### box-sizing mixin
++ ## <a name='box-sizing'></a>box-sizing mixin 
 
 Easily change the box model of an element. You have 3 options to choose:
   
@@ -257,7 +257,7 @@ Easily change the box model of an element. You have 3 options to choose:
 
 ##  
 
-+ ### transition mixin
++ ## <a name='transition'></a>transition mixin 
 
 You attach the transition mixin to the default state of the selector that is to be changed by an event like hover — **not to the pseudo-class!** The declarations used in the pseudo-class are available to the transition mixin.
 
@@ -329,7 +329,7 @@ To fine-tune transitional behaviour, there are a number of very convenient Sass 
 
 ##  
 
-+ ### font-face mixin
++ ## <a name='font-face'></a>font-face mixin 
 
 As we know, typography is an essential piece of the puzzle of designing high quality projects for the web. As a kind of atomic structure it guides so many design decisions and can influence the perception of the user in a multitude of ways. 
 
