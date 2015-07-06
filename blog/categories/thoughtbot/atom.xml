@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Thoughtbot | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/thoughtbot/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-07-06T16:18:48+02:00</updated>
+  <updated>2015-07-06T22:14:09+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -694,7 +694,7 @@ $end-gradient-color: #7229d1
 
 //  SCSS syntax
 //  .simple-gradient {
-      @include linear-gradient($start-gradient-color, $end-gradient-color)
+      @include linear-gradient(-90deg, $start-gradient-color, $end-gradient-color)
       height: 200px;
 //  }
 </code></pre>
@@ -710,7 +710,7 @@ $end-gradient-color: #7229d1
 </ul>
 
 
-<p>This handy mixin makes it straightforward to target every corner individually.</p>
+<p>This handy mixin makes it straightforward to target the corners of a box in pairs: top, bottom, right and left corners basically. If you want rounded corners and avoid typing repetitive declarations, this one is your friend.</p>
 
 <pre><code class="html ">&lt;section class='super-duper-borders'&gt;
 </code></pre>
@@ -723,8 +723,6 @@ $end-gradient-color: #7229d1
   // border-radii for every corner
   +border-top-radius(3px)
   +border-bottom-radius(3px)
-  +border-left-radius(3px)
-  +border-right-radius(3px)
 
   height: 50px
 
@@ -737,8 +735,6 @@ $end-gradient-color: #7229d1
 
       @include border-top-radius(3px);
       @include border-bottom-radius(3px);
-      @include border-left-radius(3px);
-      @include border-right-radius(3px);
 
       height: 50px;
 //  } 
@@ -752,7 +748,7 @@ $end-gradient-color: #7229d1
 
 <h2></h2>
 
-<p>Of course you are right, it would be tedious to write 4 lines of code if you want the same border-radius for every corner. There is an option to write this more compact by targeting the top, bottom , left or right part of the box. If you put some time into it, you can build some crazy things with it.</p>
+<p>Of course you can go crazy with border radii. If you put some time into it, you can build some cool stuff with it. Below are a couple of nonsensical examples that should just illustrate how the various options work.</p>
 
 <pre><code class="sass border-radius mixin">.super-duper-borders
   +linear-gradient($start-gradient-color, $end-gradient-color)
@@ -948,7 +944,7 @@ $end-gradient-color: #7229d1
 //  }
 </code></pre>
 
-<p>Boom!! That easy!</p>
+<p>Boom!! That easy! And a remarkable reduction of code as well.</p>
 
 <h3>Under The Hood:</h3>
 
@@ -956,7 +952,7 @@ $end-gradient-color: #7229d1
 
 <ul>
 <li>a <strong>fonts</strong> folder where you store your webfonts
-— which I still generate with the <strong>webfont generator</strong> from <strong>fontsquirrel</strong> ->  eot, ttf, woff, svg formats of uploaded typefaces.</li>
+— which you can still generate with the <strong>webfont generator</strong> from <strong>fontsquirrel</strong> ->  eot, ttf, woff, svg formats of uploaded typefaces.</li>
 </ul>
 
 
@@ -972,7 +968,7 @@ $end-gradient-color: #7229d1
 <li><p>a <strong>file-path</strong> to find the custom font on the machine</p></li>
 <li><p><strong>font-weight</strong> like <em>normal</em> or <em>bold</em></p></li>
 <li><p><strong>font-style</strong> like <em>normal</em>, <em>italic</em> or <em>oblique</em> ( maybe avoid oblique type! )</p></li>
-<li><p>and a hash for using the <strong>asset-pipeline</strong> with rails or not</p></li>
+<li><p>and a hash for using the <strong>asset-pipeline</strong> in Rails or not</p></li>
 </ul>
 
 
@@ -1007,7 +1003,7 @@ It will fail like this:</li>
 
 <h2>Cheers!</h2>
 
-<p>I have prepared another article about Bourbon&rsquo;s mixins: <li><a href="/blog/2014/01/27/bourbon-mixins-02/">Bourbon: Mixins #02</a></li></p>
+<p>I have prepared another article about Bourbon&rsquo;s mixins: <li><a href="/http://localhost:4000/octopress_drafts_previewer/blog/2014/01/27/bourbon-mixins-02/">Bourbon: Mixins #02</a></li></p>
 
 <p><img src="/images/bourbon-mixins/github-bourbon.gif"></p>
 ]]></content>

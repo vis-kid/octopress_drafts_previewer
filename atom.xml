@@ -4,7 +4,7 @@
   <title><![CDATA[Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-07-06T16:18:48+02:00</updated>
+  <updated>2015-07-06T22:14:09+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -1051,7 +1051,7 @@ The same goes for gradients.</p>
 </span><span class='line'>
 </span><span class='line'><span class="c1">//  SCSS syntax</span>
 </span><span class='line'><span class="c1">//  .simple-gradient {</span>
-</span><span class='line'>      <span class="c1">@include linear-gradient($start-gradient-color, $end-gradient-color)</span>
+</span><span class='line'>      <span class="c1">@include linear-gradient(-90deg, $start-gradient-color, $end-gradient-color)</span>
 </span><span class='line'>      <span class="c1">height: 200px;</span>
 </span><span class='line'><span class="c1">//  }</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -1068,7 +1068,7 @@ The same goes for gradients.</p>
 </ul>
 
 
-<p>This handy mixin makes it straightforward to target every corner individually.</p>
+<p>This handy mixin makes it straightforward to target the corners of a box in pairs: top, bottom, right and left corners basically. If you want rounded corners and avoid typing repetitive declarations, this one is your friend.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">&#39;super-duper-borders&#39;</span><span class="nt">&gt;</span>
@@ -1100,10 +1100,6 @@ The same goes for gradients.</p>
 <span class='line-number'>21</span>
 <span class='line-number'>22</span>
 <span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nc">.super-duper-borders</span>
 </span><span class='line'>  <span class="nd">+background-image</span><span class="p">(</span>
 </span><span class='line'>  <span class="nt">linear-gradient</span><span class="o">(</span><span class="nt">hsla</span><span class="o">(</span><span class="nt">0</span><span class="o">,</span> <span class="nt">100</span><span class="err">%</span><span class="o">,</span> <span class="nt">100</span><span class="err">%</span><span class="o">,</span> <span class="nt">0</span><span class="nc">.25</span><span class="o">)</span> <span class="nt">0</span><span class="err">%</span><span class="o">,</span> <span class="nt">hsla</span><span class="o">(</span><span class="nt">0</span><span class="o">,</span> <span class="nt">100</span><span class="err">%</span><span class="o">,</span> <span class="nt">100</span><span class="err">%</span><span class="o">,</span> <span class="nt">0</span><span class="nc">.08</span><span class="o">)</span> <span class="nt">50</span><span class="err">%</span><span class="o">,</span> <span class="nt">transparent</span> <span class="nt">50</span><span class="err">%</span><span class="o">),</span>
@@ -1112,8 +1108,6 @@ The same goes for gradients.</p>
 </span><span class='line'>  <span class="c1">// border-radii for every corner</span>
 </span><span class='line'>  <span class="nd">+border-top-radius</span><span class="p">(</span><span class="mi">3</span><span class="kt">px</span><span class="p">)</span>
 </span><span class='line'>  <span class="nd">+border-bottom-radius</span><span class="p">(</span><span class="mi">3</span><span class="kt">px</span><span class="p">)</span>
-</span><span class='line'>  <span class="nd">+border-left-radius</span><span class="p">(</span><span class="mi">3</span><span class="kt">px</span><span class="p">)</span>
-</span><span class='line'>  <span class="nd">+border-right-radius</span><span class="p">(</span><span class="mi">3</span><span class="kt">px</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">50</span><span class="kt">px</span>
 </span><span class='line'>
@@ -1126,8 +1120,6 @@ The same goes for gradients.</p>
 </span><span class='line'>
 </span><span class='line'>      <span class="c1">@include border-top-radius(3px);</span>
 </span><span class='line'>      <span class="c1">@include border-bottom-radius(3px);</span>
-</span><span class='line'>      <span class="c1">@include border-left-radius(3px);</span>
-</span><span class='line'>      <span class="c1">@include border-right-radius(3px);</span>
 </span><span class='line'>
 </span><span class='line'>      <span class="c1">height: 50px;</span>
 </span><span class='line'><span class="c1">//  } </span>
@@ -1142,7 +1134,7 @@ The same goes for gradients.</p>
 
 <h2></h2>
 
-<p>Of course you are right, it would be tedious to write 4 lines of code if you want the same border-radius for every corner. There is an option to write this more compact by targeting the top, bottom , left or right part of the box. If you put some time into it, you can build some crazy things with it.</p>
+<p>Of course you can go crazy with border radii. If you put some time into it, you can build some cool stuff with it. Below are a couple of nonsensical examples that should just illustrate how the various options work.</p>
 
 <figure class='code'><figcaption><span>border-radius mixin</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1456,7 +1448,7 @@ The same goes for gradients.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Boom!! That easy!</p>
+<p>Boom!! That easy! And a remarkable reduction of code as well.</p>
 
 <h3>Under The Hood:</h3>
 
@@ -1464,7 +1456,7 @@ The same goes for gradients.</p>
 
 <ul>
 <li>a <strong>fonts</strong> folder where you store your webfonts
-— which I still generate with the <strong>webfont generator</strong> from <strong>fontsquirrel</strong> ->  eot, ttf, woff, svg formats of uploaded typefaces.</li>
+— which you can still generate with the <strong>webfont generator</strong> from <strong>fontsquirrel</strong> ->  eot, ttf, woff, svg formats of uploaded typefaces.</li>
 </ul>
 
 
@@ -1480,7 +1472,7 @@ The same goes for gradients.</p>
 <li><p>a <strong>file-path</strong> to find the custom font on the machine</p></li>
 <li><p><strong>font-weight</strong> like <em>normal</em> or <em>bold</em></p></li>
 <li><p><strong>font-style</strong> like <em>normal</em>, <em>italic</em> or <em>oblique</em> ( maybe avoid oblique type! )</p></li>
-<li><p>and a hash for using the <strong>asset-pipeline</strong> with rails or not</p></li>
+<li><p>and a hash for using the <strong>asset-pipeline</strong> in Rails or not</p></li>
 </ul>
 
 
@@ -1527,7 +1519,7 @@ It will fail like this:</li>
 
 <h2>Cheers!</h2>
 
-<p>I have prepared another article about Bourbon&rsquo;s mixins: <li><a href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2014/01/27/bourbon-mixins-02/">Bourbon: Mixins #02</a></li></p>
+<p>I have prepared another article about Bourbon&rsquo;s mixins: <li><a href="http://vis-kid.github.io/octopress_drafts_previewer/http://localhost:4000/octopress_drafts_previewer/blog/2014/01/27/bourbon-mixins-02/">Bourbon: Mixins #02</a></li></p>
 
 <p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-mixins/github-bourbon.gif"></p>
 ]]></content>
