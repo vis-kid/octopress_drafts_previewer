@@ -206,7 +206,7 @@ Compare both gradients and focus your attention on the lower gradient which now 
 
 ##  
 
-Of course you are right, it would be tedious to write 4 lines of code if you want the same border-radius for every corner. There is an option to write this more compact by targeting the top, bottom , left or right part of the box together. If you put some time into it, you can build some crazy things with it. 
+Of course you are right, it would be tedious to write 4 lines of code if you want the same border-radius for every corner. There is an option to write this more compact by targeting the top, bottom , left or right part of the box. If you put some time into it, you can build some crazy things with it. 
 
 ``` sass border-radius mixin
 .super-duper-borders
@@ -271,42 +271,33 @@ You attach the transition mixin to the default state of the selector that is to 
 
 ``` sass transition mixin
 .fancy-transition 
-  +transition (all 1.0s ease-in-out)
+  +transition (all 1.0s $ease-in-sine)
 
+  height: 50px
   background-color: red
   +border-top-radius(5px)
   +border-bottom-radius(5px)
-  +border-left-radius(5px)
-  +border-right-radius(5px)
-  height: 50px
 
   &:hover 
   // declarations available to the transitions mixin
   background-color: blue 
   +border-top-radius(25px)
   +border-bottom-radius(25px)
-  +border-left-radius(25px)
-  +border-right-radius(25px)
-  
 
 //  SCSS syntax
 //  .fancy-transition {
-      @include transition (all 1.0s ease-in-out);
+      @include transition (all 1.0s $ease-in-sine);
     
+      height: 50px;
       background-color: red;
       @include border-top-radius(5px);
       @include border-bottom-radius(5px);
-      @include border-left-radius(5px);
-      @include border-right-radius(5px);
-      height: 50px;
     
       declarations available to the transitions mixin
       &:hover {
       background-color: blue;
       @include border-top-radius(25px);
       @include border-bottom-radius(25px);
-      @include border-left-radius(25px);
-      @include border-right-radius(25px);
       }
 //  }
 ```
@@ -324,17 +315,19 @@ It transitions over the specified time -> Here 1.0s
 
 {% img /images/bourbon-mixins/transition-mixin-blue.png %}
 
-You can handpick the properties you want to be affected by the transition. Instead of  **all** use only the properties you need.
+You can handpick the properties you want to be affected by the transition. Instead of  **all** use only the properties you need. Different timing-functions for different properties can also be chained together nicely.
 
 ``` sass 
 // all
-@include transition (all 1.0s ease-in-out);
+@include transition (all 1.0s $ease-in-sine);
 
 // fine-tuned
-@include transition (background-color, height 1.0s ease-in-out);
+@include transition (background-color 2.0s $ease-in-sine, height 1.0s $ease-out-cubic);
 ```
 
-To fine-tune transitional behaviour there are a number of very convenient **timing-functions** at your disposal:
+##  
+
+To fine-tune transitional behaviour, there are a number of very convenient Sass variables from Bourbon for various **timing-functions** at your disposal:
 
 {% img /images/bourbon-mixins/timing-functions.gif %}
 
@@ -382,6 +375,7 @@ In the past I went to [fontsquirrel](http://fontsquirrel.com), which is awesome 
 }
 ```
 Obviously this can get very tedious very quickly. Using Bourbon, it looks like this now:
+(Using Rails with the asset pipeline here)
 
 ``` sass font-face mixin
 +font-face(SourceSansPro-Regular, 'SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true) 
@@ -412,15 +406,16 @@ Boom!! That easy!
 
 This mixin expects you to provide 
 
-+ a **fonts** folder in assetts: **app/assets/fonts** where you store your webfonts 
++ a **fonts** folder where you store your webfonts 
 — which I still generate with the **webfont generator** from **fontsquirrel** ->  eot, ttf, woff, svg formats of uploaded typefaces.
 
-#### Screenshot
+#### Screenshot 
+(this example is from a Rails app)
 
 {% img /images/bourbon-mixins/app-assets-fonts.png %}
 
 + a **font-family** name for later use in your declarations
-— can be any name you wish. Above I used **SourceSansPro-Regular** for example 
+— can be any name you wish. Above I used **SourceSansPro-Regular **and **SourceSansPro-Bold** for example 
 
 + a **file-path** to find the custom font on the machine
 
