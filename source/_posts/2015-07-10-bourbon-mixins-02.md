@@ -14,14 +14,14 @@ categories: [ Sass, Mixins, Bourbon, Neat, Semantics, Thoughtbot, CSS, Design, P
 
 ## Another Short List Of Goodies
 
-+ **inline-block mixin**
-+ **position mixin**
-+ **triangle mixin**
-+ **clearfix mixin**
-+ **button mixin**
-+ **size mixin**
-+ **HiDPI-media-query mixin**
-+ **retina-image mixin**
++ [**inline-block mixin**](#inline-block)
++ [**position mixin**](#position)
++ [**triangle mixin**](#triangle)
++ [**clearfix mixin**](#clearfix)
++ [**button mixin**](#button)
++ [**size mixin**](#size)
++ [**HiDPI-media-query mixin**](#hidpi)
++ [**retina-image mixin**](#retina)
 
 Let’s take a look at these mixins in more detail as well.
 
@@ -31,7 +31,7 @@ Let’s take a look at these mixins in more detail as well.
 
 ##  
 
-+ ### inline-block mixin
++ ## <a name='inline-block'></a>inline-block mixin   
 
 ``` html paragraphs’ default display behaviour is block
   <p class='paragraphs-behave-like-blocks'>
@@ -91,7 +91,7 @@ Notice the whitespace between the block elements. If you’d be using **float**,
 
 ##  
 
-+ ### position mixin
++ ## <a name='position'></a>position mixin
 
 This mixin is a shorthand for writing something like this —
 
@@ -118,7 +118,7 @@ That’s it. No magic, but still super useful. Keeping stylesheets simple and re
 
 ##  
 
-+ ### triangle mixin
++ ## <a name='triangle'></a>triangle mixin
 
 Want to use CSS **triangles** without fiddling around? There is certainly no need to use images for the job.  
 
@@ -151,7 +151,7 @@ You can even define a second color if you need a background color for your trian
 
 ##  
 
-+ ### clearfix mixin
++ ## <a name='clearfix'></a>clearfix mixin
 
 Wrappers that have floated elements inside have the [**zero-height container problem**](http://complexspiral.com/publications/containing-floats/) — in essence the container element inflates to zero pixels if all its elements inside are floated and therefore taken out of the containers *flow*, which leaves nothing left to fill the container -> inflates to zero. 
 
@@ -227,7 +227,7 @@ Instead of creating an "empty" tag in your markup right before the closing tag o
 
 ##  
 
-+ ### button mixin
++ ## <a name='button'></a>button mixin
 
 Need high quality buttons out of the box?
 
@@ -313,7 +313,7 @@ $light-grey: #DEDEDE
 
 ##  
 
-+ ### size mixin
++ ## <a name='size'></a>size mixin
 
 Want to define **width** and **height** in one declaration?
 All you need to do is:
@@ -351,7 +351,7 @@ If you provide only one size, Bourbon assumes you want a square.
 
 ##  
 
-+ ### HiDPI-media-query mixin
++ ## <a name='hidpi'></a>HiDPI mixin
 
 If you want to quickly generate completely vendor prefixed media queries for detecting **HiDPI** ( "Retina" ) devices, this mixin comes in handy.
 
@@ -391,7 +391,7 @@ Pretty cool! Slimmed down repetitive code quite a bit.
 
 ##  
 
-+ ### retina-image mixin
++ ## <a name='retina'></a>retina-image mixin
 
 Depending on the **pixel density** of the device displaying your designs, you can provide images with the **appropriate bitmap resolution**. This fine mixin provides a **retina background-image** or a **non-retina background-image** — depending on the result of the mixin’s internal **HiDPI-media-query** checking the device for its pixel density. 
 
