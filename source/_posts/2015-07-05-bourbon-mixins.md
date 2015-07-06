@@ -447,6 +447,6 @@ This mixin expects you to provide
 
 ## Cheers!
 
-I have prepared another article about Bourbon's mixins: <li><a href="{{ root_url }}/http://localhost:4000/octopress_drafts_previewer/blog/2014/01/27/bourbon-mixins-02/">Bourbon: Mixins #02</a></li>
+I have prepared another article about Bourbon's mixins: <li><a href="{{ root_url }}/blog/2015/07/10/bourbon-mixins-02/">Bourbon: Mixins #02</a></li>
 
 {% img /images/bourbon-mixins/github-bourbon.gif %}
