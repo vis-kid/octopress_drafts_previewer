@@ -150,7 +150,7 @@ $end-gradient-color: #7229d1
 
 //  SCSS syntax
 //  .simple-gradient {
-      @include linear-gradient($start-gradient-color, $end-gradient-color)
+      @include linear-gradient(-90deg, $start-gradient-color, $end-gradient-color)
       height: 200px;
 //  }
 ```
@@ -163,7 +163,7 @@ $end-gradient-color: #7229d1
 
 + ### border-radius mixin
 
-This handy mixin makes it straightforward to target every corner individually.
+This handy mixin makes it straightforward to target the corners of a box in pairs: top, bottom, right and left corners basically. If you want rounded corners and avoid typing repetitive declarations, this one is your friend.
 
 ``` html 
 <section class='super-duper-borders'>
@@ -178,8 +178,6 @@ This handy mixin makes it straightforward to target every corner individually.
   // border-radii for every corner
   +border-top-radius(3px)
   +border-bottom-radius(3px)
-  +border-left-radius(3px)
-  +border-right-radius(3px)
 
   height: 50px
 
@@ -192,8 +190,6 @@ This handy mixin makes it straightforward to target every corner individually.
     
       @include border-top-radius(3px);
       @include border-bottom-radius(3px);
-      @include border-left-radius(3px);
-      @include border-right-radius(3px);
     
       height: 50px;
 //  } 
@@ -206,7 +202,7 @@ Compare both gradients and focus your attention on the lower gradient which now 
 
 ##  
 
-Of course you are right, it would be tedious to write 4 lines of code if you want the same border-radius for every corner. There is an option to write this more compact by targeting the top, bottom , left or right part of the box. If you put some time into it, you can build some crazy things with it. 
+Of course you can go crazy with border radii. If you put some time into it, you can build some cool stuff with it. Below are a couple of nonsensical examples that should just illustrate how the various options work. 
 
 ``` sass border-radius mixin
 .super-duper-borders
@@ -400,14 +396,14 @@ Obviously this can get very tedious very quickly. Using Bourbon, it looks like t
 //  }
 ```
 
-Boom!! That easy!
+Boom!! That easy! And a remarkable reduction of code as well.
 
 ###Under The Hood:
 
 This mixin expects you to provide 
 
 + a **fonts** folder where you store your webfonts 
-— which I still generate with the **webfont generator** from **fontsquirrel** ->  eot, ttf, woff, svg formats of uploaded typefaces.
+— which you can still generate with the **webfont generator** from **fontsquirrel** ->  eot, ttf, woff, svg formats of uploaded typefaces.
 
 #### Screenshot 
 (this example is from a Rails app)
@@ -423,7 +419,7 @@ This mixin expects you to provide
 
 + **font-style** like *normal*, *italic* or *oblique* ( maybe avoid oblique type! ) 
 
-+ and a hash for using the **asset-pipeline** with rails or not
++ and a hash for using the **asset-pipeline** in Rails or not
 
 ``` sass Breaking down the parts
              //font-family name      file-path                          weight  style 
@@ -451,6 +447,6 @@ This mixin expects you to provide
 
 ## Cheers!
 
-I have prepared another article about Bourbon's mixins: <li><a href="{{ root_url }}/blog/2014/01/27/bourbon-mixins-02/">Bourbon: Mixins #02</a></li>
+I have prepared another article about Bourbon's mixins: <li><a href="{{ root_url }}/http://localhost:4000/octopress_drafts_previewer/blog/2014/01/27/bourbon-mixins-02/">Bourbon: Mixins #02</a></li>
 
 {% img /images/bourbon-mixins/github-bourbon.gif %}
