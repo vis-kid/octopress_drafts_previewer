@@ -4,17 +4,13 @@ title: "Bourbon - Mixins #02"
 date: 2015-07-10 15:23:35 +0100
 comments: true
 sharing: true
-categories: [ Sass, Mixins, Bourbon, Neat, Semantics, Thoughtbot, CSS, Design, Pixel Density, Media Query, HIDPI ] 
+categories: [ Sass, Mixins, Bourbon, Neat, Semantics, Thoughtbot, CSS, Design, Pixel Density, Media Query, HiDPI ] 
 ---
 
 {% img /images/bourbon-mixins/bourbon-mixins02.jpg 550 %}
 
 [{% img /images/bourbon-mixins/bourbon-logo@2x.png  250 450 %}](http://bourbon.io/)
 
-
-[ -- **Context: Rails 4 apps** -- ] 
-
-[ -- **Requirements: Sass 3.2+** -- ]
 
 ## Another Short List Of Goodies
 
@@ -24,10 +20,10 @@ categories: [ Sass, Mixins, Bourbon, Neat, Semantics, Thoughtbot, CSS, Design, P
 + **clearfix mixin**
 + **button mixin**
 + **size mixin**
++ **HiDPI-media-query mixin**
 + **retina-image mixin**
-+ **HIDPI-media-query mixin**
 
-Let’s take a look at these mixins in more detail.
+Let’s take a look at these mixins in more detail as well.
 
 <!-- more -->
 
@@ -40,8 +36,11 @@ Let’s take a look at these mixins in more detail.
 ``` html paragraphs’ default display behaviour is block
   <p class='paragraphs-behave-like-blocks'>
     Yada yada yada
+  </p>
+
   <p class='paragraphs-behave-like-blocks'>
     Yada yada yada
+  </p>
 ```
 
 #### Screenshot
@@ -53,17 +52,20 @@ Block-level elements, like paragraphs, automatically create a new row in the lay
 
 This mixin comes in handy if you want to change the **default display behaviour** of elements to **inline-block**, instead of floating elements for example. It not only sets **display: inline-block** but also takes care of quirks and legacy support for IE7.
 
+Learn more about [display](http://designshack.net/articles/css/whats-the-deal-with-display-inline-block/) here.
+
 ``` sass blocks with float-like behaviour through inline-block
 .paragraphs-behave-like-blocks
   +inline-block
   background-color: tomato
 
 //  SCSS syntax
-
-//    .paragraphs-behave-like-blocks {
+//  .paragraphs-behave-like-blocks {
       @include inline-block;
 //  }
 ```
+
+Take a look at the generated CSS output. Who wants to remember nasty stuff like that. 
 
 ``` css CSS output
 .paragraphs-behave-like-blocks {
@@ -80,14 +82,12 @@ This mixin comes in handy if you want to change the **default display behaviour*
 
 {% img /images/bourbon-mixins/display-block-inline.png 400 %}
 
-Set to display: inline-block, the paragraphs get displayed inline but retain their block-level characteristics.
+Set to display: inline-block, the paragraphs get displayed inline but retain their block-level characteristics. Alternative to floating elements — Check!
 
 
 ### Attention
 
 Notice the whitespace between the block elements. If you’d be using **float**, you wouldn’t see any whitespace. It’s a kind of default whitespace that doesn’t go away by setting margins to 0px. Instead set **margins to -4px** if you want to get rid of it.
-
-Learn more about [display](http://designshack.net/articles/css/whats-the-deal-with-display-inline-block/) here.
 
 ##  
 
@@ -110,18 +110,17 @@ This mixin is a shorthand for writing something like this —
                     //top right bottom left
 
 // SCSS syntax
-
    .some-element
 //   @include position(relative, 0px 0 0 100px);
 ```
 
-That’s it. No magic, but still super useful.
+That’s it. No magic, but still super useful. Keeping stylesheets simple and readable pays off over time.
 
 ##  
 
 + ### triangle mixin
 
-Want to use CSS **triangles** without fiddling around? There is certainly no more use for images to do the job.  
+Want to use CSS **triangles** without fiddling around? There is certainly no need to use images for the job.  
 
 It’s easy as pie with this:
 
@@ -131,7 +130,6 @@ It’s easy as pie with this:
          // size, color, direction
 
 // SCSS syntax
-
    .triangle {
      @include triangle(25px, tomato, down);
 // }
@@ -140,13 +138,16 @@ It’s easy as pie with this:
 The third parameter defines the direction.
 Options for this mixin include:
 
+#### Screenshot
+
+{% img /images/bourbon-mixins/triangles.png 400 %}
+
+
 **down** — **up** — **left** — **right**
 
 **up-right** — **up-left** — **down-right** — **down-left**
 
-#### Screenshot
-
-{% img /images/bourbon-mixins/triangles.png 400 %}
+You can even define a second color if you need a background color for your triangle.
 
 ##  
 
@@ -164,9 +165,11 @@ Take a look at this very simple example:
 ```
 
 ``` sass
+$light-grey: #D4D4D4
+
 .grey-wrapper
-  +clearfix        //grey
-  background-color: #D4D4D4
+  background-color: $light-grey
+  +clearfix        
   .logos
     float: right
     +background-image(url("bourbon-logo@2x.png"), url("thoughtbot.png"))
@@ -176,10 +179,9 @@ Take a look at this very simple example:
     width: 50%
 
 // SCSS syntax
-
 // .grey-wrapper {
      @include clearfix;
-     background-color: #D4D4D4;
+     background-color: $light-grey;
      .logos {
        float: right;
        @include background-image(url("bourbon-logo@2x.png"), url("thoughtbot.png"));
@@ -223,10 +225,6 @@ If you take a look at the source code it becomes clear how this **micro clearfix
 
 Instead of creating an "empty" tag in your markup right before the closing tag of the container element and apply a clearfix there, this mixin uses the **&:after** pseudo element and places an **empty string** at the very end of the container and clears the float. That way it mimics content after the logo and tricks the browser to expand the grey container to surround other elements inside.
 
-### Critique
-
-I wonder if it would make more sense to use a **Sass placeholder selector** for the clearfix and use an **@extend** instead on an **@include**. I think one could argue that such an approach would be more leightweight and makes sense if you’d have lots of elements with clearfixes — of course this would mean an inconsistency in the Bourbon API though ...
-
 ##  
 
 + ### button mixin
@@ -248,7 +246,6 @@ $light-blue: #2485F1
   +button($light-blue)
 
 // SCSS syntax
-
 // .super-duper-button {
      @include button($light-blue);
 // }
@@ -273,7 +270,6 @@ $dark-pink: #6B32D1
   +button(pill, $dark-pink)
 
 // SCSS syntax
-
 // .super-duper-button {
      @include button(pill, $dark-pink);
 // }
@@ -294,7 +290,6 @@ $acceptance-green: #43C914
   +button(shiny, $acceptance-green)
 
 // SCSS syntax
-
 // .super-duper-button {
      @include button(shiny, $acceptance-green);
 // }
@@ -311,7 +306,6 @@ $light-grey: #DEDEDE
   +button(shiny, $light-grey)
 
 // SCSS syntax
-
 // .super-duper-button {
      @include button(shiny, $light-grey);
 // }
@@ -329,7 +323,6 @@ All you need to do is:
   +size(300, 400)
 
 // SCSS syntax
-
 // .small-article {
      @include size(300, 400);
 // }
@@ -351,7 +344,6 @@ If you provide only one size, Bourbon assumes you want a square.
   +size(25px)
 
 // SCSS syntax
-
 // .square {
      @include size(25px);
 // }
@@ -359,20 +351,19 @@ If you provide only one size, Bourbon assumes you want a square.
 
 ##  
 
-+ ### HIDPI-media-query mixin
++ ### HiDPI-media-query mixin
 
-If you want to quickly generate completely vendor prefixed media queries for detecting **HIDPI** ( "Retina" ) devices, this mixin comes in handy.
+If you want to quickly generate completely vendor prefixed media queries for detecting **HiDPI** ( "Retina" ) devices, this mixin comes in handy.
 
 All you need to do is provide a target **device pixel ratio** and declarations that change if the media query detects devices with this or higher ratio. The default ratio is 1.3.
 
-``` sass HIDPI-media-query
+``` sass HiDPI-media-query
 .image
   width: 150px
   +hidpi(1.5)
     width: 200px
 
 // SCSS syntax
-
 // .image {
      width: 150px;
      +hidpi(1.5) {
@@ -396,11 +387,13 @@ All you need to do is provide a target **device pixel ratio** and declarations t
 }
 ```
 
+Pretty cool! Slimmed down repetitive code quite a bit. 
+
 ##  
 
 + ### retina-image mixin
 
-Depending on the **pixel density** of the device displaying your designs, you can provide images with the **appropriate bitmap resolution**. This fine mixin provides a **retina background-image** or a **non-retina background-image** — depending on the result of the mixin’s internal **HIDPI-media-query** checking the device for its pixel density. 
+Depending on the **pixel density** of the device displaying your designs, you can provide images with the **appropriate bitmap resolution**. This fine mixin provides a **retina background-image** or a **non-retina background-image** — depending on the result of the mixin’s internal **HiDPI-media-query** checking the device for its pixel density. 
 
 If I’m not mistaken, as a bonus, it will serve only one of the images to avoid downloading both — which is especially advantageous for **mobile devices** with lower pixel densities. If the above is all *gobbledygook* to you, I’d recommend starting with this fantastic [article.](http://coding.smashingmagazine.com/2012/08/20/towards-retina-web/)
 
@@ -409,7 +402,6 @@ If I’m not mistaken, as a bonus, it will serve only one of the images to avoid
   +retina-image(logo-icon, 50px, 30px)
 
 // SCSS syntax
-
 // .logo {
      @include retina-image(logo-icon, 50px, 30px);
 // }
@@ -442,15 +434,14 @@ This mixin expects a **.png** as standard extension for all images. Per default,
 .logo                                     
   +retina-image(logo-icon, 50px, 30px, 
                 $extension: jpg, 
-                $retina-filename: HIDPI-logo-icon, 
+                $retina-filename: HiDPI-logo-icon, 
                 $retina-suffix: _retina )
 
 // SCSS syntax
-
 // .logo {
      @include retina-image(logo-icon, 50px, 30px, 
                 $extension: jpg, 
-                $retina-filename: HIDPI-logo-icon, 
+                $retina-filename: HiDPI-logo-icon, 
                 $retina-suffix: _retina );
 // }
 ```
@@ -466,13 +457,13 @@ This mixin expects a **.png** as standard extension for all images. Per default,
        only screen and (min-resolution: 125dpi), 
        only screen and (min-resolution: 1.3dppx) {
   .logo {
-    background-image: url(HIDPI-logo-icon_retina.jpg);
+    background-image: url(HiDPI-logo-icon_retina.jpg);
     background-size: 50px 30px; 
   }
 }
 ```
 
-There is another option if you are using the asset pipeline:
+There is another option if you are using the asset pipeline in Rails:
 
 ``` sass 
 .logo                                     
@@ -480,7 +471,6 @@ There is another option if you are using the asset pipeline:
                 $asset-pipeline: true)
 
 // SCSS syntax
-
 // .logo {
      @include retina-image(logo-icon, 50px, 30px,
                            $asset-pipeline: true);
