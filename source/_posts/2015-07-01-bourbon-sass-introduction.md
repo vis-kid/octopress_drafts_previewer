@@ -91,7 +91,7 @@ Learn more about individual Bourbon mixins in my other articles here:
 
 <a href="{{ root_url }}/blog/2015/07/05/bourbon-mixins/">Bourbon: Mixins #01</a>
 
-<a href="{{ root_url }}/blog/2015/07/10/bourbon-mixins-02k/">Bourbon: Mixins #02</a>
+<a href="{{ root_url }}/blog/2015/07/10/bourbon-mixins-02/">Bourbon: Mixins #02</a>
 
 ## <a name='functions'></a>Functions Overview
 
