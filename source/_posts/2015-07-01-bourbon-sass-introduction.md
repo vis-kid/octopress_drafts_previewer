@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Bourbon - Connoisseurs’s Choice Sass Mixins" 
+title: "Bourbon - Connoisseurs’ Choice Sass Mixins" 
 date: 2015-07-01 18:34:54 +0100
 comments: true
 sharing: true
