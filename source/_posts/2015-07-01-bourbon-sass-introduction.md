@@ -26,19 +26,19 @@ categories: [ Sass, Mixins, Bourbon, Neat, Semantics, Thoughtbot, CSS, Design ]
 
 [Bourbon](http://bourbon.io) is a top-notch Sass **library for designers**. It has a minimalistic approach and is serious about creating quality code that cares about **semantics**. I like it especially because it encourages best practices for developing great code that scales.
 
-This gem helps **designers** to write their code faster and manages a lot of the nitty-gritty details like annoying **vendor prefixes**. It’s mixins often act as wrappers for outputting quality CSS but stay as vanilla as possible by being close to the original CSS syntax.
+This gem helps designers to write their code faster and manages a lot of the nitty-gritty details like annoying vendor prefixes. It’s mixins often act as wrappers for outputting quality CSS but stay as vanilla as possible by being close to the original CSS syntax.
 
-Big heavyweight frameworks like [Bootstrap](http://getbootstrap.com) certainly have their charms. Developers like them because most design decisions are already made and reasonably decent looking websites come out pretty much prefabricated. There's nothing wrong with that - given that you want to bootstrap your project without a designer who values **semantic markup**. I should mention though that once designers are involved they might not be happy with that choice. Having to manually rip out unsemantic styles that are intertwined  with your markup might give them ideas for putting funny stuff in your coffee.
+Big heavyweight frameworks like [Bootstrap](http://getbootstrap.com) certainly have their charms. Developers like them because most design decisions are already made and reasonably decent looking websites come out pretty much prefabricated. There's nothing wrong with that - given that you want to bootstrap your project without a designer who values semantic markup. I should mention though that once designers are involved they might not be happy with that choice. Having to manually rip out unsemantic styles that are intertwined  with your markup might give them ideas for putting funny stuff in your coffee.
 
 ### Worth Pointing Out
 
-+ Bourbon is **pure Sass & platform agnostic**, it works with any Sass project
++ Bourbon is pure Sass & platform agnostic, it works with any Sass project
 + Very close to the vanilla CSS syntax
 + Not tied to Ruby, unlike Compass
-+ Includes awesome **functions**
-+ Outsources **vendor prefixes**
++ Includes awesome functions
++ Outsources vendor prefixes
 + It’s super lightweight
-+ It’s **semantic**
++ It’s semantic
 
 ## <a name='setup'></a>Setup
 
@@ -97,25 +97,24 @@ Learn more about individual Bourbon mixins in my other articles here:
 
 Sass already has a ton of built-in functions, from manipulating strings to messing with opacity and colors. Bourbon adds a couple of selected enhancements and provides very handy Sass functions for a variety of use cases. Take a look a this selection:
 
-+ ### **golden-ratio()**
++ `golden-ratio()`
 
-Want to calculate the golden ratio of a certain number? (slowly depricated though)
+With this function, it is very easy to calculate the golden ratio of a certain number (slowly depricated though). It is useful if you want to create “meaningful” relationships within the sizes of your headers and body copy for example. The same goes for structural relationships in your layout.
 
-+ ### **linear-gradient()** & **radial-gradient()**
++ `linear-gradient()`
 
-Need a linear- or radial-gradient for your background-image mixin?
+If you need a linear gradient in combination with your background-image mixin, this function will save you quite a bit of code.
 
-You might already be familiar with Sass's built in functions for colors like **lighten()** and **darken()** which do exactly what you'd expect. Bourbon provides two additional awesome color functions for your convenience:
++ `tint()`
++ `shade()`
 
-+ ### **tint()** & **shade()**
+You might already be familiar with Sass's built in functions for colors like **lighten()** and **darken()** which do exactly what you'd expect. Bourbon provides two additional awesome color functions for your convenience. The tint function changes a color by mixing it with white. The shade function changes a color by mixing it with black. Both functions take a color and percentage parameter to fine-tune the color mix.
 
-The tint function changes a color by mixing it with **white**. The shade function changes a color by mixing it with **black**. Both functions take a **color** and **percentage** parameter to fine-tune the color mix.
++ `modular-scale()`
 
-+ ### **modular-scale()**
+If you are into "*more meaningful typography*" and want to calculate a modular scale for varying font sizes that have some sort of numerical relationship, modular-scale() might become your new best friend.
 
-If you are into "*more meaningful typography*" and want to calculate a modular scale for varying font sizes that have some sort of numerical relationship, **modular-scale()** might become your new best friend.
-
-+ ### **em()**
++ `em()`
 
 Calculates **pixels to ems** for you.
 
@@ -124,17 +123,17 @@ I have prepared a more detailed look at functions here:
 
 ## <a name='addons'></a>Add-ons
 
-A small collection of useful variables:
 
 + ### **font-family variables**
 
-  + font-family: $helvetica;
-  + font-family: $georgia;
-  + font-family: $lucida-grande;
-  + font-family: $monospace;
-  + font-family: $verdana;
+Bourbon defines a small but useful set of default variables for font-families.
 
-Bourbon defines a set of default variables for font-families.
+  + `$helvetica`
+  + `$georgia`
+  + `$lucida-grande`
+  + `$monospace`
+  + `$verdana`
+
 Instead of typing —
 
 ``` sass traditional way of defining fonts
@@ -149,7 +148,7 @@ font-family: $helvetica
 
 + ### **timing variables**
 
-A mixin like **transition** has the following syntax:
+A mixin like `transition` has the following syntax:
 
 ``` sass
 .some-element
