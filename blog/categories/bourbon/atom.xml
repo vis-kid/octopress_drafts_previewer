@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bourbon | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/bourbon/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-07-07T11:46:23+02:00</updated>
+  <updated>2015-07-07T22:46:47+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -1026,20 +1026,20 @@ It will fail like this:</li>
 
 <p><a href="http://bourbon.io">Bourbon</a> is a top-notch Sass <strong>library for designers</strong>. It has a minimalistic approach and is serious about creating quality code that cares about <strong>semantics</strong>. I like it especially because it encourages best practices for developing great code that scales.</p>
 
-<p>This gem helps <strong>designers</strong> to write their code faster and manages a lot of the nitty-gritty details like annoying <strong>vendor prefixes</strong>. It’s mixins often act as wrappers for outputting quality CSS but stay as vanilla as possible by being close to the original CSS syntax.</p>
+<p>This gem helps designers to write their code faster and manages a lot of the nitty-gritty details like annoying vendor prefixes. It’s mixins often act as wrappers for outputting quality CSS but stay as vanilla as possible by being close to the original CSS syntax.</p>
 
-<p>Big heavyweight frameworks like <a href="http://getbootstrap.com">Bootstrap</a> certainly have their charms. Developers like them because most design decisions are already made and reasonably decent looking websites come out pretty much prefabricated. Nothing wrong with that - given that you want to bootstrap your project without a designer who values <strong>semantic markup</strong>. I should mention though that once designers are involved, they might not be happy with that choice. Having to manually rip out unsemantic styles that are intermingled with your markup might give them ideas for putting funny stuff in your coffee.</p>
+<p>Big heavyweight frameworks like <a href="http://getbootstrap.com">Bootstrap</a> certainly have their charms. Developers like them because most design decisions are already made and reasonably decent looking websites come out pretty much prefabricated. There&rsquo;s nothing wrong with that - given that you want to bootstrap your project without a designer who values semantic markup. I should mention though that once designers are involved they might not be happy with that choice. Having to manually rip out unsemantic styles that are intertwined  with your markup might give them ideas for putting funny stuff in your coffee.</p>
 
 <h3>Worth Pointing Out</h3>
 
 <ul>
-<li>Bourbon is <strong>pure Sass &amp; platform agnostic</strong> -> works with any Sass project</li>
-<li>Very close to actual CSS syntax -> Vanilla</li>
-<li>Not tied to Ruby ( unlike Compass )</li>
-<li>Includes awesome <strong>functions</strong></li>
-<li>Outsources <strong>vendor prefixes</strong></li>
+<li>Bourbon is pure Sass &amp; platform agnostic, it works with any Sass project</li>
+<li>Very close to the vanilla CSS syntax</li>
+<li>Not tied to Ruby, unlike Compass</li>
+<li>Includes awesome functions</li>
+<li>Outsources vendor prefixes</li>
 <li>It’s super lightweight</li>
-<li>It’s <strong>Semantic</strong></li>
+<li>It’s semantic</li>
 </ul>
 
 
@@ -1061,14 +1061,14 @@ It will fail like this:</li>
 <pre><code class="bash Terminal">$ bourbon install
 </code></pre>
 
-<h6>This command generates a bourbon folder that contains the functions, mixins, helpers, settings, etc that you need. Do yourself a favor and don’t touch this folder. You will have a much better experience updating Bourbon in the future.</h6>
+<p>This command generates a bourbon folder that contains the functions, mixins, helpers, settings, etc. that you need. Don’t touch this folder. You will have a much better experience updating Bourbon in the future.</p>
 
 <h4>Screenshot</h4>
 
 <p><img src="/images/bourbon-introduction/bourbon-install-generated-folder.png"></p>
 
 <ul>
-<li>You need to finish the setup by importing the generated sass files in your stylesheets. Import Bourbon on top of your <strong>application.sass</strong> file and make sure you only import other Sass files below.</li>
+<li>You need to finish the setup by importing the generated <code>sass</code> files in your stylesheets. Import Bourbon on top of your <strong>application.sass</strong> file and make sure you only import other Sass files below.</li>
 </ul>
 
 
@@ -1078,72 +1078,71 @@ It will fail like this:</li>
 
 <h2><a name='mixins'></a>Mixins Overview</h2>
 
-<p>Bourbon has a wide range of super useful mixins to speed up your work. In terms of design, it’s safe to say that they want to support your own design decisions without forcing a particular style on you. You are basically encouraged to mix your own awesomesauce. You can use these mixins as a stable and relatively neutral basis.
-Here are a couple of mixins you might wanna check out first:</p>
+<p>Bourbon has a wide range of super useful mixins to speed up your work. In terms of design, it’s safe to say that they want to support your own design decisions without forcing a particular style on you. You are basically encouraged to mix your own awesome sauce. You can use these mixins as a stable and relatively neutral basis.</p>
+
+<p>Here are a couple of mixins you might wanna check out first:</p>
 
 <ul>
-<li><strong>background-image</strong></li>
-<li><strong>border-radius</strong></li>
-<li><strong>box-sizing</strong></li>
-<li><strong>linear-gradient</strong></li>
-<li><strong>transitions</strong></li>
-<li><strong>animations</strong></li>
-<li><strong>font-face</strong></li>
-<li><strong>button</strong></li>
-<li><strong>triangle</strong></li>
-<li><strong>retina-image</strong></li>
-<li><strong>position</strong></li>
-<li><strong>size</strong></li>
-<li><strong>clearfix</strong></li>
-<li><strong>inline-block</strong></li>
+<li><code>background-image</code></li>
+<li><code>border-radius</code></li>
+<li><code>box-sizing</code></li>
+<li><code>linear-gradient</code></li>
+<li><code>transitions</code></li>
+<li><code>animations</code></li>
+<li><code>font-face</code></li>
+<li><code>button</code></li>
+<li><code>triangle</code></li>
+<li><code>retina-image</code></li>
+<li><code>position</code></li>
+<li><code>size</code></li>
+<li><code>clearfix</code></li>
+<li><code>inline-block</code></li>
 </ul>
 
 
 <p>Learn more about individual Bourbon mixins in my other articles here:</p>
 
-<p><a href="/blog/2015/07/05/bourbon-mixins/">Bourbon: Mixins #01</a></p>
+<ul>
+<li><a href="/blog/2015/07/05/bourbon-mixins/">Bourbon: Mixins #01</a></li>
+<li><a href="/blog/2015/07/10/bourbon-mixins-02/">Bourbon: Mixins #02</a></li>
+</ul>
 
-<p><a href="/blog/2015/07/10/bourbon-mixins-02/">Bourbon: Mixins #02</a></p>
 
 <h2><a name='functions'></a>Functions Overview</h2>
 
 <p>Sass already has a ton of built-in functions, from manipulating strings to messing with opacity and colors. Bourbon adds a couple of selected enhancements and provides very handy Sass functions for a variety of use cases. Take a look a this selection:</p>
 
 <ul>
-<li><h3><strong>golden-ratio()</strong></h3></li>
+<li><code>golden-ratio()</code></li>
 </ul>
 
 
-<p>Want to calculate the golden ratio of a certain number? (slowly depricated though)</p>
+<p>With this function, it is very easy to calculate the golden ratio of a certain number (slowly depricated though). It is useful if you want to create “meaningful” relationships within the sizes of your headers and body copy for example. The same goes for structural relationships in your layout.</p>
 
 <ul>
-<li><h3><strong>linear-gradient()</strong> &amp; <strong>radial-gradient()</strong></h3></li>
+<li><code>linear-gradient()</code></li>
 </ul>
 
 
-<p>Need a linear- or radial-gradient for your background-image mixin?</p>
-
-<p>You might already be familiar with Sass&rsquo;s built in functions for colors like <strong>lighten()</strong> and <strong>darken()</strong> which do exactly what you&rsquo;d expect.
-Bourbon provides two additional awesome color functions for your convenience:</p>
+<p>If you need a linear gradient in combination with your background-image mixin, this function will save you quite a bit of code.</p>
 
 <ul>
-<li><h3><strong>tint()</strong> &amp; <strong>shade()</strong></h3></li>
+<li><code>tint()</code></li>
+<li><code>shade()</code></li>
 </ul>
 
 
-<p>The tint function changes a color by mixing it with <strong>white</strong>.
-The shade function changes a color by mixing it with <strong>black</strong>.
-Both functions take a <strong>color</strong> and <strong>percentage</strong> parameter to fine-tune the color mix.</p>
+<p>You might already be familiar with Sass&rsquo;s built in functions for colors like <strong>lighten()</strong> and <strong>darken()</strong> which do exactly what you&rsquo;d expect. Bourbon provides two additional awesome color functions for your convenience. The tint function changes a color by mixing it with white. The shade function changes a color by mixing it with black. Both functions take a color and percentage parameter to fine-tune the color mix.</p>
 
 <ul>
-<li><h3><strong>modular-scale()</strong></h3></li>
+<li><code>modular-scale()</code></li>
 </ul>
 
 
-<p>If you are into &ldquo;<em>more meaningful typography</em>&rdquo; and want to calculate a modular scale for varying font sizes that have some sort of numerical relationship, <strong>modular-scale()</strong> might become your new best friend.</p>
+<p>If you are into &ldquo;<em>more meaningful typography</em>&rdquo; and want to calculate a modular scale for varying font sizes that have some sort of numerical relationship, modular-scale() might become your new best friend.</p>
 
 <ul>
-<li><h3><strong>em()</strong></h3></li>
+<li><code>em()</code></li>
 </ul>
 
 
@@ -1154,24 +1153,23 @@ Both functions take a <strong>color</strong> and <strong>percentage</strong> par
 
 <h2><a name='addons'></a>Add-ons</h2>
 
-<p>A small collection of useful variables:</p>
-
 <ul>
-<li><h3><strong>font-family variables</strong></h3>
-
-<ul>
-<li>font-family: $helvetica;</li>
-<li>font-family: $georgia;</li>
-<li>font-family: $lucida-grande;</li>
-<li>font-family: $monospace;</li>
-<li>font-family: $verdana;</li>
-</ul>
-</li>
+<li><h3><strong>font-family variables</strong></h3></li>
 </ul>
 
 
-<p>Bourbon defines a set of default variables for font-families.
-Instead of typing —</p>
+<p>Bourbon defines a small but useful set of default variables for font-families.</p>
+
+<ul>
+<li><code>$helvetica</code></li>
+<li><code>$georgia</code></li>
+<li><code>$lucida-grande</code></li>
+<li><code>$monospace</code></li>
+<li><code>$verdana</code></li>
+</ul>
+
+
+<p>Instead of typing —</p>
 
 <pre><code class="sass traditional way of defining fonts">font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
 </code></pre>
@@ -1186,7 +1184,7 @@ Instead of typing —</p>
 </ul>
 
 
-<p>A mixin like <strong>transition</strong> has the following syntax:</p>
+<p>A mixin like <code>transition</code> has the following syntax:</p>
 
 <pre><code class="sass">.some-element
   +transition(all 5s $ease-in-circ)
