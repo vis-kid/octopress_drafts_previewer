@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/07/15/bourbon-functions/</loc>
+    <lastmod>2015-07-15T13:51:46+02:00</lastmod>
+  </url>
+  <url>
     <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/07/10/bourbon-mixins-02/</loc>
     <lastmod>2015-07-10T16:23:35+02:00</lastmod>
   </url>
@@ -50,5 +54,17 @@
   </url>
   <url>
     <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/hidpi/</loc>
+  </url>
+  <url>
+    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/functions/</loc>
+  </url>
+  <url>
+    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/golden-ratio/</loc>
+  </url>
+  <url>
+    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/golden-mean/</loc>
+  </url>
+  <url>
+    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/divine-proportion/</loc>
   </url>
 </urlset>

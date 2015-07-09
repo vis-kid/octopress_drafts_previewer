@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mixins | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/mixins/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-07-07T22:46:47+02:00</updated>
+  <updated>2015-07-09T21:48:12+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -1061,7 +1061,7 @@ It will fail like this:</li>
 <pre><code class="bash Terminal">$ bourbon install
 </code></pre>
 
-<p>This command generates a bourbon folder that contains the functions, mixins, helpers, settings, etc. that you need. Don’t touch this folder. You will have a much better experience updating Bourbon in the future.</p>
+<p>This command generates a bourbon folder that contains the functions, mixins, helpers, settings, etc. that you need. I’d recommend that you don’t touch this folder. You will have a much better experience updating Bourbon in the future.</p>
 
 <h4>Screenshot</h4>
 
@@ -1084,19 +1084,19 @@ It will fail like this:</li>
 
 <ul>
 <li><code>background-image</code></li>
-<li><code>border-radius</code></li>
-<li><code>box-sizing</code></li>
 <li><code>linear-gradient</code></li>
+<li><code>border-radius</code></li>
+<li><code>retina-image</code></li>
+<li><code>inline-block</code></li>
 <li><code>transitions</code></li>
+<li><code>box-sizing</code></li>
 <li><code>animations</code></li>
 <li><code>font-face</code></li>
-<li><code>button</code></li>
 <li><code>triangle</code></li>
-<li><code>retina-image</code></li>
-<li><code>position</code></li>
-<li><code>size</code></li>
 <li><code>clearfix</code></li>
-<li><code>inline-block</code></li>
+<li><code>position</code></li>
+<li><code>button</code></li>
+<li><code>size</code></li>
 </ul>
 
 
@@ -1132,14 +1132,14 @@ It will fail like this:</li>
 </ul>
 
 
-<p>You might already be familiar with Sass&rsquo;s built in functions for colors like <strong>lighten()</strong> and <strong>darken()</strong> which do exactly what you&rsquo;d expect. Bourbon provides two additional awesome color functions for your convenience. The tint function changes a color by mixing it with white. The shade function changes a color by mixing it with black. Both functions take a color and percentage parameter to fine-tune the color mix.</p>
+<p>You might already be familiar with Sass&rsquo;s built in functions for colors like <strong>lighten()</strong> and <strong>darken()</strong> which do exactly what you&rsquo;d expect. Bourbon provides two additional awesome color functions for your convenience. <code>tint()</code> changes a color by mixing it with white. <code>shade()</code> changes a color by mixing it with black. Both functions take a color and percentage parameter to fine-tune the color mix.</p>
 
 <ul>
 <li><code>modular-scale()</code></li>
 </ul>
 
 
-<p>If you are into &ldquo;<em>more meaningful typography</em>&rdquo; and want to calculate a modular scale for varying font sizes that have some sort of numerical relationship, modular-scale() might become your new best friend.</p>
+<p>If you are into <a href="http://alistapart.com/article/more-meaningful-typography">&ldquo;<em>more meaningful typography</em>&rdquo;</a> and want to calculate a modular scale for varying font sizes that have some sort of numerical relationship, this function might become your new best friend.</p>
 
 <ul>
 <li><code>em()</code></li>
@@ -1154,17 +1154,17 @@ It will fail like this:</li>
 <h2><a name='addons'></a>Add-ons</h2>
 
 <ul>
-<li><h3><strong>font-family variables</strong></h3></li>
+<li><h4><strong>font-family variables</strong></h4></li>
 </ul>
 
 
 <p>Bourbon defines a small but useful set of default variables for font-families.</p>
 
 <ul>
-<li><code>$helvetica</code></li>
-<li><code>$georgia</code></li>
 <li><code>$lucida-grande</code></li>
 <li><code>$monospace</code></li>
+<li><code>$helvetica</code></li>
+<li><code>$georgia</code></li>
 <li><code>$verdana</code></li>
 </ul>
 
@@ -1180,7 +1180,7 @@ It will fail like this:</li>
 </code></pre>
 
 <ul>
-<li><h3><strong>timing variables</strong></h3></li>
+<li><h4><strong>timing variables</strong></h4></li>
 </ul>
 
 

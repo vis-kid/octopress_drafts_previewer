@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Neat | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/neat/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-07-07T22:46:47+02:00</updated>
+  <updated>2015-07-09T21:48:12+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,462 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Bourbon - Functions]]></title>
+    <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/07/15/bourbon-functions/"/>
+    <updated>2015-07-15T13:51:46+02:00</updated>
+    <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/07/15/bourbon-functions</id>
+    <content type="html"><![CDATA[<p><img src="/images/bourbon-functions/bourbon-aerator.jpg" width="450" height="260" title="" ></p>
+
+<p><a href="http://bourbon.io/"><img src="/images/bourbon-mixins/bourbon-logo@2x.png" width="250" height="450"></a></p>
+
+<p>[ &ndash; <strong>Context: Rails 4 apps</strong> &ndash; ]</p>
+
+<p>[ &ndash; <strong>Requirements: Sass 3.2+</strong> &ndash; ]</p>
+
+<h2>Functions</h2>
+
+<p>Bourbon provides very handy Sass functions for a variety of use cases. Let&rsquo;s take a look at this selection:</p>
+
+<ul>
+<li><strong>linear-gradient()</strong></li>
+<li><strong>modular-scale()</strong></li>
+<li><strong>golden-ratio()</strong></li>
+<li><strong>shade()</strong></li>
+<li><strong>tint()</strong></li>
+<li><strong>em()</strong></li>
+</ul>
+
+
+<!-- more -->
+
+
+<h2></h2>
+
+<ul>
+<li><h3><strong>golden-ratio() function</strong></h3></li>
+</ul>
+
+
+<h3>The Golden Ratio</h3>
+
+<p><img src="/images/bourbon-functions/bender-golden-ratio.jpg" width="280"></p>
+
+<p>The <strong><em>golden ratio</em></strong> or <strong><em>divine proportion</em></strong> is a very common ratio across disciplines. In music, art, mathematics, architecture, biology and in many other fields you can encounter the &ldquo;use&rdquo; of the ratio <strong>1 : 1.6180339</strong> to tie structures together. Interestingly, in the past, especially in early architecture, it was often used to please the &ldquo;gods&rdquo; by attempting to &ldquo;communicate&rdquo; in a &ldquo;divine geometric language&rdquo;.</p>
+
+<p>This ratio represents a pattern that seems to please human visual perception. Probably because it has been so abundant in biology around us all along, we perceive some kind of inherent balance when confronted with it. For ages, applying this ratio was an old &ldquo;trick&rdquo; used by creators because it can make your work feel more <strong>harmonious</strong> or even &ldquo;natural&rdquo;.</p>
+
+<h3>Twitter&rsquo;s use of the golden ratio for its layout</h3>
+
+<p><img src="/images/bourbon-functions/goldentwitter.jpg" width="580"></p>
+
+<p>In design the use of the <strong><em>golden mean</em></strong> is widespread as well:</p>
+
+<ul>
+<li>Layouts in Webdesign</li>
+<li>iPods / iPhones</li>
+<li>Business cards</li>
+<li>Credit cards</li>
+<li>Tyography</li>
+<li>Postcards</li>
+<li>Logos</li>
+<li>Cars</li>
+</ul>
+
+
+<p>&hellip;and <a href="http://en.wikipedia.org/wiki/List_of_works_designed_with_the_golden_ratio">many more</a></p>
+
+<h3>The golden ratio for your typographic scale</h3>
+
+<p>If you want to generate a <a href="http://www.hyperarts.com/blog/how-to-use-a-modular-scale/">modular scale</a> to structure various sizes of type by using the golden ratio, you can apply the <strong>goden-ratio function</strong> to calculate the <strong>golden mean</strong> for any number. Building your <strong>typographic scale</strong> is straightforward:</p>
+
+<pre><code class="sass typographic scale using the golden ratio">$base-font-size: 10px
+
+body
+  font-size: $base-font-size
+
+.footnote
+  font-size: golden-ratio($base-font-size, -1)
+                                        // decrement value
+h3
+  font-size: golden-ratio($base-font-size, 1)
+                                        // increment value
+h2
+  font-size: golden-ratio($base-font-size, 2)
+
+h1
+  font-size: golden-ratio($base-font-size, 3)
+
+//  SCSS syntax
+
+//  $base-font-size: 10px;
+
+    body {
+      font-size: $base-font-size;
+    }
+
+    .footnote {
+      font-size: golden-ratio($base-font-size, -1);
+    }
+
+    h3 {
+      font-size: golden-ratio($base-font-size, 1);
+    }
+
+    h2 {
+      font-size: golden-ratio($base-font-size, 2);
+    }
+
+    h1 {
+      font-size: golden-ratio($base-font-size, 3);
+//  }
+</code></pre>
+
+<pre><code class="css CSS output">body {
+  font-size: 10px;
+}
+
+.footnote {
+  font-size: 6.18px;
+}
+
+h3 {
+  font-size: 16.18px;
+}
+
+h2 {
+  font-size: 26.179px;
+}
+
+h1 {
+  font-size: 42.358px;
+}
+</code></pre>
+
+<p>The function&rsquo;s first parameter expects a <strong>pixel</strong> or <strong>em</strong> value — here represented by a Sass variable defined above. The second parameter requires an integer as <strong>increment / decrement value</strong> (&hellip;-3, -2, -1, 0, 1, 2, 3&hellip;) for scaling the provided font-size using <strong>1.6180339</strong>.
+If you need to round the output, you can use Sass&rsquo;s functions for:</p>
+
+<h3><strong>abs()</strong> — <strong>floor()</strong> — <strong>ceil()</strong></h3>
+
+<pre><code class="sass rounded example">.footnote
+  font-size: floor( golden-ratio($base-font-size, -1) )
+
+//  SCSS syntax
+
+//  .footnote {
+      font-size: floor( golden-ratio($base-font-size, -1) );
+//  }
+</code></pre>
+
+<h3>Under The Hood</h3>
+
+<p>Internally the golden-ratio function is using the <strong>modular-scale function</strong> with the scaling variable <strong>$golden</strong> for golden-ratio.</p>
+
+<pre><code class="sass modular-scale mixin">@function golden-ratio($value, $increment) {
+  @return modular-scale($value, $increment, $golden)
+}
+</code></pre>
+
+<p>Btw the fantastic <a href="http://neat.bourbon.io">Bourbon Neat</a> grid framework also uses the golden ratio by default for <strong>gutters</strong> and <strong>columns</strong>.</p>
+
+<h2></h2>
+
+<ul>
+<li><h3><strong>modular-scale() function</strong></h3></li>
+</ul>
+
+
+<p>If you are looking to dive further into <a href="http://www.alistapart.com/article/more-meaningful-typography">&ldquo;<em>more meaningful typography</em>&rdquo;</a>, this function offers to calculate <strong>various modular scales</strong> for you — the golden ratio is just one out of <strong>17 options</strong>, excluding your very own made up scales of course.</p>
+
+<p>It works the same as the <strong>golden-ratio() function</strong> described above, but takes a <strong>third parameter</strong> as your <strong>ratio of choice</strong>.</p>
+
+<pre><code class="sass modular-scale example">$base-font-size: 10px
+// Your choice of ratio saved in a variable to change it in one place
+// Here I used the double-octave ratio
+$type-of-scale: $double-octave
+
+body
+  font-size: $base-font-size
+
+.footnote
+  font-size: modular-scale($base-font-size, -1, $type-of-scale)
+
+h3
+  font-size: modular-scale($base-font-size, 1, $type-of-scale)
+
+h2
+  font-size: modular-scale($base-font-size, 2, $type-of-scale)
+
+h1
+  font-size: modular-scale($base-font-size, 3, $type-of-scale)
+
+//  SCSS syntax
+
+//  $base-font-size: 10px;
+    $type-of-scale: $double-octave;
+
+    body {
+      font-size: $base-font-size;
+    }
+
+    .footnote {
+      font-size: modular-scale($base-font-size, -1, $type-of-scale);
+    }
+
+    h3 {
+      font-size: modular-scale($base-font-size, 1, $type-of-scale);
+    }
+
+    h2 {
+      font-size: modular-scale($base-font-size, 2, $type-of-scale);
+    }
+
+    h1 {
+      font-size: modular-scale($base-font-size, 3, $type-of-scale);
+//  }
+</code></pre>
+
+<h3>Scaling Variables</h3>
+
+<p><img src="/images/bourbon-functions/scaling-variables.png" width="350"></p>
+
+<p>Bourbon prepared these <strong>variables</strong> of <strong>predefined ratios for various scales</strong>. To create a consistent design, it would be a good decsision not to mix different ratios for your typographic scale in one project. Keep it classy by deciding on one ratio that mirrors your intentions best.</p>
+
+<h3>Attention!</h3>
+
+<p>To use these scaling variables you need to install a version of Bourbon higher than <strong>v3.1.8</strong>.
+As of Feb 2014, I&rsquo;d recommend updating to the beta with</p>
+
+<ul>
+<li>tag
+
+<ul>
+<li><strong>v3.2.0-beta.1</strong><br/>
+or</li>
+<li><strong>v3.2.0-beta.2</strong></li>
+</ul>
+</li>
+</ul>
+
+
+<p>Put this in your gemfile to directly update from Github:</p>
+
+<pre><code class="ruby Gemfile">gem 'bourbon', git: 'https://github.com/thoughtbot/bourbon.git', tag: 'v3.2.0-beta.2'
+</code></pre>
+
+<p>and of course</p>
+
+<pre><code class="ruby">bundle install
+</code></pre>
+
+<p>Otherwise the variables above will throw an error. Of course you can just type in any desired ratio as the third parameter yourself.</p>
+
+<pre><code class="sass without scaling variables">$base-font-size: 10px
+
+h2
+  font-size: modular-scale($base-font-size, 2, 1.6180)
+                                            // golden ratio
+
+//  SCSS syntax
+
+//  $base-font-size: 10px;
+
+    h2 {
+      font-sizse: modular-scale($base-font-size, 2, 1.6180);
+//  }
+</code></pre>
+
+<h2>Need a linear- or radial-gradient for your background-image mixin?</h2>
+
+<p>It could not be any more straightforward to create gradiants with these functions.</p>
+
+<ul>
+<li><h3><strong>linear-gradient()</strong> function</h3></li>
+</ul>
+
+
+<p>The color of the gradient is defined by the <strong>starting color</strong>, the <strong>ending color</strong> and optional <strong>stop-color points</strong> in between.</p>
+
+<p>Those additional color-stops give you the possiblity to create more sophisticated transitions between the starting and ending colors, or provide a more colorful gradient.</p>
+
+<p>Take a look at this horrible gradient. Here I think it&rsquo;s easy to see how the <strong>linear-gradient</strong> function works and how you can utilize it:</p>
+
+<h4>Screenshot</h4>
+
+<p><img src="/images/bourbon-functions/horrible-gradient.png"></p>
+
+<pre><code class="sass horrible linear-gradient">.horrible-gradient
+  +background-image(linear-gradient( 
+    45deg,                // directon of gradient line 
+    red 10%,              // starting color 
+    yellow 15%,   // S    // bleeds into red     
+    yellow 40%,   // T                           
+    orange 45%,   // O    // bleeds into yellow   
+    orange 50%,   // P                            
+    orange 70%,   // S    // bleeds into green    
+    green 90%)            // ending color
+  )                       
+    height: 50px
+
+//  SCSS syntax
+
+//  .horrible-gradient {
+      @include background-image(linear-gradient( 
+        45deg,                // directon of gradient line 
+        red 10%,              // starting color 
+        yellow 15%,   // S    // bleeds into red     
+        yellow 40%,   // T                           
+        orange 45%,   // O    // bleeds into yellow   
+        orange 50%,   // P                            
+        orange 70%,   // S    // bleeds into green    
+        green 90%)            // ending color
+      )                      
+        height: 50px
+//  }
+</code></pre>
+
+<p>For colors you can optionally provide <strong>precentage</strong>, <strong>pixel</strong> or <strong>em</strong> <strong>values</strong>. Those define the distance this color is supposed to stretch out. You should probably stick to using <strong><em>%</em></strong> most of the time though. If you don&rsquo;t provide percentages as limitation values, the colors will strech out evenly, divided by the number of colors in the gradient.
+You can optionally provide an angle for the first parameter — either in form of <strong>value</strong> + <strong>deg</strong> or
+<strong>to</strong> with <strong>direction</strong>:</p>
+
+<ul>
+<li>45deg</li>
+<li>90deg</li>
+<li>to left top</li>
+<li>to right</li>
+<li>to left</li>
+</ul>
+
+
+<p>and so on.</p>
+
+<h4>Screenshot</h4>
+
+<p><img src="/images/bourbon-functions/yellow-blue-gradient.png"></p>
+
+<p>The gradient flows from left to right</p>
+
+<pre><code class="sass with direction parameter — left to right">.gradient
+  +background-image(linear-gradient(to right, yellow 50%, blue 60%)) 
+  height: 50px
+
+//  SCSS syntax
+
+//  .gradient {
+      @include background-image(linear-gradient(to right, yellow 50%, blue 60%)); 
+      height: 50px;
+//  }
+</code></pre>
+
+<h4>Screenshot</h4>
+
+<p><img src="/images/bourbon-functions/hsla-gradient.png"></p>
+
+<p>Something more sophisticated using <strong>hsla()</strong> functions and multiple <strong>linear-gradient()</strong> functions:</p>
+
+<pre><code class="sass decent gradient">.gradient 
+  +background-image(linear-gradient(
+    hsla(0, 100%, 100%, 0.25) 0%, 
+    hsla(0, 100%, 100%, 0.08) 50%, transparent 50%), 
+    linear-gradient(#4e7ba3, darken(#4e7ba4, 10%)))
+  height: 50px
+
+//  SCSS syntax
+
+//  .gradient 
+      +background-image(linear-gradient(
+        hsla(0, 100%, 100%, 0.25) 0%, 
+        hsla(0, 100%, 100%, 0.08) 50%, transparent 50%), 
+        linear-gradient(#4e7ba3, darken(#4e7ba4, 10%)))
+//    height: 50px
+</code></pre>
+
+<h2>Tint &amp; Shade Color Functions</h2>
+
+<p>You might already be familiar with Sass&rsquo;s built in functions for colors like <strong>lighten()</strong> and <strong>darken()</strong> which do exactly what you&rsquo;d expect.
+Bourbon provides two additional awesome color functions for your convenience:</p>
+
+<ul>
+<li><h3><strong>tint() function</strong></h3></li>
+</ul>
+
+
+<p>The tint function changes a color by mixing it with <strong>white</strong>.
+It expects a second parameter that takes the <strong>percentage of white</strong> you want to mix the color with.</p>
+
+<pre><code class="sass tint()">.tint
+  background: tint(#2F7DD1, 25%)                                                               height: 100px
+
+//  SCSS syntax
+
+//  .tint {
+      background: tint(#2F7DD1, 25%)                                                               height: 100px
+//  }
+</code></pre>
+
+<h4>Without tint()</h4>
+
+<p><img src="/images/bourbon-functions/no-tint.png"></p>
+
+<h4>With tint()</h4>
+
+<p><img src="/images/bourbon-functions/tint.png"></p>
+
+<h2></h2>
+
+<ul>
+<li><h3><strong>shade() function</strong></h3></li>
+</ul>
+
+
+<p>The shade function changes a color by mixing it with <strong>black</strong>.
+This function also takes a <strong>color</strong> and <strong>percentage</strong> parameter to fine-tune the color mix.</p>
+
+<pre><code class="sass shade()">.shade
+  background: shade(#2F7DD1, 25%)                                                              height: 100px
+
+//  SCSS syntax
+
+//  .shade{
+      background: shade(#2F7DD1, 25%)                                                              height: 100px
+//  }
+</code></pre>
+
+<h4>Without shade()</h4>
+
+<p><img src="/images/bourbon-functions/no-tint.png"></p>
+
+<h4>With shade()</h4>
+
+<p><img src="/images/bourbon-functions/shade.png"></p>
+
+<h2></h2>
+
+<ul>
+<li><h3><strong>em() function</strong></h3></li>
+</ul>
+
+
+<p>Calculates <strong>pixels to ems</strong> for you.</p>
+
+<pre><code class="sass em function in a Sass file">:q
+:q
+font-size: em(12)
+</code></pre>
+
+<pre><code class="css css output">font-size: 0.75em;
+</code></pre>
+
+<h2></h2>
+
+<p>That&rsquo;s it for Bourbon for now. Over the last couple of articles we have looked in detail at mixins &amp; functions and covered a lot of ground. I hope I could convey how awesome this project is and why it deserves a lot of respect.</p>
+
+<p>Now feel free to scheme how to take over the world with it.</p>
+
+<p><img src="/images/bourbon-functions/scheming.gif" width="700"></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Bourbon - Mixins #02]]></title>
@@ -1061,7 +1517,7 @@ It will fail like this:</li>
 <pre><code class="bash Terminal">$ bourbon install
 </code></pre>
 
-<p>This command generates a bourbon folder that contains the functions, mixins, helpers, settings, etc. that you need. Don’t touch this folder. You will have a much better experience updating Bourbon in the future.</p>
+<p>This command generates a bourbon folder that contains the functions, mixins, helpers, settings, etc. that you need. I’d recommend that you don’t touch this folder. You will have a much better experience updating Bourbon in the future.</p>
 
 <h4>Screenshot</h4>
 
@@ -1084,19 +1540,19 @@ It will fail like this:</li>
 
 <ul>
 <li><code>background-image</code></li>
-<li><code>border-radius</code></li>
-<li><code>box-sizing</code></li>
 <li><code>linear-gradient</code></li>
+<li><code>border-radius</code></li>
+<li><code>retina-image</code></li>
+<li><code>inline-block</code></li>
 <li><code>transitions</code></li>
+<li><code>box-sizing</code></li>
 <li><code>animations</code></li>
 <li><code>font-face</code></li>
-<li><code>button</code></li>
 <li><code>triangle</code></li>
-<li><code>retina-image</code></li>
-<li><code>position</code></li>
-<li><code>size</code></li>
 <li><code>clearfix</code></li>
-<li><code>inline-block</code></li>
+<li><code>position</code></li>
+<li><code>button</code></li>
+<li><code>size</code></li>
 </ul>
 
 
@@ -1132,14 +1588,14 @@ It will fail like this:</li>
 </ul>
 
 
-<p>You might already be familiar with Sass&rsquo;s built in functions for colors like <strong>lighten()</strong> and <strong>darken()</strong> which do exactly what you&rsquo;d expect. Bourbon provides two additional awesome color functions for your convenience. The tint function changes a color by mixing it with white. The shade function changes a color by mixing it with black. Both functions take a color and percentage parameter to fine-tune the color mix.</p>
+<p>You might already be familiar with Sass&rsquo;s built in functions for colors like <strong>lighten()</strong> and <strong>darken()</strong> which do exactly what you&rsquo;d expect. Bourbon provides two additional awesome color functions for your convenience. <code>tint()</code> changes a color by mixing it with white. <code>shade()</code> changes a color by mixing it with black. Both functions take a color and percentage parameter to fine-tune the color mix.</p>
 
 <ul>
 <li><code>modular-scale()</code></li>
 </ul>
 
 
-<p>If you are into &ldquo;<em>more meaningful typography</em>&rdquo; and want to calculate a modular scale for varying font sizes that have some sort of numerical relationship, modular-scale() might become your new best friend.</p>
+<p>If you are into <a href="http://alistapart.com/article/more-meaningful-typography">&ldquo;<em>more meaningful typography</em>&rdquo;</a> and want to calculate a modular scale for varying font sizes that have some sort of numerical relationship, this function might become your new best friend.</p>
 
 <ul>
 <li><code>em()</code></li>
@@ -1154,17 +1610,17 @@ It will fail like this:</li>
 <h2><a name='addons'></a>Add-ons</h2>
 
 <ul>
-<li><h3><strong>font-family variables</strong></h3></li>
+<li><h4><strong>font-family variables</strong></h4></li>
 </ul>
 
 
 <p>Bourbon defines a small but useful set of default variables for font-families.</p>
 
 <ul>
-<li><code>$helvetica</code></li>
-<li><code>$georgia</code></li>
 <li><code>$lucida-grande</code></li>
 <li><code>$monospace</code></li>
+<li><code>$helvetica</code></li>
+<li><code>$georgia</code></li>
 <li><code>$verdana</code></li>
 </ul>
 
@@ -1180,7 +1636,7 @@ It will fail like this:</li>
 </code></pre>
 
 <ul>
-<li><h3><strong>timing variables</strong></h3></li>
+<li><h4><strong>timing variables</strong></h4></li>
 </ul>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-07-07T22:46:47+02:00</updated>
+  <updated>2015-07-09T21:48:12+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,683 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Bourbon - Functions]]></title>
+    <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/07/15/bourbon-functions/"/>
+    <updated>2015-07-15T13:51:46+02:00</updated>
+    <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/07/15/bourbon-functions</id>
+    <content type="html"><![CDATA[<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-functions/bourbon-aerator.jpg" width="450" height="260" title="" ></p>
+
+<p><a href="http://bourbon.io/"><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-mixins/bourbon-logo@2x.png" width="250" height="450"></a></p>
+
+<p>[ &ndash; <strong>Context: Rails 4 apps</strong> &ndash; ]</p>
+
+<p>[ &ndash; <strong>Requirements: Sass 3.2+</strong> &ndash; ]</p>
+
+<h2>Functions</h2>
+
+<p>Bourbon provides very handy Sass functions for a variety of use cases. Let&rsquo;s take a look at this selection:</p>
+
+<ul>
+<li><strong>linear-gradient()</strong></li>
+<li><strong>modular-scale()</strong></li>
+<li><strong>golden-ratio()</strong></li>
+<li><strong>shade()</strong></li>
+<li><strong>tint()</strong></li>
+<li><strong>em()</strong></li>
+</ul>
+
+
+<!-- more -->
+
+
+<h2></h2>
+
+<ul>
+<li><h3><strong>golden-ratio() function</strong></h3></li>
+</ul>
+
+
+<h3>The Golden Ratio</h3>
+
+<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-functions/bender-golden-ratio.jpg" width="280"></p>
+
+<p>The <strong><em>golden ratio</em></strong> or <strong><em>divine proportion</em></strong> is a very common ratio across disciplines. In music, art, mathematics, architecture, biology and in many other fields you can encounter the &ldquo;use&rdquo; of the ratio <strong>1 : 1.6180339</strong> to tie structures together. Interestingly, in the past, especially in early architecture, it was often used to please the &ldquo;gods&rdquo; by attempting to &ldquo;communicate&rdquo; in a &ldquo;divine geometric language&rdquo;.</p>
+
+<p>This ratio represents a pattern that seems to please human visual perception. Probably because it has been so abundant in biology around us all along, we perceive some kind of inherent balance when confronted with it. For ages, applying this ratio was an old &ldquo;trick&rdquo; used by creators because it can make your work feel more <strong>harmonious</strong> or even &ldquo;natural&rdquo;.</p>
+
+<h3>Twitter&rsquo;s use of the golden ratio for its layout</h3>
+
+<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-functions/goldentwitter.jpg" width="580"></p>
+
+<p>In design the use of the <strong><em>golden mean</em></strong> is widespread as well:</p>
+
+<ul>
+<li>Layouts in Webdesign</li>
+<li>iPods / iPhones</li>
+<li>Business cards</li>
+<li>Credit cards</li>
+<li>Tyography</li>
+<li>Postcards</li>
+<li>Logos</li>
+<li>Cars</li>
+</ul>
+
+
+<p>&hellip;and <a href="http://en.wikipedia.org/wiki/List_of_works_designed_with_the_golden_ratio">many more</a></p>
+
+<h3>The golden ratio for your typographic scale</h3>
+
+<p>If you want to generate a <a href="http://www.hyperarts.com/blog/how-to-use-a-modular-scale/">modular scale</a> to structure various sizes of type by using the golden ratio, you can apply the <strong>goden-ratio function</strong> to calculate the <strong>golden mean</strong> for any number. Building your <strong>typographic scale</strong> is straightforward:</p>
+
+<figure class='code'><figcaption><span>typographic scale using the golden ratio</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="na">$base-font-size</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">body</span>
+</span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nv">$base-font-size</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.footnote</span>
+</span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">golden-ratio</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">-1</span><span class="p">)</span>
+</span><span class='line'>                                        <span class="c1">// decrement value</span>
+</span><span class='line'><span class="nt">h3</span>
+</span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">golden-ratio</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>                                        <span class="c1">// increment value</span>
+</span><span class='line'><span class="nt">h2</span>
+</span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">golden-ratio</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">h1</span>
+</span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">golden-ratio</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  SCSS syntax</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  $base-font-size: 10px;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">body {</span>
+</span><span class='line'>      <span class="c1">font-size: $base-font-size;</span>
+</span><span class='line'>    <span class="c1">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">.footnote {</span>
+</span><span class='line'>      <span class="c1">font-size: golden-ratio($base-font-size, -1);</span>
+</span><span class='line'>    <span class="c1">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">h3 {</span>
+</span><span class='line'>      <span class="c1">font-size: golden-ratio($base-font-size, 1);</span>
+</span><span class='line'>    <span class="c1">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">h2 {</span>
+</span><span class='line'>      <span class="c1">font-size: golden-ratio($base-font-size, 2);</span>
+</span><span class='line'>    <span class="c1">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">h1 {</span>
+</span><span class='line'>      <span class="c1">font-size: golden-ratio($base-font-size, 3);</span>
+</span><span class='line'><span class="c1">//  }</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>CSS output</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">body</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">font-size</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.footnote</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">font-size</span><span class="o">:</span> <span class="m">6.18px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">h3</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">font-size</span><span class="o">:</span> <span class="m">16.18px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">h2</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">font-size</span><span class="o">:</span> <span class="m">26.179px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">h1</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">font-size</span><span class="o">:</span> <span class="m">42.358px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The function&rsquo;s first parameter expects a <strong>pixel</strong> or <strong>em</strong> value — here represented by a Sass variable defined above. The second parameter requires an integer as <strong>increment / decrement value</strong> (&hellip;-3, -2, -1, 0, 1, 2, 3&hellip;) for scaling the provided font-size using <strong>1.6180339</strong>.
+If you need to round the output, you can use Sass&rsquo;s functions for:</p>
+
+<h3><strong>abs()</strong> — <strong>floor()</strong> — <strong>ceil()</strong></h3>
+
+<figure class='code'><figcaption><span>rounded example</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nc">.footnote</span>
+</span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">floor</span><span class="p">(</span> <span class="nf">golden-ratio</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  SCSS syntax</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  .footnote {</span>
+</span><span class='line'>      <span class="c1">font-size: floor( golden-ratio($base-font-size, -1) );</span>
+</span><span class='line'><span class="c1">//  }</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Under The Hood</h3>
+
+<p>Internally the golden-ratio function is using the <strong>modular-scale function</strong> with the scaling variable <strong>$golden</strong> for golden-ratio.</p>
+
+<figure class='code'><figcaption><span>modular-scale mixin</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="k">@function</span> <span class="nt">golden-ratio</span><span class="o">(</span><span class="err">$</span><span class="nt">value</span><span class="o">,</span> <span class="err">$</span><span class="nt">increment</span><span class="o">)</span> <span class="err">{</span>
+</span><span class='line'>  <span class="k">@return</span> <span class="nt">modular-scale</span><span class="o">(</span><span class="err">$</span><span class="nt">value</span><span class="o">,</span> <span class="err">$</span><span class="nt">increment</span><span class="o">,</span> <span class="err">$</span><span class="nt">golden</span><span class="o">)</span>
+</span><span class='line'><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Btw the fantastic <a href="http://neat.bourbon.io">Bourbon Neat</a> grid framework also uses the golden ratio by default for <strong>gutters</strong> and <strong>columns</strong>.</p>
+
+<h2></h2>
+
+<ul>
+<li><h3><strong>modular-scale() function</strong></h3></li>
+</ul>
+
+
+<p>If you are looking to dive further into <a href="http://www.alistapart.com/article/more-meaningful-typography">&ldquo;<em>more meaningful typography</em>&rdquo;</a>, this function offers to calculate <strong>various modular scales</strong> for you — the golden ratio is just one out of <strong>17 options</strong>, excluding your very own made up scales of course.</p>
+
+<p>It works the same as the <strong>golden-ratio() function</strong> described above, but takes a <strong>third parameter</strong> as your <strong>ratio of choice</strong>.</p>
+
+<figure class='code'><figcaption><span>modular-scale example</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="na">$base-font-size</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span>
+</span><span class='line'><span class="c1">// Your choice of ratio saved in a variable to change it in one place</span>
+</span><span class='line'><span class="c1">// Here I used the double-octave ratio</span>
+</span><span class='line'><span class="na">$type-of-scale</span><span class="o">:</span> <span class="nv">$double-octave</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">body</span>
+</span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nv">$base-font-size</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.footnote</span>
+</span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">-1</span><span class="o">,</span> <span class="nv">$type-of-scale</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">h3</span>
+</span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="nv">$type-of-scale</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">h2</span>
+</span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="nv">$type-of-scale</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">h1</span>
+</span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="nv">$type-of-scale</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  SCSS syntax</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  $base-font-size: 10px;</span>
+</span><span class='line'>    <span class="c1">$type-of-scale: $double-octave;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">body {</span>
+</span><span class='line'>      <span class="c1">font-size: $base-font-size;</span>
+</span><span class='line'>    <span class="c1">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">.footnote {</span>
+</span><span class='line'>      <span class="c1">font-size: modular-scale($base-font-size, -1, $type-of-scale);</span>
+</span><span class='line'>    <span class="c1">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">h3 {</span>
+</span><span class='line'>      <span class="c1">font-size: modular-scale($base-font-size, 1, $type-of-scale);</span>
+</span><span class='line'>    <span class="c1">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">h2 {</span>
+</span><span class='line'>      <span class="c1">font-size: modular-scale($base-font-size, 2, $type-of-scale);</span>
+</span><span class='line'>    <span class="c1">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">h1 {</span>
+</span><span class='line'>      <span class="c1">font-size: modular-scale($base-font-size, 3, $type-of-scale);</span>
+</span><span class='line'><span class="c1">//  }</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Scaling Variables</h3>
+
+<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-functions/scaling-variables.png" width="350"></p>
+
+<p>Bourbon prepared these <strong>variables</strong> of <strong>predefined ratios for various scales</strong>. To create a consistent design, it would be a good decsision not to mix different ratios for your typographic scale in one project. Keep it classy by deciding on one ratio that mirrors your intentions best.</p>
+
+<h3>Attention!</h3>
+
+<p>To use these scaling variables you need to install a version of Bourbon higher than <strong>v3.1.8</strong>.
+As of Feb 2014, I&rsquo;d recommend updating to the beta with</p>
+
+<ul>
+<li>tag
+
+<ul>
+<li><strong>v3.2.0-beta.1</strong><br/>
+or</li>
+<li><strong>v3.2.0-beta.2</strong></li>
+</ul>
+</li>
+</ul>
+
+
+<p>Put this in your gemfile to directly update from Github:</p>
+
+<figure class='code'><figcaption><span>Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;bourbon&#39;</span><span class="p">,</span> <span class="ss">git</span><span class="p">:</span> <span class="s1">&#39;https://github.com/thoughtbot/bourbon.git&#39;</span><span class="p">,</span> <span class="ss">tag</span><span class="p">:</span> <span class="s1">&#39;v3.2.0-beta.2&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and of course</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">bundle</span> <span class="n">install</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Otherwise the variables above will throw an error. Of course you can just type in any desired ratio as the third parameter yourself.</p>
+
+<figure class='code'><figcaption><span>without scaling variables</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="na">$base-font-size</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">h2</span>
+</span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="mf">.6180</span><span class="p">)</span>
+</span><span class='line'>                                            <span class="c1">// golden ratio</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  SCSS syntax</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  $base-font-size: 10px;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">h2 {</span>
+</span><span class='line'>      <span class="c1">font-sizse: modular-scale($base-font-size, 2, 1.6180);</span>
+</span><span class='line'><span class="c1">//  }</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Need a linear- or radial-gradient for your background-image mixin?</h2>
+
+<p>It could not be any more straightforward to create gradiants with these functions.</p>
+
+<ul>
+<li><h3><strong>linear-gradient()</strong> function</h3></li>
+</ul>
+
+
+<p>The color of the gradient is defined by the <strong>starting color</strong>, the <strong>ending color</strong> and optional <strong>stop-color points</strong> in between.</p>
+
+<p>Those additional color-stops give you the possiblity to create more sophisticated transitions between the starting and ending colors, or provide a more colorful gradient.</p>
+
+<p>Take a look at this horrible gradient. Here I think it&rsquo;s easy to see how the <strong>linear-gradient</strong> function works and how you can utilize it:</p>
+
+<h4>Screenshot</h4>
+
+<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-functions/horrible-gradient.png"></p>
+
+<figure class='code'><figcaption><span>horrible linear-gradient</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nc">.horrible-gradient</span>
+</span><span class='line'>  <span class="nd">+background-image</span><span class="p">(</span><span class="nf">linear-gradient</span><span class="p">(</span>
+</span><span class='line'>    <span class="nt">45deg</span><span class="o">,</span>                <span class="o">//</span> <span class="nt">directon</span> <span class="nt">of</span> <span class="nt">gradient</span> <span class="nt">line</span>
+</span><span class='line'>    <span class="nt">red</span> <span class="nt">10</span><span class="err">%</span><span class="o">,</span>              <span class="o">//</span> <span class="nt">starting</span> <span class="nt">color</span>
+</span><span class='line'>    <span class="nt">yellow</span> <span class="nt">15</span><span class="err">%</span><span class="o">,</span>   <span class="o">//</span> <span class="nt">S</span>    <span class="o">//</span> <span class="nt">bleeds</span> <span class="nt">into</span> <span class="nt">red</span>
+</span><span class='line'>    <span class="nt">yellow</span> <span class="nt">40</span><span class="err">%</span><span class="o">,</span>   <span class="o">//</span> <span class="nt">T</span>
+</span><span class='line'>    <span class="nt">orange</span> <span class="nt">45</span><span class="err">%</span><span class="o">,</span>   <span class="o">//</span> <span class="nt">O</span>    <span class="o">//</span> <span class="nt">bleeds</span> <span class="nt">into</span> <span class="nt">yellow</span>
+</span><span class='line'>    <span class="nt">orange</span> <span class="nt">50</span><span class="err">%</span><span class="o">,</span>   <span class="o">//</span> <span class="nt">P</span>
+</span><span class='line'>    <span class="nt">orange</span> <span class="nt">70</span><span class="err">%</span><span class="o">,</span>   <span class="o">//</span> <span class="nt">S</span>    <span class="o">//</span> <span class="nt">bleeds</span> <span class="nt">into</span> <span class="nt">green</span>
+</span><span class='line'>    <span class="nt">green</span> <span class="nt">90</span><span class="err">%</span><span class="o">)</span>            <span class="o">//</span> <span class="nt">ending</span> <span class="nt">color</span>
+</span><span class='line'>  <span class="o">)</span>
+</span><span class='line'>    <span class="na">height</span><span class="o">:</span> <span class="mi">50</span><span class="kt">px</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  SCSS syntax</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  .horrible-gradient {</span>
+</span><span class='line'>      <span class="c1">@include background-image(linear-gradient( </span>
+</span><span class='line'>        <span class="c1">45deg,                // directon of gradient line </span>
+</span><span class='line'>        <span class="c1">red 10%,              // starting color </span>
+</span><span class='line'>        <span class="c1">yellow 15%,   // S    // bleeds into red     </span>
+</span><span class='line'>        <span class="c1">yellow 40%,   // T                           </span>
+</span><span class='line'>        <span class="c1">orange 45%,   // O    // bleeds into yellow   </span>
+</span><span class='line'>        <span class="c1">orange 50%,   // P                            </span>
+</span><span class='line'>        <span class="c1">orange 70%,   // S    // bleeds into green    </span>
+</span><span class='line'>        <span class="c1">green 90%)            // ending color</span>
+</span><span class='line'>      <span class="c1">)                      </span>
+</span><span class='line'>        <span class="c1">height: 50px</span>
+</span><span class='line'><span class="c1">//  }</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For colors you can optionally provide <strong>precentage</strong>, <strong>pixel</strong> or <strong>em</strong> <strong>values</strong>. Those define the distance this color is supposed to stretch out. You should probably stick to using <strong><em>%</em></strong> most of the time though. If you don&rsquo;t provide percentages as limitation values, the colors will strech out evenly, divided by the number of colors in the gradient.
+You can optionally provide an angle for the first parameter — either in form of <strong>value</strong> + <strong>deg</strong> or
+<strong>to</strong> with <strong>direction</strong>:</p>
+
+<ul>
+<li>45deg</li>
+<li>90deg</li>
+<li>to left top</li>
+<li>to right</li>
+<li>to left</li>
+</ul>
+
+
+<p>and so on.</p>
+
+<h4>Screenshot</h4>
+
+<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-functions/yellow-blue-gradient.png"></p>
+
+<p>The gradient flows from left to right</p>
+
+<figure class='code'><figcaption><span>with direction parameter — left to right</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nc">.gradient</span>
+</span><span class='line'>  <span class="nd">+background-image</span><span class="p">(</span><span class="nf">linear-gradient</span><span class="p">(</span><span class="n">to</span> <span class="no">right</span><span class="o">,</span> <span class="nb">yellow</span> <span class="mi">50</span><span class="kt">%</span><span class="o">,</span> <span class="nb">blue</span> <span class="mi">60</span><span class="kt">%</span><span class="p">))</span>
+</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">50</span><span class="kt">px</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  SCSS syntax</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  .gradient {</span>
+</span><span class='line'>      <span class="c1">@include background-image(linear-gradient(to right, yellow 50%, blue 60%)); </span>
+</span><span class='line'>      <span class="c1">height: 50px;</span>
+</span><span class='line'><span class="c1">//  }</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Screenshot</h4>
+
+<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-functions/hsla-gradient.png"></p>
+
+<p>Something more sophisticated using <strong>hsla()</strong> functions and multiple <strong>linear-gradient()</strong> functions:</p>
+
+<figure class='code'><figcaption><span>decent gradient</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nc">.gradient</span>
+</span><span class='line'>  <span class="nd">+background-image</span><span class="p">(</span><span class="nf">linear-gradient</span><span class="p">(</span>
+</span><span class='line'>    <span class="nt">hsla</span><span class="o">(</span><span class="nt">0</span><span class="o">,</span> <span class="nt">100</span><span class="err">%</span><span class="o">,</span> <span class="nt">100</span><span class="err">%</span><span class="o">,</span> <span class="nt">0</span><span class="nc">.25</span><span class="o">)</span> <span class="nt">0</span><span class="err">%</span><span class="o">,</span>
+</span><span class='line'>    <span class="nt">hsla</span><span class="o">(</span><span class="nt">0</span><span class="o">,</span> <span class="nt">100</span><span class="err">%</span><span class="o">,</span> <span class="nt">100</span><span class="err">%</span><span class="o">,</span> <span class="nt">0</span><span class="nc">.08</span><span class="o">)</span> <span class="nt">50</span><span class="err">%</span><span class="o">,</span> <span class="nt">transparent</span> <span class="nt">50</span><span class="err">%</span><span class="o">),</span>
+</span><span class='line'>    <span class="nt">linear-gradient</span><span class="o">(</span><span class="nn">#4e7ba3</span><span class="o">,</span> <span class="nt">darken</span><span class="o">(</span><span class="nn">#4e7ba4</span><span class="o">,</span> <span class="nt">10</span><span class="err">%</span><span class="o">)))</span>
+</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">50</span><span class="kt">px</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  SCSS syntax</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  .gradient </span>
+</span><span class='line'>      <span class="c1">+background-image(linear-gradient(</span>
+</span><span class='line'>        <span class="c1">hsla(0, 100%, 100%, 0.25) 0%, </span>
+</span><span class='line'>        <span class="c1">hsla(0, 100%, 100%, 0.08) 50%, transparent 50%), </span>
+</span><span class='line'>        <span class="c1">linear-gradient(#4e7ba3, darken(#4e7ba4, 10%)))</span>
+</span><span class='line'><span class="c1">//    height: 50px</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Tint &amp; Shade Color Functions</h2>
+
+<p>You might already be familiar with Sass&rsquo;s built in functions for colors like <strong>lighten()</strong> and <strong>darken()</strong> which do exactly what you&rsquo;d expect.
+Bourbon provides two additional awesome color functions for your convenience:</p>
+
+<ul>
+<li><h3><strong>tint() function</strong></h3></li>
+</ul>
+
+
+<p>The tint function changes a color by mixing it with <strong>white</strong>.
+It expects a second parameter that takes the <strong>percentage of white</strong> you want to mix the color with.</p>
+
+<figure class='code'><figcaption><span>tint()</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nc">.tint</span>
+</span><span class='line'>  <span class="na">background</span><span class="o">:</span> <span class="nf">tint</span><span class="p">(</span><span class="mh">#2F7DD1</span><span class="o">,</span> <span class="mi">25</span><span class="kt">%</span><span class="p">)</span>                                                               <span class="no">height</span><span class="o">:</span> <span class="mi">100</span><span class="kt">px</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  SCSS syntax</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  .tint {</span>
+</span><span class='line'>      <span class="c1">background: tint(#2F7DD1, 25%)                                                               height: 100px</span>
+</span><span class='line'><span class="c1">//  }</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Without tint()</h4>
+
+<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-functions/no-tint.png"></p>
+
+<h4>With tint()</h4>
+
+<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-functions/tint.png"></p>
+
+<h2></h2>
+
+<ul>
+<li><h3><strong>shade() function</strong></h3></li>
+</ul>
+
+
+<p>The shade function changes a color by mixing it with <strong>black</strong>.
+This function also takes a <strong>color</strong> and <strong>percentage</strong> parameter to fine-tune the color mix.</p>
+
+<figure class='code'><figcaption><span>shade()</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nc">.shade</span>
+</span><span class='line'>  <span class="na">background</span><span class="o">:</span> <span class="nf">shade</span><span class="p">(</span><span class="mh">#2F7DD1</span><span class="o">,</span> <span class="mi">25</span><span class="kt">%</span><span class="p">)</span>                                                              <span class="no">height</span><span class="o">:</span> <span class="mi">100</span><span class="kt">px</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  SCSS syntax</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//  .shade{</span>
+</span><span class='line'>      <span class="c1">background: shade(#2F7DD1, 25%)                                                              height: 100px</span>
+</span><span class='line'><span class="c1">//  }</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Without shade()</h4>
+
+<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-functions/no-tint.png"></p>
+
+<h4>With shade()</h4>
+
+<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-functions/shade.png"></p>
+
+<h2></h2>
+
+<ul>
+<li><h3><strong>em() function</strong></h3></li>
+</ul>
+
+
+<p>Calculates <strong>pixels to ems</strong> for you.</p>
+
+<figure class='code'><figcaption><span>em function in a Sass file</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="na">:q</span>
+</span><span class='line'><span class="na">:q</span>
+</span><span class='line'><span class="na">font-size</span><span class="o">:</span> <span class="nf">em</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>css output</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">font-size</span><span class="o">:</span> <span class="nt">0</span><span class="nc">.75em</span><span class="o">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2></h2>
+
+<p>That&rsquo;s it for Bourbon for now. Over the last couple of articles we have looked in detail at mixins &amp; functions and covered a lot of ground. I hope I could convey how awesome this project is and why it deserves a lot of respect.</p>
+
+<p>Now feel free to scheme how to take over the world with it.</p>
+
+<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-functions/scheming.gif" width="700"></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Bourbon - Mixins #02]]></title>
@@ -1570,7 +2247,7 @@ It will fail like this:</li>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This command generates a bourbon folder that contains the functions, mixins, helpers, settings, etc. that you need. Don’t touch this folder. You will have a much better experience updating Bourbon in the future.</p>
+<p>This command generates a bourbon folder that contains the functions, mixins, helpers, settings, etc. that you need. I’d recommend that you don’t touch this folder. You will have a much better experience updating Bourbon in the future.</p>
 
 <h4>Screenshot</h4>
 
@@ -1596,19 +2273,19 @@ It will fail like this:</li>
 
 <ul>
 <li><code>background-image</code></li>
-<li><code>border-radius</code></li>
-<li><code>box-sizing</code></li>
 <li><code>linear-gradient</code></li>
+<li><code>border-radius</code></li>
+<li><code>retina-image</code></li>
+<li><code>inline-block</code></li>
 <li><code>transitions</code></li>
+<li><code>box-sizing</code></li>
 <li><code>animations</code></li>
 <li><code>font-face</code></li>
-<li><code>button</code></li>
 <li><code>triangle</code></li>
-<li><code>retina-image</code></li>
-<li><code>position</code></li>
-<li><code>size</code></li>
 <li><code>clearfix</code></li>
-<li><code>inline-block</code></li>
+<li><code>position</code></li>
+<li><code>button</code></li>
+<li><code>size</code></li>
 </ul>
 
 
@@ -1644,14 +2321,14 @@ It will fail like this:</li>
 </ul>
 
 
-<p>You might already be familiar with Sass&rsquo;s built in functions for colors like <strong>lighten()</strong> and <strong>darken()</strong> which do exactly what you&rsquo;d expect. Bourbon provides two additional awesome color functions for your convenience. The tint function changes a color by mixing it with white. The shade function changes a color by mixing it with black. Both functions take a color and percentage parameter to fine-tune the color mix.</p>
+<p>You might already be familiar with Sass&rsquo;s built in functions for colors like <strong>lighten()</strong> and <strong>darken()</strong> which do exactly what you&rsquo;d expect. Bourbon provides two additional awesome color functions for your convenience. <code>tint()</code> changes a color by mixing it with white. <code>shade()</code> changes a color by mixing it with black. Both functions take a color and percentage parameter to fine-tune the color mix.</p>
 
 <ul>
 <li><code>modular-scale()</code></li>
 </ul>
 
 
-<p>If you are into &ldquo;<em>more meaningful typography</em>&rdquo; and want to calculate a modular scale for varying font sizes that have some sort of numerical relationship, modular-scale() might become your new best friend.</p>
+<p>If you are into <a href="http://alistapart.com/article/more-meaningful-typography">&ldquo;<em>more meaningful typography</em>&rdquo;</a> and want to calculate a modular scale for varying font sizes that have some sort of numerical relationship, this function might become your new best friend.</p>
 
 <ul>
 <li><code>em()</code></li>
@@ -1666,17 +2343,17 @@ It will fail like this:</li>
 <h2><a name='addons'></a>Add-ons</h2>
 
 <ul>
-<li><h3><strong>font-family variables</strong></h3></li>
+<li><h4><strong>font-family variables</strong></h4></li>
 </ul>
 
 
 <p>Bourbon defines a small but useful set of default variables for font-families.</p>
 
 <ul>
-<li><code>$helvetica</code></li>
-<li><code>$georgia</code></li>
 <li><code>$lucida-grande</code></li>
 <li><code>$monospace</code></li>
+<li><code>$helvetica</code></li>
+<li><code>$georgia</code></li>
 <li><code>$verdana</code></li>
 </ul>
 
@@ -1696,7 +2373,7 @@ It will fail like this:</li>
 
 
 <ul>
-<li><h3><strong>timing variables</strong></h3></li>
+<li><h4><strong>timing variables</strong></h4></li>
 </ul>
 
 
