@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mixins | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/mixins/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-07-09T21:48:12+02:00</updated>
+  <updated>2015-07-09T23:19:40+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -1113,43 +1113,17 @@ It will fail like this:</li>
 <p>Sass already has a ton of built-in functions, from manipulating strings to messing with opacity and colors. Bourbon adds a couple of selected enhancements and provides very handy Sass functions for a variety of use cases. Take a look a this selection:</p>
 
 <ul>
-<li><code>golden-ratio()</code></li>
-</ul>
-
-
-<p>With this function, it is very easy to calculate the golden ratio of a certain number (slowly depricated though). It is useful if you want to create “meaningful” relationships within the sizes of your headers and body copy for example. The same goes for structural relationships in your layout.</p>
-
-<ul>
 <li><code>linear-gradient()</code></li>
-</ul>
-
-
-<p>If you need a linear gradient in combination with your background-image mixin, this function will save you quite a bit of code.</p>
-
-<ul>
-<li><code>tint()</code></li>
-<li><code>shade()</code></li>
-</ul>
-
-
-<p>You might already be familiar with Sass&rsquo;s built in functions for colors like <strong>lighten()</strong> and <strong>darken()</strong> which do exactly what you&rsquo;d expect. Bourbon provides two additional awesome color functions for your convenience. <code>tint()</code> changes a color by mixing it with white. <code>shade()</code> changes a color by mixing it with black. Both functions take a color and percentage parameter to fine-tune the color mix.</p>
-
-<ul>
 <li><code>modular-scale()</code></li>
-</ul>
-
-
-<p>If you are into <a href="http://alistapart.com/article/more-meaningful-typography">&ldquo;<em>more meaningful typography</em>&rdquo;</a> and want to calculate a modular scale for varying font sizes that have some sort of numerical relationship, this function might become your new best friend.</p>
-
-<ul>
+<li><code>golden-ratio()</code></li>
+<li><code>shade()</code></li>
+<li><code>tint()</code></li>
 <li><code>em()</code></li>
 </ul>
 
 
-<p>Calculates <strong>pixels to ems</strong> for you.</p>
-
 <p>I have prepared a more detailed look at functions here:
-<a href="/blog/2014/01/29/bourbon-functions/">Bourbon: Functions</a></p>
+<a href="/blog/2015/07/15/bourbon-functions/">Bourbon: Functions</a></p>
 
 <h2><a name='addons'></a>Add-ons</h2>
 
