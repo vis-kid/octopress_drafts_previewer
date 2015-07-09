@@ -54,7 +54,7 @@ $ gem install bourbon
 $ bourbon install
 ```
 
-This command generates a bourbon folder that contains the functions, mixins, helpers, settings, etc. that you need. Don’t touch this folder. You will have a much better experience updating Bourbon in the future.
+This command generates a bourbon folder that contains the functions, mixins, helpers, settings, etc. that you need. I’d recommend that you don’t touch this folder. You will have a much better experience updating Bourbon in the future.
 
 #### Screenshot
 
@@ -74,19 +74,19 @@ Bourbon has a wide range of super useful mixins to speed up your work. In terms 
 Here are a couple of mixins you might wanna check out first:
 
 + `background-image`
-+ `border-radius`
-+ `box-sizing`
 + `linear-gradient`
++ `border-radius`
++ `retina-image`
++ `inline-block`
 + `transitions`
++ `box-sizing`
 + `animations`
 + `font-face`
-+ `button`
 + `triangle`
-+ `retina-image`
-+ `position`
-+ `size`
 + `clearfix`
-+ `inline-block`
++ `position`
++ `button`
++ `size`
 
 Learn more about individual Bourbon mixins in my other articles here:
 
@@ -97,41 +97,27 @@ Learn more about individual Bourbon mixins in my other articles here:
 
 Sass already has a ton of built-in functions, from manipulating strings to messing with opacity and colors. Bourbon adds a couple of selected enhancements and provides very handy Sass functions for a variety of use cases. Take a look a this selection:
 
-+ `golden-ratio()`
-
-With this function, it is very easy to calculate the golden ratio of a certain number (slowly depricated though). It is useful if you want to create “meaningful” relationships within the sizes of your headers and body copy for example. The same goes for structural relationships in your layout.
-
 + `linear-gradient()`
-
-If you need a linear gradient in combination with your background-image mixin, this function will save you quite a bit of code.
-
-+ `tint()`
-+ `shade()`
-
-You might already be familiar with Sass's built in functions for colors like **lighten()** and **darken()** which do exactly what you'd expect. Bourbon provides two additional awesome color functions for your convenience. The tint function changes a color by mixing it with white. The shade function changes a color by mixing it with black. Both functions take a color and percentage parameter to fine-tune the color mix.
-
 + `modular-scale()`
-
-If you are into "*more meaningful typography*" and want to calculate a modular scale for varying font sizes that have some sort of numerical relationship, modular-scale() might become your new best friend.
-
++ `golden-ratio()`
++ `shade()`
++ `tint()`
 + `em()`
 
-Calculates **pixels to ems** for you.
-
 I have prepared a more detailed look at functions here:
-<a href="{{ root_url }}/blog/2014/01/29/bourbon-functions/">Bourbon: Functions</a>
+<a href="{{ root_url }}/blog/2015/07/15/bourbon-functions/">Bourbon: Functions</a>
 
 ## <a name='addons'></a>Add-ons
 
 
-+ ### **font-family variables**
++ #### **font-family variables**
 
 Bourbon defines a small but useful set of default variables for font-families.
 
-  + `$helvetica`
-  + `$georgia`
   + `$lucida-grande`
   + `$monospace`
+  + `$helvetica`
+  + `$georgia`
   + `$verdana`
 
 Instead of typing —
@@ -146,7 +132,7 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
 font-family: $helvetica
 ```
 
-+ ### **timing variables**
++ #### **timing variables**
 
 A mixin like `transition` has the following syntax:
 

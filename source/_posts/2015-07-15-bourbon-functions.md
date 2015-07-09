@@ -11,38 +11,36 @@ categories: [ Sass, Functions, Golden Ratio, Golden Mean, Divine Proportion, Bou
 
 [{% img /images/bourbon-mixins/bourbon-logo@2x.png  250 450 %}](http://bourbon.io/)
 
-
-[ -- **Context: Rails 4 apps** -- ] 
-
-[ -- **Requirements: Sass 3.2+** -- ]
-
-
 ## Functions
 
-Bourbon provides very handy Sass functions for a variety of use cases. Let's take a look at this selection:
+Bourbon provides very handy Sass functions for a variety of use cases. Let’s take a look at this selection:
 
-+ **linear-gradient()** 
-+ **modular-scale()**
-+ **golden-ratio()**
-+ **shade()**
-+ **tint()**
-+ **em()**
++ `linear-gradient()` 
++ `modular-scale()`
++ `golden-ratio()`
++ `shade()`
++ `tint()`
++ `em()`
 
 <!-- more -->
 
 ##   
 
-+ ### **golden-ratio() function**
++ `golden-ratio()` function
 
-### The Golden Ratio
+With this function, it is very easy to calculate the golden ratio of a certain number (slowly depricated though). It is useful if you want to create “meaningful” relationships within your typography for example. The same goes for structural relationships in your layout.
+
+### FYI: The Golden Ratio
 
 {% img /images/bourbon-functions/bender-golden-ratio.jpg 280 %}
 
-The ***golden ratio*** or ***divine proportion*** is a very common ratio across disciplines. In music, art, mathematics, architecture, biology and in many other fields you can encounter the "use" of the ratio **1 : 1.6180339** to tie structures together. Interestingly, in the past, especially in early architecture, it was often used to please the "gods" by attempting to "communicate" in a "divine geometric language". 
+There are two sides to this story. The classical approach to describing the importance of this ratio could be along the following lines: 
 
-This ratio represents a pattern that seems to please human visual perception. Probably because it has been so abundant in biology around us all along, we perceive some kind of inherent balance when confronted with it. For ages, applying this ratio was an old "trick" used by creators because it can make your work feel more **harmonious** or even "natural". 
+The golden ratio or “***divine proportion***” is a very common ratio across disciplines. In music, art, mathematics, architecture, biology and in many other fields you can encounter the "use" of the ratio **1 : 1.6180339** to tie structures together. Interestingly, in the past, especially in early architecture, it was often used to please the "gods" by attempting to "communicate" in a "divine geometric language". 
 
-### Twitter's use of the golden ratio for its layout
+This ratio represents a pattern that seems to please human visual perception, probably because it’s been so abundant in biology around us all along. Therefore we supposedly perceive some kind of inherent balance when confronted with it. For ages, applying this ratio was seen as an old "trick" used by creators because it can make your work feel more **harmonious** or even "natural". 
+
+### Twitter’s use of the golden ratio for its layout
 
 {% img /images/bourbon-functions/goldentwitter.jpg 580 %}
 
@@ -59,6 +57,10 @@ In design the use of the ***golden mean*** is widespread as well:
 + Cars
 
 ...and [many more](http://en.wikipedia.org/wiki/List_of_works_designed_with_the_golden_ratio) 
+
+On the other hand, you are also encouraged to doubt the tremendous reputation the golden ratio has earned over the centuries. Check out this controversial [article](http://www.fastcodesign.com/3044877/the-golden-ratio-designs-biggest-myth) if you want to whet your appetite. The tl;dr version is that it’s supposed to be bullshit and a very old scam. Maybe still useful and effective, but simply nonsense projected onto an irrational number. 
+
+At Stanford hundreds of students were asked over the years about their preference of the golden ratio. The Haas School of Business in Berkeley did something similar. The conclusion was that in the real world people don’t prefer the golden ratio. I’ll leave you with that and you can decide for yourself if “divine” is really what we should call this proportion that is supposedly the universal formula behind aesthetic beauty. Maybe another case where we try to find meaning in the patterns out there.
 
 ### The golden ratio for your typographic scale
 
@@ -129,8 +131,8 @@ h1 {
 }
 ```
 
-The function's first parameter expects a **pixel** or **em** value — here represented by a Sass variable defined above. The second parameter requires an integer as **increment / decrement value** (...-3, -2, -1, 0, 1, 2, 3...) for scaling the provided font-size using **1.6180339**.
-If you need to round the output, you can use Sass's functions for: 
+The function’s first parameter expects a **pixel** or **em** value — here represented by a Sass variable defined above. The second parameter requires an integer as **increment / decrement value** (...-3, -2, -1, 0, 1, 2, 3...) for scaling the provided font-size using **1.6180339**.
+If you need to round the output, you can use Sass’s functions for: 
 
 ### **abs()** — **floor()** — **ceil()** 
 
@@ -161,9 +163,9 @@ Btw the fantastic [Bourbon Neat](http://neat.bourbon.io) grid framework also use
 
 + ### **modular-scale() function**
 
-If you are looking to dive further into ["*more meaningful typography*"](http://www.alistapart.com/article/more-meaningful-typography), this function offers to calculate **various modular scales** for you — the golden ratio is just one out of **17 options**, excluding your very own made up scales of course. 
+If you are into ["*more meaningful typography*"](http://www.alistapart.com/article/more-meaningful-typography) and want to calculate a modular scale for various font sizes that have some sort of numerical relationship, this function might be interesting to you.
+It offers to calculate various modular scales for you — the golden ratio is just one out of **17 options**, excluding your very own made up scales of course. 
 
-It works the same as the **golden-ratio() function** described above, but takes a **third parameter** as your **ratio of choice**.
 
 ``` sass modular-scale example
 $base-font-size: 10px
@@ -222,7 +224,7 @@ Bourbon prepared these **variables** of **predefined ratios for various scales**
 ### Attention!
 
 To use these scaling variables you need to install a version of Bourbon higher than **v3.1.8**.
-As of Feb 2014, I'd recommend updating to the beta with 
+As of Feb 2014, I’d recommend updating to the beta with 
 
 + tag 
   + **v3.2.0-beta.1**  
@@ -260,17 +262,13 @@ h2
 //  }
 ```
 
-## Need a linear- or radial-gradient for your background-image mixin?
-
-It could not be any more straightforward to create gradiants with these functions.
+## 
 
 + ### **linear-gradient()** function
 
-The color of the gradient is defined by the **starting color**, the **ending color** and optional **stop-color points** in between.  
+If you need a linear gradient in combination with your background-image mixin, this function will save you quite a bit of code. The color of the gradient is defined by the **starting color**, the **ending color** and optional **stop-color points** in between. Those additional color-stops give you the possiblity to create more sophisticated transitions between the starting and ending colors, or provide a more colorful gradient. 
 
-Those additional color-stops give you the possiblity to create more sophisticated transitions between the starting and ending colors, or provide a more colorful gradient. 
-
-Take a look at this horrible gradient. Here I think it's easy to see how the **linear-gradient** function works and how you can utilize it:
+Take a look at this horrible gradient. Here I think it’s easy to see how the **linear-gradient** function works and how you can utilize it:
 
 #### Screenshot
 
@@ -307,7 +305,7 @@ Take a look at this horrible gradient. Here I think it's easy to see how the **l
 //  }
 ```
 
-For colors you can optionally provide **precentage**, **pixel** or **em** **values**. Those define the distance this color is supposed to stretch out. You should probably stick to using ***%*** most of the time though. If you don't provide percentages as limitation values, the colors will strech out evenly, divided by the number of colors in the gradient.
+For colors you can optionally provide **precentage**, **pixel** or **em** **values**. Those define the distance this color is supposed to stretch out. You should probably stick to using ***%*** most of the time though. If you don’t provide percentages as limitation values, the colors will strech out evenly, divided by the number of colors in the gradient.
 You can optionally provide an angle for the first parameter — either in form of **value** + **deg** or 
 **to** with **direction**:
 
@@ -365,8 +363,7 @@ Something more sophisticated using **hsla()** functions and multiple **linear-gr
 
 ## Tint & Shade Color Functions 
 
-You might already be familiar with Sass's built in functions for colors like **lighten()** and **darken()** which do exactly what you'd expect.
-Bourbon provides two additional awesome color functions for your convenience:
+You might already be familiar with Sass’s built in functions for colors like `lighten()` and `darken()` which do exactly what you’d expect. Bourbon provides two additional awesome color functions for your convenience. Both functions take a color and percentage parameter to fine-tune the color mix.
 
 + ### **tint() function**
 
@@ -436,7 +433,7 @@ font-size: 0.75em;
 
 ##  
 
-That's it for Bourbon for now. Over the last couple of articles we have looked in detail at mixins & functions and covered a lot of ground. I hope I could convey how awesome this project is and why it deserves a lot of respect.
+That’s it for Bourbon for now. Over the last couple of articles we have looked in detail at mixins & functions and covered a lot of ground. I hope I could convey how awesome this project is and why it deserves a lot of respect.
 
 Now feel free to scheme how to take over the world with it.
 
