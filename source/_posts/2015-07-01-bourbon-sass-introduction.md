@@ -22,7 +22,7 @@ categories: [ Sass, Mixins, Bourbon, Neat, Semantics, Thoughtbot, CSS, Design ]
 
 <!--more-->
 
-## An Introduction
+## A Short Introduction
 
 [Bourbon](http://bourbon.io) is a top-notch Sass **library for designers**. It has a minimalistic approach and is serious about creating quality code that cares about **semantics**. I like it especially because it encourages best practices for developing great code that scales.
 
@@ -95,7 +95,7 @@ Learn more about individual Bourbon mixins in my other articles here:
 
 ## <a name='functions'></a>Functions Overview
 
-Sass already has a ton of built-in functions, from manipulating strings to messing with opacity and colors. Bourbon adds a couple of selected enhancements and provides very handy Sass functions for a variety of use cases. Take a look a this selection:
+Sass already has a ton of built-in functions, from manipulating strings to messing with opacity and colors. Bourbon adds a couple of selected enhancements and provides very handy Sass functions for a variety of use cases. You might wanna start looking into this selection:
 
 + `linear-gradient()`
 + `modular-scale()`
