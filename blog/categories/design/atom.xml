@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Design | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/design/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-07-10T03:26:05+02:00</updated>
+  <updated>2015-07-10T03:28:54+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -1476,7 +1476,7 @@ It will fail like this:</li>
 <!--more-->
 
 
-<h2>An Introduction</h2>
+<h2>A Short Introduction</h2>
 
 <p><a href="http://bourbon.io">Bourbon</a> is a top-notch Sass <strong>library for designers</strong>. It has a minimalistic approach and is serious about creating quality code that cares about <strong>semantics</strong>. I like it especially because it encourages best practices for developing great code that scales.</p>
 
