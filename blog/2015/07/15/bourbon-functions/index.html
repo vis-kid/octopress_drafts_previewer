@@ -9,8 +9,8 @@
   <meta name="author" content="Your Name">
 
   
-  <meta name="description" content="Functions Bourbon provides very handy Sass functions for a variety of use cases. Let’s take a look at this selection: linear-gradient()
-modular- &hellip;">
+  <meta name="description" content="Functions Bourbon provides very handy Sass functions for a variety of use cases. Let’s take a look at this selection: golden-ratio()
+modular-scale &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,12 +94,12 @@ modular- &hellip;">
 <p>Bourbon provides very handy Sass functions for a variety of use cases. Let’s take a look at this selection:</p>
 
 <ul>
-<li><code>linear-gradient()</code></li>
-<li><code>modular-scale()</code></li>
-<li><code>golden-ratio()</code></li>
-<li><code>shade()</code></li>
-<li><code>tint()</code></li>
-<li><code>em()</code></li>
+<li><a href="#ratio"><strong>golden-ratio()</strong></a></li>
+<li><a href="#modular"><strong>modular-scale()</strong></a></li>
+<li><a href="#linear"><strong>linear-gradient</strong></a></li>
+<li><a href="#tint"><strong>tint()</strong></a></li>
+<li><a href="#shade"><strong>shade()</strong></a></li>
+<li><a href="#em"><strong>em()</strong></a></li>
 </ul>
 
 
@@ -109,49 +109,17 @@ modular- &hellip;">
 <h2></h2>
 
 <ul>
-<li><code>golden-ratio()</code> function</li>
+<li><h2><a name='ratio'></a>golden-ratio()</h2></li>
 </ul>
 
 
-<p>With this function, it is very easy to calculate the golden ratio of a certain number (slowly depricated though). It is useful if you want to create “meaningful” relationships within your typography for example. The same goes for structural relationships in your layout.</p>
+<p>With this function, it is very easy to calculate the golden ratio (<strong>1:1.6180339</strong>) of a certain number. As a heads up, I should mention that it is slowly deprecated though. The function is useful if you want to create “meaningful” relationships within your typography for example. The same goes for structural relationships within your layout.</p>
 
-<h3>FYI: The Golden Ratio</h3>
+<h4>The golden ratio for your typographic scale</h4>
 
-<p><img src="/octopress_drafts_previewer/images/bourbon-functions/bender-golden-ratio.jpg" width="280"></p>
+<p>If you want to generate a <a href="http://www.hyperarts.com/blog/how-to-use-a-modular-scale/">modular scale</a> to structure various sizes of type by using the golden ratio, you can apply the <strong>goden-ratio function</strong> to calculate the <strong>golden mean</strong> for any number. Building your <strong>typographic scale</strong> with it is straightforward:</p>
 
-<p>There are two sides to this story. The classical approach to describing the importance of this ratio could be along the following lines:</p>
-
-<p>The golden ratio or “<strong><em>divine proportion</em></strong>” is a very common ratio across disciplines. In music, art, mathematics, architecture, biology and in many other fields you can encounter the &ldquo;use&rdquo; of the ratio <strong>1 : 1.6180339</strong> to tie structures together. Interestingly, in the past, especially in early architecture, it was often used to please the &ldquo;gods&rdquo; by attempting to &ldquo;communicate&rdquo; in a &ldquo;divine geometric language&rdquo;.</p>
-
-<p>This ratio represents a pattern that seems to please human visual perception, probably because it’s been so abundant in biology around us all along. Therefore we supposedly perceive some kind of inherent balance when confronted with it. For ages, applying this ratio was seen as an old &ldquo;trick&rdquo; used by creators because it can make your work feel more <strong>harmonious</strong> or even &ldquo;natural&rdquo;.</p>
-
-<h3>Twitter’s use of the golden ratio for its layout</h3>
-
-<p><img src="/octopress_drafts_previewer/images/bourbon-functions/goldentwitter.jpg" width="580"></p>
-
-<p>In design the use of the <strong><em>golden mean</em></strong> is widespread as well:</p>
-
-<ul>
-<li>Layouts in Webdesign</li>
-<li>iPods / iPhones</li>
-<li>Business cards</li>
-<li>Credit cards</li>
-<li>Tyography</li>
-<li>Postcards</li>
-<li>Logos</li>
-<li>Cars</li>
-</ul>
-
-
-<p>&hellip;and <a href="http://en.wikipedia.org/wiki/List_of_works_designed_with_the_golden_ratio">many more</a></p>
-
-<p>On the other hand, you are also encouraged to doubt the tremendous reputation the golden ratio has earned over the centuries. Check out this controversial <a href="http://www.fastcodesign.com/3044877/the-golden-ratio-designs-biggest-myth">article</a> if you want to whet your appetite. The tl;dr version is that it’s supposed to be bullshit and a very old scam. Maybe still useful and effective, but simply nonsense projected onto an irrational number.</p>
-
-<p>At Stanford hundreds of students were asked over the years about their preference of the golden ratio. The Haas School of Business in Berkeley did something similar. The conclusion was that in the real world people don’t prefer the golden ratio. I’ll leave you with that and you can decide for yourself if “divine” is really what we should call this proportion that is supposedly the universal formula behind aesthetic beauty. Maybe another case where we try to find meaning in the patterns out there.</p>
-
-<h3>The golden ratio for your typographic scale</h3>
-
-<p>If you want to generate a <a href="http://www.hyperarts.com/blog/how-to-use-a-modular-scale/">modular scale</a> to structure various sizes of type by using the golden ratio, you can apply the <strong>goden-ratio function</strong> to calculate the <strong>golden mean</strong> for any number. Building your <strong>typographic scale</strong> is straightforward:</p>
+<p>The function’s first parameter expects a <strong>pixel</strong> or <strong>em</strong> value — here represented by a Sass variable defined above. The second parameter requires an integer as <strong>increment / decrement value</strong> (&hellip;-3, -2, -1, 0, 1, 2, 3&hellip;) for moving up &amp; down the scale using the golden ratio.</p>
 
 <figure class='code'><figcaption><span>typographic scale using the golden ratio</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -192,7 +160,6 @@ modular- &hellip;">
 <span class='line-number'>37</span>
 <span class='line-number'>38</span>
 <span class='line-number'>39</span>
-<span class='line-number'>40</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="na">$base-font-size</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span>
 </span><span class='line'>
 </span><span class='line'><span class="nt">body</span>
@@ -200,13 +167,12 @@ modular- &hellip;">
 </span><span class='line'>
 </span><span class='line'><span class="nc">.footnote</span>
 </span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">golden-ratio</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">-1</span><span class="p">)</span>
-</span><span class='line'>                                        <span class="c1">// decrement value</span>
+</span><span class='line'>  <span class="c1">// decrement size value proportional to golden ratio by factor 1</span>
 </span><span class='line'><span class="nt">h3</span>
 </span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">golden-ratio</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>                                        <span class="c1">// increment value</span>
 </span><span class='line'><span class="nt">h2</span>
 </span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">golden-ratio</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'>
+</span><span class='line'>  <span class="c1">// increment size value proportional to golden ratio by factor 1</span>
 </span><span class='line'><span class="nt">h1</span>
 </span><span class='line'>  <span class="na">font-size</span><span class="o">:</span> <span class="nf">golden-ratio</span><span class="p">(</span><span class="nv">$base-font-size</span><span class="o">,</span> <span class="mi">3</span><span class="p">)</span>
 </span><span class='line'>
@@ -279,8 +245,7 @@ modular- &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The function’s first parameter expects a <strong>pixel</strong> or <strong>em</strong> value — here represented by a Sass variable defined above. The second parameter requires an integer as <strong>increment / decrement value</strong> (&hellip;-3, -2, -1, 0, 1, 2, 3&hellip;) for scaling the provided font-size using <strong>1.6180339</strong>.
-If you need to round the output, you can use Sass’s functions for:</p>
+<p>If you need to round the output, you can use Sass’s built in functions for that purpose:</p>
 
 <h3><strong>abs()</strong> — <strong>floor()</strong> — <strong>ceil()</strong></h3>
 
@@ -305,7 +270,7 @@ If you need to round the output, you can use Sass’s functions for:</p>
 
 <h3>Under The Hood</h3>
 
-<p>Internally the golden-ratio function is using the <strong>modular-scale function</strong> with the scaling variable <strong>$golden</strong> for golden-ratio.</p>
+<p>Internally, the golden-ratio function is using the <strong>modular-scale function</strong> with the scaling variable <strong>$golden</strong> for golden-ratio.</p>
 
 <figure class='code'><figcaption><span>modular-scale mixin</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -320,8 +285,44 @@ If you need to round the output, you can use Sass’s functions for:</p>
 
 <h2></h2>
 
+<h3>FYI: The Golden Ratio</h3>
+
+<p><img src="/octopress_drafts_previewer/images/bourbon-functions/bender-golden-ratio.jpg" width="280"></p>
+
+<p>There are two sides to this story. The classical approach to describing the importance of this ratio could be along the following lines:</p>
+
+<p>The golden ratio or “<strong><em>divine proportion</em></strong>” is a very common ratio across disciplines. In music, art, mathematics, architecture, biology and in many other fields you can encounter the &ldquo;use&rdquo; of the ratio <strong>1 : 1.6180339</strong> to tie structures and forms together. Interestingly, in the past, especially in early architecture, it was often used to please the &ldquo;gods&rdquo; by attempting to &ldquo;communicate&rdquo; in a &ldquo;divine geometric language&rdquo;.</p>
+
+<p>This ratio represents a pattern that is said to please human visual perception, probably because it’s been so abundant in biology around us all along. Therefore we supposedly perceive some kind of inherent balance when confronted with it. For ages, applying this ratio was seen as an old &ldquo;trick&rdquo; used by creators because it can make your work feel more <strong>harmonious</strong> or even &ldquo;natural&rdquo;.</p>
+
+<p>In design, the use of the <strong><em>golden mean</em></strong> is widespread as well:</p>
+
+<h4>Twitter’s use of the golden ratio for its layout</h4>
+
+<p><img src="/octopress_drafts_previewer/images/bourbon-functions/goldentwitter.jpg" width="580"></p>
+
 <ul>
-<li><h3><strong>modular-scale() function</strong></h3></li>
+<li>Layouts in Webdesign</li>
+<li>iPods / iPhones</li>
+<li>Business cards</li>
+<li>Credit cards</li>
+<li>Tyography</li>
+<li>Postcards</li>
+<li>Logos</li>
+<li>Cars</li>
+</ul>
+
+
+<p>&hellip;and <a href="http://en.wikipedia.org/wiki/List_of_works_designed_with_the_golden_ratio">many more</a></p>
+
+<p>On the other hand, you are also encouraged to doubt the tremendous reputation the golden ratio has earned over the centuries. Check out this controversial <a href="http://www.fastcodesign.com/3044877/the-golden-ratio-designs-biggest-myth">article</a> if you want to whet your appetite. The tl;dr version is that it’s supposed to be bullshit and a very old scam. Maybe still useful and effective, but simply nonsense projected onto an irrational number.</p>
+
+<p>Over the years, hundreds of students were tested about their preference of the golden ratio at Stanford University. The Haas School of Business in Berkeley did something similar. The conclusion was that in the real world people don’t prefer the golden ratio. I’ll leave you with that and you can decide for yourself if “divine” is really what we should call this proportion that is supposedly the universal formula behind aesthetic beauty. Maybe another case where we try to find meaning in the patterns out there.</p>
+
+<h2></h2>
+
+<ul>
+<li><h2><a name='modular'></a>modular-scale()</h2></li>
 </ul>
 
 
@@ -490,7 +491,7 @@ or</li>
 <h2></h2>
 
 <ul>
-<li><h3><strong>linear-gradient()</strong> function</h3></li>
+<li><h2><a name='linear'></a>linear-gradient()</h2></li>
 </ul>
 
 
@@ -649,7 +650,7 @@ You can optionally provide an angle for the first parameter — either in form o
 <p>You might already be familiar with Sass’s built in functions for colors like <code>lighten()</code> and <code>darken()</code> which do exactly what you’d expect. Bourbon provides two additional awesome color functions for your convenience. Both functions take a color and percentage parameter to fine-tune the color mix.</p>
 
 <ul>
-<li><h3><strong>tint() function</strong></h3></li>
+<li><h2><a name='tint'></a>tint()</h2></li>
 </ul>
 
 
@@ -686,7 +687,7 @@ It expects a second parameter that takes the <strong>percentage of white</strong
 <h2></h2>
 
 <ul>
-<li><h3><strong>shade() function</strong></h3></li>
+<li><h2><a name='shade'></a>shade()</h2></li>
 </ul>
 
 
@@ -723,18 +724,14 @@ This function also takes a <strong>color</strong> and <strong>percentage</strong
 <h2></h2>
 
 <ul>
-<li><h3><strong>em() function</strong></h3></li>
+<li><h2><a name='em'></a>em()</h2></li>
 </ul>
 
 
 <p>Calculates <strong>pixels to ems</strong> for you.</p>
 
 <figure class='code'><figcaption><span>em function in a Sass file</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="na">:q</span>
-</span><span class='line'><span class="na">:q</span>
-</span><span class='line'><span class="na">font-size</span><span class="o">:</span> <span class="nf">em</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="na">font-size</span><span class="o">:</span> <span class="nf">em</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

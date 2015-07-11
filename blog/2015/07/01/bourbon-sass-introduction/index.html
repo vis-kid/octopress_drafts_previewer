@@ -14,7 +14,7 @@ Setup
 Mixins Overview
 Functions Overview
 Add-ons
-Conclusion A Short Introduction Bourbon is a top-notch Sass library for &hellip;">
+Conclusion A Short Introduction To be precise, Bourbon has actually &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -96,7 +96,7 @@ Conclusion A Short Introduction Bourbon is a top-notch Sass library for &hellip;
 <h2>What’s ahead?</h2>
 
 <ul>
-<li><strong>Introduction</strong></li>
+<li><a href="#intro"><strong>Introduction</strong></a></li>
 <li><a href="#setup"><strong>Setup</strong></a></li>
 <li><a href="#mixins"><strong>Mixins Overview</strong></a></li>
 <li><a href="#functions"><strong>Functions Overview</strong></a></li>
@@ -108,15 +108,41 @@ Conclusion A Short Introduction Bourbon is a top-notch Sass library for &hellip;
 <!--more-->
 
 
-<h2>A Short Introduction</h2>
+<h2><a name='intro'></a> A Short Introduction</h2>
 
-<p><a href="http://bourbon.io">Bourbon</a> is a top-notch Sass <strong>library for designers</strong>. It has a minimalistic approach and is serious about creating quality code that cares about <strong>semantics</strong>. I like it especially because it encourages best practices for developing great code that scales.</p>
+<p>To be precise, Bourbon has actually grown into a small suite of projects which are maintained by the designers at <a href="https://thoughtbot.com/">thoughtbot</a>. In the coming weeks, I will release articles that cover all of the follwing in detail.</p>
+
+<ul>
+<li><a href="http://bourbon.io/">Bourbon</a></li>
+<li><a href="http://neat.bourbon.io/">Neat</a></li>
+<li><a href="http://refills.bourbon.io/">Refills</a></li>
+<li><a href="http://bitters.bourbon.io/">Bitters</a></li>
+</ul>
+
+
+<p>For now, here’s the gist:</p>
+
+<p><em>Bourbon</em> mainly provides a small but juicy set of mixins and functions that are extracted from designing with Sass every day.</p>
+
+<p><em>Neat</em> is a lightweight grid framework for Sass. It is built on top of Bourbon and was motivated by the need for a semantic approach to layout sites.</p>
+
+<p><em>Refills</em> is a collection of design patterns, nicely styled or unstyled, which are designed with Bourbon and Neat. Code examples are at your disposal.</p>
+
+<p><em>Bitters</em> are a few scaffold styles, variables and a bit of structure for new Bourbon projects to get you up and running in no time.</p>
+
+<h2></h2>
+
+<h3>Bourbon - A Mixin Library For Sass</h3>
+
+<p>The original Bourbon got started by <a href="https://twitter.com/_LaPier">Philip LaPier</a>, at the time digital product designer at thoughtbot, in early 2011. The project started out centralizing various mixins from different designers in the company.</p>
+
+<p>Today, Bourbon is a top-notch Sass <strong>library for designers</strong>. It has a minimalistic approach and is serious about creating quality code that cares about <strong>semantics</strong>. I like it especially because it encourages best practices for developing great code that scales.</p>
 
 <p>This gem helps designers to write their code faster and manages a lot of the nitty-gritty details like annoying vendor prefixes. It’s mixins often act as wrappers for outputting quality CSS but stay as vanilla as possible by being close to the original CSS syntax.</p>
 
 <p>Big heavyweight frameworks like <a href="http://getbootstrap.com">Bootstrap</a> certainly have their charms. Developers like them because most design decisions are already made and reasonably decent looking websites come out pretty much prefabricated. There&rsquo;s nothing wrong with that - given that you want to bootstrap your project without a designer who values semantic markup. I should mention though that once designers are involved they might not be happy with that choice. Having to manually rip out unsemantic styles that are intertwined  with your markup might give them ideas for putting funny stuff in your coffee.</p>
 
-<h3>Worth Pointing Out</h3>
+<h4>Worth Pointing Out</h4>
 
 <ul>
 <li>Bourbon is pure Sass &amp; platform agnostic, it works with any Sass project</li>
@@ -128,10 +154,6 @@ Conclusion A Short Introduction Bourbon is a top-notch Sass library for &hellip;
 <li>It’s semantic</li>
 </ul>
 
-
-<h2></h2>
-
-<h3>A Little Bit Of History</h3>
 
 <h2><a name='setup'></a>Setup</h2>
 
@@ -173,7 +195,7 @@ Conclusion A Short Introduction Bourbon is a top-notch Sass library for &hellip;
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2><a name='mixins'></a>Mixins Overview</h2>
+<h2><a name='mixins'></a>Bourbon Mixins Overview</h2>
 
 <p>Bourbon has a wide range of super useful mixins to speed up your work. In terms of design, it’s safe to say that they want to support your own design decisions without forcing a particular style on you. You are basically encouraged to mix your own awesome sauce. You can use these mixins as a stable and relatively neutral basis.</p>
 
@@ -205,7 +227,7 @@ Conclusion A Short Introduction Bourbon is a top-notch Sass library for &hellip;
 </ul>
 
 
-<h2><a name='functions'></a>Functions Overview</h2>
+<h2><a name='functions'></a>Bourbon Functions Overview</h2>
 
 <p>Sass already has a ton of built-in functions, from manipulating strings to messing with opacity and colors. Bourbon adds a couple of selected enhancements and provides very handy Sass functions for a variety of use cases. You might wanna start looking into this selection:</p>
 
@@ -222,7 +244,7 @@ Conclusion A Short Introduction Bourbon is a top-notch Sass library for &hellip;
 <p>I have prepared a more detailed look at functions here:
 <a href="/octopress_drafts_previewer/blog/2015/07/15/bourbon-functions/">Bourbon: Functions</a></p>
 
-<h2><a name='addons'></a>Add-ons</h2>
+<h2><a name='addons'></a>Bourbon Add-ons</h2>
 
 <ul>
 <li><h4><strong>font-family variables</strong></h4></li>
@@ -259,7 +281,7 @@ Conclusion A Short Introduction Bourbon is a top-notch Sass library for &hellip;
 </ul>
 
 
-<p>A mixin like <code>transition</code> has the following syntax:</p>
+<p>Bourbon provides a ton of timing variables out of the box. A mixin like <code>transition</code> has the following syntax:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
