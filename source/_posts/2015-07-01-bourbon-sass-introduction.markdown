@@ -13,7 +13,7 @@ categories: [ Sass, Mixins, Bourbon, Neat, Semantics, Thoughtbot, CSS, Design ]
 
 ## What’s ahead?
 
-+ **Introduction**
++ [**Introduction**](#intro)
 + [**Setup**](#setup)
 + [**Mixins Overview**](#mixins)
 + [**Functions Overview**](#functions)
@@ -22,15 +22,38 @@ categories: [ Sass, Mixins, Bourbon, Neat, Semantics, Thoughtbot, CSS, Design ]
 
 <!--more-->
 
-## A Short Introduction
+## <a name='intro'></a> A Short Introduction
 
-[Bourbon](http://bourbon.io) is a top-notch Sass **library for designers**. It has a minimalistic approach and is serious about creating quality code that cares about **semantics**. I like it especially because it encourages best practices for developing great code that scales.
+To be precise, Bourbon has actually grown into a small suite of projects which are maintained by the designers at [thoughtbot](https://thoughtbot.com/). In the coming weeks, I will release articles that cover all of the follwing in detail.
+
++ [Bourbon](http://bourbon.io/)
++ [Neat](http://neat.bourbon.io/)
++ [Refills](http://refills.bourbon.io/)
++ [Bitters](http://bitters.bourbon.io/)
+
+For now, here’s the gist:
+
+*Bourbon* mainly provides a small but juicy set of mixins and functions that are extracted from designing with Sass every day. 
+
+*Neat* is a lightweight grid framework for Sass. It is built on top of Bourbon and was motivated by the need for a semantic approach to layout sites. 
+
+*Refills* is a collection of design patterns, nicely styled or unstyled, which are designed with Bourbon and Neat. Code examples are at your disposal.
+
+*Bitters* are a few scaffold styles, variables and a bit of structure for new Bourbon projects to get you up and running in no time.
+
+## 
+
+### Bourbon - A Mixin Library For Sass
+
+The original Bourbon got started by [Philip LaPier](https://twitter.com/_LaPier), at the time digital product designer at thoughtbot, in early 2011. The project started out centralizing various mixins from different designers in the company.   
+
+Today, Bourbon is a top-notch Sass **library for designers**. It has a minimalistic approach and is serious about creating quality code that cares about **semantics**. I like it especially because it encourages best practices for developing great code that scales.
 
 This gem helps designers to write their code faster and manages a lot of the nitty-gritty details like annoying vendor prefixes. It’s mixins often act as wrappers for outputting quality CSS but stay as vanilla as possible by being close to the original CSS syntax.
 
 Big heavyweight frameworks like [Bootstrap](http://getbootstrap.com) certainly have their charms. Developers like them because most design decisions are already made and reasonably decent looking websites come out pretty much prefabricated. There's nothing wrong with that - given that you want to bootstrap your project without a designer who values semantic markup. I should mention though that once designers are involved they might not be happy with that choice. Having to manually rip out unsemantic styles that are intertwined  with your markup might give them ideas for putting funny stuff in your coffee.
 
-### Worth Pointing Out
+#### Worth Pointing Out
 
 + Bourbon is pure Sass & platform agnostic, it works with any Sass project
 + Very close to the vanilla CSS syntax
@@ -39,10 +62,6 @@ Big heavyweight frameworks like [Bootstrap](http://getbootstrap.com) certainly h
 + Outsources vendor prefixes
 + It’s super lightweight
 + It’s semantic
-
-## 
-
-### A Little Bit Of History
 
 ## <a name='setup'></a>Setup
 
@@ -71,7 +90,7 @@ This command generates a bourbon folder that contains the functions, mixins, hel
 @import 'other-sass-partials-below'
 ```
 
-## <a name='mixins'></a>Mixins Overview
+## <a name='mixins'></a>Bourbon Mixins Overview
 
 Bourbon has a wide range of super useful mixins to speed up your work. In terms of design, it’s safe to say that they want to support your own design decisions without forcing a particular style on you. You are basically encouraged to mix your own awesome sauce. You can use these mixins as a stable and relatively neutral basis.
 
@@ -97,7 +116,7 @@ Learn more about individual Bourbon mixins in my other articles here:
 * <a href="{{ root_url }}/blog/2015/07/05/bourbon-mixins/">Bourbon: Mixins #01</a>
 * <a href="{{ root_url }}/blog/2015/07/10/bourbon-mixins-02/">Bourbon: Mixins #02</a>
 
-## <a name='functions'></a>Functions Overview
+## <a name='functions'></a>Bourbon Functions Overview
 
 Sass already has a ton of built-in functions, from manipulating strings to messing with opacity and colors. Bourbon adds a couple of selected enhancements and provides very handy Sass functions for a variety of use cases. You might wanna start looking into this selection:
 
@@ -111,7 +130,7 @@ Sass already has a ton of built-in functions, from manipulating strings to messi
 I have prepared a more detailed look at functions here:
 <a href="{{ root_url }}/blog/2015/07/15/bourbon-functions/">Bourbon: Functions</a>
 
-## <a name='addons'></a>Add-ons
+## <a name='addons'></a>Bourbon Add-ons
 
 
 + #### **font-family variables**
@@ -138,7 +157,7 @@ font-family: $helvetica
 
 + #### **timing variables**
 
-A mixin like `transition` has the following syntax:
+Bourbon provides a ton of timing variables out of the box. A mixin like `transition` has the following syntax:
 
 ``` sass
 .some-element
