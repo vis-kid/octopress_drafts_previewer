@@ -15,56 +15,26 @@ categories: [ Sass, Functions, Golden Ratio, Golden Mean, Divine Proportion, Bou
 
 Bourbon provides very handy Sass functions for a variety of use cases. Let’s take a look at this selection:
 
-+ `linear-gradient()` 
-+ `modular-scale()`
-+ `golden-ratio()`
-+ `shade()`
-+ `tint()`
-+ `em()`
++ [**golden-ratio()**](#ratio)
++ [**modular-scale()**](#modular)
++ [**linear-gradient**](#linear)
++ [**tint()**](#tint)
++ [**shade()**](#shade)
++ [**em()**](#em)
 
 <!-- more -->
 
 ##   
 
-+ `golden-ratio()` function
++ ## <a name='ratio'></a>golden-ratio()
 
-With this function, it is very easy to calculate the golden ratio of a certain number (slowly depricated though). It is useful if you want to create “meaningful” relationships within your typography for example. The same goes for structural relationships in your layout.
+With this function, it is very easy to calculate the golden ratio (**1:1.6180339**) of a certain number. As a heads up, I should mention that it is slowly deprecated though. The function is useful if you want to create “meaningful” relationships within your typography for example. The same goes for structural relationships within your layout.
 
-### FYI: The Golden Ratio
+#### The golden ratio for your typographic scale
 
-{% img /images/bourbon-functions/bender-golden-ratio.jpg 280 %}
+If you want to generate a [modular scale](http://www.hyperarts.com/blog/how-to-use-a-modular-scale/) to structure various sizes of type by using the golden ratio, you can apply the **goden-ratio function** to calculate the **golden mean** for any number. Building your **typographic scale** with it is straightforward:
 
-There are two sides to this story. The classical approach to describing the importance of this ratio could be along the following lines: 
-
-The golden ratio or “***divine proportion***” is a very common ratio across disciplines. In music, art, mathematics, architecture, biology and in many other fields you can encounter the "use" of the ratio **1 : 1.6180339** to tie structures together. Interestingly, in the past, especially in early architecture, it was often used to please the "gods" by attempting to "communicate" in a "divine geometric language". 
-
-This ratio represents a pattern that seems to please human visual perception, probably because it’s been so abundant in biology around us all along. Therefore we supposedly perceive some kind of inherent balance when confronted with it. For ages, applying this ratio was seen as an old "trick" used by creators because it can make your work feel more **harmonious** or even "natural". 
-
-### Twitter’s use of the golden ratio for its layout
-
-{% img /images/bourbon-functions/goldentwitter.jpg 580 %}
-
-
-In design the use of the ***golden mean*** is widespread as well: 
-
-+ Layouts in Webdesign
-+ iPods / iPhones
-+ Business cards 
-+ Credit cards
-+ Tyography
-+ Postcards
-+ Logos
-+ Cars
-
-...and [many more](http://en.wikipedia.org/wiki/List_of_works_designed_with_the_golden_ratio) 
-
-On the other hand, you are also encouraged to doubt the tremendous reputation the golden ratio has earned over the centuries. Check out this controversial [article](http://www.fastcodesign.com/3044877/the-golden-ratio-designs-biggest-myth) if you want to whet your appetite. The tl;dr version is that it’s supposed to be bullshit and a very old scam. Maybe still useful and effective, but simply nonsense projected onto an irrational number. 
-
-At Stanford hundreds of students were asked over the years about their preference of the golden ratio. The Haas School of Business in Berkeley did something similar. The conclusion was that in the real world people don’t prefer the golden ratio. I’ll leave you with that and you can decide for yourself if “divine” is really what we should call this proportion that is supposedly the universal formula behind aesthetic beauty. Maybe another case where we try to find meaning in the patterns out there.
-
-### The golden ratio for your typographic scale
-
-If you want to generate a [modular scale](http://www.hyperarts.com/blog/how-to-use-a-modular-scale/) to structure various sizes of type by using the golden ratio, you can apply the **goden-ratio function** to calculate the **golden mean** for any number. Building your **typographic scale** is straightforward:
+The function’s first parameter expects a **pixel** or **em** value — here represented by a Sass variable defined above. The second parameter requires an integer as **increment / decrement value** (...-3, -2, -1, 0, 1, 2, 3...) for moving up & down the scale using the golden ratio.
 
 ```sass typographic scale using the golden ratio
 $base-font-size: 10px
@@ -74,13 +44,12 @@ body
 
 .footnote
   font-size: golden-ratio($base-font-size, -1)
-                                        // decrement value
+  // decrement size value proportional to golden ratio by factor 1
 h3
   font-size: golden-ratio($base-font-size, 1)
-                                        // increment value
 h2
   font-size: golden-ratio($base-font-size, 2)
-
+  // increment size value proportional to golden ratio by factor 1
 h1
   font-size: golden-ratio($base-font-size, 3)
 
@@ -131,8 +100,7 @@ h1 {
 }
 ```
 
-The function’s first parameter expects a **pixel** or **em** value — here represented by a Sass variable defined above. The second parameter requires an integer as **increment / decrement value** (...-3, -2, -1, 0, 1, 2, 3...) for scaling the provided font-size using **1.6180339**.
-If you need to round the output, you can use Sass’s functions for: 
+If you need to round the output, you can use Sass’s built in functions for that purpose: 
 
 ### **abs()** — **floor()** — **ceil()** 
 
@@ -149,7 +117,7 @@ If you need to round the output, you can use Sass’s functions for:
 
 ### Under The Hood
 
-Internally the golden-ratio function is using the **modular-scale function** with the scaling variable **$golden** for golden-ratio.
+Internally, the golden-ratio function is using the **modular-scale function** with the scaling variable **$golden** for golden-ratio.
 
 ``` sass modular-scale mixin
 @function golden-ratio($value, $increment) {
@@ -159,9 +127,42 @@ Internally the golden-ratio function is using the **modular-scale function** wit
 
 Btw the fantastic [Bourbon Neat](http://neat.bourbon.io) grid framework also uses the golden ratio by default for **gutters** and **columns**.
 
-##  
+## 
 
-+ ### **modular-scale() function**
+### FYI: The Golden Ratio
+
+{% img /images/bourbon-functions/bender-golden-ratio.jpg 280 %}
+
+There are two sides to this story. The classical approach to describing the importance of this ratio could be along the following lines: 
+
+The golden ratio or “***divine proportion***” is a very common ratio across disciplines. In music, art, mathematics, architecture, biology and in many other fields you can encounter the "use" of the ratio **1 : 1.6180339** to tie structures and forms together. Interestingly, in the past, especially in early architecture, it was often used to please the "gods" by attempting to "communicate" in a "divine geometric language". 
+
+This ratio represents a pattern that is said to please human visual perception, probably because it’s been so abundant in biology around us all along. Therefore we supposedly perceive some kind of inherent balance when confronted with it. For ages, applying this ratio was seen as an old "trick" used by creators because it can make your work feel more **harmonious** or even "natural". 
+
+In design, the use of the ***golden mean*** is widespread as well: 
+
+#### Twitter’s use of the golden ratio for its layout
+
+{% img /images/bourbon-functions/goldentwitter.jpg 580 %}
+
++ Layouts in Webdesign
++ iPods / iPhones
++ Business cards 
++ Credit cards
++ Tyography
++ Postcards
++ Logos
++ Cars
+
+...and [many more](http://en.wikipedia.org/wiki/List_of_works_designed_with_the_golden_ratio) 
+
+On the other hand, you are also encouraged to doubt the tremendous reputation the golden ratio has earned over the centuries. Check out this controversial [article](http://www.fastcodesign.com/3044877/the-golden-ratio-designs-biggest-myth) if you want to whet your appetite. The tl;dr version is that it’s supposed to be bullshit and a very old scam. Maybe still useful and effective, but simply nonsense projected onto an irrational number. 
+
+Over the years, hundreds of students were tested about their preference of the golden ratio at Stanford University. The Haas School of Business in Berkeley did something similar. The conclusion was that in the real world people don’t prefer the golden ratio. I’ll leave you with that and you can decide for yourself if “divine” is really what we should call this proportion that is supposedly the universal formula behind aesthetic beauty. Maybe another case where we try to find meaning in the patterns out there.
+
+## 
+
++ ## <a name='modular'></a>modular-scale()
 
 If you are into ["*more meaningful typography*"](http://www.alistapart.com/article/more-meaningful-typography) and want to calculate a modular scale for various font sizes that have some sort of numerical relationship, this function might be interesting to you.
 It offers to calculate various modular scales for you — the golden ratio is just one out of **17 options**, excluding your very own made up scales of course. 
@@ -264,7 +265,7 @@ h2
 
 ## 
 
-+ ### **linear-gradient()** function
++ ## <a name='linear'></a>linear-gradient()
 
 If you need a linear gradient in combination with your background-image mixin, this function will save you quite a bit of code. The color of the gradient is defined by the **starting color**, the **ending color** and optional **stop-color points** in between. Those additional color-stops give you the possiblity to create more sophisticated transitions between the starting and ending colors, or provide a more colorful gradient. 
 
@@ -365,7 +366,7 @@ Something more sophisticated using **hsla()** functions and multiple **linear-gr
 
 You might already be familiar with Sass’s built in functions for colors like `lighten()` and `darken()` which do exactly what you’d expect. Bourbon provides two additional awesome color functions for your convenience. Both functions take a color and percentage parameter to fine-tune the color mix.
 
-+ ### **tint() function**
++ ## <a name='tint'></a>tint()
 
 The tint function changes a color by mixing it with **white**.
 It expects a second parameter that takes the **percentage of white** you want to mix the color with.
@@ -391,7 +392,7 @@ It expects a second parameter that takes the **percentage of white** you want to
 
 ##  
 
-+ ### **shade() function**
++ ## <a name='shade'></a>shade()
 
 The shade function changes a color by mixing it with **black**.
 This function also takes a **color** and **percentage** parameter to fine-tune the color mix.
@@ -417,13 +418,11 @@ This function also takes a **color** and **percentage** parameter to fine-tune t
 
 ##  
 
-+ ### **em() function**
++ ## <a name='em'></a>em()
 
 Calculates **pixels to ems** for you.
 
 ``` sass em function in a Sass file
-:q
-:q
 font-size: em(12)
 ```
 
