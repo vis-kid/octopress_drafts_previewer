@@ -40,6 +40,10 @@ Big heavyweight frameworks like [Bootstrap](http://getbootstrap.com) certainly h
 + It’s super lightweight
 + It’s semantic
 
+## 
+
+### A Little Bit Of History
+
 ## <a name='setup'></a>Setup
 
 + Fire up your terminal, change into your project’s directory and install Bourbon via RubyGems
