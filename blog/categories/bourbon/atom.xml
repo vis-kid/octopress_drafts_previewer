@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bourbon | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/bourbon/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-07-11T21:55:28+02:00</updated>
+  <updated>2015-07-20T00:15:49+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -149,15 +149,11 @@ h1 {
 
 <p>There are two sides to this story. The classical approach to describing the importance of this ratio could be along the following lines:</p>
 
-<p>The golden ratio or “<strong><em>divine proportion</em></strong>” is a very common ratio across disciplines. In music, art, mathematics, architecture, biology and in many other fields you can encounter the &ldquo;use&rdquo; of the ratio <strong>1 : 1.6180339</strong> to tie structures and forms together. Interestingly, in the past, especially in early architecture, it was often used to please the &ldquo;gods&rdquo; by attempting to &ldquo;communicate&rdquo; in a &ldquo;divine geometric language&rdquo;.</p>
+<p>The golden ratio or “<strong><em>divine proportion</em></strong>” is a very common ratio used across disciplines. In music, art, mathematics, architecture, biology and in many other fields you can encounter the &ldquo;use&rdquo; of the ratio <strong>1 : 1.6180339</strong> to tie structures and forms together. Interestingly, in the past, especially in early architecture, it was often used to please the &ldquo;gods&rdquo; by attempting to &ldquo;communicate&rdquo; in a &ldquo;divine geometric language&rdquo;.</p>
 
 <p>This ratio represents a pattern that is said to please human visual perception, probably because it’s been so abundant in biology around us all along. Therefore we supposedly perceive some kind of inherent balance when confronted with it. For ages, applying this ratio was seen as an old &ldquo;trick&rdquo; used by creators because it can make your work feel more <strong>harmonious</strong> or even &ldquo;natural&rdquo;.</p>
 
 <p>In design, the use of the <strong><em>golden mean</em></strong> is widespread as well:</p>
-
-<h4>Twitter’s use of the golden ratio for its layout</h4>
-
-<p><img src="/images/bourbon-functions/goldentwitter.jpg" width="580"></p>
 
 <ul>
 <li>Layouts in Webdesign</li>
@@ -173,9 +169,13 @@ h1 {
 
 <p>&hellip;and <a href="http://en.wikipedia.org/wiki/List_of_works_designed_with_the_golden_ratio">many more</a></p>
 
+<h4>Twitter’s use of the golden ratio for its layout</h4>
+
+<p><img src="/images/bourbon-functions/goldentwitter.jpg" width="580"></p>
+
 <p>On the other hand, you are also encouraged to doubt the tremendous reputation the golden ratio has earned over the centuries. Check out this controversial <a href="http://www.fastcodesign.com/3044877/the-golden-ratio-designs-biggest-myth">article</a> if you want to whet your appetite. The tl;dr version is that it’s supposed to be bullshit and a very old scam. Maybe still useful and effective, but simply nonsense projected onto an irrational number.</p>
 
-<p>Over the years, hundreds of students were tested about their preference of the golden ratio at Stanford University. The Haas School of Business in Berkeley did something similar. The conclusion was that in the real world people don’t prefer the golden ratio. I’ll leave you with that and you can decide for yourself if “divine” is really what we should call this proportion that is supposedly the universal formula behind aesthetic beauty. Maybe another case where we try to find meaning in the patterns out there.</p>
+<p>Over the years, hundreds of students were tested about their preference of the golden ratio at Stanford University. The Haas School of Business in Berkeley did something similar. The conclusion was that in the real world people don’t prefer the golden ratio. I’ll leave you with that and you can decide for yourself if “divine” is really what we should call this proportion that is supposedly the universal formula behind aesthetic beauty. Maybe it’s just another case where we try to find meaning in the patterns out there.</p>
 
 <h2></h2>
 
@@ -242,13 +242,13 @@ h1
 <h3>Attention!</h3>
 
 <p>To use these scaling variables you need to install a version of Bourbon higher than <strong>v3.1.8</strong>.
-As of Feb 2014, I’d recommend updating to the beta with</p>
+As of Feb 2014, I’d recommend updating to the beta with:</p>
 
 <ul>
 <li>tag
 
 <ul>
-<li><strong>v3.2.0-beta.1</strong><br/>
+<li><strong>v3.2.0-beta.1</strong>
 or</li>
 <li><strong>v3.2.0-beta.2</strong></li>
 </ul>
@@ -299,38 +299,37 @@ h2
 <p><img src="/images/bourbon-functions/horrible-gradient.png"></p>
 
 <pre><code class="sass horrible linear-gradient">.horrible-gradient
-  +background-image(linear-gradient( 
-    45deg,                // directon of gradient line 
-    red 10%,              // starting color 
-    yellow 15%,   // S    // bleeds into red     
-    yellow 40%,   // T                           
-    orange 45%,   // O    // bleeds into yellow   
-    orange 50%,   // P                            
-    orange 70%,   // S    // bleeds into green    
+  +background-image(linear-gradient(
+    45deg,                // directon of gradient line
+    red 10%,              // starting color
+    yellow 15%,   // S    // bleeds into red
+    yellow 40%,   // T
+    orange 45%,   // O    // bleeds into yellow
+    orange 50%,   // P
+    orange 70%,   // S    // bleeds into green
     green 90%)            // ending color
-  )                       
+  )
     height: 50px
 
 //  SCSS syntax
 
 //  .horrible-gradient {
-      @include background-image(linear-gradient( 
-        45deg,                // directon of gradient line 
-        red 10%,              // starting color 
-        yellow 15%,   // S    // bleeds into red     
-        yellow 40%,   // T                           
-        orange 45%,   // O    // bleeds into yellow   
-        orange 50%,   // P                            
-        orange 70%,   // S    // bleeds into green    
+      @include background-image(linear-gradient(
+        45deg,                // directon of gradient line
+        red 10%,              // starting color
+        yellow 15%,   // S    // bleeds into red
+        yellow 40%,   // T
+        orange 45%,   // O    // bleeds into yellow
+        orange 50%,   // P
+        orange 70%,   // S    // bleeds into green
         green 90%)            // ending color
-      )                      
+      )
         height: 50px
 //  }
 </code></pre>
 
-<p>For colors you can optionally provide <strong>precentage</strong>, <strong>pixel</strong> or <strong>em</strong> <strong>values</strong>. Those define the distance this color is supposed to stretch out. You should probably stick to using <strong><em>%</em></strong> most of the time though. If you don’t provide percentages as limitation values, the colors will strech out evenly, divided by the number of colors in the gradient.
-You can optionally provide an angle for the first parameter — either in form of <strong>value</strong> + <strong>deg</strong> or
-<strong>to</strong> with <strong>direction</strong>:</p>
+<p>For colors you can optionally provide <strong>percentage</strong>, <strong>pixel</strong> or <strong>em</strong> <strong>values</strong>. Those define the distance this color is supposed to stretch out. You should probably stick to using <strong><em>%</em></strong> most of the time though. If you don’t provide percentages as limitation values, the colors will strech out evenly, divided by the number of colors in the gradient.
+You can optionally provide an angle for the first parameter — either in form of <strong>value</strong> + <strong>deg</strong> or <strong>to</strong> with <strong>direction</strong>:</p>
 
 <ul>
 <li>45deg</li>
@@ -343,46 +342,46 @@ You can optionally provide an angle for the first parameter — either in form o
 
 <p>and so on.</p>
 
-<h4>Screenshot</h4>
-
-<p><img src="/images/bourbon-functions/yellow-blue-gradient.png"></p>
-
-<p>The gradient flows from left to right</p>
-
 <pre><code class="sass with direction parameter — left to right">.gradient
-  +background-image(linear-gradient(to right, yellow 50%, blue 60%)) 
+  +background-image(linear-gradient(to right, yellow 50%, blue 60%))
   height: 50px
 
 //  SCSS syntax
 
 //  .gradient {
-      @include background-image(linear-gradient(to right, yellow 50%, blue 60%)); 
+      @include background-image(linear-gradient(to right, yellow 50%, blue 60%));
       height: 50px;
 //  }
 </code></pre>
 
 <h4>Screenshot</h4>
 
-<p><img src="/images/bourbon-functions/hsla-gradient.png"></p>
+<p><img src="/images/bourbon-functions/yellow-blue-gradient.png"></p>
 
-<p>Something more sophisticated using <strong>hsla()</strong> functions and multiple <strong>linear-gradient()</strong> functions:</p>
+<p>The gradient flows from left to right</p>
 
-<pre><code class="sass decent gradient">.gradient 
+<p>Or something more sophisticated using <strong>hsla()</strong> functions and multiple <strong>linear-gradient()</strong> functions:</p>
+
+<pre><code class="sass decent gradient">.gradient
   +background-image(linear-gradient(
-    hsla(0, 100%, 100%, 0.25) 0%, 
-    hsla(0, 100%, 100%, 0.08) 50%, transparent 50%), 
+    hsla(0, 100%, 100%, 0.25) 0%,
+    hsla(0, 100%, 100%, 0.08) 50%, transparent 50%),
     linear-gradient(#4e7ba3, darken(#4e7ba4, 10%)))
   height: 50px
 
 //  SCSS syntax
 
-//  .gradient 
+//  .gradient
       +background-image(linear-gradient(
-        hsla(0, 100%, 100%, 0.25) 0%, 
-        hsla(0, 100%, 100%, 0.08) 50%, transparent 50%), 
+        hsla(0, 100%, 100%, 0.25) 0%,
+        hsla(0, 100%, 100%, 0.08) 50%, transparent 50%),
         linear-gradient(#4e7ba3, darken(#4e7ba4, 10%)))
 //    height: 50px
 </code></pre>
+
+<h4>Screenshot</h4>
+
+<p><img src="/images/bourbon-functions/hsla-gradient.png"></p>
 
 <h2>Tint &amp; Shade Color Functions</h2>
 
@@ -396,13 +395,20 @@ You can optionally provide an angle for the first parameter — either in form o
 <p>The tint function changes a color by mixing it with <strong>white</strong>.
 It expects a second parameter that takes the <strong>percentage of white</strong> you want to mix the color with.</p>
 
-<pre><code class="sass tint()">.tint
-  background: tint(#2F7DD1, 25%)                                                               height: 100px
+<pre><code class="sass tint()">$light-blue: #2F7DD1
+
+.tint
+  background: tint($light-blue, 25%)
+  height: 100px
+
 
 //  SCSS syntax
 
-//  .tint {
-      background: tint(#2F7DD1, 25%)                                                               height: 100px
+//  $light-blue: #2F7DD1
+
+    .tint {
+      background: tint($light-blue, 25%)
+      height: 100px
 //  }
 </code></pre>
 
@@ -424,13 +430,20 @@ It expects a second parameter that takes the <strong>percentage of white</strong
 <p>The shade function changes a color by mixing it with <strong>black</strong>.
 This function also takes a <strong>color</strong> and <strong>percentage</strong> parameter to fine-tune the color mix.</p>
 
-<pre><code class="sass shade()">.shade
-  background: shade(#2F7DD1, 25%)                                                              height: 100px
+<pre><code class="sass shade()">$light-blue: #2F7DD1
+
+.shade
+  background: shade($light-blue, 25%)
+  height: 100px
+
 
 //  SCSS syntax
 
-//  .shade{
-      background: shade(#2F7DD1, 25%)                                                              height: 100px
+//  $light-blue: #2F7DD1
+
+    .shade{
+      background: shade($light-blue, 25%)
+      height: 100px
 //  }
 </code></pre>
 
@@ -533,7 +546,7 @@ This function also takes a <strong>color</strong> and <strong>percentage</strong
 //  }
 </code></pre>
 
-<p>Take a look at the generated CSS output. Who wants to remember nasty stuff like that.</p>
+<p>Take a look at the generated CSS output. Who wants to handle nasty stuff like that anyway?</p>
 
 <pre><code class="css CSS output">.paragraphs-behave-like-blocks {
   display: inline-block;
@@ -572,7 +585,7 @@ This function also takes a <strong>color</strong> and <strong>percentage</strong
 
 <p>— in just one line</p>
 
-<pre><code class="sass">.some-element      
+<pre><code class="sass">.some-element
   +position(relative, 0px 0 0 100px)
                     //top right bottom left
 
@@ -638,7 +651,7 @@ Options for this mixin include:</p>
 
 .grey-wrapper
   background-color: $light-grey
-  +clearfix        
+  +clearfix
   .logos
     float: right
     +background-image(url("bourbon-logo@2x.png"), url("thoughtbot.png"))
@@ -709,7 +722,7 @@ Options for this mixin include:</p>
 <pre><code class="html">  &lt;div class='super-duper-button'&gt;Super duper button&lt;/div&gt;
 </code></pre>
 
-<pre><code class="sass standard button">$light-blue: #2485F1 
+<pre><code class="sass standard button">$light-blue: #2485F1
 
 .super-duper-button
   +button($light-blue)
@@ -749,7 +762,7 @@ Options for this mixin include:</p>
 <pre><code class="html">  &lt;div class='super-duper-button'&gt;Super duper shiny button&lt;/div&gt;
 </code></pre>
 
-<pre><code class="sass shiny button">$acceptance-green: #43C914 
+<pre><code class="sass shiny button">$acceptance-green: #43C914
 
 .super-duper-button
   +button(shiny, $acceptance-green)
@@ -766,7 +779,7 @@ Options for this mixin include:</p>
 
 <p><img src="/images/bourbon-mixins/bourbon-buttons/grey-shiny-button.png" width="250"></p>
 
-<pre><code class="sass text adapts to the color of the button ">$light-grey: #DEDEDE
+<pre><code class="sass text adapts to the color of the button">$light-grey: #DEDEDE
 
 .super-duper-button
   +button(shiny, $light-grey)
@@ -852,7 +865,7 @@ If you provide only one size, Bourbon assumes you want a square.</p>
     only screen and (min-resolution: 1.5dppx) {
 
     width: 200px;
-  } 
+  }
 }
 </code></pre>
 
@@ -881,17 +894,17 @@ If you provide only one size, Bourbon assumes you want a square.</p>
 <p>The CSS output helps explain its functionality:</p>
 
 <pre><code class="css CSS output">.logo {
-  background-image: url(logo-icon.png); 
+  background-image: url(logo-icon.png);
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.3), 
-       only screen and (min--moz-device-pixel-ratio: 1.3), 
-       only screen and (-o-min-device-pixel-ratio: 1.3 / 1), 
-       only screen and (min-resolution: 125dpi), 
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3),
+       only screen and (min--moz-device-pixel-ratio: 1.3),
+       only screen and (-o-min-device-pixel-ratio: 1.3 / 1),
+       only screen and (min-resolution: 125dpi),
        only screen and (min-resolution: 1.3dppx) {
   .logo {
     background-image: url(logo-icon_2x.png);
-    background-size: 50px 30px; 
+    background-size: 50px 30px;
   }
 }
 </code></pre>
@@ -900,40 +913,40 @@ If you provide only one size, Bourbon assumes you want a square.</p>
 
 <p>This mixin expects a <strong>.png</strong> as standard extension for all images. Per default, it also expects a <strong>_2x.png</strong> extension to the filename of your retina-image. Of course you can overwrite both defaults by providing another retina-filename and standard extension like this:</p>
 
-<pre><code class="sass ">.logo                                     
-  +retina-image(logo-icon, 50px, 30px, 
-                $extension: jpg, 
-                $retina-filename: HiDPI-logo-icon, 
+<pre><code class="sass">.logo
+  +retina-image(logo-icon, 50px, 30px,
+                $extension: jpg,
+                $retina-filename: HiDPI-logo-icon,
                 $retina-suffix: _retina )
 
 // SCSS syntax
 // .logo {
-     @include retina-image(logo-icon, 50px, 30px, 
-                $extension: jpg, 
-                $retina-filename: HiDPI-logo-icon, 
+     @include retina-image(logo-icon, 50px, 30px,
+                $extension: jpg,
+                $retina-filename: HiDPI-logo-icon,
                 $retina-suffix: _retina );
 // }
 </code></pre>
 
 <pre><code class="css CSS output">.logo {
-  background-image: url(logo-icon.jpg); 
+  background-image: url(logo-icon.jpg);
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.3), 
-       only screen and (min--moz-device-pixel-ratio: 1.3), 
-       only screen and (-o-min-device-pixel-ratio: 1.3 / 1), 
-       only screen and (min-resolution: 125dpi), 
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3),
+       only screen and (min--moz-device-pixel-ratio: 1.3),
+       only screen and (-o-min-device-pixel-ratio: 1.3 / 1),
+       only screen and (min-resolution: 125dpi),
        only screen and (min-resolution: 1.3dppx) {
   .logo {
     background-image: url(HiDPI-logo-icon_retina.jpg);
-    background-size: 50px 30px; 
+    background-size: 50px 30px;
   }
 }
 </code></pre>
 
 <p>There is another option if you are using the asset pipeline in Rails:</p>
 
-<pre><code class="sass ">.logo                                     
+<pre><code class="sass">.logo
   +retina-image(logo-icon, 50px, 30px,
                 $asset-pipeline: true)
 
@@ -945,17 +958,17 @@ If you provide only one size, Bourbon assumes you want a square.</p>
 </code></pre>
 
 <pre><code class="css CSS output">.logo {
-  background-image: url(logo-icon.png); 
+  background-image: url(logo-icon.png);
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.3), 
-       only screen and (min--moz-device-pixel-ratio: 1.3), 
-       only screen and (-o-min-device-pixel-ratio: 1.3 / 1), 
-       only screen and (min-resolution: 125dpi), 
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3),
+       only screen and (min--moz-device-pixel-ratio: 1.3),
+       only screen and (-o-min-device-pixel-ratio: 1.3 / 1),
+       only screen and (min-resolution: 125dpi),
        only screen and (min-resolution: 1.3dppx) {
   .logo {          /* Attention! */
     background-image: image-url(logo-icon_2x.png);
-    background-size: 50px 30px; 
+    background-size: 50px 30px;
   }
 }
 </code></pre>
@@ -977,7 +990,7 @@ It’s a small difference but adds to your convenience developing with rails if 
 
 <h2></h2>
 
-<p>That’s it for mixins. Next I will look into functions: <li><a href="/blog/2014/01/29/bourbon-functions/">Bourbon: Functions</a></li></p>
+<p>That’s it for mixins. Next I will look into functions: <li><a href="/blog/2015/07/15/bourbon-functions/">Bourbon: Functions</a></li></p>
 
 <p><img src="/images/bourbon-mixins/bourbon-anime.gif" width="700"></p>
 ]]></content>
@@ -1034,7 +1047,6 @@ It’s a small difference but adds to your convenience developing with rails if 
   background-position: center top, top left
   // chain the repeat values
   background-repeat: repeat-y, repeat-x
-
   height: 560px
 
 //  SCSS syntax
@@ -1060,11 +1072,11 @@ The same goes for gradients.</p>
 <p>You can use a shorthand notation for <strong>background-image</strong> like this:</p>
 
 <pre><code class="sass shorthand notation for background-image mixin">.ridiculous-background
-  +background(url("bourbon-logo@2x.png"), url("thoughtbot-logo.png")) 
+  +background(url("bourbon-logo@2x.png"), url("thoughtbot-logo.png"))
 
 //  SCSS syntax
 //  .ridiculous-background
-//    @include background(url("bourbon-logo@2x.png"), url("thoughtbot-logo.png")); 
+//    @include background(url("bourbon-logo@2x.png"), url("thoughtbot-logo.png"));
 </code></pre>
 
 <h4>With gradients</h4>
@@ -1155,7 +1167,7 @@ $end-gradient-color: #7229d1
 
 <p>This handy mixin makes it straightforward to target the corners of a box in pairs: top, bottom, right and left corners basically. If you want rounded corners and avoid typing repetitive declarations, this one is your friend.</p>
 
-<pre><code class="html ">&lt;section class='super-duper-borders'&gt;
+<pre><code class="html">&lt;section class='super-duper-borders'&gt;
 </code></pre>
 
 <pre><code class="sass border-radius mixin">.super-duper-borders
@@ -1180,7 +1192,7 @@ $end-gradient-color: #7229d1
       @include border-bottom-radius(3px);
 
       height: 50px;
-//  } 
+//  }
 </code></pre>
 
 <h4>Screenshot</h4>
@@ -1234,7 +1246,7 @@ $end-gradient-color: #7229d1
 
 <p>( <a href="http://css-tricks.com/box-sizing/">more about box sizing</a> )</p>
 
-<pre><code class="sass box-sizing mixin ">.user-profile
+<pre><code class="sass box-sizing mixin">.user-profile
   +box-sizing(border-box)
 
 //   SCSS syntax
@@ -1252,10 +1264,10 @@ $end-gradient-color: #7229d1
 
 <p>You attach the transition mixin to the default state of the selector that is to be changed by an event like hover — <strong>not to the pseudo-class!</strong> The declarations used in the pseudo-class are available to the transition mixin.</p>
 
-<pre><code class="html ">&lt;section class='fancy-transition'&gt;
+<pre><code class="html">&lt;section class='fancy-transition'&gt;
 </code></pre>
 
-<pre><code class="sass transition mixin">.fancy-transition 
+<pre><code class="sass transition mixin">.fancy-transition
   +transition (all 1.0s $ease-in-sine)
 
   height: 50px
@@ -1263,9 +1275,9 @@ $end-gradient-color: #7229d1
   +border-top-radius(5px)
   +border-bottom-radius(5px)
 
-  &amp;:hover 
+  &amp;:hover
   // declarations available to the transitions mixin
-  background-color: blue 
+  background-color: blue
   +border-top-radius(25px)
   +border-bottom-radius(25px)
 
@@ -1303,7 +1315,7 @@ $end-gradient-color: #7229d1
 
 <p>You can handpick the properties you want to be affected by the transition. Instead of  <strong>all</strong> use only the properties you need. Different timing-functions for different properties can also be chained together nicely.</p>
 
-<pre><code class="sass ">// all
+<pre><code class="sass">// all
 @include transition (all 1.0s $ease-in-sine);
 
 // fine-tuned
@@ -1327,7 +1339,7 @@ $end-gradient-color: #7229d1
 
 <p><strong>@font-face</strong> allows designers to <strong>customize type</strong> an incredible amount by providing users with custom fonts which they might not have installed on their machines.</p>
 
-<p>In the past I went to <a href="http://fontsquirrel.com">fontsquirrel</a>, which is awesome btw, used the <strong>webfont generator</strong> and pasted a lot of CSS like this into my stylesheets. Those days are gone.</p>
+<p>In the past I went to <a href="http://fontsquirrel.com">fontsquirrel</a>, which is awesome btw, used the <strong>webfont generator</strong> and pasted a lot of CSS like this into my stylesheets.</p>
 
 <pre><code class="scss styles generated by webfont generator pasted into a classic CSS stylesheet">@font-face {
     font-family: 'SourceSansPro-Regular';
@@ -1362,21 +1374,20 @@ $end-gradient-color: #7229d1
 }
 </code></pre>
 
-<p>Obviously this can get very tedious very quickly. Using Bourbon, it looks like this now:
-(Using Rails with the asset pipeline here)</p>
+<p>Obviously this can get very tedious very quickly. Those days are now gone and this practice became obsolete with this mixin. Using Bourbon, it looks like this: (Using Rails with the asset pipeline here)</p>
 
-<pre><code class="sass font-face mixin">+font-face(SourceSansPro-Regular, 'SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true) 
+<pre><code class="sass font-face mixin">+font-face(SourceSansPro-Regular, 'SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true)
 +font-face(SourceSansPro-Bold, 'SourceSansPro/sourcesanspro-bold', bold, $asset-pipeline: true)
 
-.regular-font 
+.regular-font
   font-family: SourceSansPro-Regular
 
-.bold-font 
+.bold-font
   font-family: SourceSansPro-Bold
 
 //  SCSS syntax
-//  @include font-face(SourceSansPro-Regular, 'SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true); 
-    @include font-face(SourceSansPro-Bold, 'SourceSansPro/sourcesanspro-bold', bold, $asset-pipeline: true); 
+//  @include font-face(SourceSansPro-Regular, 'SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true);
+    @include font-face(SourceSansPro-Bold, 'SourceSansPro/sourcesanspro-bold', bold, $asset-pipeline: true);
 
     .regular-font {
       font-family: SourceSansPro-Regular;
@@ -1415,7 +1426,7 @@ $end-gradient-color: #7229d1
 </ul>
 
 
-<pre><code class="sass Breaking down the parts">             //font-family name      file-path                          weight  style 
+<pre><code class="sass Breaking down the parts">             //font-family name      file-path                          weight  style
 +font-face(NameFor-font-family, 'SomeFontFolder/NameOfFont-Italic', normal, italic, $asset-pipeline: true)
 
 // SCSS syntax
@@ -1437,11 +1448,11 @@ It will fail like this:</li>
 </ul>
 
 
-<pre><code class="sass ">                                       !!!
-+font-face(SourceSansPro-Regular, '/SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true) 
+<pre><code class="sass">                                       !!!
++font-face(SourceSansPro-Regular, '/SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true)
 
 //  SCSS syntax
-//  @include font-face(/SourceSansPro-Regular, '/SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true); 
+//  @include font-face(/SourceSansPro-Regular, '/SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true);
 </code></pre>
 
 <h2>Cheers!</h2>
@@ -1490,13 +1501,13 @@ It will fail like this:</li>
 
 <p>For now, here’s the gist:</p>
 
-<p><em>Bourbon</em> mainly provides a small but juicy set of mixins and functions that are extracted from designing with Sass every day.</p>
+<p><strong>Bourbon</strong> mainly provides a small but juicy set of mixins and functions that have been extracted from various designers’s Sass code. The idea was to centralize useful examples and to avoid reinventing the wheel all the time.</p>
 
-<p><em>Neat</em> is a lightweight grid framework for Sass. It is built on top of Bourbon and was motivated by the need for a semantic approach to layout sites.</p>
+<p><strong>Neat</strong> is a lightweight grid framework for Sass. It is built on top of Bourbon and was motivated by the need for a semantic approach to layout sites.</p>
 
-<p><em>Refills</em> is a collection of design patterns, nicely styled or unstyled, which are designed with Bourbon and Neat. Code examples are at your disposal.</p>
+<p><strong>Refills</strong> is a collection of design patterns, nicely styled or unstyled, which are designed with Bourbon and Neat. Code examples are at your disposal.</p>
 
-<p><em>Bitters</em> are a few scaffold styles, variables and a bit of structure for new Bourbon projects to get you up and running in no time.</p>
+<p><strong>Bitters</strong> are a few scaffold styles, variables and a bit of structure for new Bourbon projects to get you up and running in no time.</p>
 
 <h2></h2>
 

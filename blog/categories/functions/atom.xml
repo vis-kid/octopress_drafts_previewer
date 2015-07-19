@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Functions | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/functions/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-07-11T21:55:28+02:00</updated>
+  <updated>2015-07-20T00:15:49+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -149,15 +149,11 @@ h1 {
 
 <p>There are two sides to this story. The classical approach to describing the importance of this ratio could be along the following lines:</p>
 
-<p>The golden ratio or “<strong><em>divine proportion</em></strong>” is a very common ratio across disciplines. In music, art, mathematics, architecture, biology and in many other fields you can encounter the &ldquo;use&rdquo; of the ratio <strong>1 : 1.6180339</strong> to tie structures and forms together. Interestingly, in the past, especially in early architecture, it was often used to please the &ldquo;gods&rdquo; by attempting to &ldquo;communicate&rdquo; in a &ldquo;divine geometric language&rdquo;.</p>
+<p>The golden ratio or “<strong><em>divine proportion</em></strong>” is a very common ratio used across disciplines. In music, art, mathematics, architecture, biology and in many other fields you can encounter the &ldquo;use&rdquo; of the ratio <strong>1 : 1.6180339</strong> to tie structures and forms together. Interestingly, in the past, especially in early architecture, it was often used to please the &ldquo;gods&rdquo; by attempting to &ldquo;communicate&rdquo; in a &ldquo;divine geometric language&rdquo;.</p>
 
 <p>This ratio represents a pattern that is said to please human visual perception, probably because it’s been so abundant in biology around us all along. Therefore we supposedly perceive some kind of inherent balance when confronted with it. For ages, applying this ratio was seen as an old &ldquo;trick&rdquo; used by creators because it can make your work feel more <strong>harmonious</strong> or even &ldquo;natural&rdquo;.</p>
 
 <p>In design, the use of the <strong><em>golden mean</em></strong> is widespread as well:</p>
-
-<h4>Twitter’s use of the golden ratio for its layout</h4>
-
-<p><img src="/images/bourbon-functions/goldentwitter.jpg" width="580"></p>
 
 <ul>
 <li>Layouts in Webdesign</li>
@@ -173,9 +169,13 @@ h1 {
 
 <p>&hellip;and <a href="http://en.wikipedia.org/wiki/List_of_works_designed_with_the_golden_ratio">many more</a></p>
 
+<h4>Twitter’s use of the golden ratio for its layout</h4>
+
+<p><img src="/images/bourbon-functions/goldentwitter.jpg" width="580"></p>
+
 <p>On the other hand, you are also encouraged to doubt the tremendous reputation the golden ratio has earned over the centuries. Check out this controversial <a href="http://www.fastcodesign.com/3044877/the-golden-ratio-designs-biggest-myth">article</a> if you want to whet your appetite. The tl;dr version is that it’s supposed to be bullshit and a very old scam. Maybe still useful and effective, but simply nonsense projected onto an irrational number.</p>
 
-<p>Over the years, hundreds of students were tested about their preference of the golden ratio at Stanford University. The Haas School of Business in Berkeley did something similar. The conclusion was that in the real world people don’t prefer the golden ratio. I’ll leave you with that and you can decide for yourself if “divine” is really what we should call this proportion that is supposedly the universal formula behind aesthetic beauty. Maybe another case where we try to find meaning in the patterns out there.</p>
+<p>Over the years, hundreds of students were tested about their preference of the golden ratio at Stanford University. The Haas School of Business in Berkeley did something similar. The conclusion was that in the real world people don’t prefer the golden ratio. I’ll leave you with that and you can decide for yourself if “divine” is really what we should call this proportion that is supposedly the universal formula behind aesthetic beauty. Maybe it’s just another case where we try to find meaning in the patterns out there.</p>
 
 <h2></h2>
 
@@ -242,13 +242,13 @@ h1
 <h3>Attention!</h3>
 
 <p>To use these scaling variables you need to install a version of Bourbon higher than <strong>v3.1.8</strong>.
-As of Feb 2014, I’d recommend updating to the beta with</p>
+As of Feb 2014, I’d recommend updating to the beta with:</p>
 
 <ul>
 <li>tag
 
 <ul>
-<li><strong>v3.2.0-beta.1</strong><br/>
+<li><strong>v3.2.0-beta.1</strong>
 or</li>
 <li><strong>v3.2.0-beta.2</strong></li>
 </ul>
@@ -299,38 +299,37 @@ h2
 <p><img src="/images/bourbon-functions/horrible-gradient.png"></p>
 
 <pre><code class="sass horrible linear-gradient">.horrible-gradient
-  +background-image(linear-gradient( 
-    45deg,                // directon of gradient line 
-    red 10%,              // starting color 
-    yellow 15%,   // S    // bleeds into red     
-    yellow 40%,   // T                           
-    orange 45%,   // O    // bleeds into yellow   
-    orange 50%,   // P                            
-    orange 70%,   // S    // bleeds into green    
+  +background-image(linear-gradient(
+    45deg,                // directon of gradient line
+    red 10%,              // starting color
+    yellow 15%,   // S    // bleeds into red
+    yellow 40%,   // T
+    orange 45%,   // O    // bleeds into yellow
+    orange 50%,   // P
+    orange 70%,   // S    // bleeds into green
     green 90%)            // ending color
-  )                       
+  )
     height: 50px
 
 //  SCSS syntax
 
 //  .horrible-gradient {
-      @include background-image(linear-gradient( 
-        45deg,                // directon of gradient line 
-        red 10%,              // starting color 
-        yellow 15%,   // S    // bleeds into red     
-        yellow 40%,   // T                           
-        orange 45%,   // O    // bleeds into yellow   
-        orange 50%,   // P                            
-        orange 70%,   // S    // bleeds into green    
+      @include background-image(linear-gradient(
+        45deg,                // directon of gradient line
+        red 10%,              // starting color
+        yellow 15%,   // S    // bleeds into red
+        yellow 40%,   // T
+        orange 45%,   // O    // bleeds into yellow
+        orange 50%,   // P
+        orange 70%,   // S    // bleeds into green
         green 90%)            // ending color
-      )                      
+      )
         height: 50px
 //  }
 </code></pre>
 
-<p>For colors you can optionally provide <strong>precentage</strong>, <strong>pixel</strong> or <strong>em</strong> <strong>values</strong>. Those define the distance this color is supposed to stretch out. You should probably stick to using <strong><em>%</em></strong> most of the time though. If you don’t provide percentages as limitation values, the colors will strech out evenly, divided by the number of colors in the gradient.
-You can optionally provide an angle for the first parameter — either in form of <strong>value</strong> + <strong>deg</strong> or
-<strong>to</strong> with <strong>direction</strong>:</p>
+<p>For colors you can optionally provide <strong>percentage</strong>, <strong>pixel</strong> or <strong>em</strong> <strong>values</strong>. Those define the distance this color is supposed to stretch out. You should probably stick to using <strong><em>%</em></strong> most of the time though. If you don’t provide percentages as limitation values, the colors will strech out evenly, divided by the number of colors in the gradient.
+You can optionally provide an angle for the first parameter — either in form of <strong>value</strong> + <strong>deg</strong> or <strong>to</strong> with <strong>direction</strong>:</p>
 
 <ul>
 <li>45deg</li>
@@ -343,46 +342,46 @@ You can optionally provide an angle for the first parameter — either in form o
 
 <p>and so on.</p>
 
-<h4>Screenshot</h4>
-
-<p><img src="/images/bourbon-functions/yellow-blue-gradient.png"></p>
-
-<p>The gradient flows from left to right</p>
-
 <pre><code class="sass with direction parameter — left to right">.gradient
-  +background-image(linear-gradient(to right, yellow 50%, blue 60%)) 
+  +background-image(linear-gradient(to right, yellow 50%, blue 60%))
   height: 50px
 
 //  SCSS syntax
 
 //  .gradient {
-      @include background-image(linear-gradient(to right, yellow 50%, blue 60%)); 
+      @include background-image(linear-gradient(to right, yellow 50%, blue 60%));
       height: 50px;
 //  }
 </code></pre>
 
 <h4>Screenshot</h4>
 
-<p><img src="/images/bourbon-functions/hsla-gradient.png"></p>
+<p><img src="/images/bourbon-functions/yellow-blue-gradient.png"></p>
 
-<p>Something more sophisticated using <strong>hsla()</strong> functions and multiple <strong>linear-gradient()</strong> functions:</p>
+<p>The gradient flows from left to right</p>
 
-<pre><code class="sass decent gradient">.gradient 
+<p>Or something more sophisticated using <strong>hsla()</strong> functions and multiple <strong>linear-gradient()</strong> functions:</p>
+
+<pre><code class="sass decent gradient">.gradient
   +background-image(linear-gradient(
-    hsla(0, 100%, 100%, 0.25) 0%, 
-    hsla(0, 100%, 100%, 0.08) 50%, transparent 50%), 
+    hsla(0, 100%, 100%, 0.25) 0%,
+    hsla(0, 100%, 100%, 0.08) 50%, transparent 50%),
     linear-gradient(#4e7ba3, darken(#4e7ba4, 10%)))
   height: 50px
 
 //  SCSS syntax
 
-//  .gradient 
+//  .gradient
       +background-image(linear-gradient(
-        hsla(0, 100%, 100%, 0.25) 0%, 
-        hsla(0, 100%, 100%, 0.08) 50%, transparent 50%), 
+        hsla(0, 100%, 100%, 0.25) 0%,
+        hsla(0, 100%, 100%, 0.08) 50%, transparent 50%),
         linear-gradient(#4e7ba3, darken(#4e7ba4, 10%)))
 //    height: 50px
 </code></pre>
+
+<h4>Screenshot</h4>
+
+<p><img src="/images/bourbon-functions/hsla-gradient.png"></p>
 
 <h2>Tint &amp; Shade Color Functions</h2>
 
@@ -396,13 +395,20 @@ You can optionally provide an angle for the first parameter — either in form o
 <p>The tint function changes a color by mixing it with <strong>white</strong>.
 It expects a second parameter that takes the <strong>percentage of white</strong> you want to mix the color with.</p>
 
-<pre><code class="sass tint()">.tint
-  background: tint(#2F7DD1, 25%)                                                               height: 100px
+<pre><code class="sass tint()">$light-blue: #2F7DD1
+
+.tint
+  background: tint($light-blue, 25%)
+  height: 100px
+
 
 //  SCSS syntax
 
-//  .tint {
-      background: tint(#2F7DD1, 25%)                                                               height: 100px
+//  $light-blue: #2F7DD1
+
+    .tint {
+      background: tint($light-blue, 25%)
+      height: 100px
 //  }
 </code></pre>
 
@@ -424,13 +430,20 @@ It expects a second parameter that takes the <strong>percentage of white</strong
 <p>The shade function changes a color by mixing it with <strong>black</strong>.
 This function also takes a <strong>color</strong> and <strong>percentage</strong> parameter to fine-tune the color mix.</p>
 
-<pre><code class="sass shade()">.shade
-  background: shade(#2F7DD1, 25%)                                                              height: 100px
+<pre><code class="sass shade()">$light-blue: #2F7DD1
+
+.shade
+  background: shade($light-blue, 25%)
+  height: 100px
+
 
 //  SCSS syntax
 
-//  .shade{
-      background: shade(#2F7DD1, 25%)                                                              height: 100px
+//  $light-blue: #2F7DD1
+
+    .shade{
+      background: shade($light-blue, 25%)
+      height: 100px
 //  }
 </code></pre>
 

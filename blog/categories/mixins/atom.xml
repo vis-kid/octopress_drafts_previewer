@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mixins | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/mixins/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-07-11T21:55:28+02:00</updated>
+  <updated>2015-07-20T00:15:49+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -79,7 +79,7 @@
 //  }
 </code></pre>
 
-<p>Take a look at the generated CSS output. Who wants to remember nasty stuff like that.</p>
+<p>Take a look at the generated CSS output. Who wants to handle nasty stuff like that anyway?</p>
 
 <pre><code class="css CSS output">.paragraphs-behave-like-blocks {
   display: inline-block;
@@ -118,7 +118,7 @@
 
 <p>— in just one line</p>
 
-<pre><code class="sass">.some-element      
+<pre><code class="sass">.some-element
   +position(relative, 0px 0 0 100px)
                     //top right bottom left
 
@@ -184,7 +184,7 @@ Options for this mixin include:</p>
 
 .grey-wrapper
   background-color: $light-grey
-  +clearfix        
+  +clearfix
   .logos
     float: right
     +background-image(url("bourbon-logo@2x.png"), url("thoughtbot.png"))
@@ -255,7 +255,7 @@ Options for this mixin include:</p>
 <pre><code class="html">  &lt;div class='super-duper-button'&gt;Super duper button&lt;/div&gt;
 </code></pre>
 
-<pre><code class="sass standard button">$light-blue: #2485F1 
+<pre><code class="sass standard button">$light-blue: #2485F1
 
 .super-duper-button
   +button($light-blue)
@@ -295,7 +295,7 @@ Options for this mixin include:</p>
 <pre><code class="html">  &lt;div class='super-duper-button'&gt;Super duper shiny button&lt;/div&gt;
 </code></pre>
 
-<pre><code class="sass shiny button">$acceptance-green: #43C914 
+<pre><code class="sass shiny button">$acceptance-green: #43C914
 
 .super-duper-button
   +button(shiny, $acceptance-green)
@@ -312,7 +312,7 @@ Options for this mixin include:</p>
 
 <p><img src="/images/bourbon-mixins/bourbon-buttons/grey-shiny-button.png" width="250"></p>
 
-<pre><code class="sass text adapts to the color of the button ">$light-grey: #DEDEDE
+<pre><code class="sass text adapts to the color of the button">$light-grey: #DEDEDE
 
 .super-duper-button
   +button(shiny, $light-grey)
@@ -398,7 +398,7 @@ If you provide only one size, Bourbon assumes you want a square.</p>
     only screen and (min-resolution: 1.5dppx) {
 
     width: 200px;
-  } 
+  }
 }
 </code></pre>
 
@@ -427,17 +427,17 @@ If you provide only one size, Bourbon assumes you want a square.</p>
 <p>The CSS output helps explain its functionality:</p>
 
 <pre><code class="css CSS output">.logo {
-  background-image: url(logo-icon.png); 
+  background-image: url(logo-icon.png);
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.3), 
-       only screen and (min--moz-device-pixel-ratio: 1.3), 
-       only screen and (-o-min-device-pixel-ratio: 1.3 / 1), 
-       only screen and (min-resolution: 125dpi), 
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3),
+       only screen and (min--moz-device-pixel-ratio: 1.3),
+       only screen and (-o-min-device-pixel-ratio: 1.3 / 1),
+       only screen and (min-resolution: 125dpi),
        only screen and (min-resolution: 1.3dppx) {
   .logo {
     background-image: url(logo-icon_2x.png);
-    background-size: 50px 30px; 
+    background-size: 50px 30px;
   }
 }
 </code></pre>
@@ -446,40 +446,40 @@ If you provide only one size, Bourbon assumes you want a square.</p>
 
 <p>This mixin expects a <strong>.png</strong> as standard extension for all images. Per default, it also expects a <strong>_2x.png</strong> extension to the filename of your retina-image. Of course you can overwrite both defaults by providing another retina-filename and standard extension like this:</p>
 
-<pre><code class="sass ">.logo                                     
-  +retina-image(logo-icon, 50px, 30px, 
-                $extension: jpg, 
-                $retina-filename: HiDPI-logo-icon, 
+<pre><code class="sass">.logo
+  +retina-image(logo-icon, 50px, 30px,
+                $extension: jpg,
+                $retina-filename: HiDPI-logo-icon,
                 $retina-suffix: _retina )
 
 // SCSS syntax
 // .logo {
-     @include retina-image(logo-icon, 50px, 30px, 
-                $extension: jpg, 
-                $retina-filename: HiDPI-logo-icon, 
+     @include retina-image(logo-icon, 50px, 30px,
+                $extension: jpg,
+                $retina-filename: HiDPI-logo-icon,
                 $retina-suffix: _retina );
 // }
 </code></pre>
 
 <pre><code class="css CSS output">.logo {
-  background-image: url(logo-icon.jpg); 
+  background-image: url(logo-icon.jpg);
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.3), 
-       only screen and (min--moz-device-pixel-ratio: 1.3), 
-       only screen and (-o-min-device-pixel-ratio: 1.3 / 1), 
-       only screen and (min-resolution: 125dpi), 
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3),
+       only screen and (min--moz-device-pixel-ratio: 1.3),
+       only screen and (-o-min-device-pixel-ratio: 1.3 / 1),
+       only screen and (min-resolution: 125dpi),
        only screen and (min-resolution: 1.3dppx) {
   .logo {
     background-image: url(HiDPI-logo-icon_retina.jpg);
-    background-size: 50px 30px; 
+    background-size: 50px 30px;
   }
 }
 </code></pre>
 
 <p>There is another option if you are using the asset pipeline in Rails:</p>
 
-<pre><code class="sass ">.logo                                     
+<pre><code class="sass">.logo
   +retina-image(logo-icon, 50px, 30px,
                 $asset-pipeline: true)
 
@@ -491,17 +491,17 @@ If you provide only one size, Bourbon assumes you want a square.</p>
 </code></pre>
 
 <pre><code class="css CSS output">.logo {
-  background-image: url(logo-icon.png); 
+  background-image: url(logo-icon.png);
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.3), 
-       only screen and (min--moz-device-pixel-ratio: 1.3), 
-       only screen and (-o-min-device-pixel-ratio: 1.3 / 1), 
-       only screen and (min-resolution: 125dpi), 
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3),
+       only screen and (min--moz-device-pixel-ratio: 1.3),
+       only screen and (-o-min-device-pixel-ratio: 1.3 / 1),
+       only screen and (min-resolution: 125dpi),
        only screen and (min-resolution: 1.3dppx) {
   .logo {          /* Attention! */
     background-image: image-url(logo-icon_2x.png);
-    background-size: 50px 30px; 
+    background-size: 50px 30px;
   }
 }
 </code></pre>
@@ -523,7 +523,7 @@ It’s a small difference but adds to your convenience developing with rails if 
 
 <h2></h2>
 
-<p>That’s it for mixins. Next I will look into functions: <li><a href="/blog/2014/01/29/bourbon-functions/">Bourbon: Functions</a></li></p>
+<p>That’s it for mixins. Next I will look into functions: <li><a href="/blog/2015/07/15/bourbon-functions/">Bourbon: Functions</a></li></p>
 
 <p><img src="/images/bourbon-mixins/bourbon-anime.gif" width="700"></p>
 ]]></content>
@@ -580,7 +580,6 @@ It’s a small difference but adds to your convenience developing with rails if 
   background-position: center top, top left
   // chain the repeat values
   background-repeat: repeat-y, repeat-x
-
   height: 560px
 
 //  SCSS syntax
@@ -606,11 +605,11 @@ The same goes for gradients.</p>
 <p>You can use a shorthand notation for <strong>background-image</strong> like this:</p>
 
 <pre><code class="sass shorthand notation for background-image mixin">.ridiculous-background
-  +background(url("bourbon-logo@2x.png"), url("thoughtbot-logo.png")) 
+  +background(url("bourbon-logo@2x.png"), url("thoughtbot-logo.png"))
 
 //  SCSS syntax
 //  .ridiculous-background
-//    @include background(url("bourbon-logo@2x.png"), url("thoughtbot-logo.png")); 
+//    @include background(url("bourbon-logo@2x.png"), url("thoughtbot-logo.png"));
 </code></pre>
 
 <h4>With gradients</h4>
@@ -701,7 +700,7 @@ $end-gradient-color: #7229d1
 
 <p>This handy mixin makes it straightforward to target the corners of a box in pairs: top, bottom, right and left corners basically. If you want rounded corners and avoid typing repetitive declarations, this one is your friend.</p>
 
-<pre><code class="html ">&lt;section class='super-duper-borders'&gt;
+<pre><code class="html">&lt;section class='super-duper-borders'&gt;
 </code></pre>
 
 <pre><code class="sass border-radius mixin">.super-duper-borders
@@ -726,7 +725,7 @@ $end-gradient-color: #7229d1
       @include border-bottom-radius(3px);
 
       height: 50px;
-//  } 
+//  }
 </code></pre>
 
 <h4>Screenshot</h4>
@@ -780,7 +779,7 @@ $end-gradient-color: #7229d1
 
 <p>( <a href="http://css-tricks.com/box-sizing/">more about box sizing</a> )</p>
 
-<pre><code class="sass box-sizing mixin ">.user-profile
+<pre><code class="sass box-sizing mixin">.user-profile
   +box-sizing(border-box)
 
 //   SCSS syntax
@@ -798,10 +797,10 @@ $end-gradient-color: #7229d1
 
 <p>You attach the transition mixin to the default state of the selector that is to be changed by an event like hover — <strong>not to the pseudo-class!</strong> The declarations used in the pseudo-class are available to the transition mixin.</p>
 
-<pre><code class="html ">&lt;section class='fancy-transition'&gt;
+<pre><code class="html">&lt;section class='fancy-transition'&gt;
 </code></pre>
 
-<pre><code class="sass transition mixin">.fancy-transition 
+<pre><code class="sass transition mixin">.fancy-transition
   +transition (all 1.0s $ease-in-sine)
 
   height: 50px
@@ -809,9 +808,9 @@ $end-gradient-color: #7229d1
   +border-top-radius(5px)
   +border-bottom-radius(5px)
 
-  &amp;:hover 
+  &amp;:hover
   // declarations available to the transitions mixin
-  background-color: blue 
+  background-color: blue
   +border-top-radius(25px)
   +border-bottom-radius(25px)
 
@@ -849,7 +848,7 @@ $end-gradient-color: #7229d1
 
 <p>You can handpick the properties you want to be affected by the transition. Instead of  <strong>all</strong> use only the properties you need. Different timing-functions for different properties can also be chained together nicely.</p>
 
-<pre><code class="sass ">// all
+<pre><code class="sass">// all
 @include transition (all 1.0s $ease-in-sine);
 
 // fine-tuned
@@ -873,7 +872,7 @@ $end-gradient-color: #7229d1
 
 <p><strong>@font-face</strong> allows designers to <strong>customize type</strong> an incredible amount by providing users with custom fonts which they might not have installed on their machines.</p>
 
-<p>In the past I went to <a href="http://fontsquirrel.com">fontsquirrel</a>, which is awesome btw, used the <strong>webfont generator</strong> and pasted a lot of CSS like this into my stylesheets. Those days are gone.</p>
+<p>In the past I went to <a href="http://fontsquirrel.com">fontsquirrel</a>, which is awesome btw, used the <strong>webfont generator</strong> and pasted a lot of CSS like this into my stylesheets.</p>
 
 <pre><code class="scss styles generated by webfont generator pasted into a classic CSS stylesheet">@font-face {
     font-family: 'SourceSansPro-Regular';
@@ -908,21 +907,20 @@ $end-gradient-color: #7229d1
 }
 </code></pre>
 
-<p>Obviously this can get very tedious very quickly. Using Bourbon, it looks like this now:
-(Using Rails with the asset pipeline here)</p>
+<p>Obviously this can get very tedious very quickly. Those days are now gone and this practice became obsolete with this mixin. Using Bourbon, it looks like this: (Using Rails with the asset pipeline here)</p>
 
-<pre><code class="sass font-face mixin">+font-face(SourceSansPro-Regular, 'SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true) 
+<pre><code class="sass font-face mixin">+font-face(SourceSansPro-Regular, 'SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true)
 +font-face(SourceSansPro-Bold, 'SourceSansPro/sourcesanspro-bold', bold, $asset-pipeline: true)
 
-.regular-font 
+.regular-font
   font-family: SourceSansPro-Regular
 
-.bold-font 
+.bold-font
   font-family: SourceSansPro-Bold
 
 //  SCSS syntax
-//  @include font-face(SourceSansPro-Regular, 'SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true); 
-    @include font-face(SourceSansPro-Bold, 'SourceSansPro/sourcesanspro-bold', bold, $asset-pipeline: true); 
+//  @include font-face(SourceSansPro-Regular, 'SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true);
+    @include font-face(SourceSansPro-Bold, 'SourceSansPro/sourcesanspro-bold', bold, $asset-pipeline: true);
 
     .regular-font {
       font-family: SourceSansPro-Regular;
@@ -961,7 +959,7 @@ $end-gradient-color: #7229d1
 </ul>
 
 
-<pre><code class="sass Breaking down the parts">             //font-family name      file-path                          weight  style 
+<pre><code class="sass Breaking down the parts">             //font-family name      file-path                          weight  style
 +font-face(NameFor-font-family, 'SomeFontFolder/NameOfFont-Italic', normal, italic, $asset-pipeline: true)
 
 // SCSS syntax
@@ -983,11 +981,11 @@ It will fail like this:</li>
 </ul>
 
 
-<pre><code class="sass ">                                       !!!
-+font-face(SourceSansPro-Regular, '/SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true) 
+<pre><code class="sass">                                       !!!
++font-face(SourceSansPro-Regular, '/SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true)
 
 //  SCSS syntax
-//  @include font-face(/SourceSansPro-Regular, '/SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true); 
+//  @include font-face(/SourceSansPro-Regular, '/SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true);
 </code></pre>
 
 <h2>Cheers!</h2>
@@ -1036,13 +1034,13 @@ It will fail like this:</li>
 
 <p>For now, here’s the gist:</p>
 
-<p><em>Bourbon</em> mainly provides a small but juicy set of mixins and functions that are extracted from designing with Sass every day.</p>
+<p><strong>Bourbon</strong> mainly provides a small but juicy set of mixins and functions that have been extracted from various designers’s Sass code. The idea was to centralize useful examples and to avoid reinventing the wheel all the time.</p>
 
-<p><em>Neat</em> is a lightweight grid framework for Sass. It is built on top of Bourbon and was motivated by the need for a semantic approach to layout sites.</p>
+<p><strong>Neat</strong> is a lightweight grid framework for Sass. It is built on top of Bourbon and was motivated by the need for a semantic approach to layout sites.</p>
 
-<p><em>Refills</em> is a collection of design patterns, nicely styled or unstyled, which are designed with Bourbon and Neat. Code examples are at your disposal.</p>
+<p><strong>Refills</strong> is a collection of design patterns, nicely styled or unstyled, which are designed with Bourbon and Neat. Code examples are at your disposal.</p>
 
-<p><em>Bitters</em> are a few scaffold styles, variables and a bit of structure for new Bourbon projects to get you up and running in no time.</p>
+<p><strong>Bitters</strong> are a few scaffold styles, variables and a bit of structure for new Bourbon projects to get you up and running in no time.</p>
 
 <h2></h2>
 
