@@ -33,13 +33,13 @@ To be precise, Bourbon has actually grown into a small suite of projects which a
 
 For now, here’s the gist:
 
-*Bourbon* mainly provides a small but juicy set of mixins and functions that are extracted from designing with Sass every day. 
+**Bourbon** mainly provides a small but juicy set of mixins and functions that have been extracted from various designers’s Sass code. The idea was to centralize useful examples and to avoid reinventing the wheel all the time.
 
-*Neat* is a lightweight grid framework for Sass. It is built on top of Bourbon and was motivated by the need for a semantic approach to layout sites. 
+**Neat** is a lightweight grid framework for Sass. It is built on top of Bourbon and was motivated by the need for a semantic approach to layout sites. 
 
-*Refills* is a collection of design patterns, nicely styled or unstyled, which are designed with Bourbon and Neat. Code examples are at your disposal.
+**Refills** is a collection of design patterns, nicely styled or unstyled, which are designed with Bourbon and Neat. Code examples are at your disposal.
 
-*Bitters* are a few scaffold styles, variables and a bit of structure for new Bourbon projects to get you up and running in no time.
+**Bitters** are a few scaffold styles, variables and a bit of structure for new Bourbon projects to get you up and running in no time.
 
 ## 
 
@@ -131,7 +131,6 @@ I have prepared a more detailed look at functions here:
 <a href="{{ root_url }}/blog/2015/07/15/bourbon-functions/">Bourbon: Functions</a>
 
 ## <a name='addons'></a>Bourbon Add-ons
-
 
 + #### **font-family variables**
 

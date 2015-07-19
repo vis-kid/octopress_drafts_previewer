@@ -46,7 +46,6 @@ Creates a background-image property comprised out of multiple ( 1 up to 10 ) com
   background-position: center top, top left
   // chain the repeat values
   background-repeat: repeat-y, repeat-x
-
   height: 560px
 
 //  SCSS syntax
@@ -72,11 +71,11 @@ You can use a shorthand notation for **background-image** like this:
 
 ``` sass shorthand notation for background-image mixin
 .ridiculous-background
-  +background(url("bourbon-logo@2x.png"), url("thoughtbot-logo.png")) 
+  +background(url("bourbon-logo@2x.png"), url("thoughtbot-logo.png"))
 
 //  SCSS syntax
 //  .ridiculous-background
-//    @include background(url("bourbon-logo@2x.png"), url("thoughtbot-logo.png")); 
+//    @include background(url("bourbon-logo@2x.png"), url("thoughtbot-logo.png"));
 ```
 
 #### With gradients
@@ -107,11 +106,11 @@ You can make use of Bourbon’s **linear-gradient function** inside the backgrou
 #### Screenshot
 {% img /images/bourbon-mixins/backgroud-image_gradient.png %}
 
-##  
+## 
 
-+ ## <a name='linear-gradient'></a>linear-gradient mixin 
++ ## <a name='linear-gradient'></a>linear-gradient mixin
 
-This little fella can take up to 10 color stops and takes percent values if you want to fine tune the color distribution. 
+This little fella can take up to 10 color stops and takes percent values if you want to fine tune the color distribution.
 
 ``` html 
 <section class='simple-gradient'>
@@ -136,7 +135,7 @@ $end-gradient-color: #7229d1
 
 {% img /images/bourbon-mixins/linear-gradient-mixin.png %}
 
-##  
+## 
 
 You can also provide an optional first argument to control the direction (in degrees) of the gradient.
 
@@ -159,13 +158,13 @@ $end-gradient-color: #7229d1
 
 {% img /images/bourbon-mixins/linear-gradient-mixin-direction.png %}
 
-##  
+## 
 
-+ ## <a name='border-radius'></a>border-radius mixin 
++ ## <a name='border-radius'></a>border-radius mixin
 
 This handy mixin makes it straightforward to target the corners of a box in pairs: top, bottom, right and left corners basically. If you want rounded corners and avoid typing repetitive declarations, this one is your friend.
 
-``` html 
+``` html
 <section class='super-duper-borders'>
 ```
 
@@ -187,12 +186,12 @@ This handy mixin makes it straightforward to target the corners of a box in pair
       @include background-image(
       linear-gradient(hsla(0, 100%, 100%, 0.25) 0%, hsla(0, 100%, 100%, 0.08) 50%, transparent 50%), 
       linear-gradient(#4e7ba3, darken(#4e7ba4, 10%)));
-    
+
       @include border-top-radius(3px);
       @include border-bottom-radius(3px);
-    
+
       height: 50px;
-//  } 
+//  }
 ```
 #### Screenshot
 
@@ -200,9 +199,9 @@ This handy mixin makes it straightforward to target the corners of a box in pair
 
 Compare both gradients and focus your attention on the lower gradient which now has very subtle **3px rounded corners**. Too much rounding lets designs often look comical. Keep it simple!
 
-##  
+## 
 
-Of course you can go crazy with border radii. If you put some time into it, you can build some cool stuff with it. Below are a couple of nonsensical examples that should just illustrate how the various options work. 
+Of course you can go crazy with border radii. If you put some time into it, you can build some cool stuff with it. Below are a couple of nonsensical examples that should just illustrate how the various options work.
 
 ``` sass border-radius mixin
 .super-duper-borders
@@ -218,7 +217,7 @@ Of course you can go crazy with border radii. If you put some time into it, you 
 
 {% img /images/bourbon-mixins/border-radius-mixin-crazy.png %}
 
-##  
+## 
 
 ``` sass border-radius mixin
 .super-duper-borders
@@ -234,18 +233,17 @@ Of course you can go crazy with border radii. If you put some time into it, you 
 
 {% img /images/bourbon-mixins/border-radius-mixin-crazy2.png %}
 
-##  
+## 
 
-+ ## <a name='box-sizing'></a>box-sizing mixin 
++ ## <a name='box-sizing'></a>box-sizing mixin
 
 Easily change the box model of an element. You have 3 options to choose:
-  
 
-**border-box | content-box | inherit**  
+**border-box | content-box | inherit**
 
-( [more about box sizing](http://css-tricks.com/box-sizing/) ) 
+( [more about box sizing](http://css-tricks.com/box-sizing/) )
 
-``` sass box-sizing mixin 
+``` sass box-sizing mixin
 .user-profile
   +box-sizing(border-box)
 
@@ -255,18 +253,18 @@ Easily change the box model of an element. You have 3 options to choose:
 //  }
 ```
 
-##  
+## 
 
-+ ## <a name='transition'></a>transition mixin 
++ ## <a name='transition'></a>transition mixin
 
 You attach the transition mixin to the default state of the selector that is to be changed by an event like hover — **not to the pseudo-class!** The declarations used in the pseudo-class are available to the transition mixin.
 
-``` html 
+``` html
 <section class='fancy-transition'>
 ```
 
 ``` sass transition mixin
-.fancy-transition 
+.fancy-transition
   +transition (all 1.0s $ease-in-sine)
 
   height: 50px
@@ -274,21 +272,21 @@ You attach the transition mixin to the default state of the selector that is to 
   +border-top-radius(5px)
   +border-bottom-radius(5px)
 
-  &:hover 
+  &:hover
   // declarations available to the transitions mixin
-  background-color: blue 
+  background-color: blue
   +border-top-radius(25px)
   +border-bottom-radius(25px)
 
 //  SCSS syntax
 //  .fancy-transition {
       @include transition (all 1.0s $ease-in-sine);
-    
+
       height: 50px;
       background-color: red;
       @include border-top-radius(5px);
       @include border-bottom-radius(5px);
-    
+
       declarations available to the transitions mixin
       &:hover {
       background-color: blue;
@@ -313,7 +311,7 @@ It transitions over the specified time -> Here 1.0s
 
 You can handpick the properties you want to be affected by the transition. Instead of  **all** use only the properties you need. Different timing-functions for different properties can also be chained together nicely.
 
-``` sass 
+``` sass
 // all
 @include transition (all 1.0s $ease-in-sine);
 
@@ -321,21 +319,21 @@ You can handpick the properties you want to be affected by the transition. Inste
 @include transition (background-color 2.0s $ease-in-sine, height 1.0s $ease-out-cubic);
 ```
 
-##  
+## 
 
 To fine-tune transitional behaviour, there are a number of very convenient Sass variables from Bourbon for various **timing-functions** at your disposal:
 
 {% img /images/bourbon-mixins/timing-functions.gif %}
 
-##  
+## 
 
-+ ## <a name='font-face'></a>font-face mixin 
++ ## <a name='font-face'></a>font-face mixin
 
-As we know, typography is an essential piece of the puzzle of designing high quality projects for the web. As a kind of atomic structure it guides so many design decisions and can influence the perception of the user in a multitude of ways. 
+As we know, typography is an essential piece of the puzzle of designing high quality projects for the web. As a kind of atomic structure it guides so many design decisions and can influence the perception of the user in a multitude of ways.
 
 **@font-face** allows designers to **customize type** an incredible amount by providing users with custom fonts which they might not have installed on their machines.
 
-In the past I went to [fontsquirrel](http://fontsquirrel.com), which is awesome btw, used the **webfont generator** and pasted a lot of CSS like this into my stylesheets. Those days are gone.
+In the past I went to [fontsquirrel](http://fontsquirrel.com), which is awesome btw, used the **webfont generator** and pasted a lot of CSS like this into my stylesheets.
 
 ``` scss styles generated by webfont generator pasted into a classic CSS stylesheet
 @font-face {
@@ -370,27 +368,26 @@ In the past I went to [fontsquirrel](http://fontsquirrel.com), which is awesome 
   font-family: SourceSansPro-Bold;
 }
 ```
-Obviously this can get very tedious very quickly. Using Bourbon, it looks like this now:
-(Using Rails with the asset pipeline here)
+Obviously this can get very tedious very quickly. Those days are now gone and this practice became obsolete with this mixin. Using Bourbon, it looks like this: (Using Rails with the asset pipeline here)
 
 ``` sass font-face mixin
-+font-face(SourceSansPro-Regular, 'SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true) 
++font-face(SourceSansPro-Regular, 'SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true)
 +font-face(SourceSansPro-Bold, 'SourceSansPro/sourcesanspro-bold', bold, $asset-pipeline: true)
 
-.regular-font 
+.regular-font
   font-family: SourceSansPro-Regular
 
-.bold-font 
+.bold-font
   font-family: SourceSansPro-Bold
 
 //  SCSS syntax
-//  @include font-face(SourceSansPro-Regular, 'SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true); 
-    @include font-face(SourceSansPro-Bold, 'SourceSansPro/sourcesanspro-bold', bold, $asset-pipeline: true); 
-    
+//  @include font-face(SourceSansPro-Regular, 'SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true);
+    @include font-face(SourceSansPro-Bold, 'SourceSansPro/sourcesanspro-bold', bold, $asset-pipeline: true);
+
     .regular-font {
       font-family: SourceSansPro-Regular;
     }
-    
+
     .bold-font {
       font-family: SourceSansPro-Bold;
 //  }
@@ -400,29 +397,29 @@ Boom!! That easy! And a remarkable reduction of code as well.
 
 ###Under The Hood:
 
-This mixin expects you to provide 
+This mixin expects you to provide
 
-+ a **fonts** folder where you store your webfonts 
++ a **fonts** folder where you store your webfonts
 — which you can still generate with the **webfont generator** from **fontsquirrel** ->  eot, ttf, woff, svg formats of uploaded typefaces.
 
-#### Screenshot 
+#### Screenshot
 (this example is from a Rails app)
 
 {% img /images/bourbon-mixins/app-assets-fonts.png %}
 
 + a **font-family** name for later use in your declarations
-— can be any name you wish. Above I used **SourceSansPro-Regular **and **SourceSansPro-Bold** for example 
+— can be any name you wish. Above I used **SourceSansPro-Regular **and **SourceSansPro-Bold** for example
 
 + a **file-path** to find the custom font on the machine
 
 + **font-weight** like *normal* or *bold*
 
-+ **font-style** like *normal*, *italic* or *oblique* ( maybe avoid oblique type! ) 
++ **font-style** like *normal*, *italic* or *oblique* ( maybe avoid oblique type! )
 
 + and a hash for using the **asset-pipeline** in Rails or not
 
 ``` sass Breaking down the parts
-             //font-family name      file-path                          weight  style 
+             //font-family name      file-path                          weight  style
 +font-face(NameFor-font-family, 'SomeFontFolder/NameOfFont-Italic', normal, italic, $asset-pipeline: true)
 
 // SCSS syntax
@@ -430,19 +427,19 @@ This mixin expects you to provide
 ```
 
 ### Attention!
-+ The order of the includes matters, and it is: 
++ The order of the includes matters, and it is:
 
 **normal, bold, italic, bold+italic**
- 
+
 + Do not use forward slashes for the folder your fonts are stored in!!
   It will fail like this:
 
-```sass 
+```sass
                                        !!!
-+font-face(SourceSansPro-Regular, '/SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true) 
++font-face(SourceSansPro-Regular, '/SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true)
 
 //  SCSS syntax
-//  @include font-face(/SourceSansPro-Regular, '/SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true); 
+//  @include font-face(/SourceSansPro-Regular, '/SourceSansPro/sourcesanspro-regular', normal, $asset-pipeline: true);
 ```
 
 ## Cheers!
