@@ -1,20 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/07/15/bourbon-functions/</loc>
-    <lastmod>2015-07-15T13:51:46+02:00</lastmod>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/07/10/bourbon-mixins-02/</loc>
-    <lastmod>2015-07-10T16:23:35+02:00</lastmod>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/07/05/bourbon-mixins/</loc>
-    <lastmod>2015-07-05T20:55:32+02:00</lastmod>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/07/01/bourbon-sass-introduction/</loc>
-    <lastmod>2015-07-01T19:34:54+02:00</lastmod>
+    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/2014/02/16/bourbon-neat-semantic-responsive-grids/</loc>
+    <lastmod>2014-02-16T04:29:10+01:00</lastmod>
   </url>
   <url>
     <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/archives/</loc>
@@ -26,45 +14,21 @@
     <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/sass/</loc>
   </url>
   <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/mixins/</loc>
-  </url>
-  <url>
     <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/bourbon/</loc>
   </url>
   <url>
     <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/neat/</loc>
   </url>
   <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/semantics/</loc>
+    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/thoughtbot/</loc>
   </url>
   <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/thoughtbot/</loc>
+    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/scss/</loc>
   </url>
   <url>
     <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/css/</loc>
   </url>
   <url>
     <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/design/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/pixel-density/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/media-query/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/hidpi/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/functions/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/golden-ratio/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/golden-mean/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/divine-proportion/</loc>
   </url>
 </urlset>

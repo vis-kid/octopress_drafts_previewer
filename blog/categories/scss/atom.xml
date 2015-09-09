@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Design | Drafts Previewer]]></title>
-  <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/design/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Scss | Drafts Previewer]]></title>
+  <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/scss/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
   <updated>2015-09-09T17:37:38+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
