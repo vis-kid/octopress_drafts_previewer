@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Bourbon Neat - Semantic Responsive Grids"
-date: 2014-02-16 04:29:10 +0100
+title: "Bourbon Neat: Semantically Responsible Responsive Grids"
+date: 2015-09-09 04:29:10 +0100
 comments: true
 sharing: true
 published: true 
@@ -12,58 +12,50 @@ categories: [ Sass,  Bourbon, Neat, Thoughtbot, SCSS, CSS, Design ]
 
 [{% img /images/bourbon-neat/Bourbon-Neat-Logo.png  250 450 %}](http://neat.bourbon.io/)
 
-[ -- **Context: Rails 4 apps** -- ] 
-
-[ -- **Requirements: Sass 3.2+** -- ]
-
-[ -- **Requirements: Bourbon 2.1+** -- ]
-
 ## Welcome to your new favorite tool
 We all know the myriad of frameworks that promise to deliver a stable frame for developing your designs. And certainly most succeed in that regard in one way or another. The relevant questions are in how many regards and to what degree:
 
-+ ** Are you be able to switch frameworks in the future easily?**
-+ **Are they suited for scaling bigger projects?**
-+ **Problems with cluttering your markup?**
-+ **Are they HUGE — I mean way too big?**
-+ **Steep learning curve?**
-+ **Generic look?**
++ Will you be able to switch frameworks in the future easily?
++ Problems with cluttering your markup?
++ Are they suited for scaling projects?
++ Are they ridiculous in size?
++ Steep learning curve?
++ Generic look?
 
-If any of the issues above are remotly ringing a bell, I just want to assure you that such headaches are easily avoidable these days. It's very rare to come across a project that balances it's payoffs so well like **Neat**. <br> Why? How is it so different?
+If any of the issues above are remotly ringing a bell, I just want to assure you that such headaches are easily avoidable these days. It’s very rare to come across a project that balances it’s payoffs so well as *Bourbon Neat*. Why so? Here are a couple of good reasons:
 
-<!-- more -->
++ super lightweight
++ future-proof
++ easy to use
++ responsive
++ semantic
++ scalable
++ elegant
 
-### By being
+Also it aims to provide you with options—not answers. What I like especially is that it isn’t a factory for generic, pre-defined styles. That way it aids the designer’s own design decisions without standing in the way. 
 
-+ **super lightweight** 
-+ **future-proof**
-+ **responsive**
-+ **easy to use**
-+ **scalable**
-+ **semantic**
-+ **elegant**
-+ **clean**
+## A word about semantics
 
-… and by providing you with options — not answers or by being a factory for generic design decisions. 
-
-## Semantics
-I will make it short:
-**Presentation classes** and additional **“empty” divs** as wrappers are ghosts from the past — at least they should be ghosted really. **Neat** plays a significant role in moving past those gnarly semantic habits. You can write **clean, unobtrusive markup** and have all your grid styles cleanly separated in your stylesheets by including mixins. Busted!
+This is an important issue but I’ll make it short:
+These ugly *presentation classes* and additional *“empty” wrapper divs* that you often find in similar libraries are ghosts from the past—at least they should be ghosted really. *Neat* plays a significant role in moving past these gnarly semantic habits. Nowadays you can easily write *clean, unobtrusive markup* and have all your grid styles cleanly separated in your stylesheets by including mixins. Busted!
 
 {% img /images/bourbon-neat/Ghostbusters.gif 350 %}
 
-## Grids
+## Neat Grids
 
-Design is all about relationships and relationships are hard. Grids make them easier by helping to tie structures together more meaningfully.
+Why deal with a grid framework at all? Well, design is all about relationships and relationships are hard. Grids make them easier by helping you tie structures together more meaningfully and organized.
 
-What I like most about grids is that they **simplify, reduce** and **stabilize** – in essence, they help trim the fat out of designs — if not applied mindlessly at least. That's exactly what Bourbon Neat helps achieve so effortlessly. 
+What I like most about grids is that they *simplify, reduce* and *stabilize*—in essence, they help trim the fat out of designs. Unless applied mindlessly of course, that’s exactly what Bourbon Neat helps achieve so effortlessly. Neat’s grids offer a lot of power in a small looking package that is easy to use. Hard to belive this library consists of only:
 
-It's a lot of power in a small looking box — and easy to use as well. **Neat** consists of “only” 
++ ### 14 mixins
 
-+ ### **eleven mixins**
+  + reset-layout-direction
+  + direction-context
+  + shift-in-context
+  + display-context
   + outer-container
   + span-columns
   + reset-display
-  + reset-layout
   + fill-parent
   + reset-all
   + omega
@@ -72,19 +64,18 @@ It's a lot of power in a small looking box — and easy to use as well. **Neat**
   + pad
   + row
 
-##  
++ ### one function for setting breakpoints 
 
-+ ### one **function** for setting **breakpoints** 
   + new-breakpoint
 
-##  
++ ### and twelve variables for settings 
 
-+ ### **eleven variables for settings** 
   + default-layout-direction
   + visual-grid-opacity
   + border-box-sizing
   + visual-grid-index
   + visual-grid-color
+  + disable-warnings
   + default-feature
   + grids-columns
   + max-width
@@ -92,25 +83,19 @@ It's a lot of power in a small looking box — and easy to use as well. **Neat**
   + column
   + gutter
 
-
+Boom! That’s it!
 
 ## Responsive Grids
 
-{% blockquote %}
+{% img /images/bourbon-neat/grids.gif 750 %}
 
-“The taller the bamboo grows, the lower it bends”
+It’s becoming obvious that *change* and the *need for flexibility* are constant future-proof necessities. Incorporating media queries should be smooth and easily manageable but they can quickly become a mess if not handled with care. 
 
-{% endblockquote %}
+Bourbon Neat encourages a [*DRY*](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) approach for handling your breakpoints with it’s **new-breakpoint** function. Save breakpoints in variables and resuse them wherever you need. Changing a bunch of media queries in one place is hard to beat. 
 
-{% img /images/bourbon-neat/Responsive-Bamboo.png 750 %}
+Given that you’re using intelligent tools, it’s definitely a joy working with grids. This framework does a great job in planning for developer happiness—long- and short-term. To me there is but one word which describes best what Bourbon Neat has provided me with when I work with grids: *Zen*. Hard to find better developer / designer happiness than that imho. 
 
-It's becoming obvious that **change** and the **need for flexibility** are constant future-proof necessities. Incorporating media queries should be smooth and easily manageable but they can quickly become a mess if not handled with care. 
-
-Bourbon Neat encourages a **DRY approach** for handling your breakpoints with it's **new-breakpoint function**. Save breakpoints in variables and resuse them wherever you need. Changing a bunch of media queries in one place is hard to beat. 
-
-It's definitely a joy working with grids — given that you're using the right tools. This framework does a great job planning for developer happiness — long- and short-term. To me there is but one word which describes it best: **ZEN**. 
-
-In the next article I will take a closer, more technical look at how to use this fantastic gem.
-Have fun playing with Neat — I know you will!
+In the next article I’ll take a closer, more technical look at how to use this fantastic gem.
+Have fun playing with Neat, I know you will!
 
 {% img /images/bourbon-neat/ping-pong-grids.gif 450 %}
