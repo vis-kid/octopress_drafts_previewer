@@ -4,7 +4,7 @@
   <title><![CDATA[Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-09T17:37:38+02:00</updated>
+  <updated>2015-09-11T00:05:13+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -14,78 +14,67 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Bourbon Neat - Semantic Responsive Grids]]></title>
-    <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2014/02/16/bourbon-neat-semantic-responsive-grids/"/>
-    <updated>2014-02-16T04:29:10+01:00</updated>
-    <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2014/02/16/bourbon-neat-semantic-responsive-grids</id>
+    <title type="html"><![CDATA[Bourbon Neat: Semantically Responsible Responsive Grids]]></title>
+    <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/09/bourbon-neat-semantic-responsive-grids/"/>
+    <updated>2015-09-09T05:29:10+02:00</updated>
+    <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/09/bourbon-neat-semantic-responsive-grids</id>
     <content type="html"><![CDATA[<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-neat/bourbon-neat.jpg" width="450" height="260" title="" ></p>
 
 <p><a href="http://neat.bourbon.io/"><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-neat/Bourbon-Neat-Logo.png" width="250" height="450"></a></p>
-
-<p>[ &ndash; <strong>Context: Rails 4 apps</strong> &ndash; ]</p>
-
-<p>[ &ndash; <strong>Requirements: Sass 3.2+</strong> &ndash; ]</p>
-
-<p>[ &ndash; <strong>Requirements: Bourbon 2.1+</strong> &ndash; ]</p>
 
 <h2>Welcome to your new favorite tool</h2>
 
 <p>We all know the myriad of frameworks that promise to deliver a stable frame for developing your designs. And certainly most succeed in that regard in one way or another. The relevant questions are in how many regards and to what degree:</p>
 
 <ul>
-<li><strong> Are you be able to switch frameworks in the future easily?</strong></li>
-<li><strong>Are they suited for scaling bigger projects?</strong></li>
-<li><strong>Problems with cluttering your markup?</strong></li>
-<li><strong>Are they HUGE — I mean way too big?</strong></li>
-<li><strong>Steep learning curve?</strong></li>
-<li><strong>Generic look?</strong></li>
+<li>Will you be able to switch frameworks in the future easily?</li>
+<li>Problems with cluttering your markup?</li>
+<li>Are they suited for scaling projects?</li>
+<li>Are they ridiculous in size?</li>
+<li>Steep learning curve?</li>
+<li>Generic look?</li>
 </ul>
 
 
-<p>If any of the issues above are remotly ringing a bell, I just want to assure you that such headaches are easily avoidable these days. It&rsquo;s very rare to come across a project that balances it&rsquo;s payoffs so well like <strong>Neat</strong>. <br> Why? How is it so different?</p>
-
-<!-- more -->
-
-
-<h3>By being</h3>
+<p>If any of the issues above are remotly ringing a bell, I just want to assure you that such headaches are easily avoidable these days. It’s very rare to come across a project that balances it’s payoffs so well as <em>Bourbon Neat</em>. Why so? Here are a couple of good reasons:</p>
 
 <ul>
-<li><strong>super lightweight</strong></li>
-<li><strong>future-proof</strong></li>
-<li><strong>responsive</strong></li>
-<li><strong>easy to use</strong></li>
-<li><strong>scalable</strong></li>
-<li><strong>semantic</strong></li>
-<li><strong>elegant</strong></li>
-<li><strong>clean</strong></li>
+<li>super lightweight</li>
+<li>future-proof</li>
+<li>easy to use</li>
+<li>responsive</li>
+<li>semantic</li>
+<li>scalable</li>
+<li>elegant</li>
 </ul>
 
 
-<p>… and by providing you with options — not answers or by being a factory for generic design decisions.</p>
+<p>Also it aims to provide you with options—not answers. What I like especially is that it isn’t a factory for generic, pre-defined styles. That way it aids the designer’s own design decisions without standing in the way.</p>
 
-<h2>Semantics</h2>
+<h2>A word about semantics</h2>
 
-<p>I will make it short:
-<strong>Presentation classes</strong> and additional <strong>“empty” divs</strong> as wrappers are ghosts from the past — at least they should be ghosted really. <strong>Neat</strong> plays a significant role in moving past those gnarly semantic habits. You can write <strong>clean, unobtrusive markup</strong> and have all your grid styles cleanly separated in your stylesheets by including mixins. Busted!</p>
+<p>This is an important issue but I’ll make it short:
+These ugly <em>presentation classes</em> and additional <em>“empty” wrapper divs</em> that you often find in similar libraries are ghosts from the past—at least they should be ghosted really. <em>Neat</em> plays a significant role in moving past these gnarly semantic habits. Nowadays you can easily write <em>clean, unobtrusive markup</em> and have all your grid styles cleanly separated in your stylesheets by including mixins. Busted!</p>
 
 <p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-neat/Ghostbusters.gif" width="350"></p>
 
-<h2>Grids</h2>
+<h2>Neat Grids</h2>
 
-<p>Design is all about relationships and relationships are hard. Grids make them easier by helping to tie structures together more meaningfully.</p>
+<p>Why deal with a grid framework at all? Well, design is all about relationships and relationships are hard. Grids make them easier by helping you tie structures together more meaningfully and organized.</p>
 
-<p>What I like most about grids is that they <strong>simplify, reduce</strong> and <strong>stabilize</strong> – in essence, they help trim the fat out of designs — if not applied mindlessly at least. That&rsquo;s exactly what Bourbon Neat helps achieve so effortlessly.</p>
-
-<p>It&rsquo;s a lot of power in a small looking box — and easy to use as well. <strong>Neat</strong> consists of “only”</p>
+<p>What I like most about grids is that they <em>simplify, reduce</em> and <em>stabilize</em>—in essence, they help trim the fat out of designs. Unless applied mindlessly of course, that’s exactly what Bourbon Neat helps achieve so effortlessly. Neat’s grids offer a lot of power in a small looking package that is easy to use. Hard to belive this library consists of only:</p>
 
 <ul>
-<li><h3><strong>eleven mixins</strong></h3>
+<li><h3>14 mixins</h3>
 
 <ul>
+<li>reset-layout-direction</li>
+<li>direction-context</li>
+<li>shift-in-context</li>
+<li>display-context</li>
 <li>outer-container</li>
 <li>span-columns</li>
 <li>reset-display</li>
-<li>reset-layout</li>
 <li>fill-parent</li>
 <li>reset-all</li>
 <li>omega</li>
@@ -95,25 +84,13 @@
 <li>row</li>
 </ul>
 </li>
-</ul>
-
-
-<h2></h2>
-
-<ul>
-<li><h3>one <strong>function</strong> for setting <strong>breakpoints</strong></h3>
+<li><h3>one function for setting breakpoints</h3>
 
 <ul>
 <li>new-breakpoint</li>
 </ul>
 </li>
-</ul>
-
-
-<h2></h2>
-
-<ul>
-<li><h3><strong>eleven variables for settings</strong></h3>
+<li><h3>and twelve variables for settings</h3>
 
 <ul>
 <li>default-layout-direction</li>
@@ -121,6 +98,7 @@
 <li>border-box-sizing</li>
 <li>visual-grid-index</li>
 <li>visual-grid-color</li>
+<li>disable-warnings</li>
 <li>default-feature</li>
 <li>grids-columns</li>
 <li>max-width</li>
@@ -132,21 +110,20 @@
 </ul>
 
 
+<p>Boom! That’s it!</p>
+
 <h2>Responsive Grids</h2>
 
-<blockquote><p>“The taller the bamboo grows, the lower it bends”</p></blockquote>
+<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-neat/grids.gif" width="750"></p>
 
+<p>It’s becoming obvious that <em>change</em> and the <em>need for flexibility</em> are constant future-proof necessities. Incorporating media queries should be smooth and easily manageable but they can quickly become a mess if not handled with care.</p>
 
-<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-neat/Responsive-Bamboo.png" width="750"></p>
+<p>Bourbon Neat encourages a <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself"><em>DRY</em></a> approach for handling your breakpoints with it’s <strong>new-breakpoint</strong> function. Save breakpoints in variables and resuse them wherever you need. Changing a bunch of media queries in one place is hard to beat.</p>
 
-<p>It&rsquo;s becoming obvious that <strong>change</strong> and the <strong>need for flexibility</strong> are constant future-proof necessities. Incorporating media queries should be smooth and easily manageable but they can quickly become a mess if not handled with care.</p>
+<p>Given that you’re using intelligent tools, it’s definitely a joy working with grids. This framework does a great job in planning for developer happiness—long- and short-term. To me there is but one word which describes best what Bourbon Neat has provided me with when I work with grids: <em>Zen</em>. Hard to find better developer / designer happiness than that imho.</p>
 
-<p>Bourbon Neat encourages a <strong>DRY approach</strong> for handling your breakpoints with it&rsquo;s <strong>new-breakpoint function</strong>. Save breakpoints in variables and resuse them wherever you need. Changing a bunch of media queries in one place is hard to beat.</p>
-
-<p>It&rsquo;s definitely a joy working with grids — given that you&rsquo;re using the right tools. This framework does a great job planning for developer happiness — long- and short-term. To me there is but one word which describes it best: <strong>ZEN</strong>.</p>
-
-<p>In the next article I will take a closer, more technical look at how to use this fantastic gem.
-Have fun playing with Neat — I know you will!</p>
+<p>In the next article I’ll take a closer, more technical look at how to use this fantastic gem.
+Have fun playing with Neat, I know you will!</p>
 
 <p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/bourbon-neat/ping-pong-grids.gif" width="450"></p>
 ]]></content>
