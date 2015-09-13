@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Neat | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/neat/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-11T00:05:13+02:00</updated>
+  <updated>2015-09-13T19:16:11+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -24,7 +24,9 @@
 
 <h2>Welcome to your new favorite tool</h2>
 
-<p>We all know the myriad of frameworks that promise to deliver a stable frame for developing your designs. And certainly most succeed in that regard in one way or another. The relevant questions are in how many regards and to what degree:</p>
+<p>Bourbon Neat was conceived by <a href="https://twitter.com/kaishin">Reda Lemeden</a> and is part of the fantastic <a href="http://bourbon.io/">Bourbon</a> suite. Its basically a lightweight responsive grid framework that was built on top of Sass and Bourbon. If semantic markup is your thing and presentation classes make you mad, this smart library will brighten your day. Btw, the project is supported by <a href="https://thoughtbot.com/">thoughtbot</a> and their designers take care of it.</p>
+
+<p>Before we install the thing, let me give you a couple of good reasons to look into it. We all know countless frameworks that promise to deliver a stable frame for developing your designs. And certainly most succeed in that regard in one way or another. The relevant questions are in how many regards and to what degree:</p>
 
 <ul>
 <li>Will you be able to switch frameworks in the future easily?</li>
@@ -36,7 +38,7 @@
 </ul>
 
 
-<p>If any of the issues above are remotly ringing a bell, I just want to assure you that such headaches are easily avoidable these days. It’s very rare to come across a project that balances it’s payoffs so well as <em>Bourbon Neat</em>. Why so? Here are a couple of good reasons:</p>
+<p>If any of the issues above are remotly ringing a bell, I just want to assure you that such headaches are easily avoidable these days. Its very rare to come across a project that balances its payoffs so well as <em>Bourbon Neat</em> (Or just Neat for short). Why so? Here are a couple of good reasons:</p>
 
 <ul>
 <li>super lightweight</li>
@@ -49,7 +51,7 @@
 </ul>
 
 
-<p>Also it aims to provide you with options—not answers. What I like especially is that it isn’t a factory for generic, pre-defined styles. That way it aids the designer’s own design decisions without standing in the way.</p>
+<p>Bourbon also aims to provide you with options—not answers. What I like especially is that it isn’t a factory for generic, pre-defined styles. That way it aids the designer’s own design decisions without standing in the way.</p>
 
 <h2>A word about semantics</h2>
 
@@ -60,9 +62,9 @@ These ugly <em>presentation classes</em> and additional <em>“empty” wrapper 
 
 <h2>Neat Grids</h2>
 
-<p>Why deal with a grid framework at all? Well, design is all about relationships and relationships are hard. Grids make them easier by helping you tie structures together more meaningfully and organized.</p>
+<p>Why deal with a grid framework at all? Well, design is all about relationships and relationships are obviously hard. Grids make them easier by helping you tie structures together more meaningfull and organized.</p>
 
-<p>What I like most about grids is that they <em>simplify, reduce</em> and <em>stabilize</em>—in essence, they help trim the fat out of designs. Unless applied mindlessly of course, that’s exactly what Bourbon Neat helps achieve so effortlessly. Neat’s grids offer a lot of power in a small looking package that is easy to use. Hard to belive this library consists of only:</p>
+<p>What I like most about grids is that they <em>simplify, reduce</em> and <em>stabilize</em>—in essence, they help trim the fat out of designs. Unless applied mindlessly of course, that’s exactly what Neat helps you achieve so effortlessly. Neat’s grid framework offers a lot of power in a small looking package that is easy to use. Hard to believe this library consists of only:</p>
 
 <ul>
 <li><h3>14 mixins</h3>
@@ -97,8 +99,8 @@ These ugly <em>presentation classes</em> and additional <em>“empty” wrapper 
 <li>visual-grid-opacity</li>
 <li>border-box-sizing</li>
 <li>visual-grid-index</li>
-<li>visual-grid-color</li>
 <li>disable-warnings</li>
+<li>visual-grid-color</li>
 <li>default-feature</li>
 <li>grids-columns</li>
 <li>max-width</li>
@@ -110,20 +112,144 @@ These ugly <em>presentation classes</em> and additional <em>“empty” wrapper 
 </ul>
 
 
-<p>Boom! That’s it!</p>
+<p>Boom, that’s it! Pretty low key but it equips you with a lot of horsepower!</p>
 
 <h2>Responsive Grids</h2>
 
 <p><img src="/images/bourbon-neat/grids.gif" width="750"></p>
 
-<p>It’s becoming obvious that <em>change</em> and the <em>need for flexibility</em> are constant future-proof necessities. Incorporating media queries should be smooth and easily manageable but they can quickly become a mess if not handled with care.</p>
+<p>Its becoming obvious that <em>change</em> and the <em>need for flexibility</em> are constant future-proof necessities. Incorporating media queries should be smooth and easily manageable but they can quickly become a mess if not handled with care.</p>
 
-<p>Bourbon Neat encourages a <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself"><em>DRY</em></a> approach for handling your breakpoints with it’s <strong>new-breakpoint</strong> function. Save breakpoints in variables and resuse them wherever you need. Changing a bunch of media queries in one place is hard to beat.</p>
+<p>Bourbon Neat encourages a <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself"><em>DRY</em></a> approach for handling your breakpoints with its <strong>new-breakpoint</strong> function. Save breakpoints in variables and resuse them wherever you need. Changing a bunch of media queries in one place is hard to beat.</p>
 
-<p>Given that you’re using intelligent tools, it’s definitely a joy working with grids. This framework does a great job in planning for developer happiness—long- and short-term. To me there is but one word which describes best what Bourbon Neat has provided me with when I work with grids: <em>Zen</em>. Hard to find better developer / designer happiness than that imho.</p>
+<p>To be more concrete, let me give you one little teaser.
+Here’s some random Sass example using the <strong>new-breakpoint</strong> function for media-queries:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$mobile</span><span class="o">:</span> <span class="nf">new-breakpoint</span><span class="p">(</span><span class="no">max-width</span> <span class="mi">500</span><span class="kt">px</span> <span class="mi">4</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.sidebar</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>  <span class="nd">+media</span><span class="p">(</span><span class="nv">$mobile</span><span class="p">)</span>
+</span><span class='line'>      <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.content</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+</span><span class='line'>    <span class="nd">+media</span><span class="p">(</span><span class="nv">$mobile</span><span class="p">)</span>
+</span><span class='line'>      <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+In my next article I’ll dive deeper into the nitty-gritties of this but what should be apparent to you in this example is the ease of use if you decide to change your media queries. Through the use of Sass variables in this function, you’ll have one consistent, authoritative place to change / tweak your responsive layout without touching each element individually.</p>
+
+<h2>Installation</h2>
+
+<p>Now that you know what you’re getting yourself into, let’s install this beauty:
+(You need <a href="http://sass-lang.com/install">Sass</a> installed before you start of course)</p>
+
+<ul>
+<li><h4>#01 Install Bourbon</h4></li>
+</ul>
+
+
+<p>Take a look at my article about Bourbon if you need to follow this step.</p>
+
+<ul>
+<li><h4>#02 Install the Neat gem via <a href="https://rubygems.org/">RubyGems</a></h4></li>
+</ul>
+
+
+<pre><code class="">gem install neat
+</code></pre>
+
+<ul>
+<li><h4>#03 Install Neat</h4></li>
+</ul>
+
+
+<p>Change into a Sass directory of your choosing:</p>
+
+<pre><code>neat install
+</code></pre>
+
+<p>This will install all the necessary mixins, settings and functions in your designated directory.</p>
+
+<h3>Screenshot:</h3>
+
+<p><img src="/images/bourbon-neat/neat_directories.png"></p>
+
+<ul>
+<li><h4>#04 Do a Sass import for Neat in your Sass stylesheet</h4></li>
+</ul>
+
+
+<pre><code class="sass">@import 'bourbon/bourbon'
+@import 'grid-settings'
+@import 'neat/neat'
+</code></pre>
+
+<p>As you can see, the order is important here. Because Neat was built on top of Bourbon you need to import Bourbon first. Same goes for <strong>grid-settings</strong>.</p>
+
+<h2>Rails</h2>
+
+<p>If you want to use Neat with Rails you’ll just add</p>
+
+<ul>
+<li><h4>#01</h4></li>
+</ul>
+
+
+<pre><code class="ruby">gem neat
+</code></pre>
+
+<p>to your Gemfile and run</p>
+
+<ul>
+<li><h4>#02</h4></li>
+</ul>
+
+
+<pre><code class="bash">bundle install
+</code></pre>
+
+<p>in your terminal.</p>
+
+<ul>
+<li><h4>#03</h4></li>
+</ul>
+
+
+<p>In <strong>application.sass</strong> you’ll simply add</p>
+
+<pre><code class="sass">@import 'bourbon'
+@import 'grid-settings'
+@import 'neat'
+</code></pre>
+
+<p>and you’re good to go. You should remember though that <code>@import</code> isn’t playing well with Sprockets directives. Therefore you need to delete Sprockets directives. In <strong>application.sass</strong>, all references to <strong>require</strong>, <strong>require_tree</strong>, and <strong>require_self</strong> need to go.</p>
+
+<p>Last but not least, the fine folks at thoughtbot provided you with a nice command line interface. It comes with three self-explanatory commands:</p>
+
+<pre><code class="bash">neat install
+
+neat update
+
+neat remove
+</code></pre>
+
+<h2>Closing $0.02</h2>
+
+<p>Given that you’re using intelligent tools, its definitely a joy working with grids. This framework does a great job in planning for developer happiness—long- and short-term. To me there is but one word which describes best what Bourbon Neat has provided me with when I work with grids: <em>Zen</em>. Hard to find better developer / designer happiness than that imho.</p>
 
 <p>In the next article I’ll take a closer, more technical look at how to use this fantastic gem.
-Have fun playing with Neat, I know you will!</p>
+Have fun playing with Neat! I know you will!</p>
 
 <p><img src="/images/bourbon-neat/ping-pong-grids.gif" width="450"></p>
 ]]></content>
