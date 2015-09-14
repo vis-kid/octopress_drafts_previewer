@@ -216,7 +216,7 @@ Here’s some random Sass example using the <strong>new-breakpoint</strong> func
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>In my next article I’ll dive deeper into the nitty-gritties of this but what should be apparent to you in this example is the ease of use if you decide to change your media queries. Through the use of Sass variables in this function, you’ll have one consistent, authoritative place to change / tweak your responsive layout without touching each element individually.</p>
+<p>In my next article I’ll dive deeper into the nitty-gritties of this but what should be apparent to you in this example is the ease of use if you decide to change your media queries. Through the use of Sass variables and this function, you’ll have one consistent, authoritative place to change / tweak your responsive layout without touching each element individually.</p>
 
 <h2>Installation</h2>
 
@@ -272,7 +272,7 @@ Here’s some random Sass example using the <strong>new-breakpoint</strong> func
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>As you can see, the order is important here. Because Neat was built on top of Bourbon you need to import Bourbon first. Same goes for <strong>grid-settings</strong>.</p>
+<p>As you can see, the order is important here. Because Neat was built on top of Bourbon you need to import Bourbon first. The same goes for its <strong>grid-settings</strong>.</p>
 
 <h2>Rails</h2>
 
@@ -320,7 +320,7 @@ Here’s some random Sass example using the <strong>new-breakpoint</strong> func
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>and you’re good to go. You should remember though that <code>@import</code> isn’t playing well with Sprockets directives. Therefore you need to delete Sprockets directives. In <strong>application.sass</strong>, all references to <strong>require</strong>, <strong>require_tree</strong>, and <strong>require_self</strong> need to go.</p>
+<p>and you’re good to go. Remember though that <code>@import</code> isn’t playing well with Sprockets directives and therefore you need to delete them. In <strong>application.sass</strong>, all references to <strong>require</strong>, <strong>require_tree</strong>, and <strong>require_self</strong> need to go.</p>
 
 <p>Last but not least, the fine folks at thoughtbot provided you with a nice command line interface. It comes with three self-explanatory commands:</p>
 

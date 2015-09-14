@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Sass | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/sass/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-13T19:16:11+02:00</updated>
+  <updated>2015-09-14T20:37:02+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -147,7 +147,7 @@ Here’s some random Sass example using the <strong>new-breakpoint</strong> func
 </span><span class='line'>    <span class="nd">+media</span><span class="p">(</span><span class="nv">$mobile</span><span class="p">)</span>
 </span><span class='line'>      <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
-In my next article I’ll dive deeper into the nitty-gritties of this but what should be apparent to you in this example is the ease of use if you decide to change your media queries. Through the use of Sass variables in this function, you’ll have one consistent, authoritative place to change / tweak your responsive layout without touching each element individually.</p>
+In my next article I’ll dive deeper into the nitty-gritties of this but what should be apparent to you in this example is the ease of use if you decide to change your media queries. Through the use of Sass variables and this function, you’ll have one consistent, authoritative place to change / tweak your responsive layout without touching each element individually.</p>
 
 <h2>Installation</h2>
 
@@ -195,7 +195,7 @@ In my next article I’ll dive deeper into the nitty-gritties of this but what s
 @import 'neat/neat'
 </code></pre>
 
-<p>As you can see, the order is important here. Because Neat was built on top of Bourbon you need to import Bourbon first. Same goes for <strong>grid-settings</strong>.</p>
+<p>As you can see, the order is important here. Because Neat was built on top of Bourbon you need to import Bourbon first. The same goes for its <strong>grid-settings</strong>.</p>
 
 <h2>Rails</h2>
 
@@ -233,7 +233,7 @@ In my next article I’ll dive deeper into the nitty-gritties of this but what s
 @import 'neat'
 </code></pre>
 
-<p>and you’re good to go. You should remember though that <code>@import</code> isn’t playing well with Sprockets directives. Therefore you need to delete Sprockets directives. In <strong>application.sass</strong>, all references to <strong>require</strong>, <strong>require_tree</strong>, and <strong>require_self</strong> need to go.</p>
+<p>and you’re good to go. Remember though that <code>@import</code> isn’t playing well with Sprockets directives and therefore you need to delete them. In <strong>application.sass</strong>, all references to <strong>require</strong>, <strong>require_tree</strong>, and <strong>require_self</strong> need to go.</p>
 
 <p>Last but not least, the fine folks at thoughtbot provided you with a nice command line interface. It comes with three self-explanatory commands:</p>
 
