@@ -111,7 +111,7 @@ $mobile: new-breakpoint(max-width 500px 4)
 	+media($mobile)
 	  +span-columns(3)
 ```
-In my next article I’ll dive deeper into the nitty-gritties of this but what should be apparent to you in this example is the ease of use if you decide to change your media queries. Through the use of Sass variables in this function, you’ll have one consistent, authoritative place to change / tweak your responsive layout without touching each element individually. 
+In my next article I’ll dive deeper into the nitty-gritties of this but what should be apparent to you in this example is the ease of use if you decide to change your media queries. Through the use of Sass variables and this function, you’ll have one consistent, authoritative place to change / tweak your responsive layout without touching each element individually. 
 
 ## Installation
 
@@ -148,7 +148,7 @@ This will install all the necessary mixins, settings and functions in your desig
 @import 'neat/neat'
 ```
 
-As you can see, the order is important here. Because Neat was built on top of Bourbon you need to import Bourbon first. Same goes for **grid-settings**.
+As you can see, the order is important here. Because Neat was built on top of Bourbon you need to import Bourbon first. The same goes for its **grid-settings**.
 
 ## Rails
 
@@ -179,7 +179,7 @@ In **application.sass** you’ll simply add
 @import 'grid-settings'
 @import 'neat'
 ```
-and you’re good to go. You should remember though that `@import` isn’t playing well with Sprockets directives. Therefore you need to delete Sprockets directives. In **application.sass**, all references to **require**, **require_tree**, and **require_self** need to go.
+and you’re good to go. Remember though that `@import` isn’t playing well with Sprockets directives and therefore you need to delete them. In **application.sass**, all references to **require**, **require_tree**, and **require_self** need to go.
 
 Last but not least, the fine folks at thoughtbot provided you with a nice command line interface. It comes with three self-explanatory commands:
 
