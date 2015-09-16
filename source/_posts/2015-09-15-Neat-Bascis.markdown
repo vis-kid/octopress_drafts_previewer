@@ -89,8 +89,12 @@ article
   background-color: Olive
 ```
 
+You don’t need to concern yourself too much about **span-columns** and **omega** in this example for now. After a couple of paragraphs it will be crystal clear to you.
+
 
 #### Screenshot
 
 {% img /images/Neat_01/outer-container.png %}
 
+Here is also a codepen for playing around with it:
+http://codepen.io/vis-kid/pen/xwZJOP
