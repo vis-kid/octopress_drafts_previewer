@@ -23,13 +23,13 @@ In this piece I’ll take a newbie-friendly look at the following function, mixi
 
 #### Mixins
 
-+ shift-in-context()
++ shift-in-context
 + outer-container
-+ span-columns()
-+ media()
++ span-columns
++ media
 + omega
-+ shift()
-+ pad()
++ shift
++ pad
 
 #### Variables
 
@@ -37,18 +37,17 @@ In this piece I’ll take a newbie-friendly look at the following function, mixi
 + $visual-grid-index
 + $visual-grid-color
 + $grid-columns
-+ $visual-grid
 + $max-width
++ $visual-grid
 
 ## Mixins
 
 + ### outer-container
 
-In your **grid-settings** file you can specify a **$max-width** Sass variable that defines the maximum width that the content of your page should span. For example, Neat comes with a easily changeable **$max-width** setting of 1088px (converted to em) out of the box. That setting basically specifies the width of your outermost container for your “main” content. 
+When you make an element the outer container, Neat automatically centers it in the viewport (by adding **margin-left: auto** / **margin-right: auto**), clears the floats and applies the specified **$max-width**. It is an optional mixin (recommended though) and you can have multiple outer container elements on a single page. The one thing you can’t do is nest them. 
 
-When you make a container the outer-container, Neat automatically centers it in the viewport (by adding **margin-left: auto** / **margin-right: auto**), clears the floats and applies the specified **$max-width**. It is an optional mixin (recommended though) and you can have multiple outer container elements on a single page. The one thing you can’t do is nest them. 
+The outer container holds your layout grid. Within it, your grid can span as many columns across as specified in your **grid-settings** file via the **$grid-columns** variable (default to 12 columns). That means all the elements in a row have to add up to the total number of columns specified there. 
 
-The outer container holds your layout. Within its element you’ll build your grid which can span as many columns across as specified in your settings under **$grid-columns** (default to 12 columns). All the elements in a row have to add up to the total number of columns specified. 
 
 In the dummy example below, you’ll see that the **container** element wraps a couple of **aside** and **article** tags. They span 3 and 9 columns respectively and simply add up to 12 columns as specified in my settings. If I’d go over that number of columns the layout would certainly break. Think of the **outer-container** mixin as the most likey prerequisite for adding grid layouts within container elements.
 
@@ -89,8 +88,7 @@ article
   background-color: Olive
 ```
 
-You don’t need to concern yourself too much about **span-columns** and **omega** in this example for now. After a couple of paragraphs it will be crystal clear to you.
-
+The background colors are supposed to make it easier to see how the pieces fit together. You don’t need to concern yourself too much about the **span-columns** and **omega** mixins in this example for now. After a couple of paragraphs they will be crystal clear to you.
 
 #### Screenshot
 
@@ -98,3 +96,44 @@ You don’t need to concern yourself too much about **span-columns** and **omega
 
 Here is also a codepen for playing around with it:
 http://codepen.io/vis-kid/pen/xwZJOP
+
+In your settings file you can also specify a **$max-width** Sass variable that defines the maximum width that the content of your page should span. For example, Neat comes with a easily changeable **$max-width** setting of 1088px (converted to em) out of the box. That setting basically specifies the width of your outer container elements.
+
+There is also the option to provide this mixin with an argument for a **$local-max-width** if you want a certain container element to have a different **max-width** than the global one set in **grid-settings**. This overwrites locally the default **max-width** from your settings file. You can provide *pixel*, *em* or *percentage* arguments. The columns of your grid inside that container adjust their width automatically but the number of columns stays the same.
+
+```sass
+.container
+  +outer-container(800px)
+  background-color: tomato
+```
+```sass
+.container
+  +outer-container(80%)
+  background-color: tomato
+```
+
+http://codepen.io/vis-kid/pen/vNGOqj
+
++ ### span-columns
+
+If you’re new to designing with grids, you should maybe look into this excellent book by [Khoi Vinh](http://www.subtraction.com/2010/11/05/i-wrote-a-book/). I highly recommend it. One concept that you need to understand right away though is that you build up your grid designs through a series of columns that span across the page. 
+
+The basic functionality of this is super straightforward in this framework. You just pick an element and tell it how many columns it should span within the total number of **$grid-columns**. 
+
+``` sass
+aside
+  +span-columns(3)
+  margin-bottom: 5px
+  height: 200px
+  background-color: LightSkyBlue 
+
+article
+  +span-columns(9)
+  +omega
+  margin-bottom: 5px
+  height: 200px
+  background-color: Olive
+```
+
+The coolest part is that there is no need to add anything to your markup—since this is related to your presentation layer, you only add the info how your grid is composed of to your Sass files. Cleanly separated concerns. Every sane designer that touches your work after you will love you for not polluting the content with styling information.
+
