@@ -120,12 +120,37 @@ If you’re new to designing with grids, you should maybe look into this excelle
 
 The basic functionality of this is super straightforward in this framework. You just pick an element and tell it how many columns it should span within the total number of **$grid-columns**. 
 
+Haml:
+
+``` haml
+.container
+  %aside.first  First: 2 columns
+  %article.second  Second: 10 columns
+  %aside.third  Third: 4 columns
+  %article.fourth  Fourth: 8 columns
+  %aside.fifth  Fifth: 6columns
+  %article.sixth  Sixth: 6 columns
+  %aside.seventh  Seventh: 8 columns
+  %article.eigth  Eigth: 4 columns
+  %aside.ninth  Ninth: 10 columns
+  %article.tenth  Tenth: 2 columns
+```
+
+Sass:
 ``` sass
+body
+  color: white
+  background-color: white
+
+.container
+  +outer-container
+  background-color: tomato
+
 aside
   +span-columns(3)
   margin-bottom: 5px
   height: 200px
-  background-color: LightSkyBlue 
+  background-color: LightSkyBlue
 
 article
   +span-columns(9)
@@ -133,7 +158,46 @@ article
   margin-bottom: 5px
   height: 200px
   background-color: Olive
+
+st
+  +span-columns(2)
+
+.second
+  +span-columns(10)
+  +omega
+
+.third
+  +span-columns(4)
+
+.fourth
+  +span-columns(8)
+  +omega
+
+.fifth
+  +span-columns(6)
+
+.sixth
+  +span-columns(6)
+  +omega
+
+.seventh
+  +span-columns(8)
+
+.eigth
+  +span-columns(4)
+  +omega
+
+.ninth
+  +span-columns(10)
+
+.tenth
+  +span-columns(2)
+  +omega
 ```
+
+#### Screenshot
+
+{% img /images/Neat_01/span-columns.png %}
 
 The coolest part is that there is no need to add anything to your markup—since this is related to your presentation layer, you only add the info how your grid is composed of to your Sass files. Cleanly separated concerns. Every sane designer that touches your work after you will love you for not polluting the content with styling information.
 
