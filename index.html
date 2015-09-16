@@ -246,6 +246,35 @@
 
 <p>The basic functionality of this is super straightforward in this framework. You just pick an element and tell it how many columns it should span within the total number of <strong>$grid-columns</strong>.</p>
 
+<p>Haml:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='haml'><span class='line'><span class="nc">.container</span>
+</span><span class='line'>  <span class="nt">%aside</span><span class="nc">.first</span>  First: 2 columns
+</span><span class='line'>  <span class="nt">%article</span><span class="nc">.second</span>  Second: 10 columns
+</span><span class='line'>  <span class="nt">%aside</span><span class="nc">.third</span>  Third: 4 columns
+</span><span class='line'>  <span class="nt">%article</span><span class="nc">.fourth</span>  Fourth: 8 columns
+</span><span class='line'>  <span class="nt">%aside</span><span class="nc">.fifth</span>  Fifth: 6columns
+</span><span class='line'>  <span class="nt">%article</span><span class="nc">.sixth</span>  Sixth: 6 columns
+</span><span class='line'>  <span class="nt">%aside</span><span class="nc">.seventh</span>  Seventh: 8 columns
+</span><span class='line'>  <span class="nt">%article</span><span class="nc">.eigth</span>  Eigth: 4 columns
+</span><span class='line'>  <span class="nt">%aside</span><span class="nc">.ninth</span>  Ninth: 10 columns
+</span><span class='line'>  <span class="nt">%article</span><span class="nc">.tenth</span>  Tenth: 2 columns
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Sass:</p>
+
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -258,7 +287,58 @@
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nt">aside</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nt">body</span>
+</span><span class='line'>  <span class="na">color</span><span class="o">:</span> <span class="nb">white</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.container</span>
+</span><span class='line'>  <span class="nd">+outer-container</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">tomato</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">aside</span>
 </span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </span><span class='line'>  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span>
 </span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span>
@@ -270,8 +350,47 @@
 </span><span class='line'>  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span>
 </span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span>
 </span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">Olive</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">st</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.second</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>  <span class="nd">+omega</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.third</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.fourth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</span><span class='line'>  <span class="nd">+omega</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.fifth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.sixth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</span><span class='line'>  <span class="nd">+omega</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.seventh</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.eigth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span class='line'>  <span class="nd">+omega</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.ninth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.tenth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="nd">+omega</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+<h4>Screenshot</h4>
+
+<p><img src="/octopress_drafts_previewer/images/Neat_01/span-columns.png"></p>
 
 <p>The coolest part is that there is no need to add anything to your markup—since this is related to your presentation layer, you only add the info how your grid is composed of to your Sass files. Cleanly separated concerns. Every sane designer that touches your work after you will love you for not polluting the content with styling information.</p>
 </div>
