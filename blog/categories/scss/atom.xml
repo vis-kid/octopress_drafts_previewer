@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scss | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/scss/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-16T18:23:11+02:00</updated>
+  <updated>2015-09-16T23:11:26+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -38,13 +38,13 @@
 <h4>Mixins</h4>
 
 <ul>
-<li>shift-in-context()</li>
+<li>shift-in-context</li>
 <li>outer-container</li>
-<li>span-columns()</li>
-<li>media()</li>
+<li>span-columns</li>
+<li>media</li>
 <li>omega</li>
-<li>shift()</li>
-<li>pad()</li>
+<li>shift</li>
+<li>pad</li>
 </ul>
 
 
@@ -55,8 +55,8 @@
 <li>$visual-grid-index</li>
 <li>$visual-grid-color</li>
 <li>$grid-columns</li>
-<li>$visual-grid</li>
 <li>$max-width</li>
+<li>$visual-grid</li>
 </ul>
 
 
@@ -67,11 +67,9 @@
 </ul>
 
 
-<p>In your <strong>grid-settings</strong> file you can specify a <strong>$max-width</strong> Sass variable that defines the maximum width that the content of your page should span. For example, Neat comes with a easily changeable <strong>$max-width</strong> setting of 1088px (converted to em) out of the box. That setting basically specifies the width of your outermost container for your “main” content.</p>
+<p>When you make an element the outer container, Neat automatically centers it in the viewport (by adding <strong>margin-left: auto</strong> / <strong>margin-right: auto</strong>), clears the floats and applies the specified <strong>$max-width</strong>. It is an optional mixin (recommended though) and you can have multiple outer container elements on a single page. The one thing you can’t do is nest them.</p>
 
-<p>When you make a container the outer-container, Neat automatically centers it in the viewport (by adding <strong>margin-left: auto</strong> / <strong>margin-right: auto</strong>), clears the floats and applies the specified <strong>$max-width</strong>. It is an optional mixin (recommended though) and you can have multiple outer container elements on a single page. The one thing you can’t do is nest them.</p>
-
-<p>The outer container holds your layout. Within its element you’ll build your grid which can span as many columns across as specified in your settings under <strong>$grid-columns</strong> (default to 12 columns). All the elements in a row have to add up to the total number of columns specified.</p>
+<p>The outer container holds your layout grid. Within it, your grid can span as many columns across as specified in your <strong>grid-settings</strong> file via the <strong>$grid-columns</strong> variable (default to 12 columns). That means all the elements in a row have to add up to the total number of columns specified there.</p>
 
 <p>In the dummy example below, you’ll see that the <strong>container</strong> element wraps a couple of <strong>aside</strong> and <strong>article</strong> tags. They span 3 and 9 columns respectively and simply add up to 12 columns as specified in my settings. If I’d go over that number of columns the layout would certainly break. Think of the <strong>outer-container</strong> mixin as the most likey prerequisite for adding grid layouts within container elements.</p>
 
@@ -110,7 +108,7 @@ article
   background-color: Olive
 </code></pre>
 
-<p>You don’t need to concern yourself too much about <strong>span-columns</strong> and <strong>omega</strong> in this example for now. After a couple of paragraphs it will be crystal clear to you.</p>
+<p>The background colors are supposed to make it easier to see how the pieces fit together. You don’t need to concern yourself too much about the <strong>span-columns</strong> and <strong>omega</strong> mixins in this example for now. After a couple of paragraphs they will be crystal clear to you.</p>
 
 <h4>Screenshot</h4>
 
@@ -118,6 +116,47 @@ article
 
 <p>Here is also a codepen for playing around with it:
 <a href="http://codepen.io/vis-kid/pen/xwZJOP">http://codepen.io/vis-kid/pen/xwZJOP</a></p>
+
+<p>In your settings file you can also specify a <strong>$max-width</strong> Sass variable that defines the maximum width that the content of your page should span. For example, Neat comes with a easily changeable <strong>$max-width</strong> setting of 1088px (converted to em) out of the box. That setting basically specifies the width of your outer container elements.</p>
+
+<p>There is also the option to provide this mixin with an argument for a <strong>$local-max-width</strong> if you want a certain container element to have a different <strong>max-width</strong> than the global one set in <strong>grid-settings</strong>. This overwrites locally the default <strong>max-width</strong> from your settings file. You can provide <em>pixel</em>, <em>em</em> or <em>percentage</em> arguments. The columns of your grid inside that container adjust their width automatically but the number of columns stays the same.</p>
+
+<pre><code class="sass">.container
+  +outer-container(800px)
+  background-color: tomato
+</code></pre>
+
+<pre><code class="sass">.container
+  +outer-container(80%)
+  background-color: tomato
+</code></pre>
+
+<p><a href="http://codepen.io/vis-kid/pen/vNGOqj">http://codepen.io/vis-kid/pen/vNGOqj</a></p>
+
+<ul>
+<li><h3>span-columns</h3></li>
+</ul>
+
+
+<p>If you’re new to designing with grids, you should maybe look into this excellent book by <a href="http://www.subtraction.com/2010/11/05/i-wrote-a-book/">Khoi Vinh</a>. I highly recommend it. One concept that you need to understand right away though is that you build up your grid designs through a series of columns that span across the page.</p>
+
+<p>The basic functionality of this is super straightforward in this framework. You just pick an element and tell it how many columns it should span within the total number of <strong>$grid-columns</strong>.</p>
+
+<pre><code class="sass">aside
+  +span-columns(3)
+  margin-bottom: 5px
+  height: 200px
+  background-color: LightSkyBlue 
+
+article
+  +span-columns(9)
+  +omega
+  margin-bottom: 5px
+  height: 200px
+  background-color: Olive
+</code></pre>
+
+<p>The coolest part is that there is no need to add anything to your markup—since this is related to your presentation layer, you only add the info how your grid is composed of to your Sass files. Cleanly separated concerns. Every sane designer that touches your work after you will love you for not polluting the content with styling information.</p>
 ]]></content>
   </entry>
   
