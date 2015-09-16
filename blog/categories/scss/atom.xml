@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scss | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/scss/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-14T20:37:02+02:00</updated>
+  <updated>2015-09-16T18:23:11+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,114 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Neat Basics]]></title>
+    <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/15/Neat-Bascis/"/>
+    <updated>2015-09-15T05:29:10+02:00</updated>
+    <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/15/Neat-Bascis</id>
+    <content type="html"><![CDATA[<p><img src="/images/Neat_01/Neat-pour.jpg"></p>
+
+<p><a href="http://neat.bourbon.io/"><img src="/images/bourbon-neat/Bourbon-Neat-Logo.png" width="250" height="450"></a></p>
+
+<p>I assume you have taken a look at my previous intro article about Neat. So without further ado, let me pour you your first sip of Bourbon Neat.</p>
+
+<h2>Neat Basics #01</h2>
+
+<p>In this piece I’ll take a newbie-friendly look at the following function, mixins and variables:</p>
+
+<h4>Function</h4>
+
+<ul>
+<li>new-breakpoint</li>
+</ul>
+
+
+<h4>Mixins</h4>
+
+<ul>
+<li>shift-in-context()</li>
+<li>outer-container</li>
+<li>span-columns()</li>
+<li>media()</li>
+<li>omega</li>
+<li>shift()</li>
+<li>pad()</li>
+</ul>
+
+
+<h4>Variables</h4>
+
+<ul>
+<li>$visual-grid-opacity</li>
+<li>$visual-grid-index</li>
+<li>$visual-grid-color</li>
+<li>$grid-columns</li>
+<li>$visual-grid</li>
+<li>$max-width</li>
+</ul>
+
+
+<h2>Mixins</h2>
+
+<ul>
+<li><h3>outer-container</h3></li>
+</ul>
+
+
+<p>In your <strong>grid-settings</strong> file you can specify a <strong>$max-width</strong> Sass variable that defines the maximum width that the content of your page should span. For example, Neat comes with a easily changeable <strong>$max-width</strong> setting of 1088px (converted to em) out of the box. That setting basically specifies the width of your outermost container for your “main” content.</p>
+
+<p>When you make a container the outer-container, Neat automatically centers it in the viewport (by adding <strong>margin-left: auto</strong> / <strong>margin-right: auto</strong>), clears the floats and applies the specified <strong>$max-width</strong>. It is an optional mixin (recommended though) and you can have multiple outer container elements on a single page. The one thing you can’t do is nest them.</p>
+
+<p>The outer container holds your layout. Within its element you’ll build your grid which can span as many columns across as specified in your settings under <strong>$grid-columns</strong> (default to 12 columns). All the elements in a row have to add up to the total number of columns specified.</p>
+
+<p>In the dummy example below, you’ll see that the <strong>container</strong> element wraps a couple of <strong>aside</strong> and <strong>article</strong> tags. They span 3 and 9 columns respectively and simply add up to 12 columns as specified in my settings. If I’d go over that number of columns the layout would certainly break. Think of the <strong>outer-container</strong> mixin as the most likey prerequisite for adding grid layouts within container elements.</p>
+
+<p>Haml:</p>
+
+<pre><code class="haml">.container
+  %aside Aside
+  %article Article
+  %aside Aside
+  %article Article
+  %aside Aside
+  %article Article
+</code></pre>
+
+<p>Sass:</p>
+
+<pre><code class="sass">
+body
+  background-color: white
+
+.container
+  +outer-container
+  background-color: tomato
+
+aside
+  +span-columns(3)
+  margin-bottom: 5px
+  height: 200px
+  background-color: LightSkyBlue 
+
+article
+  +span-columns(9)
+  +omega
+  margin-bottom: 5px
+  height: 200px
+  background-color: Olive
+</code></pre>
+
+<p>You don’t need to concern yourself too much about <strong>span-columns</strong> and <strong>omega</strong> in this example for now. After a couple of paragraphs it will be crystal clear to you.</p>
+
+<h4>Screenshot</h4>
+
+<p><img src="/images/Neat_01/outer-container.png"></p>
+
+<p>Here is also a codepen for playing around with it:
+<a href="http://codepen.io/vis-kid/pen/xwZJOP">http://codepen.io/vis-kid/pen/xwZJOP</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Bourbon Neat: Semantically Responsible Responsive Grids]]></title>

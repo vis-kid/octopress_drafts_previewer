@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Neat Basics - Drafts Previewer</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="I assume you have taken a look at my previous intro article about Neat. So without further ado, let me pour you your first sip of Bourbon Neat. Neat &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/15/Neat-Bascis/">
+  <link href="/octopress_drafts_previewer/favicon.png" rel="icon">
+  <link href="/octopress_drafts_previewer/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/octopress_drafts_previewer/atom.xml" rel="alternate" title="Drafts Previewer" type="application/atom+xml">
+  <script src="/octopress_drafts_previewer/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/octopress_drafts_previewer/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/octopress_drafts_previewer/">Drafts Previewer</a></h1>
+  
+    <h2>Simple way to share my drafts for feedback</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/octopress_drafts_previewer/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="vis-kid.github.io/octopress_drafts_previewer">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/octopress_drafts_previewer/">Blog</a></li>
+  <li><a href="/octopress_drafts_previewer/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Neat Basics</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-09-15T05:29:10+02:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>5:29 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img src="/octopress_drafts_previewer/images/Neat_01/Neat-pour.jpg"></p>
+
+<p><a href="http://neat.bourbon.io/"><img src="/octopress_drafts_previewer/images/bourbon-neat/Bourbon-Neat-Logo.png" width="250" height="450"></a></p>
+
+<p>I assume you have taken a look at my previous intro article about Neat. So without further ado, let me pour you your first sip of Bourbon Neat.</p>
+
+<h2>Neat Basics #01</h2>
+
+<p>In this piece I’ll take a newbie-friendly look at the following function, mixins and variables:</p>
+
+<h4>Function</h4>
+
+<ul>
+<li>new-breakpoint</li>
+</ul>
+
+
+<h4>Mixins</h4>
+
+<ul>
+<li>shift-in-context()</li>
+<li>outer-container</li>
+<li>span-columns()</li>
+<li>media()</li>
+<li>omega</li>
+<li>shift()</li>
+<li>pad()</li>
+</ul>
+
+
+<h4>Variables</h4>
+
+<ul>
+<li>$visual-grid-opacity</li>
+<li>$visual-grid-index</li>
+<li>$visual-grid-color</li>
+<li>$grid-columns</li>
+<li>$visual-grid</li>
+<li>$max-width</li>
+</ul>
+
+
+<h2>Mixins</h2>
+
+<ul>
+<li><h3>outer-container</h3></li>
+</ul>
+
+
+<p>In your <strong>grid-settings</strong> file you can specify a <strong>$max-width</strong> Sass variable that defines the maximum width that the content of your page should span. For example, Neat comes with a easily changeable <strong>$max-width</strong> setting of 1088px (converted to em) out of the box. That setting basically specifies the width of your outermost container for your “main” content.</p>
+
+<p>When you make a container the outer-container, Neat automatically centers it in the viewport (by adding <strong>margin-left: auto</strong> / <strong>margin-right: auto</strong>), clears the floats and applies the specified <strong>$max-width</strong>. It is an optional mixin (recommended though) and you can have multiple outer container elements on a single page. The one thing you can’t do is nest them.</p>
+
+<p>The outer container holds your layout. Within its element you’ll build your grid which can span as many columns across as specified in your settings under <strong>$grid-columns</strong> (default to 12 columns). All the elements in a row have to add up to the total number of columns specified.</p>
+
+<p>In the dummy example below, you’ll see that the <strong>container</strong> element wraps a couple of <strong>aside</strong> and <strong>article</strong> tags. They span 3 and 9 columns respectively and simply add up to 12 columns as specified in my settings. If I’d go over that number of columns the layout would certainly break. Think of the <strong>outer-container</strong> mixin as the most likey prerequisite for adding grid layouts within container elements.</p>
+
+<p>Haml:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='haml'><span class='line'><span class="nc">.container</span>
+</span><span class='line'>  <span class="nt">%aside</span> Aside
+</span><span class='line'>  <span class="nt">%article</span> Article
+</span><span class='line'>  <span class="nt">%aside</span> Aside
+</span><span class='line'>  <span class="nt">%article</span> Article
+</span><span class='line'>  <span class="nt">%aside</span> Aside
+</span><span class='line'>  <span class="nt">%article</span> Article
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Sass:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nt">body</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.container</span>
+</span><span class='line'>  <span class="nd">+outer-container</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">tomato</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">aside</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">LightSkyBlue</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">article</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+</span><span class='line'>  <span class="nd">+omega</span>
+</span><span class='line'>  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">Olive</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You don’t need to concern yourself too much about <strong>span-columns</strong> and <strong>omega</strong> in this example for now. After a couple of paragraphs it will be crystal clear to you.</p>
+
+<h4>Screenshot</h4>
+
+<p><img src="/octopress_drafts_previewer/images/Neat_01/outer-container.png"></p>
+
+<p>Here is also a codepen for playing around with it:
+<a href="http://codepen.io/vis-kid/pen/xwZJOP">http://codepen.io/vis-kid/pen/xwZJOP</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-09-15T05:29:10+02:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>5:29 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/octopress_drafts_previewer/blog/categories/bourbon/'>bourbon</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/css/'>css</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/design/'>design</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/neat/'>neat</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/sass/'>sass</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/scss/'>scss</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/thoughtbot/'>thoughtbot</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/15/Neat-Bascis/" data-via="" data-counturl="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/15/Neat-Bascis/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/octopress_drafts_previewer/blog/2015/09/09/bourbon-neat-semantic-responsive-grids/" title="Previous Post: Bourbon Neat: Semantically Responsible Responsive Grids">&laquo; Bourbon Neat: Semantically Responsible Responsive Grids</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/octopress_drafts_previewer/blog/2015/09/15/Neat-Bascis/">Neat Basics</a>
+      </li>
+    
+      <li class="post">
+        <a href="/octopress_drafts_previewer/blog/2015/09/09/bourbon-neat-semantic-responsive-grids/">Bourbon Neat: Semantically Responsible Responsive Grids</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
