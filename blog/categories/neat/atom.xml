@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Neat | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/neat/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-16T23:40:17+02:00</updated>
+  <updated>2015-09-17T17:58:27+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Neat Basics]]></title>
+    <title type="html"><![CDATA[Bourbon Neat Basics]]></title>
     <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/15/Neat-Bascis/"/>
     <updated>2015-09-15T05:29:10+02:00</updated>
     <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/15/Neat-Bascis</id>
@@ -22,11 +22,7 @@
 
 <p><a href="http://neat.bourbon.io/"><img src="/images/bourbon-neat/Bourbon-Neat-Logo.png" width="250" height="450"></a></p>
 
-<p>I assume you have taken a look at my previous intro article about Neat. So without further ado, let me pour you your first sip of Bourbon Neat.</p>
-
-<h2>Neat Basics #01</h2>
-
-<p>In this piece I’ll take a newbie-friendly look at the following function, mixins and variables:</p>
+<p>I assume you have taken a look at my previous intro article about Neat. So without further ado, let me pour you your first sip of Bourbon Neat. In this piece I’ll take a newbie-friendly look at the following function, mixins and variables:</p>
 
 <h4>Function</h4>
 
@@ -138,21 +134,25 @@ article
 </ul>
 
 
-<p>If you’re new to designing with grids, you should maybe look into this excellent book by <a href="http://www.subtraction.com/2010/11/05/i-wrote-a-book/">Khoi Vinh</a>. I highly recommend it. One concept that you need to understand right away though is that you build up your grid designs through a series of columns that span across the page.</p>
+<p>Just in case some of you are new to designing with grids, you should maybe look into this excellent book by <a href="http://www.subtraction.com/2010/11/05/i-wrote-a-book/">Khoi Vinh</a>. I highly recommend it. One concept that you need to understand right away though is that you build up your grid designs through a series of columns that span across the page.</p>
 
-<p>The basic functionality of this is super straightforward in this framework. You just pick an element and tell it how many columns it should span within the total number of <strong>$grid-columns</strong>.</p>
+<p>The basic functionality of this is super straightforward in this framework. You just pick an element and tell it how many columns it should span within the total number of <strong>$grid-columns</strong>. Let me demonstrate the basics.</p>
 
 <p>Haml:</p>
 
 <pre><code class="haml">.container
   %aside.first  First: 2 columns
   %article.second  Second: 10 columns
+
   %aside.third  Third: 4 columns
   %article.fourth  Fourth: 8 columns
+
   %aside.fifth  Fifth: 6columns
   %article.sixth  Sixth: 6 columns
+
   %aside.seventh  Seventh: 8 columns
-  %article.eigth  Eigth: 4 columns
+  %article.eighth  Eigth: 4 columns
+
   %aside.ninth  Ninth: 10 columns
   %article.tenth  Tenth: 2 columns
 </code></pre>
@@ -200,19 +200,6 @@ article
 <span class='line-number'>40</span>
 <span class='line-number'>41</span>
 <span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nt">body</span>
 </span><span class='line'>  <span class="na">color</span><span class="o">:</span> <span class="nb">white</span>
 </span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
@@ -221,52 +208,39 @@ article
 </span><span class='line'>  <span class="nd">+outer-container</span>
 </span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">tomato</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">aside</span>
-</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class='line'>  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">aside</span><span class="o">,</span> <span class="nt">article</span>
 </span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span>
-</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">LightSkyBlue</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">article</span>
-</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
-</span><span class='line'>  <span class="nd">+omega</span>
-</span><span class='line'>  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span>
-</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span>
 </span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">Olive</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">st</span>
-</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">aside</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">LightSkyBlue</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.first</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="nc">.third</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span class='line'><span class="nc">.fifth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</span><span class='line'><span class="nc">.seventh</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</span><span class='line'><span class="nc">.ninth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.second</span>
 </span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</span><span class='line'>  <span class="nd">+omega</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.third</span>
-</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.fourth</span>
+</span><span class='line'><span class="nc">.fourth</span>
 </span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-</span><span class='line'>  <span class="nd">+omega</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.fifth</span>
-</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.sixth</span>
+</span><span class='line'><span class="nc">.sixth</span>
 </span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-</span><span class='line'>  <span class="nd">+omega</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.seventh</span>
-</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.eigth</span>
+</span><span class='line'><span class="nc">.eighth</span>
 </span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-</span><span class='line'>  <span class="nd">+omega</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="nc">.tenth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.ninth</span>
-</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.tenth</span>
-</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.second</span><span class="o">,</span> <span class="nc">.fourth</span><span class="o">,</span> <span class="nc">.sixth</span><span class="o">,</span> <span class="nc">.eighth</span><span class="o">,</span> <span class="nc">.tenth</span>
 </span><span class='line'>  <span class="nd">+omega</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
@@ -274,7 +248,13 @@ article
 
 <p><img src="/images/Neat_01/span-columns.png"></p>
 
-<p>The coolest part is that there is no need to add anything to your markup—since this is related to your presentation layer, you only add the info how your grid is composed of to your Sass files. Cleanly separated concerns. Every sane designer that touches your work after you will love you for not polluting the content with styling information.</p>
+<p><a href="http://codepen.io/vis-kid/pen/Mayorb">http://codepen.io/vis-kid/pen/Mayorb</a></p>
+
+<p>Of course such an example is just for show and makes little practical sense . As you can see, every row consists of one blue <strong>aside</strong> on the left and one green <strong>article</strong> element on the right. The layout doesn’t break because their total number of columns add up to 12 (as defined in <strong>$grid-columns</strong>) evenly.</p>
+
+<p>The coolest part is that there is no need to add any styling information to your markup—since this is related to your presentation layer, you only add the info how your grid is composed of to your Sass files. Cleanly separated concerns. Every sane designer that touches your work after you will love you for not polluting the content with styling information.</p>
+
+<h3>Nesting columns</h3>
 ]]></content>
   </entry>
   
