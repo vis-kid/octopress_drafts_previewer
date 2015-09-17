@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Neat Basics
+title: Bourbon Neat Basics
 date: 2015-09-15 04:29:10 +0100
 comments: true
 sharing: true
@@ -12,11 +12,7 @@ categories: [ Sass,  Bourbon, Neat, Thoughtbot, SCSS, CSS, Design ]
 
 [{% img /images/bourbon-neat/Bourbon-Neat-Logo.png  250 450 %}](http://neat.bourbon.io/)
 
-I assume you have taken a look at my previous intro article about Neat. So without further ado, let me pour you your first sip of Bourbon Neat. 
-
-## Neat Basics #01
-
-In this piece I’ll take a newbie-friendly look at the following function, mixins and variables:
+I assume you have taken a look at my previous intro article about Neat. So without further ado, let me pour you your first sip of Bourbon Neat. In this piece I’ll take a newbie-friendly look at the following function, mixins and variables:
 
 #### Function
 + new-breakpoint
@@ -116,9 +112,9 @@ http://codepen.io/vis-kid/pen/vNGOqj
 
 + ### span-columns
 
-If you’re new to designing with grids, you should maybe look into this excellent book by [Khoi Vinh](http://www.subtraction.com/2010/11/05/i-wrote-a-book/). I highly recommend it. One concept that you need to understand right away though is that you build up your grid designs through a series of columns that span across the page. 
+Just in case some of you are new to designing with grids, you should maybe look into this excellent book by [Khoi Vinh](http://www.subtraction.com/2010/11/05/i-wrote-a-book/). I highly recommend it. One concept that you need to understand right away though is that you build up your grid designs through a series of columns that span across the page. 
 
-The basic functionality of this is super straightforward in this framework. You just pick an element and tell it how many columns it should span within the total number of **$grid-columns**. 
+The basic functionality of this is super straightforward in this framework. You just pick an element and tell it how many columns it should span within the total number of **$grid-columns**. Let me demonstrate the basics. 
 
 Haml:
 
@@ -126,12 +122,16 @@ Haml:
 .container
   %aside.first  First: 2 columns
   %article.second  Second: 10 columns
+
   %aside.third  Third: 4 columns
   %article.fourth  Fourth: 8 columns
+
   %aside.fifth  Fifth: 6columns
   %article.sixth  Sixth: 6 columns
+
   %aside.seventh  Seventh: 8 columns
-  %article.eigth  Eigth: 4 columns
+  %article.eighth  Eigth: 4 columns
+
   %aside.ninth  Ninth: 10 columns
   %article.tenth  Tenth: 2 columns
 ```
@@ -142,56 +142,43 @@ body
   color: white
   background-color: white
 
-.container
+.container 
   +outer-container
   background-color: tomato
 
-aside
-  +span-columns(3)
-  margin-bottom: 5px
+aside, article
   height: 200px
-  background-color: LightSkyBlue
+  margin-bottom: 5px
 
 article
-  +span-columns(9)
-  +omega
-  margin-bottom: 5px
-  height: 200px
   background-color: Olive
 
-st
+aside
+  background-color: LightSkyBlue
+
+.first
   +span-columns(2)
-
-.second
-  +span-columns(10)
-  +omega
-
 .third
   +span-columns(4)
-
-.fourth
-  +span-columns(8)
-  +omega
-
 .fifth
   +span-columns(6)
-
-.sixth
-  +span-columns(6)
-  +omega
-
 .seventh
   +span-columns(8)
-
-.eigth
-  +span-columns(4)
-  +omega
-
 .ninth
   +span-columns(10)
 
+.second
+  +span-columns(10)
+.fourth
+  +span-columns(8)
+.sixth
+  +span-columns(6)
+.eighth
+  +span-columns(4)
 .tenth
   +span-columns(2)
+
+.second, .fourth, .sixth, .eighth, .tenth
   +omega
 ```
 
@@ -199,5 +186,11 @@ st
 
 {% img /images/Neat_01/span-columns.png %}
 
-The coolest part is that there is no need to add anything to your markup—since this is related to your presentation layer, you only add the info how your grid is composed of to your Sass files. Cleanly separated concerns. Every sane designer that touches your work after you will love you for not polluting the content with styling information.
+http://codepen.io/vis-kid/pen/Mayorb
 
+Of course such an example is just for show and makes little practical sense . As you can see, every row consists of one blue **aside** on the left and one green **article** element on the right. The layout doesn’t break because their total number of columns add up to 12 (as defined in **$grid-columns**) evenly.
+
+The coolest part is that there is no need to add any styling information to your markup—since this is related to your presentation layer, you only add the info how your grid is composed of to your Sass files. Cleanly separated concerns. Every sane designer that touches your work after you will love you for not polluting the content with styling information.
+
+
+### Nesting columns
