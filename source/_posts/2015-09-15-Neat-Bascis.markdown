@@ -42,7 +42,7 @@ I assume you have taken a look at my previous intro article about Neat. So witho
 
 When you make an element the outer container, Neat automatically centers it in the viewport (by adding **margin-left: auto** / **margin-right: auto**), clears the floats and applies the specified **$max-width**. It is an optional mixin (recommended though) and you can have multiple outer container elements on a single page. The one thing you can’t do is nest them. 
 
-The outer container holds your layout grid. Within it, your grid can span as many columns across as specified in your **grid-settings** file via the **$grid-columns** variable (default to 12 columns). That means all the elements in a row have to add up to the total number of columns specified there. 
+The outer container holds your layout grid. Within it, your grid can span as many columns across as specified in your **grid-settings** file via the **$grid-columns** variable (defaults to 12 columns). That means all the elements in a row have to add up to the total number of columns specified there. 
 
 
 In the dummy example below, you’ll see that the **container** element wraps a couple of **aside** and **article** tags. They span 3 and 9 columns respectively and simply add up to 12 columns as specified in my settings. If I’d go over that number of columns the layout would certainly break. Think of the **outer-container** mixin as the most likey prerequisite for adding grid layouts within container elements.
@@ -119,7 +119,7 @@ or
 
 Just in case some of you are new to designing with grids, you should maybe look into this excellent book by [Khoi Vinh](http://www.subtraction.com/2010/11/05/i-wrote-a-book/). I highly recommend it. One concept that you need to understand right away though is that you build up your grid designs through a series of columns that span across the page. 
 
-The basic functionality of this is super straightforward in this framework. You just pick an element and tell it how many columns it should span within the total number of **$grid-columns**. Let me demonstrate the basics. 
+The basic usage of this is super straightforward in this framework. You just pick an element and tell it how many columns it should span within the total number of **$grid-columns**. Let me demonstrate the basics. 
 
 Haml:
 
@@ -193,10 +193,12 @@ aside
 
 [codepen example](http://codepen.io/vis-kid/pen/Mayorb)
 
-Of course such an example is just for show and makes little practical sense . As you can see, every row consists of one blue **aside** on the left and one green **article** element on the right. The layout doesn’t break because their total number of columns add up to 12 (as defined in **$grid-columns**) evenly.
+Of course such an example is just for show and makes little practical sense . As you can see, every row consists of one blue **aside** on the left and one green **article** element on the right. The layout doesn’t break because within the outer container element their total number of columns add up to 12 (as defined in **$grid-columns**) evenly.
 
-The coolest part is that there is no need to add any styling information to your markup—since this is related to your presentation layer, you only add the info how your grid is composed of to your Sass files. Cleanly separated concerns. Every sane designer that touches your work after you will love you for not polluting the content with styling information.
+The coolest part is that there is no need to add any styling information to your markup—since this is related to your presentation layer, you only add the info how your grid is composed of to your Sass files. Cleanly separated concerns. SWEET! Every sane designer that touches your work after you will love you for not polluting the content with styling information. Your future self anyway!
 
+
+An added bonus that comes for free is that you can name classes in your markup anyway you want / need. Nobody makes these decisions for you which is a blessing without any disguise. Yes naming is hard, yadda yadda yadda, but its even trickier if somebody unrelated makes these decisions for you.
 
 ### Nesting columns
 
@@ -209,7 +211,7 @@ Sass:
   +span-columns(5 of 10)
 ```
 
-Of course, from time to time it might come in handy to quickly nest a grid within another. Say you have a wide element that spans for 10 columns and should incorporate two smaller elements spanning 5 columns each. Easy! All you have to provide the nested elements with is the size of the parent column. That’s it! Let’s look at a more concrete example.
+Of course, from time to time it might come in handy to quickly nest grid elements within another. Say you have a wide element that spans for 10 columns and should incorporate two smaller elements spanning 5 columns each. Easy! All you have to provide the nested elements with is the size of the parent column as an argument to the **span-columns** mixin. The nested elements can of course only add up to the number of columns of the parent tops. That’s it! Let’s look at a more concrete example.
 
 Haml:
 ```haml
@@ -266,3 +268,193 @@ aside
 {% img /images/Neat_01/span-columns-nested.png %}
 
 [codepen example](http://codepen.io/vis-kid/pen/VvaWBV)
+
++ ### omega
+
+Another important concept for newbies playing with grids is the gutter. It’s just the margin on the right between grid elements and get’s automatically created for every grid element in a container—except for the last! Gutters also scale responsively if you resize the browser window. The example below clearly demonstrates this space beween grid elements. The gutter is signified by the tomato-colored background which comes through from the outer container. 
+
+#### Screenshot
+{% img /images/Neat_01/gutters.png %}
+
+Haml:
+```haml
+.container
+  .first  1 column
+  .second 2 columns
+  .third  3 columns
+  .fourth 3 columns
+  .fifth  2 columns
+  .sixth  1 column
+```
+
+Sass:
+```sass
+body
+  color: white
+  background-color: white
+
+.container
+  +outer-container
+  background-color: tomato
+
+.first, .second, .third, .fourth, .fifth, .sixth
+  background-color: Olive
+  height: 200px
+  
+.first
+  +span-columns(1)
+  
+.second
+  +span-columns(2)
+   
+.third
+  +span-columns(3)
+  
+.fourth
+  +span-columns(3)
+  
+.fifth
+  +span-columns(2)
+  
+.sixth
+  +span-columns(1)
+```
+
+[codepen example](http://codepen.io/vis-kid/pen/avNPjX)
+
+Easy-peasy right? But guess what happens if we just double the columns and duplicate the row right beneath it?
+
+#### Screenshot
+
+{% img /images/Neat_01/messy-columns-without-omega.png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/BoKvER)
+
+Pretty messy huh? So what happened here? Because the 6th element in the first row is not the last element anymore, it also get’s a right gutter (margin) by default. Let me be very clear on this—to achieve a cleanly aligned layout, the last element in a container has it’s gutter removed by default. Because the width of all elements in the first row now exceed the **total-width** your number of **total-columns** can span per row your grid simply breaks. 
+
+Nothing too tragic though and the fix is easy. Just find the element that needs that automatically added gutter to the right removed and apply the **omega** mixin there. Boom, that easy!
+
+Haml:
+```sass
+.container
+  .first  1st: 1 column
+  .second 2nd: 2 columns
+  .third  3rd: 3 columns
+  .fourth 4th: 3 columns
+  .fifth  5th: 2 columns
+  .sixth  6th: 1 column
+  
+  .first  1st: 1 column
+  .second 2nd: 2 columns
+  .third  3rd: 3 columns
+  .fourth 4th: 3 columns
+  .fifth  5th: 2 columns
+  .sixth  6th: 1 column
+```
+
+Sass:
+``` sass
+@import "bourbon"
+@import "neat"
+
+body
+  color: white
+  background-color: white
+
+.container
+  +outer-container
+  background-color: tomato
+
+.first, .second, .third, .fourth, .fifth, .sixth
+  background-color: Olive
+  height: 200px
+  margin-bottom: 5px
+  
+.first
+  +span-columns(1)
+  
+.second
+  +span-columns(2)
+   
+.third
+  +span-columns(3)
+  
+.fourth
+  +span-columns(3)
+  
+.fifth
+  +span-columns(2)
+  
+.sixth
+  +span-columns(1)
+  +omega
+```
+
+As you can see, I only added an **omega** to the **.sixth** class but it made all the difference. Every element falls into place nicely and none of the rows exceed their **total-width**.
+
+{% img /images/Neat_01/messy-columns-with-omega.png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/BoKMow)
+
+Let’s take this one little step further. Say you have a couple of rows that should display images of the same size evenly without breaking the grid. All we need is a couple of elements that span the same width, here **span-columns(2)**, and place them in a couple of rows. The magic happens with the arguement you supply the **omega** with:
+
+```sass
+img
+  +omega(6n)
+```
+So every sixth **img** element will have it’s right gutter removed and therefore evenly fits six 2-column elements into the 12 columns of the outer container. Neat! 
+
+#### Screenshot
+
+{% img /images/Neat_01/omega(6n).png %}
+
+Haml:
+```haml
+.container
+  %img
+  %img
+  %img
+  %img
+  %img
+  %img
+  
+  %img
+  %img
+  %img
+  %img
+  %img
+  %img
+  
+  %img
+  %img
+  %img
+  %img
+  %img
+  %img
+  
+```
+
+Sass:
+```sass
+body
+  color: white
+  background-color: white
+
+.container
+  +outer-container
+  background-color: tomato
+
+img
+  +span-columns(2)
+  +omega(6n)
+  height: 200px
+  margin-bottom: 5px
+  background-color: Olive
+```
+
+I enrourage you to play around with this example via the provided codepen and get a feel for it. There is no magic there, but if you need a bit more time to wrap your head around, mess a bit with the arguments of the omega and I have no doubt it will become crystal clear to you in no time.
+
+[codepen example](http://codepen.io/vis-kid/pen/NGNoXB)
+
+### Attention!
+Last words of wisdom: In some cases in seems to matter in which order you supply the **span-columns** and **omega** mixins to the elements. My advice is to always use **span-columns** first to avoid unexpected behaviour.
