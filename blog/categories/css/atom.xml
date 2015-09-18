@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Css | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/css/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-17T17:58:27+02:00</updated>
+  <updated>2015-09-18T21:51:15+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -65,7 +65,7 @@
 
 <p>When you make an element the outer container, Neat automatically centers it in the viewport (by adding <strong>margin-left: auto</strong> / <strong>margin-right: auto</strong>), clears the floats and applies the specified <strong>$max-width</strong>. It is an optional mixin (recommended though) and you can have multiple outer container elements on a single page. The one thing you can’t do is nest them.</p>
 
-<p>The outer container holds your layout grid. Within it, your grid can span as many columns across as specified in your <strong>grid-settings</strong> file via the <strong>$grid-columns</strong> variable (default to 12 columns). That means all the elements in a row have to add up to the total number of columns specified there.</p>
+<p>The outer container holds your layout grid. Within it, your grid can span as many columns across as specified in your <strong>grid-settings</strong> file via the <strong>$grid-columns</strong> variable (defaults to 12 columns). That means all the elements in a row have to add up to the total number of columns specified there.</p>
 
 <p>In the dummy example below, you’ll see that the <strong>container</strong> element wraps a couple of <strong>aside</strong> and <strong>article</strong> tags. They span 3 and 9 columns respectively and simply add up to 12 columns as specified in my settings. If I’d go over that number of columns the layout would certainly break. Think of the <strong>outer-container</strong> mixin as the most likey prerequisite for adding grid layouts within container elements.</p>
 
@@ -74,8 +74,10 @@
 <pre><code class="haml">.container
   %aside Aside
   %article Article
+
   %aside Aside
   %article Article
+
   %aside Aside
   %article Article
 </code></pre>
@@ -90,17 +92,17 @@ body
   +outer-container
   background-color: tomato
 
-aside
-  +span-columns(3)
+aside, article
   margin-bottom: 5px
   height: 200px
+
+aside
+  +span-columns(3)
   background-color: LightSkyBlue 
 
 article
   +span-columns(9)
   +omega
-  margin-bottom: 5px
-  height: 200px
   background-color: Olive
 </code></pre>
 
@@ -111,23 +113,26 @@ article
 <p><img src="/images/Neat_01/outer-container.png"></p>
 
 <p>Here is also a codepen for playing around with it:
-<a href="http://codepen.io/vis-kid/pen/xwZJOP">http://codepen.io/vis-kid/pen/xwZJOP</a></p>
+<a href="http://codepen.io/vis-kid/pen/xwZJOP">codepen example</a></p>
 
 <p>In your settings file you can also specify a <strong>$max-width</strong> Sass variable that defines the maximum width that the content of your page should span. For example, Neat comes with a easily changeable <strong>$max-width</strong> setting of 1088px (converted to em) out of the box. That setting basically specifies the width of your outer container elements.</p>
 
 <p>There is also the option to provide this mixin with an argument for a <strong>$local-max-width</strong> if you want a certain container element to have a different <strong>max-width</strong> than the global one set in <strong>grid-settings</strong>. This overwrites locally the default <strong>max-width</strong> from your settings file. You can provide <em>pixel</em>, <em>em</em> or <em>percentage</em> arguments. The columns of your grid inside that container adjust their width automatically but the number of columns stays the same.</p>
 
-<pre><code class="sass">.container
+<p>Sass:
+<code>sass
+.container
   +outer-container(800px)
   background-color: tomato
-</code></pre>
+</code>
+or</p>
 
 <pre><code class="sass">.container
   +outer-container(80%)
   background-color: tomato
 </code></pre>
 
-<p><a href="http://codepen.io/vis-kid/pen/vNGOqj">http://codepen.io/vis-kid/pen/vNGOqj</a></p>
+<p><a href="http://codepen.io/vis-kid/pen/vNGOqj">codepen example</a></p>
 
 <ul>
 <li><h3>span-columns</h3></li>
@@ -136,7 +141,7 @@ article
 
 <p>Just in case some of you are new to designing with grids, you should maybe look into this excellent book by <a href="http://www.subtraction.com/2010/11/05/i-wrote-a-book/">Khoi Vinh</a>. I highly recommend it. One concept that you need to understand right away though is that you build up your grid designs through a series of columns that span across the page.</p>
 
-<p>The basic functionality of this is super straightforward in this framework. You just pick an element and tell it how many columns it should span within the total number of <strong>$grid-columns</strong>. Let me demonstrate the basics.</p>
+<p>The basic usage of this is super straightforward in this framework. You just pick an element and tell it how many columns it should span within the total number of <strong>$grid-columns</strong>. Let me demonstrate the basics.</p>
 
 <p>Haml:</p>
 
@@ -151,7 +156,7 @@ article
   %article.sixth  Sixth: 6 columns
 
   %aside.seventh  Seventh: 8 columns
-  %article.eighth  Eigth: 4 columns
+  %article.eighth  Eighth: 4 columns
 
   %aside.ninth  Ninth: 10 columns
   %article.tenth  Tenth: 2 columns
@@ -248,13 +253,430 @@ article
 
 <p><img src="/images/Neat_01/span-columns.png"></p>
 
-<p><a href="http://codepen.io/vis-kid/pen/Mayorb">http://codepen.io/vis-kid/pen/Mayorb</a></p>
+<p><a href="http://codepen.io/vis-kid/pen/Mayorb">codepen example</a></p>
 
-<p>Of course such an example is just for show and makes little practical sense . As you can see, every row consists of one blue <strong>aside</strong> on the left and one green <strong>article</strong> element on the right. The layout doesn’t break because their total number of columns add up to 12 (as defined in <strong>$grid-columns</strong>) evenly.</p>
+<p>Of course such an example is just for show and makes little practical sense . As you can see, every row consists of one blue <strong>aside</strong> on the left and one green <strong>article</strong> element on the right. The layout doesn’t break because within the outer container element their total number of columns add up to 12 (as defined in <strong>$grid-columns</strong>) evenly.</p>
 
-<p>The coolest part is that there is no need to add any styling information to your markup—since this is related to your presentation layer, you only add the info how your grid is composed of to your Sass files. Cleanly separated concerns. Every sane designer that touches your work after you will love you for not polluting the content with styling information.</p>
+<p>The coolest part is that there is no need to add any styling information to your markup—since this is related to your presentation layer, you only add the info how your grid is composed of to your Sass files. Cleanly separated concerns. SWEET! Every sane designer that touches your work after you will love you for not polluting the content with styling information. Your future self anyway!</p>
+
+<p>An added bonus that comes for free is that you can name classes in your markup anyway you want / need. Nobody makes these decisions for you which is a blessing without any disguise. Yes naming is hard, yadda yadda yadda, but its even trickier if somebody unrelated makes these decisions for you.</p>
 
 <h3>Nesting columns</h3>
+
+<p>Sass:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nc">.some-parent-element</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.some-nested-element</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">5</span> <span class="n">of</span> <span class="mi">10</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Of course, from time to time it might come in handy to quickly nest grid elements within another. Say you have a wide element that spans for 10 columns and should incorporate two smaller elements spanning 5 columns each. Easy! All you have to provide the nested elements with is the size of the parent column as an argument to the <strong>span-columns</strong> mixin. The nested elements can of course only add up to the number of columns of the parent tops. That’s it! Let’s look at a more concrete example.</p>
+
+<p>Haml:
+<code>haml
+.container
+  %aside.first First: 2 columns
+  %article.second
+    %article.third Third: 5 nested columns
+    %article.fourth Fourth: 5 nested  columns
+</code></p>
+
+<p>Sass:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="k">@import</span> <span class="s">&amp;ldquo;bourbon&amp;rdquo;</span>
+</span><span class='line'><span class="k">@import</span> <span class="s">&amp;ldquo;neat&amp;rdquo;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">body</span>
+</span><span class='line'>  <span class="na">color</span><span class="o">:</span> <span class="nb">white</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.container</span>
+</span><span class='line'>  <span class="nd">+outer-container</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">tomato</span>
+</span><span class='line'>  <span class="na">padding</span><span class="o">:</span>
+</span><span class='line'>    <span class="na">top</span><span class="o">:</span> <span class="mi">15</span><span class="kt">px</span>
+</span><span class='line'>    <span class="na">bottom</span><span class="o">:</span> <span class="mi">15</span><span class="kt">px</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">aside</span><span class="o">,</span> <span class="nt">article</span>
+</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">article</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">Olive</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">aside</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">LightSkyBlue</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.first</span><span class="o">,</span> <span class="nc">.second</span>
+</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">250</span><span class="kt">px</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.second</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.third</span><span class="o">,</span> <span class="nc">.fourth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">5</span> <span class="n">of</span> <span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nf">darken</span><span class="p">(</span><span class="nb">Olive</span><span class="o">,</span> <span class="mi">6</span><span class="p">)</span>
+</span><span class='line'>  <span class="na">margin-top</span><span class="o">:</span> <span class="mi">25</span><span class="kt">px</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.first</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="na">padding-top</span><span class="o">:</span> <span class="mi">25</span><span class="kt">px</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h4>Screenshot</h4>
+
+<p><img src="/images/Neat_01/span-columns-nested.png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/VvaWBV">codepen example</a></p>
+
+<ul>
+<li><h3>omega</h3></li>
+</ul>
+
+
+<p>Another important concept for newbies playing with grids is the gutter. It’s just the margin on the right between grid elements and get’s automatically created for every grid element in a container—except for the last! Gutters also scale responsively if you resize the browser window. The example below clearly demonstrates this space beween grid elements. The gutter is signified by the tomato-colored background which comes through from the outer container.</p>
+
+<h4>Screenshot</h4>
+
+<p><img src="/images/Neat_01/gutters.png"></p>
+
+<p>Haml:
+<code>haml
+.container
+  .first  1 column
+  .second 2 columns
+  .third  3 columns
+  .fourth 3 columns
+  .fifth  2 columns
+  .sixth  1 column
+</code></p>
+
+<p>Sass:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nt">body</span>
+</span><span class='line'>  <span class="na">color</span><span class="o">:</span> <span class="nb">white</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.container</span>
+</span><span class='line'>  <span class="nd">+outer-container</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">tomato</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.first</span><span class="o">,</span> <span class="nc">.second</span><span class="o">,</span> <span class="nc">.third</span><span class="o">,</span> <span class="nc">.fourth</span><span class="o">,</span> <span class="nc">.fifth</span><span class="o">,</span> <span class="nc">.sixth</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">Olive</span>
+</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.first</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.second</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.third</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.fourth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.fifth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.sixth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/avNPjX">codepen example</a></p>
+
+<p>Easy-peasy right? But guess what happens if we just double the columns and duplicate the row right beneath it?</p>
+
+<h4>Screenshot</h4>
+
+<p><img src="/images/Neat_01/messy-columns-without-omega.png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/BoKvER">codepen example</a></p>
+
+<p>Pretty messy huh? So what happened here? Because the 6th element in the first row is not the last element anymore, it also get’s a right gutter (margin) by default. Let me be very clear on this—to achieve a cleanly aligned layout, the last element in a container has it’s gutter removed by default. Because the width of all elements in the first row now exceed the <strong>total-width</strong> your number of <strong>total-columns</strong> can span per row your grid simply breaks.</p>
+
+<p>Nothing too tragic though and the fix is easy. Just find the element that needs that automatically added gutter to the right removed and apply the <strong>omega</strong> mixin there. Boom, that easy!</p>
+
+<p>Haml:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nc">.container</span>
+</span><span class='line'>  <span class="na">.first</span><span class="err">  </span><span class="na">1st</span><span class="o">:</span> <span class="mi">1</span> <span class="n">column</span>
+</span><span class='line'>  <span class="na">.second</span><span class="err"> </span><span class="na">2nd</span><span class="o">:</span> <span class="mi">2</span> <span class="n">columns</span>
+</span><span class='line'>  <span class="na">.third</span><span class="err">  </span><span class="na">3rd</span><span class="o">:</span> <span class="mi">3</span> <span class="n">columns</span>
+</span><span class='line'>  <span class="na">.fourth</span><span class="err"> </span><span class="na">4th</span><span class="o">:</span> <span class="mi">3</span> <span class="n">columns</span>
+</span><span class='line'>  <span class="na">.fifth</span><span class="err">  </span><span class="na">5th</span><span class="o">:</span> <span class="mi">2</span> <span class="n">columns</span>
+</span><span class='line'>  <span class="na">.sixth</span><span class="err">  </span><span class="na">6th</span><span class="o">:</span> <span class="mi">1</span> <span class="n">column</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">&lt;p&gt;</span><span class="err">  </span><span class="na">.first</span><span class="err">  </span><span class="na">1st</span><span class="o">:</span> <span class="mi">1</span> <span class="n">column</span>
+</span><span class='line'>  <span class="na">.second</span><span class="err"> </span><span class="na">2nd</span><span class="o">:</span> <span class="mi">2</span> <span class="n">columns</span>
+</span><span class='line'>  <span class="na">.third</span><span class="err">  </span><span class="na">3rd</span><span class="o">:</span> <span class="mi">3</span> <span class="n">columns</span>
+</span><span class='line'>  <span class="na">.fourth</span><span class="err"> </span><span class="na">4th</span><span class="o">:</span> <span class="mi">3</span> <span class="n">columns</span>
+</span><span class='line'>  <span class="na">.fifth</span><span class="err">  </span><span class="na">5th</span><span class="o">:</span> <span class="mi">2</span> <span class="n">columns</span>
+</span><span class='line'>  <span class="na">.sixth</span><span class="err">  </span><span class="na">6th</span><span class="o">:</span> <span class="mi">1</span> <span class="n">column</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Sass:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="k">@import</span> <span class="s">&amp;ldquo;bourbon&amp;rdquo;</span>
+</span><span class='line'><span class="k">@import</span> <span class="s">&amp;ldquo;neat&amp;rdquo;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">body</span>
+</span><span class='line'>  <span class="na">color</span><span class="o">:</span> <span class="nb">white</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.container</span>
+</span><span class='line'>  <span class="nd">+outer-container</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">tomato</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.first</span><span class="o">,</span> <span class="nc">.second</span><span class="o">,</span> <span class="nc">.third</span><span class="o">,</span> <span class="nc">.fourth</span><span class="o">,</span> <span class="nc">.fifth</span><span class="o">,</span> <span class="nc">.sixth</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">Olive</span>
+</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.first</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.second</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.third</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.fourth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.fifth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.sixth</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="nd">+omega</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>As you can see, I only added an <strong>omega</strong> to the <strong>.sixth</strong> class but it made all the difference. Every element falls into place nicely and none of the rows exceed their <strong>total-width</strong>.</p>
+
+<p><img src="/images/Neat_01/messy-columns-with-omega.png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/BoKMow">codepen example</a></p>
+
+<p>Let’s take this one little step further. Say you have a couple of rows that should display images of the same size evenly without breaking the grid. All we need is a couple of elements that span the same width, here <strong>span-columns(2)</strong>, and place them in a couple of rows. The magic happens with the arguement you supply the <strong>omega</strong> with:</p>
+
+<pre><code class="sass">img
+  +omega(6n)
+</code></pre>
+
+<p>So every sixth <strong>img</strong> element will have it’s right gutter removed and therefore evenly fits six 2-column elements into the 12 columns of the outer container. Neat!</p>
+
+<h4>Screenshot</h4>
+
+<p><img src="/images/Neat_01/omega(6n).png"></p>
+
+<p>Haml:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='haml'><span class='line'><span class="nc">.container</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  %img
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  %img
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;
+</span><span class='line'>Sass:
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;body
+</span><span class='line'>  color: white
+</span><span class='line'>  background-color: white&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;.container
+</span><span class='line'>  +outer-container
+</span><span class='line'>  background-color: tomato&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;img
+</span><span class='line'>  +span-columns(2)
+</span><span class='line'>  +omega(6n)
+</span><span class='line'>  height: 200px
+</span><span class='line'>  margin-bottom: 5px
+</span><span class='line'>  background-color: Olive
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>I enrourage you to play around with this example via the provided codepen and get a feel for it. There is no magic there, but if you need a bit more time to wrap your head around, mess a bit with the arguments of the omega and I have no doubt it will become crystal clear to you in no time.</p>
+
+<p><a href="http://codepen.io/vis-kid/pen/NGNoXB">codepen example</a></p>
+
+<h3>Attention!</h3>
+
+<p>Last words of wisdom: In some cases in seems to matter in which order you supply the <strong>span-columns</strong> and <strong>omega</strong> mixins to the elements. My advice is to always use <strong>span-columns</strong> first to avoid unexpected behaviour.</p>
 ]]></content>
   </entry>
   
