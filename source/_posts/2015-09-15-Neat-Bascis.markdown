@@ -500,4 +500,18 @@ Screenshot with **shift(-2)**:
 
 + ### shift-in-context
 
-Same idea as shift (shift uses **shift-in-context** under the hood btw) but made for grid elements that are nested I guess. Played around with it a little bit in a dummy example that had nested grid elements but achieved the same results using only **shift**. 
+Same idea as shift (it uses **shift-in-context** under the hood btw) but made for grid elements that are nested I guess. Played around with it a little bit in a dummy example that had nested grids but achieved the same results using only **shift**.  
+
++ ### pad
+
+I don’t think I need to go into any specifics how this little padding fella works. It’s a little helper to clean  up your stylesheets and to provide you with the default gutter width if you provide the mixin with **default** as an argument. Nothing too fancy, but I thought I mentioned it to complete your options for adjusting the spacing of your grids.
+
+Sass:
+```
+.some-element-that-needs-padding
+  +pad(10px 20px 30px default)
+```
+
+Here you go, all you need to know to get started for playing with Neat grids. I tried to provide you with a solid basis that enables you to build any grid you need—however complex you like. Neat is one of my favorite tools out there and I hope I could show you why this lightweight project deserves a lot of respect. 
+
+My next article will cover another round of Neat mixins and also explain how you can use media queries and breakpoints to adjust your grids for changing viewport sizes.
