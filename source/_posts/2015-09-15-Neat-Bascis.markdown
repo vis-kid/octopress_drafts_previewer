@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Bourbon Neat Basics
+title: Bourbon Neat-Mixins 01
 date: 2015-09-15 04:29:10 +0100
 comments: true
 sharing: true
@@ -322,7 +322,7 @@ body
 
 [codepen example](http://codepen.io/vis-kid/pen/avNPjX)
 
-Easy-peasy right? But guess what happens if we just double the columns and duplicate the row right beneath it?
+Easy-peasy right? But guess what happens if we just double the columns by duplicating the row right beneath it?
 
 #### Screenshot
 
@@ -452,9 +452,9 @@ img
   background-color: Olive
 ```
 
-I enrourage you to play around with this example via the provided codepen and get a feel for it. There is no magic there, but if you need a bit more time to wrap your head around, mess a bit with the arguments of the omega and I have no doubt it will become crystal clear to you in no time.
+I enrourage you to play around with this example via the provided codepen and get a feel for it. There is no magic here, but if you need a bit more time to wrap your head around, mess a bit with the arguments of the omega and I have no doubt it will become crystal clear to you in no time.
 
 [codepen example](http://codepen.io/vis-kid/pen/NGNoXB)
 
 ### Attention!
-Last words of wisdom: In some cases in seems to matter in which order you supply the **span-columns** and **omega** mixins to the elements. My advice is to always use **span-columns** first to avoid unexpected behaviour.
+Last words of wisdom: In some cases it seems to matter in which order you supply the **span-columns** and **omega** mixins to the elements. My advice is to always use **span-columns** first to avoid unexpected behaviour.
