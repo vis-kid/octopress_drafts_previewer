@@ -330,7 +330,7 @@ Easy-peasy right? But guess what happens if we just double the columns by duplic
 
 [codepen example](http://codepen.io/vis-kid/pen/BoKvER)
 
-Pretty messy huh? So what happened here? Because the 6th element in the first row is not the last element anymore, it also get’s a right gutter (margin) by default. Let me be very clear on this—to achieve a cleanly aligned layout, the last element in a container has it’s gutter removed by default. Because the width of all elements in the first row now exceed the **total-width** your number of **total-columns** can span per row your grid simply breaks. 
+Pretty messy huh? So what happened here? Because the 6th element in the first row is not the last element anymore, it also get’s a right gutter (margin) by default. Let me be very clear on this—to achieve a cleanly aligned layout, the last element in a container has it’s gutter removed by default. Because of the added gutter on the sixth element, the width of all elements in the first row now exceed the **total-width** your number of **total-columns** can span per row and your grid simply breaks. 
 
 Nothing too tragic though and the fix is easy. Just find the element that needs that automatically added gutter to the right removed and apply the **omega** mixin there. Boom, that easy!
 
@@ -404,10 +404,6 @@ img
 ```
 So every sixth **img** element will have it’s right gutter removed and therefore evenly fits six 2-column elements into the 12 columns of the outer container. Neat! 
 
-#### Screenshot
-
-{% img /images/Neat_01/omega(6n).png %}
-
 Haml:
 ```haml
 .container
@@ -452,9 +448,28 @@ img
   background-color: Olive
 ```
 
-I enrourage you to play around with this example via the provided codepen and get a feel for it. There is no magic here, but if you need a bit more time to wrap your head around, mess a bit with the arguments of the omega and I have no doubt it will become crystal clear to you in no time.
+#### Screenshot
+
+{% img /images/Neat_01/omega(6n).png %}
 
 [codepen example](http://codepen.io/vis-kid/pen/NGNoXB)
 
+You want only 4 elements per row? No problem! Just reduce the argument for **omega** to **4n**. This will come in handy in the next article when we get to responsive grids and how you can change your layout through media queries.
+
+Sass:
+```sass
+img
+  +omega(4n)
+```
+
+{% img /images/Neat_01/omega(4n).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/meEbdr)
+
+I enrourage you to play around with this example via the provided codepen and get a feel for it. There is no magic here, but if you need a bit more time to wrap your head around, mess a bit with the arguments of the omega and I have no doubt it will become crystal clear to you in no time.
+
+
 ### Attention!
 Last words of wisdom: In some cases it seems to matter in which order you supply the **span-columns** and **omega** mixins to the elements. My advice is to always use **span-columns** first to avoid unexpected behaviour.
+
++ ### shift
