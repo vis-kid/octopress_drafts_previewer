@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Neat | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/neat/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-19T17:28:05+02:00</updated>
+  <updated>2015-09-19T18:02:04+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -724,7 +724,24 @@ img
 </ul>
 
 
-<p>Same idea as shift (shift uses <strong>shift-in-context</strong> under the hood btw) but made for grid elements that are nested I guess. Played around with it a little bit in a dummy example that had nested grid elements but achieved the same results using only <strong>shift</strong>.</p>
+<p>Same idea as shift (it uses <strong>shift-in-context</strong> under the hood btw) but made for grid elements that are nested I guess. Played around with it a little bit in a dummy example that had nested grids but achieved the same results using only <strong>shift</strong>.</p>
+
+<ul>
+<li><h3>pad</h3></li>
+</ul>
+
+
+<p>I think I don’t need to go into any specifics how this little padding fella works. It’s a little helper to clean  up your stylesheets and to provide you with the default gutter width if you provide the mixin with <strong>default</strong> as an argument. Nothing too fancy, but I thought I mentioned it to complete your options for adjusting the spacing of your grids.</p>
+
+<p>Sass:
+<code>
+.some-element-that-needs-padding
+  +pad(10px 20px 30px default)
+</code></p>
+
+<p>Here you go, all you need to know to get started for playing with Neat grids. I tried to provide you with a solid basis that enables you to build any grid you need—however complex you like. Neat is one of my favorite tools out there and I hope I could show you why this lightweight project deserves a lot of respect.</p>
+
+<p>My next article will show you another round of Neat mixins and also explain how you can use media-queries and breakpoints to adjust your grids for changing viewport sizes.</p>
 ]]></content>
   </entry>
   
