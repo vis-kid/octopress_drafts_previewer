@@ -469,7 +469,31 @@ img
 I enrourage you to play around with this example via the provided codepen and get a feel for it. There is no magic here, but if you need a bit more time to wrap your head around, mess a bit with the arguments of the omega and I have no doubt it will become crystal clear to you in no time.
 
 
-### Attention!
+#### Attention!
 Last words of wisdom: In some cases it seems to matter in which order you supply the **span-columns** and **omega** mixins to the elements. My advice is to always use **span-columns** first to avoid unexpected behaviour.
 
 + ### shift
+
+This one should be quick. If you want to adjust an element by moving it horizontally to the left or right, you simply apply the **shift** mixin and provide it with the number of columns it should move. You can use integers or floating point numbers.
+
+Sass:
+```sass
+.some-element-that-needs-adjusting
+  +shift(n)
+```
+
+Provide a positive number (unitless) of columns and the element moves to the right and vice versa. Behind the scenes, Neat simply increases or decreases the percentage values of **margin-left** on the element.
+
+Screenshot without **shift**:
+
+{% img /images/Neat_01/without-shift.png %}
+
+Screenshot with **shift(1)**:
+
+{% img /images/Neat_01/with-shift(1).png %}
+
+Screenshot with **shift(-2)**:
+
+{% img /images/Neat_01/with-shift(-1.5).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/XmKrmQ)
