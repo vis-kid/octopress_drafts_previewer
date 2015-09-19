@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Sass | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/sass/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-19T16:50:40+02:00</updated>
+  <updated>2015-09-19T17:28:05+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -703,7 +703,7 @@ img
   +shift(n)
 </code></p>
 
-<p>Provide a positive number (unitless) of columns and the element moves to the right and vice versa. Behind the scenes, Neat simply increases or decreases the percentage values of <strong>margin-left</strong> on the element.</p>
+<p>Provide a positive number (unitless) of columns and the element moves to the right and vice versa. Behind the scenes, Neat simply increases or decreases the percentage values of <strong>margin-left</strong> on the element. Little sidenote, if you use <strong>shift</strong> without any argument, it will default to <strong>shift(1)</strong>.</p>
 
 <p>Screenshot without <strong>shift</strong>:</p>
 
@@ -718,6 +718,13 @@ img
 <p><img src="/images/Neat_01/with-shift(-1.5).png"></p>
 
 <p><a href="http://codepen.io/vis-kid/pen/XmKrmQ">codepen example</a></p>
+
+<ul>
+<li><h3>shift-in-context</h3></li>
+</ul>
+
+
+<p>Same idea as shift (shift uses <strong>shift-in-context</strong> under the hood btw) but made for grid elements that are nested I guess. Played around with it a little bit in a dummy example that had nested grid elements but achieved the same results using only <strong>shift</strong>.</p>
 ]]></content>
   </entry>
   
