@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Sass | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/sass/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-18T21:51:15+02:00</updated>
+  <updated>2015-09-19T16:50:40+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Bourbon Neat Basics]]></title>
+    <title type="html"><![CDATA[Bourbon Neat-Mixins 01]]></title>
     <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/15/Neat-Bascis/"/>
     <updated>2015-09-15T05:29:10+02:00</updated>
     <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/15/Neat-Bascis</id>
@@ -455,7 +455,7 @@ or</p>
 
 <p><a href="http://codepen.io/vis-kid/pen/avNPjX">codepen example</a></p>
 
-<p>Easy-peasy right? But guess what happens if we just double the columns and duplicate the row right beneath it?</p>
+<p>Easy-peasy right? But guess what happens if we just double the columns by duplicating the row right beneath it?</p>
 
 <h4>Screenshot</h4>
 
@@ -463,7 +463,7 @@ or</p>
 
 <p><a href="http://codepen.io/vis-kid/pen/BoKvER">codepen example</a></p>
 
-<p>Pretty messy huh? So what happened here? Because the 6th element in the first row is not the last element anymore, it also get’s a right gutter (margin) by default. Let me be very clear on this—to achieve a cleanly aligned layout, the last element in a container has it’s gutter removed by default. Because the width of all elements in the first row now exceed the <strong>total-width</strong> your number of <strong>total-columns</strong> can span per row your grid simply breaks.</p>
+<p>Pretty messy huh? So what happened here? Because the 6th element in the first row is not the last element anymore, it also get’s a right gutter (margin) by default. Let me be very clear on this—to achieve a cleanly aligned layout, the last element in a container has it’s gutter removed by default. Because of the added gutter on the sixth element, the width of all elements in the first row now exceed the <strong>total-width</strong> your number of <strong>total-columns</strong> can span per row and your grid simply breaks.</p>
 
 <p>Nothing too tragic though and the fix is easy. Just find the element that needs that automatically added gutter to the right removed and apply the <strong>omega</strong> mixin there. Boom, that easy!</p>
 
@@ -583,10 +583,6 @@ or</p>
 
 <p>So every sixth <strong>img</strong> element will have it’s right gutter removed and therefore evenly fits six 2-column elements into the 12 columns of the outer container. Neat!</p>
 
-<h4>Screenshot</h4>
-
-<p><img src="/images/Neat_01/omega(6n).png"></p>
-
 <p>Haml:
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -670,13 +666,58 @@ or</p>
 </span><span class='line'>  background-color: Olive
 </span></code></pre></td></tr></table></div></figure></p>
 
-<p>I enrourage you to play around with this example via the provided codepen and get a feel for it. There is no magic there, but if you need a bit more time to wrap your head around, mess a bit with the arguments of the omega and I have no doubt it will become crystal clear to you in no time.</p>
+<h4>Screenshot</h4>
+
+<p><img src="/images/Neat_01/omega(6n).png"></p>
 
 <p><a href="http://codepen.io/vis-kid/pen/NGNoXB">codepen example</a></p>
 
-<h3>Attention!</h3>
+<p>You want only 4 elements per row? No problem! Just reduce the argument for <strong>omega</strong> to <strong>4n</strong>. This will come in handy in the next article when we get to responsive grids and how you can change your layout through media queries.</p>
 
-<p>Last words of wisdom: In some cases in seems to matter in which order you supply the <strong>span-columns</strong> and <strong>omega</strong> mixins to the elements. My advice is to always use <strong>span-columns</strong> first to avoid unexpected behaviour.</p>
+<p>Sass:
+<code>sass
+img
+  +omega(4n)
+</code></p>
+
+<p><img src="/images/Neat_01/omega(4n).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/meEbdr">codepen example</a></p>
+
+<p>I enrourage you to play around with this example via the provided codepen and get a feel for it. There is no magic here, but if you need a bit more time to wrap your head around, mess a bit with the arguments of the omega and I have no doubt it will become crystal clear to you in no time.</p>
+
+<h4>Attention!</h4>
+
+<p>Last words of wisdom: In some cases it seems to matter in which order you supply the <strong>span-columns</strong> and <strong>omega</strong> mixins to the elements. My advice is to always use <strong>span-columns</strong> first to avoid unexpected behaviour.</p>
+
+<ul>
+<li><h3>shift</h3></li>
+</ul>
+
+
+<p>This one should be quick. If you want to adjust an element by moving it horizontally to the left or right, you simply apply the <strong>shift</strong> mixin and provide it with the number of columns it should move. You can use integers or floating point numbers.</p>
+
+<p>Sass:
+<code>sass
+.some-element-that-needs-adjusting
+  +shift(n)
+</code></p>
+
+<p>Provide a positive number (unitless) of columns and the element moves to the right and vice versa. Behind the scenes, Neat simply increases or decreases the percentage values of <strong>margin-left</strong> on the element.</p>
+
+<p>Screenshot without <strong>shift</strong>:</p>
+
+<p><img src="/images/Neat_01/without-shift.png"></p>
+
+<p>Screenshot with <strong>shift(1)</strong>:</p>
+
+<p><img src="/images/Neat_01/with-shift(1).png"></p>
+
+<p>Screenshot with <strong>shift(-2)</strong>:</p>
+
+<p><img src="/images/Neat_01/with-shift(-1.5).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/XmKrmQ">codepen example</a></p>
 ]]></content>
   </entry>
   
