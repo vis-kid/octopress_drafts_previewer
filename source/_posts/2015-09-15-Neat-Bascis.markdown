@@ -482,7 +482,7 @@ Sass:
   +shift(n)
 ```
 
-Provide a positive number (unitless) of columns and the element moves to the right and vice versa. Behind the scenes, Neat simply increases or decreases the percentage values of **margin-left** on the element.
+Provide a positive number (unitless) of columns and the element moves to the right and vice versa. Behind the scenes, Neat simply increases or decreases the percentage values of **margin-left** on the element. Little sidenote, if you use **shift** without any argument, it will default to **shift(1)**.
 
 Screenshot without **shift**:
 
@@ -497,3 +497,7 @@ Screenshot with **shift(-2)**:
 {% img /images/Neat_01/with-shift(-1.5).png %}
 
 [codepen example](http://codepen.io/vis-kid/pen/XmKrmQ)
+
++ ### shift-in-context
+
+Same idea as shift (shift uses **shift-in-context** under the hood btw) but made for grid elements that are nested I guess. Played around with it a little bit in a dummy example that had nested grid elements but achieved the same results using only **shift**. 
