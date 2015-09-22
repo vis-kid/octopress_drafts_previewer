@@ -1,0 +1,48 @@
+---
+layout: post
+title: Bourbon Neat-Mixins 02
+date: 2015-09-22 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [ Sass,  Bourbon, Neat, Thoughtbot, SCSS, CSS, Design ]
+---
+
+{% img /images/Neat_01/Neat-pour.jpg %}
+
+[{% img /images/bourbon-neat/Bourbon-Neat-Logo.png  250 450 %}](http://neat.bourbon.io/)
+
+In the second article about Neat mixins I’ll dive a little deeper and explore the following function, mixins and variables:
+
+#### Function
++ new-breakpoint
+
+#### Mixins
+
++ reset-layout-direction
++ direction-context
++ display-context
++ reset-display
++ fill-parent
++ reset-all
++ media
++ row
+
+
+#### Variables
+
++ $visual-grid-opacity
++ $visual-grid-index
++ $visual-grid-color
++ $grid-columns
++ $max-width
++ $visual-grid
+
+## Function
+
++ ### new-breakpoint
+
+## Mixins
+
++ ### media
+
