@@ -206,9 +206,8 @@ Sass:
 ``` sass
 .some-parent-element
   +span-columns(10)
-
-.some-nested-element
-  +span-columns(5 of 10)
+  .some-nested-element
+    +span-columns(5 of 10)
 ```
 
 Of course, from time to time it might come in handy to quickly nest grid elements within another. Say you have a wide element that spans for 10 columns and should incorporate two smaller elements spanning 5 columns each. Easy! All you have to provide the nested elements with is the size of the parent column as an argument to the **span-columns** mixin. The nested elements can of course only add up to the number of columns of the parent tops. That’s it! Let’s look at a more concrete example.
@@ -492,7 +491,7 @@ Screenshot with **shift(1)**:
 
 {% img /images/Neat_01/with-shift(1).png %}
 
-Screenshot with **shift(-2)**:
+Screenshot with **shift(-1.5)**:
 
 {% img /images/Neat_01/with-shift(-1.5).png %}
 
