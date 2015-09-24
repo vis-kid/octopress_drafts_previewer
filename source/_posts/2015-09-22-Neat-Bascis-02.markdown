@@ -103,7 +103,9 @@ then Neat is going to use **$default-feature** which is **min-width**. Also, pro
 
 + ### new-breakpoint
 
-I’d say this handy custom Sass function is the Robin to your **media** Batman. If you want to make things a lot more readable and reuseable with your media queries, I don’t see a good reason why you won’t be using this sidekick to fight media query crime. 
+So you’re probably thinking about what’s up with the DRY approach I mentioned a couple of paragraphs earlier right? That’s the spirit!
+
+I’d say this handy custom Sass function is the Robin to your **media** Batman and keeps you from repeating yourself over and over. If you want to make things a lot more readable and reuseable with your media queries, I don’t see a good reason why you won’t be using this sidekick to fight media query crime. 
 
 Put simply, all it does is save media contexts ( media query / grid context ) through variables and gives you the opportunity to reuse them at your will in all your **media** mixins. In my book, that’s one hell of a useful extraction. Let’s take a look.
 
@@ -127,27 +129,3 @@ $tablet: new-breakpoint(min-width 768px max-width 1024px 4)
 To be extra sure we’re on the same page: You just provide all the media features you need—but no commas, colons, **or**, **and**—plus the number of columns for the new grid context and save it to a Sass variable. All that is left to do is feed your **media** mixins with the appropriate variable and DRY they are. 
 
 I hope you’ll appreciate how clean this reads and how easy it is to tweak your layouts for various breakpoints—all in one central place. Gone are the days where managing tons of media queries quickly could get you in a fantasy fist fight with your former self. 
-
-
-By using media queries, presentations can be tailored to a specific range of output devices without changing the content itself.
-
-A media query is a logical expression that is either true or false. A media query is true if the media type of the media query matches the media type of the device where the user agent is running (as defined in the "Applies to" line), and all expressions in the media query are true.o
-
-Several media queries can be combined in a media query list. A comma-separated list of media queries. If one or more of the media queries in the comma-separated list are true, the whole list is true, and otherwise false. In the media queries syntax, the comma expresses a logical OR, while the ‘and’ keyword expresses a logical AND.
-
-If a media feature does not apply to the device where the UA is running, expressions involving the media feature will be false.o
-
-Syntactically, media features resemble CSS properties: they have names and accept certain values. There are, however, several important differences between properties and media features:
-
-Properties are used in declarations to give information about how to present a document. Media features are used in expressions to describe requirements of the output device.
-Most media features accept optional ‘min-’ or ‘max-’ prefixes to express "greater or equal to" and "smaller or equal to" constraints. This syntax is used to avoid "<" and ">" characters which may conflict with HTML and XML. Those media features that accept prefixes will most often be used with prefixes, but can also be used alone.
-Properties always require a value to form a declaration. Media features, on the other hand, can also be used without a value. For a media feature feature, (feature) will evaluate to true if (feature:x) will evaluate to true for a value x other than zero or zero followed by a unit identifier (i.e., other than 0, 0px, 0em, etc.). Media features that are prefixed by min/max cannot be used without a value. When a media feature prefixed with min/max is used without a value it makes the media query malformed.
-Properties may accept more complex values, e.g., calculations that involve several other values. Media features only accept single values: one keyword, one number, or a number with a unit identifier. (The only exceptions are the ‘aspect-ratio’ and ‘device-aspect-ratio’ media features.)
-
-The ‘orientation’ media feature is ‘portrait’ when the value of the ‘height’ media feature is greater than or equal to the value of the ‘width’ media feature. Otherwise ‘orientation’ is ‘landscape’.
-
-The ‘resolution’ media feature describes the resolution of the output device, i.e. the density of the pixels. When querying devices with non-square pixels, in ‘min-resolution’ queries the least-dense dimension must be compared to the specified value and in ‘max-resolution’ queries the most-dense dimensions must be compared instead. A ‘resolution’ (without a "min-" or "max-" prefix) query never matches a device with non-square pixels.
-
-+ ### new-breakpoint
-
-So you’re probably thinking about what’s up with the DRY approach I mentioned a couple of paragraphs earlier right? That’s where this little beauty comes in.
