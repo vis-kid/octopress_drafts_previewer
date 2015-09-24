@@ -129,3 +129,23 @@ $tablet: new-breakpoint(min-width 768px max-width 1024px 4)
 To be extra sure we’re on the same page: You just provide all the media features you need—but no commas, colons, **or**, **and**—plus the number of columns for the new grid context and save it to a Sass variable. All that is left to do is feed your **media** mixins with the appropriate variable and DRY they are. 
 
 I hope you’ll appreciate how clean this reads and how easy it is to tweak your layouts for various breakpoints—all in one central place. Gone are the days where managing tons of media queries quickly could get you in a fantasy fist fight with your former self. 
+
++ ### fill-parent
+
+This mixin is nothing fancy but might come in handy when you deal with media queries. If you want some element to quickly fill its parent by spanning the same number of columns, you got an easy solution. You don’t have to provide any arguments as well. Let’s look at a couple of screenshots for comparison:
+
+Screenshot without **fill-parent**:
+
+{% img /images/Neat_02/without-fill-parent.png%}
+
+Screenshot with only one element that uses **fill-parent**:
+
+{% img /images/Neat_02/single-fill-parent.png%}
+
+Screenshot with both elements using **fill-parent**:
+
+{% img /images/Neat_02/both-fill-parent.png%}
+
+[codepen example](http://codepen.io/vis-kid/pen/Kdgebx)
+
+Just wanted to show you that it ignores other elements in the same row and aims to span the full width of its parent without considering its neighbors. I guess this one is straightforward enough, let’s move on!
