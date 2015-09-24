@@ -38,13 +38,13 @@ Something to avoid is what you could call query spagetthi—which basically is a
 
 This mixin is no perfect antidote but definitly encourages a DRY approach to dealing with media queries—especially when paired with the **new-breakpoint** function. How so?
 
-You can write media query blocks that can take grid contexts. Say you have two elements that add up to **12** columns and that span **3** and **9** columns respectively on desktop size screens which allow for **1088px** wide outer containers. For smaller devices / viewport sizes, just let the media query know at what size the context of **12** columns needs to change and adjust the size for the responsive element accordingly. Boom!
+You can write media query blocks that can take grid contexts. Say you have two elements that add up to **12** columns. They span **3** and **9** columns respectively on desktop size screens which allow for **1088px** wide outer containers. For smaller devices / viewport sizes, just let the media query know at what size the context of **12** columns needs to change and adjust the size for the responsive elements accordingly. Boom!
 
 Haml:
 ```haml
 .container
-  %aside Aside: 3 columns
-  %article Article: 9 columns
+  %aside 3 columns / 1 column
+  %article 9 columns / 2 columns
 ```
 
 Sass:
@@ -86,9 +86,9 @@ Screenshot with media query at 700px viewport size and 4 columns as grid context
 [codepen example](http://codepen.io/vis-kid/pen/wKzJXM)
 
 
-I just provided the **media** mixin with a [media feature](http://www.w3.org/TR/css3-mediaqueries/#media1) via **max-width 700px** and a new grid context of **4** columns for the **$total-columns** **max-width** of the element. Having established a new grid context for both the **aside** and **article** elements for the viewport size of **700px** max, I only needed to tell the elements how many columns they can now span within the total of **4** columns.  I think this is pretty darn readable and easy to organize. It get’s even cooler once you reuse *media query contexts* by saving them to a Sass variable via the **new-breakpoint** function. 
+I just provided the **media** mixin with a [media feature](http://www.w3.org/TR/css3-mediaqueries/#media1) via **max-width 700px** and a new grid context of **4** columns for the **$total-columns** **max-width** of the element. Having established a new grid context for both the **aside** and **article** elements for the viewport size of **700px** max, I only needed to tell the elements how many columns they can now span within the new total of **4** columns.  I think this is pretty darn readable and easy to organize. It get’s even cooler once you reuse *media contexts* ( media query / grid context ) via the **new-breakpoint** function and save them to a Sass variable . 
 
-### Attention!
+#### Attention!
 If you provide this mixin with only a pixel value without any specific media feature
 
 Sass:
@@ -101,8 +101,32 @@ Sass:
 
 then Neat is going to use **$default-feature** which is **min-width**. Also, providing a grid context is optional and defaults to whatever is set through **$total-columns** in your **_grid-settings** partial. 
 
-+ Save media query contexts ( media query / grid context ) through variables and reuse them at your will.
++ ### new-breakpoint
 
+I’d say this handy custom Sass function is the Robin to your **media** Batman. If you want to make things a lot more readable and reuseable with your media queries, I don’t see a good reason why you won’t be using this sidekick to fight media query crime. 
+
+Put simply, all it does is save media contexts ( media query / grid context ) through variables and gives you the opportunity to reuse them at your will in all your **media** mixins. In my book, that’s one hell of a useful extraction. Let’s take a look.
+
+Sass:
+``` sass
+$tablet: new-breakpoint(min-width 768px max-width 1024px 4)
+
+.some-responsive-element
+  +span-columns(3)
+  + media($tablet)
+    + span-columns(1)
+
+.some-other-responsive-element
+  +span-columns(9)
+  + media($tablet)
+    + span-columns(2)
+```
+
+[codepen example](http://codepen.io/vis-kid/pen/merKVe)
+
+To be extra sure we’re on the same page: You just provide all the media features you need—but no commas, colons or **and**—plus the number of columns for the new grid context and save it to a Sass variable. All that is left to do is feed your **media** mixins with the appropriate media contexts and DRY they are. 
+
+I hope you’ll appreciate how clean this reads and how easy it is to tweak your layouts for various breakpoints—all in one central place. Gone are the days where managing tons of media queries quickly could got you in a fantasy fist fight with your former self. 
 
 
 By using media queries, presentations can be tailored to a specific range of output devices without changing the content itself.
