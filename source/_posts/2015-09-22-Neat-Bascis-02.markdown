@@ -32,7 +32,7 @@ Now that you should have the basics under your belt, in the second article about
 
 + ### media
 
-I assume you haven’t lived under a rock for the past couple of years and that you know about the importance of flexible designs that respond to the ever evolving landscape of screen sizes and types of devices. Responsive design is here to stay and a responsible and sustainable use of media queries is king.
+I assume you haven’t lived under a rock for the past couple of years and that you know about the importance of flexible designs that respond to the ever evolving landscape of screen sizes and types of devices. Bourbon Neat has your back and provides you with an elegant approach to manage these queries for your grids. Through the use of clever targeted media queries, your layout can be adapted to a wide range of devices without changing the content. Responsive design is here to stay and a responsible and sustainable use of media queries is king.
 
 Something to avoid is what you could call query spagetthi—which basically is a tangled mess of media queries that becomes tricky to maintain lightening fast. So whatever you can do to keep these things neat and clean you should pay extra attention to I think. 
 
@@ -124,9 +124,9 @@ $tablet: new-breakpoint(min-width 768px max-width 1024px 4)
 
 [codepen example](http://codepen.io/vis-kid/pen/merKVe)
 
-To be extra sure we’re on the same page: You just provide all the media features you need—but no commas, colons or **and**—plus the number of columns for the new grid context and save it to a Sass variable. All that is left to do is feed your **media** mixins with the appropriate media contexts and DRY they are. 
+To be extra sure we’re on the same page: You just provide all the media features you need—but no commas, colons, **or**, **and**—plus the number of columns for the new grid context and save it to a Sass variable. All that is left to do is feed your **media** mixins with the appropriate variable and DRY they are. 
 
-I hope you’ll appreciate how clean this reads and how easy it is to tweak your layouts for various breakpoints—all in one central place. Gone are the days where managing tons of media queries quickly could got you in a fantasy fist fight with your former self. 
+I hope you’ll appreciate how clean this reads and how easy it is to tweak your layouts for various breakpoints—all in one central place. Gone are the days where managing tons of media queries quickly could get you in a fantasy fist fight with your former self. 
 
 
 By using media queries, presentations can be tailored to a specific range of output devices without changing the content itself.
