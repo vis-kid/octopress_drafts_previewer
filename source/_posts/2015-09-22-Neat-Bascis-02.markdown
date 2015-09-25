@@ -147,3 +147,127 @@ Screenshot with both elements using **fill-parent**:
 [codepen example](http://codepen.io/vis-kid/pen/Kdgebx)
 
 Just wanted to show you that elements using **fill-parent** ignore other elements in the same row and aim to span the full width of its parent without considering its neighbors. I guess this one is straightforward enough, let’s move on!
+
++ ### direction-context
+
+Every element in your Neat grid has a default **$layout-direction** which is set to **LTR** (left-to-right) in **settings/_grid.scss**. This simply means that behind the scenes, Neat is always using a **direction-context** of **left-to-right**. It is an obivious decision of course since most cultures are used to digest content from left to right.
+
+Under the hood, this mixin does nothing else than changing the float direction of the applied element. What is neat is that within some directional context, let’s say left-to-right, you can gather a bunch of grid elements and change their direction to right-to-left all at once. Again, this solution makes things mostly more compact and readable for yourself as well as easier to understand / navigate for someone who’s not that familiar with a certain project.
+
+Haml:
+``` haml
+.container
+  %aside 3 columns
+	%article 9 columns
+```
+
+Sass:
+``` sass
+body
+  color: white
+  background-color: white
+  
+.container
+  +outer-container
+  margin-top: 10px
+  background-color: tomato
+
+aside, article
+  margin-bottom: 5px
+  height: 200px  
+  
++direction-context(right-to-left)
+  aside
+    +span-columns(3)
+    background-color: LightSkyBlue 
+
+  article
+    +span-columns(9)
+    background-color: Olive
+```
+
+Screenshot “without” **direction-context**:
+
+{% img /images/Neat_02/without-direction-context.png %}
+
+Screenshot with **direction-context(right-to-left)**:
+
+{% img /images/Neat_02/with-direction-context.png %}
+
+
+[codepen example](http://codepen.io/vis-kid/pen/OyRKPq)
+
+Just for the fun of it, here’s another example. Nothing new here for now—just the columns are of equal size now and also flow from **right-to-left**. 
+
+Haml:
+``` haml
+.container
+  %aside 3 columns
+  %article 3 columns
+```
+
+Sass:
+``` sass
+@import "bourbon"
+@import "neat" 
+
+body
+  color: white
+  background-color: white
+  
+.container
+  +outer-container
+  margin-top: 10px
+  background-color: tomato
+
+aside, article
+  margin-bottom: 5px
+  height: 200px  
+  
++direction-context(right-to-left)
+  aside
+    +span-columns(3)
+    background-color: LightSkyBlue 
+
+  article
+    +span-columns(3)
+    background-color: Olive
+```
+Screenshot:
+
+{% img /images/Neat_02/3-column-elements-with-direction-context-rtl.png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/ZbpgWp)
+
+The following little tweak only has one of these 3-column elements use the mixin and therefore both float on the opposite side of the container. Nothing too magic, but might be handy to have in your bag of tricks. Et voilà! 
+
+Sass:
+``` sass
+@import "bourbon"
+@import "neat" 
+
+body
+  color: white
+  background-color: white
+  
+.container
+  +outer-container
+  margin-top: 10px
+  background-color: tomato
+
+aside, article
+  margin-bottom: 5px
+  height: 200px  
+  
+aside
+  +span-columns(3)
+  background-color: LightSkyBlue 
+  
++direction-context(right-to-left)
+  article
+    +span-columns(3)
+    background-color: Olive
+```
+
+{% img /images/Neat_02/one-3-column-element-with-direction-context-rtl.png %}
+[codepen example](http://codepen.io/vis-kid/pen/yYamVJ)
