@@ -32,13 +32,11 @@ Now that you should have the basics under your belt, in the second article about
 
 + ### media
 
-I assume you haven’t lived under a rock for the past couple of years and that you know about the importance of flexible designs that respond to the ever evolving landscape of screen sizes and types of devices. Bourbon Neat has your back and provides you with an elegant approach to manage these queries for your grids. Through the use of clever targeted media queries, your layout can be adapted to a wide range of devices without changing the content. Responsive design is here to stay and a responsible and sustainable use of media queries is king.
+I assume you haven’t lived under a rock for the past couple of years and that you know about the importance of flexible designs that respond to the ever evolving landscape of screen sizes and types of devices. Bourbon Neat has your back and provides you with an elegant approach to manage media queries for your grids. Through the use of clever targeted media queries, your layout can be adapted to a wide range of devices without making a mess. Responsive design is here to stay and a responsible and sustainable use of media queries is king.
 
-Something to avoid is what you could call query spagetthi—which basically is a tangled mess of media queries that becomes tricky to maintain lightening fast. So whatever you can do to keep these things neat and clean you should pay extra attention to I think. 
+Something to avoid is what you could call query spagetthi—which basically is a tangled mess of media queries that becomes tricky to maintain lightening fast. So whatever you can do to keep these things neat and clean you should pay extra attention to I think. This mixin is no perfect antidote but definitly encourages a DRY approach to dealing with media queries sanely—especially when paired with the **new-breakpoint** function. How so?
 
-This mixin is no perfect antidote but definitly encourages a DRY approach to dealing with media queries—especially when paired with the **new-breakpoint** function. How so?
-
-You can write media query blocks that can take grid contexts. Say you have two elements that add up to **12** columns. They span **3** and **9** columns respectively on desktop size screens which allow for **1088px** wide outer containers. For smaller devices / viewport sizes, just let the media query know at what size the context of **12** columns needs to change and adjust the size for the responsive elements accordingly. Boom!
+You can write media query blocks that can take grid contexts. Say you have two elements that add up to **12** columns—as defined in **$total-columns** in your **_grid-settings** file. These elements span **3** and **9** columns respectively on desktop size screens which allow for **1088px** wide outer containers. For smaller devices / viewport sizes, just let the **media** (query) mixin know at what size the context of **12** columns overall needs to change to another number and adjust the size for the responsive elements within that new context accordingly. Boom!
 
 Haml:
 ```haml
@@ -107,7 +105,7 @@ So you’re probably thinking about what’s up with the DRY approach I mentione
 
 I’d say this handy custom Sass function is the Robin to your **media** Batman and keeps you from repeating yourself over and over. If you want to make things a lot more readable and reuseable with your media queries, I don’t see a good reason why you won’t be using this sidekick to fight media query crime. 
 
-Put simply, all it does is save media contexts ( media query / grid context ) through variables and gives you the opportunity to reuse them at your will in all your **media** mixins. In my book, that’s one hell of a useful extraction. Let’s take a look.
+Put simply, all it does is save media contexts ( media query / grid context ) through variables and gives you the opportunity to reuse them at will in all your **media** mixins. In my book, that’s one hell of a useful extraction. Super readable too! Let’s take a look.
 
 Sass:
 ``` sass
@@ -115,20 +113,20 @@ $tablet: new-breakpoint(min-width 768px max-width 1024px 4)
 
 .some-responsive-element
   +span-columns(3)
-  + media($tablet)
-    + span-columns(1)
+  +media($tablet)
+    +span-columns(1)
 
 .some-other-responsive-element
   +span-columns(9)
-  + media($tablet)
-    + span-columns(2)
+  +media($tablet)
+    +span-columns(2)
 ```
 
 [codepen example](http://codepen.io/vis-kid/pen/merKVe)
 
 To be extra sure we’re on the same page: You just provide all the media features you need—but no commas, colons, **or**, **and**—plus the number of columns for the new grid context and save it to a Sass variable. All that is left to do is feed your **media** mixins with the appropriate variable and DRY they are. 
 
-I hope you’ll appreciate how clean this reads and how easy it is to tweak your layouts for various breakpoints—all in one central place. Gone are the days where managing tons of media queries quickly could get you in a fantasy fist fight with your former self. 
+I hope you’ll appreciate how clean this reads and how easy it is to tweak your layouts for various breakpoints—all in one central place. Gone are the days where managing tons of layout related media queries could quickly get you in a fantasy fist fight with your former self. 
 
 + ### fill-parent
 
@@ -148,4 +146,4 @@ Screenshot with both elements using **fill-parent**:
 
 [codepen example](http://codepen.io/vis-kid/pen/Kdgebx)
 
-Just wanted to show you that it ignores other elements in the same row and aims to span the full width of its parent without considering its neighbors. I guess this one is straightforward enough, let’s move on!
+Just wanted to show you that elements using **fill-parent** ignore other elements in the same row and aim to span the full width of its parent without considering its neighbors. I guess this one is straightforward enough, let’s move on!
