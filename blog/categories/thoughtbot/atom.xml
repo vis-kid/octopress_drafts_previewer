@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Thoughtbot | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/thoughtbot/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-25T15:19:25+02:00</updated>
+  <updated>2015-09-25T20:02:15+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -143,9 +143,9 @@
 
 <p>So you’re probably thinking about what’s up with the DRY approach I mentioned a couple of paragraphs earlier right? That’s the spirit!</p>
 
-<p>I’d say this handy custom Sass function is the Robin to your <strong>media</strong> Batman and keeps you from repeating yourself over and over. If you want to make things a lot more readable and reuseable with your media queries, I don’t see a good reason why you won’t be using this sidekick to fight media query crime.</p>
+<p>I’d say this handy custom Sass function is the Robin to your <strong>media</strong> Batman and keeps you from repeating yourself over and over again. If you want to make your media queries a lot more readable and reuseable, I don’t see a good reason why you won’t be using this sidekick to fight media query crimes.</p>
 
-<p>Put simply, all it does is save media contexts ( media query / grid context ) through variables and gives you the opportunity to reuse them at will in all your <strong>media</strong> mixins. In my book, that’s one hell of a useful extraction. Super readable too! Let’s take a look.</p>
+<p>Put simply, all it does is save media contexts ( media query / grid context ) through variables and gives you the opportunity to reuse them at will in all your <strong>media</strong> mixins. In my book, that’s one hell of a useful extraction! Let’s take a look.</p>
 
 <p>Sass:
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -174,7 +174,7 @@
 
 <p><a href="http://codepen.io/vis-kid/pen/merKVe">codepen example</a></p>
 
-<p>To be extra sure we’re on the same page: You just provide all the media features you need—but no commas, colons, <strong>or</strong>, <strong>and</strong>—plus the number of columns for the new grid context and save it to a Sass variable. All that is left to do is feed your <strong>media</strong> mixins with the appropriate variable and DRY they are.</p>
+<p>Super readable right? To be extra sure we’re on the same page: You just provide all the media features you need—but no commas, colons, <strong>or</strong>, <strong>and</strong>—plus the number of columns for the new grid context and save it to a Sass variable. All that is left to do is feed your <strong>media</strong> mixins with the appropriate variable and DRY they are.</p>
 
 <p>I hope you’ll appreciate how clean this reads and how easy it is to tweak your layouts for various breakpoints—all in one central place. Gone are the days where managing tons of layout related media queries could quickly get you in a fantasy fist fight with your former self.</p>
 
@@ -183,21 +183,76 @@
 </ul>
 
 
-<p>This mixin is nothing fancy but might come in handy when you deal with media queries. If you want some element to quickly fill its parent by spanning the same number of columns, you got an easy solution. You don’t have to provide any arguments as well. Let’s look at a couple of screenshots for comparison:</p>
+<p>This mixin is nothing fancy but might come in handy when you deal with media queries or tables. Neat offers you an easy solution, if you want some element to quickly fill its parent by spanning the same number of columns. You don’t have to provide any arguments.</p>
 
-<p>Screenshot without <strong>fill-parent</strong>:</p>
+<p>Haml:
+<code>haml
+.container
+  %aside Aside 3 columns | fill-parent
+  %article Article 5 columns | fill-parent
+</code></p>
 
-<p><img src="/images/Neat_02/without-fill-parent.png"></p>
+<p>Sass:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nt">body</span>
+</span><span class='line'>  <span class="na">color</span><span class="o">:</span> <span class="nb">white</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.container</span>
+</span><span class='line'>  <span class="nd">+outer-container</span>
+</span><span class='line'>  <span class="na">margin-top</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">tomato</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">aside</span><span class="o">,</span> <span class="nt">article</span>
+</span><span class='line'>  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">aside</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>  <span class="nd">+fill-parent</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">LightSkyBlue</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">article</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'>  <span class="nd">+fill-parent</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">Olive</span>
+</span></code></pre></td></tr></table></div></figure>
+<a href="http://codepen.io/vis-kid/pen/Kdgebx">codepen example</a></p>
 
-<p>Screenshot with only one element that uses <strong>fill-parent</strong>:</p>
-
-<p><img src="/images/Neat_02/single-fill-parent.png"></p>
+<p>Let’s look at a couple of screenshots for comparison:</p>
 
 <p>Screenshot with both elements using <strong>fill-parent</strong>:</p>
 
 <p><img src="/images/Neat_02/both-fill-parent.png"></p>
 
-<p><a href="http://codepen.io/vis-kid/pen/Kdgebx">codepen example</a></p>
+<p>Screenshot with only one element that uses <strong>fill-parent</strong>:</p>
+
+<p><img src="/images/Neat_02/single-fill-parent.png"></p>
+
+<p>Screenshot without <strong>fill-parent</strong>:</p>
+
+<p><img src="/images/Neat_02/without-fill-parent.png"></p>
 
 <p>Just wanted to show you that elements using <strong>fill-parent</strong> ignore other elements in the same row and aim to span the full width of its parent without considering its neighbors. I guess this one is straightforward enough, let’s move on!</p>
 
@@ -206,9 +261,9 @@
 </ul>
 
 
-<p>Every element in your Neat grid has a default <strong>$layout-direction</strong> which is set to <strong>LTR</strong> (left-to-right) in <strong>settings/_grid.scss</strong>. This simply means that behind the scenes, Neat is always using a <strong>direction-context</strong> of <strong>left-to-right</strong>. It is an obivious decision of course since most cultures are used to digest content from left to right.</p>
+<p>Every element in your Neat grid has a <strong>$default-layout-direction</strong> which is set to <strong>LTR</strong> (left-to-right) in <strong>settings/_grid.scss</strong>. This simply means that behind the scenes, Neat is always using a <strong>direction-context</strong> with <strong>left-to-right</strong>. It is an obivious decision of course since most cultures are used to digest content from left to right.</p>
 
-<p>Under the hood, this mixin does nothing else than changing the float direction of the applied element. What is neat is that within some directional context, let’s say left-to-right, you can gather a bunch of grid elements and change their direction to right-to-left all at once. Again, this solution makes things mostly more compact and readable for yourself as well as easier to understand / navigate for someone who’s not that familiar with a certain project.</p>
+<p>Under the hood, this mixin does nothing else than changing the float direction of the applied element. What is neat is that within some directional context, let’s say <strong>left-to-right</strong>, you can gather a bunch of grid elements and change their direction to <strong>right-to-left</strong> all at once under one code block. Again, this solution makes things mostly more compact and readable for yourself as well as easier to understand / navigate for someone who’s not that familiar with a certain project.</p>
 
 <p>Haml:
 <code>haml
@@ -262,15 +317,15 @@
 </span><span class='line'>    <span class="na">background-color</span><span class="o">:</span> <span class="nb">Olive</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
-<p>Screenshot “without” <strong>direction-context</strong>:</p>
-
-<p><img src="/images/Neat_02/without-direction-context.png"></p>
+<p><a href="http://codepen.io/vis-kid/pen/OyRKPq">codepen example</a></p>
 
 <p>Screenshot with <strong>direction-context(right-to-left)</strong>:</p>
 
 <p><img src="/images/Neat_02/with-direction-context.png"></p>
 
-<p><a href="http://codepen.io/vis-kid/pen/OyRKPq">codepen example</a></p>
+<p>Screenshot “without” <strong>direction-context</strong>:</p>
+
+<p><img src="/images/Neat_02/without-direction-context.png"></p>
 
 <p>Just for the fun of it, here’s another example. Nothing new here for now—just the columns are of equal size now and also flow from <strong>right-to-left</strong>.</p>
 
