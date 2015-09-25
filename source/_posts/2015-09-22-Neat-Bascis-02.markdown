@@ -103,9 +103,9 @@ then Neat is going to use **$default-feature** which is **min-width**. Also, pro
 
 So you’re probably thinking about what’s up with the DRY approach I mentioned a couple of paragraphs earlier right? That’s the spirit!
 
-I’d say this handy custom Sass function is the Robin to your **media** Batman and keeps you from repeating yourself over and over. If you want to make things a lot more readable and reuseable with your media queries, I don’t see a good reason why you won’t be using this sidekick to fight media query crime. 
+I’d say this handy custom Sass function is the Robin to your **media** Batman and keeps you from repeating yourself over and over again. If you want to make your media queries a lot more readable and reuseable, I don’t see a good reason why you won’t be using this sidekick to fight media query crimes.
 
-Put simply, all it does is save media contexts ( media query / grid context ) through variables and gives you the opportunity to reuse them at will in all your **media** mixins. In my book, that’s one hell of a useful extraction. Super readable too! Let’s take a look.
+Put simply, all it does is save media contexts ( media query / grid context ) through variables and gives you the opportunity to reuse them at will in all your **media** mixins. In my book, that’s one hell of a useful extraction! Let’s take a look.
 
 Sass:
 ``` sass
@@ -124,35 +124,69 @@ $tablet: new-breakpoint(min-width 768px max-width 1024px 4)
 
 [codepen example](http://codepen.io/vis-kid/pen/merKVe)
 
-To be extra sure we’re on the same page: You just provide all the media features you need—but no commas, colons, **or**, **and**—plus the number of columns for the new grid context and save it to a Sass variable. All that is left to do is feed your **media** mixins with the appropriate variable and DRY they are. 
+Super readable right? To be extra sure we’re on the same page: You just provide all the media features you need—but no commas, colons, **or**, **and**—plus the number of columns for the new grid context and save it to a Sass variable. All that is left to do is feed your **media** mixins with the appropriate variable and DRY they are. 
 
-I hope you’ll appreciate how clean this reads and how easy it is to tweak your layouts for various breakpoints—all in one central place. Gone are the days where managing tons of layout related media queries could quickly get you in a fantasy fist fight with your former self. 
+I hope you’ll appreciate how clean this reads and how easy it is to tweak your layouts for various breakpoints—all in one central place. Gone are the days where managing tons of layout related media queries could quickly get you in a fantasy fist fight with your former self.
 
 + ### fill-parent
 
-This mixin is nothing fancy but might come in handy when you deal with media queries. If you want some element to quickly fill its parent by spanning the same number of columns, you got an easy solution. You don’t have to provide any arguments as well. Let’s look at a couple of screenshots for comparison:
+This mixin is nothing fancy but might come in handy when you deal with media queries or tables. Neat offers you an easy solution, if you want some element to quickly fill its parent by spanning the same number of columns. You don’t have to provide any arguments. 
 
-Screenshot without **fill-parent**:
+Haml:
+``` haml
+.container
+  %aside Aside 3 columns | fill-parent
+  %article Article 5 columns | fill-parent
+```
 
-{% img /images/Neat_02/without-fill-parent.png%}
+Sass:
+``` sass
+body
+  color: white
+  background-color: white
+  
+.container
+  +outer-container
+  margin-top: 10px
+  background-color: tomato
 
-Screenshot with only one element that uses **fill-parent**:
+aside, article
+  margin-bottom: 5px
+  height: 200px  
+  
+aside
+  +span-columns(3)
+  +fill-parent
+  background-color: LightSkyBlue
 
-{% img /images/Neat_02/single-fill-parent.png%}
+article
+  +span-columns(5)
+  +fill-parent
+  background-color: Olive
+```
+[codepen example](http://codepen.io/vis-kid/pen/Kdgebx)
+
+Let’s look at a couple of screenshots for comparison:
 
 Screenshot with both elements using **fill-parent**:
 
 {% img /images/Neat_02/both-fill-parent.png%}
 
-[codepen example](http://codepen.io/vis-kid/pen/Kdgebx)
+Screenshot with only one element that uses **fill-parent**:
+
+{% img /images/Neat_02/single-fill-parent.png%}
+
+Screenshot without **fill-parent**:
+
+{% img /images/Neat_02/without-fill-parent.png%}
 
 Just wanted to show you that elements using **fill-parent** ignore other elements in the same row and aim to span the full width of its parent without considering its neighbors. I guess this one is straightforward enough, let’s move on!
 
 + ### direction-context
 
-Every element in your Neat grid has a **$default-layout-direction** which is set to **LTR** (left-to-right) in **settings/_grid.scss**. This simply means that behind the scenes, Neat is always using a **direction-context** of **left-to-right**. It is an obivious decision of course since most cultures are used to digest content from left to right.
+Every element in your Neat grid has a **$default-layout-direction** which is set to **LTR** (left-to-right) in **settings/_grid.scss**. This simply means that behind the scenes, Neat is always using a **direction-context** with **left-to-right**. It is an obivious decision of course since most cultures are used to digest content from left to right.
 
-Under the hood, this mixin does nothing else than changing the float direction of the applied element. What is neat is that within some directional context, let’s say left-to-right, you can gather a bunch of grid elements and change their direction to right-to-left all at once. Again, this solution makes things mostly more compact and readable for yourself as well as easier to understand / navigate for someone who’s not that familiar with a certain project.
+Under the hood, this mixin does nothing else than changing the float direction of the applied element. What is neat is that within some directional context, let’s say **left-to-right**, you can gather a bunch of grid elements and change their direction to **right-to-left** all at once under one code block. Again, this solution makes things mostly more compact and readable for yourself as well as easier to understand / navigate for someone who’s not that familiar with a certain project.
 
 Haml:
 ``` haml
@@ -174,30 +208,29 @@ body
 
 aside, article
   margin-bottom: 5px
-  height: 200px  
+  height: 200px
   
 +direction-context(right-to-left)
   aside
     +span-columns(3)
-    background-color: LightSkyBlue 
+    background-color: LightSkyBlue
 
   article
     +span-columns(9)
     background-color: Olive
 ```
 
-Screenshot “without” **direction-context**:
-
-{% img /images/Neat_02/without-direction-context.png %}
+[codepen example](http://codepen.io/vis-kid/pen/OyRKPq)
 
 Screenshot with **direction-context(right-to-left)**:
 
 {% img /images/Neat_02/with-direction-context.png %}
 
+Screenshot “without” **direction-context**:
 
-[codepen example](http://codepen.io/vis-kid/pen/OyRKPq)
+{% img /images/Neat_02/without-direction-context.png %}
 
-Just for the fun of it, here’s another example. Nothing new here for now—just the columns are of equal size now and also flow from **right-to-left**. 
+Just for the fun of it, here’s another example. Nothing new here for now—just the columns are of equal size now and also flow from **right-to-left**.
 
 Haml:
 ``` haml
@@ -214,7 +247,7 @@ Sass:
 body
   color: white
   background-color: white
-  
+
 .container
   +outer-container
   margin-top: 10px
@@ -222,12 +255,12 @@ body
 
 aside, article
   margin-bottom: 5px
-  height: 200px  
-  
+  height: 200px
+
 +direction-context(right-to-left)
   aside
     +span-columns(3)
-    background-color: LightSkyBlue 
+    background-color: LightSkyBlue
 
   article
     +span-columns(3)
@@ -239,17 +272,17 @@ Screenshot:
 
 [codepen example](http://codepen.io/vis-kid/pen/ZbpgWp)
 
-The following little tweak only has one of these 3-column elements use the mixin and therefore both float on the opposite side of the container. Nothing too magic, but might be handy to have in your bag of tricks. Et voilà! 
+The following little tweak only has one of these 3-column elements use the mixin and therefore both float on the opposite side of the container. Nothing too magic, but might be handy to have in your bag of tricks. Et voilà!
 
 Sass:
 ``` sass
 @import "bourbon"
-@import "neat" 
+@import "neat"
 
 body
   color: white
   background-color: white
-  
+
 .container
   +outer-container
   margin-top: 10px
@@ -257,12 +290,12 @@ body
 
 aside, article
   margin-bottom: 5px
-  height: 200px  
+  height: 200px
   
 aside
   +span-columns(3)
-  background-color: LightSkyBlue 
-  
+  background-color: LightSkyBlue
+
 +direction-context(right-to-left)
   article
     +span-columns(3)
