@@ -150,7 +150,7 @@ Just wanted to show you that elements using **fill-parent** ignore other element
 
 + ### direction-context
 
-Every element in your Neat grid has a default **$layout-direction** which is set to **LTR** (left-to-right) in **settings/_grid.scss**. This simply means that behind the scenes, Neat is always using a **direction-context** of **left-to-right**. It is an obivious decision of course since most cultures are used to digest content from left to right.
+Every element in your Neat grid has a **$default-layout-direction** which is set to **LTR** (left-to-right) in **settings/_grid.scss**. This simply means that behind the scenes, Neat is always using a **direction-context** of **left-to-right**. It is an obivious decision of course since most cultures are used to digest content from left to right.
 
 Under the hood, this mixin does nothing else than changing the float direction of the applied element. What is neat is that within some directional context, let’s say left-to-right, you can gather a bunch of grid elements and change their direction to right-to-left all at once. Again, this solution makes things mostly more compact and readable for yourself as well as easier to understand / navigate for someone who’s not that familiar with a certain project.
 
