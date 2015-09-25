@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Css | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/css/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-19T18:02:04+02:00</updated>
+  <updated>2015-09-25T15:19:25+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,388 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Bourbon Neat-Mixins 02]]></title>
+    <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/22/Neat-Bascis-02/"/>
+    <updated>2015-09-22T05:29:10+02:00</updated>
+    <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/22/Neat-Bascis-02</id>
+    <content type="html"><![CDATA[<p><img src="/images/Neat_01/Neat-pour.jpg"></p>
+
+<p><a href="http://neat.bourbon.io/"><img src="/images/bourbon-neat/Bourbon-Neat-Logo.png" width="250" height="450"></a></p>
+
+<p>Now that you should have the basics under your belt, in the second article about Neat mixins I’ll dive a little deeper and explore the following function and mixins:</p>
+
+<h4>Function</h4>
+
+<ul>
+<li>new-breakpoint</li>
+</ul>
+
+
+<h4>Mixins</h4>
+
+<ul>
+<li>reset-layout-direction</li>
+<li>direction-context</li>
+<li>display-context</li>
+<li>reset-display</li>
+<li>fill-parent</li>
+<li>reset-all</li>
+<li>media</li>
+<li><p>row</p></li>
+<li><h3>media</h3></li>
+</ul>
+
+
+<p>I assume you haven’t lived under a rock for the past couple of years and that you know about the importance of flexible designs that respond to the ever evolving landscape of screen sizes and types of devices. Bourbon Neat has your back and provides you with an elegant approach to manage media queries for your grids. Through the use of clever targeted media queries, your layout can be adapted to a wide range of devices without making a mess. Responsive design is here to stay and a responsible and sustainable use of media queries is king.</p>
+
+<p>Something to avoid is what you could call query spagetthi—which basically is a tangled mess of media queries that becomes tricky to maintain lightening fast. So whatever you can do to keep these things neat and clean you should pay extra attention to I think. This mixin is no perfect antidote but definitly encourages a DRY approach to dealing with media queries sanely—especially when paired with the <strong>new-breakpoint</strong> function. How so?</p>
+
+<p>You can write media query blocks that can take grid contexts. Say you have two elements that add up to <strong>12</strong> columns—as defined in <strong>$total-columns</strong> in your <strong>_grid-settings</strong> file. These elements span <strong>3</strong> and <strong>9</strong> columns respectively on desktop size screens which allow for <strong>1088px</strong> wide outer containers. For smaller devices / viewport sizes, just let the <strong>media</strong> (query) mixin know at what size the context of <strong>12</strong> columns overall needs to change to another number and adjust the size for the responsive elements within that new context accordingly. Boom!</p>
+
+<p>Haml:
+<code>haml
+.container
+  %aside 3 columns / 1 column
+  %article 9 columns / 2 columns
+</code></p>
+
+<p>Sass:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nt">body</span>
+</span><span class='line'>  <span class="na">color</span><span class="o">:</span> <span class="nb">white</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.container</span>
+</span><span class='line'>  <span class="nd">+outer-container</span>
+</span><span class='line'>  <span class="na">margin-top</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">tomato</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">aside</span><span class="o">,</span> <span class="nt">article</span>
+</span><span class='line'>  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">aside</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">LightSkyBlue</span>
+</span><span class='line'>  <span class="nd">+media</span><span class="p">(</span><span class="no">max-width</span> <span class="mi">700</span><span class="kt">px</span><span class="o">,</span> <span class="mi">4</span><span class="p">)</span>
+</span><span class='line'>    <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">article</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">Olive</span>
+</span><span class='line'>  <span class="nd">+media</span><span class="p">(</span><span class="no">max-width</span> <span class="mi">700</span><span class="kt">px</span><span class="o">,</span> <span class="mi">4</span><span class="p">)</span>
+</span><span class='line'>    <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Screenshot without media query:</p>
+
+<p><img src="/images/Neat_02/without-media-query.png"></p>
+
+<p>Screenshot with media query at 700px viewport size and 4 columns as grid context:</p>
+
+<p><img src="/images/Neat_02/with-media-query.png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/wKzJXM">codepen example</a></p>
+
+<p>I just provided the <strong>media</strong> mixin with a <a href="http://www.w3.org/TR/css3-mediaqueries/#media1">media feature</a> via <strong>max-width 700px</strong> and a new grid context of <strong>4</strong> columns for the <strong>$total-columns</strong> <strong>max-width</strong> of the element. Having established a new grid context for both the <strong>aside</strong> and <strong>article</strong> elements for the viewport size of <strong>700px</strong> max, I only needed to tell the elements how many columns they can now span within the new total of <strong>4</strong> columns.  I think this is pretty darn readable and easy to organize. It get’s even cooler once you reuse <em>media contexts</em> ( media query / grid context ) via the <strong>new-breakpoint</strong> function and save them to a Sass variable .</p>
+
+<h4>Attention!</h4>
+
+<p>If you provide this mixin with only a pixel value without any specific media feature</p>
+
+<p>Sass:
+<code>sass
+.some-responsive-element
+  +span-columns(8)
+  +media(700px)
+    +span-columns(4)
+</code></p>
+
+<p>then Neat is going to use <strong>$default-feature</strong> which is <strong>min-width</strong>. Also, providing a grid context is optional and defaults to whatever is set through <strong>$total-columns</strong> in your <strong>_grid-settings</strong> partial.</p>
+
+<ul>
+<li><h3>new-breakpoint</h3></li>
+</ul>
+
+
+<p>So you’re probably thinking about what’s up with the DRY approach I mentioned a couple of paragraphs earlier right? That’s the spirit!</p>
+
+<p>I’d say this handy custom Sass function is the Robin to your <strong>media</strong> Batman and keeps you from repeating yourself over and over. If you want to make things a lot more readable and reuseable with your media queries, I don’t see a good reason why you won’t be using this sidekick to fight media query crime.</p>
+
+<p>Put simply, all it does is save media contexts ( media query / grid context ) through variables and gives you the opportunity to reuse them at will in all your <strong>media</strong> mixins. In my book, that’s one hell of a useful extraction. Super readable too! Let’s take a look.</p>
+
+<p>Sass:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$tablet</span><span class="o">:</span> <span class="nf">new-breakpoint</span><span class="p">(</span><span class="no">min-width</span> <span class="mi">768</span><span class="kt">px</span> <span class="no">max-width</span> <span class="mi">1024</span><span class="kt">px</span> <span class="mi">4</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.some-responsive-element</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>  <span class="nd">+media</span><span class="p">(</span><span class="nv">$tablet</span><span class="p">)</span>
+</span><span class='line'>    <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.some-other-responsive-element</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+</span><span class='line'>  <span class="nd">+media</span><span class="p">(</span><span class="nv">$tablet</span><span class="p">)</span>
+</span><span class='line'>    <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/merKVe">codepen example</a></p>
+
+<p>To be extra sure we’re on the same page: You just provide all the media features you need—but no commas, colons, <strong>or</strong>, <strong>and</strong>—plus the number of columns for the new grid context and save it to a Sass variable. All that is left to do is feed your <strong>media</strong> mixins with the appropriate variable and DRY they are.</p>
+
+<p>I hope you’ll appreciate how clean this reads and how easy it is to tweak your layouts for various breakpoints—all in one central place. Gone are the days where managing tons of layout related media queries could quickly get you in a fantasy fist fight with your former self.</p>
+
+<ul>
+<li><h3>fill-parent</h3></li>
+</ul>
+
+
+<p>This mixin is nothing fancy but might come in handy when you deal with media queries. If you want some element to quickly fill its parent by spanning the same number of columns, you got an easy solution. You don’t have to provide any arguments as well. Let’s look at a couple of screenshots for comparison:</p>
+
+<p>Screenshot without <strong>fill-parent</strong>:</p>
+
+<p><img src="/images/Neat_02/without-fill-parent.png"></p>
+
+<p>Screenshot with only one element that uses <strong>fill-parent</strong>:</p>
+
+<p><img src="/images/Neat_02/single-fill-parent.png"></p>
+
+<p>Screenshot with both elements using <strong>fill-parent</strong>:</p>
+
+<p><img src="/images/Neat_02/both-fill-parent.png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/Kdgebx">codepen example</a></p>
+
+<p>Just wanted to show you that elements using <strong>fill-parent</strong> ignore other elements in the same row and aim to span the full width of its parent without considering its neighbors. I guess this one is straightforward enough, let’s move on!</p>
+
+<ul>
+<li><h3>direction-context</h3></li>
+</ul>
+
+
+<p>Every element in your Neat grid has a default <strong>$layout-direction</strong> which is set to <strong>LTR</strong> (left-to-right) in <strong>settings/_grid.scss</strong>. This simply means that behind the scenes, Neat is always using a <strong>direction-context</strong> of <strong>left-to-right</strong>. It is an obivious decision of course since most cultures are used to digest content from left to right.</p>
+
+<p>Under the hood, this mixin does nothing else than changing the float direction of the applied element. What is neat is that within some directional context, let’s say left-to-right, you can gather a bunch of grid elements and change their direction to right-to-left all at once. Again, this solution makes things mostly more compact and readable for yourself as well as easier to understand / navigate for someone who’s not that familiar with a certain project.</p>
+
+<p>Haml:
+<code>haml
+.container
+  %aside 3 columns
+    %article 9 columns
+</code></p>
+
+<p>Sass:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nt">body</span>
+</span><span class='line'>  <span class="na">color</span><span class="o">:</span> <span class="nb">white</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.container</span>
+</span><span class='line'>  <span class="nd">+outer-container</span>
+</span><span class='line'>  <span class="na">margin-top</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">tomato</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">aside</span><span class="o">,</span> <span class="nt">article</span>
+</span><span class='line'>  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;+</span><span class="nt">direction-context</span><span class="o">(</span><span class="nt">right-to-left</span><span class="o">)</span>
+</span><span class='line'>  <span class="nt">aside</span>
+</span><span class='line'>    <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>    <span class="na">background-color</span><span class="o">:</span> <span class="ni">LightSkyBlue</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span>  <span class="nt">article</span>
+</span><span class='line'>    <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+</span><span class='line'>    <span class="na">background-color</span><span class="o">:</span> <span class="nb">Olive</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Screenshot “without” <strong>direction-context</strong>:</p>
+
+<p><img src="/images/Neat_02/without-direction-context.png"></p>
+
+<p>Screenshot with <strong>direction-context(right-to-left)</strong>:</p>
+
+<p><img src="/images/Neat_02/with-direction-context.png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/OyRKPq">codepen example</a></p>
+
+<p>Just for the fun of it, here’s another example. Nothing new here for now—just the columns are of equal size now and also flow from <strong>right-to-left</strong>.</p>
+
+<p>Haml:
+<code>haml
+.container
+  %aside 3 columns
+  %article 3 columns
+</code></p>
+
+<p>Sass:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="k">@import</span> <span class="s">&amp;ldquo;bourbon&amp;rdquo;</span>
+</span><span class='line'><span class="k">@import</span> <span class="s">&amp;ldquo;neat&amp;rdquo;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">body</span>
+</span><span class='line'>  <span class="na">color</span><span class="o">:</span> <span class="nb">white</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.container</span>
+</span><span class='line'>  <span class="nd">+outer-container</span>
+</span><span class='line'>  <span class="na">margin-top</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">tomato</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">aside</span><span class="o">,</span> <span class="nt">article</span>
+</span><span class='line'>  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;+</span><span class="nt">direction-context</span><span class="o">(</span><span class="nt">right-to-left</span><span class="o">)</span>
+</span><span class='line'>  <span class="nt">aside</span>
+</span><span class='line'>    <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>    <span class="na">background-color</span><span class="o">:</span> <span class="ni">LightSkyBlue</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span>  <span class="nt">article</span>
+</span><span class='line'>    <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>    <span class="na">background-color</span><span class="o">:</span> <span class="nb">Olive</span>
+</span></code></pre></td></tr></table></div></figure>
+Screenshot:</p>
+
+<p><img src="/images/Neat_02/3-column-elements-with-direction-context-rtl.png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/ZbpgWp">codepen example</a></p>
+
+<p>The following little tweak only has one of these 3-column elements use the mixin and therefore both float on the opposite side of the container. Nothing too magic, but might be handy to have in your bag of tricks. Et voilà!</p>
+
+<p>Sass:
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="k">@import</span> <span class="s">&amp;ldquo;bourbon&amp;rdquo;</span>
+</span><span class='line'><span class="k">@import</span> <span class="s">&amp;ldquo;neat&amp;rdquo;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">body</span>
+</span><span class='line'>  <span class="na">color</span><span class="o">:</span> <span class="nb">white</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.container</span>
+</span><span class='line'>  <span class="nd">+outer-container</span>
+</span><span class='line'>  <span class="na">margin-top</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">tomato</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">aside</span><span class="o">,</span> <span class="nt">article</span>
+</span><span class='line'>  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span>
+</span><span class='line'>  <span class="na">height</span><span class="o">:</span> <span class="mi">200</span><span class="kt">px</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">aside</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="ni">LightSkyBlue</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;+</span><span class="nt">direction-context</span><span class="o">(</span><span class="nt">right-to-left</span><span class="o">)</span>
+</span><span class='line'>  <span class="nt">article</span>
+</span><span class='line'>    <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>    <span class="na">background-color</span><span class="o">:</span> <span class="nb">Olive</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p><img src="/images/Neat_02/one-3-column-element-with-direction-context-rtl.png">
+<a href="http://codepen.io/vis-kid/pen/yYamVJ">codepen example</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Bourbon Neat-Mixins 01]]></title>
@@ -264,17 +646,12 @@ or</p>
 <h3>Nesting columns</h3>
 
 <p>Sass:
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nc">.some-parent-element</span>
-</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nc">.some-nested-element</span>
-</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">5</span> <span class="n">of</span> <span class="mi">10</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<code>sass
+.some-parent-element
+  +span-columns(10)
+  .some-nested-element
+    +span-columns(5 of 10)
+</code></p>
 
 <p>Of course, from time to time it might come in handy to quickly nest grid elements within another. Say you have a wide element that spans for 10 columns and should incorporate two smaller elements spanning 5 columns each. Easy! All you have to provide the nested elements with is the size of the parent column as an argument to the <strong>span-columns</strong> mixin. The nested elements can of course only add up to the number of columns of the parent tops. That’s it! Let’s look at a more concrete example.</p>
 
@@ -713,7 +1090,7 @@ img
 
 <p><img src="/images/Neat_01/with-shift(1).png"></p>
 
-<p>Screenshot with <strong>shift(-2)</strong>:</p>
+<p>Screenshot with <strong>shift(-1.5)</strong>:</p>
 
 <p><img src="/images/Neat_01/with-shift(-1.5).png"></p>
 
@@ -731,7 +1108,7 @@ img
 </ul>
 
 
-<p>I think I don’t need to go into any specifics how this little padding fella works. It’s a little helper to clean  up your stylesheets and to provide you with the default gutter width if you provide the mixin with <strong>default</strong> as an argument. Nothing too fancy, but I thought I mentioned it to complete your options for adjusting the spacing of your grids.</p>
+<p>I don’t think I need to go into any specifics how this little padding fella works. It’s a little helper to clean  up your stylesheets and to provide you with the default gutter width if you provide the mixin with <strong>default</strong> as an argument. Nothing too fancy, but I thought I mentioned it to complete your options for adjusting the spacing of your grids.</p>
 
 <p>Sass:
 <code>
@@ -741,7 +1118,7 @@ img
 
 <p>Here you go, all you need to know to get started for playing with Neat grids. I tried to provide you with a solid basis that enables you to build any grid you need—however complex you like. Neat is one of my favorite tools out there and I hope I could show you why this lightweight project deserves a lot of respect.</p>
 
-<p>My next article will show you another round of Neat mixins and also explain how you can use media-queries and breakpoints to adjust your grids for changing viewport sizes.</p>
+<p>My next article will cover another round of Neat mixins and also explain how you can use media queries and breakpoints to adjust your grids for changing viewport sizes.</p>
 ]]></content>
   </entry>
   
