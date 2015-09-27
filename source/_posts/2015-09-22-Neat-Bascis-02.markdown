@@ -50,7 +50,7 @@ Sass:
 body
   color: white
   background-color: white
-  
+
 .container
   +outer-container
   margin-top: 10px
@@ -59,25 +59,25 @@ body
 aside, article
   margin-bottom: 5px
   height: 200px  
-  
+
 aside
   +span-columns(3)
-  background-color: LightSkyBlue 
-  +media(max-width 700px, 4)
+	background-color: LightSkyBlue 
+	+media(max-width 700px, 4)
     +span-columns(1)
 
 article
   +span-columns(9)
-  background-color: Olive
-  +media(max-width 700px, 4)
+	background-color: Olive
+	+media(max-width 700px, 4)
     +span-columns(2)
 ```
 
-Screenshot without media query:
+##### Screenshot without media query:
 
 {% img /images/Neat_02/without-media-query.png %}
 
-Screenshot with media query at 700px viewport size and 4 columns as grid context:
+##### Screenshot with media query at 700px viewport size and 4 columns as grid context:
 
 {% img /images/Neat_02/with-media-query.png %}
 
@@ -128,6 +128,260 @@ Super readable right? To be extra sure we’re on the same page: You just provid
 
 I hope you’ll appreciate how clean this reads and how easy it is to tweak your layouts for various breakpoints—all in one central place. Gone are the days where managing tons of layout related media queries could quickly get you in a fantasy fist fight with your former self.
 
++ ### row
+
+#### Basics
+
+I wanna take a little extra time to explore this one. If you’re not using tables very often in your designs—as you probably shouldn’t since we kissed the days of using tables for layout purposes goodbye—this one can be tricky to jump into right away. You have two options for using this mixin: with the argument **table** or without any argument.
+
+Sass:
+``` sass
+.some-row-element
+  +row
+```
+
+Using row without the **table** argument, a **clearfix** is added and **$display** stays set to default which is **block**. Effectively that means that whatever comes after the designated element using **row** needs to start its own thing on a separare “row”.
+
+``` sass
+.some-table-row-element
+  +row(table)
+```
+
+On the other hand, using **row(table)**, you guessed it, makes this row part of a table layout. What happens under the hood, among other things, is that this mixin sets `display: table` and `table-layout: fixed`. 
+
+But let’s start at the beginning. The following dummy example has 16 **img** elements and the first four are nested under a **.row** container which uses the **row** mixin. Let’s see what happens if you leave off the **table** argument. 
+
+Haml:
+``` haml
+.container
+
+  +row
+    %img
+    %img
+    %img
+    %img
+  
+  img
+  img
+  img
+  img
+  
+  img
+  img
+  img
+  img
+  
+  img
+  img
+  img
+  img
+```
+
+Sass:
+``` sass
+.container
+  +outer-container
+  background-color: tomato
+
+.row
+  +row
+
+img
+  +span-columns(1)
+  height: 60px
+  margin-bottom: 5px
+  background-color: Olive
+```
+
+##### Screenshot:
+
+{% img /images/Neat_02/img-row-without-argument.png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/ojYgMa)
+
+As you can see, the browser treats the first four elements as part of one row and puts the following **img** elements on a separate row. The elements below the .row container are not bound to a particular row and just float downwards as long as they have space available to them.
+
+Two **.row** containers result in the same trick, stacked on top of each other.
+
+Haml:
+``` haml
+.container
+
+  .row
+    %img
+    %img
+    %img
+    %img
+  
+  .row
+    %img
+    %img
+    %img
+    %img
+  
+  %img
+  %img
+  %img
+  %img
+  
+  %img
+  %img
+  %img
+  %img
+```
+
+##### Screenshot:
+
+{% img /images/Neat_02/img-2-rows-without-argument.png%}
+
+[codepen example](http://codepen.io/vis-kid/pen/ZbBJjK)
+
+Not too tricky I guess. Although I’m not sure how useful this would be because instinctively I’d rather use the **omega** mixin for such an occasion—but I might change my mind if I’d run against a wall of sorts with that approach. What seems pretty useless though is using **row(table)** here. You’d just get one very long column that stacks all 16 elements above each other. I’ll spare you the nasty screenshot but check out the [codepen example](http://codepen.io/vis-kid/pen/ZbBJqK) if you’re curious.
+
+### Using row without an argument on a table
+
+Above I wanted to show you the basic mechanics of this mixin, especially if you are new to the game. Now we’re approaching useful territory. Let’s play with an actual table:
+
+If you haven’t fooled with tables before, I recommend firing up Google before you proceed. Below is a little survival guide for those who only need to refresh a couple of terms.
+
+Here we have a **table** element that uses the **thead** tag which has one row that displays the various column names / headers via the **th** tag. Underneath you’ll find the **tbody** tag that houses the actual data for each table row (**tr**) via the **td** tag.
+
+Haml:
+``` haml
+.container
+
+  %table
+  
+    %thead
+      %tr
+        %th Username
+        %th User_ID
+        %th Favorite Pizza
+        %th Pet
+        %th Pet Name
+        %th Favorite Game
+    
+    %tbody
+      %tr
+        %td Joe
+        %td 112233
+        %td Pepperoni
+        %td Cat
+        %td Gordon
+        %td Splinter Cell
+      %tr
+        %td Jane
+        %td 223311
+        %td Mushrooms
+        %td Dog
+        %td Fluffy
+        %td Metal Gear Solid V
+      %tr
+        %td Bob
+        %td 331122
+        %td Onions
+        %td Fish
+        %td Sharky
+        %td Little Big Planet 2
+```
+
+Sass:
+``` sass
+body
+  color: white
+  background-color: white
+
+.container
+  +outer-container
+  background-color: tomato
+
+tr
+  +row()
+  text-align: center
+  
+th
+  padding:
+  top: 10px
+  bottom: 20px
+  
+td
+  height: 50px
+  background: Olive
+  padding-top: 2px
+```
+This results in an uneven nasty table blob that only spans as far as the content in these table data cells go. Obviously not super useful and a pain if you want to manually fix this using a bunch of CSS rules to even things out.
+
+Sreenshot: 
+
+{% img /images/Neat_02/row-without-table.png%}
+
+[codepen example](http://codepen.io/vis-kid/pen/avBzXK)
+
+### Using row(table)
+
+There should be a simple solution to this right? Adding **table** as an argument and `display: table` and `table-layout: fixed` come to the rescue! Not too mention with a little topping of **fill-parent** under the hood. That’s it! That’s all you need to do for a nice table for your data—no need for an aspirin!
+
+Sass:
+``` sass
+tr
+  +row(table)
+  text-align: center
+```
+
+##### Screenshot
+
+{% img /images/Neat_02/row-with-table.png%}
+
+[codepen example](http://codepen.io/vis-kid/pen/rOWzGy)
+
+#### Attention!
+A fixed table-layout like that has the advantage of not only laying out the table faster, but the width of the columns is not dependent on the contents (their length) of the table cells. That basically means that you’ll get evenly laid out rows in your table grid that span over the width of the table container. Remove one table data cell (**td**) and you’ll see that the other elements will divide up the space in that row evenly. Booyakasha! 
+
+##### Screenshot with irregular number of columns:
+
+{% img /images/Neat_02/table-with-varying-length-table-data.png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/KdNXzq)
+
+
+### Without row
+
+Let’s close with an example that shows the default behaviour of tables without using the **row** mixin at all. (With a little padding and stuff though)
+
+Sass
+``` sass
+body
+  color: white
+  background-color: white
+
+.container
+  +outer-container
+  background-color: tomato
+
+tr
+  text-align: center
+
+th
+  padding:
+  top: 10px
+  bottom: 20px
+
+td
+  height: 50px
+  background: Olive
+  padding-top: 2px
+```
+
+#### Screenshot:
+
+{% img /images/Neat_02/table-without-row.png%}
+
+[codepen example](http://codepen.io/vis-kid/pen/bVBrXp)
+
+Easy to see that cells for every column are spaced evenly but don’t use all the appropriated space that is available to them. They simply orient themselves on the longest data / content per column and adjust their cells to align themselves along these lines.
+
+Apologies for being overly verbose about **row** but I hope this section made any headaches you might have with tables / rows a little less likely.
+
 + ### fill-parent
 
 This mixin is nothing fancy but might come in handy when you deal with media queries or tables. Neat offers you an easy solution, if you want some element to quickly fill its parent by spanning the same number of columns. You don’t have to provide any arguments. 
@@ -144,7 +398,7 @@ Sass:
 body
   color: white
   background-color: white
-  
+
 .container
   +outer-container
   margin-top: 10px
@@ -153,7 +407,7 @@ body
 aside, article
   margin-bottom: 5px
   height: 200px  
-  
+
 aside
   +span-columns(3)
   +fill-parent
@@ -164,19 +418,20 @@ article
   +fill-parent
   background-color: Olive
 ```
+
 [codepen example](http://codepen.io/vis-kid/pen/Kdgebx)
 
 Let’s look at a couple of screenshots for comparison:
 
-Screenshot with both elements using **fill-parent**:
+##### Screenshot with both elements using **fill-parent**:
 
 {% img /images/Neat_02/both-fill-parent.png%}
 
-Screenshot with only one element that uses **fill-parent**:
+##### Screenshot with only one element that uses **fill-parent**:
 
 {% img /images/Neat_02/single-fill-parent.png%}
 
-Screenshot without **fill-parent**:
+##### Screenshot without **fill-parent**:
 
 {% img /images/Neat_02/without-fill-parent.png%}
 
@@ -192,7 +447,7 @@ Haml:
 ``` haml
 .container
   %aside 3 columns
-	%article 9 columns
+  %article 9 columns
 ```
 
 Sass:
@@ -200,7 +455,7 @@ Sass:
 body
   color: white
   background-color: white
-  
+
 .container
   +outer-container
   margin-top: 10px
@@ -209,7 +464,7 @@ body
 aside, article
   margin-bottom: 5px
   height: 200px
-  
+
 +direction-context(right-to-left)
   aside
     +span-columns(3)
@@ -222,11 +477,11 @@ aside, article
 
 [codepen example](http://codepen.io/vis-kid/pen/OyRKPq)
 
-Screenshot with **direction-context(right-to-left)**:
+##### Screenshot with **direction-context(right-to-left)**:
 
 {% img /images/Neat_02/with-direction-context.png %}
 
-Screenshot “without” **direction-context**:
+##### Screenshot “without” **direction-context**:
 
 {% img /images/Neat_02/without-direction-context.png %}
 
@@ -241,9 +496,6 @@ Haml:
 
 Sass:
 ``` sass
-@import "bourbon"
-@import "neat" 
-
 body
   color: white
   background-color: white
@@ -266,7 +518,8 @@ aside, article
     +span-columns(3)
     background-color: Olive
 ```
-Screenshot:
+
+##### Screenshot:
 
 {% img /images/Neat_02/3-column-elements-with-direction-context-rtl.png %}
 
@@ -276,9 +529,6 @@ The following little tweak only has one of these 3-column elements use the mixin
 
 Sass:
 ``` sass
-@import "bourbon"
-@import "neat"
-
 body
   color: white
   background-color: white
@@ -291,7 +541,7 @@ body
 aside, article
   margin-bottom: 5px
   height: 200px
-  
+
 aside
   +span-columns(3)
   background-color: LightSkyBlue
@@ -303,4 +553,5 @@ aside
 ```
 
 {% img /images/Neat_02/one-3-column-element-with-direction-context-rtl.png %}
+
 [codepen example](http://codepen.io/vis-kid/pen/yYamVJ)
