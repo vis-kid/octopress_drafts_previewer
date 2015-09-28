@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bourbon | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/bourbon/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-28T17:27:11+02:00</updated>
+  <updated>2015-09-28T20:18:42+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -855,6 +855,60 @@ tr
   +media(700px)
     +reset-layout-direction
 </code></p>
+
+<ul>
+<li><h3>display-context</h3></li>
+</ul>
+
+
+<p>To create a code block that changes the display properties used by mixins within itself you have two options you can pass to this mixin: <strong>block</strong> and <strong>table</strong>. The first one is obvious of course and <strong>table</strong> adds <code>display: table-cell</code> for you. <strong>table-cell</strong> let’s an element behave like a <strong>&lt;td></strong> element.</p>
+
+<p>Sass:
+<code>sass
++display-context(table)
+  .some-cell {
+    +span-columns(9)
+  .some-other-cell
+    +span-columns(3)
+</code></p>
+
+<ul>
+<li><h3>reset-display</h3></li>
+</ul>
+
+
+<p>Let’s say you have changed the active display to <strong>table</strong> like in the example above, you can easily switch back to <strong>block</strong> through this mixin. Takes no argument as well. The documentation says it’s most useful if applied to single rows that changed their display values.</p>
+
+<p>Sass:
+<code>sass
++display-context(table)
+  .some-cell {
+    +span-columns(9)
+  .some-other-cell
+    +span-columns(3)
+  +media(700px)
+    .some-cell, .some-other-cell
+      +reset-display
+</code></p>
+
+<ul>
+<li><h3>reset-all</h3></li>
+</ul>
+
+
+<p>If you want to combine <strong>reset-display</strong> and <strong>reset-layout-direction</strong> in one go, that’s what you’ll get—no arguments required. Let’s say one some row you changed the display to <strong>table</strong> and the <strong>$default-layout-direction</strong> to <strong>RTL</strong> and want to switch back.</p>
+
+<p>Sass:
+<code>sass
+.some-element
+  +row(table, RTL)
+  +media(700px)
+    +reset-all
+</code></p>
+
+<h3>Final thoughts</h3>
+
+<p>Well, that was a long one. Thanks for making it through and I hope it was an interesting journey through the Neat mixin land. There is one more thing to discuss though, namely all the variables that you have at your disposal to tweak the framework for your needs. The next article is a shorter one but then the Neat module should be complete for now. Thanks for taking the time!</p>
 ]]></content>
   </entry>
   
