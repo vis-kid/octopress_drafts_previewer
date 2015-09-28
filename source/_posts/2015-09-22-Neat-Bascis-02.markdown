@@ -576,3 +576,16 @@ Sass:
   +media(700px)
     +reset-layout-direction
 ```
+
++ ### display-context
+
+To create a code block that changes the display properties used by mixins within itself you have two options you can pass to this mixin: **block** and **table**. The first one is obvious of course and **table** adds `display: table-cell` for you. **table-cell** let’s an element behave like a **<td\>** element.
+
+Sass:
+``` sass
++display-context(table)
+  .some-cell {
+    +span-columns(9)
+  .some-other-cell
+    +span-columns(3)
+```
