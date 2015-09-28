@@ -565,4 +565,14 @@ aside
 
 [codepen example](http://codepen.io/vis-kid/pen/yYamVJ)
 
++ ### reset-layout-direction
 
+Not much to say about this one. You’ve changed the layout direction of some section for whatever reason and want to switch back to the **$default-layout-direction** (**left-to-right**) under some specific circumstance? Here you go, the default context is restored! No argument needed. When might this be useful? Probably mostly when you need to change direction on a single element / row.
+
+Sass:
+``` sass
+.some-jumpy-element
+  +row($direction: RTL)
+  +media(700px)
+    +reset-layout-direction
+```
