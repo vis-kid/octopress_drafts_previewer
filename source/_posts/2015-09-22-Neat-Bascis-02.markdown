@@ -155,26 +155,26 @@ Haml:
 ``` haml
 .container
 
-  +row
+  .row
     %img
     %img
     %img
     %img
   
-  img
-  img
-  img
-  img
+  %img
+  %img
+  %img
+  %img
   
-  img
-  img
-  img
-  img
+  %img
+  %img
+  %img
+  %img
   
-  img
-  img
-  img
-  img
+  %img
+  %img
+  %img
+  %img
 ```
 
 Sass:
@@ -423,25 +423,25 @@ article
 
 Let’s look at a couple of screenshots for comparison:
 
-##### Screenshot with both elements using **fill-parent**:
+##### Screenshot without **fill-parent**:
 
-{% img /images/Neat_02/both-fill-parent.png%}
+{% img /images/Neat_02/without-fill-parent.png%}
 
 ##### Screenshot with only one element that uses **fill-parent**:
 
 {% img /images/Neat_02/single-fill-parent.png%}
 
-##### Screenshot without **fill-parent**:
+##### Screenshot with both elements using **fill-parent**:
 
-{% img /images/Neat_02/without-fill-parent.png%}
+{% img /images/Neat_02/both-fill-parent.png%}
 
 Just wanted to show you that elements using **fill-parent** ignore other elements in the same row and aim to span the full width of its parent without considering its neighbors. I guess this one is straightforward enough, let’s move on!
 
 + ### direction-context
 
-Every element in your Neat grid has a **$default-layout-direction** which is set to **LTR** (left-to-right) in **settings/_grid.scss**. This simply means that behind the scenes, Neat is always using a **direction-context** with **left-to-right**. It is an obivious decision of course since most cultures are used to digest content from left to right.
+Every element in your Neat grid has a **$default-layout-direction** which is set to **LTR** (left-to-right) in **settings/_grid.scss**. This simply means that behind the scenes Neat is always using a **direction-context** with **left-to-right**. It is an obivious decision of course since most cultures are used to digest content from left to right.
 
-Under the hood, this mixin does nothing else than changing the float direction of the applied element. What is neat is that within some directional context, let’s say **left-to-right**, you can gather a bunch of grid elements and change their direction to **right-to-left** all at once under one code block. Again, this solution makes things mostly more compact and readable for yourself as well as easier to understand / navigate for someone who’s not that familiar with a certain project.
+Under the hood, this mixin does nothing else than change the float direction of the applied element. What is neat is that within some directional context, let’s say **left-to-right**, you can gather a bunch of grid elements and change their direction to **right-to-left** all at once under one code block. Again, this solution makes things mostly more compact and readable for yourself as well as easier to understand / navigate for someone who’s not that familiar with a certain project.
 
 Haml:
 ``` haml
@@ -485,7 +485,7 @@ aside, article
 
 {% img /images/Neat_02/without-direction-context.png %}
 
-Just for the fun of it, here’s another example. Nothing new here for now—just the columns are of equal size now and also flow from **right-to-left**.
+Just for the heck of it, here’s another example. Nothing new here for now—just the columns are of equal size now and also flow from **right-to-left**.
 
 Haml:
 ``` haml
@@ -525,7 +525,7 @@ aside, article
 
 [codepen example](http://codepen.io/vis-kid/pen/ZbpgWp)
 
-The following little tweak only has one of these 3-column elements use the mixin and therefore both float on the opposite side of the container. Nothing too magic, but might be handy to have in your bag of tricks. Et voilà!
+The following little tweak only has one of these 3-column elements use the mixin and therefore both float on the opposite side of the container. Nothing too magic, but might be handy to have in your bag of tricks. Over time, not needing to fiddle around with floats on every element manually because you can do it on a high level that extracts the details is not small potatoes. Et voilà!
 
 Sass:
 ``` sass
