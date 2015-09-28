@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Thoughtbot | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/thoughtbot/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-09-27T23:22:42+02:00</updated>
+  <updated>2015-09-28T17:27:11+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -185,7 +185,7 @@
 
 <h4>Basics</h4>
 
-<p>I wanna take a little extra time to explore this one. If you’re not using tables very often in your designs—as you probably shouldn’t since we kissed the days of using tables for layout purposes goodbye—this one can be tricky to jump into right away. You have two options for using this mixin: with the argument <strong>table</strong> or without any argument.</p>
+<p>I wanna take a little extra time to explore this one. If you’re not using tables very often in your designs—as you probably shouldn’t since we kissed the days of using tables for layout purposes goodbye—this one can be tricky to jump into right away. You have two main options for using this mixin: with the argument <strong>table</strong> or without any argument.</p>
 
 <p>Sass:
 <code>sass
@@ -195,11 +195,21 @@
 
 <p>Using row without the <strong>table</strong> argument, a <strong>clearfix</strong> is added and <strong>$display</strong> stays set to default which is <strong>block</strong>. Effectively that means that whatever comes after the designated element using <strong>row</strong> needs to start its own thing on a separare “row”.</p>
 
-<pre><code class="sass">.some-table-row-element
+<p>Sass:
+<code>sass
+.some-table-row-element
   +row(table)
-</code></pre>
+</code></p>
 
 <p>On the other hand, using <strong>row(table)</strong>, you guessed it, makes this row part of a table layout. What happens under the hood, among other things, is that this mixin sets <code>display: table</code> and <code>table-layout: fixed</code>.</p>
+
+<p>There is one more option you can provide this mixin with. You can pass an argument($direction with <strong>LTR</strong> or <strong>RTL</strong>) that changes the direction—<em>left-to-right</em> or vice versa—of your layout for that particular row.</p>
+
+<p>Sass:
+<code>sass
+.some-row-element
+  +row($direction: RTL)
+</code></p>
 
 <p>But let’s start at the beginning. The following dummy example has 16 <strong>img</strong> elements and the first four are nested under a <strong>.row</strong> container which uses the <strong>row</strong> mixin. Let’s see what happens if you leave off the <strong>table</strong> argument.</p>
 
@@ -228,26 +238,26 @@
 <span class='line-number'>22</span>
 </pre></td><td class='code'><pre><code class='haml'><span class='line'><span class="nc">.container</span>&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;  +row
+</span><span class='line'>&lt;p&gt;  .row
 </span><span class='line'>    <span class="nt">%img</span>
 </span><span class='line'>    <span class="nt">%img</span>
 </span><span class='line'>    <span class="nt">%img</span>
 </span><span class='line'>    <span class="nt">%img</span>&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;  img
-</span><span class='line'>  img
-</span><span class='line'>  img
-</span><span class='line'>  img&lt;/p&gt;
+</span><span class='line'>&lt;p&gt;  %img
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;  img
-</span><span class='line'>  img
-</span><span class='line'>  img
-</span><span class='line'>  img&lt;/p&gt;
+</span><span class='line'>&lt;p&gt;  %img
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;  img
-</span><span class='line'>  img
-</span><span class='line'>  img
-</span><span class='line'>  img
+</span><span class='line'>&lt;p&gt;  %img
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
+</span><span class='line'>  <span class="nt">%img</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <p>Sass:
@@ -635,17 +645,17 @@ tr
 
 <p>Let’s look at a couple of screenshots for comparison:</p>
 
-<h5>Screenshot with both elements using <strong>fill-parent</strong>:</h5>
+<h5>Screenshot without <strong>fill-parent</strong>:</h5>
 
-<p><img src="/images/Neat_02/both-fill-parent.png"></p>
+<p><img src="/images/Neat_02/without-fill-parent.png"></p>
 
 <h5>Screenshot with only one element that uses <strong>fill-parent</strong>:</h5>
 
 <p><img src="/images/Neat_02/single-fill-parent.png"></p>
 
-<h5>Screenshot without <strong>fill-parent</strong>:</h5>
+<h5>Screenshot with both elements using <strong>fill-parent</strong>:</h5>
 
-<p><img src="/images/Neat_02/without-fill-parent.png"></p>
+<p><img src="/images/Neat_02/both-fill-parent.png"></p>
 
 <p>Just wanted to show you that elements using <strong>fill-parent</strong> ignore other elements in the same row and aim to span the full width of its parent without considering its neighbors. I guess this one is straightforward enough, let’s move on!</p>
 
@@ -654,9 +664,9 @@ tr
 </ul>
 
 
-<p>Every element in your Neat grid has a <strong>$default-layout-direction</strong> which is set to <strong>LTR</strong> (left-to-right) in <strong>settings/_grid.scss</strong>. This simply means that behind the scenes, Neat is always using a <strong>direction-context</strong> with <strong>left-to-right</strong>. It is an obivious decision of course since most cultures are used to digest content from left to right.</p>
+<p>Every element in your Neat grid has a <strong>$default-layout-direction</strong> which is set to <strong>LTR</strong> (left-to-right) in <strong>settings/_grid.scss</strong>. This simply means that behind the scenes Neat is always using a <strong>direction-context</strong> with <strong>left-to-right</strong>. It is an obivious decision of course since most cultures are used to digest content from left to right.</p>
 
-<p>Under the hood, this mixin does nothing else than changing the float direction of the applied element. What is neat is that within some directional context, let’s say <strong>left-to-right</strong>, you can gather a bunch of grid elements and change their direction to <strong>right-to-left</strong> all at once under one code block. Again, this solution makes things mostly more compact and readable for yourself as well as easier to understand / navigate for someone who’s not that familiar with a certain project.</p>
+<p>Under the hood, this mixin does nothing else than change the float direction of the applied element. What is neat is that within some directional context, let’s say <strong>left-to-right</strong>, you can gather a bunch of grid elements and change their direction to <strong>right-to-left</strong> all at once under one code block. Again, this solution makes things mostly more compact and readable for yourself as well as easier to understand / navigate for someone who’s not that familiar with a certain project.</p>
 
 <p>Haml:
 <code>haml
@@ -720,7 +730,7 @@ tr
 
 <p><img src="/images/Neat_02/without-direction-context.png"></p>
 
-<p>Just for the fun of it, here’s another example. Nothing new here for now—just the columns are of equal size now and also flow from <strong>right-to-left</strong>.</p>
+<p>Just for the heck of it, here’s another example. Nothing new here for now—just the columns are of equal size now and also flow from <strong>right-to-left</strong>.</p>
 
 <p>Haml:
 <code>haml
@@ -780,7 +790,7 @@ tr
 
 <p><a href="http://codepen.io/vis-kid/pen/ZbpgWp">codepen example</a></p>
 
-<p>The following little tweak only has one of these 3-column elements use the mixin and therefore both float on the opposite side of the container. Nothing too magic, but might be handy to have in your bag of tricks. Et voilà!</p>
+<p>The following little tweak only has one of these 3-column elements use the mixin and therefore both float on the opposite side of the container. Nothing too magic, but might be handy to have in your bag of tricks. Over time, not needing to fiddle around with floats on every element manually because you can do it on a high level that extracts the details is not small potatoes. Et voilà!</p>
 
 <p>Sass:
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -830,6 +840,21 @@ tr
 <p><img src="/images/Neat_02/one-3-column-element-with-direction-context-rtl.png"></p>
 
 <p><a href="http://codepen.io/vis-kid/pen/yYamVJ">codepen example</a></p>
+
+<ul>
+<li><h3>reset-layout-direction</h3></li>
+</ul>
+
+
+<p>Not much to say about this one. You’ve changed the layout direction of some section for whatever reason and want to switch back to the <strong>$default-layout-direction</strong> (<strong>left-to-right</strong>) under some specific circumstance? Here you go, the default context is restored! No argument needed. When might this be useful? Probably mostly when you need to change direction on a single element / row.</p>
+
+<p>Sass:
+<code>sass
+.some-jumpy-element
+  +row($direction: RTL)
+  +media(700px)
+    +reset-layout-direction
+</code></p>
 ]]></content>
   </entry>
   
