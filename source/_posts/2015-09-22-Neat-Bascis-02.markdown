@@ -605,3 +605,19 @@ Sass:
     .some-cell, .some-other-cell
       +reset-display
 ```
+
++ ### reset-all
+
+If you want to combine **reset-display** and **reset-layout-direction** in one go, that’s what you’ll get—no arguments required. Let’s say one some row you changed the display to **table** and the **$default-layout-direction** to **RTL** and want to switch back.
+
+Sass:
+``` sass
+.some-element
+  +row(table, RTL)
+  +media(700px)
+    +reset-all
+```
+
+### Final thoughts
+
+Well, that was a long one. Thanks for making it through and I hope it was an interesting journey through the Neat mixin land. There is one more thing to discuss though, namely all the variables that you have at your disposal to tweak the framework for your needs. The next article is a shorter one but then the Neat module should be complete for now. Thanks for taking the time!
