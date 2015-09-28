@@ -132,7 +132,7 @@ I hope you’ll appreciate how clean this reads and how easy it is to tweak your
 
 #### Basics
 
-I wanna take a little extra time to explore this one. If you’re not using tables very often in your designs—as you probably shouldn’t since we kissed the days of using tables for layout purposes goodbye—this one can be tricky to jump into right away. You have two options for using this mixin: with the argument **table** or without any argument.
+I wanna take a little extra time to explore this one. If you’re not using tables very often in your designs—as you probably shouldn’t since we kissed the days of using tables for layout purposes goodbye—this one can be tricky to jump into right away. You have two main options for using this mixin: with the argument **table** or without any argument.
 
 Sass:
 ``` sass
@@ -142,12 +142,21 @@ Sass:
 
 Using row without the **table** argument, a **clearfix** is added and **$display** stays set to default which is **block**. Effectively that means that whatever comes after the designated element using **row** needs to start its own thing on a separare “row”.
 
+Sass:
 ``` sass
 .some-table-row-element
   +row(table)
 ```
 
 On the other hand, using **row(table)**, you guessed it, makes this row part of a table layout. What happens under the hood, among other things, is that this mixin sets `display: table` and `table-layout: fixed`. 
+
+There is one more option you can provide this mixin with. You can pass an argument($direction with **LTR** or **RTL**) that changes the direction—*left-to-right* or vice versa—of your layout for that particular row.
+
+Sass:
+``` sass
+.some-row-element
+  +row($direction: RTL)
+```
 
 But let’s start at the beginning. The following dummy example has 16 **img** elements and the first four are nested under a **.row** container which uses the **row** mixin. Let’s see what happens if you leave off the **table** argument. 
 
@@ -555,3 +564,5 @@ aside
 {% img /images/Neat_02/one-3-column-element-with-direction-context-rtl.png %}
 
 [codepen example](http://codepen.io/vis-kid/pen/yYamVJ)
+
+
