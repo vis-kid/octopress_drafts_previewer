@@ -589,3 +589,19 @@ Sass:
   .some-other-cell
     +span-columns(3)
 ```
+
++ ### reset-display
+
+Let’s say you have changed the active display to **table** like in the example above, you can easily switch back to **block** through this mixin. Takes no argument as well. The documentation says it’s most useful if applied to single rows that changed their display values. 
+
+Sass:
+``` sass
++display-context(table)
+  .some-cell {
+    +span-columns(9)
+  .some-other-cell
+    +span-columns(3)
+  +media(700px)
+    .some-cell, .some-other-cell
+      +reset-display
+```
