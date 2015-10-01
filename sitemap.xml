@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/22/Neat-Bascis-02/</loc>
-    <lastmod>2015-09-22T05:29:10+02:00</lastmod>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/15/Neat-Bascis/</loc>
-    <lastmod>2015-09-15T05:29:10+02:00</lastmod>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/09/09/bourbon-neat-semantic-responsive-grids/</loc>
-    <lastmod>2015-09-09T05:29:10+02:00</lastmod>
+    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/01/Neat-Variables/</loc>
+    <lastmod>2015-10-01T05:29:10+02:00</lastmod>
   </url>
   <url>
     <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/archives/</loc>
