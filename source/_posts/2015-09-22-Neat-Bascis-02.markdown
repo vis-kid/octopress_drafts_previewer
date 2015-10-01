@@ -393,7 +393,9 @@ Apologies for being overly verbose about **row** but I hope this section made an
 
 + ### fill-parent
 
-This mixin is nothing fancy but might come in handy when you deal with media queries or tables. Neat offers you an easy solution, if you want some element to quickly fill its parent by spanning the same number of columns. You don’t have to provide any arguments. 
+Neat offers you an easy solution if you want some element to quickly fill its parent by spanning the same number of columns. You don’t have to provide any arguments. This mixin is nothing fancy but might come in handy when you deal with media queries or tables. 
+#### Attention!
+Using **span-columns(12)** instead of **fill-parent** to span the whole width of an outer-container for example would not be the right approach in such a case—it would just add unnecessary baggage. 
 
 Haml:
 ``` haml
@@ -567,15 +569,7 @@ aside
 
 + ### reset-layout-direction
 
-Not much to say about this one. You’ve changed the layout direction of some section for whatever reason and want to switch back to the **$default-layout-direction** (**left-to-right**) under some specific circumstance? Here you go, the default context is restored! No argument needed. When might this be useful? Probably mostly when you need to change direction on a single element / row.
-
-Sass:
-``` sass
-.some-jumpy-element
-  +row($direction: RTL)
-  +media(700px)
-    +reset-layout-direction
-```
+Not much to say about this one. You’ve changed the layout direction for whatever reason and want to switch back to the **$default-layout-direction** (**left-to-right**)? Here you go, the default context is restored! No argument needed. When might this be useful? Good question! The documentation says mostly when you need to change direction in a single row. I personally wouldn’t bother too much. First of all it’s gonna be deprecated in favor of a **direction** mixin anyway and also it gave me a surprising headache when I wanted to make it work with media queries. 
 
 + ### display-context
 
