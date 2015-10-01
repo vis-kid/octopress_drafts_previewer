@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bourbon | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/bourbon/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-01T15:49:56+02:00</updated>
+  <updated>2015-10-01T17:55:21+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -22,7 +22,7 @@
 
 <p><a href="http://neat.bourbon.io/"><img src="/images/bourbon-neat/Bourbon-Neat-Logo.png" width="250" height="450"></a></p>
 
-<p>In this last section about Bourbon Neat we’ll look at the various “built in” Sass variables you have at your disposal. It’s gonna be a short ride but being able to tweak your grids is important to know.</p>
+<p>In this last section about Bourbon Neat we’ll look at the various “built in” Sass variables you have at your disposal. It’s gonna be a short ride but knowing how to tweak your grids is important.</p>
 
 <h4>Variables</h4>
 
@@ -42,14 +42,109 @@
 </ul>
 
 
+<p>Your variables are best placed in one central place like in your <strong>_grid-settings</strong> partial. In any case, to avoid any surprises, make sure to not forget to import these variables before you import Neat.</p>
+
+<p>Sass:
+<code>sass
+@import "bourbon/bourbon"
+@import "grid-settings"
+@import "neat/neat"
+</code></p>
+
 <h2>Visualizing your grid</h2>
 
-<p>Let’s start with something that you should be using from day one. Neat can show you a visual grid that makes it easier to see how you wanna compose your layout.</p>
+<p>Let’s start with something that you should be using from day one. Neat can show you a visual grid that makes it easier to visualize your designs and spot opportunities for experimentation.</p>
+
+<p>I’m definitely in the camp of people who advocate designing in the browser as soon as possible. No doubt, sometimes it is important so spend a little extra time in Sketch or whatever, but aiming to bridge the two faster is a reasonable ambition. Seeing the grid skelleton for your layout in the browser makes it a whole lot easier to leave other graphical design tools behind.</p>
 
 <ul>
 <li><h3>visual-grid</h3></li>
 </ul>
 
+
+<p>By default, Neat sets <strong>visual-grid</strong> to <strong>false</strong>. Just jump into <strong>_grid-settings</strong> and change it to <strong>true</strong>.</p>
+
+<p>Sass:
+<code>sass
+$visual-grid: true
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/visual-grid-empty.png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/PPWLQK">codepen example</a></p>
+
+<p>The color you’ll see will be a bit different—I already tweaked that abit—but it will show you the number of columns you have set via <strong>$grid-columns</strong>. In this case I kept the default which is 12 columns.</p>
+
+<ul>
+<li><h3>visual-grid-index</h3></li>
+</ul>
+
+
+<p>If you already have some content which spans the full width on the page you might be surprised to see no effect. In case that happens, remember that the <strong>visual-grid-index</strong> is set to <strong>back</strong> by default.</p>
+
+<p>Sass:
+<code>sass
+$visual-grid-index: back !default
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/visual-grid-index-back.png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/MaJRpY">codepen example</a></p>
+
+<p>If you want to see the visual grid displayed in front of the content on the page just make this little change:</p>
+
+<p>Sass:
+<code>sass
+$visual-grid-index: front
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/visual-grid-index-front.png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/RWKOyB">codepen example</a></p>
+
+<p>A 12 column grid offers you a lot of flexiblity to combine sections of various length neatly into it. It’s a solid choice for beginners as well as advanced designers.</p>
+
+<ul>
+<li><h3>visual-grid-color</h3></li>
+</ul>
+
+
+<p>If you’re unhappy with the default color you can change that of course. Of course it’s a good idea to choose a color that has good contrast compared to your design. I like using plain old <strong>tomato</strong>—although for the examples here I decided differently since I already used it to highlight the containers.</p>
+
+<p>Sass:
+<code>sass
+$visual-grid-color: black
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/visual-grid-color.png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/PPWgXL">codepen example</a></p>
+
+<ul>
+<li><h3>visual-grid-opacity</h3></li>
+</ul>
+
+
+<p>If you’re unhappy with the default opacity of 40% you can overrule that too of course. I believe <strong>0.4</strong> is a good choice for a default but every project is different of course. Although its not the best use of this variable, let’s see how 100% looks in the same example.</p>
+
+<p>Sass:
+<code>sass
+$visual-grid-opacity: 1
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/visual-grid-opacity-100.png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/pjRmPe">codepen example</a></p>
 ]]></content>
   </entry>
   
