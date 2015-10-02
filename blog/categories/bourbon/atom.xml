@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bourbon | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/bourbon/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-01T17:55:21+02:00</updated>
+  <updated>2015-10-03T00:02:24+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -22,7 +22,7 @@
 
 <p><a href="http://neat.bourbon.io/"><img src="/images/bourbon-neat/Bourbon-Neat-Logo.png" width="250" height="450"></a></p>
 
-<p>In this last section about Bourbon Neat we’ll look at the various “built in” Sass variables you have at your disposal. It’s gonna be a short ride but knowing how to tweak your grids is important.</p>
+<p>In this last section about Bourbon Neat we’ll look at the various “built-in” Sass variables you have at your disposal. It’s gonna be a short ride but knowing how to tweak your grids is important.</p>
 
 <h4>Variables</h4>
 
@@ -53,16 +53,16 @@
 
 <h2>Visualizing your grid</h2>
 
-<p>Let’s start with something that you should be using from day one. Neat can show you a visual grid that makes it easier to visualize your designs and spot opportunities for experimentation.</p>
+<p>Let’s start with something that you should be using from day one. Neat can show you a visual grid that makes it easier to visualize your designs and better spot opportunities for experimentation.</p>
 
-<p>I’m definitely in the camp of people who advocate designing in the browser as soon as possible. No doubt, sometimes it is important so spend a little extra time in Sketch or whatever, but aiming to bridge the two faster is a reasonable ambition. Seeing the grid skelleton for your layout in the browser makes it a whole lot easier to leave other graphical design tools behind.</p>
+<p>I’m definitely in the camp of people who advocate designing in the browser as soon as possible. No doubt, sometimes it is important so spend a little extra time in Sketch or whatever, but aiming to bridge the two faster is a reasonable ambition. Seeing the grid skelleton for your layout in the browser makes it a whole lot easier to leave other graphical design tools more and more behind.</p>
 
 <ul>
 <li><h3>visual-grid</h3></li>
 </ul>
 
 
-<p>By default, Neat sets <strong>visual-grid</strong> to <strong>false</strong>. Just jump into <strong>_grid-settings</strong> and change it to <strong>true</strong>.</p>
+<p>By default, Neat sets <strong>$visual-grid</strong> to <strong>false</strong>. Just jump into <strong>_grid-settings</strong> and change it to <strong>true</strong>.</p>
 
 <p>Sass:
 <code>sass
@@ -75,14 +75,16 @@ $visual-grid: true
 
 <p><a href="http://codepen.io/vis-kid/pen/PPWLQK">codepen example</a></p>
 
-<p>The color you’ll see will be a bit different—I already tweaked that abit—but it will show you the number of columns you have set via <strong>$grid-columns</strong>. In this case I kept the default which is 12 columns.</p>
+<p>The color you’ll see will be a bit different—I already tweaked that abit—but it will show you the number of columns you have set via <strong>$grid-columns</strong> within your outer containers. In this case I kept the default which is 12 columns.</p>
+
+<p>A 12 column grid offers you a lot of flexiblity to combine sections of various length neatly into it. It’s a solid choice for beginners as well as for advanced designers.</p>
 
 <ul>
 <li><h3>visual-grid-index</h3></li>
 </ul>
 
 
-<p>If you already have some content which spans the full width on the page you might be surprised to see no effect. In case that happens, remember that the <strong>visual-grid-index</strong> is set to <strong>back</strong> by default.</p>
+<p>If you already have some content which spans the full width of the outer container(s) on the page you might be surprised to see no effect. In case that happens, remember that the <strong>$visual-grid-index</strong> is set to <strong>back</strong> by default.</p>
 
 <p>Sass:
 <code>sass
@@ -108,14 +110,12 @@ $visual-grid-index: front
 
 <p><a href="http://codepen.io/vis-kid/pen/RWKOyB">codepen example</a></p>
 
-<p>A 12 column grid offers you a lot of flexiblity to combine sections of various length neatly into it. It’s a solid choice for beginners as well as advanced designers.</p>
-
 <ul>
 <li><h3>visual-grid-color</h3></li>
 </ul>
 
 
-<p>If you’re unhappy with the default color you can change that of course. Of course it’s a good idea to choose a color that has good contrast compared to your design. I like using plain old <strong>tomato</strong>—although for the examples here I decided differently since I already used it to highlight the containers.</p>
+<p>If you’re unhappy with the default color you can change that of course. Obviously it’s a good idea to choose a color that has good contrast compared to your design. I like using plain old <strong>tomato</strong>—although for the examples here I decided differently since I already used it to highlight the containers.</p>
 
 <p>Sass:
 <code>sass
@@ -133,7 +133,7 @@ $visual-grid-color: black
 </ul>
 
 
-<p>If you’re unhappy with the default opacity of 40% you can overrule that too of course. I believe <strong>0.4</strong> is a good choice for a default but every project is different of course. Although its not the best use of this variable, let’s see how 100% looks in the same example.</p>
+<p>If you’re unhappy with the default opacity of 40% you can overrule that too. I believe <strong>0.4</strong> is a good choice for a default but every project is different. Although its not the best use of this variable, let’s see how 100% looks in the same example.</p>
 
 <p>Sass:
 <code>sass
@@ -145,6 +145,280 @@ $visual-grid-opacity: 1
 <p><img src="/images/bourbon-variables/visual-grid-opacity-100.png"></p>
 
 <p><a href="http://codepen.io/vis-kid/pen/pjRmPe">codepen example</a></p>
+
+<ul>
+<li><h3>grid-columns</h3></li>
+</ul>
+
+
+<p>If you think the default 12-column grid gives you not the flexibility you were looking for you can change the default via this variable globally. Doing this after you already designed your way through a layout in the browser you might face some pain tough. Take it with a grain of salt— it’s just an educated warning since I haven’t been there before. I mean it’s probably nothing tragic but manual adjustments for individual rows / columns seem like a given.</p>
+
+<p>Let’s through a couple of reasonable examples around:</p>
+
+<p>Sass:
+<code>sass
+$grid-columns(6)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/grid-columns(6).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/PPpbOo">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$grid-columns(16)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/grid-columns(16).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/NGpbyN">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$grid-columns(4)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/grid-columns(4).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/QjpGmG">codepen example</a></p>
+
+<ul>
+<li><h3>column</h3></li>
+</ul>
+
+
+<p>For this one we’ll have to step back for a minute. Neat’s grid system is based on the Golden Ratio. If that is gobbledygook to you check out my articles about Bourbon mixins where I spent a little time on that. What is important here is that you can change the relative width of a single grid column via this variable. Let’s look under the hood.</p>
+
+<p>SCSS:
+<code>scss
+$column: modular-scale(3, 1em, $golden) !default;
+</code></p>
+
+<p>Internally it uses the <strong>modular-scale</strong> function which I also described in an article about Bourbon’s various functions. Here it sets up the base value of <strong>1em</strong> and makes every column as wide as <strong>3</strong> increments from that base value. Additionally it locks the scale to be used to the Golden Ratio via <strong>$golden</strong>.</p>
+
+<p>I never felt the need to tweak these things but if curiosity and some extra time would hit me I would start playing around with the various scales that you have at your disposal in Bourbon. You can choose from 17 scales that come with the library—or make up your own of course.</p>
+
+<h4>Attention!</h4>
+
+<p>Make sure to import Bourbon first because the variables are defined there and not in Neat.</p>
+
+<p>SCSS
+<code>scss
+$golden:           1.618;
+$minor-second:     1.067;
+$major-second:     1.125;
+$minor-third:      1.2;
+$major-third:      1.25;
+$perfect-fourth:   1.333;
+$augmented-fourth: 1.414;
+$perfect-fifth:    1.5;
+$minor-sixth:      1.6;
+$major-sixth:      1.667;
+$minor-seventh:    1.778;
+$major-seventh:    1.875;
+$octave:           2;
+$major-tenth:      2.5;
+$major-eleventh:   2.667;
+$major-twelfth:    3;
+$double-octave:    4;
+</code></p>
+
+<p>Let’s compare the different scales for a default 12-column grid. Not all of them result in sensible choices but take a look and see if someting pops out that you like:</p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $golden)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(golden).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/ojZBgr">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $minor-second)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(minor-second).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/NGpdbv">codepen examples</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $major-second)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(major-second).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/yYMgzq">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $minor-third)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(minor-third).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/yYMgPx">codepen examples</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $major-third)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(major-third).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/WQpRdM">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $perfect-fourth)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(perfect-fourth).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/epvgzL">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $augmented-fourth)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(augmented-fourth).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/yYMgKR">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $perfect-fifth)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(perfect-fifth).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/WQpRyz">codepen examples</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $minor-sixth)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(minor-sixth).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/GpWrXm">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $major-sixth)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(major-sixth).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/Zbeyvm">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $minor-seventh)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(minor-seventh).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/gamRvm">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $major-seventh)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(major-seventh).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/pjewaZ">codepen examples</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $octave)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(octave).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/EVWXQz">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $major-tenth)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(major-tenth).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/epvRMx">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $major-eleventh)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(major-eleventh).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/JYWJvj">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $major-twelfth)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(major-twelfth).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/gamRzW">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $double-octave)
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/column(golden-octave).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/EVWZPG">codepen example</a></p>
+
+<p>I can’t believe I actually took screenshots of all scales. Guess I got curious because I planned on only showing you a couple. Maybe not a rabbit hole you wanna follow but hey folks like to get clever with these things. Using the default Golden Ratio is an absolute solid choice for people who just wanna move on.</p>
 ]]></content>
   </entry>
   
