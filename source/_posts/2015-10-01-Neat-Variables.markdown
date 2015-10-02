@@ -12,7 +12,7 @@ categories: [ Sass,  Bourbon, Neat, Thoughtbot, SCSS, CSS, Design ]
 
 [{% img /images/bourbon-neat/Bourbon-Neat-Logo.png  250 450 %}](http://neat.bourbon.io/)
 
-In this last section about Bourbon Neat we’ll look at the various “built in” Sass variables you have at your disposal. It’s gonna be a short ride but knowing how to tweak your grids is important. 
+In this last section about Bourbon Neat we’ll look at the various “built-in” Sass variables you have at your disposal. It’s gonna be a short ride but knowing how to tweak your grids is important. 
 
 #### Variables
 
@@ -40,13 +40,13 @@ Sass:
 
 ## Visualizing your grid
 
-Let’s start with something that you should be using from day one. Neat can show you a visual grid that makes it easier to visualize your designs and spot opportunities for experimentation. 
+Let’s start with something that you should be using from day one. Neat can show you a visual grid that makes it easier to visualize your designs and better spot opportunities for experimentation. 
 
-I’m definitely in the camp of people who advocate designing in the browser as soon as possible. No doubt, sometimes it is important so spend a little extra time in Sketch or whatever, but aiming to bridge the two faster is a reasonable ambition. Seeing the grid skelleton for your layout in the browser makes it a whole lot easier to leave other graphical design tools behind.
+I’m definitely in the camp of people who advocate designing in the browser as soon as possible. No doubt, sometimes it is important so spend a little extra time in Sketch or whatever, but aiming to bridge the two faster is a reasonable ambition. Seeing the grid skelleton for your layout in the browser makes it a whole lot easier to leave other graphical design tools more and more behind.
 
 + ### visual-grid
 
-By default, Neat sets **visual-grid** to **false**. Just jump into **_grid-settings** and change it to **true**.  
+By default, Neat sets **$visual-grid** to **false**. Just jump into **_grid-settings** and change it to **true**.  
 
 Sass:
 ``` sass
@@ -59,11 +59,13 @@ $visual-grid: true
 
 [codepen example](http://codepen.io/vis-kid/pen/PPWLQK)
 
-The color you’ll see will be a bit different—I already tweaked that abit—but it will show you the number of columns you have set via **$grid-columns**. In this case I kept the default which is 12 columns.
+The color you’ll see will be a bit different—I already tweaked that abit—but it will show you the number of columns you have set via **$grid-columns** within your outer containers. In this case I kept the default which is 12 columns.
+
+A 12 column grid offers you a lot of flexiblity to combine sections of various length neatly into it. It’s a solid choice for beginners as well as for advanced designers.
 
 + ### visual-grid-index
 
-If you already have some content which spans the full width on the page you might be surprised to see no effect. In case that happens, remember that the **visual-grid-index** is set to **back** by default. 
+If you already have some content which spans the full width of the outer container(s) on the page you might be surprised to see no effect. In case that happens, remember that the **$visual-grid-index** is set to **back** by default. 
 
 Sass:
 ``` sass
@@ -89,11 +91,9 @@ $visual-grid-index: front
 
 [codepen example](http://codepen.io/vis-kid/pen/RWKOyB)
 
-A 12 column grid offers you a lot of flexiblity to combine sections of various length neatly into it. It’s a solid choice for beginners as well as advanced designers.
-
 + ### visual-grid-color
 
-If you’re unhappy with the default color you can change that of course. Of course it’s a good idea to choose a color that has good contrast compared to your design. I like using plain old **tomato**—although for the examples here I decided differently since I already used it to highlight the containers.
+If you’re unhappy with the default color you can change that of course. Obviously it’s a good idea to choose a color that has good contrast compared to your design. I like using plain old **tomato**—although for the examples here I decided differently since I already used it to highlight the containers.
 
 Sass:
 ``` sass
@@ -108,7 +108,7 @@ $visual-grid-color: black
 
 + ### visual-grid-opacity
 
-If you’re unhappy with the default opacity of 40% you can overrule that too of course. I believe **0.4** is a good choice for a default but every project is different of course. Although its not the best use of this variable, let’s see how 100% looks in the same example.
+If you’re unhappy with the default opacity of 40% you can overrule that too. I believe **0.4** is a good choice for a default but every project is different. Although its not the best use of this variable, let’s see how 100% looks in the same example.
 
 Sass:
 ``` sass
