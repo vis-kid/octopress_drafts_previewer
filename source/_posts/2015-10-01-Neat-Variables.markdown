@@ -120,3 +120,42 @@ $visual-grid-opacity: 1
 {% img /images/bourbon-variables/visual-grid-opacity-100.png %}
 
 [codepen example](http://codepen.io/vis-kid/pen/pjRmPe)
+
++ ### grid-columns
+
+If you think the default 12-column grid gives you not the flexibility you were looking for you can change the default via this variable globally. Doing this after you already designed your way through a layout in the browser you might face some pain tough. Take it with a grain of salt— it’s just an educated warning since I haven’t been there before. I mean it’s probably nothing tragic but manual adjustments for individual rows / columns seem like a given.
+
+Let’s through a couple of reasonable examples around:
+
+Sass:
+``` sass
+$grid-columns(6)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/grid-columns(6).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/PPpbOo)
+
+Sass:
+``` sass
+$grid-columns(16)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/grid-columns(16).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/NGpbyN)
+
+Sass:
+``` sass
+$grid-columns(4)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/grid-columns(4).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/QjpGmG)
