@@ -159,3 +159,232 @@ $grid-columns(4)
 {% img /images/bourbon-variables/grid-columns(4).png %}
 
 [codepen example](http://codepen.io/vis-kid/pen/QjpGmG)
+
++ ### column
+
+For this one we’ll have to step back for a minute. Neat’s grid system is based on the Golden Ratio. If that is gobbledygook to you check out my articles about Bourbon mixins where I spent a little time on that. What is important here is that you can change the relative width of a single grid column via this variable. Let’s look under the hood.
+
+SCSS:
+``` scss
+$column: modular-scale(3, 1em, $golden) !default;
+```
+
+Internally it uses the **modular-scale** function which I also described in an article about Bourbon’s various functions. Here it sets up the base value of **1em** and makes every column as wide as **3** increments from that base value. Additionally it locks the scale to be used to the Golden Ratio via **$golden**.  
+
+I never felt the need to tweak these things but if curiosity and some extra time would hit me I would start playing around with the various scales that you have at your disposal in Bourbon. You can choose from 17 scales that come with the library—or make up your own of course.
+
+#### Attention!
+Make sure to import Bourbon first because the variables are defined there and not in Neat.
+
+SCSS
+``` scss
+$golden:           1.618;
+$minor-second:     1.067;
+$major-second:     1.125;
+$minor-third:      1.2;
+$major-third:      1.25;
+$perfect-fourth:   1.333;
+$augmented-fourth: 1.414;
+$perfect-fifth:    1.5;
+$minor-sixth:      1.6;
+$major-sixth:      1.667;
+$minor-seventh:    1.778;
+$major-seventh:    1.875;
+$octave:           2;
+$major-tenth:      2.5;
+$major-eleventh:   2.667;
+$major-twelfth:    3;
+$double-octave:    4;
+```
+
+Let’s compare the different scales for a default 12-column grid. Not all of them result in sensible choices but take a look and see if someting pops out that you like:
+
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $golden)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(golden).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/ojZBgr)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $minor-second)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(minor-second).png %}
+
+[codepen examples](http://codepen.io/vis-kid/pen/NGpdbv)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $major-second)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(major-second).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/yYMgzq)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $minor-third)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(minor-third).png %}
+
+[codepen examples](http://codepen.io/vis-kid/pen/yYMgPx)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $major-third)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(major-third).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/WQpRdM)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $perfect-fourth)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(perfect-fourth).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/epvgzL)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $augmented-fourth)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(augmented-fourth).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/yYMgKR)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $perfect-fifth)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(perfect-fifth).png %}
+
+[codepen examples](http://codepen.io/vis-kid/pen/WQpRyz)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $minor-sixth)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(minor-sixth).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/GpWrXm)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $major-sixth)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(major-sixth).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/Zbeyvm)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $minor-seventh)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(minor-seventh).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/gamRvm)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $major-seventh)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(major-seventh).png %}
+
+[codepen examples](http://codepen.io/vis-kid/pen/pjewaZ)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $octave)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(octave).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/EVWXQz)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $major-tenth)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(major-tenth).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/epvRMx)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $major-eleventh)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(major-eleventh).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/JYWJvj)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $major-twelfth)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(major-twelfth).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/gamRzW)
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $double-octave)
+```
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/column(golden-octave).png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/EVWZPG)
+
+I can’t believe I actually took screenshots of all scales. Guess I got curious because I planned on only showing you a couple. Maybe not a rabbit hole you wanna follow but hey folks like to get clever with these things. Using the default Golden Ratio is an absolute solid choice for people who just wanna move on.
