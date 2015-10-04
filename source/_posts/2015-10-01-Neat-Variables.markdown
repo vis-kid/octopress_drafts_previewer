@@ -468,3 +468,21 @@ Sass:
 ``` sass
 $default-feature: max-width
 ```
+
++ ### border-box-sizing
+
+By default this is set to **true** and I guess a good reason would be in order to mess with this one.
+
++ ### default-layout-direction
+
+Through this variable your layout uses the default orientation of LTR—left-to-right. Obviously this can have only one of two options—RTL being the second. I guess if you design something for cultures that digest content from the opposite direction, this one will make you love Neat even more.
+
++ ### disable-warnings
+
+If excess deprication warnings are the sort of thing that sometimes want to make you hug their authors around the neck–unlike me of course—you can mute these messages by setting this variable to **true**.
+
+Sass:
+
+``` sass
+$disable-warnings: true !default;
+```
