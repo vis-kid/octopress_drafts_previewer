@@ -4,7 +4,7 @@
   <title><![CDATA[Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-04T19:35:32+02:00</updated>
+  <updated>2015-10-04T20:04:58+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -560,6 +560,80 @@
 <p><a href="http://codepen.io/vis-kid/pen/rOyoKx">codepen example</a></p>
 
 <p>This variable is certainly handy since the “standards” for how wide web pages are supposed to span are changing rapidly and long gone are the 960px days. Through the access to this variable you have one central place where you can determine how much space your content has to span tops.</p>
+
+<ul>
+<li><h3>default-feature</h3></li>
+</ul>
+
+
+<p>If you have gone through my previous articles you might remember that I really like the use of the <strong>media</strong> mixin from Neat combined with the additional convenient usage of the <strong>new-breakpoint</strong> function. I also mentioned that if you provide no <em>media feature</em> to your breakpoint pixel value it will default to <strong>min-width</strong>. Let me refresh your memeory:</p>
+
+<p>Sass:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$tablet</span><span class="o">:</span> <span class="nf">new-breakpoint</span><span class="p">(</span><span class="mi">800</span><span class="kt">px</span> <span class="mi">6</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.some-responsive-element</span>
+</span><span class='line'>  <span class="nd">+media</span><span class="p">(</span><span class="n">tablet</span><span class="p">)</span>
+</span><span class='line'>  <span class="nd">+span-columns</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>CSS:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="k">@media</span> <span class="nt">screen</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">800px</span><span class="o">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nc">.some-responsive-element</span> <span class="p">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>   <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see, providing no <em>media-feature</em> makes things super easy if want <strong>min-width</strong> for setting breakpoints. If that default is messing with your Zen when dealing with media queries you can change that default as well.</p>
+
+<p>Sass:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="na">$default-feature</span><span class="o">:</span> <span class="no">max-width</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><h3>border-box-sizing</h3></li>
+</ul>
+
+
+<p>By default this is set to <strong>true</strong> and I guess a good reason would be in order to mess with this one.</p>
+
+<ul>
+<li><h3>default-layout-direction</h3></li>
+</ul>
+
+
+<p>Through this variable your layout uses the default orientation of LTR—left-to-right. Obviously this can have only one of two options—RTL being the second. I guess if you design something for cultures that digest content from the opposite direction, this one will make you love Neat even more.</p>
+
+<ul>
+<li><h3>disable-warnings</h3></li>
+</ul>
+
+
+<p>If excess deprication warnings are the sort of thing that sometimes want to make you hug their authors around the neck–unlike me of course—you can mute these messages by setting this variable to <strong>true</strong>.</p>
+
+<p>Sass:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="na">$disable-warnings</span><span class="o">:</span> <span class="n-Pseudo">true</span> <span class="nv">!default</span><span class="err">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   
