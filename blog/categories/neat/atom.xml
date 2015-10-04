@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Neat | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/neat/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-04T18:49:43+02:00</updated>
+  <updated>2015-10-04T19:35:32+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -204,7 +204,7 @@ $column: modular-scale(3, 1em, $golden) !default;
 
 <h4>Attention!</h4>
 
-<p>Make sure to import Bourbon first because the variables are defined there and not in Neat.</p>
+<p>Make sure to import Bourbon first because the variables are defined there and not in Neat. Also, if you decide that you want to change the width of your column via a different variable for your modular scale you should not forget to change this unit in your gutters as well (more info in the next section about <strong>gutter</strong>).</p>
 
 <p>SCSS
 <code>scss
@@ -417,6 +417,66 @@ $column: modular-scale(3, 1em, $double-octave)
 <p><a href="http://codepen.io/vis-kid/pen/EVWZPG">codepen example</a></p>
 
 <p>I can’t believe I actually took screenshots of all scales. Guess I got curious after all because I planned on only showing you a couple. Maybe not a rabbit hole you wanna follow but hey folks like to get clever with these things. Using the default Golden Ratio is an absolute solid choice for people who just wanna move on.</p>
+
+<ul>
+<li><h3>gutter</h3></li>
+</ul>
+
+
+<p>Kinda the same idea as with <strong>column</strong>. This ones sets the relative width of a single   gutter—the space between each column—in your grid. To create a coherent grid system that has the Golden Ratio backed into every aspect, by default, <strong>gutter</strong> also uses <strong>$golden</strong> to calculate the gutters.</p>
+
+<p>SCSS:
+<code>scss
+$gutter: modular-scale(1, 1em, $golden) !default;
+</code></p>
+
+<p>For people new to the party, let me visualize this for you. All the <strong>tomato</strong> colored stuff are gutters:</p>
+
+<p><img src="/images/bourbon-variables/gutter(golden).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/zvZypr">codepen example</a></p>
+
+<h4>Attention!</h4>
+
+<p>If you decide that you want to change the width of your gutter via a different variable for your modular scale you should not forget to change this unit in your columns as well.</p>
+
+<p>Sass:
+<code>sass
+$column: modular-scale(3, 1em, $octave) !default
+$gutter: modular-scale(1, 1em, $octave) !default
+</code></p>
+
+<h4>Screenshot:</h4>
+
+<p><img src="/images/bourbon-variables/gutter(octave).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/EVWGEy">codepen example</a></p>
+
+<ul>
+<li><h3>max-width</h3></li>
+</ul>
+
+
+<p>This variable let’s you change the size of your outer containers that is used by the <strong>outer-container</strong> mixin. By default it is set to <strong>1088</strong> pixels which get calculated to <strong>em</strong> out of the box.</p>
+
+<h4>Screenshot with default max-width of <strong>1088px</strong>:</h4>
+
+<p><img src="/images/bourbon-variables/max-width(1088).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/dYvwjV">codepen example</a></p>
+
+<p>Sass:
+<code>sass
+$max-width: em(1200) !default;
+</code></p>
+
+<h4>Screenshot with <strong>1200px</strong> max-width:</h4>
+
+<p><img src="/images/bourbon-variables/max-width(1200).png"></p>
+
+<p><a href="http://codepen.io/vis-kid/pen/rOyoKx">codepen example</a></p>
+
+<p>This variable is certainly handy since the “standards” for how wide web pages are supposed to span are changing rapidly and long gone are the 960px days. Through the access to this variable you have one central place where you can determine how much space your content has to span tops.</p>
 ]]></content>
   </entry>
   
