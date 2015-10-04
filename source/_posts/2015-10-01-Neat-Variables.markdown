@@ -486,3 +486,7 @@ Sass:
 ``` sass
 $disable-warnings: true !default;
 ```
+
+### Final thoughts
+
+If you have gone through both modules about Bourbon and Neat and still don’t like the idea of using this framework for your projects I’d like it if you’d share your reasons and maybe even write about it. I’d love to hear reasonable opposing opinions or learn about better options to build lightweight semantic grids with Sass. I guess Neat is pretty hard to beat these days though. That being said, the thing that makes it so appealing to me and that most likely will keep it relevant for quite some time is that there isn’t much left that can be taken away to reduce it.
