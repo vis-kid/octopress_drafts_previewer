@@ -172,7 +172,7 @@ Internally it uses the **modular-scale** function which I also described in an a
 I never felt the need to tweak these things but if curiosity and some extra time for experimentation would hit me I’d start playing around with the various variables for modular scales that you have at your disposal in Bourbon. You can choose from 17 “scales” that come with the library—or make up your own of course.
 
 #### Attention!
-Make sure to import Bourbon first because the variables are defined there and not in Neat.
+Make sure to import Bourbon first because the variables are defined there and not in Neat. Also, if you decide that you want to change the width of your column via a different variable for your modular scale you should not forget to change this unit in your gutters as well (more info in the next section about **gutter**).
 
 SCSS
 ``` scss
@@ -386,3 +386,33 @@ $column: modular-scale(3, 1em, $double-octave)
 [codepen example](http://codepen.io/vis-kid/pen/EVWZPG)
 
 I can’t believe I actually took screenshots of all scales. Guess I got curious after all because I planned on only showing you a couple. Maybe not a rabbit hole you wanna follow but hey folks like to get clever with these things. Using the default Golden Ratio is an absolute solid choice for people who just wanna move on.
+
++ ### gutter
+
+Kinda the same idea as with **column**. This ones sets the relative width of a single	gutter—the space between each column—in your grid. To create a coherent grid system that has the Golden Ratio backed into every aspect, by default, **gutter** also uses **$golden** to calculate the gutters. 
+
+SCSS:
+``` scss
+$gutter: modular-scale(1, 1em, $golden) !default;
+```
+
+For people new to the party, let me visualize this for you. All the **tomato** colored stuff are gutters:
+
+{% img /images/bourbon-variables/gutter(golden).png%}
+
+[codepen example](http://codepen.io/vis-kid/pen/zvZypr)
+
+#### Attention!
+If you decide that you want to change the width of your gutter via a different variable for your modular scale you should not forget to change this unit in your columns as well.
+
+Sass:
+``` sass
+$column: modular-scale(3, 1em, $octave) !default
+$gutter: modular-scale(1, 1em, $octave) !default
+``` 
+
+#### Screenshot:
+
+{% img /images/bourbon-variables/gutter(octave).png%}
+
+[codepen example](http://codepen.io/vis-kid/pen/EVWGEy)
