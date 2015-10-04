@@ -439,3 +439,32 @@ $max-width: em(1200) !default;
 [codepen example](http://codepen.io/vis-kid/pen/rOyoKx)
 
 This variable is certainly handy since the “standards” for how wide web pages are supposed to span are changing rapidly and long gone are the 960px days. Through the access to this variable you have one central place where you can determine how much space your content has to span tops.
+
++ ### default-feature
+
+If you have gone through my previous articles you might remember that I really like the use of the **media** mixin from Neat combined with the additional convenient usage of the **new-breakpoint** function. I also mentioned that if you provide no *media feature* to your breakpoint pixel value it will default to **min-width**. Let me refresh your memeory:
+
+Sass:
+``` sass
+$tablet: new-breakpoint(800px 6)
+
+.some-responsive-element
+  +media(tablet)
+  +span-columns(6)
+```
+
+CSS:
+``` css
+@media screen and (min-width: 800px) {
+  .some-responsive-element {
+    ...
+    ...
+   }
+```
+
+As you can see, providing no *media-feature* makes things super easy if want **min-width** for setting breakpoints. If that default is messing with your Zen when dealing with media queries you can change that default as well.
+
+Sass:
+``` sass
+$default-feature: max-width
+```
