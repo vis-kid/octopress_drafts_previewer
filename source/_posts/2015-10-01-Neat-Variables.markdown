@@ -416,3 +416,26 @@ $gutter: modular-scale(1, 1em, $octave) !default
 {% img /images/bourbon-variables/gutter(octave).png%}
 
 [codepen example](http://codepen.io/vis-kid/pen/EVWGEy)
+
++ ### max-width
+
+This variable let’s you change the size of your outer containers that is used by the **outer-container** mixin. By default it is set to **1088** pixels which get calculated to **em** out of the box.
+
+#### Screenshot with default max-width of **1088px**:
+
+{% img /images/bourbon-variables/max-width(1088).png%}
+
+[codepen example](http://codepen.io/vis-kid/pen/dYvwjV)
+
+Sass:
+``` sass
+$max-width: em(1200) !default;
+```
+
+#### Screenshot with **1200px** max-width:
+
+{% img /images/bourbon-variables/max-width(1200).png%}
+
+[codepen example](http://codepen.io/vis-kid/pen/rOyoKx)
+
+This variable is certainly handy since the “standards” for how wide web pages are supposed to span are changing rapidly and long gone are the 960px days. Through the access to this variable you have one central place where you can determine how much space your content has to span tops.
