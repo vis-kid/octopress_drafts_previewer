@@ -12,7 +12,7 @@ categories: [ Sass,  Bourbon, Neat, Thoughtbot, SCSS, CSS, Design ]
 
 [{% img /images/bourbon-neat/Bourbon-Neat-Logo.png  250 450 %}](http://neat.bourbon.io/)
 
-In this last section about Bourbon Neat we’ll look at the various “built-in” Sass variables you have at your disposal. It’s gonna be a short ride but knowing how to tweak your grids is important. 
+In this last section about Bourbon Neat we’ll look at the various “built-in” Sass variables you have at your disposal. Its gonna be a short ride but knowing how to tweak your grids is important. 
 
 #### Variables
 
@@ -29,7 +29,7 @@ In this last section about Bourbon Neat we’ll look at the various “built-in�
 + column
 + gutter
 
-Your variables are best placed in one central place like in your **_grid-settings** partial. In any case, to avoid any surprises, make sure to not forget to import these variables before you import Neat.
+Before we start I should remind you that most of the time your Neat variables are best placed in one central location like in your **_grid-settings** partial. In any case, to avoid any surprises, make sure to not forget to import these variables before you import Neat.
 
 Sass:
 ``` sass
@@ -59,13 +59,11 @@ $visual-grid: true
 
 [codepen example](http://codepen.io/vis-kid/pen/PPWLQK)
 
-The color you’ll see will be a bit different—I already tweaked that abit—but it will show you the number of columns you have set via **$grid-columns** within your outer containers. In this case I kept the default which is 12 columns.
-
-A 12 column grid offers you a lot of flexiblity to combine sections of various length neatly into it. It’s a solid choice for beginners as well as for advanced designers.
+The color you’ll see will be a bit different—I already tweaked that a bit—but it will show you the number of columns you have set via **$grid-columns** within your outer containers. In this case I kept the default which is 12 columns. In general, a 12 column grid offers you a lot of flexiblity to combine sections of various length neatly into it. It’s a solid choice for beginners as well as for advanced designers.
 
 + ### visual-grid-index
 
-If you already have some content which spans the full width of the outer container(s) on the page you might be surprised to see no effect. In case that happens, remember that the **$visual-grid-index** is set to **back** by default. 
+If you already have some content which spans the full width of the outer container(s) on the page you might be surprised to see no effect. In case that happens, remember that the **$visual-grid-index** is set to **back** by default. Maybe not the best default ever, but no biggie either.
 
 Sass:
 ``` sass
@@ -93,7 +91,7 @@ $visual-grid-index: front
 
 + ### visual-grid-color
 
-If you’re unhappy with the default color you can change that of course. Obviously it’s a good idea to choose a color that has good contrast compared to your design. I like using plain old **tomato**—although for the examples here I decided differently since I already used it to highlight the containers.
+If you’re unhappy with the default grid color you can change that of course. Obviously it’s a good idea to choose a color that has good contrast compared to your design. I like using plain old **tomato**—although for the examples here I decided differently since I already used it to highlight the containers.
 
 Sass:
 ``` sass
@@ -123,9 +121,9 @@ $visual-grid-opacity: 1
 
 + ### grid-columns
 
-If you think the default 12-column grid gives you not the flexibility you were looking for you can change the default via this variable globally. Doing this after you already designed your way through a layout in the browser you might face some pain tough. Take it with a grain of salt— it’s just an educated warning since I haven’t been there before. I mean it’s probably nothing tragic but manual adjustments for individual rows / columns seem like a given.
+If you think the default 12-column grid gives you not the flexibility or structure you were looking for you can change the default via this variable globally. Doing this after you already designed your way through a layout in the browser might make you face some pain tough. Take it with a grain of salt— its just an educated warning since I haven’t been there before. I mean its probably nothing tragic but manual adjustments for individual rows / columns seem like a given.
 
-Let’s through a couple of reasonable examples around:
+Let’s go through a couple of reasonable examples:
 
 Sass:
 ``` sass
@@ -162,16 +160,16 @@ $grid-columns(4)
 
 + ### column
 
-For this one we’ll have to step back for a minute. Neat’s grid system is based on the Golden Ratio. If that is gobbledygook to you check out my articles about Bourbon mixins where I spent a little time on that. What is important here is that you can change the relative width of a single grid column via this variable. Let’s look under the hood.
+For this one we’ll have to take a step back for a minute. Neat’s grid system is based on the Golden Ratio. If that is gobbledygook to you check out my articles about Bourbon mixins where I spent a little time on that. What is important here is that you can change the relative width of a single grid column via this variable. Let’s look under the hood.
 
 SCSS:
 ``` scss
 $column: modular-scale(3, 1em, $golden) !default;
 ```
 
-Internally it uses the **modular-scale** function which I also described in an article about Bourbon’s various functions. Here it sets up the base value of **1em** and makes every column as wide as **3** increments from that base value. Additionally it locks the scale to be used to the Golden Ratio via **$golden**.  
+Internally it uses the **modular-scale** function which I also described in an article about Bourbon’s various functions. Here it sets up the base value of **1em** and makes every column as wide as **3** increments from that base value. Additionally it locks the scale of choice to the Golden Ratio via **$golden**.  
 
-I never felt the need to tweak these things but if curiosity and some extra time would hit me I would start playing around with the various scales that you have at your disposal in Bourbon. You can choose from 17 scales that come with the library—or make up your own of course.
+I never felt the need to tweak these things but if curiosity and some extra time for experimentation would hit me I’d start playing around with the various variables for modular scales that you have at your disposal in Bourbon. You can choose from 17 “scales” that come with the library—or make up your own of course.
 
 #### Attention!
 Make sure to import Bourbon first because the variables are defined there and not in Neat.
@@ -197,7 +195,7 @@ $major-twelfth:    3;
 $double-octave:    4;
 ```
 
-Let’s compare the different scales for a default 12-column grid. Not all of them result in sensible choices but take a look and see if someting pops out that you like:
+Let’s compare the different modular scales for a default 12-column grid. Not all of them result in sensible choices but take a look and see if someting pops out that you like:
 
 
 Sass:
@@ -387,4 +385,4 @@ $column: modular-scale(3, 1em, $double-octave)
 
 [codepen example](http://codepen.io/vis-kid/pen/EVWZPG)
 
-I can’t believe I actually took screenshots of all scales. Guess I got curious because I planned on only showing you a couple. Maybe not a rabbit hole you wanna follow but hey folks like to get clever with these things. Using the default Golden Ratio is an absolute solid choice for people who just wanna move on.
+I can’t believe I actually took screenshots of all scales. Guess I got curious after all because I planned on only showing you a couple. Maybe not a rabbit hole you wanna follow but hey folks like to get clever with these things. Using the default Golden Ratio is an absolute solid choice for people who just wanna move on.
