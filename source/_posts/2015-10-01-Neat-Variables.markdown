@@ -65,8 +65,8 @@ The color you’ll see will be a bit different—I already tweaked that a bit—
 
 If you already have some content which spans the full width of the outer container(s) on the page you might be surprised to see no effect of the **$visual-grid**. In case that happens, remember that the **$visual-grid-index** is set to **back** by default. Maybe not the best default ever, but no biggie either.
 
-Sass:
-``` sass
+SCSS:
+``` scss
 $visual-grid-index: back !default
 ```
 
