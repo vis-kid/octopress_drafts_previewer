@@ -467,7 +467,7 @@ $tablet: new-breakpoint(800px 6)
 
 .some-responsive-element
   +media(tablet)
-  +span-columns(6)
+    +span-columns(6)
 ```
 
 CSS:
