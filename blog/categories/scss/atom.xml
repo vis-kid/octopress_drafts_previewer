@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scss | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/scss/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-05T20:24:44+02:00</updated>
+  <updated>2015-10-05T20:36:21+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -84,8 +84,8 @@ $visual-grid: true
 
 <p>If you already have some content which spans the full width of the outer container(s) on the page you might be surprised to see no effect of the <strong>$visual-grid</strong>. In case that happens, remember that the <strong>$visual-grid-index</strong> is set to <strong>back</strong> by default. Maybe not the best default ever, but no biggie either.</p>
 
-<p>Sass:
-<code>sass
+<p>SCSS:
+<code>scss
 $visual-grid-index: back !default
 </code></p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-05T20:24:44+02:00</updated>
+  <updated>2015-10-05T20:36:21+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -90,10 +90,10 @@
 
 <p>If you already have some content which spans the full width of the outer container(s) on the page you might be surprised to see no effect of the <strong>$visual-grid</strong>. In case that happens, remember that the <strong>$visual-grid-index</strong> is set to <strong>back</strong> by default. Maybe not the best default ever, but no biggie either.</p>
 
-<p>Sass:</p>
+<p>SCSS:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="na">$visual-grid-index</span><span class="o">:</span> <span class="n">back</span> <span class="nv">!default</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nv">$visual-grid-index</span><span class="o">:</span> <span class="n">back</span> <span class="nv">!default</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
