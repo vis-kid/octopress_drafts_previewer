@@ -171,9 +171,6 @@ Internally it uses the **modular-scale** function which I also described in an a
 
 I’ve never felt the need to tweak these things but if curiosity and some extra time for experimentation would hit me I’d start playing around with the various variables for modular scales that you have at your disposal in Bourbon. You can choose from 17 “scales” that come with the library—or make up your own of course.
 
-#### Attention!
-Make sure to import Bourbon first because the variables are defined there and not in Neat. Also, if you decide that you want to change the width of your column via a different variable for your modular scale you should not forget to change this unit in your gutters as well (more info in the next section about **gutter**).
-
 SCSS
 ``` scss
 $golden:           1.618;
@@ -194,6 +191,9 @@ $major-eleventh:   2.667;
 $major-twelfth:    3;
 $double-octave:    4;
 ```
+
+#### Attention!
+Make sure to import Bourbon first because the variables are defined there and not in Neat. Also, if you decide that you want to change the width of your column via a different variable for your modular scale you should not forget to change this unit in your gutters as well (more info in the next section about **gutter**).
 
 Let’s compare the different modular scales for a default 12-column grid. Not all of them result in sensible choices but take a look and see if someting pops out that you like:
 
@@ -402,7 +402,7 @@ $gutter: modular-scale(1, 1em, $double-octave)
 
 [codepen example](http://codepen.io/vis-kid/pen/EVWZPG)
 
-I can’t believe I actually took screenshots of all scales. Guess I got curious after all because I planned on only showing you a couple. Maybe not a rabbit hole you wanna follow but hey folks like to get clever with these things. Using the default Golden Ratio is an absolute solid choice for people who just wanna move on.
+I can’t believe I actually took screenshots of all scales. Guess I got curious after all because I planned on only showing you a couple. Maybe not a rabbit hole you wanna follow but hey, folks like to get clever with these things. Using the default Golden Ratio is an absolute solid choice for people who just wanna move on.
 
 + ### gutter
 
@@ -424,8 +424,8 @@ If you decide that you want to change the width of your gutter via a different v
 
 Sass:
 ``` sass
-$column: modular-scale(3, 1em, $octave) !default
-$gutter: modular-scale(1, 1em, $octave) !default
+$column: modular-scale(3, 1em, $octave)
+$gutter: modular-scale(1, 1em, $octave)
 ``` 
 
 #### Screenshot:
@@ -436,7 +436,7 @@ $gutter: modular-scale(1, 1em, $octave) !default
 
 + ### max-width
 
-This variable let’s you change the size of your outer containers that is used by the **outer-container** mixin. By default it is set to **1088** pixels which get calculated to **em** out of the box.
+This variable let’s you change the size of your outer containers that is used by the **outer-container** mixin. By default it is set to **1088** pixels which gets calculated to **em** out of the box.
 
 #### Screenshot with default max-width of **1088px**:
 
@@ -455,11 +455,11 @@ $max-width: em(1200) !default;
 
 [codepen example](http://codepen.io/vis-kid/pen/rOyoKx)
 
-This variable is certainly handy since the “standards” for how wide web pages are supposed to span are changing rapidly and long gone are the 960px days. Through the access to this variable you have one central place where you can determine how much space your content has to span tops.
+This variable is certainly handy since the “standards” for how wide web pages are supposed to span are changing rapidly and long gone are the 960px days. Through access to this variable you have one central place where you can determine how much space your content can maximally span.
 
 + ### default-feature
 
-If you have gone through my previous articles you might remember that I really like the use of the **media** mixin from Neat combined with the additional convenient usage of the **new-breakpoint** function. I also mentioned that if you provide no *media feature* to your breakpoint pixel value it will default to **min-width**. Let me refresh your memeory:
+If you have gone through my previous articles you might remember that for media queries I really like the use of the **media** mixin from Neat combined with the additional convenient usage of the **new-breakpoint** function. I also mentioned that if you provide no *media feature* to your breakpoint pixel value it will default to **min-width**. Let me refresh your memeory:
 
 Sass:
 ``` sass
@@ -507,3 +507,5 @@ $disable-warnings: true !default;
 ### Final thoughts
 
 If you have gone through both modules about Bourbon and Neat and still don’t like the idea of using this framework for your projects I’d like it if you’d share your reasons and maybe even write about it. I’d love to hear reasonable opposing opinions or learn about better options to build lightweight semantic grids with Sass. I guess Neat is pretty hard to beat these days though. That being said, the thing that makes it so appealing to me and that most likely will keep it relevant for quite some time is that there isn’t much left that can be taken away to reduce it.
+
+Btw, I just learned that thoughtbot recently announced that Bourbon and Neat are used in the new [U.S. Web Design Standards](https://playbook.cio.gov/designstandards/). Pretty darn cool!
