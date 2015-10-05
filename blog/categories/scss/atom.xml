@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scss | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/scss/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-05T19:52:51+02:00</updated>
+  <updated>2015-10-05T20:24:44+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -42,7 +42,7 @@
 </ul>
 
 
-<p>Before we start I should remind you that most of the time your Neat variables are best placed in one central location like in your <strong>_grid-settings</strong> partial. In any case, to avoid any surprises, make sure to not forget to import these variables before you import Neat.</p>
+<p>Before we start, I should remind you that most of the time your Neat variables are best placed in one central location like in your <strong>_grid-settings</strong> partial. In any case, to avoid any surprises, make sure to not forget to import these variables before you import Neat.</p>
 
 <p>Sass:
 <code>sass
@@ -75,14 +75,14 @@ $visual-grid: true
 
 <p><a href="http://codepen.io/vis-kid/pen/PPWLQK">codepen example</a></p>
 
-<p>The color you’ll see will be a bit different—I already tweaked that a bit—but it will show you the number of columns you have set via <strong>$grid-columns</strong> within your outer containers. In this case I kept the default which is 12 columns. In general, a 12 column grid offers you a lot of flexiblity to combine sections of various length neatly into it. It’s a solid choice for beginners as well as for advanced designers.</p>
+<p>The color you’ll see will be a bit different—I already tweaked that a bit—but it will show you the number of columns you have set via <strong>$grid-columns</strong>—all within your outer containers. In this case I kept the default which is 12 columns. In general, a 12 column grid offers you a lot of flexiblity and is a solid choice for beginners as well as for advanced designers.</p>
 
 <ul>
 <li><h3>visual-grid-index</h3></li>
 </ul>
 
 
-<p>If you already have some content which spans the full width of the outer container(s) on the page you might be surprised to see no effect. In case that happens, remember that the <strong>$visual-grid-index</strong> is set to <strong>back</strong> by default. Maybe not the best default ever, but no biggie either.</p>
+<p>If you already have some content which spans the full width of the outer container(s) on the page you might be surprised to see no effect of the <strong>$visual-grid</strong>. In case that happens, remember that the <strong>$visual-grid-index</strong> is set to <strong>back</strong> by default. Maybe not the best default ever, but no biggie either.</p>
 
 <p>Sass:
 <code>sass
@@ -113,7 +113,7 @@ $visual-grid-index: front
 </ul>
 
 
-<p>If you’re unhappy with the default grid color you can change that of course. Obviously it’s a good idea to choose a color that has good contrast compared to your design. I like using plain old <strong>tomato</strong>—although for the examples here I decided differently since I already used it to highlight the containers.</p>
+<p>If you’re unhappy with the default grid color you can change that of course. Obviously its a good idea to choose a color that has good contrast compared to your design. I like using plain old <strong>tomato</strong>—although for the examples here I decided differently since I already used it to highlight the containers.</p>
 
 <p>Sass:
 <code>sass
@@ -198,7 +198,7 @@ $grid-columns(4)
 $column: modular-scale(3, 1em, $golden) !default;
 </code></p>
 
-<p>Internally it uses the <strong>modular-scale</strong> function which I also described in an article about Bourbon’s various functions. Here it sets up the base value of <strong>1em</strong> and makes every column as wide as <strong>3</strong> increments from that base value. Additionally it locks the scale of choice to the Golden Ratio via <strong>$golden</strong>.</p>
+<p>Internally it uses the <strong>modular-scale</strong> function which I also described in an article about Bourbon’s various functions. Here it sets up the base value of <strong>1em</strong> and makes every column as wide as <strong>3</strong> increments / steps from that base value. Additionally it locks the scale of choice to the Golden Ratio via <strong>$golden</strong>.</p>
 
 <p>I’ve never felt the need to tweak these things but if curiosity and some extra time for experimentation would hit me I’d start playing around with the various variables for modular scales that you have at your disposal in Bourbon. You can choose from 17 “scales” that come with the library—or make up your own of course.</p>
 
@@ -440,7 +440,7 @@ $gutter: modular-scale(1, 1em, $double-octave)
 </ul>
 
 
-<p>Kinda the same idea as with <strong>column</strong>. This ones sets the relative width of a single   gutter—the space between each column—in your grid. To create a coherent grid system that has the Golden Ratio backed into every aspect, by default, <strong>gutter</strong> also uses <strong>$golden</strong> to calculate the gutters.</p>
+<p>Kinda the same idea as with <strong>column</strong>. This ones sets the relative width of a single   gutter—the space between each column—in your grid. To create a coherent grid system that has the Golden Ratio baked into every aspect, by default, <strong>gutter</strong> also uses <strong>$golden</strong> to calculate the gutters.</p>
 
 <p>SCSS:
 <code>scss
@@ -455,7 +455,7 @@ $gutter: modular-scale(1, 1em, $golden) !default;
 
 <h4>Attention!</h4>
 
-<p>If you decide that you want to change the width of your gutter via a different variable for your modular scale you should not forget to change this unit in your columns as well.</p>
+<p>If you decide that you want to change the width of your gutter via a different variable for your modular scale you should not forget to change this unit for your columns as well.</p>
 
 <p>Sass:
 <code>sass
@@ -484,7 +484,7 @@ $gutter: modular-scale(1, 1em, $octave)
 
 <p>Sass:
 <code>sass
-$max-width: em(1200) !default;
+$max-width: em(1200)
 </code></p>
 
 <h4>Screenshot with <strong>1200px</strong> max-width:</h4>
@@ -543,7 +543,7 @@ $default-feature: max-width
 </ul>
 
 
-<p>Through this variable your layout uses the default orientation of LTR—left-to-right. Obviously this can have only one of two options—RTL being the second. I guess if you design something for cultures that digest content from the opposite direction, this one will make you love Neat even more.</p>
+<p>Through this variable your layout uses the default orientation of <strong>LTR</strong>—left-to-right. Obviously this can have only one of two options—<strong>RTL</strong> being the second. I guess if you design something for cultures that digest content from the opposite direction, this one will make you love Neat even more.</p>
 
 <ul>
 <li><h3>disable-warnings</h3></li>
@@ -554,12 +554,12 @@ $default-feature: max-width
 
 <p>Sass:</p>
 
-<pre><code class="sass">$disable-warnings: true !default;
+<pre><code class="sass">$disable-warnings: true
 </code></pre>
 
 <h3>Final thoughts</h3>
 
-<p>If you have gone through both modules about Bourbon and Neat and still don’t like the idea of using this framework for your projects I’d like it if you’d share your reasons and maybe even write about it. I’d love to hear reasonable opposing opinions or learn about better options to build lightweight semantic grids with Sass. I guess Neat is pretty hard to beat these days though. That being said, the thing that makes it so appealing to me and that most likely will keep it relevant for quite some time is that there isn’t much left that can be taken away to reduce it.</p>
+<p>If you have gone through both modules about Bourbon and Neat and still don’t like the idea of using this framework for your projects I’d like it if you’d share your reasons and maybe even write about it. I’d love to hear reasonable opposing opinions or learn about better options to build lightweight semantic grids with Sass. I guess Neat is pretty hard to beat these days though. That being said, the thing that makes it so appealing to me, and that most likely will keep it relevant for quite some time, is that there isn’t much left that can be taken away to reduce it.</p>
 
 <p>Btw, I just learned that thoughtbot recently announced that Bourbon and Neat are used in the new <a href="https://playbook.cio.gov/designstandards/">U.S. Web Design Standards</a>. Pretty darn cool!</p>
 ]]></content>
