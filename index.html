@@ -291,7 +291,7 @@
 
 <p>Internally it uses the <strong>modular-scale</strong> function which I also described in an article about Bourbon’s various functions. Here it sets up the base value of <strong>1em</strong> and makes every column as wide as <strong>3</strong> increments from that base value. Additionally it locks the scale of choice to the Golden Ratio via <strong>$golden</strong>.</p>
 
-<p>I never felt the need to tweak these things but if curiosity and some extra time for experimentation would hit me I’d start playing around with the various variables for modular scales that you have at your disposal in Bourbon. You can choose from 17 “scales” that come with the library—or make up your own of course.</p>
+<p>I’ve never felt the need to tweak these things but if curiosity and some extra time for experimentation would hit me I’d start playing around with the various variables for modular scales that you have at your disposal in Bourbon. You can choose from 17 “scales” that come with the library—or make up your own of course.</p>
 
 <h4>Attention!</h4>
 
@@ -341,7 +341,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$golden</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$golden</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -354,7 +356,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$minor-second</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$minor-second</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -367,7 +371,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-second</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-second</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -380,7 +386,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$minor-third</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$minor-third</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -393,7 +401,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-third</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-third</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -406,7 +416,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$perfect-fourth</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$perfect-fourth</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -419,7 +431,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$augmented-fourth</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$augmented-fourth</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -432,7 +446,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$perfect-fifth</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$perfect-fifth</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -445,7 +461,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$minor-sixth</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$minor-sixth</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -458,7 +476,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-sixth</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-sixth</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -471,7 +491,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$minor-seventh</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$minor-seventh</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -484,7 +506,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-seventh</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-seventh</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -497,7 +521,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$octave</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$octave</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -510,7 +536,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-tenth</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-tenth</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -523,7 +551,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-eleventh</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-eleventh</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -536,7 +566,9 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-twelfth</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$major-twelfth</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -549,13 +581,15 @@
 <p>Sass:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sass'><span class='line'><span class="nv">$column</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$double-octave</span><span class="p">)</span>
+</span><span class='line'><span class="nv">$gutter</span><span class="o">:</span> <span class="nf">modular-scale</span><span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="kt">em</span><span class="o">,</span> <span class="nv">$double-octave</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <h4>Screenshot:</h4>
 
-<p><img src="/octopress_drafts_previewer/images/bourbon-variables/column(golden-octave).png"></p>
+<p><img src="/octopress_drafts_previewer/images/bourbon-variables/column(double-octave).png"></p>
 
 <p><a href="http://codepen.io/vis-kid/pen/EVWZPG">codepen example</a></p>
 

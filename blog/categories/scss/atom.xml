@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scss | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/scss/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-04T20:17:19+02:00</updated>
+  <updated>2015-10-05T19:31:34+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -200,7 +200,7 @@ $column: modular-scale(3, 1em, $golden) !default;
 
 <p>Internally it uses the <strong>modular-scale</strong> function which I also described in an article about Bourbon’s various functions. Here it sets up the base value of <strong>1em</strong> and makes every column as wide as <strong>3</strong> increments from that base value. Additionally it locks the scale of choice to the Golden Ratio via <strong>$golden</strong>.</p>
 
-<p>I never felt the need to tweak these things but if curiosity and some extra time for experimentation would hit me I’d start playing around with the various variables for modular scales that you have at your disposal in Bourbon. You can choose from 17 “scales” that come with the library—or make up your own of course.</p>
+<p>I’ve never felt the need to tweak these things but if curiosity and some extra time for experimentation would hit me I’d start playing around with the various variables for modular scales that you have at your disposal in Bourbon. You can choose from 17 “scales” that come with the library—or make up your own of course.</p>
 
 <h4>Attention!</h4>
 
@@ -232,6 +232,7 @@ $double-octave:    4;
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $golden)
+$gutter: modular-scale(1, 1em, $golden)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -243,6 +244,7 @@ $column: modular-scale(3, 1em, $golden)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $minor-second)
+$gutter: modular-scale(1, 1em, $minor-second)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -254,6 +256,7 @@ $column: modular-scale(3, 1em, $minor-second)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $major-second)
+$gutter: modular-scale(1, 1em, $major-second)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -265,6 +268,7 @@ $column: modular-scale(3, 1em, $major-second)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $minor-third)
+$gutter: modular-scale(1, 1em, $minor-third)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -276,6 +280,7 @@ $column: modular-scale(3, 1em, $minor-third)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $major-third)
+$gutter: modular-scale(1, 1em, $major-third)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -287,6 +292,7 @@ $column: modular-scale(3, 1em, $major-third)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $perfect-fourth)
+$gutter: modular-scale(1, 1em, $perfect-fourth)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -298,6 +304,7 @@ $column: modular-scale(3, 1em, $perfect-fourth)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $augmented-fourth)
+$gutter: modular-scale(1, 1em, $augmented-fourth)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -309,6 +316,7 @@ $column: modular-scale(3, 1em, $augmented-fourth)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $perfect-fifth)
+$gutter: modular-scale(1, 1em, $perfect-fifth)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -320,6 +328,7 @@ $column: modular-scale(3, 1em, $perfect-fifth)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $minor-sixth)
+$gutter: modular-scale(1, 1em, $minor-sixth)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -331,6 +340,7 @@ $column: modular-scale(3, 1em, $minor-sixth)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $major-sixth)
+$gutter: modular-scale(1, 1em, $major-sixth)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -342,6 +352,7 @@ $column: modular-scale(3, 1em, $major-sixth)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $minor-seventh)
+$gutter: modular-scale(1, 1em, $minor-seventh)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -353,6 +364,7 @@ $column: modular-scale(3, 1em, $minor-seventh)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $major-seventh)
+$gutter: modular-scale(1, 1em, $major-seventh)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -364,6 +376,7 @@ $column: modular-scale(3, 1em, $major-seventh)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $octave)
+$gutter: modular-scale(1, 1em, $octave)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -375,6 +388,7 @@ $column: modular-scale(3, 1em, $octave)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $major-tenth)
+$gutter: modular-scale(1, 1em, $major-tenth)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -386,6 +400,7 @@ $column: modular-scale(3, 1em, $major-tenth)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $major-eleventh)
+$gutter: modular-scale(1, 1em, $major-eleventh)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -397,6 +412,7 @@ $column: modular-scale(3, 1em, $major-eleventh)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $major-twelfth)
+$gutter: modular-scale(1, 1em, $major-twelfth)
 </code></p>
 
 <h4>Screenshot:</h4>
@@ -408,11 +424,12 @@ $column: modular-scale(3, 1em, $major-twelfth)
 <p>Sass:
 <code>sass
 $column: modular-scale(3, 1em, $double-octave)
+$gutter: modular-scale(1, 1em, $double-octave)
 </code></p>
 
 <h4>Screenshot:</h4>
 
-<p><img src="/images/bourbon-variables/column(golden-octave).png"></p>
+<p><img src="/images/bourbon-variables/column(double-octave).png"></p>
 
 <p><a href="http://codepen.io/vis-kid/pen/EVWZPG">codepen example</a></p>
 
