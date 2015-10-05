@@ -169,7 +169,7 @@ $column: modular-scale(3, 1em, $golden) !default;
 
 Internally it uses the **modular-scale** function which I also described in an article about Bourbon’s various functions. Here it sets up the base value of **1em** and makes every column as wide as **3** increments from that base value. Additionally it locks the scale of choice to the Golden Ratio via **$golden**.  
 
-I never felt the need to tweak these things but if curiosity and some extra time for experimentation would hit me I’d start playing around with the various variables for modular scales that you have at your disposal in Bourbon. You can choose from 17 “scales” that come with the library—or make up your own of course.
+I’ve never felt the need to tweak these things but if curiosity and some extra time for experimentation would hit me I’d start playing around with the various variables for modular scales that you have at your disposal in Bourbon. You can choose from 17 “scales” that come with the library—or make up your own of course.
 
 #### Attention!
 Make sure to import Bourbon first because the variables are defined there and not in Neat. Also, if you decide that you want to change the width of your column via a different variable for your modular scale you should not forget to change this unit in your gutters as well (more info in the next section about **gutter**).
@@ -201,6 +201,7 @@ Let’s compare the different modular scales for a default 12-column grid. Not a
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $golden)
+$gutter: modular-scale(1, 1em, $golden)
 ```
 
 #### Screenshot:
@@ -212,6 +213,7 @@ $column: modular-scale(3, 1em, $golden)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $minor-second)
+$gutter: modular-scale(1, 1em, $minor-second)
 ```
 
 #### Screenshot:
@@ -223,6 +225,7 @@ $column: modular-scale(3, 1em, $minor-second)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $major-second)
+$gutter: modular-scale(1, 1em, $major-second)
 ```
 
 #### Screenshot:
@@ -234,6 +237,7 @@ $column: modular-scale(3, 1em, $major-second)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $minor-third)
+$gutter: modular-scale(1, 1em, $minor-third)
 ```
 
 #### Screenshot:
@@ -245,6 +249,7 @@ $column: modular-scale(3, 1em, $minor-third)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $major-third)
+$gutter: modular-scale(1, 1em, $major-third)
 ```
 
 #### Screenshot:
@@ -256,6 +261,7 @@ $column: modular-scale(3, 1em, $major-third)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $perfect-fourth)
+$gutter: modular-scale(1, 1em, $perfect-fourth)
 ```
 
 #### Screenshot:
@@ -267,6 +273,7 @@ $column: modular-scale(3, 1em, $perfect-fourth)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $augmented-fourth)
+$gutter: modular-scale(1, 1em, $augmented-fourth)
 ```
 
 #### Screenshot:
@@ -278,6 +285,7 @@ $column: modular-scale(3, 1em, $augmented-fourth)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $perfect-fifth)
+$gutter: modular-scale(1, 1em, $perfect-fifth)
 ```
 
 #### Screenshot:
@@ -289,6 +297,7 @@ $column: modular-scale(3, 1em, $perfect-fifth)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $minor-sixth)
+$gutter: modular-scale(1, 1em, $minor-sixth)
 ```
 
 #### Screenshot:
@@ -300,6 +309,7 @@ $column: modular-scale(3, 1em, $minor-sixth)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $major-sixth)
+$gutter: modular-scale(1, 1em, $major-sixth)
 ```
 
 #### Screenshot:
@@ -311,6 +321,7 @@ $column: modular-scale(3, 1em, $major-sixth)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $minor-seventh)
+$gutter: modular-scale(1, 1em, $minor-seventh)
 ```
 
 #### Screenshot:
@@ -322,6 +333,7 @@ $column: modular-scale(3, 1em, $minor-seventh)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $major-seventh)
+$gutter: modular-scale(1, 1em, $major-seventh)
 ```
 
 #### Screenshot:
@@ -333,6 +345,7 @@ $column: modular-scale(3, 1em, $major-seventh)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $octave)
+$gutter: modular-scale(1, 1em, $octave)
 ```
 
 #### Screenshot:
@@ -344,6 +357,7 @@ $column: modular-scale(3, 1em, $octave)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $major-tenth)
+$gutter: modular-scale(1, 1em, $major-tenth)
 ```
 
 #### Screenshot:
@@ -355,6 +369,7 @@ $column: modular-scale(3, 1em, $major-tenth)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $major-eleventh)
+$gutter: modular-scale(1, 1em, $major-eleventh)
 ```
 
 #### Screenshot:
@@ -366,6 +381,7 @@ $column: modular-scale(3, 1em, $major-eleventh)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $major-twelfth)
+$gutter: modular-scale(1, 1em, $major-twelfth)
 ```
 
 #### Screenshot:
@@ -377,11 +393,12 @@ $column: modular-scale(3, 1em, $major-twelfth)
 Sass:
 ``` sass
 $column: modular-scale(3, 1em, $double-octave)
+$gutter: modular-scale(1, 1em, $double-octave)
 ```
 
 #### Screenshot:
 
-{% img /images/bourbon-variables/column(golden-octave).png %}
+{% img /images/bourbon-variables/column(double-octave).png %}
 
 [codepen example](http://codepen.io/vis-kid/pen/EVWZPG)
 
