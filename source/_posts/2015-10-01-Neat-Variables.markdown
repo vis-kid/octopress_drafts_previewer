@@ -29,7 +29,7 @@ In this last section about Bourbon Neat we’ll look at the various “built-in�
 + column
 + gutter
 
-Before we start I should remind you that most of the time your Neat variables are best placed in one central location like in your **_grid-settings** partial. In any case, to avoid any surprises, make sure to not forget to import these variables before you import Neat.
+Before we start, I should remind you that most of the time your Neat variables are best placed in one central location like in your **_grid-settings** partial. In any case, to avoid any surprises, make sure to not forget to import these variables before you import Neat.
 
 Sass:
 ``` sass
@@ -59,11 +59,11 @@ $visual-grid: true
 
 [codepen example](http://codepen.io/vis-kid/pen/PPWLQK)
 
-The color you’ll see will be a bit different—I already tweaked that a bit—but it will show you the number of columns you have set via **$grid-columns** within your outer containers. In this case I kept the default which is 12 columns. In general, a 12 column grid offers you a lot of flexiblity to combine sections of various length neatly into it. It’s a solid choice for beginners as well as for advanced designers.
+The color you’ll see will be a bit different—I already tweaked that a bit—but it will show you the number of columns you have set via **$grid-columns**—all within your outer containers. In this case I kept the default which is 12 columns. In general, a 12 column grid offers you a lot of flexiblity and is a solid choice for beginners as well as for advanced designers.
 
 + ### visual-grid-index
 
-If you already have some content which spans the full width of the outer container(s) on the page you might be surprised to see no effect. In case that happens, remember that the **$visual-grid-index** is set to **back** by default. Maybe not the best default ever, but no biggie either.
+If you already have some content which spans the full width of the outer container(s) on the page you might be surprised to see no effect of the **$visual-grid**. In case that happens, remember that the **$visual-grid-index** is set to **back** by default. Maybe not the best default ever, but no biggie either.
 
 Sass:
 ``` sass
@@ -91,7 +91,7 @@ $visual-grid-index: front
 
 + ### visual-grid-color
 
-If you’re unhappy with the default grid color you can change that of course. Obviously it’s a good idea to choose a color that has good contrast compared to your design. I like using plain old **tomato**—although for the examples here I decided differently since I already used it to highlight the containers.
+If you’re unhappy with the default grid color you can change that of course. Obviously its a good idea to choose a color that has good contrast compared to your design. I like using plain old **tomato**—although for the examples here I decided differently since I already used it to highlight the containers.
 
 Sass:
 ``` sass
@@ -167,7 +167,7 @@ SCSS:
 $column: modular-scale(3, 1em, $golden) !default;
 ```
 
-Internally it uses the **modular-scale** function which I also described in an article about Bourbon’s various functions. Here it sets up the base value of **1em** and makes every column as wide as **3** increments from that base value. Additionally it locks the scale of choice to the Golden Ratio via **$golden**.  
+Internally it uses the **modular-scale** function which I also described in an article about Bourbon’s various functions. Here it sets up the base value of **1em** and makes every column as wide as **3** increments / steps from that base value. Additionally it locks the scale of choice to the Golden Ratio via **$golden**.  
 
 I’ve never felt the need to tweak these things but if curiosity and some extra time for experimentation would hit me I’d start playing around with the various variables for modular scales that you have at your disposal in Bourbon. You can choose from 17 “scales” that come with the library—or make up your own of course.
 
@@ -406,7 +406,7 @@ I can’t believe I actually took screenshots of all scales. Guess I got curious
 
 + ### gutter
 
-Kinda the same idea as with **column**. This ones sets the relative width of a single	gutter—the space between each column—in your grid. To create a coherent grid system that has the Golden Ratio backed into every aspect, by default, **gutter** also uses **$golden** to calculate the gutters. 
+Kinda the same idea as with **column**. This ones sets the relative width of a single	gutter—the space between each column—in your grid. To create a coherent grid system that has the Golden Ratio baked into every aspect, by default, **gutter** also uses **$golden** to calculate the gutters. 
 
 SCSS:
 ``` scss
@@ -420,7 +420,7 @@ For people new to the party, let me visualize this for you. All the **tomato** c
 [codepen example](http://codepen.io/vis-kid/pen/zvZypr)
 
 #### Attention!
-If you decide that you want to change the width of your gutter via a different variable for your modular scale you should not forget to change this unit in your columns as well.
+If you decide that you want to change the width of your gutter via a different variable for your modular scale you should not forget to change this unit for your columns as well.
 
 Sass:
 ``` sass
@@ -446,7 +446,7 @@ This variable let’s you change the size of your outer containers that is used 
 
 Sass:
 ``` sass
-$max-width: em(1200) !default;
+$max-width: em(1200)
 ```
 
 #### Screenshot with **1200px** max-width:
@@ -492,7 +492,7 @@ By default this is set to **true** and I guess a good reason would be in order t
 
 + ### default-layout-direction
 
-Through this variable your layout uses the default orientation of LTR—left-to-right. Obviously this can have only one of two options—RTL being the second. I guess if you design something for cultures that digest content from the opposite direction, this one will make you love Neat even more.
+Through this variable your layout uses the default orientation of **LTR**—left-to-right. Obviously this can have only one of two options—**RTL** being the second. I guess if you design something for cultures that digest content from the opposite direction, this one will make you love Neat even more.
 
 + ### disable-warnings
 
@@ -501,11 +501,11 @@ If excess deprication warnings are the sort of thing that sometimes want to make
 Sass:
 
 ``` sass
-$disable-warnings: true !default;
+$disable-warnings: true
 ```
 
 ### Final thoughts
 
-If you have gone through both modules about Bourbon and Neat and still don’t like the idea of using this framework for your projects I’d like it if you’d share your reasons and maybe even write about it. I’d love to hear reasonable opposing opinions or learn about better options to build lightweight semantic grids with Sass. I guess Neat is pretty hard to beat these days though. That being said, the thing that makes it so appealing to me and that most likely will keep it relevant for quite some time is that there isn’t much left that can be taken away to reduce it.
+If you have gone through both modules about Bourbon and Neat and still don’t like the idea of using this framework for your projects I’d like it if you’d share your reasons and maybe even write about it. I’d love to hear reasonable opposing opinions or learn about better options to build lightweight semantic grids with Sass. I guess Neat is pretty hard to beat these days though. That being said, the thing that makes it so appealing to me, and that most likely will keep it relevant for quite some time, is that there isn’t much left that can be taken away to reduce it.
 
 Btw, I just learned that thoughtbot recently announced that Bourbon and Neat are used in the new [U.S. Web Design Standards](https://playbook.cio.gov/designstandards/). Pretty darn cool!
