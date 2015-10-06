@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Thoughtbot | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/thoughtbot/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-05T23:58:09+02:00</updated>
+  <updated>2015-10-06T18:04:44+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -550,7 +550,7 @@ $default-feature: max-width
 </ul>
 
 
-<p>If excess deprication warnings are the sort of thing that sometimes want to make you hug their authors around the neck–unlike me of course—you can mute these messages by setting this variable to <strong>true</strong>.</p>
+<p>If excess deprication warnings are the sort of thing that sometimes make you want to hug their authors around the neck–unlike me of course—you can mute these messages by setting this variable to <strong>true</strong>.</p>
 
 <p>Sass:</p>
 
