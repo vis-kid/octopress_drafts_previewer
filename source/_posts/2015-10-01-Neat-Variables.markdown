@@ -496,7 +496,7 @@ Through this variable your layout uses the default orientation of **LTR**—left
 
 + ### disable-warnings
 
-If excess deprication warnings are the sort of thing that sometimes want to make you hug their authors around the neck–unlike me of course—you can mute these messages by setting this variable to **true**.
+If excess deprication warnings are the sort of thing that sometimes make you want to hug their authors around the neck–unlike me of course—you can mute these messages by setting this variable to **true**.
 
 Sass:
 
