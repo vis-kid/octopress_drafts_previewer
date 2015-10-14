@@ -16,7 +16,7 @@ This two-part mini-series was written for people who quickly wanna jump into wor
 
 I did my best to keep it newbie-friendly for folks who started to play with tests rather recently. Obviously having been in the same shoes made me believe that it doesn’t take much to make new people feel more comfortable with testing. Taking a bit more time to explain the context and demystifying the lingo goes a long way in cutting down frustration rates for beginners imho.
 
-#### Contents
+### Contents
 
 + Intro & Context
 + Configuration
@@ -27,6 +27,16 @@ I did my best to keep it newbie-friendly for folks who started to play with test
 + Inheritance
 + Multiple records
 + Sequences
+
++ ### Intro & Context
+
+Let’s start with a little bit of history and talk about the fine folks at [thoughtbot](https://thoughtbot.com/) who are in charge of this popular Ruby gem. Back in 2007/2008 [Joe Ferries](https://github.com/jferris), CTO at thoughtbot, had had it with Fixtures and started to cook up his own solution. Going through various files to test a single method was a common pain point while dealing with fixtures. Put differently, that practice also lead to writing tests that don’t tell you much about their context being tested right away. 
+
+Being tired with that practice made him checkout various solutions for factories but none of them supported everything he wanted. After his first attempt, Factory Girl made tests more readable, DRY and also more explicit by giving you the context for every test. A couple of years later, [Josh Clayton](https://twitter.com/joshuaclayton), Development Director at @thoughtbot in Boston, took over as the maintainer for the project. Since then the project has grown steadily and has become a go-to solution in the Ruby community 
+
+pain point meant to solve: dealing with a lot associated records, dealing with information that’s changing and you wanna be able to build these data sets for your integration tests. Build all this data but dont want to manage it in yaml you want it to be dynamic, you wanna refer to other factories, you wnat to be able to overwrite values, and factory girl allows you to do that.
+Set up your data easily and effectively There you can deal more with concepts than with the actual columns in the database. -> Building fixture data in a convenient way.
+
 
 Notes:
 Factory girl is a ruby gem
@@ -59,8 +69,6 @@ uses a lot of metaprogramming with a lot of dynamic method definitions
 
 you can refer to attributes on objects even if you haven’t defined them in your factory. that means you can define factories with the absolute bare minimum to make them valid objects and assign attributes needed for your tests on the fly.
 
-pain point meant to solve: dealing with a lot associated records, dealing with information that’s changing and you wanna be able to build these data sets for your integration tests. Build all this data but dont want to manage it in yaml you want it to be dynamic, you wanna refer to other factories, you wnat to be able to overwrite values, and factory girl allows you to do that.
-Set up your data easily and effectively There you can deal more with concepts than with the actual columns in the database. -> Building fixture data in a convenient way.
 
 Want to have it DRY
 
