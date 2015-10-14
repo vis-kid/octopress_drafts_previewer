@@ -38,6 +38,92 @@ What’s the main pain point that’s being solved today? When you build your te
 
 Factory Girl allows you to do all of that effortlessly—given the fact that a lot of Metaprogramming witchraft is going on behind the scenes which provides you with a great domain-specific language. Building up your fixture data with this gem can be described as easy, effective and overall more convenient. That way you can deal more with concepts than with the actual columns in the database. But enough of talking the talk, let’s get our hands a bit dirty.
 
++ ### Configuration
+
+I assume you already have Ruby installed on your system. If not, come back after consulting Google and you should be good to go. It’s quite straightforward I’d say. You can install the gem manually in your terminal via
+
+Shell:
+``` bash
+gem install factory_girl
+```
+
+or add it to your Gemfile 
+``` ruby
+gem "factory_girl", "~> 4.0"
+```
+and run `bundle install`.
+
+If you want to use Factory Girl with Rails, the fine folks at thoughtbot have you covered of course. the *factory_girl_rails* gem provides a handy Rails integration for *factory_girl*.
+
+Shell:
+``` bash
+gem install factory_girl_rails
+```
+
+Gemfile:
+``` ruby
+gem "factory_girl_rails", "~> 4.0"
+```
+
+### Convenient Syntax Setup
+
+If you would like to prefer typing something like
+
+Ruby:
+``` ruby
+create(:user)
+```
+
+instead of 
+Ruby:
+``` ruby
+FactoryGirl.create(:user)
+```
+
+everytime you use one of your factories you just need to include the `FactoryGirl::Syntax::Methods` module in your configuration file. If you forget that step, you have to preface all Factory Girl methods with the same annoying preface.
+
+For **RSpec** find the **spec/spec_helper.rb** file and add:
+``` ruby
+RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
+end
+```
+#### Attention!
+For the newbies among you, beware that you only have to add the second line which is responsible for including the module. The **RSpec.configure** block will already be there buried under some amount of comments. Easy, you’ll see! You can also do the same by creating a file specifially for Factory girl like this: **spec/support/factory_girl.rb** file. In that case you will have to add the whole config block yourself of course. 
+
+You can use the same configuration if you are using
+
++ Test::Unit
++ Cucumber
++ Spinach
++ MiniTest
++ MiniTest::Spec
++ minitest-rails
+
+You can go more fancy with your configuration by throwing in DatabaseCleaner for example but the documentation does only the step above so I’ll move on from here.
+
++ ### Defining Factories
+
+You can define your factories anywhere but they will be loaded automatically if they are placed in the following locations:
+
+Test::Unit:
+``` bash
+test/factories.rb
+test/factories/*.rb
+```
+
+RSpec:
+``` bash
+spec/factories.rb
+spec/factories/*.rb
+```
+
+As you can see you have the option to split them into separate files that adhere to whatever logic or bundle your factories together into one big **factories.rb** file. The complexity of your project will be the best guideline for when to logically separate factories into their own separate files.
+
+
+
+
+
 
 
 Notes:
