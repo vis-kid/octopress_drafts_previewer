@@ -32,17 +32,17 @@ I did my best to keep it newbie-friendly for folks who started to play with test
 
 Let’s start with a little bit of history and talk about the fine folks at [thoughtbot](https://thoughtbot.com/) who are in charge of this popular Ruby gem. Back in 2007/2008 [Joe Ferries](https://github.com/jferris), CTO at thoughtbot, had had it with Fixtures and started to cook up his own solution. Going through various files to test a single method was a common pain point while dealing with fixtures. Put differently, that practice also lead to writing tests that don’t tell you much about their context being tested right away. 
 
-Not being sold on that practice made him checkout various solutions for factories but none of them supported everything he wanted. After his first attempt, Factory Girl made tests more readable, DRY and also more explicit by giving you the context for every test. A couple of years later, [Josh Clayton](https://twitter.com/joshuaclayton), Development Director at @thoughtbot in Boston, took over as the maintainer for the project. Since then the project has grown steadily and has become a go-to solution in the Ruby community 
+Not being sold on that practice made him checkout various solutions for factories but none of them supported everything he wanted. After his first attempt, Factory Girl made testing with fixture data more readable, DRY and also more explicit by giving you the context for every test. A couple of years later, [Josh Clayton](https://twitter.com/joshuaclayton), Development Director at @thoughtbot in Boston, took over as the maintainer for the project. Since then the project has grown steadily and has become a go-to solution in the Ruby community 
 
 What’s the main pain point that’s being solved today? When you build your test suite you’re dealing with a lot of associated records and with information that’s changing frequently. You further want to be able to build data sets for your integration tests that are not brittle, easy to manage and explicit. Your data factories should be dynamic and able to refer to other factories—something that is reasonably far beyond YAML fixtures from the old days. Another convenience you want to have is the ability to overwrite attributes for objects on the fly.
 
-Factory Girl allows you to do all of that effortlessly—given the fact that a lot of Metaprogramming witchraft is going on behind the scenes which provides you with a great domain-specific language. Building up your fixture data with this gem can be described as easy, effective and overall more convenient. That way you can deal more with concepts than with the actual columns in the database. But enough of talking the talk, let’s get our hands a bit dirty.
+Factory Girl allows you to do all of that effortlessly—given the fact that a lot of Metaprogramming witchraft is going on behind the scenes—and you are provided with a great domain-specific language. Building up your fixture data with this gem can be described as easy, effective and overall more convenient. That way you can deal more with concepts than with the actual columns in the database. But enough of talking the talk, let’s get our hands a bit dirty.
 
 + ### Configuration
 
 I assume you already have Ruby installed on your system. If not, come back after consulting Google and you should be good to go. It’s quite straightforward I’d say. You can install the gem manually in your terminal via
 
-Shell:
+**Shell:**
 ``` bash
 gem install factory_girl
 ```
@@ -53,14 +53,14 @@ gem "factory_girl", "~> 4.0"
 ```
 and run `bundle install`.
 
-If you want to use Factory Girl with Rails, the fine folks at thoughtbot have you covered of course. the *factory_girl_rails* gem provides a handy Rails integration for *factory_girl*.
+You are covered of course if you want to use Factory Girl with Rails. The *factory_girl_rails* gem provides a handy Rails integration for *factory_girl*.
 
-Shell:
+**Shell:**
 ``` bash
 gem install factory_girl_rails
 ```
 
-Gemfile:
+**Gemfile:**
 ``` ruby
 gem "factory_girl_rails", "~> 4.0"
 ```
@@ -69,18 +69,18 @@ gem "factory_girl_rails", "~> 4.0"
 
 If you would like to prefer typing something like
 
-Ruby:
+**Ruby:**
 ``` ruby
 create(:user)
 ```
 
 instead of 
-Ruby:
+
 ``` ruby
 FactoryGirl.create(:user)
 ```
 
-everytime you use one of your factories you just need to include the `FactoryGirl::Syntax::Methods` module in your configuration file. If you forget that step, you have to preface all Factory Girl methods with the same annoying preface.
+everytime you use one of your factories you just need to include the `FactoryGirl::Syntax::Methods` module in your test configuration file. If you forget that step, you have to preface all Factory Girl methods with the same annoying preface.
 
 For **RSpec** find the **spec/spec_helper.rb** file and add:
 ``` ruby
@@ -100,7 +100,7 @@ You can use the same configuration if you are using
 + MiniTest::Spec
 + minitest-rails
 
-You can go more fancy with your configuration by throwing in DatabaseCleaner for example but the documentation does only the step above so I’ll move on from here.
+You can go more fancy with your configuration by throwing in **DatabaseCleaner** for example but the documentation does only the step above so I’ll move on from here.
 
 + ### Defining Factories
 
