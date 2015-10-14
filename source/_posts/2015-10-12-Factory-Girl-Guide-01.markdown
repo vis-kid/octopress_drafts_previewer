@@ -21,8 +21,8 @@ I did my best to keep it newbie-friendly for folks who started to play with test
 + Intro & Context
 + Configuration
 + Fixtures
-+ Defining fixtures
-+ Using fixtures
++ Defining factories
++ Using factories
 + Associations
 + Inheritance
 + Multiple records
