@@ -58,7 +58,7 @@ Agent:
   birthday: Unknown
 ```
 
-It looks like a hash, doesn’t it? It’s a colon-separeted list of key / value pairs that are separated by a blank space. You can reference other nodes within each other if you want to simulate associations from your models. But I think its fair to say that that’s where the music stops and many say their pain begins.
+It looks like a hash, doesn’t it? It’s a colon-separeted list of key / value pairs that are separated by a blank space. You can reference other nodes within each other if you want to simulate associations from your models. But I think its fair to say that that’s where the music stops and many say their pain begins. For data sets that are a bit more involved, fixtures are difficult to maintain and hard to change without affecting other tests
 
 To avoid breaking your test data when the inevitable changes occur, developers where happy to adopt newer strategies that offered more flexibility and dynamic behaviour. That’s where Factory Girl came in and left the YAML days behind. Another issue is the heavy dependency between the test and the fixture file. [Mystery guests](https://robots.thoughtbot.com/mystery-guest) are also a major pain with these kinds of fixtures. Factory Girl let’s you avoid that by creating users inline in your tests
 
@@ -162,9 +162,6 @@ goal is to replace rails fixtures
 fixtures were the de facto standard for setting up data for testing your application
 
 it was data stored in yaml
-
-and it was difficult to maintain
-hard to change without affecting other tests
 
 provides ruby dsl syntax for defining factories like user, post, any object, not only active record objects
 
