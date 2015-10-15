@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: 
+Disallow: /
 
 Sitemap: http://vis-kid.github.io/octopress_drafts_previewer/sitemap.xml 

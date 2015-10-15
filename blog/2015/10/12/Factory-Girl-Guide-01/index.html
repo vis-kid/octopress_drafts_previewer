@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Drafts Previewer</title>
+  <title>Factory Girl 101 - Drafts Previewer</title>
   <meta name="author" content="Your Name">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://vis-kid.github.io/octopress_drafts_previewer/">
+  <link rel="canonical" href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/12/Factory-Girl-Guide-01/">
   <link href="/octopress_drafts_previewer/favicon.png" rel="icon">
   <link href="/octopress_drafts_previewer/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/octopress_drafts_previewer/atom.xml" rel="alternate" title="Drafts Previewer" type="application/atom+xml">
@@ -63,15 +63,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/octopress_drafts_previewer/blog/2015/10/12/Factory-Girl-Guide-01/">Factory Girl 101</a></h1>
+      <h1 class="entry-title">Factory Girl 101</h1>
     
     
       <p class="meta">
@@ -87,7 +84,7 @@
   </header>
 
 
-  <div class="entry-content"><p><img src="/octopress_drafts_previewer/images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg"></p>
+<div class="entry-content"><p><img src="/octopress_drafts_previewer/images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg"></p>
 
 <p><a href="https://github.com/thoughtbot/factory_girl"><img src="/octopress_drafts_previewer/images/Factory-Girl-Guide/Factory-Girl-Icon.png" width="150"></a></p>
 
@@ -328,18 +325,50 @@ Global coupling. Data is global in your test suite? it can become painful. When 
 
 <p>A lot of times you actually dont need factory girl to write some of your unit tests. Josh would be the first to attest to that. Bigger systems with lots of data and collaborators and stuff that that you dont need for your unit tests. If you write unit tests and your data doesnt need any associations, it doesnt need persistance, you dont care about callbacks, dont use factory girl or at least use build (stubbed??) which instantiates the record and assignes all the attriubutes, gives it an id and raises if you interact with the database at all.  which gives you fake data that looks like its been persisted - gives you a full-fledged object that looks like its been saved. A lot faster. nothing hits the database at all.</p>
 </div>
-  
-  
 
 
-    </article>
+  <footer>
+    <p class="meta">
+      
   
-  <div class="pagination">
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-10-12T05:29:10+02:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>5:29 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/octopress_drafts_previewer/blog/categories/bdd/'>bdd</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/factory-girl/'>factory girl</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/rails/'>rails</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/rspec/'>rspec</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/ruby/'>ruby</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/tdd/'>tdd</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/test-driven-design/'>test-driven-design</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/thoughtbot/'>thoughtbot</a>
+  
+</span>
+
+
+    </p>
     
-    <a href="/octopress_drafts_previewer/blog/archives">Blog Archives</a>
-    
-  </div>
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/12/Factory-Girl-Guide-01/" data-via="" data-counturl="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/12/Factory-Girl-Guide-01/" >Tweet</a>
+  
+  
+  
 </div>
+
+    
+    <p class="meta">
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -359,6 +388,7 @@ Global coupling. Data is global in your test suite? it can become painful. When 
 
   
 </aside>
+
 
     </div>
   </div>
