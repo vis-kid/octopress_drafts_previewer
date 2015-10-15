@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Factory Girl Survival Guide 01
+title: Factory Girl 101
 date: 2015-10-12 04:29:10 +0100
 comments: true
 sharing: true
@@ -19,8 +19,8 @@ I did my best to keep it newbie-friendly for folks who started to play with test
 ### Contents
 
 + Intro & Context
-+ Configuration
 + Fixtures
++ Configuration
 + Defining factories
 + Using factories
 + Associations
@@ -30,13 +30,41 @@ I did my best to keep it newbie-friendly for folks who started to play with test
 
 + ### Intro & Context
 
-Let’s start with a little bit of history and talk about the fine folks at [thoughtbot](https://thoughtbot.com/) who are in charge of this popular Ruby gem. Back in 2007/2008 [Joe Ferries](https://github.com/jferris), CTO at thoughtbot, had had it with Fixtures and started to cook up his own solution. Going through various files to test a single method was a common pain point while dealing with fixtures. Put differently, that practice also lead to writing tests that don’t tell you much about their context being tested right away. 
+Let’s start with a little bit of history and talk about the fine folks at [thoughtbot](https://thoughtbot.com/) who are in charge of this popular Ruby gem. Back in 2007/2008 [Joe Ferries](https://github.com/jferris), CTO at thoughtbot, had had it with fixtures and started to cook up his own solution. Going through various files to test a single method was a common pain point while dealing with fixtures. Put differently, that practice also lead to writing tests that don’t tell you much about their context being tested right away. 
 
 Not being sold on that practice made him checkout various solutions for factories but none of them supported everything he wanted. After his first attempt, Factory Girl made testing with fixture data more readable, DRY and also more explicit by giving you the context for every test. A couple of years later, [Josh Clayton](https://twitter.com/joshuaclayton), Development Director at @thoughtbot in Boston, took over as the maintainer for the project. Since then the project has grown steadily and has become a go-to solution in the Ruby community 
 
 What’s the main pain point that’s being solved today? When you build your test suite you’re dealing with a lot of associated records and with information that’s changing frequently. You further want to be able to build data sets for your integration tests that are not brittle, easy to manage and explicit. Your data factories should be dynamic and able to refer to other factories—something that is reasonably far beyond YAML fixtures from the old days. Another convenience you want to have is the ability to overwrite attributes for objects on the fly.
 
 Factory Girl allows you to do all of that effortlessly—given the fact that a lot of Metaprogramming witchraft is going on behind the scenes—and you are provided with a great domain-specific language. Building up your fixture data with this gem can be described as easy, effective and overall more convenient. That way you can deal more with concepts than with the actual columns in the database. But enough of talking the talk, let’s get our hands a bit dirty.
+
++ ### Fixtures
+
+Folks who have experience with testing applications and who don’t need to learn about the concept of fixtures, please feel free to jump right ahead to the next section. This one is for newbies who just need an update about testing data.
+
+Fixtures are sample data—that’s it really! For a good chunk of your test suite you want to be able to populate your test database with data that is tailored to your specific test cases. For quite a while, many devs used YAML for this data—which made it database independent. In hindsight, being independent that way may have been the best thing about it. It was more or less one file per model. That alone might give you an idea about all kinds of headaches people were complaining about. Complexity is a fast growing enemy that YAML is hardly equiped to take on. Below you’ll see what such a **.yml** file with test data looks like.
+
+YAML file: **secret_service.yml**
+
+``` yaml
+Quartermaster:
+  name: Q
+  skills: inventing gadgets and hacking
+  birthday: Unknown
+
+Agent:
+  name: James Bond
+  skills: getting Bond Girls killed and covert infiltration
+  birthday: Unknown
+```
+
+It looks like a hash, doesn’t it? It’s a colon-separeted list of key / value pairs that are separated by a blank space. You can reference other nodes within each other if you want to simulate associations from your models. But I think its fair to say that that’s where the music stops and many say their pain begins.
+
+To avoid breaking your test data when the inevitable changes occur, developers where happy to adopt newer strategies that offered more flexibility and dynamic behaviour. That’s where Factory Girl came in and left the YAML days behind. Another issue is the heavy dependency between the test and the fixture file. [Mystery guests](https://robots.thoughtbot.com/mystery-guest) are also a major pain with these kinds of fixtures. Factory Girl let’s you avoid that by creating users inline in your tests
+
+Sure, fixtures are fast and I have heard people argue that a slow test suite with Factory Girl data made them use fixtures again. In my mind, if you are using Factory Girl so much that it really slows down your suite, you might be overusing factories where they are not needed and you might ignore strategies that are not hitting the database when you create / save objects. You’ll see what I mean when we get to the relevant chapter(s). Of course, use whatever you need / see fit but consider yourself warned if you get burned.
+
+I think it would be fair to add that in the early days of Rails and Ruby TDD, YAML fixtures played an important role and helped moving the industry forward. Nowadays they have a bad rep though. Times change, let’s move on to factories!
 
 + ### Configuration
 
