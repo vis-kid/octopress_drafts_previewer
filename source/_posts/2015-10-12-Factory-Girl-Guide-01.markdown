@@ -36,7 +36,7 @@ Not being sold on that practice made him checkout various solutions for factorie
 
 What’s the main pain point that’s being solved today? When you build your test suite you’re dealing with a lot of associated records and with information that’s changing frequently. You further want to be able to build data sets for your integration tests that are not brittle, easy to manage and explicit. Your data factories should be dynamic and able to refer to other factories—something that is reasonably far beyond YAML fixtures from the old days. Another convenience you want to have is the ability to overwrite attributes for objects on the fly.
 
-Factory Girl allows you to do all of that effortlessly—given the fact that a lot of Metaprogramming witchraft is going on behind the scenes—and you are provided with a great domain-specific language. Building up your fixture data with this gem can be described as easy, effective and overall more convenient. That way you can deal more with concepts than with the actual columns in the database. But enough of talking the talk, let’s get our hands a bit dirty.
+Factory Girl allows you to do all of that effortlessly—given the fact that it is written in Ruby and a lot of Metaprogramming witchraft is going on behind the scenes—and you are provided with a great domain-specific language. Building up your fixture data with this gem can be described as easy, effective and overall more convenient. That way you can deal more with concepts than with the actual columns in the database. But enough of talking the talk, let’s get our hands a bit dirty.
 
 + ### Fixtures
 
@@ -49,10 +49,11 @@ YAML file: **secret_service.yml**
 ``` yaml
 Quartermaster:
   name: Q
-  skills: inventing gadgets and hacking
+  function: Quartermaster
+  skills: inventing gizmos and hacking
   birthday: Unknown
 
-Agent:
+00 Agent:
   name: James Bond
   skills: getting Bond Girls killed and covert infiltration
   birthday: Unknown
@@ -60,15 +61,15 @@ Agent:
 
 It looks like a hash, doesn’t it? It’s a colon-separeted list of key / value pairs that are separated by a blank space. You can reference other nodes within each other if you want to simulate associations from your models. But I think its fair to say that that’s where the music stops and many say their pain begins. For data sets that are a bit more involved, fixtures are difficult to maintain and hard to change without affecting other tests
 
-To avoid breaking your test data when the inevitable changes occur, developers where happy to adopt newer strategies that offered more flexibility and dynamic behaviour. That’s where Factory Girl came in and left the YAML days behind. Another issue is the heavy dependency between the test and the fixture file. [Mystery guests](https://robots.thoughtbot.com/mystery-guest) are also a major pain with these kinds of fixtures. Factory Girl let’s you avoid that by creating users inline in your tests
+To avoid breaking your test data when the inevitable changes occur, developers where happy to adopt newer strategies that offered more flexibility and dynamic behaviour. That’s where Factory Girl came in and left the YAML days behind. Another issue is the heavy dependency between the test and the fixture file. [Mystery guests](https://robots.thoughtbot.com/mystery-guest) are also a major pain with these kinds of fixtures. Factory Girl let’s you avoid that by creating objects relevant to the tests inline.
 
-Sure, fixtures are fast and I have heard people argue that a slow test suite with Factory Girl data made them use fixtures again. In my mind, if you are using Factory Girl so much that it really slows down your suite, you might be overusing factories where they are not needed and you might ignore strategies that are not hitting the database when you create / save objects. You’ll see what I mean when we get to the relevant chapter(s). Of course, use whatever you need / see fit but consider yourself warned if you get burned.
+Sure, fixtures are fast and I’ve heard people argue that a slow test suite with Factory Girl data made them use fixtures again. In my mind, if you are using Factory Girl so much that it really slows down your suite, you might be overusing factories where they are not needed and you might ignore strategies that are not hitting the database when you create / save objects. You’ll see what I mean when we get to the relevant chapter(s). Of course, use whatever you need / see fit but consider yourself warned if you get burned.
 
-I think it would be fair to add that in the early days of Rails and Ruby TDD, YAML fixtures played an important role and helped moving the industry forward. Nowadays they have a bad rep though. Times change, let’s move on to factories!
+I think it would be fair to add that in the early days of Rails and Ruby TDD, YAML fixtures were the de facto standard for setting up data for testing your application. They played an important role and helped moving the industry forward. Nowadays they have a reasonably bad rep though. Times change so let’s move on to factories which aim at replacing fixtures.
 
 + ### Configuration
 
-I assume you already have Ruby installed on your system. If not, come back after consulting Google and you should be good to go. It’s quite straightforward I’d say. You can install the gem manually in your terminal via
+I assume you already have Ruby installed on your system. If not, come back after consulting Google and you should be good to go. Its quite straightforward I’d say. You can install the gem manually in your terminal via
 
 **Shell:**
 ``` bash
@@ -148,6 +149,41 @@ spec/factories/*.rb
 
 As you can see you have the option to split them into separate files that adhere to whatever logic or bundle your factories together into one big **factories.rb** file. The complexity of your project will be the best guideline for when to logically separate factories into their own separate files.
 
+### Barebones Factories
+
+Factory Girl provides a well-developed ruby DSL syntax for defining factories like *user*, *post* or any object—not only Active Record objects
+
+You start by setting up a define block in your **factories.rb** file.
+
+**Ruby:**
+``` ruby
+FactoryGirl.define do
+  #define factories here
+end
+```
+
+All factories are defined inside this block. Factories just need a **:symbol** name and a set of attributes to get started. Here the factory is named **agent** and the attributes are **name**, **function**, **skills** and **birthday**.
+
+**Ruby:**
+``` ruby
+FactoryGirl.define do
+
+  factory :agent do
+    name "Q"
+    function "Quartermaster"
+    skills "Inventing gizmos and hacking"
+    birthday "Unknown"
+  end
+
+end
+```
+
+#### Attention!
+
+ If you take one thing away from this article then it should be the following: Don’t be lazy and only define the most barebones factory possible in order to be valid by default—valid in the sense of Active Record validations for example. Factory Girl will call **save!** on instances. That means validations are always run. If any of them fail, **ActiveRecord::RecordInvalid** gets raised. Defining only the bare minimum gives you more flexibility if your data changes and will reduce the chances of duplication and breaking tests—since coupling is reduced to the core. 
+
+If you think this sounds hard to manage, you’ll most likely be glad to hear that there is a handy solution in place to segregate objects and their attributes via **Traits**. Its a great strategy to complement your barebones factories and keeps them DRY at the same time. My second article will focus quite a bit on this very rad feature of Factory Girl. 
+
 
 
 
@@ -157,24 +193,15 @@ As you can see you have the option to split them into separate files that adhere
 Notes:
 Factory girl is a ruby gem
 
-goal is to replace rails fixtures
-
-fixtures were the de facto standard for setting up data for testing your application
-
 it was data stored in yaml
-
-provides ruby dsl syntax for defining factories like user, post, any object, not only active record objects
 
 have post with cretain attributes
 can have associations(references to other factories), callbacks(for you create data), traits(mix in behaviour)
 
-it written in ruby instead of yaml like fixtures
 
 references to related data
 
 overwrite on the fly
-
-josh maintainer of factory girl
 
 attribute order does not matter
 
@@ -185,13 +212,6 @@ you can refer to attributes on objects even if you haven’t defined them in you
 
 Want to have it DRY
 
-Outro
-Global coupling. Data is global in your test suite? it can become painful. When you change some attribute and tests start to break. Idea is to declare factories and then segregate them -> Something is different is named differently. A user with admin flag becomes admin in separate factory or trait. Regular user vs admin user -> Different type of users. Splitting up the data types helps ease some of the pain of the fact that they are global. So like changes to admin are less likely to break global things. 
-
-That’s also one more reason why only defining only the absolute basic objects and their attributes goes a long way in avoiding the side effects of global coupling. -> Bare minimum factory definitions and segregating related objects into separate factories or factories witht traits is the key thing to remember whatever you do. 
-
-Declaring the most barebones factory as possible in order for it to be valid by default. In terms of Active Record validations. Facotry Girls will call save! on instance when its being created. which means that validations are always run. If any of them fail ActiveRecord::RecordInvalid gets raised. 
-
 create is actually going to persist the data. the goal is declaring bare bones factories and either have child factories and assign different attribues that mutate the data in a certain manner or that you use traits where you can mutate multiple columns (attributes) and change a handful of columns at at time or you can add associations or different callbacks. 
 
 Being able to define traits as a concept. for example flag on a post. published boolean and then requirements change and you need timestamp. later it changes again because you need state machine with published, not published, draft and so one. Instead of building a factory girl object and putting that column when you create this record ends up being a painfpoint because everything needs to change now when you refer to published-> all through your tests. -> traits just referring to this concept which lets you apply and affect changes in only one central DRY place. Imagine if you’d have used an options hash for instantiation and that requirement totally changed how many potential places in your tests might break and need attention now. with traits your test dont necessarily care about how its stored in the database. 
@@ -200,10 +220,16 @@ traits are comma separated list of symbol traits / attributes that you wanna add
 
 And because you still do (hopefully) unit tests on the columns  for your models that are represented in traits you give them you still give them the same amount of care than the attributes that are needed to have valid objects. 
 
-Facotry girl is a pretty popular project in the Ruby community
 
 The more date you put in your global test space the more pain you are gonna have maintainance wise. Don’t be lazy!
 
+
+Outro
+
+That’s also one more reason why only defining only the absolute basic objects and their attributes goes a long way in avoiding the side effects of global coupling. -> Bare minimum factory definitions and segregating related objects into separate factories or factories witht traits is the key thing to remember whatever you do. 
+
+
 A lot of times you actually dont need factory girl to write some of your unit tests. Josh would be the first to attest to that. Bigger systems with lots of data and collaborators and stuff that that you dont need for your unit tests. If you write unit tests and your data doesnt need any associations, it doesnt need persistance, you dont care about callbacks, dont use factory girl or at least use build (stubbed??) which instantiates the record and assignes all the attriubutes, gives it an id and raises if you interact with the database at all.  which gives you fake data that looks like its been persisted - gives you a full-fledged object that looks like its been saved. A lot faster. nothing hits the database at all. 
 
+Global coupling. Data is global in your test suite? it can become painful. When you change some attribute and tests start to break. Idea is to declare factories and then segregate them -> Something is different is named differently. A user with admin flag becomes admin in separate factory or trait. Regular user vs admin user -> Different type of users. Splitting up the data types helps ease some of the pain of the fact that they are global. So like changes to admin are less likely to break global things. 
 
