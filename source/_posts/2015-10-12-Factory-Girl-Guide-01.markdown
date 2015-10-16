@@ -12,9 +12,7 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 [{% img /images/Factory-Girl-Guide/Factory-Girl-Icon.png  150 %}](https://github.com/thoughtbot/factory_girl)
 
-This two-part mini-series was written for people who quickly wanna jump into working with this gem and cut to the chase without digging through the documentation for themselves. 
-
-I did my best to keep it newbie-friendly for folks who started to play with tests rather recently. Obviously having been in the same shoes made me believe that it doesn’t take much to make new people feel more comfortable with testing. Taking a bit more time to explain the context and demystifying the lingo goes a long way in cutting down frustration rates for beginners imho.
+This two-part mini-series was written for people who quickly wanna jump into working with this gem and cut to the chase without digging through the documentation for themselves. I did my best to keep it newbie-friendly for folks who started to play with tests rather recently. Obviously having been in the same shoes at some point made me believe that it doesn’t take much to make new people feel more comfortable with testing. Taking a bit more time to explain the context and demystifying the lingo goes a long way in cutting down frustration rates for beginners imho.
 
 ### Contents
 
@@ -30,19 +28,19 @@ I did my best to keep it newbie-friendly for folks who started to play with test
 
 + ### Intro & Context
 
-Let’s start with a little bit of history and talk about the fine folks at [thoughtbot](https://thoughtbot.com/) who are in charge of this popular Ruby gem. Back in 2007/2008 [Joe Ferries](https://github.com/jferris), CTO at thoughtbot, had had it with fixtures and started to cook up his own solution. Going through various files to test a single method was a common pain point while dealing with fixtures. Put differently, that practice also lead to writing tests that don’t tell you much about their context being tested right away. 
+Let’s start with a little bit of history and talk about the fine folks at [thoughtbot](https://thoughtbot.com/) who are responsible for this popular Ruby gem. Back in 2007/2008 [Joe Ferries](https://github.com/jferris), CTO at thoughtbot, had had it with fixtures and started to cook up his own solution. Going through various files to test a single method was a common pain point while dealing with fixtures. Put differently and ignoring all kinds of inflexiblities, that practice also lead to writing tests that don’t tell you much about their context being tested right away. 
 
-Not being sold on that practice made him checkout various solutions for factories but none of them supported everything he wanted. After his first attempt, Factory Girl made testing with fixture data more readable, DRY and also more explicit by giving you the context for every test. A couple of years later, [Josh Clayton](https://twitter.com/joshuaclayton), Development Director at @thoughtbot in Boston, took over as the maintainer for the project. Since then the project has grown steadily and has become a go-to solution in the Ruby community 
+Not being sold on that practice made him checkout various solutions for factories but none of them supported everything he wanted. After his first attempt, Factory Girl made testing with fixture data more readable, DRY and also more explicit by giving you the context for every test. A couple of years later, [Josh Clayton](https://twitter.com/joshuaclayton), Development Director at @thoughtbot in Boston, took over as the maintainer of the project. Since then the project has grown steadily and has become a go-to solution in the Ruby community 
 
-What’s the main pain point that’s being solved today? When you build your test suite you’re dealing with a lot of associated records and with information that’s changing frequently. You further want to be able to build data sets for your integration tests that are not brittle, easy to manage and explicit. Your data factories should be dynamic and able to refer to other factories—something that is reasonably far beyond YAML fixtures from the old days. Another convenience you want to have is the ability to overwrite attributes for objects on the fly.
+What’s the main pain point that’s being solved today? When you build your test suite you’re dealing with a lot of associated records and with information that’s changing frequently. You want to be able to build data sets for your integration tests that are not brittle, easy to manage and explicit. Your data factories should be dynamic and able to refer to other factories—something that is in part beyond YAML fixtures from the old days. Another convenience you want to have is the ability to overwrite attributes for objects on the fly.
 
 Factory Girl allows you to do all of that effortlessly—given the fact that it is written in Ruby and a lot of Metaprogramming witchraft is going on behind the scenes—and you are provided with a great domain-specific language. Building up your fixture data with this gem can be described as easy, effective and overall more convenient. That way you can deal more with concepts than with the actual columns in the database. But enough of talking the talk, let’s get our hands a bit dirty.
 
-+ ### Fixtures
++ ### Fixtures?
 
 Folks who have experience with testing applications and who don’t need to learn about the concept of fixtures, please feel free to jump right ahead to the next section. This one is for newbies who just need an update about testing data.
 
-Fixtures are sample data—that’s it really! For a good chunk of your test suite you want to be able to populate your test database with data that is tailored to your specific test cases. For quite a while, many devs used YAML for this data—which made it database independent. In hindsight, being independent that way may have been the best thing about it. It was more or less one file per model. That alone might give you an idea about all kinds of headaches people were complaining about. Complexity is a fast growing enemy that YAML is hardly equiped to take on. Below you’ll see what such a **.yml** file with test data looks like.
+Fixtures are sample data—that’s it really! For a good chunk of your test suite you want to be able to populate your test database with data that is tailored to your specific test cases. For quite a while, many devs used YAML for this data—which made it database independent. In hindsight, being independent that way may have been the best thing about it. It was more or less one file per model. That alone might give you an idea about all kinds of headaches people were complaining about. Complexity is a fast growing enemy that YAML is hardly equiped to take on effectively. Below you’ll see what such a **.yml** file with test data looks like.
 
 YAML file: **secret_service.yml**
 
@@ -59,13 +57,13 @@ Quartermaster:
   birthday: Unknown
 ```
 
-It looks like a hash, doesn’t it? It’s a colon-separeted list of key / value pairs that are separated by a blank space. You can reference other nodes within each other if you want to simulate associations from your models. But I think its fair to say that that’s where the music stops and many say their pain begins. For data sets that are a bit more involved, fixtures are difficult to maintain and hard to change without affecting other tests
+It looks like a hash, doesn’t it? Its a colon-separeted list of key / value pairs that are separated by a blank space. You can reference other nodes within each other if you want to simulate associations from your models. But I think its fair to say that that’s where the music stops and many say their pain begins. For data sets that are a bit more involved, YAML fixtures are difficult to maintain and hard to change without affecting other tests. I mean you can make them work of course—after all developers used them plenty in the past—but many people agreed that the price to pay for managing fixtures is just a bit stingy. 
 
-To avoid breaking your test data when the inevitable changes occur, developers where happy to adopt newer strategies that offered more flexibility and dynamic behaviour. That’s where Factory Girl came in and left the YAML days behind. Another issue is the heavy dependency between the test and the fixture file. [Mystery guests](https://robots.thoughtbot.com/mystery-guest) are also a major pain with these kinds of fixtures. Factory Girl let’s you avoid that by creating objects relevant to the tests inline.
+To avoid breaking your test data when the inevitable changes occur, developers where happy to adopt newer strategies that offered more flexibility and dynamic behaviour. That’s where Factory Girl came in and left the YAML days behind. Another issue is the heavy dependency between the test and the **.yml** fixture file. [Mystery guests](https://robots.thoughtbot.com/mystery-guest) are also a major pain with these kinds of fixtures. Factory Girl let’s you avoid that by creating objects relevant to the tests inline.
 
-Sure, fixtures are fast and I’ve heard people argue that a slow test suite with Factory Girl data made them use fixtures again. In my mind, if you are using Factory Girl so much that it really slows down your suite, you might be overusing factories where they are not needed and you might ignore strategies that are not hitting the database when you create / save objects. You’ll see what I mean when we get to the relevant chapter(s). Of course, use whatever you need / see fit but consider yourself warned if you get burned.
+Sure, YAML fixtures are fast and I’ve heard people argue that a slow test suite with Factory Girl data made them go back YAML land. In my mind, if you are using Factory Girl so much that it really slows down your tests, you might be overusing factories unnecessarily and you might ignore strategies that are not hitting the database when you create / save objects. You’ll see what I mean when we get to the relevant section(s). Of course, use whatever you need / see fit but consider yourself warned if you get burned.
 
-I think it would be fair to add that in the early days of Rails and Ruby TDD, YAML fixtures were the de facto standard for setting up data for testing your application. They played an important role and helped moving the industry forward. Nowadays they have a reasonably bad rep though. Times change so let’s move on to factories which aim at replacing fixtures.
+I think it would be fair to add that in the early days of Rails and Ruby TDD, YAML fixtures were the de facto standard for setting up test data in your application. They played an important role and helped move the industry forward. Nowadays they have a reasonably bad rep though. Times change so let’s move on to factories which are meant to replace fixtures.
 
 + ### Configuration
 
@@ -129,7 +127,7 @@ You can use the same configuration if you are using
 + MiniTest::Spec
 + minitest-rails
 
-You can go more fancy with your configuration by throwing in **DatabaseCleaner** for example but the documentation does only the step above so I’ll move on from here.
+You can go more fancy with your configuration by throwing in **DatabaseCleaner** for example but the documentation implies that this setup is sufficient to get going so I’ll move on from here.
 
 + ### Defining Factories
 
@@ -151,9 +149,7 @@ As you can see you have the option to split them into separate files that adhere
 
 ### Barebones Factories
 
-Factory Girl provides a well-developed ruby DSL syntax for defining factories like *user*, *post* or any object—not only Active Record objects
-
-You start by setting up a define block in your **factories.rb** file.
+Factory Girl provides a well-developed ruby DSL syntax for defining factories like *user*, *post* or any other object—not only Active Record objects. “Plain” Ruby classes are perfectly fine. You start by setting up a define block in your **factories.rb** file.
 
 **Ruby:**
 ``` ruby
@@ -180,9 +176,9 @@ end
 
 #### Attention!
 
- If you take one thing away from this article then it should be the following: Don’t be lazy and only define the most barebones factory possible in order to be valid by default—valid in the sense of Active Record validations for example. Factory Girl will call **save!** on instances. That means validations are always run. If any of them fail, **ActiveRecord::RecordInvalid** gets raised. Defining only the bare minimum gives you more flexibility if your data changes and will reduce the chances of duplication and breaking tests—since coupling is reduced to the core. 
+ If you take one thing away from this article then it should be the following: Only define the most barebones factory possible in order to be valid by default—valid in the sense of Active Record validations for example. Factory Girl will call **save!** on instances. That means validations are always run. If any of them fail, **ActiveRecord::RecordInvalid** gets raised. Defining only the bare minimum gives you more flexibility if your data changes and will reduce the chances of breaking tests and duplication—since coupling is reduced to the core. Don’t be lazy when you compose your factories—it will pay off big time! 
 
-If you think this sounds hard to manage, you’ll most likely be glad to hear that there is a handy solution in place to segregate objects and their attributes via **Traits**. Its a great strategy to complement your barebones factories and keeps them DRY at the same time. My second article will focus quite a bit on this very rad feature of Factory Girl. 
+If you think this sounds hard to manage, you’ll most likely be glad to hear that there is a handy solution to segregate objects and their attributes via **Traits**. They are a great strategy to complement your barebones factories and keep them DRY at the same time. My second article will focus quite a bit on this very rad feature of Factory Girl. 
 
 
 
