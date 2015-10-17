@@ -91,9 +91,7 @@
 
 <p><a href="https://github.com/thoughtbot/factory_girl"><img src="/octopress_drafts_previewer/images/Factory-Girl-Guide/Factory-Girl-Icon.png" width="150"></a></p>
 
-<p>This two-part mini-series was written for people who quickly wanna jump into working with this gem and cut to the chase without digging through the documentation for themselves.</p>
-
-<p>I did my best to keep it newbie-friendly for folks who started to play with tests rather recently. Obviously having been in the same shoes made me believe that it doesn’t take much to make new people feel more comfortable with testing. Taking a bit more time to explain the context and demystifying the lingo goes a long way in cutting down frustration rates for beginners imho.</p>
+<p>This two-part mini-series was written for people who quickly wanna jump into working with this gem and cut to the chase without digging through the documentation for themselves. I did my best to keep it newbie-friendly for folks who started to play with tests rather recently. Obviously having been in the same shoes at some point made me believe that it doesn’t take much to make new people feel more comfortable with testing. Taking a bit more time to explain the context and demystifying the lingo goes a long way in cutting down frustration rates for beginners imho.</p>
 
 <h3>Contents</h3>
 
@@ -111,22 +109,22 @@
 </ul>
 
 
-<p>Let’s start with a little bit of history and talk about the fine folks at <a href="https://thoughtbot.com/">thoughtbot</a> who are in charge of this popular Ruby gem. Back in 2007/2008 <a href="https://github.com/jferris">Joe Ferries</a>, CTO at thoughtbot, had had it with fixtures and started to cook up his own solution. Going through various files to test a single method was a common pain point while dealing with fixtures. Put differently, that practice also lead to writing tests that don’t tell you much about their context being tested right away.</p>
+<p>Let’s start with a little bit of history and talk about the fine folks at <a href="https://thoughtbot.com/">thoughtbot</a> who are responsible for this popular Ruby gem. Back in 2007/2008 <a href="https://github.com/jferris">Joe Ferries</a>, CTO at thoughtbot, had had it with fixtures and started to cook up his own solution. Going through various files to test a single method was a common pain point while dealing with fixtures. Put differently and ignoring all kinds of inflexiblities, that practice also lead to writing tests that don’t tell you much about their context being tested right away.</p>
 
-<p>Not being sold on that practice made him checkout various solutions for factories but none of them supported everything he wanted. After his first attempt, Factory Girl made testing with fixture data more readable, DRY and also more explicit by giving you the context for every test. A couple of years later, <a href="https://twitter.com/joshuaclayton">Josh Clayton</a>, Development Director at @thoughtbot in Boston, took over as the maintainer for the project. Since then the project has grown steadily and has become a go-to solution in the Ruby community</p>
+<p>Not being sold on that practice made him checkout various solutions for factories but none of them supported everything he wanted. After his first attempt, Factory Girl made testing with fixture data more readable, DRY and also more explicit by giving you the context for every test. A couple of years later, <a href="https://twitter.com/joshuaclayton">Josh Clayton</a>, Development Director at @thoughtbot in Boston, took over as the maintainer of the project. Since then the project has grown steadily and has become a go-to solution in the Ruby community</p>
 
-<p>What’s the main pain point that’s being solved today? When you build your test suite you’re dealing with a lot of associated records and with information that’s changing frequently. You further want to be able to build data sets for your integration tests that are not brittle, easy to manage and explicit. Your data factories should be dynamic and able to refer to other factories—something that is reasonably far beyond YAML fixtures from the old days. Another convenience you want to have is the ability to overwrite attributes for objects on the fly.</p>
+<p>What’s the main pain point that’s being solved today? When you build your test suite you’re dealing with a lot of associated records and with information that’s changing frequently. You want to be able to build data sets for your integration tests that are not brittle, easy to manage and explicit. Your data factories should be dynamic and able to refer to other factories—something that is in part beyond YAML fixtures from the old days. Another convenience you want to have is the ability to overwrite attributes for objects on the fly.</p>
 
-<p>Factory Girl allows you to do all of that effortlessly—given the fact that a lot of Metaprogramming witchraft is going on behind the scenes—and you are provided with a great domain-specific language. Building up your fixture data with this gem can be described as easy, effective and overall more convenient. That way you can deal more with concepts than with the actual columns in the database. But enough of talking the talk, let’s get our hands a bit dirty.</p>
+<p>Factory Girl allows you to do all of that effortlessly—given the fact that it is written in Ruby and a lot of Metaprogramming witchraft is going on behind the scenes—and you are provided with a great domain-specific language. Building up your fixture data with this gem can be described as easy, effective and overall more convenient. That way you can deal more with concepts than with the actual columns in the database. But enough of talking the talk, let’s get our hands a bit dirty.</p>
 
 <ul>
-<li><h3>Fixtures</h3></li>
+<li><h3>Fixtures?</h3></li>
 </ul>
 
 
 <p>Folks who have experience with testing applications and who don’t need to learn about the concept of fixtures, please feel free to jump right ahead to the next section. This one is for newbies who just need an update about testing data.</p>
 
-<p>Fixtures are sample data—that’s it really! For a good chunk of your test suite you want to be able to populate your test database with data that is tailored to your specific test cases. For quite a while, many devs used YAML for this data—which made it database independent. In hindsight, being independent that way may have been the best thing about it. It was more or less one file per model. That alone might give you an idea about all kinds of headaches people were complaining about. Complexity is a fast growing enemy that YAML is hardly equiped to take on. Below you’ll see what such a <strong>.yml</strong> file with test data looks like.</p>
+<p>Fixtures are sample data—that’s it really! For a good chunk of your test suite you want to be able to populate your test database with data that is tailored to your specific test cases. For quite a while, many devs used YAML for this data—which made it database independent. In hindsight, being independent that way may have been the best thing about it. It was more or less one file per model. That alone might give you an idea about all kinds of headaches people were complaining about. Complexity is a fast growing enemy that YAML is hardly equiped to take on effectively. Below you’ll see what such a <strong>.yml</strong> file with test data looks like.</p>
 
 <p>YAML file: <strong>secret_service.yml</strong></p>
 
@@ -141,30 +139,30 @@
 <span class='line-number'>9</span>
 </pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">Quartermaster</span><span class="p-Indicator">:</span>
 </span><span class='line'>  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Q</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">skills</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">inventing gadgets and hacking</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">birthday</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Unknown</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">favorite_gadget</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Broom radio</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">skills</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Inventing gizmos and hacking</span>
 </span><span class='line'>
-</span><span class='line'><span class="l-Scalar-Plain">Agent</span><span class="p-Indicator">:</span>
+</span><span class='line'><span class="l-Scalar-Plain">00 Agent</span><span class="p-Indicator">:</span>
 </span><span class='line'>  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">James Bond</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">skills</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">getting Bond Girls killed and covert infiltration</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">birthday</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Unknown</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">favorite_gadget</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Submarine Lotus Esprit</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">skills</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Getting Bond Girls killed and covert infiltration</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>It looks like a hash, doesn’t it? It’s a colon-separeted list of key / value pairs that are separated by a blank space. You can reference other nodes within each other if you want to simulate associations from your models. But I think its fair to say that that’s where the music stops and many say their pain begins. For data sets that are a bit more involved, fixtures are difficult to maintain and hard to change without affecting other tests</p>
+<p>It looks like a hash, doesn’t it? Its a colon-separeted list of key / value pairs that are separated by a blank space. You can reference other nodes within each other if you want to simulate associations from your models. But I think its fair to say that that’s where the music stops and many say their pain begins. For data sets that are a bit more involved, YAML fixtures are difficult to maintain and hard to change without affecting other tests. I mean you can make them work of course—after all developers used them plenty in the past—but many people agreed that the price to pay for managing fixtures is just a bit stingy.</p>
 
-<p>To avoid breaking your test data when the inevitable changes occur, developers where happy to adopt newer strategies that offered more flexibility and dynamic behaviour. That’s where Factory Girl came in and left the YAML days behind. Another issue is the heavy dependency between the test and the fixture file. <a href="https://robots.thoughtbot.com/mystery-guest">Mystery guests</a> are also a major pain with these kinds of fixtures. Factory Girl let’s you avoid that by creating users inline in your tests</p>
+<p>To avoid breaking your test data when the inevitable changes occur, developers where happy to adopt newer strategies that offered more flexibility and dynamic behaviour. That’s where Factory Girl came in and left the YAML days behind. Another issue is the heavy dependency between the test and the <strong>.yml</strong> fixture file. <a href="https://robots.thoughtbot.com/mystery-guest">Mystery guests</a> are also a major pain with these kinds of fixtures. Factory Girl let’s you avoid that by creating objects relevant to the tests inline.</p>
 
-<p>Sure, fixtures are fast and I have heard people argue that a slow test suite with Factory Girl data made them use fixtures again. In my mind, if you are using Factory Girl so much that it really slows down your suite, you might be overusing factories where they are not needed and you might ignore strategies that are not hitting the database when you create / save objects. You’ll see what I mean when we get to the relevant chapter(s). Of course, use whatever you need / see fit but consider yourself warned if you get burned.</p>
+<p>Sure, YAML fixtures are fast and I’ve heard people argue that a slow test suite with Factory Girl data made them go back YAML land. In my mind, if you are using Factory Girl so much that it really slows down your tests, you might be overusing factories unnecessarily and you might ignore strategies that are not hitting the database when you create / save objects. You’ll see what I mean when we get to the relevant section(s). Of course, use whatever you need / see fit but consider yourself warned if you get burned.</p>
 
-<p>I think it would be fair to add that in the early days of Rails and Ruby TDD, YAML fixtures played an important role and helped moving the industry forward. Nowadays they have a bad rep though. Times change, let’s move on to factories!</p>
+<p>I think it would be fair to add that in the early days of Rails and Ruby TDD, YAML fixtures were the de facto standard for setting up test data in your application. They played an important role and helped move the industry forward. Nowadays they have a reasonably bad rep though. Times change so let’s move on to factories which are meant to replace fixtures.</p>
 
 <ul>
 <li><h3>Configuration</h3></li>
 </ul>
 
 
-<p>I assume you already have Ruby installed on your system. If not, come back after consulting Google and you should be good to go. It’s quite straightforward I’d say. You can install the gem manually in your terminal via</p>
+<p>I assume you already have Ruby and RSpec for testing installed on your system. If not, come back after consulting Google and you should be good to go. Its quite straightforward I’d say. You can install the gem manually in your terminal via</p>
 
 <p><strong>Shell:</strong></p>
 
@@ -173,7 +171,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>or add it to your Gemfile</p>
+<p>or add it to your <strong>Gemfile:</strong></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s2">&quot;factory_girl&quot;</span><span class="p">,</span> <span class="s2">&quot;~&gt; 4.0&quot;</span>
@@ -181,6 +179,15 @@
 
 
 <p>and run <code>bundle install</code>.</p>
+
+<p>Now you only need to <strong>require</strong> Factory Girl to complete your setup. Here I’m using RSpec so add the following at the top in <strong>/spec/spec_helper.rb</strong>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;factory_girl&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Ruby on Rails</h4>
 
 <p>You are covered of course if you want to use Factory Girl with Rails. The <em>factory_girl_rails</em> gem provides a handy Rails integration for <em>factory_girl</em>.</p>
 
@@ -198,9 +205,16 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>and <strong>require</strong> it of course in <strong>spec/spec_helper.rb</strong>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;factory_girl_rails&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 <h3>Convenient Syntax Setup</h3>
 
-<p>If you would like to prefer typing something like</p>
+<p>If you prefer typing something like (of course you do)</p>
 
 <p><strong>Ruby:</strong></p>
 
@@ -216,14 +230,18 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>everytime you use one of your factories you just need to include the <code>FactoryGirl::Syntax::Methods</code> module in your test configuration file. If you forget that step, you have to preface all Factory Girl methods with the same annoying preface.</p>
+<p>everytime you use one of your factories you just need to include the <code>FactoryGirl::Syntax::Methods</code> module in your test configuration file. If you forget that step, you have to preface all Factory Girl methods with the same verbose preface. This works with any Ruby app, not just with Rails ones of course.</p>
 
 <p>For <strong>RSpec</strong> find the <strong>spec/spec_helper.rb</strong> file and add:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;factory_girl_rails&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
 </span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">include</span> <span class="no">FactoryGirl</span><span class="o">::</span><span class="no">Syntax</span><span class="o">::</span><span class="no">Methods</span>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -231,9 +249,9 @@
 
 <h4>Attention!</h4>
 
-<p>For the newbies among you, beware that you only have to add the second line which is responsible for including the module. The <strong>RSpec.configure</strong> block will already be there buried under some amount of comments. Easy, you’ll see! You can also do the same by creating a file specifially for Factory girl like this: <strong>spec/support/factory_girl.rb</strong> file. In that case you will have to add the whole config block yourself of course.</p>
+<p>For the newbies among you, beware that the <strong>RSpec.configure</strong> block will already be there—buried under some amount of comments. You can also do the same setup in a separate file like <strong>spec/support/factory_girl.rb</strong>. In that case you will have to add the whole config block yourself of course.</p>
 
-<p>You can use the same configuration if you are using</p>
+<p>The same configuration works if you are using:</p>
 
 <ul>
 <li>Test::Unit</li>
@@ -245,7 +263,7 @@
 </ul>
 
 
-<p>You can go more fancy with your configuration by throwing in <strong>DatabaseCleaner</strong> for example but the documentation does only the step above so I’ll move on from here.</p>
+<p>You can go more fancy with your configuration by throwing in <strong>DatabaseCleaner</strong> for example but the documentation implies that this setup is sufficient to get going so I’ll move on from here.</p>
 
 <ul>
 <li><h3>Defining Factories</h3></li>
@@ -254,16 +272,7 @@
 
 <p>You can define your factories anywhere but they will be loaded automatically if they are placed in the following locations:</p>
 
-<p>Test::Unit:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">test</span>/factories.rb
-</span><span class='line'><span class="nb">test</span>/factories/*.rb
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>RSpec:</p>
+<p><strong>RSpec:</strong></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -272,29 +281,333 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p><strong>Test::Unit:</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">test</span>/factories.rb
+</span><span class='line'><span class="nb">test</span>/factories/*.rb
+</span></code></pre></td></tr></table></div></figure>
+
+
 <p>As you can see you have the option to split them into separate files that adhere to whatever logic or bundle your factories together into one big <strong>factories.rb</strong> file. The complexity of your project will be the best guideline for when to logically separate factories into their own separate files.</p>
+
+<h3>Barebones Factories</h3>
+
+<p>Factory Girl provides a well-developed ruby DSL syntax for defining factories like <em>user</em>, <em>post</em> or any other object—not only Active Record objects. “Plain” Ruby classes are perfectly fine. You start by setting up a define block in your <strong>factories.rb</strong> file.</p>
+
+<p><strong>Ruby:</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>  <span class="c1">#define factories here</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All factories are defined inside this block. Factories just need a <strong>:symbol</strong> name and a set of attributes to get started. The factory below is named <strong>secret_service_agent</strong> and the attributes are <strong>name</strong>, <strong>favorite_gadget</strong> and <strong>skills</strong>.</p>
+
+<p><strong>Ruby:</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:secret_service_agent</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;Q&quot;</span>
+</span><span class='line'>    <span class="n">favorite_gadget</span> <span class="no">Submarine</span> <span class="no">Lotus</span> <span class="no">Esprit</span>
+</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Inventing gizmos and hacking&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Attention!</h4>
+
+<p>If you take one thing away from this article then it should be the following: Only define the most barebones factory possible in order to be valid by default—valid in the sense of Active Record validations for example. When Factory Girl calls <strong>save!</strong> on instances your validations will get excercised. If any of them fail, <strong>ActiveRecord::RecordInvalid</strong> gets raised. Defining only the bare minimum gives you more flexibility if your data changes and will reduce the chances of breaking tests and duplication—since coupling is reduced to the core. Don’t be lazy when you compose your factories—it will pay off big time!</p>
+
+<p>If you think this sounds hard to manage, you’ll most likely be glad to hear that there is a handy solution to segregate objects and their attributes via <strong>Traits</strong>. They are a great strategy to complement your barebones factories and keep them DRY at the same time. My second article will focus quite a bit on this very rad feature of Factory Girl.</p>
+
+<ul>
+<li><h3>Using Factories</h3></li>
+</ul>
+
+
+<p>If you have included the <strong>FactoryGirl::Syntax::Methods</strong> in the configuration step you are able to use the shorthand syntax to create factories in your tests. You have four options which people call <em>build strategies</em>:</p>
+
+<ul>
+<li><strong>create</strong></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">create</span><span class="p">(</span><span class="ss">:some_object</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># FactoryGirl.create(:some_object)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This one returns an instance of the class the factory emulates. It is recommended to use <strong>create</strong> only when you really need to hit the database. This strategy slows down your test suite if overused unnecessarily. Use it if you want to make use of your validations since it will run <strong>save!</strong> in the background. I think this option is mostly appropriate when you do integration tests where you want to involve a database for your test scenarios.</p>
+
+<ul>
+<li><strong>build</strong></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">build</span><span class="p">(</span><span class="ss">:some_object</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># FactoryGirl.build(:some_object)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It instantiates and assigns attributes but you’ll get an instance returned that is not saved to the database—<strong>build</strong> keeps the object only in memory. If you want to check if an object has certain attributes this will do the job since you don’t need database access for that kinda thing. Behind the scenes it does not use <strong>save!</strong> which means your validations are not run.</p>
+
+<h4>Heads up!</h4>
+
+<p>When you use associations with it you might run into a small gotcha. There is a little exception in regards to not saving the object via <strong>build</strong>—it <em>builds</em> the object but it <em>creates</em> the associations—which I will cover in the section about Factory Girl associations. There is a solution for that in case that’s not what you were shopping for.</p>
+
+<ul>
+<li><strong>build_stubbed</strong></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">build_stubbed</span><span class="p">(</span><span class="ss">:some_object</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># FactoryGirl.build_stubbed(:some_object)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This option was created for speeding up your tests and for test cases where none of the code needs to hit the database. It also instantiates and assigns attributes like <strong>build</strong> does but it only makes objects look like they have been persisted. The object returned has all the defined attributes from your factory stubbed out—plus a fake <strong>id</strong> and <strong>nil</strong> timestamps. Their associations are stubbed out as well—unlike <strong>build</strong> associations which are using <strong>create</strong>. Since this strategy is dealing with stubs and has no dependency on the database these tests will be super fast.</p>
+
+<ul>
+<li><strong>attributes_for</strong></li>
+</ul>
+
+
+<p>This method will return a hash of only the attributes defined in the factory—without associations, timestamps and id of course. Its sort of convenient if you want to build an instance of an object without fiddling around with attribute hashes manually. I have seen it mostly in Controller specs used similar to this:</p>
+
+<p><strong>Ruby:</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">it</span> <span class="s1">&#39;redirects to some location&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">post</span> <span class="ss">:create</span><span class="p">,</span> <span class="ss">spy</span><span class="p">:</span> <span class="n">attributes_for</span><span class="p">(</span><span class="ss">:spy</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">redirect_to</span><span class="p">(</span><span class="n">some_location</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Object comparison</h4>
+
+<p>To close this section, let me give you one simple example to see the different objects returned from these 4 build strategies. Below you can compare the four different objects that you’ll get from <strong>attributes_for</strong>, <strong>create</strong>, <strong>build</strong> and <strong>build_stubbed</strong>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;Marty McSpy&quot;</span>
+</span><span class='line'>    <span class="n">favorite_gadget</span> <span class="no">Hoverboard</span>
+</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Infiltration and espionage&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">attributes_for</span><span class="p">(</span><span class="ss">:spy</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#returned object</span>
+</span><span class='line'><span class="p">{</span><span class="ss">:name</span><span class="o">=&gt;</span><span class="s2">&quot;Marty McSpy&quot;</span><span class="p">,</span> <span class="ss">:favorite_gadget</span><span class="o">=&gt;</span><span class="s2">&quot;Hoverboard&quot;</span><span class="p">,</span> <span class="ss">:skills</span><span class="o">=&gt;</span><span class="s2">&quot;Infiltration and espionage&quot;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">create</span><span class="p">(</span><span class="ss">:spy</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#returned object</span>
+</span><span class='line'><span class="o">&lt;</span><span class="no">Spy</span> <span class="nb">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Marty McSpy&quot;</span><span class="p">,</span> <span class="ss">favorite_gadget</span><span class="p">:</span> <span class="s2">&quot;Hoverboard&quot;</span><span class="p">,</span> <span class="ss">skills</span><span class="p">:</span> <span class="s2">&quot;Infiltration and espionage&quot;</span><span class="p">,</span> <span class="ss">created_at</span><span class="p">:</span> <span class="s2">&quot;2015-10-17 16:40:09&quot;</span><span class="p">,</span> <span class="ss">updated_at</span><span class="p">:</span> <span class="s2">&quot;2015-10-17 16:40:09&quot;</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">build</span><span class="p">(</span><span class="ss">:spy</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#returned object</span>
+</span><span class='line'><span class="o">&lt;</span><span class="no">Spy</span> <span class="nb">id</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span> <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Marty McSpy&quot;</span><span class="p">,</span> <span class="ss">favorite_gadget</span><span class="p">:</span> <span class="s2">&quot;Hoverboard&quot;</span><span class="p">,</span> <span class="ss">skills</span><span class="p">:</span> <span class="s2">&quot;Infiltration and espionage&quot;</span><span class="p">,</span> <span class="ss">created_at</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span> <span class="ss">updated_at</span><span class="p">:</span> <span class="kp">nil</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">build_stubbed</span><span class="p">(</span><span class="ss">:spy</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#returned object</span>
+</span><span class='line'><span class="o">&lt;</span><span class="no">Spy</span> <span class="nb">id</span><span class="p">:</span> <span class="mi">1001</span><span class="p">,</span> <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Marty McSpy&quot;</span><span class="p">,</span> <span class="ss">favorite_gadget</span><span class="p">:</span> <span class="s2">&quot;Hoverboard&quot;</span><span class="p">,</span> <span class="ss">skills</span><span class="p">:</span> <span class="s2">&quot;Infiltration and espionage&quot;</span><span class="p">,</span> <span class="ss">created_at</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span> <span class="ss">updated_at</span><span class="p">:</span> <span class="kp">nil</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hope this was helpful if there was still some confusion left how they work.</p>
+
+<h5>/spec/factories.rb</h5>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;Marty McSpy&quot;</span>
+</span><span class='line'>    <span class="n">favorite_gadget</span> <span class="no">Hoverboard</span>
+</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Infiltration and espionage&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>/spec/spy_spec.rb</h5>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">describe</span> <span class="no">Spy</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">it</span> <span class="s1">&#39;returns alias of a spy&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">spy</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:spy</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">spy</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_instance_of</span><span class="p">(</span><span class="no">Spy</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">spy</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s1">&#39;Marty McSpy&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">spy</span><span class="o">.</span><span class="n">function</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s1">&#39;Covert agent&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">spy</span><span class="o">.</span><span class="n">skills</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s1">&#39;Infiltration and espionage&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="/octopress_drafts_previewer/images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg"></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;Marty McSpy&quot;</span>
+</span><span class='line'>    <span class="n">function</span> <span class="s2">&quot;Covert agent&quot;</span>
+</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Infiltration and espionage&quot;</span>
+</span><span class='line'>    <span class="n">date_of_birth</span> <span class="no">Date</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1968</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:quartermaster</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="no">Spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;Q&quot;</span>
+</span><span class='line'>    <span class="n">function</span> <span class="s2">&quot;Quartermaster&quot;</span>
+</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Inventing gizmos and hacking&quot;</span>
+</span><span class='line'>    <span class="n">date_of_birth</span> <span class="kp">nil</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="p">:</span><span class="mo">00</span> <span class="n">agent</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="no">Spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;James Bond&quot;</span>
+</span><span class='line'>    <span class="n">function</span> <span class="s2">&quot;Covert agent&quot;</span>
+</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Getting Bond Girls killed and covert infiltration&quot;</span>
+</span><span class='line'>    <span class="n">date_of_birth</span> <span class="kp">nil</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Notes:
 Factory girl is a ruby gem</p>
 
-<p>goal is to replace rails fixtures</p>
-
-<p>fixtures were the de facto standard for setting up data for testing your application</p>
-
 <p>it was data stored in yaml</p>
-
-<p>provides ruby dsl syntax for defining factories like user, post, any object, not only active record objects</p>
 
 <p>have post with cretain attributes
 can have associations(references to other factories), callbacks(for you create data), traits(mix in behaviour)</p>
 
-<p>it written in ruby instead of yaml like fixtures</p>
-
 <p>references to related data</p>
 
 <p>overwrite on the fly</p>
-
-<p>josh maintainer of factory girl</p>
 
 <p>attribute order does not matter</p>
 
@@ -304,13 +617,6 @@ can have associations(references to other factories), callbacks(for you create d
 
 <p>Want to have it DRY</p>
 
-<p>Outro
-Global coupling. Data is global in your test suite? it can become painful. When you change some attribute and tests start to break. Idea is to declare factories and then segregate them -> Something is different is named differently. A user with admin flag becomes admin in separate factory or trait. Regular user vs admin user -> Different type of users. Splitting up the data types helps ease some of the pain of the fact that they are global. So like changes to admin are less likely to break global things.</p>
-
-<p>That’s also one more reason why only defining only the absolute basic objects and their attributes goes a long way in avoiding the side effects of global coupling. -> Bare minimum factory definitions and segregating related objects into separate factories or factories witht traits is the key thing to remember whatever you do.</p>
-
-<p>Declaring the most barebones factory as possible in order for it to be valid by default. In terms of Active Record validations. Facotry Girls will call save! on instance when its being created. which means that validations are always run. If any of them fail ActiveRecord::RecordInvalid gets raised.</p>
-
 <p>create is actually going to persist the data. the goal is declaring bare bones factories and either have child factories and assign different attribues that mutate the data in a certain manner or that you use traits where you can mutate multiple columns (attributes) and change a handful of columns at at time or you can add associations or different callbacks.</p>
 
 <p>Being able to define traits as a concept. for example flag on a post. published boolean and then requirements change and you need timestamp. later it changes again because you need state machine with published, not published, draft and so one. Instead of building a factory girl object and putting that column when you create this record ends up being a painfpoint because everything needs to change now when you refer to published-> all through your tests. -> traits just referring to this concept which lets you apply and affect changes in only one central DRY place. Imagine if you’d have used an options hash for instantiation and that requirement totally changed how many potential places in your tests might break and need attention now. with traits your test dont necessarily care about how its stored in the database.</p>
@@ -319,11 +625,17 @@ Global coupling. Data is global in your test suite? it can become painful. When 
 
 <p>And because you still do (hopefully) unit tests on the columns  for your models that are represented in traits you give them you still give them the same amount of care than the attributes that are needed to have valid objects.</p>
 
-<p>Facotry girl is a pretty popular project in the Ruby community</p>
-
 <p>The more date you put in your global test space the more pain you are gonna have maintainance wise. Don’t be lazy!</p>
 
+<p>When unit-testing most methods, however, Factory Girl (and even persisting data to the database) is unnecessary.</p>
+
+<p>Outro</p>
+
+<p>That’s also one more reason why only defining only the absolute basic objects and their attributes goes a long way in avoiding the side effects of global coupling. -> Bare minimum factory definitions and segregating related objects into separate factories or factories witht traits is the key thing to remember whatever you do.</p>
+
 <p>A lot of times you actually dont need factory girl to write some of your unit tests. Josh would be the first to attest to that. Bigger systems with lots of data and collaborators and stuff that that you dont need for your unit tests. If you write unit tests and your data doesnt need any associations, it doesnt need persistance, you dont care about callbacks, dont use factory girl or at least use build (stubbed??) which instantiates the record and assignes all the attriubutes, gives it an id and raises if you interact with the database at all.  which gives you fake data that looks like its been persisted - gives you a full-fledged object that looks like its been saved. A lot faster. nothing hits the database at all.</p>
+
+<p>Global coupling. Data is global in your test suite? it can become painful. When you change some attribute and tests start to break. Idea is to declare factories and then segregate them -> Something is different is named differently. A user with admin flag becomes admin in separate factory or trait. Regular user vs admin user -> Different type of users. Splitting up the data types helps ease some of the pain of the fact that they are global. So like changes to admin are less likely to break global things.</p>
 </div>
   
   
