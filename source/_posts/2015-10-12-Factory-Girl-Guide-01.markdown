@@ -66,7 +66,7 @@ I think it would be fair to add that in the early days of Rails and Ruby TDD, YA
 
 + ### Configuration
 
-I assume you already have Ruby installed on your system. If not, come back after consulting Google and you should be good to go. Its quite straightforward I’d say. You can install the gem manually in your terminal via
+I assume you already have Ruby and RSpec for testing installed on your system. If not, come back after consulting Google and you should be good to go. Its quite straightforward I’d say. You can install the gem manually in your terminal via
 
 **Shell:**
 ``` bash
@@ -85,14 +85,18 @@ Now you only need to **require** Factory Girl to complete your setup. Here I’m
 require 'factory_girl'
 ```
 
+#### Ruby on Rails
+
 You are covered of course if you want to use Factory Girl with Rails. The *factory_girl_rails* gem provides a handy Rails integration for *factory_girl*.
 
 **Shell:**
+
 ``` bash
 gem install factory_girl_rails
 ```
 
 **Gemfile:**
+
 ``` ruby
 gem "factory_girl_rails", "~> 4.0"
 ```
@@ -105,9 +109,10 @@ require 'factory_girl_rails'
 
 ### Convenient Syntax Setup
 
-If you would like to prefer typing something like
+If you prefer typing something like (of course you do)
 
 **Ruby:**
+
 ``` ruby
 create(:user)
 ```
@@ -118,7 +123,7 @@ instead of
 FactoryGirl.create(:user)
 ```
 
-everytime you use one of your factories you just need to include the `FactoryGirl::Syntax::Methods` module in your test configuration file. If you forget that step, you have to preface all Factory Girl methods with the same annoying preface.
+everytime you use one of your factories you just need to include the `FactoryGirl::Syntax::Methods` module in your test configuration file. If you forget that step, you have to preface all Factory Girl methods with the same verbose preface. This works with any Ruby app, not just with Rails ones of course. 
 
 For **RSpec** find the **spec/spec_helper.rb** file and add:
 ``` ruby
@@ -131,9 +136,9 @@ end
 
 #### Attention!
 
-For the newbies among you, beware that the **RSpec.configure** block will already be there—buried under some amount of comments. You can also do the same setup in a separate file: **spec/support/factory_girl.rb**. In that case you will have to add the whole config block yourself of course. 
+For the newbies among you, beware that the **RSpec.configure** block will already be there—buried under some amount of comments. You can also do the same setup in a separate file like **spec/support/factory_girl.rb**. In that case you will have to add the whole config block yourself of course. 
 
-You can use the same configuration if you are using
+The same configuration works if you are using:
 
 + Test::Unit
 + Cucumber
@@ -148,16 +153,18 @@ You can go more fancy with your configuration by throwing in **DatabaseCleaner**
 
 You can define your factories anywhere but they will be loaded automatically if they are placed in the following locations:
 
-Test::Unit:
-``` bash
-test/factories.rb
-test/factories/*.rb
-```
+**RSpec:**
 
-RSpec:
 ``` bash
 spec/factories.rb
 spec/factories/*.rb
+```
+
+**Test::Unit:**
+
+``` bash
+test/factories.rb
+test/factories/*.rb
 ```
 
 As you can see you have the option to split them into separate files that adhere to whatever logic or bundle your factories together into one big **factories.rb** file. The complexity of your project will be the best guideline for when to logically separate factories into their own separate files.
@@ -173,7 +180,7 @@ FactoryGirl.define do
 end
 ```
 
-All factories are defined inside this block. Factories just need a **:symbol** name and a set of attributes to get started. Here the factory is named **secret_service_agent** and the attributes are **name**, **function**, **skills** and **date_of_birth**.
+All factories are defined inside this block. Factories just need a **:symbol** name and a set of attributes to get started. The factory below is named **secret_service_agent** and the attributes are **name**, **favorite_gadget** and **skills**.
 
 **Ruby:**
 ``` ruby
@@ -190,7 +197,7 @@ end
 
 #### Attention!
 
- If you take one thing away from this article then it should be the following: Only define the most barebones factory possible in order to be valid by default—valid in the sense of Active Record validations for example. Factory Girl will call **save!** on instances. That means validations are always run. If any of them fail, **ActiveRecord::RecordInvalid** gets raised. Defining only the bare minimum gives you more flexibility if your data changes and will reduce the chances of breaking tests and duplication—since coupling is reduced to the core. Don’t be lazy when you compose your factories—it will pay off big time! 
+If you take one thing away from this article then it should be the following: Only define the most barebones factory possible in order to be valid by default—valid in the sense of Active Record validations for example. When Factory Girl calls **save!** on instances your validations will get excercised. If any of them fail, **ActiveRecord::RecordInvalid** gets raised. Defining only the bare minimum gives you more flexibility if your data changes and will reduce the chances of breaking tests and duplication—since coupling is reduced to the core. Don’t be lazy when you compose your factories—it will pay off big time! 
 
 If you think this sounds hard to manage, you’ll most likely be glad to hear that there is a handy solution to segregate objects and their attributes via **Traits**. They are a great strategy to complement your barebones factories and keep them DRY at the same time. My second article will focus quite a bit on this very rad feature of Factory Girl. 
 
@@ -205,7 +212,7 @@ create(:some_object)
 # FactoryGirl.create(:some_object)
 ```
 
-This one returns an instance of the class the factory emulates. It is recommended to use **create** only when you really need to hit the database since this strategy slows down your test suite if overused unnecessarily. Use it if you want to make use of your validations since it will run **save!** in the background. I think this option is mostly appropriate when you do integration tests where you want to involve a database for your test scenarios.
+This one returns an instance of the class the factory emulates. It is recommended to use **create** only when you really need to hit the database. This strategy slows down your test suite if overused unnecessarily. Use it if you want to make use of your validations since it will run **save!** in the background. I think this option is mostly appropriate when you do integration tests where you want to involve a database for your test scenarios.
 
 + **build**  
 
@@ -217,7 +224,7 @@ It instantiates and assigns attributes but you’ll get an instance returned tha
 
 #### Heads up!
 
-When you use associations, there is a little exception in regards to not saving the object via **build**—it *builds* the object but it *creates* the associations—which I will cover in the section about Factory Girl associations. There is a solution for that in case that’s not what you were shopping for.
+When you use associations with it you might run into a small gotcha. There is a little exception in regards to not saving the object via **build**—it *builds* the object but it *creates* the associations—which I will cover in the section about Factory Girl associations. There is a solution for that in case that’s not what you were shopping for.
 
 + **build_stubbed** 
 
@@ -226,16 +233,26 @@ build_stubbed(:some_object)
 # FactoryGirl.build_stubbed(:some_object)
 ```
 
-This option was created for test cases where none of the code needs to hit the database. For that matter it will be the fastest of the three factory methods. It also instantiates and assigns attributes like **build** does but it only makes objects look like they have been persisted. The object returned has all the defined attributes stubbed out. Their associations are stubbed out as well—unlike **build** associations which are using **create**. Overall, this strategy leads to much faster tests because there is no dependency on the database.
+This option was created for speeding up your tests and for test cases where none of the code needs to hit the database. It also instantiates and assigns attributes like **build** does but it only makes objects look like they have been persisted. The object returned has all the defined attributes from your factory stubbed out—plus a fake **id** and **nil** timestamps. Their associations are stubbed out as well—unlike **build** associations which are using **create**. Since this strategy is dealing with stubs and has no dependency on the database these tests will be super fast. 
 
 + **attributes_for** 
 
+This method will return a hash of only the attributes defined in the factory—without associations, timestamps and id of course. Its sort of convenient if you want to build an instance of an object without fiddling around with attribute hashes manually. I have seen it mostly in Controller specs used similar to this:
+
+**Ruby:**
 ``` ruby
-attrs = attributes_for(:some_object)
-# attrs = FactoryGirl.attributes_for(:some_object)
+it 'redirects to some location' do
+  post :create, spy: attributes_for(:spy)
+
+  expect(response).to redirect_to(some_location) 
+end
 ```
 
-This method will return a hash of only the attributes defined in the factory—without associations, timestamps and id of course. Its sort of convenient if you want to build an instance of an object without fiddling around with attribute hashes manually. Let me give you one simple example to see the different objects returned:
+#### Object comparison
+
+To close this section, let me give you one simple example to see the different objects returned from these 4 build strategies. Below you can compare the four different objects that you’ll get from **attributes_for**, **create**, **build** and **build_stubbed**:
+
+
 
 ``` ruby
 FactoryGirl.define do
@@ -248,8 +265,6 @@ FactoryGirl.define do
 
 end
 ```
-
-Below you can compare the two different objects that you’ll get for **attributes_for** and **build**:
 
 ``` ruby
 attributes_for(:spy)
@@ -279,7 +294,7 @@ build_stubbed(:spy)
 <Spy id: 1001, name: "Marty McSpy", favorite_gadget: "Hoverboard", skills: "Infiltration and espionage", created_at: nil, updated_at: nil>
 ```
 
-Through these examples you can also clearly observe all the little differences the various build strategies provide you with. Hope this was helpful if there was still some confusion left how they work.
+Hope this was helpful if there was still some confusion left how they work.
 
 ##### /spec/factories.rb
 
