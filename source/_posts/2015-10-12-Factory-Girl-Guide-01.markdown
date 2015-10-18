@@ -30,11 +30,11 @@ This two-part mini-series was written for people who quickly wanna jump into wor
 
 Let’s start with a little bit of history and talk about the fine folks at [thoughtbot](https://thoughtbot.com/) who are responsible for this popular Ruby gem. Back in 2007/2008 [Joe Ferries](https://github.com/jferris), CTO at thoughtbot, had had it with fixtures and started to cook up his own solution. Going through various files to test a single method was a common pain point while dealing with fixtures. Put differently and ignoring all kinds of inflexiblities, that practice also lead to writing tests that don’t tell you much about their context being tested right away. 
 
-Not being sold on that practice made him checkout various solutions for factories but none of them supported everything he wanted. After his first attempt, Factory Girl made testing with fixture data more readable, DRY and also more explicit by giving you the context for every test. A couple of years later, [Josh Clayton](https://twitter.com/joshuaclayton), Development Director at @thoughtbot in Boston, took over as the maintainer of the project. Since then the project has grown steadily and has become a go-to solution in the Ruby community 
+Not being sold on that practice made Joe check out various solutions for factories but none of them supported everything he wanted. So he came up with Factory Girl which made testing with test data more readable, DRY and also more explicit by giving you the context for every test. A couple of years later, [Josh Clayton](https://twitter.com/joshuaclayton), Development Director at @thoughtbot in Boston, took over as the maintainer of the project. Over time this gem has grown steadily and became a “fixture” in the Ruby community. 
 
-What’s the main pain point that’s being solved today? When you build your test suite you’re dealing with a lot of associated records and with information that’s changing frequently. You want to be able to build data sets for your integration tests that are not brittle, easy to manage and explicit. Your data factories should be dynamic and able to refer to other factories—something that is in part beyond YAML fixtures from the old days. Another convenience you want to have is the ability to overwrite attributes for objects on the fly.
+Let’s talk more about the main pain point Factory Girl solves. When you build your test suite you’re dealing with a lot of associated records and with information that’s changing frequently. You want to be able to build data sets for your integration tests that are not brittle, easy to manage and explicit. Your data factories should be dynamic and able to refer to other factories—something that is in part beyond YAML fixtures from the old days. Another convenience you want to have is the ability to overwrite attributes for objects on the fly. Factory Girl allows you to do all of that effortlessly—given the fact that it is written in Ruby and a lot of Metaprogramming witchraft is going on behind the scenes—and you are provided with a great domain-specific language. 
 
-Factory Girl allows you to do all of that effortlessly—given the fact that it is written in Ruby and a lot of Metaprogramming witchraft is going on behind the scenes—and you are provided with a great domain-specific language. Building up your fixture data with this gem can be described as easy, effective and overall more convenient. That way you can deal more with concepts than with the actual columns in the database. But enough of talking the talk, let’s get our hands a bit dirty.
+Building up your fixture data with this gem can be described as easy, effective and overall more convenient than fiddling with fixtures. That way you can deal more with concepts than with the actual columns in the database. But enough of talking the talk, let’s get our hands a bit dirty.
 
 + ### Fixtures?
 
@@ -60,7 +60,7 @@ It looks like a hash, doesn’t it? Its a colon-separeted list of key / value pa
 
 To avoid breaking your test data when the inevitable changes occur, developers where happy to adopt newer strategies that offered more flexibility and dynamic behaviour. That’s where Factory Girl came in and left the YAML days behind. Another issue is the heavy dependency between the test and the **.yml** fixture file. [Mystery guests](https://robots.thoughtbot.com/mystery-guest) are also a major pain with these kinds of fixtures. Factory Girl let’s you avoid that by creating objects relevant to the tests inline.
 
-Sure, YAML fixtures are fast and I’ve heard people argue that a slow test suite with Factory Girl data made them go back YAML land. In my mind, if you are using Factory Girl so much that it really slows down your tests, you might be overusing factories unnecessarily and you might ignore strategies that are not hitting the database when you create / save objects. You’ll see what I mean when we get to the relevant section(s). Of course, use whatever you need / see fit but consider yourself warned if you get burned.
+Sure, YAML fixtures are fast and I’ve heard people argue that a slow test suite with Factory Girl data made them go back YAML land. In my mind, if you are using Factory Girl so much that it really slows down your tests, you might be overusing factories unnecessarily and you might ignore strategies that are not hitting the database when you create / save objects. You’ll see what I mean when we get to the relevant section(s). Of course, use whatever you need / see fit but consider yourself warned if you get burned by YAML.
 
 I think it would be fair to add that in the early days of Rails and Ruby TDD, YAML fixtures were the de facto standard for setting up test data in your application. They played an important role and helped move the industry forward. Nowadays they have a reasonably bad rep though. Times change so let’s move on to factories which are meant to replace fixtures.
 
@@ -85,7 +85,7 @@ Now you only need to **require** Factory Girl to complete your setup. Here I’m
 require 'factory_girl'
 ```
 
-#### Ruby on Rails
+### Ruby on Rails
 
 You are covered of course if you want to use Factory Girl with Rails. The *factory_girl_rails* gem provides a handy Rails integration for *factory_girl*.
 
@@ -134,7 +134,7 @@ RSpec.configure do |config|
 end
 ```
 
-#### Attention!
+### Attention!
 
 For the newbies among you, beware that the **RSpec.configure** block will already be there—buried under some amount of comments. You can also do the same setup in a separate file like **spec/support/factory_girl.rb**. In that case you will have to add the whole config block yourself of course. 
 
@@ -195,7 +195,7 @@ FactoryGirl.define do
 end
 ```
 
-#### Attention!
+### Attention!
 
 If you take one thing away from this article then it should be the following: Only define the most barebones factory possible in order to be valid by default—valid in the sense of Active Record validations for example. When Factory Girl calls **save!** on instances your validations will get excercised. If any of them fail, **ActiveRecord::RecordInvalid** gets raised. Defining only the bare minimum gives you more flexibility if your data changes and will reduce the chances of breaking tests and duplication—since coupling is reduced to the core. Don’t be lazy when you compose your factories—it will pay off big time! 
 
@@ -222,7 +222,7 @@ build(:some_object)
 ```
 It instantiates and assigns attributes but you’ll get an instance returned that is not saved to the database—**build** keeps the object only in memory. If you want to check if an object has certain attributes this will do the job since you don’t need database access for that kinda thing. Behind the scenes it does not use **save!** which means your validations are not run.
 
-#### Heads up!
+### Heads up!
 
 When you use associations with it you might run into a small gotcha. There is a little exception in regards to not saving the object via **build**—it *builds* the object but it *creates* the associations—which I will cover in the section about Factory Girl associations. There is a solution for that in case that’s not what you were shopping for.
 
@@ -237,7 +237,7 @@ This option was created for speeding up your tests and for test cases where none
 
 + **attributes_for** 
 
-This method will return a hash of only the attributes defined in the factory—without associations, timestamps and id of course. Its sort of convenient if you want to build an instance of an object without fiddling around with attribute hashes manually. I have seen it mostly in Controller specs used similar to this:
+This method will return a hash of only the attributes defined in the relevant factory—without associations, timestamps and id of course. Its sort of convenient if you want to build an instance of an object without fiddling around with attribute hashes manually. I have seen it mostly in Controller specs used similar to this:
 
 **Ruby:**
 ``` ruby
@@ -248,9 +248,9 @@ it 'redirects to some location' do
 end
 ```
 
-#### Object comparison
+### Object comparison
 
-To close this section, let me give you one simple example to see the different objects returned from these 4 build strategies. Below you can compare the four different objects that you’ll get from **attributes_for**, **create**, **build** and **build_stubbed**:
+To close this section, let me give you one simple example to see the different objects returned from these four build strategies. Below you can compare the four different objects that you’ll get from **attributes_for**, **create**, **build** and **build_stubbed**:
 
 
 
@@ -296,6 +296,8 @@ build_stubbed(:spy)
 
 Hope this was helpful if there was still some confusion left how they work.
 
+{% img /images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg %}
+
 ##### /spec/factories.rb
 
 ``` ruby
@@ -327,7 +329,6 @@ end
 ```
 
 
-{% img /images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg %}
 
 
 
