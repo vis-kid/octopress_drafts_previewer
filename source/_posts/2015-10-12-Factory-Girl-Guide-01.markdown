@@ -21,8 +21,8 @@ This two-part mini-series was written for people who quickly wanna jump into wor
 + Configuration
 + Defining factories
 + Using factories
-+ Associations
 + Inheritance
++ Associations
 + Multiple records
 + Sequences
 
@@ -188,7 +188,7 @@ FactoryGirl.define do
 
   factory :secret_service_agent do
     name "Q"
-    favorite_gadget Submarine Lotus Esprit
+    favorite_gadget "Submarine Lotus Esprit"
     skills "Inventing gizmos and hacking"
   end
 
@@ -259,7 +259,7 @@ FactoryGirl.define do
   
   factory :spy do
     name "Marty McSpy"
-    favorite_gadget Hoverboard
+    favorite_gadget "Hoverboard"
     skills "Infiltration and espionage"
   end
 
@@ -296,6 +296,62 @@ build_stubbed(:spy)
 
 Hope this was helpful if there was still some confusion left how they work.
 
+
++ ### Inheritance
+
+You’re gonna love this one! Keeping your test data DRY is very important and inheritance makes this way more easy for you. Say you wanna define a couple of core attributes on a factory and within that same factory have different factories for the same class with different attributes. With inheritance you can avoid repeating attributes and just nest your factories. Let’s take a look:
+
+**factories.rb**
+
+``` ruby
+factory :spy do
+  name 'Marty McSpy'
+  licence_to_kill 'false'
+  skills 'Espionage and intelligence'
+
+  factory :quartermaster do
+    name 'Q'
+    skills 'Inventing gizmos and hacking'
+  end
+  
+  factory :bond do
+    name 'James Bond'
+    licence_to_kill 'true'
+  end
+end
+```
+
+**some_spec.rb**
+``` ruby
+bond = create(:Bond)
+quartermaster = create(:quartermaster)
+
+bond.skills # => 'Espionage and intelligence'
+quartermaster.licence_to_kill # => 'false'
+quartermaster.skills # => 'Inventing gizmos and hacking'
+```
+
+With inheritance you define factories only with the necessary attributes that each class needs for creation. This parent factory can spawn as many “child” factories as you see fit to cover all kinds of test scenarios with varying data sets.
+
+If you don’t want to nest factory definitions you can also link factories to their parent explicitly by providing a **parent** hash:
+
+**factories.rb**
+
+``` ruby
+factory :spy do
+  name 'Marty McSpy'
+  licence_to_kill 'false'
+  skills 'Espionage and intelligence'
+end
+
+factory :bond, parent: :spy do
+  name 'James Bond'
+  licence_to_kill 'true'
+end
+```
+
+Same functionality and almost as DRY.
+
 {% img /images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg %}
 
 ##### /spec/factories.rb
@@ -305,7 +361,7 @@ FactoryGirl.define do
   
   factory :spy do
     name "Marty McSpy"
-    favorite_gadget Hoverboard
+    favorite_gadget "Hoverboard"
     skills "Infiltration and espionage"
   end
 
