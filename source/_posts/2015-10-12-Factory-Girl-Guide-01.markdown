@@ -299,7 +299,9 @@ Hope this was helpful if there was still some confusion left how they work.
 
 + ### Inheritance
 
-You’re gonna love this one! Keeping your test data DRY is very important and inheritance makes this way more easy for you. Say you wanna define a couple of core attributes on a factory and within that same factory have different factories for the same class with different attributes. With inheritance you can avoid repeating attributes and just nest your factories. Let’s take a look:
+You’re gonna love this one! With inheritance you can define factories only with the necessary attributes that each class needs for creation. This parent factory can spawn as many “child” factories as you see fit to cover all kinds of test scenarios with varying data sets. Keeping your test data DRY is very important and inheritance makes this way more easy for you.
+
+Say you wanna define a couple of core attributes on a factory and within that same factory have different factories for the same **Class** with different attributes. In the example below you can see how you can avoid repeating attributes by just nesting your factories.
 
 **factories.rb**
 
@@ -331,9 +333,9 @@ quartermaster.licence_to_kill # => 'false'
 quartermaster.skills # => 'Inventing gizmos and hacking'
 ```
 
-With inheritance you define factories only with the necessary attributes that each class needs for creation. This parent factory can spawn as many “child” factories as you see fit to cover all kinds of test scenarios with varying data sets.
+As you can observe, the **:bond** and **:quartermaster** factories inherit attributes from their parent **:spy**. With that functionality you can easily overwrite attributes for similar objects and be very expressive about it at the same time. Imagine all the lines of code saved because you don’t have to repeat the same basic setup if you want to test different states or related objects. That feature alone is worth it and makes it hard to go back to YAML fixtures.
 
-If you don’t want to nest factory definitions you can also link factories to their parent explicitly by providing a **parent** hash:
+If you want to avoid nesting factory definitions you can also link factories to their parent explicitly by providing a **parent** hash:
 
 **factories.rb**
 
