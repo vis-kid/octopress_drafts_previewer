@@ -102,7 +102,6 @@
 <li>Defining factories</li>
 <li>Using factories</li>
 <li>Inheritance</li>
-<li>Associations</li>
 <li>Multiple records</li>
 <li><p>Sequences</p></li>
 <li><h3>Intro &amp; Context</h3></li>
@@ -520,7 +519,7 @@
 <span class='line-number'>15</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
 </span><span class='line'>  <span class="nb">name</span> <span class="s1">&#39;Marty McSpy&#39;</span>
-</span><span class='line'>  <span class="n">licence_to_kill</span> <span class="s1">&#39;false&#39;</span>
+</span><span class='line'>  <span class="n">licence_to_kill</span> <span class="kp">false</span>
 </span><span class='line'>  <span class="n">skills</span> <span class="s1">&#39;Espionage and intelligence&#39;</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="n">factory</span> <span class="ss">:quartermaster</span> <span class="k">do</span>
@@ -530,7 +529,7 @@
 </span><span class='line'>
 </span><span class='line'>  <span class="n">factory</span> <span class="ss">:bond</span> <span class="k">do</span>
 </span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;James Bond&#39;</span>
-</span><span class='line'>    <span class="n">licence_to_kill</span> <span class="s1">&#39;true&#39;</span>
+</span><span class='line'>    <span class="n">licence_to_kill</span> <span class="kp">true</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -548,7 +547,7 @@
 </span><span class='line'><span class="n">quartermaster</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:quartermaster</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">bond</span><span class="o">.</span><span class="n">skills</span> <span class="c1"># =&gt; &#39;Espionage and intelligence&#39;</span>
-</span><span class='line'><span class="n">quartermaster</span><span class="o">.</span><span class="n">licence_to_kill</span> <span class="c1"># =&gt; &#39;false&#39;</span>
+</span><span class='line'><span class="n">quartermaster</span><span class="o">.</span><span class="n">licence_to_kill</span> <span class="c1"># =&gt; false</span>
 </span><span class='line'><span class="n">quartermaster</span><span class="o">.</span><span class="n">skills</span> <span class="c1"># =&gt; &#39;Inventing gizmos and hacking&#39;</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -571,20 +570,112 @@
 <span class='line-number'>10</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
 </span><span class='line'>  <span class="nb">name</span> <span class="s1">&#39;Marty McSpy&#39;</span>
-</span><span class='line'>  <span class="n">licence_to_kill</span> <span class="s1">&#39;false&#39;</span>
+</span><span class='line'>  <span class="n">licence_to_kill</span> <span class="kp">false</span>
 </span><span class='line'>  <span class="n">skills</span> <span class="s1">&#39;Espionage and intelligence&#39;</span>
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">factory</span> <span class="ss">:bond</span><span class="p">,</span> <span class="ss">parent</span><span class="p">:</span> <span class="ss">:spy</span> <span class="k">do</span>
 </span><span class='line'>  <span class="nb">name</span> <span class="s1">&#39;James Bond&#39;</span>
-</span><span class='line'>  <span class="n">licence_to_kill</span> <span class="s1">&#39;true&#39;</span>
+</span><span class='line'>  <span class="n">licence_to_kill</span> <span class="kp">true</span>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Same functionality and almost as DRY.</p>
 
+<ul>
+<li><h3>Multiple Records</h3></li>
+</ul>
+
+
+<p>Here is a small but nevertheless welcome addtion to Factory Girl that makes dealing with lists easy as pie:</p>
+
+<ul>
+<li><strong>build_list</strong></li>
+<li><strong>create_list</strong></li>
+</ul>
+
+
+<p>Every once in a while in situations where you want to have multiple instances of some factory “created” without much fuzz, these will come in handy. Both methods will return an array with the amount of factory items specified. Pretty neat right?</p>
+
+<p><strong>Ruby:</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">spy_clones</span> <span class="o">=</span> <span class="n">create_list</span><span class="p">(</span><span class="ss">:spy</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">fake_spies</span> <span class="o">=</span> <span class="n">build_list</span><span class="p">(</span><span class="ss">:spy</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">spy_clones</span> <span class="c1"># =&gt; [#&lt;Spy id: 1, name: \&quot;Marty McSpy\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Infiltration and espionage\&quot;, created_at: \&quot;2015-10-18 18:52:02\&quot;, updated_at: \&quot;2015-10-18 18:52:02\&quot;&gt;, #&lt;Spy id: 2, name: \&quot;Marty McSpy\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Infiltration and espionage\&quot;, created_at: \&quot;2015-10-18 18:52:02\&quot;, updated_at: \&quot;2015-10-18 18:52:02\&quot;&gt;, #&lt;Spy id: 3, name: \&quot;Marty McSpy\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Infiltration and espionage\&quot;, created_at: \&quot;2015-10-18 18:52:02\&quot;, updated_at: \&quot;2015-10-18 18:52:02\&quot;&gt;]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">fake_spies</span> <span class="c1"># =&gt; [#&lt;Spy id: nil, name: \&quot;Marty McSpy\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Infiltration and espionage\&quot;, created_at: nil, updated_at: nil&gt;, #&lt;Spy id: nil, name: \&quot;Marty McSpy\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Infiltration and espionage\&quot;, created_at: nil, updated_at: nil&gt;, #&lt;Spy id: nil, name: \&quot;Marty McSpy\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Infiltration and espionage\&quot;, created_at: nil, updated_at: nil&gt;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Subtle differences, but I’m sure you know the differences by now. I should also mention that you can provide both methods with a hash of attributes if you want to overwrite factory attributes on the fly for some reason. Timewise, the overwrites will eat a bit of your time if you create lots of test data with that strategy.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smug_spies</span> <span class="o">=</span> <span class="n">create_list</span><span class="p">(</span><span class="ss">:spy</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="ss">skills</span><span class="p">:</span> <span class="s1">&#39;Smug jokes&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">double_agents</span> <span class="o">=</span> <span class="n">build_list</span><span class="p">(</span><span class="ss">:spy</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Vesper Lynd&#39;</span><span class="p">,</span> <span class="ss">skills</span><span class="p">:</span> <span class="s1">&#39;Seduction and bookkeeping&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">smug_spies</span> <span class="c1"># =&gt; [#&lt;Spy id: 1, name: \&quot;Marty McSpy\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Smug jokes\&quot;, created_at: \&quot;2015-10-18 19:08:07\&quot;, updated_at: \&quot;2015-10-18 19:08:07\&quot;&gt;, #&lt;Spy id: 2, name: \&quot;Marty McSpy\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Smug jokes\&quot;, created_at: \&quot;2015-10-18 19:08:07\&quot;, updated_at: \&quot;2015-10-18 19:08:07\&quot;&gt;, #&lt;Spy id: 3, name: \&quot;Marty McSpy\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Smug jokes\&quot;, created_at: \&quot;2015-10-18 19:08:07\&quot;, updated_at: \&quot;2015-10-18 19:08:07\&quot;&gt;]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">double_agents</span> <span class="c1"># =&gt; [#&lt;Spy id: nil, name: \&quot;Vesper Lynd\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Seduction and bookkeeping\&quot;, created_at: nil, updated_at: nil&gt;, #&lt;Spy id: nil, name: \&quot;Vesper Lynd\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Seduction and bookkeeping\&quot;, created_at: nil, updated_at: nil&gt;, #&lt;Spy id: nil, name: \&quot;Vesper Lynd\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Seduction and bookkeeping\&quot;, created_at: nil, updated_at: nil&gt;] </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You’ll frequently need a pair of objects and therefore Factory Girl provides you both of these:</p>
+
+<ul>
+<li><strong>build_pair</strong></li>
+<li><strong>create_pair</strong></li>
+</ul>
+
+
+<p>Same idea as above but the returned array holds only two records at a time.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">create_pair</span><span class="p">(</span><span class="ss">:spy</span><span class="p">)</span>
+</span><span class='line'> <span class="c1"># =&gt; [#&lt;Spy id: 1, name: \&quot;Marty McSpy\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Infiltration and espionage\&quot;, created_at: \&quot;2015-10-18 19:31:41\&quot;, updated_at: \&quot;2015-10-18 19:31:41\&quot;&gt;, #&lt;Spy id: 2, name: \&quot;Marty McSpy\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Infiltration and espionage\&quot;, created_at: \&quot;2015-10-18 19:31:41\&quot;, updated_at: \&quot;2015-10-18 19:31:41\&quot;&gt;]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">build_pair</span><span class="p">(</span><span class="ss">:spy</span><span class="p">)</span>
+</span><span class='line'> <span class="c1"># =&gt; [#&lt;Spy id: nil, name: \&quot;Marty McSpy\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Infiltration and espionage\&quot;, created_at: nil, updated_at: nil&gt;, #&lt;Spy id: nil, name: \&quot;Marty McSpy\&quot;, function: \&quot;Covert agent\&quot;, skills: \&quot;Infiltration and espionage\&quot;, created_at: nil, updated_at: nil&gt;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><h3>Sequences</h3></li>
+</ul>
+
+
+<p>If you thought naming spies could be more dynamic you are absolutly right. In this final section we’ll look at that exactly.</p>
+
 <p><img src="/octopress_drafts_previewer/images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg"></p>
+
+<ul>
+<li><h3>Associations</h3></li>
+</ul>
+
+
+<p><img src="/octopress_drafts_previewer/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
+
+<p>As mentioned before, another trick up the sleeve of Factory Girl is emulating associations—relatively straightforward too I’d say.</p>
 
 <h5>/spec/factories.rb</h5>
 

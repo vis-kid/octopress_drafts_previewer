@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Test-driven-design | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/test-driven-design/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-18T19:43:12+02:00</updated>
+  <updated>2015-10-18T21:41:45+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -33,7 +33,6 @@
 <li>Defining factories</li>
 <li>Using factories</li>
 <li>Inheritance</li>
-<li>Associations</li>
 <li>Multiple records</li>
 <li><p>Sequences</p></li>
 <li><h3>Intro &amp; Context</h3></li>
@@ -346,7 +345,7 @@ end
 
 <pre><code class="ruby">factory :spy do
   name 'Marty McSpy'
-  licence_to_kill 'false'
+  licence_to_kill false
   skills 'Espionage and intelligence'
 
   factory :quartermaster do
@@ -356,7 +355,7 @@ end
 
   factory :bond do
     name 'James Bond'
-    licence_to_kill 'true'
+    licence_to_kill true
   end
 end
 </code></pre>
@@ -372,7 +371,7 @@ end
 </span><span class='line'><span class="n">quartermaster</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:quartermaster</span><span class="p">)</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="sr">&lt;p&gt;bond.skills # =&gt; &amp;lsquo;Espionage and intelligence&amp;rsquo;</span>
-</span><span class='line'><span class="sr">quartermaster.licence_to_kill # =&gt; &amp;lsquo;false&amp;rsquo;</span>
+</span><span class='line'><span class="sr">quartermaster.licence_to_kill # =&gt; false</span>
 </span><span class='line'><span class="sr">quartermaster.skills # =&gt; &amp;lsquo;Inventing gizmos and hacking&amp;rsquo;</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
@@ -384,19 +383,89 @@ end
 
 <pre><code class="ruby">factory :spy do
   name 'Marty McSpy'
-  licence_to_kill 'false'
+  licence_to_kill false
   skills 'Espionage and intelligence'
 end
 
 factory :bond, parent: :spy do
   name 'James Bond'
-  licence_to_kill 'true'
+  licence_to_kill true
 end
 </code></pre>
 
 <p>Same functionality and almost as DRY.</p>
 
+<ul>
+<li><h3>Multiple Records</h3></li>
+</ul>
+
+
+<p>Here is a small but nevertheless welcome addtion to Factory Girl that makes dealing with lists easy as pie:</p>
+
+<ul>
+<li><strong>build_list</strong></li>
+<li><strong>create_list</strong></li>
+</ul>
+
+
+<p>Every once in a while in situations where you want to have multiple instances of some factory “created” without much fuzz, these will come in handy. Both methods will return an array with the amount of factory items specified. Pretty neat right?</p>
+
+<p><strong>Ruby:</strong></p>
+
+<pre><code class="ruby">spy_clones = create_list(:spy, 3)
+
+fake_spies = build_list(:spy, 3)
+
+spy_clones # =&gt; [#&lt;Spy id: 1, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: \"2015-10-18 18:52:02\", updated_at: \"2015-10-18 18:52:02\"&gt;, #&lt;Spy id: 2, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: \"2015-10-18 18:52:02\", updated_at: \"2015-10-18 18:52:02\"&gt;, #&lt;Spy id: 3, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: \"2015-10-18 18:52:02\", updated_at: \"2015-10-18 18:52:02\"&gt;]
+
+fake_spies # =&gt; [#&lt;Spy id: nil, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: nil, updated_at: nil&gt;, #&lt;Spy id: nil, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: nil, updated_at: nil&gt;, #&lt;Spy id: nil, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: nil, updated_at: nil&gt;]
+</code></pre>
+
+<p>Subtle differences, but I’m sure you know the differences by now. I should also mention that you can provide both methods with a hash of attributes if you want to overwrite factory attributes on the fly for some reason. Timewise, the overwrites will eat a bit of your time if you create lots of test data with that strategy.</p>
+
+<pre><code class="ruby">smug_spies = create_list(:spy, 3, skills: 'Smug jokes')
+
+double_agents = build_list(:spy, 3, name: 'Vesper Lynd', skills: 'Seduction and bookkeeping')
+
+smug_spies # =&gt; [#&lt;Spy id: 1, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Smug jokes\", created_at: \"2015-10-18 19:08:07\", updated_at: \"2015-10-18 19:08:07\"&gt;, #&lt;Spy id: 2, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Smug jokes\", created_at: \"2015-10-18 19:08:07\", updated_at: \"2015-10-18 19:08:07\"&gt;, #&lt;Spy id: 3, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Smug jokes\", created_at: \"2015-10-18 19:08:07\", updated_at: \"2015-10-18 19:08:07\"&gt;]
+
+double_agents # =&gt; [#&lt;Spy id: nil, name: \"Vesper Lynd\", function: \"Covert agent\", skills: \"Seduction and bookkeeping\", created_at: nil, updated_at: nil&gt;, #&lt;Spy id: nil, name: \"Vesper Lynd\", function: \"Covert agent\", skills: \"Seduction and bookkeeping\", created_at: nil, updated_at: nil&gt;, #&lt;Spy id: nil, name: \"Vesper Lynd\", function: \"Covert agent\", skills: \"Seduction and bookkeeping\", created_at: nil, updated_at: nil&gt;] 
+</code></pre>
+
+<p>You’ll frequently need a pair of objects and therefore Factory Girl provides you both of these:</p>
+
+<ul>
+<li><strong>build_pair</strong></li>
+<li><strong>create_pair</strong></li>
+</ul>
+
+
+<p>Same idea as above but the returned array holds only two records at a time.</p>
+
+<pre><code class="ruby">create_pair(:spy)
+ # =&gt; [#&lt;Spy id: 1, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: \"2015-10-18 19:31:41\", updated_at: \"2015-10-18 19:31:41\"&gt;, #&lt;Spy id: 2, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: \"2015-10-18 19:31:41\", updated_at: \"2015-10-18 19:31:41\"&gt;]
+
+build_pair(:spy)
+ # =&gt; [#&lt;Spy id: nil, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: nil, updated_at: nil&gt;, #&lt;Spy id: nil, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: nil, updated_at: nil&gt;]
+</code></pre>
+
+<ul>
+<li><h3>Sequences</h3></li>
+</ul>
+
+
+<p>If you thought naming spies could be more dynamic you are absolutly right. In this final section we’ll look at that exactly.</p>
+
 <p><img src="/images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg"></p>
+
+<ul>
+<li><h3>Associations</h3></li>
+</ul>
+
+
+<p><img src="/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
+
+<p>As mentioned before, another trick up the sleeve of Factory Girl is emulating associations—relatively straightforward too I’d say.</p>
 
 <h5>/spec/factories.rb</h5>
 
