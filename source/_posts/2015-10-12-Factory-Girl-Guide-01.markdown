@@ -22,7 +22,6 @@ This two-part mini-series was written for people who quickly wanna jump into wor
 + Defining factories
 + Using factories
 + Inheritance
-+ Associations
 + Multiple records
 + Sequences
 
@@ -308,7 +307,7 @@ Say you wanna define a couple of core attributes on a factory and within that sa
 ``` ruby
 factory :spy do
   name 'Marty McSpy'
-  licence_to_kill 'false'
+  licence_to_kill false
   skills 'Espionage and intelligence'
 
   factory :quartermaster do
@@ -318,7 +317,7 @@ factory :spy do
   
   factory :bond do
     name 'James Bond'
-    licence_to_kill 'true'
+    licence_to_kill true
   end
 end
 ```
@@ -329,7 +328,7 @@ bond = create(:Bond)
 quartermaster = create(:quartermaster)
 
 bond.skills # => 'Espionage and intelligence'
-quartermaster.licence_to_kill # => 'false'
+quartermaster.licence_to_kill # => false
 quartermaster.skills # => 'Inventing gizmos and hacking'
 ```
 
@@ -342,19 +341,81 @@ If you want to avoid nesting factory definitions you can also link factories to 
 ``` ruby
 factory :spy do
   name 'Marty McSpy'
-  licence_to_kill 'false'
+  licence_to_kill false
   skills 'Espionage and intelligence'
 end
 
 factory :bond, parent: :spy do
   name 'James Bond'
-  licence_to_kill 'true'
+  licence_to_kill true
 end
 ```
 
 Same functionality and almost as DRY.
 
++ ### Multiple Records
+
+Here is a small but nevertheless welcome addtion to Factory Girl that makes dealing with lists easy as pie: 
+
++ **build_list**
++ **create_list** 
+
+Every once in a while in situations where you want to have multiple instances of some factory “created” without much fuzz, these will come in handy. Both methods will return an array with the amount of factory items specified. Pretty neat right?
+
+**Ruby:**
+
+``` ruby
+spy_clones = create_list(:spy, 3)
+
+fake_spies = build_list(:spy, 3)
+
+spy_clones # => [#<Spy id: 1, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: \"2015-10-18 18:52:02\", updated_at: \"2015-10-18 18:52:02\">, #<Spy id: 2, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: \"2015-10-18 18:52:02\", updated_at: \"2015-10-18 18:52:02\">, #<Spy id: 3, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: \"2015-10-18 18:52:02\", updated_at: \"2015-10-18 18:52:02\">]
+
+fake_spies # => [#<Spy id: nil, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: nil, updated_at: nil>, #<Spy id: nil, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: nil, updated_at: nil>, #<Spy id: nil, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: nil, updated_at: nil>]
+```
+
+Subtle differences, but I’m sure you know the differences by now. I should also mention that you can provide both methods with a hash of attributes if you want to overwrite factory attributes on the fly for some reason. Timewise, the overwrites will eat a bit of your time if you create lots of test data with that strategy.
+
+``` ruby
+smug_spies = create_list(:spy, 3, skills: 'Smug jokes')
+
+double_agents = build_list(:spy, 3, name: 'Vesper Lynd', skills: 'Seduction and bookkeeping')
+
+smug_spies # => [#<Spy id: 1, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Smug jokes\", created_at: \"2015-10-18 19:08:07\", updated_at: \"2015-10-18 19:08:07\">, #<Spy id: 2, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Smug jokes\", created_at: \"2015-10-18 19:08:07\", updated_at: \"2015-10-18 19:08:07\">, #<Spy id: 3, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Smug jokes\", created_at: \"2015-10-18 19:08:07\", updated_at: \"2015-10-18 19:08:07\">]
+
+double_agents # => [#<Spy id: nil, name: \"Vesper Lynd\", function: \"Covert agent\", skills: \"Seduction and bookkeeping\", created_at: nil, updated_at: nil>, #<Spy id: nil, name: \"Vesper Lynd\", function: \"Covert agent\", skills: \"Seduction and bookkeeping\", created_at: nil, updated_at: nil>, #<Spy id: nil, name: \"Vesper Lynd\", function: \"Covert agent\", skills: \"Seduction and bookkeeping\", created_at: nil, updated_at: nil>] 
+```
+
+You’ll frequently need a pair of objects and therefore Factory Girl provides you both of these: 
+
++ **build_pair** 
++ **create_pair**
+
+Same idea as above but the returned array holds only two records at a time.
+
+``` ruby
+create_pair(:spy)
+ # => [#<Spy id: 1, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: \"2015-10-18 19:31:41\", updated_at: \"2015-10-18 19:31:41\">, #<Spy id: 2, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: \"2015-10-18 19:31:41\", updated_at: \"2015-10-18 19:31:41\">]
+
+build_pair(:spy)
+ # => [#<Spy id: nil, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: nil, updated_at: nil>, #<Spy id: nil, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: nil, updated_at: nil>]
+```
+
+
+
++ ### Sequences
+
+If you thought naming spies could be more dynamic you are absolutly right. In this final section we’ll look at that exactly.
+
 {% img /images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg %}
+
++ ### Associations
+
+{% img /images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png %}
+
+As mentioned before, another trick up the sleeve of Factory Girl is emulating associations—relatively straightforward too I’d say.
+
+
 
 ##### /spec/factories.rb
 
