@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tdd | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/tdd/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-18T19:26:48+02:00</updated>
+  <updated>2015-10-18T19:43:12+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -338,7 +338,9 @@ end
 </ul>
 
 
-<p>You’re gonna love this one! Keeping your test data DRY is very important and inheritance makes this way more easy for you. Say you wanna define a couple of core attributes on a factory and within that same factory have different factories for the same class with different attributes. With inheritance you can avoid repeating attributes and just nest your factories. Let’s take a look:</p>
+<p>You’re gonna love this one! With inheritance you can define factories only with the necessary attributes that each class needs for creation. This parent factory can spawn as many “child” factories as you see fit to cover all kinds of test scenarios with varying data sets. Keeping your test data DRY is very important and inheritance makes this way more easy for you.</p>
+
+<p>Say you wanna define a couple of core attributes on a factory and within that same factory have different factories for the same <strong>Class</strong> with different attributes. In the example below you can see how you can avoid repeating attributes by just nesting your factories.</p>
 
 <p><strong>factories.rb</strong></p>
 
@@ -374,9 +376,9 @@ end
 </span><span class='line'><span class="sr">quartermaster.skills # =&gt; &amp;lsquo;Inventing gizmos and hacking&amp;rsquo;</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
-<p>With inheritance you define factories only with the necessary attributes that each class needs for creation. This parent factory can spawn as many “child” factories as you see fit to cover all kinds of test scenarios with varying data sets.</p>
+<p>As you can observe, the <strong>:bond</strong> and <strong>:quartermaster</strong> factories inherit attributes from their parent <strong>:spy</strong>. With that functionality you can easily overwrite attributes for similar objects and be very expressive about it at the same time. Imagine all the lines of code saved because you don’t have to repeat the same basic setup if you want to test different states or related objects. That feature alone is worth it and makes it hard to go back to YAML fixtures.</p>
 
-<p>If you don’t want to nest factory definitions you can also link factories to their parent explicitly by providing a <strong>parent</strong> hash:</p>
+<p>If you want to avoid nesting factory definitions you can also link factories to their parent explicitly by providing a <strong>parent</strong> hash:</p>
 
 <p><strong>factories.rb</strong></p>
 
