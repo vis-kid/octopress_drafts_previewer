@@ -522,6 +522,12 @@ spycar_02.vehicle_id_number
 # ...
 ```
 
++ ### Closing Thoughts
+
+As you have seen by now, Factory Girl offers a well balanced Ruby DSL  that builds objects instead of Database Records for your test data. It helps to keep your tests focused, DRY and readable when you deal with dummy data. That’s a pretty solid accomplishment in my book. Remember that barebones factory definitions are key to your future sanity. The more factory data you put in your global test space the more likely you’ll experience some sort of maintainance pain. For your unit tests, Factory Girl will be unnecessary and only slows down your test suite. Josh Clayton would be the first to attest to this and who would recommend its best practice to use Factory Girl selectively as little as possible.    
+
+
+
 
 {% img /images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg %}
 
