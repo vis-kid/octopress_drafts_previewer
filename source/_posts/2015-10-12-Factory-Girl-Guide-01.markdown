@@ -403,7 +403,7 @@ build_pair(:spy)
 
 + ### Sequences
 
-If you thought naming spies could be more dynamic you are absolutly right. In this final section we’ll look at exactly that functionality. The data we’ve provided our factories with was as static as it gets. What about unique email addresses for testing authentication or unique usernames for example? That’s were sequences come in handy. Let’s look at a couple of different ways to use **sequence** to create unique values for your factories’ attributes:
+If you thought naming spies could be less static you are absolutly right. In this final section we’ll look at creating sequential unique values as test data for your factory attributes. When might this be useful? What about unique email addresses for testing authentication or unique usernames for example? That’s where sequences shine. Let’s look at a couple of different ways you can make use of **sequence**:
 
 + **“global” sequence**
 
@@ -433,9 +433,6 @@ end
 top_spy = create(:elite_spy)
 top_spy.email = generate(:spy_email)
 
-top_spy.name 
-# => "Edward Donne"
-
 top_spy.email
 # => "001@mi6.com"
 ```
@@ -444,7 +441,7 @@ You can use this sequence generator for all your factories wherever you need a *
 
 + **attributes**
 
-As a small variation that is super convenient I’m gonna show how you can assign sequences as attributes to your factories directly. Same condition as above where your sequence is defined “globally”. In this case you can leave off the **generate** method call and Factory Girl will assign the returned value from the sequence directly to the attribute of the same name. Neat!
+As a small variation that is super convenient I’m gonna show how you can directly assign sequences as attributes to your factories. Same condition as above where your sequence is defined “globally”. In this case you can leave off the **generate** method call and Factory Girl will assign the returned value from the sequence directly to the attribute of the same name. Neat!
 
 ``` ruby
 FactoryGirl.define do
@@ -477,7 +474,7 @@ FactoryGirl.define do
 
   factory :spy do
     name 'Marty McSpy'
-    deployment { generate(:mission_deployment }
+    deployment { generate(:mission_deployment) }
   end
 
 end
@@ -493,7 +490,7 @@ This option is best when a sequence of unique values is only needed on an attrib
 FactoryGirl.define do 
 
   factory :astin_martin do
-    sequence(:vehicle_id_number) {|n| "A_M#{n}"}
+    sequence(:vehicle_id_number) {|n| "A_M_#{n}"}
   end
 
 end
@@ -509,7 +506,7 @@ Well, maybe we should provide the **vehicle_id_number** attribute another starti
 FactoryGirl.define do 
 
   factory :astin_martin do
-    sequence(:vehicle_id_number, 9) {|n| "A_M#{n}"}
+    sequence(:vehicle_id_number, 9) {|n| "A_M_#{n}"}
   end
 
 end
