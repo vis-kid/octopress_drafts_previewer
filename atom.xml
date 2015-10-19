@@ -4,7 +4,7 @@
   <title><![CDATA[Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-18T21:41:45+02:00</updated>
+  <updated>2015-10-19T20:36:59+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -595,7 +595,222 @@
 </ul>
 
 
-<p>If you thought naming spies could be more dynamic you are absolutly right. In this final section we’ll look at that exactly.</p>
+<p>If you thought naming spies could be more dynamic you are absolutly right. In this final section we’ll look at exactly that functionality. The data we’ve provided our factories with was as static as it gets. What about unique email addresses for testing authentication or unique usernames for example? That’s were sequences come in handy. Let’s look at a couple of different ways to use <strong>sequence</strong> to create unique values for your factories’ attributes:</p>
+
+<ul>
+<li><strong>“global” sequence</strong></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">sequence</span> <span class="ss">:spy_email</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+</span><span class='line'>    <span class="s2">&quot;00</span><span class="si">#{</span><span class="n">n</span><span class="si">}</span><span class="s2">@mi6.com&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Marty McSpy&#39;</span>
+</span><span class='line'>    <span class="n">email</span> <span class="s1">&#39;marty@thepinheads.com&#39;</span>
+</span><span class='line'>    <span class="n">skills</span> <span class="s1">&#39;Espionage and infiltration&#39;</span>
+</span><span class='line'>    <span class="n">license_to_kill</span> <span class="kp">false</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">factory</span> <span class="ss">:elite_spy</span> <span class="k">do</span>
+</span><span class='line'>      <span class="nb">name</span> <span class="s1">&#39;Edward Donne&#39;</span>
+</span><span class='line'>      <span class="n">license_to_kill</span> <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">top_spy</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:elite_spy</span><span class="p">)</span>
+</span><span class='line'><span class="n">top_spy</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">generate</span><span class="p">(</span><span class="ss">:spy_email</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">top_spy</span><span class="o">.</span><span class="n">name</span>
+</span><span class='line'><span class="c1"># =&gt; &quot;Edward Donne&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">top_spy</span><span class="o">.</span><span class="n">email</span>
+</span><span class='line'><span class="c1"># =&gt; &quot;001@mi6.com&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can use this sequence generator for all your factories wherever you need a <strong>:spy_email</strong>.</p>
+
+<ul>
+<li><strong>attributes</strong></li>
+</ul>
+
+
+<p>As a small variation that is super convenient I’m gonna show how you can assign sequences as attributes to your factories directly. Same condition as above where your sequence is defined “globally”. In this case you can leave off the <strong>generate</strong> method call and Factory Girl will assign the returned value from the sequence directly to the attribute of the same name. Neat!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">sequence</span> <span class="ss">:email</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+</span><span class='line'>    <span class="s2">&quot;00</span><span class="si">#{</span><span class="n">n</span><span class="si">}</span><span class="s2">@mi6.com&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:secret_service_agent</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Edwad Donne&#39;</span>
+</span><span class='line'>    <span class="n">email</span>
+</span><span class='line'>    <span class="n">skills</span> <span class="s1">&#39;Espionage and infiltration&#39;</span>
+</span><span class='line'>    <span class="n">license_to_kill</span> <span class="kp">true</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><strong>lazy attributes</strong></li>
+</ul>
+
+
+<p>You can also use a <strong>sequence</strong> on <em>lazy attributes</em>. I will cover this topic in my second article but for completeness sake I wanted to mention it here as well. In case you need a unique value assigned at the time the instance gets created—therefore its called <em>lazy</em> because this attribute waits with value assignment until object instantiation—sequences just need a block to work as well.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">sequence</span> <span class="ss">:mission_deployment</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
+</span><span class='line'>    <span class="s2">&quot;Mission </span><span class="si">#{</span><span class="n">number</span><span class="si">}</span><span class="s2"> at </span><span class="si">#{</span><span class="no">DateTime</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">to_formatted_s</span><span class="p">(</span><span class="ss">:short</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Marty McSpy&#39;</span>
+</span><span class='line'>    <span class="n">deployment</span> <span class="p">{</span> <span class="n">generate</span><span class="p">(</span><span class="ss">:mission_deployment</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The block for the factory attribute gets evaluated when the object gets instantiated. In our case, you’ll get a string composed of a unique mission number and a new <strong>DateTime</strong> object as values for every <strong>:spy</strong> that gets deployed.</p>
+
+<ul>
+<li><strong>in-line sequence</strong></li>
+</ul>
+
+
+<p>This option is best when a sequence of unique values is only needed on an attribute for a single factory. It would make no sense to define it outside that factory and possibly have to look for it elsewhere if you need to tweak it. In the example below we are looking to generate unique ids for every spy car.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:astin_martin</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">sequence</span><span class="p">(</span><span class="ss">:vehicle_id_number</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">n</span><span class="o">|</span> <span class="s2">&quot;A_M</span><span class="si">#{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">spycar</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:astin_martin</span><span class="p">)</span>
+</span><span class='line'><span class="n">spycar</span><span class="o">.</span><span class="n">vehicle_id_number</span>
+</span><span class='line'><span class="c1"># =&gt; &quot;A_M_1&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Well, maybe we should provide the <strong>vehicle_id_number</strong> attribute another starting value than <strong>1</strong>? Let’s say we wanna account for a couple of prototypes before the car was ready for production. You can provide a second argument as the starting value for your sequence. Let’s go with <strong>9</strong> this time.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:astin_martin</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">sequence</span><span class="p">(</span><span class="ss">:vehicle_id_number</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">n</span><span class="o">|</span> <span class="s2">&quot;A_M</span><span class="si">#{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">spycar_01</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:astin_martin</span><span class="p">)</span>
+</span><span class='line'><span class="n">spycar_01</span><span class="o">.</span><span class="n">vehicle_id_number</span>
+</span><span class='line'><span class="c1"># =&gt; &quot;A_M_9&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">spycar_02</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:astin_martin</span><span class="p">)</span>
+</span><span class='line'><span class="n">spycar_02</span><span class="o">.</span><span class="n">vehicle_id_number</span>
+</span><span class='line'><span class="c1"># =&gt; &quot;A_M_10&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># ...</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg"></p>
 

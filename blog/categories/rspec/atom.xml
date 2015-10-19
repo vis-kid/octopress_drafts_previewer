@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rspec | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/rspec/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-18T21:41:45+02:00</updated>
+  <updated>2015-10-19T20:36:59+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -454,7 +454,134 @@ build_pair(:spy)
 </ul>
 
 
-<p>If you thought naming spies could be more dynamic you are absolutly right. In this final section we’ll look at that exactly.</p>
+<p>If you thought naming spies could be more dynamic you are absolutly right. In this final section we’ll look at exactly that functionality. The data we’ve provided our factories with was as static as it gets. What about unique email addresses for testing authentication or unique usernames for example? That’s were sequences come in handy. Let’s look at a couple of different ways to use <strong>sequence</strong> to create unique values for your factories’ attributes:</p>
+
+<ul>
+<li><strong>“global” sequence</strong></li>
+</ul>
+
+
+<pre><code class="ruby">FactoryGirl.define do
+
+  sequence :spy_email do |n|
+    "00#{n}@mi6.com"
+  end
+
+  factory :spy do
+    name 'Marty McSpy'
+    email 'marty@thepinheads.com'
+    skills 'Espionage and infiltration'
+    license_to_kill false
+
+
+    factory :elite_spy do
+      name 'Edward Donne'
+      license_to_kill true
+    end
+
+  end
+
+end
+
+top_spy = create(:elite_spy)
+top_spy.email = generate(:spy_email)
+
+top_spy.name 
+# =&gt; "Edward Donne"
+
+top_spy.email
+# =&gt; "001@mi6.com"
+</code></pre>
+
+<p>You can use this sequence generator for all your factories wherever you need a <strong>:spy_email</strong>.</p>
+
+<ul>
+<li><strong>attributes</strong></li>
+</ul>
+
+
+<p>As a small variation that is super convenient I’m gonna show how you can assign sequences as attributes to your factories directly. Same condition as above where your sequence is defined “globally”. In this case you can leave off the <strong>generate</strong> method call and Factory Girl will assign the returned value from the sequence directly to the attribute of the same name. Neat!</p>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+  sequence :email do |n|
+    "00#{n}@mi6.com"
+  end
+
+  factory :secret_service_agent do
+    name 'Edwad Donne'
+    email
+    skills 'Espionage and infiltration'
+    license_to_kill true
+  end
+
+end
+</code></pre>
+
+<ul>
+<li><strong>lazy attributes</strong></li>
+</ul>
+
+
+<p>You can also use a <strong>sequence</strong> on <em>lazy attributes</em>. I will cover this topic in my second article but for completeness sake I wanted to mention it here as well. In case you need a unique value assigned at the time the instance gets created—therefore its called <em>lazy</em> because this attribute waits with value assignment until object instantiation—sequences just need a block to work as well.</p>
+
+<pre><code class="ruby">
+FactoryGirl.define do
+
+  sequence :mission_deployment do |number|
+    "Mission #{number} at #{DateTime.now.to_formatted_s(:short)}"
+  end
+
+  factory :spy do
+    name 'Marty McSpy'
+    deployment { generate(:mission_deployment }
+  end
+
+end
+</code></pre>
+
+<p>The block for the factory attribute gets evaluated when the object gets instantiated. In our case, you’ll get a string composed of a unique mission number and a new <strong>DateTime</strong> object as values for every <strong>:spy</strong> that gets deployed.</p>
+
+<ul>
+<li><strong>in-line sequence</strong></li>
+</ul>
+
+
+<p>This option is best when a sequence of unique values is only needed on an attribute for a single factory. It would make no sense to define it outside that factory and possibly have to look for it elsewhere if you need to tweak it. In the example below we are looking to generate unique ids for every spy car.</p>
+
+<pre><code class="ruby">FactoryGirl.define do 
+
+  factory :astin_martin do
+    sequence(:vehicle_id_number) {|n| "A_M#{n}"}
+  end
+
+end
+
+spycar = create(:astin_martin)
+spycar.vehicle_id_number
+# =&gt; "A_M_1"
+</code></pre>
+
+<p>Well, maybe we should provide the <strong>vehicle_id_number</strong> attribute another starting value than <strong>1</strong>? Let’s say we wanna account for a couple of prototypes before the car was ready for production. You can provide a second argument as the starting value for your sequence. Let’s go with <strong>9</strong> this time.</p>
+
+<pre><code class="ruby">FactoryGirl.define do 
+
+  factory :astin_martin do
+    sequence(:vehicle_id_number, 9) {|n| "A_M#{n}"}
+  end
+
+end
+
+spycar_01 = create(:astin_martin)
+spycar_01.vehicle_id_number
+# =&gt; "A_M_9"
+
+spycar_02 = create(:astin_martin)
+spycar_02.vehicle_id_number
+# =&gt; "A_M_10"
+
+# ...
+</code></pre>
 
 <p><img src="/images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg"></p>
 
