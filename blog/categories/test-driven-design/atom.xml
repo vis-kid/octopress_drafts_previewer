@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Test-driven-design | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/test-driven-design/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-19T21:16:15+02:00</updated>
+  <updated>2015-10-19T21:38:12+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -579,6 +579,13 @@ spycar_02.vehicle_id_number
 
 # ...
 </code></pre>
+
+<ul>
+<li><h3>Closing Thoughts</h3></li>
+</ul>
+
+
+<p>As you have seen by now, Factory Girl offers a well balanced Ruby DSL  that builds objects instead of Database Records for your test data. It helps to keep your tests focused, DRY and readable when you deal with dummy data. That’s a pretty solid accomplishment in my book. Remember that barebones factory definitions are key to your future sanity. The more factory data you put in your global test space the more likely you’ll experience some sort of maintainance pain. For your unit tests, Factory Girl will be unnecessary and only slows down your test suite. Josh Clayton would be the first to attest to this and who would recommend its best practice to use Factory Girl selectively as little as possible.</p>
 
 <p><img src="/images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg"></p>
 
