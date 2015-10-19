@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-19T21:01:32+02:00</updated>
+  <updated>2015-10-19T21:16:15+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -198,7 +198,7 @@ FactoryGirl.define do
 end
 </code></p>
 
-<p>All factories are defined inside this block. Factories just need a <strong>:symbol</strong> name and a set of attributes to get started. The factory below is named <strong>secret_service_agent</strong> and the attributes are <strong>name</strong>, <strong>favorite_gadget</strong> and <strong>skills</strong>.</p>
+<p>All factories are defined inside this block. Factories just need a <strong>:symbol</strong> name and a set of attributes to get started. This name needs to be the <em>snake_cased</em> version of your Model names—like SecretServiceAgent in the following example. The factory below is named <strong>secret_service_agent</strong> and the attributes are <strong>name</strong>, <strong>favorite_gadget</strong> and <strong>skills</strong>.</p>
 
 <p><strong>Ruby:</strong>
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
