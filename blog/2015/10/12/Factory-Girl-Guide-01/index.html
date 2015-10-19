@@ -661,7 +661,7 @@
 </ul>
 
 
-<p>If you thought naming spies could be more dynamic you are absolutly right. In this final section we’ll look at exactly that functionality. The data we’ve provided our factories with was as static as it gets. What about unique email addresses for testing authentication or unique usernames for example? That’s were sequences come in handy. Let’s look at a couple of different ways to use <strong>sequence</strong> to create unique values for your factories’ attributes:</p>
+<p>If you thought naming spies could be less static you are absolutly right. In this final section we’ll look at creating sequential unique values as test data for your factory attributes. When might this be useful? What about unique email addresses for testing authentication or unique usernames for example? That’s where sequences shine. Let’s look at a couple of different ways you can make use of <strong>sequence</strong>:</p>
 
 <ul>
 <li><strong>“global” sequence</strong></li>
@@ -695,9 +695,6 @@
 <span class='line-number'>25</span>
 <span class='line-number'>26</span>
 <span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="n">sequence</span> <span class="ss">:spy_email</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
@@ -723,9 +720,6 @@
 </span><span class='line'><span class="n">top_spy</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:elite_spy</span><span class="p">)</span>
 </span><span class='line'><span class="n">top_spy</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">generate</span><span class="p">(</span><span class="ss">:spy_email</span><span class="p">)</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">top_spy</span><span class="o">.</span><span class="n">name</span>
-</span><span class='line'><span class="c1"># =&gt; &quot;Edward Donne&quot;</span>
-</span><span class='line'>
 </span><span class='line'><span class="n">top_spy</span><span class="o">.</span><span class="n">email</span>
 </span><span class='line'><span class="c1"># =&gt; &quot;001@mi6.com&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -738,7 +732,7 @@
 </ul>
 
 
-<p>As a small variation that is super convenient I’m gonna show how you can assign sequences as attributes to your factories directly. Same condition as above where your sequence is defined “globally”. In this case you can leave off the <strong>generate</strong> method call and Factory Girl will assign the returned value from the sequence directly to the attribute of the same name. Neat!</p>
+<p>As a small variation that is super convenient I’m gonna show how you can directly assign sequences as attributes to your factories. Same condition as above where your sequence is defined “globally”. In this case you can leave off the <strong>generate</strong> method call and Factory Girl will assign the returned value from the sequence directly to the attribute of the same name. Neat!</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -798,7 +792,7 @@
 </span><span class='line'>
 </span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
 </span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Marty McSpy&#39;</span>
-</span><span class='line'>    <span class="n">deployment</span> <span class="p">{</span> <span class="n">generate</span><span class="p">(</span><span class="ss">:mission_deployment</span> <span class="p">}</span>
+</span><span class='line'>    <span class="n">deployment</span> <span class="p">{</span> <span class="n">generate</span><span class="p">(</span><span class="ss">:mission_deployment</span><span class="p">)</span> <span class="p">}</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">end</span>
@@ -828,7 +822,7 @@
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="n">factory</span> <span class="ss">:astin_martin</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">sequence</span><span class="p">(</span><span class="ss">:vehicle_id_number</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">n</span><span class="o">|</span> <span class="s2">&quot;A_M</span><span class="si">#{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+</span><span class='line'>    <span class="n">sequence</span><span class="p">(</span><span class="ss">:vehicle_id_number</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">n</span><span class="o">|</span> <span class="s2">&quot;A_M_</span><span class="si">#{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">end</span>
@@ -861,7 +855,7 @@
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="n">factory</span> <span class="ss">:astin_martin</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">sequence</span><span class="p">(</span><span class="ss">:vehicle_id_number</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">n</span><span class="o">|</span> <span class="s2">&quot;A_M</span><span class="si">#{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+</span><span class='line'>    <span class="n">sequence</span><span class="p">(</span><span class="ss">:vehicle_id_number</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">n</span><span class="o">|</span> <span class="s2">&quot;A_M_</span><span class="si">#{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">end</span>

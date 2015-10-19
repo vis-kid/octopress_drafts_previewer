@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-19T20:36:59+02:00</updated>
+  <updated>2015-10-19T21:01:32+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -454,7 +454,7 @@ build_pair(:spy)
 </ul>
 
 
-<p>If you thought naming spies could be more dynamic you are absolutly right. In this final section we’ll look at exactly that functionality. The data we’ve provided our factories with was as static as it gets. What about unique email addresses for testing authentication or unique usernames for example? That’s were sequences come in handy. Let’s look at a couple of different ways to use <strong>sequence</strong> to create unique values for your factories’ attributes:</p>
+<p>If you thought naming spies could be less static you are absolutly right. In this final section we’ll look at creating sequential unique values as test data for your factory attributes. When might this be useful? What about unique email addresses for testing authentication or unique usernames for example? That’s where sequences shine. Let’s look at a couple of different ways you can make use of <strong>sequence</strong>:</p>
 
 <ul>
 <li><strong>“global” sequence</strong></li>
@@ -486,9 +486,6 @@ end
 top_spy = create(:elite_spy)
 top_spy.email = generate(:spy_email)
 
-top_spy.name 
-# =&gt; "Edward Donne"
-
 top_spy.email
 # =&gt; "001@mi6.com"
 </code></pre>
@@ -500,7 +497,7 @@ top_spy.email
 </ul>
 
 
-<p>As a small variation that is super convenient I’m gonna show how you can assign sequences as attributes to your factories directly. Same condition as above where your sequence is defined “globally”. In this case you can leave off the <strong>generate</strong> method call and Factory Girl will assign the returned value from the sequence directly to the attribute of the same name. Neat!</p>
+<p>As a small variation that is super convenient I’m gonna show how you can directly assign sequences as attributes to your factories. Same condition as above where your sequence is defined “globally”. In this case you can leave off the <strong>generate</strong> method call and Factory Girl will assign the returned value from the sequence directly to the attribute of the same name. Neat!</p>
 
 <pre><code class="ruby">FactoryGirl.define do
 
@@ -534,7 +531,7 @@ FactoryGirl.define do
 
   factory :spy do
     name 'Marty McSpy'
-    deployment { generate(:mission_deployment }
+    deployment { generate(:mission_deployment) }
   end
 
 end
@@ -552,7 +549,7 @@ end
 <pre><code class="ruby">FactoryGirl.define do 
 
   factory :astin_martin do
-    sequence(:vehicle_id_number) {|n| "A_M#{n}"}
+    sequence(:vehicle_id_number) {|n| "A_M_#{n}"}
   end
 
 end
@@ -567,7 +564,7 @@ spycar.vehicle_id_number
 <pre><code class="ruby">FactoryGirl.define do 
 
   factory :astin_martin do
-    sequence(:vehicle_id_number, 9) {|n| "A_M#{n}"}
+    sequence(:vehicle_id_number, 9) {|n| "A_M_#{n}"}
   end
 
 end
