@@ -401,11 +401,130 @@ build_pair(:spy)
  # => [#<Spy id: nil, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: nil, updated_at: nil>, #<Spy id: nil, name: \"Marty McSpy\", function: \"Covert agent\", skills: \"Infiltration and espionage\", created_at: nil, updated_at: nil>]
 ```
 
-
-
 + ### Sequences
 
-If you thought naming spies could be more dynamic you are absolutly right. In this final section we’ll look at that exactly.
+If you thought naming spies could be more dynamic you are absolutly right. In this final section we’ll look at exactly that functionality. The data we’ve provided our factories with was as static as it gets. What about unique email addresses for testing authentication or unique usernames for example? That’s were sequences come in handy. Let’s look at a couple of different ways to use **sequence** to create unique values for your factories’ attributes:
+
++ **“global” sequence**
+
+``` ruby
+FactoryGirl.define do
+
+  sequence :spy_email do |n|
+    "00#{n}@mi6.com"
+  end
+
+  factory :spy do
+    name 'Marty McSpy'
+    email 'marty@thepinheads.com'
+    skills 'Espionage and infiltration'
+    license_to_kill false
+
+  
+    factory :elite_spy do
+      name 'Edward Donne'
+      license_to_kill true
+    end
+
+  end
+
+end
+
+top_spy = create(:elite_spy)
+top_spy.email = generate(:spy_email)
+
+top_spy.name 
+# => "Edward Donne"
+
+top_spy.email
+# => "001@mi6.com"
+```
+
+You can use this sequence generator for all your factories wherever you need a **:spy_email**. 
+
++ **attributes**
+
+As a small variation that is super convenient I’m gonna show how you can assign sequences as attributes to your factories directly. Same condition as above where your sequence is defined “globally”. In this case you can leave off the **generate** method call and Factory Girl will assign the returned value from the sequence directly to the attribute of the same name. Neat!
+
+``` ruby
+FactoryGirl.define do
+
+  sequence :email do |n|
+    "00#{n}@mi6.com"
+  end
+
+  factory :secret_service_agent do
+    name 'Edwad Donne'
+    email
+    skills 'Espionage and infiltration'
+    license_to_kill true
+  end
+
+end
+```
+
++ **lazy attributes**
+
+You can also use a **sequence** on *lazy attributes*. I will cover this topic in my second article but for completeness sake I wanted to mention it here as well. In case you need a unique value assigned at the time the instance gets created—therefore its called *lazy* because this attribute waits with value assignment until object instantiation—sequences just need a block to work as well.
+
+``` ruby
+
+FactoryGirl.define do
+
+  sequence :mission_deployment do |number|
+    "Mission #{number} at #{DateTime.now.to_formatted_s(:short)}"
+  end
+
+  factory :spy do
+    name 'Marty McSpy'
+    deployment { generate(:mission_deployment }
+  end
+
+end
+```
+
+The block for the factory attribute gets evaluated when the object gets instantiated. In our case, you’ll get a string composed of a unique mission number and a new **DateTime** object as values for every **:spy** that gets deployed.
+
++ **in-line sequence**
+
+This option is best when a sequence of unique values is only needed on an attribute for a single factory. It would make no sense to define it outside that factory and possibly have to look for it elsewhere if you need to tweak it. In the example below we are looking to generate unique ids for every spy car.
+
+``` ruby
+FactoryGirl.define do 
+
+  factory :astin_martin do
+    sequence(:vehicle_id_number) {|n| "A_M#{n}"}
+  end
+
+end
+
+spycar = create(:astin_martin)
+spycar.vehicle_id_number
+# => "A_M_1"
+```
+
+Well, maybe we should provide the **vehicle_id_number** attribute another starting value than **1**? Let’s say we wanna account for a couple of prototypes before the car was ready for production. You can provide a second argument as the starting value for your sequence. Let’s go with **9** this time.
+
+``` ruby
+FactoryGirl.define do 
+
+  factory :astin_martin do
+    sequence(:vehicle_id_number, 9) {|n| "A_M#{n}"}
+  end
+
+end
+
+spycar_01 = create(:astin_martin)
+spycar_01.vehicle_id_number
+# => "A_M_9"
+
+spycar_02 = create(:astin_martin)
+spycar_02.vehicle_id_number
+# => "A_M_10"
+
+# ...
+```
+
 
 {% img /images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg %}
 
