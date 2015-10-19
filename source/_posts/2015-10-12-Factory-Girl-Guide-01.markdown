@@ -179,7 +179,7 @@ FactoryGirl.define do
 end
 ```
 
-All factories are defined inside this block. Factories just need a **:symbol** name and a set of attributes to get started. The factory below is named **secret_service_agent** and the attributes are **name**, **favorite_gadget** and **skills**.
+All factories are defined inside this block. Factories just need a **:symbol** name and a set of attributes to get started. This name needs to be the *snake_cased* version of your Model names—like SecretServiceAgent in the following example. The factory below is named **secret_service_agent** and the attributes are **name**, **favorite_gadget** and **skills**.
 
 **Ruby:**
 ``` ruby
