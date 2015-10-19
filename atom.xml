@@ -4,7 +4,7 @@
   <title><![CDATA[Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-19T21:38:12+02:00</updated>
+  <updated>2015-10-19T21:42:10+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,169 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Factory Girl 201]]></title>
+    <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/20/Factory-Girl-Guide-02/"/>
+    <updated>2015-10-20T05:29:10+02:00</updated>
+    <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/20/Factory-Girl-Guide-02</id>
+    <content type="html"><![CDATA[<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg"></p>
+
+<ul>
+<li><h3>Associations</h3></li>
+</ul>
+
+
+<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
+
+<p>As mentioned before, another trick up the sleeve of Factory Girl is emulating associations—relatively straightforward too I’d say.</p>
+
+<h5>/spec/factories.rb</h5>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;Marty McSpy&quot;</span>
+</span><span class='line'>    <span class="n">favorite_gadget</span> <span class="s2">&quot;Hoverboard&quot;</span>
+</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Infiltration and espionage&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>/spec/spy_spec.rb</h5>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">describe</span> <span class="no">Spy</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">it</span> <span class="s1">&#39;returns alias of a spy&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">spy</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:spy</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">spy</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_instance_of</span><span class="p">(</span><span class="no">Spy</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">spy</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s1">&#39;Marty McSpy&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">spy</span><span class="o">.</span><span class="n">function</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s1">&#39;Covert agent&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">spy</span><span class="o">.</span><span class="n">skills</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s1">&#39;Infiltration and espionage&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;Marty McSpy&quot;</span>
+</span><span class='line'>    <span class="n">function</span> <span class="s2">&quot;Covert agent&quot;</span>
+</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Infiltration and espionage&quot;</span>
+</span><span class='line'>    <span class="n">date_of_birth</span> <span class="no">Date</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1968</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:quartermaster</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="no">Spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;Q&quot;</span>
+</span><span class='line'>    <span class="n">function</span> <span class="s2">&quot;Quartermaster&quot;</span>
+</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Inventing gizmos and hacking&quot;</span>
+</span><span class='line'>    <span class="n">date_of_birth</span> <span class="kp">nil</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="p">:</span><span class="mo">00</span> <span class="n">agent</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="no">Spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;James Bond&quot;</span>
+</span><span class='line'>    <span class="n">function</span> <span class="s2">&quot;Covert agent&quot;</span>
+</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Getting Bond Girls killed and covert infiltration&quot;</span>
+</span><span class='line'>    <span class="n">date_of_birth</span> <span class="kp">nil</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notes:
+Factory girl is a ruby gem</p>
+
+<p>it was data stored in yaml</p>
+
+<p>have post with cretain attributes
+can have associations(references to other factories), callbacks(for you create data), traits(mix in behaviour)</p>
+
+<p>references to related data</p>
+
+<p>overwrite on the fly</p>
+
+<p>attribute order does not matter</p>
+
+<p>uses a lot of metaprogramming with a lot of dynamic method definitions</p>
+
+<p>you can refer to attributes on objects even if you haven’t defined them in your factory. that means you can define factories with the absolute bare minimum to make them valid objects and assign attributes needed for your tests on the fly.</p>
+
+<p>Want to have it DRY</p>
+
+<p>create is actually going to persist the data. the goal is declaring bare bones factories and either have child factories and assign different attribues that mutate the data in a certain manner or that you use traits where you can mutate multiple columns (attributes) and change a handful of columns at at time or you can add associations or different callbacks.</p>
+
+<p>Being able to define traits as a concept. for example flag on a post. published boolean and then requirements change and you need timestamp. later it changes again because you need state machine with published, not published, draft and so one. Instead of building a factory girl object and putting that column when you create this record ends up being a painfpoint because everything needs to change now when you refer to published-> all through your tests. -> traits just referring to this concept which lets you apply and affect changes in only one central DRY place. Imagine if you’d have used an options hash for instantiation and that requirement totally changed how many potential places in your tests might break and need attention now. with traits your test dont necessarily care about how its stored in the database.</p>
+
+<p>traits are comma separated list of symbol traits / attributes that you wanna addon to a particular factory. traits are also defined in your factories file(s). traits is a tool for eliminating duplication in your test suite.</p>
+
+<p>And because you still do (hopefully) unit tests on the columns  for your models that are represented in traits you give them you still give them the same amount of care than the attributes that are needed to have valid objects.</p>
+
+<p>The more date you put in your global test space the more pain you are gonna have maintainance wise. Don’t be lazy!</p>
+
+<p>When unit-testing most methods, however, Factory Girl (and even persisting data to the database) is unnecessary.</p>
+
+<p>Outro</p>
+
+<p>That’s also one more reason why only defining only the absolute basic objects and their attributes goes a long way in avoiding the side effects of global coupling. -> Bare minimum factory definitions and segregating related objects into separate factories or factories witht traits is the key thing to remember whatever you do.</p>
+
+<p>A lot of times you actually dont need factory girl to write some of your unit tests. Josh would be the first to attest to that. Bigger systems with lots of data and collaborators and stuff that that you dont need for your unit tests. If you write unit tests and your data doesnt need any associations, it doesnt need persistance, you dont care about callbacks, dont use factory girl or at least use build (stubbed??) which instantiates the record and assignes all the attriubutes, gives it an id and raises if you interact with the database at all.  which gives you fake data that looks like its been persisted - gives you a full-fledged object that looks like its been saved. A lot faster. nothing hits the database at all.</p>
+
+<p>Global coupling. Data is global in your test suite? it can become painful. When you change some attribute and tests start to break. Idea is to declare factories and then segregate them -> Something is different is named differently. A user with admin flag becomes admin in separate factory or trait. Regular user vs admin user -> Different type of users. Splitting up the data types helps ease some of the pain of the fact that they are global. So like changes to admin are less likely to break global things.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Factory Girl 101]]></title>
@@ -812,162 +975,6 @@
 
 
 <p>As you have seen by now, Factory Girl offers a well balanced Ruby DSL  that builds objects instead of Database Records for your test data. It helps to keep your tests focused, DRY and readable when you deal with dummy data. That’s a pretty solid accomplishment in my book. Remember that barebones factory definitions are key to your future sanity. The more factory data you put in your global test space the more likely you’ll experience some sort of maintainance pain. For your unit tests, Factory Girl will be unnecessary and only slows down your test suite. Josh Clayton would be the first to attest to this and who would recommend its best practice to use Factory Girl selectively as little as possible.</p>
-
-<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/Factory-Girl-Guide/hine-lewis-national-child-labor-committee-collection.jpg"></p>
-
-<ul>
-<li><h3>Associations</h3></li>
-</ul>
-
-
-<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
-
-<p>As mentioned before, another trick up the sleeve of Factory Girl is emulating associations—relatively straightforward too I’d say.</p>
-
-<h5>/spec/factories.rb</h5>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
-</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;Marty McSpy&quot;</span>
-</span><span class='line'>    <span class="n">favorite_gadget</span> <span class="s2">&quot;Hoverboard&quot;</span>
-</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Infiltration and espionage&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h5>/spec/spy_spec.rb</h5>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">describe</span> <span class="no">Spy</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">it</span> <span class="s1">&#39;returns alias of a spy&#39;</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">spy</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:spy</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">spy</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_instance_of</span><span class="p">(</span><span class="no">Spy</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">spy</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s1">&#39;Marty McSpy&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">spy</span><span class="o">.</span><span class="n">function</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s1">&#39;Covert agent&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">spy</span><span class="o">.</span><span class="n">skills</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s1">&#39;Infiltration and espionage&#39;</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
-</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;Marty McSpy&quot;</span>
-</span><span class='line'>    <span class="n">function</span> <span class="s2">&quot;Covert agent&quot;</span>
-</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Infiltration and espionage&quot;</span>
-</span><span class='line'>    <span class="n">date_of_birth</span> <span class="no">Date</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1968</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">factory</span> <span class="ss">:quartermaster</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="no">Spy</span> <span class="k">do</span>
-</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;Q&quot;</span>
-</span><span class='line'>    <span class="n">function</span> <span class="s2">&quot;Quartermaster&quot;</span>
-</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Inventing gizmos and hacking&quot;</span>
-</span><span class='line'>    <span class="n">date_of_birth</span> <span class="kp">nil</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">factory</span> <span class="p">:</span><span class="mo">00</span> <span class="n">agent</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="no">Spy</span> <span class="k">do</span>
-</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;James Bond&quot;</span>
-</span><span class='line'>    <span class="n">function</span> <span class="s2">&quot;Covert agent&quot;</span>
-</span><span class='line'>    <span class="n">skills</span> <span class="s2">&quot;Getting Bond Girls killed and covert infiltration&quot;</span>
-</span><span class='line'>    <span class="n">date_of_birth</span> <span class="kp">nil</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Notes:
-Factory girl is a ruby gem</p>
-
-<p>it was data stored in yaml</p>
-
-<p>have post with cretain attributes
-can have associations(references to other factories), callbacks(for you create data), traits(mix in behaviour)</p>
-
-<p>references to related data</p>
-
-<p>overwrite on the fly</p>
-
-<p>attribute order does not matter</p>
-
-<p>uses a lot of metaprogramming with a lot of dynamic method definitions</p>
-
-<p>you can refer to attributes on objects even if you haven’t defined them in your factory. that means you can define factories with the absolute bare minimum to make them valid objects and assign attributes needed for your tests on the fly.</p>
-
-<p>Want to have it DRY</p>
-
-<p>create is actually going to persist the data. the goal is declaring bare bones factories and either have child factories and assign different attribues that mutate the data in a certain manner or that you use traits where you can mutate multiple columns (attributes) and change a handful of columns at at time or you can add associations or different callbacks.</p>
-
-<p>Being able to define traits as a concept. for example flag on a post. published boolean and then requirements change and you need timestamp. later it changes again because you need state machine with published, not published, draft and so one. Instead of building a factory girl object and putting that column when you create this record ends up being a painfpoint because everything needs to change now when you refer to published-> all through your tests. -> traits just referring to this concept which lets you apply and affect changes in only one central DRY place. Imagine if you’d have used an options hash for instantiation and that requirement totally changed how many potential places in your tests might break and need attention now. with traits your test dont necessarily care about how its stored in the database.</p>
-
-<p>traits are comma separated list of symbol traits / attributes that you wanna addon to a particular factory. traits are also defined in your factories file(s). traits is a tool for eliminating duplication in your test suite.</p>
-
-<p>And because you still do (hopefully) unit tests on the columns  for your models that are represented in traits you give them you still give them the same amount of care than the attributes that are needed to have valid objects.</p>
-
-<p>The more date you put in your global test space the more pain you are gonna have maintainance wise. Don’t be lazy!</p>
-
-<p>When unit-testing most methods, however, Factory Girl (and even persisting data to the database) is unnecessary.</p>
-
-<p>Outro</p>
-
-<p>That’s also one more reason why only defining only the absolute basic objects and their attributes goes a long way in avoiding the side effects of global coupling. -> Bare minimum factory definitions and segregating related objects into separate factories or factories witht traits is the key thing to remember whatever you do.</p>
-
-<p>A lot of times you actually dont need factory girl to write some of your unit tests. Josh would be the first to attest to that. Bigger systems with lots of data and collaborators and stuff that that you dont need for your unit tests. If you write unit tests and your data doesnt need any associations, it doesnt need persistance, you dont care about callbacks, dont use factory girl or at least use build (stubbed??) which instantiates the record and assignes all the attriubutes, gives it an id and raises if you interact with the database at all.  which gives you fake data that looks like its been persisted - gives you a full-fledged object that looks like its been saved. A lot faster. nothing hits the database at all.</p>
-
-<p>Global coupling. Data is global in your test suite? it can become painful. When you change some attribute and tests start to break. Idea is to declare factories and then segregate them -> Something is different is named differently. A user with admin flag becomes admin in separate factory or trait. Regular user vs admin user -> Different type of users. Splitting up the data types helps ease some of the pain of the fact that they are global. So like changes to admin are less likely to break global things.</p>
 ]]></content>
   </entry>
   
