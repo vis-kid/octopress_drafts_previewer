@@ -4,7 +4,7 @@ title: Factory Girl 201
 date: 2015-10-20 04:29:10 +0100
 comments: true
 sharing: true
-published: true 
+published: false 
 categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Factory Girl]
 ---
 
