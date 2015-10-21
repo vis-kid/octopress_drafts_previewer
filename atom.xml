@@ -4,7 +4,7 @@
   <title><![CDATA[Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-21T22:09:47+02:00</updated>
+  <updated>2015-10-21T23:48:32+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -75,7 +75,7 @@
 </ul>
 
 
-<p>I think its fair to call them fake attributes. These virtual attributes allow you to pass addtional options when you construct your factory intances. If you use <strong>attributes_for</strong> for example, transient attributes won’t show up.</p>
+<p>I think its fair to call them fake attributes. These virtual attributes allow you to pass addtional options when you construct your factory intances—via a hash of course. The instance itself won’t be affected by them since they won’t be set on your factory object. On the other hand, Factory Girl treats transient attributes just like real ones. If you use <strong>attributes_for</strong>, they won’t show up though. <strong>Dependent attributes</strong> and <strong>Callbacks</strong> are able to access these fake attributes inside your factory. Overall, they are another strategy to keep your factories DRY.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -137,6 +137,56 @@
 </span><span class='line'><span class="n">narcissistic_villain</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:supervillain</span><span class="p">,</span> <span class="ss">megalomaniac</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span>
 </span><span class='line'><span class="n">narcissistic_villain</span><span class="o">.</span><span class="n">motivation</span>
 </span><span class='line'><span class="c1"># =&gt; &quot;Building an underwater civilization and saving the world&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The example above turns out to be a bit more DRY since I avoided creating separate factories for supervillains that want to save the world or are friends with Blofeld repectively.</p>
+
+<p>!!! Section about callbacks using transient attributes</p>
+
+<p>Transient attributes give you the flexibility to make all kinds of adjustments and avoid creating a host of ever so similar factories.</p>
+
+<ul>
+<li><h3>Lazy attributes</h3></li>
+</ul>
+
+
+<p>“Normal” attributes in Factory Girl are evaluated when the factory is defined. You usually provide static values as parameters to methods with the same name of your attributes. If you want to delay the evaluation until the last possible moment—when the instance gets created—you will need to feed attributes their values via a code block. Associations and dynamically created values from objects like <strong>DateTime</strong> objects will be your most frequent customers for that lazy treatment.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:exploding_device</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">transient</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">countdown_seconds</span> <span class="mi">10</span><span class="o">*</span><span class="mi">60</span>
+</span><span class='line'>      <span class="n">time_of_explosion</span> <span class="p">{</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="o">+</span> <span class="n">countdown_seconds</span> <span class="p">}</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">activate</span> <span class="p">{</span> <span class="s2">&quot;Exploding in </span><span class="si">#{</span><span class="n">countdown_seconds</span><span class="si">}</span><span class="s2"> seconds </span><span class="si">#{</span><span class="n">time_of_explosion</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;at %I:%M %p&quot;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ticking_device</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:exploding_device</span><span class="p">)</span>
+</span><span class='line'><span class="n">ticking_device</span><span class="o">.</span><span class="n">activate</span>
+</span><span class='line'><span class="c1"># =&gt; &quot;Exploding in 600 seconds at 11:53 PM&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

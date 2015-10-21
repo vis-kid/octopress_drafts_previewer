@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rspec | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/rspec/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-21T22:09:47+02:00</updated>
+  <updated>2015-10-21T23:48:32+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -59,7 +59,7 @@ villain.profile
 </ul>
 
 
-<p>I think its fair to call them fake attributes. These virtual attributes allow you to pass addtional options when you construct your factory intances. If you use <strong>attributes_for</strong> for example, transient attributes won’t show up.</p>
+<p>I think its fair to call them fake attributes. These virtual attributes allow you to pass addtional options when you construct your factory intances—via a hash of course. The instance itself won’t be affected by them since they won’t be set on your factory object. On the other hand, Factory Girl treats transient attributes just like real ones. If you use <strong>attributes_for</strong>, they won’t show up though. <strong>Dependent attributes</strong> and <strong>Callbacks</strong> are able to access these fake attributes inside your factory. Overall, they are another strategy to keep your factories DRY.</p>
 
 <pre><code class="ruby">FactoryGirl.define do
 
@@ -91,6 +91,38 @@ cat_friendly_villain.profile
 narcissistic_villain = create(:supervillain, megalomaniac: true)
 narcissistic_villain.motivation
 # =&gt; "Building an underwater civilization and saving the world"
+</code></pre>
+
+<p>The example above turns out to be a bit more DRY since I avoided creating separate factories for supervillains that want to save the world or are friends with Blofeld repectively.</p>
+
+<p>!!! Section about callbacks using transient attributes</p>
+
+<p>Transient attributes give you the flexibility to make all kinds of adjustments and avoid creating a host of ever so similar factories.</p>
+
+<ul>
+<li><h3>Lazy attributes</h3></li>
+</ul>
+
+
+<p>“Normal” attributes in Factory Girl are evaluated when the factory is defined. You usually provide static values as parameters to methods with the same name of your attributes. If you want to delay the evaluation until the last possible moment—when the instance gets created—you will need to feed attributes their values via a code block. Associations and dynamically created values from objects like <strong>DateTime</strong> objects will be your most frequent customers for that lazy treatment.</p>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+  factory :exploding_device do
+
+    transient do
+      countdown_seconds 10*60
+      time_of_explosion { Time.now + countdown_seconds }
+    end
+
+    activate { "Exploding in #{countdown_seconds} seconds #{time_of_explosion.strftime("at %I:%M %p")}" }
+  end
+
+end
+
+ticking_device = create(:exploding_device)
+ticking_device.activate
+# =&gt; "Exploding in 600 seconds at 11:53 PM"
 </code></pre>
 
 <ul>
