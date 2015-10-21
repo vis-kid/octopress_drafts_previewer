@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bdd | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/bdd/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-20T17:44:11+02:00</updated>
+  <updated>2015-10-21T22:09:47+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,190 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Factory Girl 201]]></title>
+    <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/20/Factory-Girl-Guide-02/"/>
+    <updated>2015-10-20T05:29:10+02:00</updated>
+    <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/20/Factory-Girl-Guide-02</id>
+    <content type="html"><![CDATA[<p><img src="/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
+
+<h3>Topics</h3>
+
+<ul>
+<li>Traits</li>
+<li>Aliases</li>
+<li>Callbacks</li>
+<li>Associations</li>
+<li>Lazy attributes</li>
+<li>Modifying factories</li>
+<li>Transient attributes</li>
+<li><p>Dependent attributes</p></li>
+<li><h3>Dependent Attributes</h3></li>
+</ul>
+
+
+<p>If you need to use attribute values for composing other factory attributes on the fly Factory Girl has you covered. You just need to wrap the whole thing in a block.</p>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+  factory :supervillain do
+    name       'Karl Stromberg'
+    passion    'marine biology'
+    ambition   'human extinction'
+    motivation 'save the oceans'
+    profile { "#{name} has a passion for #{passion} and aims to #{motivation} through #{ambition}."}
+  end
+
+end
+
+villain = create(:supervillain)
+villain.profile 
+# =&gt; "Karl Stromberg has a passion for marine biology and aims to save the oceans through human extinction."
+</code></pre>
+
+<ul>
+<li><h3>Transient Attributes</h3></li>
+</ul>
+
+
+<p>I think its fair to call them fake attributes. These virtual attributes allow you to pass addtional options when you construct your factory intances. If you use <strong>attributes_for</strong> for example, transient attributes won’t show up.</p>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+  factory :supervillain do
+    transient do
+      megalomaniac false
+      cat_owner false
+    end
+
+    name       'Karl Stromberg'
+    passion    'marine biology'
+    ambition   'human extinction'
+    motivation { "Building an underwater civilization#{" and saving the world" if megalomaniac}" }
+    profile    { "Insane business tycoon#{" – friends with Blofeld" if cat_owner}" }
+  end
+
+end
+
+villain = create(:supervillain)
+villain.profile
+# =&gt; "Insane business tycoon"
+villain.motivation
+# =&gt; "Building an underwater civilization"
+
+cat_friendly_villain = create(:supervillain, cat_owner: true)
+cat_friendly_villain.profile
+# =&gt; "Insane business tycoon – friends with Blofeld"
+
+narcissistic_villain = create(:supervillain, megalomaniac: true)
+narcissistic_villain.motivation
+# =&gt; "Building an underwater civilization and saving the world"
+</code></pre>
+
+<ul>
+<li><h3>Associations</h3></li>
+</ul>
+
+
+<p>As mentioned before, another trick up the sleeve of Factory Girl is emulating associations—relatively straightforward too I’d say.</p>
+
+<h5>/spec/factories.rb</h5>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+  factory :spy do
+    name "Marty McSpy"
+    favorite_gadget "Hoverboard"
+    skills "Infiltration and espionage"
+  end
+
+end
+</code></pre>
+
+<h5>/spec/spy_spec.rb</h5>
+
+<pre><code class="ruby">require 'rails_helper'
+
+describe Spy do
+  it 'returns alias of a spy' do
+    spy = create(:spy)
+
+    expect(spy).to be_instance_of(Spy)
+    expect(spy.name).to eq('Marty McSpy')
+    expect(spy.function).to eq('Covert agent')
+    expect(spy.skills).to eq('Infiltration and espionage')
+  end
+end
+</code></pre>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+  factory :spy do
+    name "Marty McSpy"
+    function "Covert agent"
+    skills "Infiltration and espionage"
+    date_of_birth Date.new(1968, 6, 9) 
+  end
+
+  factory :quartermaster, class: Spy do
+    name "Q"
+    function "Quartermaster"
+    skills "Inventing gizmos and hacking"
+    date_of_birth nil
+  end
+
+  factory :00 agent, class: Spy do
+    name "James Bond"
+    function "Covert agent"
+    skills "Getting Bond Girls killed and covert infiltration"
+    date_of_birth nil
+  end
+
+end
+</code></pre>
+
+<p>Notes:
+Factory girl is a ruby gem</p>
+
+<p>it was data stored in yaml</p>
+
+<p>have post with cretain attributes
+can have associations(references to other factories), callbacks(for you create data), traits(mix in behaviour)</p>
+
+<p>references to related data</p>
+
+<p>overwrite on the fly</p>
+
+<p>attribute order does not matter</p>
+
+<p>uses a lot of metaprogramming with a lot of dynamic method definitions</p>
+
+<p>you can refer to attributes on objects even if you haven’t defined them in your factory. that means you can define factories with the absolute bare minimum to make them valid objects and assign attributes needed for your tests on the fly.</p>
+
+<p>Want to have it DRY</p>
+
+<p>create is actually going to persist the data. the goal is declaring bare bones factories and either have child factories and assign different attribues that mutate the data in a certain manner or that you use traits where you can mutate multiple columns (attributes) and change a handful of columns at at time or you can add associations or different callbacks.</p>
+
+<p>Being able to define traits as a concept. for example flag on a post. published boolean and then requirements change and you need timestamp. later it changes again because you need state machine with published, not published, draft and so one. Instead of building a factory girl object and putting that column when you create this record ends up being a painfpoint because everything needs to change now when you refer to published-> all through your tests. -> traits just referring to this concept which lets you apply and affect changes in only one central DRY place. Imagine if you’d have used an options hash for instantiation and that requirement totally changed how many potential places in your tests might break and need attention now. with traits your test dont necessarily care about how its stored in the database.</p>
+
+<p>traits are comma separated list of symbol traits / attributes that you wanna addon to a particular factory. traits are also defined in your factories file(s). traits is a tool for eliminating duplication in your test suite.</p>
+
+<p>And because you still do (hopefully) unit tests on the columns  for your models that are represented in traits you give them you still give them the same amount of care than the attributes that are needed to have valid objects.</p>
+
+<p>The more date you put in your global test space the more pain you are gonna have maintainance wise. Don’t be lazy!</p>
+
+<p>When unit-testing most methods, however, Factory Girl (and even persisting data to the database) is unnecessary.</p>
+
+<p>Outro</p>
+
+<p>That’s also one more reason why only defining only the absolute basic objects and their attributes goes a long way in avoiding the side effects of global coupling. -> Bare minimum factory definitions and segregating related objects into separate factories or factories witht traits is the key thing to remember whatever you do.</p>
+
+<p>A lot of times you actually dont need factory girl to write some of your unit tests. Josh would be the first to attest to that. Bigger systems with lots of data and collaborators and stuff that that you dont need for your unit tests. If you write unit tests and your data doesnt need any associations, it doesnt need persistance, you dont care about callbacks, dont use factory girl or at least use build (stubbed??) which instantiates the record and assignes all the attriubutes, gives it an id and raises if you interact with the database at all.  which gives you fake data that looks like its been persisted - gives you a full-fledged object that looks like its been saved. A lot faster. nothing hits the database at all.</p>
+
+<p>Global coupling. Data is global in your test suite? it can become painful. When you change some attribute and tests start to break. Idea is to declare factories and then segregate them -> Something is different is named differently. A user with admin flag becomes admin in separate factory or trait. Regular user vs admin user -> Different type of users. Splitting up the data types helps ease some of the pain of the fact that they are global. So like changes to admin are less likely to break global things.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Factory Girl 101]]></title>
