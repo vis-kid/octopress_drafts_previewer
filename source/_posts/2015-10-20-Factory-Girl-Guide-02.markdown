@@ -45,7 +45,7 @@ villain.profile
 
 + ### Transient Attributes
 
-I think its fair to call them fake attributes. These virtual attributes allow you to pass addtional options when you construct your factory intances—via a hash of course. The instance itself won’t be affected by them since they won’t be set on your factory object. On the other hand, Factory Girl treats transient attributes just like real ones. If you use **attributes_for**, they won’t show up though. **Dependent attributes** and **Callbacks** are able to access these fake attributes inside your factory. 
+I think its fair to call them fake attributes. These virtual attributes allow you to pass addtional options when you construct your factory intances—via a hash of course. The instance itself won’t be affected by them since they won’t be set on your factory object. On the other hand, Factory Girl treats transient attributes just like real ones. If you use **attributes_for**, they won’t show up though. **Dependent attributes** and **Callbacks** are able to access these fake attributes inside your factory. Overall, they are another strategy to keep your factories DRY. 
 
 ``` ruby
 FactoryGirl.define do
@@ -80,10 +80,35 @@ narcissistic_villain.motivation
 # => "Building an underwater civilization and saving the world"
 ```
 
+The example above turns out to be a bit more DRY since I avoided creating separate factories for supervillains that want to save the world or are friends with Blofeld repectively.
+
 !!! Section about callbacks using transient attributes
 
 Transient attributes give you the flexibility to make all kinds of adjustments and avoid creating a host of ever so similar factories.
 
++ ### Lazy attributes
+
+“Normal” attributes in Factory Girl are evaluated when the factory is defined. You usually provide static values as parameters to methods with the same name of your attributes. If you want to delay the evaluation until the last possible moment—when the instance gets created—you will need to feed attributes their values via a code block. Associations and dynamically created values from objects like **DateTime** objects will be your most frequent customers for that lazy treatment.
+
+``` ruby
+FactoryGirl.define do
+
+  factory :exploding_device do
+  
+    transient do
+      countdown_seconds 10*60
+      time_of_explosion { Time.now + countdown_seconds }
+    end
+
+    activate { "Exploding in #{countdown_seconds} seconds #{time_of_explosion.strftime("at %I:%M %p")}" }
+  end
+
+end
+
+ticking_device = create(:exploding_device)
+ticking_device.activate
+# => "Exploding in 600 seconds at 11:53 PM"
+```
 
 
 
