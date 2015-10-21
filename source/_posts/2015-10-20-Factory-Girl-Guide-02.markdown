@@ -21,7 +21,7 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 + Transient attributes
 + Dependent attributes
 
-+ ### Dependent attributes
++ ### Dependent Attributes
 
 If you need to use attribute values for composing other factory attributes on the fly Factory Girl has you covered. You just need to wrap the whole thing in a block.
 
@@ -42,6 +42,46 @@ villain = create(:supervillain)
 villain.profile 
 # => "Karl Stromberg has a passion for marine biology and aims to save the oceans through human extinction."
 ```
+
++ ### Transient Attributes
+
+I think its fair to call them fake attributes. These virtual attributes allow you to pass addtional options when you construct your factory intances. If you use **attributes_for** for example, transient attributes won’t show up. 
+
+``` ruby
+FactoryGirl.define do
+
+  factory :supervillain do
+    transient do
+      megalomaniac false
+      cat_owner false
+    end
+
+    name       'Karl Stromberg'
+    passion    'marine biology'
+    ambition   'human extinction'
+    motivation { "Building an underwater civilization#{" and saving the world" if megalomaniac}" }
+    profile    { "Insane business tycoon#{" – friends with Blofeld" if cat_owner}" }
+  end
+
+end
+
+villain = create(:supervillain)
+villain.profile
+# => "Insane business tycoon"
+villain.motivation
+# => "Building an underwater civilization"
+
+cat_friendly_villain = create(:supervillain, cat_owner: true)
+cat_friendly_villain.profile
+# => "Insane business tycoon – friends with Blofeld"
+
+narcissistic_villain = create(:supervillain, megalomaniac: true)
+narcissistic_villain.motivation
+# => "Building an underwater civilization and saving the world"
+
+
+```
+
 
 
 
