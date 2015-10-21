@@ -45,7 +45,7 @@ villain.profile
 
 + ### Transient Attributes
 
-I think its fair to call them fake attributes. These virtual attributes allow you to pass addtional options when you construct your factory intances. If you use **attributes_for** for example, transient attributes won’t show up. 
+I think its fair to call them fake attributes. These virtual attributes allow you to pass addtional options when you construct your factory intances—via a hash of course. The instance itself won’t be affected by them since they won’t be set on your factory object. On the other hand, Factory Girl treats transient attributes just like real ones. If you use **attributes_for**, they won’t show up though. **Dependent attributes** and **Callbacks** are able to access these fake attributes inside your factory. 
 
 ``` ruby
 FactoryGirl.define do
@@ -78,9 +78,12 @@ cat_friendly_villain.profile
 narcissistic_villain = create(:supervillain, megalomaniac: true)
 narcissistic_villain.motivation
 # => "Building an underwater civilization and saving the world"
-
-
 ```
+
+!!! Section about callbacks using transient attributes
+
+Transient attributes give you the flexibility to make all kinds of adjustments and avoid creating a host of ever so similar factories.
+
 
 
 
