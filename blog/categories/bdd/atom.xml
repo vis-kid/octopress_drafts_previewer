@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bdd | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/bdd/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-21T23:48:32+02:00</updated>
+  <updated>2015-10-22T22:09:35+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -19,6 +19,8 @@
     <updated>2015-10-20T05:29:10+02:00</updated>
     <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/20/Factory-Girl-Guide-02</id>
     <content type="html"><![CDATA[<p><img src="/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
+
+<p>This second article about this popular and useful Ruby gem deals with a couple more nuanced topics that beginners don’t necessarily need to concern themselves right away when they get started. Again, I did my best to keep it newbie-accessible and explain every bit of lingo people new to TDD might have never heard of.</p>
 
 <h3>Topics</h3>
 
@@ -125,12 +127,54 @@ ticking_device.activate
 # =&gt; "Exploding in 600 seconds at 11:53 PM"
 </code></pre>
 
+<p>To achieve the same expressiveness without <strong>alias</strong> you’d have to get a lot more clever with composing your factories or introduce duplication.</p>
+
 <ul>
 <li><h3>Associations</h3></li>
 </ul>
 
 
 <p>As mentioned before, another trick up the sleeve of Factory Girl is emulating associations—relatively straightforward too I’d say.</p>
+
+<ul>
+<li><h3>Aliases</h3></li>
+</ul>
+
+
+<p>Aliases for your factories allow you to be more expressive about the context that you are using your factory objects in. You only need to provide a hash of alternative names that better describe the relationship between associated objects.</p>
+
+<p> Let’s say you have an <strong>:agent</strong> factory and a <strong>:law_enforcement_vehicle</strong> factory. Wouldn’t it be nice to refer to the agent as <strong>:owner</strong>? In the example below I contrasted it with an example without an alias.</p>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+  factory :agent, aliases: [:owner] do
+    name   'Fox Mulder'
+    job 'Chasing bad dudes'
+    special_skills 'Investigation and intelligence'
+
+    factory :doubleOseven do
+      name 'James Bond'
+    end
+  end
+
+  factory :law_enforcement_vehicle do
+    name 'Oldsmobile Achieva'
+    kind 'Compact car'
+    owner
+  end
+
+  factory :spy_car do
+    name 'Aston Martin DB9'
+    kind 'Sports car'
+    doubleOseven
+  end
+
+end
+</code></pre>
+
+<p> I think you’ll agree that it not only reads better but it also gives you or the person who comes after you a bit more context about the objects in question. Yeah, you need to use plural <strong>:aliases</strong> also if you have only a single alias.</p>
+
+<p>In the context of comments a <strong>:user</strong> could be referred to as <strong>:commenter</strong>, in the case of a <strong>:crime</strong> a <strong>:user</strong> could be aliased as a <strong>:suspect</strong> and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your need of duplication.</p>
 
 <h5>/spec/factories.rb</h5>
 

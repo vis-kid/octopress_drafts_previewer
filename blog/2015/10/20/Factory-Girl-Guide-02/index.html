@@ -9,15 +9,7 @@
   <meta name="author" content="Your Name">
 
   
-  <meta name="description" content="Topics Traits
-Aliases
-Callbacks
-Associations
-Lazy attributes
-Modifying factories
-Transient attributes
-Dependent attributes
-Dependent Attributes If &hellip;">
+  <meta name="description" content="This second article about this popular and useful Ruby gem deals with a couple more nuanced topics that beginners don’t necessarily need to concern &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +85,8 @@ Dependent Attributes If &hellip;">
 
 
 <div class="entry-content"><p><img src="/octopress_drafts_previewer/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
+
+<p>This second article about this popular and useful Ruby gem deals with a couple more nuanced topics that beginners don’t necessarily need to concern themselves right away when they get started. Again, I did my best to keep it newbie-accessible and explain every bit of lingo people new to TDD might have never heard of.</p>
 
 <h3>Topics</h3>
 
@@ -264,12 +258,80 @@ Dependent Attributes If &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>To achieve the same expressiveness without <strong>alias</strong> you’d have to get a lot more clever with composing your factories or introduce duplication.</p>
+
 <ul>
 <li><h3>Associations</h3></li>
 </ul>
 
 
 <p>As mentioned before, another trick up the sleeve of Factory Girl is emulating associations—relatively straightforward too I’d say.</p>
+
+<ul>
+<li><h3>Aliases</h3></li>
+</ul>
+
+
+<p>Aliases for your factories allow you to be more expressive about the context that you are using your factory objects in. You only need to provide a hash of alternative names that better describe the relationship between associated objects.</p>
+
+<p> Let’s say you have an <strong>:agent</strong> factory and a <strong>:law_enforcement_vehicle</strong> factory. Wouldn’t it be nice to refer to the agent as <strong>:owner</strong>? In the example below I contrasted it with an example without an alias.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:agent</span><span class="p">,</span> <span class="ss">aliases</span><span class="p">:</span> <span class="o">[</span><span class="ss">:owner</span><span class="o">]</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span>   <span class="s1">&#39;Fox Mulder&#39;</span>
+</span><span class='line'>    <span class="n">job</span> <span class="s1">&#39;Chasing bad dudes&#39;</span>
+</span><span class='line'>    <span class="n">special_skills</span> <span class="s1">&#39;Investigation and intelligence&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">factory</span> <span class="ss">:doubleOseven</span> <span class="k">do</span>
+</span><span class='line'>      <span class="nb">name</span> <span class="s1">&#39;James Bond&#39;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:law_enforcement_vehicle</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Oldsmobile Achieva&#39;</span>
+</span><span class='line'>    <span class="n">kind</span> <span class="s1">&#39;Compact car&#39;</span>
+</span><span class='line'>    <span class="n">owner</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy_car</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Aston Martin DB9&#39;</span>
+</span><span class='line'>    <span class="n">kind</span> <span class="s1">&#39;Sports car&#39;</span>
+</span><span class='line'>    <span class="n">doubleOseven</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p> I think you’ll agree that it not only reads better but it also gives you or the person who comes after you a bit more context about the objects in question. Yeah, you need to use plural <strong>:aliases</strong> also if you have only a single alias.</p>
+
+<p>In the context of comments a <strong>:user</strong> could be referred to as <strong>:commenter</strong>, in the case of a <strong>:crime</strong> a <strong>:user</strong> could be aliased as a <strong>:suspect</strong> and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your need of duplication.</p>
 
 <h5>/spec/factories.rb</h5>
 
