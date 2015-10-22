@@ -123,6 +123,87 @@ To achieve the same expressiveness without **alias** you’d have to get a lot m
 
 As mentioned before, another trick up the sleeve of Factory Girl is emulating associations—relatively straightforward too I’d say.
 
++ ### Callbacks
+
+Callbacks allow you to inject some code at various moments in the life cycle of an object—like **save**, **after_save**, **before_validation** and so on. Rails for example offers a whole bunch of them and makes it pretty easy for novices to abuse this power. Keep in mind that callbacks that are not related to the persistance of objects are a known anti-pattern and its good advice to not cross that line. For example, it may seem convenient to let an instance of user send emails or process some order in a callback but these kinds of things invite bugs and create ties that are unnecessarily harder to refactor. Maybe that was one of the reasons why Factory Girl “only” offers you five callback options to play with:
+
++ **before(:create)** executes code block before your factory instance is saved.
+
+
++ **after(:create)** executes code block after your factory instance is saved.
+
++ **after(:build)** executes code block after your factory object has been built in memory
+
++ **after(:stub)** executes code block after your factory has created a stubbed object 
+
++ **custom(:your_custom_callback)** executes a custom callback without the need to prepend **before** or **after**.
+
+``` ruby
+FactoryGirl.define do
+  
+  factory :mission do
+    target 'Stop the bad dude'
+    provided_gadgets 'Mini submarine and shark gun'
+    after(:build) { assign_support_analyst }
+  end
+end
+```
+
+#### Attention!
+
+Note that for all options, inside the callback blocks will have an instance of the factory at your disposal. Guarantee you this will come in handy every once in a while, especially with assocations. 
+
+``` ruby
+FactoryGirl.define do
+
+  factory :double_agent do
+    after(:stub) { |double_agent| assign_new_identity(double_agent) }
+  end
+
+end
+```
+Here a **Ninja** has a bunch of nasty throwing stars (shuriken) at his disposal. Since you have a ninja object you can easily assign the throwing star to belong to the Ninja.
+
+``` ruby
+FactoryGirl.define do
+
+  factory :ninja do
+    name "Ra’s al Ghul"
+
+    factory :ninja_with_shuriken do
+
+      transient do
+        number_of_shuriken 10
+      end
+
+      after(:create) do |ninja, evaluator|
+        create_list(:shuriken, evaluator.number_of_shuriken, ninja: ninja)
+      end
+
+    end
+  end
+
+  factory :shuriken do
+    name 'Hira-shuriken'
+    number_of_spikes 'Four'
+    ninja
+  end
+
+end
+
+ninja = create(:ninja)
+ninja.shuriken # => 0
+
+ninja = create(:ninja_with_shuriken)
+ninja.shuriken # => 10
+
+ninja = create(:ninja_with_shuriken, number_of_shuriken: 20)
+ninja.shuriken # => 20
+```
+
+Also, through the evaluator object you have access to transient attributes too. That gives you the option to pass in addtional information when you “create” factory objects and need to tweak them on the fly. That gives you all the flexibility needed to play with associations and write expressive test data.   
+
+
 + ### Aliases
 
 Aliases for your factories allow you to be more expressive about the context that you are using your factory objects in. You only need to provide a hash of alternative names that better describe the relationship between associated objects.
@@ -134,7 +215,7 @@ FactoryGirl.define do
 
   factory :agent, aliases: [:owner] do
     name   'Fox Mulder'
-    job 'Chasing bad dudes'
+    job    'Chasing bad dudes'
     special_skills 'Investigation and intelligence'
     
     factory :doubleOseven do
@@ -158,9 +239,28 @@ end
 ```
  I think you’ll agree that it not only reads better but it also gives you or the person who comes after you a bit more context about the objects in question. Yeah, you need to use plural **:aliases** also if you have only a single alias. 
 
+You could write this a bit different as well—a lot more verbose.
+
+``` ruby
+factory :agent do
+  name   'Fox Mulder'
+  job    'Chasing bad dudes'
+  special_skills 'Investigation and intelligence'
+end  
+
+factory :law_enforcement_vehicle do
+  name 'Oldsmobile Achieva'
+  kind 'Compact car'
+  association :owner, factory: :agent
+end
+```
+
+Well, not that neat isn’t it?
+
 In the context of comments a **:user** could be referred to as **:commenter**, in the case of a **:crime** a **:user** could be aliased as a **:suspect** and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your need of duplication.
 
 
+{% img /images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png %}
 
 ##### /spec/factories.rb
 
