@@ -10,6 +10,8 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 {% img /images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png %}
 
+This second article about this popular and useful Ruby gem deals with a couple more nuanced topics that beginners don’t necessarily need to concern themselves right away when they get started. Again, I did my best to keep it newbie-accessible and explain every bit of lingo people new to TDD might have never heard of.
+
 ### Topics
 
 + Traits
@@ -110,6 +112,7 @@ ticking_device.activate
 # => "Exploding in 600 seconds at 11:53 PM"
 ```
 
+To achieve the same expressiveness without **alias** you’d have to get a lot more clever with composing your factories or introduce duplication.
 
 
 
@@ -119,6 +122,43 @@ ticking_device.activate
 + ### Associations
 
 As mentioned before, another trick up the sleeve of Factory Girl is emulating associations—relatively straightforward too I’d say.
+
++ ### Aliases
+
+Aliases for your factories allow you to be more expressive about the context that you are using your factory objects in. You only need to provide a hash of alternative names that better describe the relationship between associated objects.
+
+ Let’s say you have an **:agent** factory and a **:law_enforcement_vehicle** factory. Wouldn’t it be nice to refer to the agent as **:owner**? In the example below I contrasted it with an example without an alias.
+
+``` ruby
+FactoryGirl.define do
+
+  factory :agent, aliases: [:owner] do
+    name   'Fox Mulder'
+    job 'Chasing bad dudes'
+    special_skills 'Investigation and intelligence'
+    
+    factory :doubleOseven do
+      name 'James Bond'
+    end
+  end
+ 
+  factory :law_enforcement_vehicle do
+    name 'Oldsmobile Achieva'
+    kind 'Compact car'
+    owner
+  end
+
+  factory :spy_car do
+    name 'Aston Martin DB9'
+    kind 'Sports car'
+    doubleOseven
+  end
+
+end
+```
+ I think you’ll agree that it not only reads better but it also gives you or the person who comes after you a bit more context about the objects in question. Yeah, you need to use plural **:aliases** also if you have only a single alias. 
+
+In the context of comments a **:user** could be referred to as **:commenter**, in the case of a **:crime** a **:user** could be aliased as a **:suspect** and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your need of duplication.
 
 
 
