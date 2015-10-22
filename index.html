@@ -271,6 +271,137 @@
 <p>As mentioned before, another trick up the sleeve of Factory Girl is emulating associations—relatively straightforward too I’d say.</p>
 
 <ul>
+<li><h3>Callbacks</h3></li>
+</ul>
+
+
+<p>Callbacks allow you to inject some code at various moments in the life cycle of an object—like <strong>save</strong>, <strong>after_save</strong>, <strong>before_validation</strong> and so on. Rails for example offers a whole bunch of them and makes it pretty easy for novices to abuse this power. Keep in mind that callbacks that are not related to the persistance of objects are a known anti-pattern and its good advice to not cross that line. For example, it may seem convenient to let an instance of user send emails or process some order in a callback but these kinds of things invite bugs and create ties that are unnecessarily harder to refactor. Maybe that was one of the reasons why Factory Girl “only” offers you five callback options to play with:</p>
+
+<ul>
+<li><p><strong>before(:create)</strong> executes code block before your factory instance is saved.</p></li>
+<li><p><strong>after(:create)</strong> executes code block after your factory instance is saved.</p></li>
+<li><p><strong>after(:build)</strong> executes code block after your factory object has been built in memory</p></li>
+<li><p><strong>after(:stub)</strong> executes code block after your factory has created a stubbed object</p></li>
+<li><p><strong>custom(:your_custom_callback)</strong> executes a custom callback without the need to prepend <strong>before</strong> or <strong>after</strong>.</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:mission</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">target</span> <span class="s1">&#39;Stop the bad dude&#39;</span>
+</span><span class='line'>    <span class="n">provided_gadgets</span> <span class="s1">&#39;Mini submarine and shark gun&#39;</span>
+</span><span class='line'>    <span class="n">after</span><span class="p">(</span><span class="ss">:build</span><span class="p">)</span> <span class="p">{</span> <span class="n">assign_support_analyst</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Attention!</h4>
+
+<p>Note that for all options, inside the callback blocks will have an instance of the factory at your disposal. Guarantee you this will come in handy every once in a while, especially with assocations.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:double_agent</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">after</span><span class="p">(</span><span class="ss">:stub</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">double_agent</span><span class="o">|</span> <span class="n">assign_new_identity</span><span class="p">(</span><span class="n">double_agent</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here a <strong>Ninja</strong> has a bunch of nasty throwing stars (shuriken) at his disposal. Since you have a ninja object you can easily assign the throwing star to belong to the Ninja.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:ninja</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s2">&quot;Ra’s al Ghul&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">factory</span> <span class="ss">:ninja_with_shuriken</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">transient</span> <span class="k">do</span>
+</span><span class='line'>        <span class="n">number_of_shuriken</span> <span class="mi">10</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">after</span><span class="p">(</span><span class="ss">:create</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">ninja</span><span class="p">,</span> <span class="n">evaluator</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">create_list</span><span class="p">(</span><span class="ss">:shuriken</span><span class="p">,</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">number_of_shuriken</span><span class="p">,</span> <span class="ss">ninja</span><span class="p">:</span> <span class="n">ninja</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:shuriken</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Hira-shuriken&#39;</span>
+</span><span class='line'>    <span class="n">number_of_spikes</span> <span class="s1">&#39;Four&#39;</span>
+</span><span class='line'>    <span class="n">ninja</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ninja</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:ninja</span><span class="p">)</span>
+</span><span class='line'><span class="n">ninja</span><span class="o">.</span><span class="n">shuriken</span> <span class="c1"># =&gt; 0</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ninja</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:ninja_with_shuriken</span><span class="p">)</span>
+</span><span class='line'><span class="n">ninja</span><span class="o">.</span><span class="n">shuriken</span> <span class="c1"># =&gt; 10</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ninja</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:ninja_with_shuriken</span><span class="p">,</span> <span class="ss">number_of_shuriken</span><span class="p">:</span> <span class="mi">20</span><span class="p">)</span>
+</span><span class='line'><span class="n">ninja</span><span class="o">.</span><span class="n">shuriken</span> <span class="c1"># =&gt; 20</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Also, through the evaluator object you have access to transient attributes too. That gives you the option to pass in addtional information when you “create” factory objects and need to tweak them on the fly. That gives you all the flexibility needed to play with associations and write expressive test data.</p>
+
+<ul>
 <li><h3>Aliases</h3></li>
 </ul>
 
@@ -308,7 +439,7 @@
 </span><span class='line'>
 </span><span class='line'>  <span class="n">factory</span> <span class="ss">:agent</span><span class="p">,</span> <span class="ss">aliases</span><span class="p">:</span> <span class="o">[</span><span class="ss">:owner</span><span class="o">]</span> <span class="k">do</span>
 </span><span class='line'>    <span class="nb">name</span>   <span class="s1">&#39;Fox Mulder&#39;</span>
-</span><span class='line'>    <span class="n">job</span> <span class="s1">&#39;Chasing bad dudes&#39;</span>
+</span><span class='line'>    <span class="n">job</span>    <span class="s1">&#39;Chasing bad dudes&#39;</span>
 </span><span class='line'>    <span class="n">special_skills</span> <span class="s1">&#39;Investigation and intelligence&#39;</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="n">factory</span> <span class="ss">:doubleOseven</span> <span class="k">do</span>
@@ -334,7 +465,38 @@
 
 <p> I think you’ll agree that it not only reads better but it also gives you or the person who comes after you a bit more context about the objects in question. Yeah, you need to use plural <strong>:aliases</strong> also if you have only a single alias.</p>
 
+<p>You could write this a bit different as well—a lot more verbose.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">factory</span> <span class="ss">:agent</span> <span class="k">do</span>
+</span><span class='line'>  <span class="nb">name</span>   <span class="s1">&#39;Fox Mulder&#39;</span>
+</span><span class='line'>  <span class="n">job</span>    <span class="s1">&#39;Chasing bad dudes&#39;</span>
+</span><span class='line'>  <span class="n">special_skills</span> <span class="s1">&#39;Investigation and intelligence&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">factory</span> <span class="ss">:law_enforcement_vehicle</span> <span class="k">do</span>
+</span><span class='line'>  <span class="nb">name</span> <span class="s1">&#39;Oldsmobile Achieva&#39;</span>
+</span><span class='line'>  <span class="n">kind</span> <span class="s1">&#39;Compact car&#39;</span>
+</span><span class='line'>  <span class="n">association</span> <span class="ss">:owner</span><span class="p">,</span> <span class="ss">factory</span><span class="p">:</span> <span class="ss">:agent</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Well, not that neat isn’t it?</p>
+
 <p>In the context of comments a <strong>:user</strong> could be referred to as <strong>:commenter</strong>, in the case of a <strong>:crime</strong> a <strong>:user</strong> could be aliased as a <strong>:suspect</strong> and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your need of duplication.</p>
+
+<p><img src="/octopress_drafts_previewer/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
 
 <h5>/spec/factories.rb</h5>
 
