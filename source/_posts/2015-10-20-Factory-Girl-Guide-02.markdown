@@ -326,6 +326,42 @@ Well, not that neat isn’t it?
 
 In the context of comments a **:user** could be referred to as **:commenter**, in the case of a **:crime** a **:user** could be aliased as a **:suspect** and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your temptation for duplication.
 
++ ### Modifying Factories
+
+Probably not a use case you’ll run into everyday but sometimes you inherit factories from other developers and want to change them—in case you are using a TDD’d gem for example. If you feel the need to tweak these legacy factories to better fit your specific test scenarios you can modify them without creating new ones or using inheritance. 
+
+You do this via **FactoryGirl.modify** and it needs to be outside of that particular **FactoryGirl.define** block that you want to change. What you can’t do is modify **sequence** or **trait**—you can override attributes defined in via **trait** though. Callbacks on the “original” factory also won’t be overridden. The callback in your **Factory.modify** block will just be run as next in line. 
+
+``` ruby
+FactoryGirl.define do
+
+  factory :spy do
+    name 'Marty McSpy'
+    skills 'Espionage and infiltration'
+    deployment { Time.now }
+  end
+	
+end
+
+FactoryGirl.modify do
+
+  sequence :mission_deployment do |number|
+    "Mission #{number} at #{DateTime.now.to_formatted_s(:short)}"
+  end
+
+  factory :spy do
+    name            'James Bond'
+    skills          'CQC and poker'
+    favorite_weapon 'Walther PPK'
+    body_count      'Classified'
+    car             'Aston Martin'
+    deployment      { generate(:mission_deployment) }
+	end
+
+end
+```
+
+In the example above we needed our spies to be a bit more “sophisticated” and use a better mechanism to handle deployment. I have seen examples where gem authors had to deal with time differently than where it was handy to modify factory objects by simply overriding stuff you need to tweak.
 
 {% img /images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png %}
 
