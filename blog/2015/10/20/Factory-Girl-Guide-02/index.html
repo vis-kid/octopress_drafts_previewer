@@ -103,7 +103,7 @@
 </ul>
 
 
-<p>If you need to use attribute values for composing other factory attributes on the fly Factory Girl has you covered. You just need to wrap the whole thing in a block.</p>
+<p>If you need to use attribute values for composing other factory attributes on the fly Factory Girl has you covered. You just need to wrap the whole thing in a block and interpolate the attributes you need. These blocks have access to an <em>evaluator</em>—which is yielded to them—and which in turn has access to other attributes, even transient ones.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -175,9 +175,11 @@
 <span class='line-number'>28</span>
 <span class='line-number'>29</span>
 <span class='line-number'>30</span>
+<span class='line-number'>31</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="n">factory</span> <span class="ss">:supervillain</span> <span class="k">do</span>
+</span><span class='line'>
 </span><span class='line'>    <span class="n">transient</span> <span class="k">do</span>
 </span><span class='line'>      <span class="n">megalomaniac</span> <span class="kp">false</span>
 </span><span class='line'>      <span class="n">cat_owner</span> <span class="kp">false</span>
@@ -208,11 +210,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The example above turns out to be a bit more DRY since I avoided creating separate factories for supervillains that want to save the world or are friends with Blofeld repectively.</p>
+<p>The example above turns out to be a bit more DRY since there was no need to create separate factories for supervillains that want to save the world or are friends with Blofeld repectively. Transient attributes give you the flexibility to make all kinds of adjustments and avoid creating a host of ever so similar factories.</p>
 
 <p>!!! Section about callbacks using transient attributes</p>
-
-<p>Transient attributes give you the flexibility to make all kinds of adjustments and avoid creating a host of ever so similar factories.</p>
 
 <ul>
 <li><h3>Lazy attributes</h3></li>
@@ -258,8 +258,6 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>To achieve the same expressiveness without <strong>alias</strong> you’d have to get a lot more clever with composing your factories or introduce duplication.</p>
-
 <ul>
 <li><h3>Associations</h3></li>
 </ul>
@@ -272,13 +270,13 @@
 </ul>
 
 
-<p>Callbacks allow you to inject some code at various moments in the life cycle of an object—like <strong>save</strong>, <strong>after_save</strong>, <strong>before_validation</strong> and so on. Rails for example offers a whole bunch of them and makes it pretty easy for novices to abuse this power. Keep in mind that callbacks that are not related to the persistance of objects are a known anti-pattern and its good advice to not cross that line. For example, it may seem convenient to let an instance of user send emails or process some order in a callback but these kinds of things invite bugs and create ties that are unnecessarily harder to refactor. Maybe that was one of the reasons why Factory Girl “only” offers you five callback options to play with:</p>
+<p>Callbacks allow you to inject some code at various moments in the life cycle of an object—like <strong>save</strong>, <strong>after_save</strong>, <strong>before_validation</strong> and so on. Rails for example offers a whole bunch of them and makes it pretty easy for novices to abuse this power. Keep in mind that callbacks that are not related to the persistance of objects are a known anti-pattern and its good advice to not cross that line. For example, it may seem convenient to use a callback after instantiating something like user to send emails or process some order but these kinds of things invite bugs and create ties that are unnecessarily harder to refactor. Maybe that was one of the reasons why Factory Girl “only” offers you five callback options to play with:</p>
 
 <ul>
-<li><p><strong>before(:create)</strong> executes code block before your factory instance is saved.</p></li>
-<li><p><strong>after(:create)</strong> executes code block after your factory instance is saved.</p></li>
-<li><p><strong>after(:build)</strong> executes code block after your factory object has been built in memory</p></li>
-<li><p><strong>after(:stub)</strong> executes code block after your factory has created a stubbed object</p></li>
+<li><p><strong>before(:create)</strong> executes a code block before your factory instance is saved. Activated when you use <strong>create(:some_object)</strong>.</p></li>
+<li><p><strong>after(:create)</strong> executes a code block after your factory instance is saved. Activated when you use <strong>create(:some_object)</strong>.</p></li>
+<li><p><strong>after(:build)</strong> executes a code block after your factory object has been built in memory. Activated when you use both <strong>build(:some_object)</strong> and <strong>create(:some_object)</strong>.</p></li>
+<li><p><strong>after(:stub)</strong> executes a code block after your factory has created a stubbed object. Activated when you use <strong>build_stubbed(:some_object)</strong>.</p></li>
 <li><p><strong>custom(:your_custom_callback)</strong> executes a custom callback without the need to prepend <strong>before</strong> or <strong>after</strong>.</p></li>
 </ul>
 
@@ -291,20 +289,22 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
+<span class='line-number'>9</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="n">factory</span> <span class="ss">:mission</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">target</span> <span class="s1">&#39;Stop the bad dude&#39;</span>
+</span><span class='line'>    <span class="n">objective</span>        <span class="s1">&#39;Stopping the bad dude&#39;</span>
 </span><span class='line'>    <span class="n">provided_gadgets</span> <span class="s1">&#39;Mini submarine and shark gun&#39;</span>
 </span><span class='line'>    <span class="n">after</span><span class="p">(</span><span class="ss">:build</span><span class="p">)</span> <span class="p">{</span> <span class="n">assign_support_analyst</span> <span class="p">}</span>
 </span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <h4>Attention!</h4>
 
-<p>Note that for all options, inside the callback blocks will have an instance of the factory at your disposal. Guarantee you this will come in handy every once in a while, especially with assocations.</p>
+<p>Note that for all callback options, inside the callback blocks you will have access to an instance of the factory via a block parameter. This will come in handy every once in a while, especially with assocations.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -323,7 +323,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Here a <strong>Ninja</strong> has a bunch of nasty throwing stars (shuriken) at his disposal. Since you have a ninja object you can easily assign the throwing star to belong to the Ninja.</p>
+<p>Here a <strong>Ninja</strong> has a bunch of nasty throwing stars (shuriken) at his disposal. Since you have a ninja object in the callback you can easily assign the throwing star to belong to the Ninja.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -398,6 +398,120 @@
 
 <p>Also, through the evaluator object you have access to transient attributes too. That gives you the option to pass in addtional information when you “create” factory objects and need to tweak them on the fly. That gives you all the flexibility needed to play with associations and write expressive test data.</p>
 
+<p>If you find the need to have multiple callbacks on your factory Factory Girl is not standing in your way—even multiple type ones. Naturally, order of execution is top to bottom.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:henchman</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Mr. Hinx&#39;</span>
+</span><span class='line'>    <span class="n">after</span><span class="p">(</span><span class="ss">:create</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">henchman</span><span class="o">|</span> <span class="n">send_on_kill_mission</span><span class="p">(</span><span class="n">henchman</span><span class="p">)</span>  <span class="p">}</span>
+</span><span class='line'>    <span class="n">after</span><span class="p">(</span><span class="ss">:create</span><span class="p">)</span> <span class="p">{</span> <span class="n">send_cleaner</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:bond_girl</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Lucia Sciarra&#39;</span>
+</span><span class='line'>    <span class="n">after</span><span class="p">(</span><span class="ss">:build</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">bond_girl</span><span class="o">|</span> <span class="n">hide_secret_documents</span><span class="p">(</span><span class="n">bond_girl</span><span class="p">)</span>  <span class="p">}</span>
+</span><span class='line'>    <span class="n">after</span><span class="p">(</span><span class="ss">:create</span><span class="p">)</span> <span class="p">{</span> <span class="n">close_hidden_safe_compartment</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The devil is in the details of course. If you use <strong>create(:some_object)</strong>, both <strong>after(:build)</strong> and <strong>after(:create)</strong> callbacks will be exectuted.</p>
+
+<p>Multiple build strategies can be bundled to execute the same callback as well.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Marty McFly&#39;</span>
+</span><span class='line'>    <span class="n">after</span><span class="p">(</span><span class="ss">:stub</span><span class="p">,</span> <span class="ss">:build</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">spy</span><span class="o">|</span> <span class="n">assign_new_mission</span><span class="p">(</span><span class="n">spy</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Last but not least, you can even setup something like “global” callbacks that override callbacks for all factories—at least in that particular file if you have separated them into multiple factory files.</p>
+
+<p><strong>factories/gun.rb</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">before</span><span class="p">(</span><span class="ss">:stub</span><span class="p">,</span> <span class="ss">:build</span><span class="p">,</span> <span class="ss">:create</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">object</span><span class="o">|</span> <span class="n">assign_serial_number</span><span class="p">(</span><span class="n">object</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy_gun</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">model_name</span> <span class="s1">&#39;Walther PPK&#39;</span>
+</span><span class='line'>    <span class="n">ammunition</span> <span class="s1">&#39;7.65mm Browning&#39;</span>
+</span><span class='line'>    <span class="n">owner</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">factory</span> <span class="ss">:golden_gun</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">model_name</span> <span class="s1">&#39;Custom Lazar&#39;</span>
+</span><span class='line'>      <span class="n">ammunition</span> <span class="s1">&#39;23-carat gold bullet&#39;</span>
+</span><span class='line'>      <span class="n">after</span><span class="p">(</span><span class="ss">:create</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">golden_gun</span><span class="o">|</span> <span class="n">erase_serial_number</span><span class="p">(</span><span class="n">golden_gun</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Attention!</h4>
+
+<p>If you use inheritance to compose child factories the callbacks on the parent will be inherited as well.</p>
+
 <ul>
 <li><h3>Aliases</h3></li>
 </ul>
@@ -439,7 +553,7 @@
 </span><span class='line'>    <span class="n">job</span>    <span class="s1">&#39;Chasing bad dudes&#39;</span>
 </span><span class='line'>    <span class="n">special_skills</span> <span class="s1">&#39;Investigation and intelligence&#39;</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">factory</span> <span class="ss">:doubleOseven</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">factory</span> <span class="ss">:double_O_seven</span> <span class="k">do</span>
 </span><span class='line'>      <span class="nb">name</span> <span class="s1">&#39;James Bond&#39;</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>  <span class="k">end</span>
@@ -453,14 +567,14 @@
 </span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy_car</span> <span class="k">do</span>
 </span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Aston Martin DB9&#39;</span>
 </span><span class='line'>    <span class="n">kind</span> <span class="s1">&#39;Sports car&#39;</span>
-</span><span class='line'>    <span class="n">doubleOseven</span>
+</span><span class='line'>    <span class="n">double_O_seven</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p> I think you’ll agree that it not only reads better but it also gives you or the person who comes after you a bit more context about the objects in question. Yeah, you need to use plural <strong>:aliases</strong> also if you have only a single alias.</p>
+<p> I think you’ll agree that using aliases it not only reads better but it also gives you or the person who comes after you a bit more context about the objects in question. Yeah, you need to use plural <strong>:aliases</strong> also if you have only a single alias.</p>
 
 <p>You could write this a bit different as well—a lot more verbose.</p>
 
@@ -491,7 +605,7 @@
 
 <p>Well, not that neat isn’t it?</p>
 
-<p>In the context of comments a <strong>:user</strong> could be referred to as <strong>:commenter</strong>, in the case of a <strong>:crime</strong> a <strong>:user</strong> could be aliased as a <strong>:suspect</strong> and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your need of duplication.</p>
+<p>In the context of comments a <strong>:user</strong> could be referred to as <strong>:commenter</strong>, in the case of a <strong>:crime</strong> a <strong>:user</strong> could be aliased as a <strong>:suspect</strong> and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your temptation for duplication.</p>
 
 <p><img src="/octopress_drafts_previewer/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
 
@@ -610,7 +724,7 @@ can have associations(references to other factories), callbacks(for you create d
 
 <p>references to related data</p>
 
-<p>overwrite on the fly</p>
+<p>override on the fly</p>
 
 <p>attribute order does not matter</p>
 

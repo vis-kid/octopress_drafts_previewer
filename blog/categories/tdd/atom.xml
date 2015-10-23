@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tdd | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/tdd/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-23T00:14:00+02:00</updated>
+  <updated>2015-10-23T21:18:34+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -37,7 +37,7 @@
 </ul>
 
 
-<p>If you need to use attribute values for composing other factory attributes on the fly Factory Girl has you covered. You just need to wrap the whole thing in a block.</p>
+<p>If you need to use attribute values for composing other factory attributes on the fly Factory Girl has you covered. You just need to wrap the whole thing in a block and interpolate the attributes you need. These blocks have access to an <em>evaluator</em>—which is yielded to them—and which in turn has access to other attributes, even transient ones.</p>
 
 <pre><code class="ruby">FactoryGirl.define do
 
@@ -66,6 +66,7 @@ villain.profile
 <pre><code class="ruby">FactoryGirl.define do
 
   factory :supervillain do
+
     transient do
       megalomaniac false
       cat_owner false
@@ -95,11 +96,9 @@ narcissistic_villain.motivation
 # =&gt; "Building an underwater civilization and saving the world"
 </code></pre>
 
-<p>The example above turns out to be a bit more DRY since I avoided creating separate factories for supervillains that want to save the world or are friends with Blofeld repectively.</p>
+<p>The example above turns out to be a bit more DRY since there was no need to create separate factories for supervillains that want to save the world or are friends with Blofeld repectively. Transient attributes give you the flexibility to make all kinds of adjustments and avoid creating a host of ever so similar factories.</p>
 
 <p>!!! Section about callbacks using transient attributes</p>
-
-<p>Transient attributes give you the flexibility to make all kinds of adjustments and avoid creating a host of ever so similar factories.</p>
 
 <ul>
 <li><h3>Lazy attributes</h3></li>
@@ -127,8 +126,6 @@ ticking_device.activate
 # =&gt; "Exploding in 600 seconds at 11:53 PM"
 </code></pre>
 
-<p>To achieve the same expressiveness without <strong>alias</strong> you’d have to get a lot more clever with composing your factories or introduce duplication.</p>
-
 <ul>
 <li><h3>Associations</h3></li>
 </ul>
@@ -141,13 +138,13 @@ ticking_device.activate
 </ul>
 
 
-<p>Callbacks allow you to inject some code at various moments in the life cycle of an object—like <strong>save</strong>, <strong>after_save</strong>, <strong>before_validation</strong> and so on. Rails for example offers a whole bunch of them and makes it pretty easy for novices to abuse this power. Keep in mind that callbacks that are not related to the persistance of objects are a known anti-pattern and its good advice to not cross that line. For example, it may seem convenient to let an instance of user send emails or process some order in a callback but these kinds of things invite bugs and create ties that are unnecessarily harder to refactor. Maybe that was one of the reasons why Factory Girl “only” offers you five callback options to play with:</p>
+<p>Callbacks allow you to inject some code at various moments in the life cycle of an object—like <strong>save</strong>, <strong>after_save</strong>, <strong>before_validation</strong> and so on. Rails for example offers a whole bunch of them and makes it pretty easy for novices to abuse this power. Keep in mind that callbacks that are not related to the persistance of objects are a known anti-pattern and its good advice to not cross that line. For example, it may seem convenient to use a callback after instantiating something like user to send emails or process some order but these kinds of things invite bugs and create ties that are unnecessarily harder to refactor. Maybe that was one of the reasons why Factory Girl “only” offers you five callback options to play with:</p>
 
 <ul>
-<li><p><strong>before(:create)</strong> executes code block before your factory instance is saved.</p></li>
-<li><p><strong>after(:create)</strong> executes code block after your factory instance is saved.</p></li>
-<li><p><strong>after(:build)</strong> executes code block after your factory object has been built in memory</p></li>
-<li><p><strong>after(:stub)</strong> executes code block after your factory has created a stubbed object</p></li>
+<li><p><strong>before(:create)</strong> executes a code block before your factory instance is saved. Activated when you use <strong>create(:some_object)</strong>.</p></li>
+<li><p><strong>after(:create)</strong> executes a code block after your factory instance is saved. Activated when you use <strong>create(:some_object)</strong>.</p></li>
+<li><p><strong>after(:build)</strong> executes a code block after your factory object has been built in memory. Activated when you use both <strong>build(:some_object)</strong> and <strong>create(:some_object)</strong>.</p></li>
+<li><p><strong>after(:stub)</strong> executes a code block after your factory has created a stubbed object. Activated when you use <strong>build_stubbed(:some_object)</strong>.</p></li>
 <li><p><strong>custom(:your_custom_callback)</strong> executes a custom callback without the need to prepend <strong>before</strong> or <strong>after</strong>.</p></li>
 </ul>
 
@@ -155,16 +152,17 @@ ticking_device.activate
 <pre><code class="ruby">FactoryGirl.define do
 
   factory :mission do
-    target 'Stop the bad dude'
+    objective        'Stopping the bad dude'
     provided_gadgets 'Mini submarine and shark gun'
     after(:build) { assign_support_analyst }
   end
+
 end
 </code></pre>
 
 <h4>Attention!</h4>
 
-<p>Note that for all options, inside the callback blocks will have an instance of the factory at your disposal. Guarantee you this will come in handy every once in a while, especially with assocations.</p>
+<p>Note that for all callback options, inside the callback blocks you will have access to an instance of the factory via a block parameter. This will come in handy every once in a while, especially with assocations.</p>
 
 <pre><code class="ruby">FactoryGirl.define do
 
@@ -175,7 +173,7 @@ end
 end
 </code></pre>
 
-<p>Here a <strong>Ninja</strong> has a bunch of nasty throwing stars (shuriken) at his disposal. Since you have a ninja object you can easily assign the throwing star to belong to the Ninja.</p>
+<p>Here a <strong>Ninja</strong> has a bunch of nasty throwing stars (shuriken) at his disposal. Since you have a ninja object in the callback you can easily assign the throwing star to belong to the Ninja.</p>
 
 <pre><code class="ruby">FactoryGirl.define do
 
@@ -215,6 +213,71 @@ ninja.shuriken # =&gt; 20
 
 <p>Also, through the evaluator object you have access to transient attributes too. That gives you the option to pass in addtional information when you “create” factory objects and need to tweak them on the fly. That gives you all the flexibility needed to play with associations and write expressive test data.</p>
 
+<p>If you find the need to have multiple callbacks on your factory Factory Girl is not standing in your way—even multiple type ones. Naturally, order of execution is top to bottom.</p>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+    factory :henchman do
+    name 'Mr. Hinx'
+    after(:create) { |henchman| send_on_kill_mission(henchman)  }
+    after(:create) { send_cleaner }
+    end
+
+end
+</code></pre>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+    factory :bond_girl do
+    name 'Lucia Sciarra'
+    after(:build) { |bond_girl| hide_secret_documents(bond_girl)  }
+    after(:create) { close_hidden_safe_compartment }
+    end
+
+end
+</code></pre>
+
+<p>The devil is in the details of course. If you use <strong>create(:some_object)</strong>, both <strong>after(:build)</strong> and <strong>after(:create)</strong> callbacks will be exectuted.</p>
+
+<p>Multiple build strategies can be bundled to execute the same callback as well.</p>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+    factory :spy do
+    name 'Marty McFly'
+    after(:stub, :build) { |spy| assign_new_mission(spy) }
+    end
+
+end
+</code></pre>
+
+<p>Last but not least, you can even setup something like “global” callbacks that override callbacks for all factories—at least in that particular file if you have separated them into multiple factory files.</p>
+
+<p><strong>factories/gun.rb</strong></p>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+  before(:stub, :build, :create) { |object| assign_serial_number(object) }
+
+    factory :spy_gun do
+    model_name 'Walther PPK'
+    ammunition '7.65mm Browning'
+    owner
+
+      factory :golden_gun do
+      model_name 'Custom Lazar'
+      ammunition '23-carat gold bullet'
+        after(:create) { |golden_gun| erase_serial_number(golden_gun) } 
+      end
+    end
+
+end
+</code></pre>
+
+<h4>Attention!</h4>
+
+<p>If you use inheritance to compose child factories the callbacks on the parent will be inherited as well.</p>
+
 <ul>
 <li><h3>Aliases</h3></li>
 </ul>
@@ -231,7 +294,7 @@ ninja.shuriken # =&gt; 20
     job    'Chasing bad dudes'
     special_skills 'Investigation and intelligence'
 
-    factory :doubleOseven do
+    factory :double_O_seven do
       name 'James Bond'
     end
   end
@@ -245,13 +308,13 @@ ninja.shuriken # =&gt; 20
   factory :spy_car do
     name 'Aston Martin DB9'
     kind 'Sports car'
-    doubleOseven
+    double_O_seven
   end
 
 end
 </code></pre>
 
-<p> I think you’ll agree that it not only reads better but it also gives you or the person who comes after you a bit more context about the objects in question. Yeah, you need to use plural <strong>:aliases</strong> also if you have only a single alias.</p>
+<p> I think you’ll agree that using aliases it not only reads better but it also gives you or the person who comes after you a bit more context about the objects in question. Yeah, you need to use plural <strong>:aliases</strong> also if you have only a single alias.</p>
 
 <p>You could write this a bit different as well—a lot more verbose.</p>
 
@@ -270,7 +333,7 @@ end
 
 <p>Well, not that neat isn’t it?</p>
 
-<p>In the context of comments a <strong>:user</strong> could be referred to as <strong>:commenter</strong>, in the case of a <strong>:crime</strong> a <strong>:user</strong> could be aliased as a <strong>:suspect</strong> and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your need of duplication.</p>
+<p>In the context of comments a <strong>:user</strong> could be referred to as <strong>:commenter</strong>, in the case of a <strong>:crime</strong> a <strong>:user</strong> could be aliased as a <strong>:suspect</strong> and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your temptation for duplication.</p>
 
 <p><img src="/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
 
@@ -339,7 +402,7 @@ can have associations(references to other factories), callbacks(for you create d
 
 <p>references to related data</p>
 
-<p>overwrite on the fly</p>
+<p>override on the fly</p>
 
 <p>attribute order does not matter</p>
 
