@@ -25,7 +25,7 @@ This second article about this popular and useful Ruby gem deals with a couple m
 
 + ### Dependent Attributes
 
-If you need to use attribute values for composing other factory attributes on the fly Factory Girl has you covered. You just need to wrap the whole thing in a block.
+If you need to use attribute values for composing other factory attributes on the fly Factory Girl has you covered. You just need to wrap the whole thing in a block and interpolate the attributes you need. These blocks have access to an *evaluator*—which is yielded to them—and which in turn has access to other attributes, even transient ones. 
 
 ``` ruby
 FactoryGirl.define do
@@ -53,6 +53,7 @@ I think its fair to call them fake attributes. These virtual attributes allow yo
 FactoryGirl.define do
 
   factory :supervillain do
+
     transient do
       megalomaniac false
       cat_owner false
@@ -82,11 +83,10 @@ narcissistic_villain.motivation
 # => "Building an underwater civilization and saving the world"
 ```
 
-The example above turns out to be a bit more DRY since I avoided creating separate factories for supervillains that want to save the world or are friends with Blofeld repectively.
+The example above turns out to be a bit more DRY since there was no need to create separate factories for supervillains that want to save the world or are friends with Blofeld repectively. Transient attributes give you the flexibility to make all kinds of adjustments and avoid creating a host of ever so similar factories.
 
 !!! Section about callbacks using transient attributes
 
-Transient attributes give you the flexibility to make all kinds of adjustments and avoid creating a host of ever so similar factories.
 
 + ### Lazy attributes
 
@@ -112,7 +112,6 @@ ticking_device.activate
 # => "Exploding in 600 seconds at 11:53 PM"
 ```
 
-To achieve the same expressiveness without **alias** you’d have to get a lot more clever with composing your factories or introduce duplication.
 
 
 
@@ -125,16 +124,16 @@ As mentioned before, another trick up the sleeve of Factory Girl is emulating as
 
 + ### Callbacks
 
-Callbacks allow you to inject some code at various moments in the life cycle of an object—like **save**, **after_save**, **before_validation** and so on. Rails for example offers a whole bunch of them and makes it pretty easy for novices to abuse this power. Keep in mind that callbacks that are not related to the persistance of objects are a known anti-pattern and its good advice to not cross that line. For example, it may seem convenient to let an instance of user send emails or process some order in a callback but these kinds of things invite bugs and create ties that are unnecessarily harder to refactor. Maybe that was one of the reasons why Factory Girl “only” offers you five callback options to play with:
+Callbacks allow you to inject some code at various moments in the life cycle of an object—like **save**, **after_save**, **before_validation** and so on. Rails for example offers a whole bunch of them and makes it pretty easy for novices to abuse this power. Keep in mind that callbacks that are not related to the persistance of objects are a known anti-pattern and its good advice to not cross that line. For example, it may seem convenient to use a callback after instantiating something like user to send emails or process some order but these kinds of things invite bugs and create ties that are unnecessarily harder to refactor. Maybe that was one of the reasons why Factory Girl “only” offers you five callback options to play with:
 
-+ **before(:create)** executes code block before your factory instance is saved.
++ **before(:create)** executes a code block before your factory instance is saved.
 
 
-+ **after(:create)** executes code block after your factory instance is saved.
++ **after(:create)** executes a code block after your factory instance is saved.
 
-+ **after(:build)** executes code block after your factory object has been built in memory
++ **after(:build)** executes a code block after your factory object has been built in memory.
 
-+ **after(:stub)** executes code block after your factory has created a stubbed object 
++ **after(:stub)** executes a code block after your factory has created a stubbed object. 
 
 + **custom(:your_custom_callback)** executes a custom callback without the need to prepend **before** or **after**.
 
@@ -142,16 +141,17 @@ Callbacks allow you to inject some code at various moments in the life cycle of 
 FactoryGirl.define do
   
   factory :mission do
-    target 'Stop the bad dude'
+    objective        'Stopping the bad dude'
     provided_gadgets 'Mini submarine and shark gun'
     after(:build) { assign_support_analyst }
   end
+
 end
 ```
 
 #### Attention!
 
-Note that for all options, inside the callback blocks will have an instance of the factory at your disposal. Guarantee you this will come in handy every once in a while, especially with assocations. 
+Note that for all callback options, inside the callback blocks you will have access to an instance of the factory via a block parameter. This will come in handy every once in a while, especially with assocations. 
 
 ``` ruby
 FactoryGirl.define do
@@ -162,7 +162,7 @@ FactoryGirl.define do
 
 end
 ```
-Here a **Ninja** has a bunch of nasty throwing stars (shuriken) at his disposal. Since you have a ninja object you can easily assign the throwing star to belong to the Ninja.
+Here a **Ninja** has a bunch of nasty throwing stars (shuriken) at his disposal. Since you have a ninja object in the callback you can easily assign the throwing star to belong to the Ninja.
 
 ``` ruby
 FactoryGirl.define do
@@ -218,7 +218,7 @@ FactoryGirl.define do
     job    'Chasing bad dudes'
     special_skills 'Investigation and intelligence'
     
-    factory :doubleOseven do
+    factory :double_O_seven do
       name 'James Bond'
     end
   end
@@ -232,12 +232,12 @@ FactoryGirl.define do
   factory :spy_car do
     name 'Aston Martin DB9'
     kind 'Sports car'
-    doubleOseven
+    double_O_seven
   end
 
 end
 ```
- I think you’ll agree that it not only reads better but it also gives you or the person who comes after you a bit more context about the objects in question. Yeah, you need to use plural **:aliases** also if you have only a single alias. 
+ I think you’ll agree that using aliases it not only reads better but it also gives you or the person who comes after you a bit more context about the objects in question. Yeah, you need to use plural **:aliases** also if you have only a single alias. 
 
 You could write this a bit different as well—a lot more verbose.
 
@@ -257,7 +257,7 @@ end
 
 Well, not that neat isn’t it?
 
-In the context of comments a **:user** could be referred to as **:commenter**, in the case of a **:crime** a **:user** could be aliased as a **:suspect** and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your need of duplication.
+In the context of comments a **:user** could be referred to as **:commenter**, in the case of a **:crime** a **:user** could be aliased as a **:suspect** and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your temptation for duplication.
 
 
 {% img /images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png %}
