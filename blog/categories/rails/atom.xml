@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-23T21:18:34+02:00</updated>
+  <updated>2015-10-23T22:10:39+02:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -334,6 +334,45 @@ end
 <p>Well, not that neat isn’t it?</p>
 
 <p>In the context of comments a <strong>:user</strong> could be referred to as <strong>:commenter</strong>, in the case of a <strong>:crime</strong> a <strong>:user</strong> could be aliased as a <strong>:suspect</strong> and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your temptation for duplication.</p>
+
+<ul>
+<li><h3>Modifying Factories</h3></li>
+</ul>
+
+
+<p>Probably not a use case you’ll run into everyday but sometimes you inherit factories from other developers and want to change them—in case you are using a TDD’d gem for example. If you feel the need to tweak these legacy factories to better fit your specific test scenarios you can modify them without creating new ones or using inheritance.</p>
+
+<p>You do this via <strong>FactoryGirl.modify</strong> and it needs to be outside of that particular <strong>FactoryGirl.define</strong> block that you want to change. What you can’t do is modify <strong>sequence</strong> or <strong>trait</strong>—you can override attributes defined in via <strong>trait</strong> though. Callbacks on the “original” factory also won’t be overridden. The callback in your <strong>Factory.modify</strong> block will just be run as next in line.</p>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+  factory :spy do
+    name 'Marty McSpy'
+    skills 'Espionage and infiltration'
+    deployment { Time.now }
+  end
+
+end
+
+FactoryGirl.modify do
+
+  sequence :mission_deployment do |number|
+    "Mission #{number} at #{DateTime.now.to_formatted_s(:short)}"
+  end
+
+  factory :spy do
+    name            'James Bond'
+    skills          'CQC and poker'
+    favorite_weapon 'Walther PPK'
+    body_count      'Classified'
+    car             'Aston Martin'
+    deployment      { generate(:mission_deployment) }
+    end
+
+end
+</code></pre>
+
+<p>In the example above we needed our spies to be a bit more “sophisticated” and use a better mechanism to handle deployment. I have seen examples where gem authors had to deal with time differently than where it was handy to modify factory objects by simply overriding stuff you need to tweak.</p>
 
 <p><img src="/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
 
