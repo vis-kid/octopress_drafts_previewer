@@ -126,14 +126,13 @@ As mentioned before, another trick up the sleeve of Factory Girl is emulating as
 
 Callbacks allow you to inject some code at various moments in the life cycle of an object—like **save**, **after_save**, **before_validation** and so on. Rails for example offers a whole bunch of them and makes it pretty easy for novices to abuse this power. Keep in mind that callbacks that are not related to the persistance of objects are a known anti-pattern and its good advice to not cross that line. For example, it may seem convenient to use a callback after instantiating something like user to send emails or process some order but these kinds of things invite bugs and create ties that are unnecessarily harder to refactor. Maybe that was one of the reasons why Factory Girl “only” offers you five callback options to play with:
 
-+ **before(:create)** executes a code block before your factory instance is saved.
++ **before(:create)** executes a code block before your factory instance is saved. Activated when you use **create(:some_object)**.
 
++ **after(:create)** executes a code block after your factory instance is saved. Activated when you use **create(:some_object)**.
 
-+ **after(:create)** executes a code block after your factory instance is saved.
++ **after(:build)** executes a code block after your factory object has been built in memory. Activated when you use both **build(:some_object)** and **create(:some_object)**.
 
-+ **after(:build)** executes a code block after your factory object has been built in memory.
-
-+ **after(:stub)** executes a code block after your factory has created a stubbed object. 
++ **after(:stub)** executes a code block after your factory has created a stubbed object. Activated when you use **build_stubbed(:some_object)**. 
 
 + **custom(:your_custom_callback)** executes a custom callback without the need to prepend **before** or **after**.
 
@@ -203,6 +202,74 @@ ninja.shuriken # => 20
 
 Also, through the evaluator object you have access to transient attributes too. That gives you the option to pass in addtional information when you “create” factory objects and need to tweak them on the fly. That gives you all the flexibility needed to play with associations and write expressive test data.   
 
+If you find the need to have multiple callbacks on your factory Factory Girl is not standing in your way—even multiple type ones. Naturally, order of execution is top to bottom.
+
+``` ruby
+FactoryGirl.define do
+  
+	factory :henchman do
+    name 'Mr. Hinx'
+    after(:create) { |henchman| send_on_kill_mission(henchman)  }
+    after(:create) { send_cleaner }
+	end
+
+end
+```
+
+``` ruby
+FactoryGirl.define do
+  
+	factory :bond_girl do
+    name 'Lucia Sciarra'
+    after(:build) { |bond_girl| hide_secret_documents(bond_girl)  }
+    after(:create) { close_hidden_safe_compartment }
+	end
+
+end
+```
+
+The devil is in the details of course. If you use **create(:some_object)**, both **after(:build)** and **after(:create)** callbacks will be exectuted.
+
+Multiple build strategies can be bundled to execute the same callback as well.
+
+``` ruby
+FactoryGirl.define do
+  
+	factory :spy do
+    name 'Marty McFly'
+    after(:stub, :build) { |spy| assign_new_mission(spy) }
+	end
+
+end
+```
+
+Last but not least, you can even setup something like “global” callbacks that override callbacks for all factories—at least in that particular file if you have separated them into multiple factory files. 
+
+**factories/gun.rb**
+
+``` ruby
+FactoryGirl.define do
+
+  before(:stub, :build, :create) { |object| assign_serial_number(object) }
+
+	factory :spy_gun do
+    model_name 'Walther PPK'
+    ammunition '7.65mm Browning'
+    owner
+
+	  factory :golden_gun do
+      model_name 'Custom Lazar'
+      ammunition '23-carat gold bullet'
+	  	after(:create) { |golden_gun| erase_serial_number(golden_gun) } 
+	  end
+	end
+
+end
+```
+
+#### Attention!
+
+If you use inheritance to compose child factories the callbacks on the parent will be inherited as well. 
 
 + ### Aliases
 
@@ -338,7 +405,7 @@ can have associations(references to other factories), callbacks(for you create d
 
 references to related data
 
-overwrite on the fly
+override on the fly
 
 attribute order does not matter
 
