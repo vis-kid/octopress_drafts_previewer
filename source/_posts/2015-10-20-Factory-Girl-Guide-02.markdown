@@ -102,13 +102,13 @@ FactoryGirl.define do
       time_of_explosion { Time.now + countdown_seconds }
     end
 
-    activate { "Exploding in #{countdown_seconds} seconds #{time_of_explosion.strftime("at %I:%M %p")}" }
+    time_of_explosion { "Exploding in #{countdown_seconds} seconds #{time_of_explosion.strftime("at %I:%M %p")}" }
   end
 
 end
 
 ticking_device = create(:exploding_device)
-ticking_device.activate
+ticking_device.time_of_explosion
 # => "Exploding in 600 seconds at 11:53 PM"
 ```
 
@@ -142,7 +142,7 @@ FactoryGirl.define do
   factory :mission do
     objective        'Stopping the bad dude'
     provided_gadgets 'Mini submarine and shark gun'
-    after(:build) { assign_support_analyst }
+    after(:build)    { assign_support_analyst }
   end
 
 end
@@ -221,7 +221,7 @@ FactoryGirl.define do
   
 	factory :bond_girl do
     name 'Lucia Sciarra'
-    after(:build) { |bond_girl| hide_secret_documents(bond_girl)  }
+    after(:build)  { |bond_girl| hide_secret_documents(bond_girl)  }
     after(:create) { close_hidden_safe_compartment }
 	end
 
