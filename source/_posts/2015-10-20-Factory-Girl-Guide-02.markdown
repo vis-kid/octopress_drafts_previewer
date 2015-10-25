@@ -23,6 +23,205 @@ This second article about this popular and useful Ruby gem deals with a couple m
 + Transient attributes
 + Dependent attributes
 
++ ### Associations
+
+
+
++ ### Traits
+
+This is one of my favorite things about Factory Girl. In my mind, **trait** is the most powerful and convenient feature to keep your factory data DRY and expressive. It allows you to bundle groupls of attributes together, give them a separate name and reuse them wherever you please. Remember when I urged you to write barebones factory objects? Traits will help you achieve exactly that without sacrificing any conveniences.
+
+``` ruby
+FactoryGirl.define do
+    
+  factory :spy_car do
+    model         'Aston Martin DB9'
+    top_speed     '295 km/h'
+    build_date    '2015'
+    ejection_seat true
+
+    trait :submarine do
+      ejection_seat              false
+      water_resistant            '100 m'
+      submarine_capabilities     true
+      air_independent_propulsion true
+    end
+    
+    trait :weaponized do
+      rockets           true
+      number_of_rockets '12'
+      machine_gun       true
+      rate_of_fire      '1,500 RPM'
+      tank_armour       true
+    end
+    
+    trait :cloaked do
+      active_camouflage true
+      radar_signatur    'reduced'
+      engine            'silenced'
+    end
+    
+    trait :night_vision do
+      infrared_sensors true
+      heads_up_display true
+    end
+  end
+
+end
+```
+
+As you can see, if you want to change some attributes on multiple objects, you can do that now in one central place. No shotgun surgery necessary. Managing state via traits couldn’t be more convenient. With that setup you can build pretty elaborate spy cars by mixing the various attribute bundles however you like—without duplicationg anything by creating new factories. 
+
+``` ruby
+invisible_spy_car = create(:spy_car, :cloaked, :night_vision)
+diving_spy_car    = create(:spy_car, :submarine, :cloaked)
+tank_spy_car      = create(:spy_car, :weaponized, :night_vision)
+```
+You can use traits with **create**, **build**, **build_stubbed** and **attributes_for**. If Q gets clever, you can also ovverride individual attributes simultaneously by passing in a hash.
+
+``` ruby
+build(:spy_car, :submarine, ejection_seat: true)
+```
+
+For combinations that occur very frequently on a particular factory you can also create child factories which names best represent that data set und bundle their traits only once.
+
+``` ruby
+FactoryGir.define do
+
+  factory :spy_car do
+    model         'Aston Martin DB9'
+    top_speed     '295 km/h'
+    build_date    '2015'
+    ejection_seat true
+
+    trait :submarine do
+      ejection_seat              false
+      water_resistant            '100 m'
+      submarine_capabilities     true
+      air_independent_propulsion true
+    end
+    
+    trait :weaponized do
+      rockets           true
+      number_of_rockets '12'
+      machine_gun       true
+      rate_of_fire      '1,500 RPM'
+      tank_armour       true
+    end
+    
+    trait :cloaked do
+      active_camouflage true
+      radar_signatur    'reduced'
+      engine            'silenced'
+    end
+    
+    trait :night_vision do
+      infrared_sensors true
+      heads_up_display true
+    end
+  end
+
+    factory :invisible_spy_car, traits: [:cloaked, :night_vision]
+    factory :diving_spy_car,    traits: [:submarine, :cloaked]
+    factory :tank_spy_car,      traits: [:weaponized, :night_vision]
+    factory :ultimate_spy_car,  traits: [:cloaked, :night_vision, :submarine, :weaponized]
+
+end
+```
+
+That let’s you create these objects more much concise—more readable too.
+
+``` ruby
+build_stubbed(:invisible_spy_car)
+create(:ultimate_spy_car)
+```
+
+Instead of:
+
+``` ruby
+build_stubbed(:spy_car, :cloaked, :night_vision)
+create(:spy_car, :cloaked, :night_vision, :submarine, :weaponized)
+```
+
+You can even reuse traits as attributes on other factories and traits:
+
+``` ruby
+FactoryGirl.define do
+
+  factory :spy_car do
+    model         'Aston Martin DB9'
+    top_speed     '295 km/h'
+    build_date    '2015'
+    ejection_seat true
+
+    trait :submarine do
+      ejection_seat              false
+      water_resistant            '100 m'
+      submarine_capabilities     true
+      air_independent_propulsion true
+    end
+    
+    trait :weaponized do
+      rockets           true
+      number_of_rockets '12'
+      machine_gun       true
+      rate_of_fire      '1,500 RPM'
+      tank_armour       true
+    end
+    
+    trait :cloaked do
+      active_camouflage true
+      radar_signatur    'reduced'
+      engine            'silenced'
+    end
+    
+    trait :night_vision do
+      infrared_sensors true
+      heads_up_display true
+    end
+
+    trait :surveillance do
+      night_vision
+      signal_detector      true
+      signal_analyzer      true
+      wifi_war_driver      true
+      license_plate_reader true
+      mini_drone           true
+    end
+  end
+
+end
+
+factory :ultimate_spy_car, parent: :spy_car do
+  car_plane true
+  submarine
+  cloaked
+  night_vision
+  weaponized
+end
+
+```
+
+Pay attention to the **surveillance** trait which reuses the **night_vision** trait—basically as an attribute. Also the **ultimate_spy_car** factory, which I separated out of the **spy_car** factory definition this time, reuses all traits plus an additional attribute that makes it fly.
+
+**create_list** and **build_list** can also make use of traits. The second parameter needs to be the number of factory instances you want.
+
+``` ruby
+create_list(:spy_car, 3, :night_vision)
+build_list(:spy_car, 4, :submarine, :cloaked)
+```
+
+!!! association with traits
+association :user, :admin, :spy
+
+You can pack callbacks and associations also neatly into traits of course.
+
+If you define the same attributes for multiple traits, the last one defined gets precedence of course.
+
+In a nutshell, traits are lego like building blocks to define your factories with traits.
+
+
+
 + ### Dependent Attributes
 
 If you need to use attribute values for composing other factory attributes on the fly Factory Girl has you covered. You just need to wrap the whole thing in a block and interpolate the attributes you need. These blocks have access to an *evaluator*—which is yielded to them—and which in turn has access to other attributes, even transient ones. 
