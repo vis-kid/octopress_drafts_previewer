@@ -99,6 +99,343 @@
 <li>Modifying factories</li>
 <li>Transient attributes</li>
 <li><p>Dependent attributes</p></li>
+<li><h3>Associations</h3></li>
+<li><h3>Traits</h3></li>
+</ul>
+
+
+<p>This is one of my favorite things about Factory Girl. In my mind, <strong>trait</strong> is the most powerful and convenient feature to keep your factory data DRY and expressive. It allows you to bundle groupls of attributes together, give them a separate name and reuse them wherever you please. Remember when I urged you to write barebones factory objects? Traits will help you achieve exactly that without sacrificing any conveniences.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy_car</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">model</span>         <span class="s1">&#39;Aston Martin DB9&#39;</span>
+</span><span class='line'>    <span class="n">top_speed</span>     <span class="s1">&#39;295 km/h&#39;</span>
+</span><span class='line'>    <span class="n">build_date</span>    <span class="s1">&#39;2015&#39;</span>
+</span><span class='line'>    <span class="n">ejection_seat</span> <span class="kp">true</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:submarine</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">ejection_seat</span>              <span class="kp">false</span>
+</span><span class='line'>      <span class="n">water_resistant</span>            <span class="s1">&#39;100 m&#39;</span>
+</span><span class='line'>      <span class="n">submarine_capabilities</span>     <span class="kp">true</span>
+</span><span class='line'>      <span class="n">air_independent_propulsion</span> <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:weaponized</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">rockets</span>           <span class="kp">true</span>
+</span><span class='line'>      <span class="n">number_of_rockets</span> <span class="s1">&#39;12&#39;</span>
+</span><span class='line'>      <span class="n">machine_gun</span>       <span class="kp">true</span>
+</span><span class='line'>      <span class="n">rate_of_fire</span>      <span class="s1">&#39;1,500 RPM&#39;</span>
+</span><span class='line'>      <span class="n">tank_armour</span>       <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:cloaked</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">active_camouflage</span> <span class="kp">true</span>
+</span><span class='line'>      <span class="n">radar_signatur</span>    <span class="s1">&#39;reduced&#39;</span>
+</span><span class='line'>      <span class="n">engine</span>            <span class="s1">&#39;silenced&#39;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:night_vision</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">infrared_sensors</span> <span class="kp">true</span>
+</span><span class='line'>      <span class="n">heads_up_display</span> <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see, if you want to change some attributes on multiple objects, you can do that now in one central place. No shotgun surgery necessary. Managing state via traits couldn’t be more convenient. With that setup you can build pretty elaborate spy cars by mixing the various attribute bundles however you like—without duplicationg anything by creating new factories.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">invisible_spy_car</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:spy_car</span><span class="p">,</span> <span class="ss">:cloaked</span><span class="p">,</span> <span class="ss">:night_vision</span><span class="p">)</span>
+</span><span class='line'><span class="n">diving_spy_car</span>    <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:spy_car</span><span class="p">,</span> <span class="ss">:submarine</span><span class="p">,</span> <span class="ss">:cloaked</span><span class="p">)</span>
+</span><span class='line'><span class="n">tank_spy_car</span>      <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:spy_car</span><span class="p">,</span> <span class="ss">:weaponized</span><span class="p">,</span> <span class="ss">:night_vision</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can use traits with <strong>create</strong>, <strong>build</strong>, <strong>build_stubbed</strong> and <strong>attributes_for</strong>. If Q gets clever, you can also ovverride individual attributes simultaneously by passing in a hash.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">build</span><span class="p">(</span><span class="ss">:spy_car</span><span class="p">,</span> <span class="ss">:submarine</span><span class="p">,</span> <span class="ss">ejection_seat</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For combinations that occur very frequently on a particular factory you can also create child factories which names best represent that data set und bundle their traits only once.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGir</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy_car</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">model</span>         <span class="s1">&#39;Aston Martin DB9&#39;</span>
+</span><span class='line'>    <span class="n">top_speed</span>     <span class="s1">&#39;295 km/h&#39;</span>
+</span><span class='line'>    <span class="n">build_date</span>    <span class="s1">&#39;2015&#39;</span>
+</span><span class='line'>    <span class="n">ejection_seat</span> <span class="kp">true</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:submarine</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">ejection_seat</span>              <span class="kp">false</span>
+</span><span class='line'>      <span class="n">water_resistant</span>            <span class="s1">&#39;100 m&#39;</span>
+</span><span class='line'>      <span class="n">submarine_capabilities</span>     <span class="kp">true</span>
+</span><span class='line'>      <span class="n">air_independent_propulsion</span> <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:weaponized</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">rockets</span>           <span class="kp">true</span>
+</span><span class='line'>      <span class="n">number_of_rockets</span> <span class="s1">&#39;12&#39;</span>
+</span><span class='line'>      <span class="n">machine_gun</span>       <span class="kp">true</span>
+</span><span class='line'>      <span class="n">rate_of_fire</span>      <span class="s1">&#39;1,500 RPM&#39;</span>
+</span><span class='line'>      <span class="n">tank_armour</span>       <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:cloaked</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">active_camouflage</span> <span class="kp">true</span>
+</span><span class='line'>      <span class="n">radar_signatur</span>    <span class="s1">&#39;reduced&#39;</span>
+</span><span class='line'>      <span class="n">engine</span>            <span class="s1">&#39;silenced&#39;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:night_vision</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">infrared_sensors</span> <span class="kp">true</span>
+</span><span class='line'>      <span class="n">heads_up_display</span> <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">factory</span> <span class="ss">:invisible_spy_car</span><span class="p">,</span> <span class="ss">traits</span><span class="p">:</span> <span class="o">[</span><span class="ss">:cloaked</span><span class="p">,</span> <span class="ss">:night_vision</span><span class="o">]</span>
+</span><span class='line'>    <span class="n">factory</span> <span class="ss">:diving_spy_car</span><span class="p">,</span>    <span class="ss">traits</span><span class="p">:</span> <span class="o">[</span><span class="ss">:submarine</span><span class="p">,</span> <span class="ss">:cloaked</span><span class="o">]</span>
+</span><span class='line'>    <span class="n">factory</span> <span class="ss">:tank_spy_car</span><span class="p">,</span>      <span class="ss">traits</span><span class="p">:</span> <span class="o">[</span><span class="ss">:weaponized</span><span class="p">,</span> <span class="ss">:night_vision</span><span class="o">]</span>
+</span><span class='line'>    <span class="n">factory</span> <span class="ss">:ultimate_spy_car</span><span class="p">,</span>  <span class="ss">traits</span><span class="p">:</span> <span class="o">[</span><span class="ss">:cloaked</span><span class="p">,</span> <span class="ss">:night_vision</span><span class="p">,</span> <span class="ss">:submarine</span><span class="p">,</span> <span class="ss">:weaponized</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That let’s you create these objects more much concise—more readable too.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">build_stubbed</span><span class="p">(</span><span class="ss">:invisible_spy_car</span><span class="p">)</span>
+</span><span class='line'><span class="n">create</span><span class="p">(</span><span class="ss">:ultimate_spy_car</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instead of:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">build_stubbed</span><span class="p">(</span><span class="ss">:spy_car</span><span class="p">,</span> <span class="ss">:cloaked</span><span class="p">,</span> <span class="ss">:night_vision</span><span class="p">)</span>
+</span><span class='line'><span class="n">create</span><span class="p">(</span><span class="ss">:spy_car</span><span class="p">,</span> <span class="ss">:cloaked</span><span class="p">,</span> <span class="ss">:night_vision</span><span class="p">,</span> <span class="ss">:submarine</span><span class="p">,</span> <span class="ss">:weaponized</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can even reuse traits as attributes on other factories and traits:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy_car</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">model</span>         <span class="s1">&#39;Aston Martin DB9&#39;</span>
+</span><span class='line'>    <span class="n">top_speed</span>     <span class="s1">&#39;295 km/h&#39;</span>
+</span><span class='line'>    <span class="n">build_date</span>    <span class="s1">&#39;2015&#39;</span>
+</span><span class='line'>    <span class="n">ejection_seat</span> <span class="kp">true</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:submarine</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">ejection_seat</span>              <span class="kp">false</span>
+</span><span class='line'>      <span class="n">water_resistant</span>            <span class="s1">&#39;100 m&#39;</span>
+</span><span class='line'>      <span class="n">submarine_capabilities</span>     <span class="kp">true</span>
+</span><span class='line'>      <span class="n">air_independent_propulsion</span> <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:weaponized</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">rockets</span>           <span class="kp">true</span>
+</span><span class='line'>      <span class="n">number_of_rockets</span> <span class="s1">&#39;12&#39;</span>
+</span><span class='line'>      <span class="n">machine_gun</span>       <span class="kp">true</span>
+</span><span class='line'>      <span class="n">rate_of_fire</span>      <span class="s1">&#39;1,500 RPM&#39;</span>
+</span><span class='line'>      <span class="n">tank_armour</span>       <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:cloaked</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">active_camouflage</span> <span class="kp">true</span>
+</span><span class='line'>      <span class="n">radar_signatur</span>    <span class="s1">&#39;reduced&#39;</span>
+</span><span class='line'>      <span class="n">engine</span>            <span class="s1">&#39;silenced&#39;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:night_vision</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">infrared_sensors</span> <span class="kp">true</span>
+</span><span class='line'>      <span class="n">heads_up_display</span> <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:surveillance</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">night_vision</span>
+</span><span class='line'>      <span class="n">signal_detector</span>      <span class="kp">true</span>
+</span><span class='line'>      <span class="n">signal_analyzer</span>      <span class="kp">true</span>
+</span><span class='line'>      <span class="n">wifi_war_driver</span>      <span class="kp">true</span>
+</span><span class='line'>      <span class="n">license_plate_reader</span> <span class="kp">true</span>
+</span><span class='line'>      <span class="n">mini_drone</span>           <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">factory</span> <span class="ss">:ultimate_spy_car</span><span class="p">,</span> <span class="ss">parent</span><span class="p">:</span> <span class="ss">:spy_car</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">car_plane</span> <span class="kp">true</span>
+</span><span class='line'>  <span class="n">submarine</span>
+</span><span class='line'>  <span class="n">cloaked</span>
+</span><span class='line'>  <span class="n">night_vision</span>
+</span><span class='line'>  <span class="n">weaponized</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Pay attention to the <strong>surveillance</strong> trait which reuses the <strong>night_vision</strong> trait—basically as an attribute. Also the <strong>ultimate_spy_car</strong> factory, which I separated out of the <strong>spy_car</strong> factory definition this time, reuses all traits plus an additional attribute that makes it fly.</p>
+
+<p><strong>create_list</strong> and <strong>build_list</strong> can also make use of traits. The second parameter needs to be the number of factory instances you want.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">create_list</span><span class="p">(</span><span class="ss">:spy_car</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="ss">:night_vision</span><span class="p">)</span>
+</span><span class='line'><span class="n">build_list</span><span class="p">(</span><span class="ss">:spy_car</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="ss">:submarine</span><span class="p">,</span> <span class="ss">:cloaked</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>!!! association with traits
+association :user, :admin, :spy</p>
+
+<p>You can pack callbacks and associations also neatly into traits of course.</p>
+
+<p>If you define the same attributes for multiple traits, the last one defined gets precedence of course.</p>
+
+<p>In a nutshell, traits are lego like building blocks to define your factories with traits.</p>
+
+<ul>
 <li><h3>Dependent Attributes</h3></li>
 </ul>
 
@@ -247,13 +584,13 @@
 </span><span class='line'>      <span class="n">time_of_explosion</span> <span class="p">{</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="o">+</span> <span class="n">countdown_seconds</span> <span class="p">}</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">activate</span> <span class="p">{</span> <span class="s2">&quot;Exploding in </span><span class="si">#{</span><span class="n">countdown_seconds</span><span class="si">}</span><span class="s2"> seconds </span><span class="si">#{</span><span class="n">time_of_explosion</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;at %I:%M %p&quot;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span>
+</span><span class='line'>    <span class="n">time_of_explosion</span> <span class="p">{</span> <span class="s2">&quot;Exploding in </span><span class="si">#{</span><span class="n">countdown_seconds</span><span class="si">}</span><span class="s2"> seconds </span><span class="si">#{</span><span class="n">time_of_explosion</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;at %I:%M %p&quot;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">ticking_device</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:exploding_device</span><span class="p">)</span>
-</span><span class='line'><span class="n">ticking_device</span><span class="o">.</span><span class="n">activate</span>
+</span><span class='line'><span class="n">ticking_device</span><span class="o">.</span><span class="n">time_of_explosion</span>
 </span><span class='line'><span class="c1"># =&gt; &quot;Exploding in 600 seconds at 11:53 PM&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -295,7 +632,7 @@
 </span><span class='line'>  <span class="n">factory</span> <span class="ss">:mission</span> <span class="k">do</span>
 </span><span class='line'>    <span class="n">objective</span>        <span class="s1">&#39;Stopping the bad dude&#39;</span>
 </span><span class='line'>    <span class="n">provided_gadgets</span> <span class="s1">&#39;Mini submarine and shark gun&#39;</span>
-</span><span class='line'>    <span class="n">after</span><span class="p">(</span><span class="ss">:build</span><span class="p">)</span> <span class="p">{</span> <span class="n">assign_support_analyst</span> <span class="p">}</span>
+</span><span class='line'>    <span class="n">after</span><span class="p">(</span><span class="ss">:build</span><span class="p">)</span>    <span class="p">{</span> <span class="n">assign_support_analyst</span> <span class="p">}</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">end</span>
@@ -436,7 +773,7 @@
 </span><span class='line'>
 </span><span class='line'>  <span class="n">factory</span> <span class="ss">:bond_girl</span> <span class="k">do</span>
 </span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Lucia Sciarra&#39;</span>
-</span><span class='line'>    <span class="n">after</span><span class="p">(</span><span class="ss">:build</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">bond_girl</span><span class="o">|</span> <span class="n">hide_secret_documents</span><span class="p">(</span><span class="n">bond_girl</span><span class="p">)</span>  <span class="p">}</span>
+</span><span class='line'>    <span class="n">after</span><span class="p">(</span><span class="ss">:build</span><span class="p">)</span>  <span class="p">{</span> <span class="o">|</span><span class="n">bond_girl</span><span class="o">|</span> <span class="n">hide_secret_documents</span><span class="p">(</span><span class="n">bond_girl</span><span class="p">)</span>  <span class="p">}</span>
 </span><span class='line'>    <span class="n">after</span><span class="p">(</span><span class="ss">:create</span><span class="p">)</span> <span class="p">{</span> <span class="n">close_hidden_safe_compartment</span> <span class="p">}</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>

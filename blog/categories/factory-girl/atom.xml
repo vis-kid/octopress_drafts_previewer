@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Factory Girl | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/factory-girl/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-23T22:10:39+02:00</updated>
+  <updated>2015-10-25T19:39:10+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -33,6 +33,195 @@
 <li>Modifying factories</li>
 <li>Transient attributes</li>
 <li><p>Dependent attributes</p></li>
+<li><h3>Associations</h3></li>
+<li><h3>Traits</h3></li>
+</ul>
+
+
+<p>This is one of my favorite things about Factory Girl. In my mind, <strong>trait</strong> is the most powerful and convenient feature to keep your factory data DRY and expressive. It allows you to bundle groupls of attributes together, give them a separate name and reuse them wherever you please. Remember when I urged you to write barebones factory objects? Traits will help you achieve exactly that without sacrificing any conveniences.</p>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+  factory :spy_car do
+    model         'Aston Martin DB9'
+    top_speed     '295 km/h'
+    build_date    '2015'
+    ejection_seat true
+
+    trait :submarine do
+      ejection_seat              false
+      water_resistant            '100 m'
+      submarine_capabilities     true
+      air_independent_propulsion true
+    end
+
+    trait :weaponized do
+      rockets           true
+      number_of_rockets '12'
+      machine_gun       true
+      rate_of_fire      '1,500 RPM'
+      tank_armour       true
+    end
+
+    trait :cloaked do
+      active_camouflage true
+      radar_signatur    'reduced'
+      engine            'silenced'
+    end
+
+    trait :night_vision do
+      infrared_sensors true
+      heads_up_display true
+    end
+  end
+
+end
+</code></pre>
+
+<p>As you can see, if you want to change some attributes on multiple objects, you can do that now in one central place. No shotgun surgery necessary. Managing state via traits couldn’t be more convenient. With that setup you can build pretty elaborate spy cars by mixing the various attribute bundles however you like—without duplicationg anything by creating new factories.</p>
+
+<pre><code class="ruby">invisible_spy_car = create(:spy_car, :cloaked, :night_vision)
+diving_spy_car    = create(:spy_car, :submarine, :cloaked)
+tank_spy_car      = create(:spy_car, :weaponized, :night_vision)
+</code></pre>
+
+<p>You can use traits with <strong>create</strong>, <strong>build</strong>, <strong>build_stubbed</strong> and <strong>attributes_for</strong>. If Q gets clever, you can also ovverride individual attributes simultaneously by passing in a hash.</p>
+
+<pre><code class="ruby">build(:spy_car, :submarine, ejection_seat: true)
+</code></pre>
+
+<p>For combinations that occur very frequently on a particular factory you can also create child factories which names best represent that data set und bundle their traits only once.</p>
+
+<pre><code class="ruby">FactoryGir.define do
+
+  factory :spy_car do
+    model         'Aston Martin DB9'
+    top_speed     '295 km/h'
+    build_date    '2015'
+    ejection_seat true
+
+    trait :submarine do
+      ejection_seat              false
+      water_resistant            '100 m'
+      submarine_capabilities     true
+      air_independent_propulsion true
+    end
+
+    trait :weaponized do
+      rockets           true
+      number_of_rockets '12'
+      machine_gun       true
+      rate_of_fire      '1,500 RPM'
+      tank_armour       true
+    end
+
+    trait :cloaked do
+      active_camouflage true
+      radar_signatur    'reduced'
+      engine            'silenced'
+    end
+
+    trait :night_vision do
+      infrared_sensors true
+      heads_up_display true
+    end
+  end
+
+    factory :invisible_spy_car, traits: [:cloaked, :night_vision]
+    factory :diving_spy_car,    traits: [:submarine, :cloaked]
+    factory :tank_spy_car,      traits: [:weaponized, :night_vision]
+    factory :ultimate_spy_car,  traits: [:cloaked, :night_vision, :submarine, :weaponized]
+
+end
+</code></pre>
+
+<p>That let’s you create these objects more much concise—more readable too.</p>
+
+<pre><code class="ruby">build_stubbed(:invisible_spy_car)
+create(:ultimate_spy_car)
+</code></pre>
+
+<p>Instead of:</p>
+
+<pre><code class="ruby">build_stubbed(:spy_car, :cloaked, :night_vision)
+create(:spy_car, :cloaked, :night_vision, :submarine, :weaponized)
+</code></pre>
+
+<p>You can even reuse traits as attributes on other factories and traits:</p>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+  factory :spy_car do
+    model         'Aston Martin DB9'
+    top_speed     '295 km/h'
+    build_date    '2015'
+    ejection_seat true
+
+    trait :submarine do
+      ejection_seat              false
+      water_resistant            '100 m'
+      submarine_capabilities     true
+      air_independent_propulsion true
+    end
+
+    trait :weaponized do
+      rockets           true
+      number_of_rockets '12'
+      machine_gun       true
+      rate_of_fire      '1,500 RPM'
+      tank_armour       true
+    end
+
+    trait :cloaked do
+      active_camouflage true
+      radar_signatur    'reduced'
+      engine            'silenced'
+    end
+
+    trait :night_vision do
+      infrared_sensors true
+      heads_up_display true
+    end
+
+    trait :surveillance do
+      night_vision
+      signal_detector      true
+      signal_analyzer      true
+      wifi_war_driver      true
+      license_plate_reader true
+      mini_drone           true
+    end
+  end
+
+end
+
+factory :ultimate_spy_car, parent: :spy_car do
+  car_plane true
+  submarine
+  cloaked
+  night_vision
+  weaponized
+end
+</code></pre>
+
+<p>Pay attention to the <strong>surveillance</strong> trait which reuses the <strong>night_vision</strong> trait—basically as an attribute. Also the <strong>ultimate_spy_car</strong> factory, which I separated out of the <strong>spy_car</strong> factory definition this time, reuses all traits plus an additional attribute that makes it fly.</p>
+
+<p><strong>create_list</strong> and <strong>build_list</strong> can also make use of traits. The second parameter needs to be the number of factory instances you want.</p>
+
+<pre><code class="ruby">create_list(:spy_car, 3, :night_vision)
+build_list(:spy_car, 4, :submarine, :cloaked)
+</code></pre>
+
+<p>!!! association with traits
+association :user, :admin, :spy</p>
+
+<p>You can pack callbacks and associations also neatly into traits of course.</p>
+
+<p>If you define the same attributes for multiple traits, the last one defined gets precedence of course.</p>
+
+<p>In a nutshell, traits are lego like building blocks to define your factories with traits.</p>
+
+<ul>
 <li><h3>Dependent Attributes</h3></li>
 </ul>
 
@@ -116,13 +305,13 @@ narcissistic_villain.motivation
       time_of_explosion { Time.now + countdown_seconds }
     end
 
-    activate { "Exploding in #{countdown_seconds} seconds #{time_of_explosion.strftime("at %I:%M %p")}" }
+    time_of_explosion { "Exploding in #{countdown_seconds} seconds #{time_of_explosion.strftime("at %I:%M %p")}" }
   end
 
 end
 
 ticking_device = create(:exploding_device)
-ticking_device.activate
+ticking_device.time_of_explosion
 # =&gt; "Exploding in 600 seconds at 11:53 PM"
 </code></pre>
 
@@ -154,7 +343,7 @@ ticking_device.activate
   factory :mission do
     objective        'Stopping the bad dude'
     provided_gadgets 'Mini submarine and shark gun'
-    after(:build) { assign_support_analyst }
+    after(:build)    { assign_support_analyst }
   end
 
 end
@@ -230,7 +419,7 @@ end
 
     factory :bond_girl do
     name 'Lucia Sciarra'
-    after(:build) { |bond_girl| hide_secret_documents(bond_girl)  }
+    after(:build)  { |bond_girl| hide_secret_documents(bond_girl)  }
     after(:create) { close_hidden_safe_compartment }
     end
 
