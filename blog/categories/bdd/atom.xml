@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bdd | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/bdd/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-26T21:55:17+01:00</updated>
+  <updated>2015-10-26T22:18:19+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -310,19 +310,18 @@ end
 
 <p>In the example above we needed our spies to be a bit more “sophisticated” and use a better mechanism to handle deployment. I have seen examples where gem authors had to deal with time differently than where it was handy to modify factory objects by simply overriding stuff you need to tweak.</p>
 
-<ul>
-<li><h3>Final Spurt</h3></li>
-</ul>
+<h3>The Last Mile</h3>
 
-
-<p>Let’s bring it all together in the following sections about <em>associations</em> and <em>traits</em>—yes I also sneaked in <strong>alias</strong> because it was the best place without jumping all over the place. If you have paid attention and remember stuff from the first article everthing should fall into place quite neatly.</p>
+<p>Let’s bring it all together in the following sections about <em>associations</em> and <em>traits</em>—yes I also sneaked in <strong>alias</strong> because it was the best place without jumping all over the place. If you have paid attention and remember stuff from the first article everything should fall quite neatly into place now .</p>
 
 <ul>
 <li><h3>Associations</h3></li>
 </ul>
 
 
-<p>Associations are essential to every self respecting web app that has a little bit of complexity. A post that belongs to a user, a user that has many comments and so forth are the bread and butter developers have for breakfast any day of the week. Seen from that perspective makes it obvious that for more complex scenarios factories need to be bullet proof and easy to handle—at least in order to not mess with your TDD mojo. Emulating model associations via FactoryGirl is relatively straightforward I’d say. That in itself is quite amazing in my mind. Achieving a high level of ease and convenience for building complex data sets makes the practice of TDD a no-brainer and so much more effective.</p>
+<p>Associations are essential to every self respecting web app that has a little bit of complexity. A post that belongs to a user, a listing that has many ratings and so forth are the bread and butter developers have for breakfast any day of the week. Seen from that perspective it, becomes obvious that for more complex scenarios factories need to be bullet proof and easy to handle—at least in order to not mess with your TDD mojo. Emulating model associations via FactoryGirl is relatively straightforward I’d say. That in itself is quite amazing in my mind. Achieving a high level of ease and convenience for building complex data sets makes the practice of TDD a no-brainer and so much more effective.</p>
+
+<p>The new Q has hacker skills and needs to own a decent computer right? In this case you have a <strong>Computer</strong> class and its instances belong to the <strong>Quartermaster</strong> class. Easy right?</p>
 
 <pre><code class="ruby">FactoryGirl.define do
 
@@ -338,7 +337,7 @@ end
 end
 </code></pre>
 
-<p>The new Q has hacker skills and needs to own a computer right? In this case you have a <strong>Computer</strong> class and its instances belong to the <strong>Quartermaster</strong> class. Easy right? What about something a bit more involved? Let’s say our spies use a <strong>gun</strong> that has_many <strong>cartridge(s)</strong> (bullets).</p>
+<p>What about something a bit more involved? Let’s say our spies use a <strong>gun</strong> that has_many <strong>cartridge(s)</strong> (bullets).</p>
 
 <pre><code class="ruby">class Cartridge &lt; ActiveRecord::Base 
   belongs_to :gun 
@@ -358,7 +357,7 @@ end
     factory :gun do
     model_name 'Walther PPK'
     ammunition '7.65mm Browning'
-    caliber '7.65'
+    caliber    '7.65'
 
     factory :gun_with_ammo do
       transient do
@@ -373,7 +372,7 @@ end
 end
 </code></pre>
 
-<p>Callbacks come in pretty handy with associtations huh? Now you can build a gun with or without ammunition.</p>
+<p>Callbacks come in pretty handy with associtations huh? Now you can build a gun with or without ammunition. Via the hash <strong>gun: gun</strong> you provided the <strong>cartridge</strong> factory with the necessary information to create the association.</p>
 
 <pre><code class="ruby">spy_gun = create(:gun)
 spy_gun.cartridges.length # =&gt; 0
@@ -388,7 +387,7 @@ loaded_spy_gun.cartridges.length # =&gt; 10
 big_magazine_gun.cartridges.length # =&gt; 20
 </code></pre>
 
-<p>So what about the different build strategies? Wasn’t there something fishy? Well, all you need to remember is that if you use <strong>create</strong> for associated objects both of them will be saved. So <strong>create(:quartermaster)</strong> will build and save both Q and his Thinkpad. Then I better use <strong>build</strong> then if I want to avoid hitting the database? Good idea but <strong>build</strong> would only apply to <strong>quartermaster</strong> in our example—the <strong>computer</strong> would still get saved. A bit tricky I know. Here’s what you can do if you need to avoid saving the associated object—you specify the build strategy you need for your association.</p>
+<p>So what about the different build strategies? Wasn’t there something fishy? Well, here’s what you need to remember: If you use <strong>create</strong> for associated objects both of them will be saved. So <strong>create(:quartermaster)</strong> will build and save both Q and his Thinkpad. Then I better use <strong>build</strong> then if I want to avoid hitting the database? Good idea but <strong>build</strong> would only apply to <strong>quartermaster</strong> in our example—the <strong>computer</strong> would still get saved. A bit tricky I know. Here’s what you can do if you need to avoid saving the associated object—you specify the build strategy you need for your association.</p>
 
 <pre><code class="ruby">FactoryGirl.define do
 
@@ -412,7 +411,7 @@ end
 end
 </code></pre>
 
-<p>Now both objects use <strong>build</strong> and nothing gets saved to the database. We can that that assumption by using <strong>new_record?</strong> which returns <strong>true</strong> if the instance hasn’t been persisted.</p>
+<p>Now both objects use <strong>build</strong> and nothing gets saved to the database. We can check that assumption by using <strong>new_record?</strong> which returns <strong>true</strong> if the instance hasn’t been persisted.</p>
 
 <pre><code class="ruby">q = build(:quartermaster)
 q.new_record? # =&gt; true
