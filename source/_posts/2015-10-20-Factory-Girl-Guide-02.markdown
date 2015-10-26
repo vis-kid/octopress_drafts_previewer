@@ -300,13 +300,15 @@ end
 
 In the example above we needed our spies to be a bit more “sophisticated” and use a better mechanism to handle deployment. I have seen examples where gem authors had to deal with time differently than where it was handy to modify factory objects by simply overriding stuff you need to tweak.
 
-+ ### Final Spurt
+### The Last Mile
 
-Let’s bring it all together in the following sections about *associations* and *traits*—yes I also sneaked in **alias** because it was the best place without jumping all over the place. If you have paid attention and remember stuff from the first article everthing should fall into place quite neatly.
+Let’s bring it all together in the following sections about *associations* and *traits*—yes I also sneaked in **alias** because it was the best place without jumping all over the place. If you have paid attention and remember stuff from the first article everything should fall quite neatly into place now .
 
 + ### Associations
 
-Associations are essential to every self respecting web app that has a little bit of complexity. A post that belongs to a user, a user that has many comments and so forth are the bread and butter developers have for breakfast any day of the week. Seen from that perspective makes it obvious that for more complex scenarios factories need to be bullet proof and easy to handle—at least in order to not mess with your TDD mojo. Emulating model associations via FactoryGirl is relatively straightforward I’d say. That in itself is quite amazing in my mind. Achieving a high level of ease and convenience for building complex data sets makes the practice of TDD a no-brainer and so much more effective. 
+Associations are essential to every self respecting web app that has a little bit of complexity. A post that belongs to a user, a listing that has many ratings and so forth are the bread and butter developers have for breakfast any day of the week. Seen from that perspective it, becomes obvious that for more complex scenarios factories need to be bullet proof and easy to handle—at least in order to not mess with your TDD mojo. Emulating model associations via FactoryGirl is relatively straightforward I’d say. That in itself is quite amazing in my mind. Achieving a high level of ease and convenience for building complex data sets makes the practice of TDD a no-brainer and so much more effective. 
+
+The new Q has hacker skills and needs to own a decent computer right? In this case you have a **Computer** class and its instances belong to the **Quartermaster** class. Easy right? 
 
 ``` ruby
 FactoryGirl.define do
@@ -323,7 +325,7 @@ FactoryGirl.define do
 end
 ```
 
-The new Q has hacker skills and needs to own a computer right? In this case you have a **Computer** class and its instances belong to the **Quartermaster** class. Easy right? What about something a bit more involved? Let’s say our spies use a **gun** that has_many **cartridge(s)** (bullets).
+What about something a bit more involved? Let’s say our spies use a **gun** that has_many **cartridge(s)** (bullets).
 
 ``` ruby
 class Cartridge < ActiveRecord::Base 
@@ -345,7 +347,7 @@ FactoryGirl.define do
 	factory :gun do
     model_name 'Walther PPK'
     ammunition '7.65mm Browning'
-    caliber '7.65'
+    caliber    '7.65'
 
     factory :gun_with_ammo do
       transient do
@@ -360,7 +362,7 @@ FactoryGirl.define do
 end
 ```
 
-Callbacks come in pretty handy with associtations huh? Now you can build a gun with or without ammunition.
+Callbacks come in pretty handy with associtations huh? Now you can build a gun with or without ammunition. Via the hash **gun: gun** you provided the **cartridge** factory with the necessary information to create the association.
 
 ``` ruby
 spy_gun = create(:gun)
@@ -377,7 +379,7 @@ big_magazine_gun = create(:gun_with_ammo, magazine_size: 20)
 big_magazine_gun.cartridges.length # => 20
 ```
 
-So what about the different build strategies? Wasn’t there something fishy? Well, all you need to remember is that if you use **create** for associated objects both of them will be saved. So **create(:quartermaster)** will build and save both Q and his Thinkpad. Then I better use **build** then if I want to avoid hitting the database? Good idea but **build** would only apply to **quartermaster** in our example—the **computer** would still get saved. A bit tricky I know. Here’s what you can do if you need to avoid saving the associated object—you specify the build strategy you need for your association.
+So what about the different build strategies? Wasn’t there something fishy? Well, here’s what you need to remember: If you use **create** for associated objects both of them will be saved. So **create(:quartermaster)** will build and save both Q and his Thinkpad. Then I better use **build** then if I want to avoid hitting the database? Good idea but **build** would only apply to **quartermaster** in our example—the **computer** would still get saved. A bit tricky I know. Here’s what you can do if you need to avoid saving the associated object—you specify the build strategy you need for your association.
 
 ``` ruby
 FactoryGirl.define do
@@ -404,7 +406,7 @@ factory :computer do
 end
 ```
 
-Now both objects use **build** and nothing gets saved to the database. We can that that assumption by using **new_record?** which returns **true** if the instance hasn’t been persisted.
+Now both objects use **build** and nothing gets saved to the database. We can check that assumption by using **new_record?** which returns **true** if the instance hasn’t been persisted.
 
 ``` ruby
 q = build(:quartermaster)
