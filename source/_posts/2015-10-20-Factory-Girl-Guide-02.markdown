@@ -431,6 +431,48 @@ FactoryGirl.define do
 end
 ```
 
+Let’s close this chapter with an example that is **polymorphic**. 
+
+``` ruby
+class Spy < ActiveRecord::Base
+  belongs_to :spyable, polymorpic: true
+end
+
+class MIFive < ActiveRecord::Base
+  has_many :spies, as: :spyable
+end
+
+class MISix < ActiveRecord::Base
+  has_many :spies, as: :spyable
+end
+```
+
+``` ruby
+FactoryGirl.define do
+
+  factory :mifive do
+    name 'Military Intelligence, Section 5'
+    principal_activity 'Domestic counter-intelligence'
+  end
+
+  factory :misix do
+    name 'Military Intelligence, Section 6'
+    principal_activity 'Foreign counter-intelligence'
+
+  end
+
+  factory :mifive_spy, class: Spy do
+    association :spyable, factory: :mifive 
+  end
+
+  factory :misix_spy, class: Spy do
+    association :spyable, factory: :misix
+  end
+
+end
+```
+
+Don’t feel bad if this one needs a bit more time to sink in. I recommend catching up on [**Polymorphic Associations**](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations) if you’re unsure what’s going on here.
 
 + ### Aliases
 
