@@ -29,7 +29,7 @@ This second article about this popular and useful Ruby gem deals with a couple m
 
 + ### Traits
 
-This is one of my favorite things about Factory Girl. In my mind, **trait** is the most powerful and convenient feature to keep your factory data DRY and expressive. It allows you to bundle groupls of attributes together, give them a separate name and reuse them wherever you please. Remember when I urged you to write barebones factory objects? Traits will help you achieve exactly that without sacrificing any conveniences.
+This is one of my favorite things about Factory Girl. In a nutshell, traits are lego-like blocks to build your factories and mix in behaviour. In my mind, **trait** is the most powerful and convenient function to keep your factory data DRY and expressive. It allows you to bundle groups of attributes together, give them separate names and reuse them wherever you please. Remember when I urged you to define barebones factory objects? Traits will help you achieve exactly that without sacrificing any conveniences.
 
 ``` ruby
 FactoryGirl.define do
@@ -70,7 +70,7 @@ FactoryGirl.define do
 end
 ```
 
-As you can see, if you want to change some attributes on multiple objects, you can do that now in one central place. No shotgun surgery necessary. Managing state via traits couldn’t be more convenient. With that setup you can build pretty elaborate spy cars by mixing the various attribute bundles however you like—without duplicationg anything by creating new factories. 
+As you can see, if you want to change some attributes that are now spread over multiple objects, you can do that now in one central place. No shotgun surgery necessary. Managing state via traits couldn’t be more convenient. With that setup you can build pretty elaborate spy cars by mixing the various attribute bundles however you like—without duplicating anything via creating all sorts of new factories that account for all the various options you need. 
 
 ``` ruby
 invisible_spy_car = create(:spy_car, :cloaked, :night_vision)
@@ -83,7 +83,7 @@ You can use traits with **create**, **build**, **build_stubbed** and **attribute
 build(:spy_car, :submarine, ejection_seat: true)
 ```
 
-For combinations that occur very frequently on a particular factory you can also create child factories which names best represent that data set und bundle their traits only once.
+For trait combinations that occur very frequently on a particular factory you can also create child factories which names best represent that data set. That way you bundle their traits only once as opposed to all the time when you create test data.
 
 ``` ruby
 FactoryGir.define do
@@ -95,29 +95,19 @@ FactoryGir.define do
     ejection_seat true
 
     trait :submarine do
-      ejection_seat              false
-      water_resistant            '100 m'
-      submarine_capabilities     true
-      air_independent_propulsion true
+      ...
     end
     
     trait :weaponized do
-      rockets           true
-      number_of_rockets '12'
-      machine_gun       true
-      rate_of_fire      '1,500 RPM'
-      tank_armour       true
+      ...
     end
     
     trait :cloaked do
-      active_camouflage true
-      radar_signatur    'reduced'
-      engine            'silenced'
+      ...
     end
     
     trait :night_vision do
-      infrared_sensors true
-      heads_up_display true
+      ...
     end
   end
 
@@ -143,7 +133,9 @@ build_stubbed(:spy_car, :cloaked, :night_vision)
 create(:spy_car, :cloaked, :night_vision, :submarine, :weaponized)
 ```
 
-You can even reuse traits as attributes on other factories and traits:
+Reads much better no? Especially when no variable names are involved.
+
+You can even reuse traits as attributes on other traits and factories:
 
 ``` ruby
 FactoryGirl.define do
@@ -155,32 +147,23 @@ FactoryGirl.define do
     ejection_seat true
 
     trait :submarine do
-      ejection_seat              false
-      water_resistant            '100 m'
-      submarine_capabilities     true
-      air_independent_propulsion true
+      ...
     end
     
     trait :weaponized do
-      rockets           true
-      number_of_rockets '12'
-      machine_gun       true
-      rate_of_fire      '1,500 RPM'
-      tank_armour       true
+      ...
     end
     
     trait :cloaked do
-      active_camouflage true
-      radar_signatur    'reduced'
-      engine            'silenced'
+      ...
     end
     
     trait :night_vision do
-      infrared_sensors true
-      heads_up_display true
+      ...
     end
 
-    trait :surveillance do
+    trait :mobile_surveillance do
+      cloaked
       night_vision
       signal_detector      true
       signal_analyzer      true
@@ -190,19 +173,20 @@ FactoryGirl.define do
     end
   end
 
-end
+  factory :ultimate_spy_car, parent: :spy_car do
+    car_plane true
+    submarine
+    cloaked
+    night_vision
+    weaponized
+    mobile_surveillance
+  end
 
-factory :ultimate_spy_car, parent: :spy_car do
-  car_plane true
-  submarine
-  cloaked
-  night_vision
-  weaponized
 end
 
 ```
 
-Pay attention to the **surveillance** trait which reuses the **night_vision** trait—basically as an attribute. Also the **ultimate_spy_car** factory, which I separated out of the **spy_car** factory definition this time, reuses all traits plus an additional attribute that makes it fly.
+Pay attention to the **mobile_surveillance** trait which reuses the **cloaked** and **night_vision** traits—basically as an attribute. Also the **ultimate_spy_car** factory, which I separated out of the **spy_car** factory definition for fun this time, reuses all traits plus an additional attribute that makes it fly too. Movie magic or maybe I should say FactoryGirl magic.
 
 **create_list** and **build_list** can also make use of traits. The second parameter needs to be the number of factory instances you want.
 
@@ -216,9 +200,9 @@ association :user, :admin, :spy
 
 You can pack callbacks and associations also neatly into traits of course.
 
-If you define the same attributes for multiple traits, the last one defined gets precedence of course.
+If you define the same attributes for multiple traits, the last one defined gets precedence of course. 
 
-In a nutshell, traits are lego like building blocks to define your factories with traits.
+Last words of wisdom: Change is your constant companion—needing to change attributes or data types happens all the time. Design decisions like these evolve. Traits will ease the pain with that and helps you manage your data sets. Imagine if you’d have used an options hash for instantiation and that requirement totally changed. How many potential places in your tests might break and will now need attention?. Straight up, **trait** is a very effective tool for eliminating duplication in your test suite. But with all that convenience, don’t be lazy and forget your unit tests on the columns for your models that are represented by your traits! That way you give them the same amount of care as the barebones attributes needed for valid objects.
 
 
 
