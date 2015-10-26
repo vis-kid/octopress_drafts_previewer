@@ -10,7 +10,7 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 {% img /images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png %}
 
-This second article about this popular and useful Ruby gem deals with a couple more nuanced topics that beginners don’t necessarily need to concern themselves right away when they get started. Again, I did my best to keep it newbie-accessible and explain every bit of lingo people new to TDD might have never heard of.
+This second article about this popular and useful Ruby gem deals with a couple more nuanced topics that beginners don’t necessarily need to concern themselves right away when they get started. Again, I did my best to keep it newbie-accessible and explain every bit of lingo people new to TDD might stumble over.
 
 ### Topics
 
@@ -113,16 +113,6 @@ ticking_device = create(:exploding_device)
 ticking_device.time_of_explosion
 # => "Exploding in 600 seconds at 11:53 PM"
 ```
-
-
-
-
-
-
-
-+ ### Associations
-
-As mentioned before, another trick up the sleeve of Factory Girl is emulating associations—relatively straightforward too I’d say.
 
 + ### Callbacks
 
@@ -273,6 +263,173 @@ end
 
 If you use inheritance to compose child factories the callbacks on the parent will be inherited as well. 
 
++ ### Modifying Factories
+
+Probably not a use case you’ll run into everyday but sometimes you inherit factories from other developers and want to change them—in case you are using a TDD’d gem for example. If you feel the need to tweak these legacy factories to better fit your specific test scenarios you can modify them without creating new ones or using inheritance. 
+
+You do this via **FactoryGirl.modify** and it needs to be outside of that particular **FactoryGirl.define** block that you want to change. What you can’t do is modify **sequence** or **trait**—you can override attributes defined in via **trait** though. Callbacks on the “original” factory also won’t be overridden. The callback in your **Factory.modify** block will just be run as next in line. 
+
+``` ruby
+FactoryGirl.define do
+
+  factory :spy do
+    name 'Marty McSpy'
+    skills 'Espionage and infiltration'
+    deployment { Time.now }
+  end
+	
+end
+
+FactoryGirl.modify do
+
+  sequence :mission_deployment do |number|
+    "Mission #{number} at #{DateTime.now.to_formatted_s(:short)}"
+  end
+
+  factory :spy do
+    name            'James Bond'
+    skills          'CQC and poker'
+    favorite_weapon 'Walther PPK'
+    body_count      'Classified'
+    car             'Aston Martin'
+    deployment      { generate(:mission_deployment) }
+	end
+
+end
+```
+
+In the example above we needed our spies to be a bit more “sophisticated” and use a better mechanism to handle deployment. I have seen examples where gem authors had to deal with time differently than where it was handy to modify factory objects by simply overriding stuff you need to tweak.
+
++ ### Final Spurt
+
+Let’s bring it all together in the following sections about *associations* and *traits*—yes I also sneaked in **alias** because it was the best place without jumping all over the place. If you have paid attention and remember stuff from the first article everthing should fall into place quite neatly.
+
++ ### Associations
+
+Associations are essential to every self respecting web app that has a little bit of complexity. A post that belongs to a user, a user that has many comments and so forth are the bread and butter developers have for breakfast any day of the week. Seen from that perspective makes it obvious that for more complex scenarios factories need to be bullet proof and easy to handle—at least in order to not mess with your TDD mojo. Emulating model associations via FactoryGirl is relatively straightforward I’d say. That in itself is quite amazing in my mind. Achieving a high level of ease and convenience for building complex data sets makes the practice of TDD a no-brainer and so much more effective. 
+
+``` ruby
+FactoryGirl.define do
+
+  factory :quartermaster do
+    name 'Q'
+  end
+
+  factory :computer do
+    model 'Custom Lenovo ThinkPad W Series'
+    quartermaster 
+	end
+
+end
+```
+
+The new Q has hacker skills and needs to own a computer right? In this case you have a **Computer** class and its instances belong to the **Quartermaster** class. Easy right? What about something a bit more involved? Let’s say our spies use a **gun** that has_many **cartridge(s)** (bullets).
+
+``` ruby
+class Cartridge < ActiveRecord::Base 
+  belongs_to :gun 
+end
+
+class Gun < ActiveRecord::Base
+  has_many :cartridges
+end
+```
+
+``` ruby
+FactoryGirl.define do
+	factory :cartridge do
+    caliber '7.65' 
+    gun
+  end
+
+	factory :gun do
+    model_name 'Walther PPK'
+    ammunition '7.65mm Browning'
+    caliber '7.65'
+
+    factory :gun_with_ammo do
+      transient do
+        magazine_size 10
+      end
+
+      after(:create) do |gun, evaluator|
+        create_list(:cartridge, evaluator.magazine_size, gun: gun)
+      end
+    end
+  end
+end
+```
+
+Callbacks come in pretty handy with associtations huh? Now you can build a gun with or without ammunition.
+
+``` ruby
+spy_gun = create(:gun)
+spy_gun.cartridges.length # => 0
+
+loaded_spy_gun = create(:gun_with_ammo)
+loaded_spy_gun.cartridges.length # => 10
+```
+
+If you need another magazine size you can pass it in via your **transient attribute**.
+
+``` ruby
+big_magazine_gun = create(:gun_with_ammo, magazine_size: 20)
+big_magazine_gun.cartridges.length # => 20
+```
+
+So what about the different build strategies? Wasn’t there something fishy? Well, all you need to remember is that if you use **create** for associated objects both of them will be saved. So **create(:quartermaster)** will build and save both Q and his Thinkpad. Then I better use **build** then if I want to avoid hitting the database? Good idea but **build** would only apply to **quartermaster** in our example—the **computer** would still get saved. A bit tricky I know. Here’s what you can do if you need to avoid saving the associated object—you specify the build strategy you need for your association.
+
+``` ruby
+FactoryGirl.define do
+
+  factory :quartermaster do
+    name 'Q'
+  end
+
+  factory :computer do
+    model 'Custom Lenovo ThinkPad W Series'
+    association :quartermaster, strategy: :build
+	end
+
+end
+
+```
+
+You name the associated factory object and pass in a hash with your build strategy. You need to use the explicit **association** call for this to work. The example below won’t work.
+
+``` ruby
+factory :computer do
+  model 'Custom Lenovo ThinkPad W Series'
+  quartermaster, strategy: :build
+end
+```
+
+Now both objects use **build** and nothing gets saved to the database. We can that that assumption by using **new_record?** which returns **true** if the instance hasn’t been persisted.
+
+``` ruby
+q = build(:quartermaster)
+q.new_record? # => true
+q.computer.new_record? # => true
+```
+
+While we’re at it, via the explicit **association** call you can also refer to different factories and change attributes on the fly.
+
+``` ruby
+FactoryGirl.define do
+
+  factory :quartermaster do
+    name 'Q'
+  end
+
+  factory :computer do
+    model 'Custom Lenovo ThinkPad W Series'
+    association :hacker, factory: :quartermaster, skills: 'Hacking'
+	end
+
+end
+```
+
+
 + ### Aliases
 
 Aliases for your factories allow you to be more expressive about the context that you are using your factory objects in. You only need to provide a hash of alternative names that better describe the relationship between associated objects.
@@ -327,49 +484,6 @@ end
 Well, not that neat isn’t it?
 
 In the context of comments a **:user** could be referred to as **:commenter**, in the case of a **:crime** a **:user** could be aliased as a **:suspect** and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your temptation for duplication.
-
-+ ### Modifying Factories
-
-Probably not a use case you’ll run into everyday but sometimes you inherit factories from other developers and want to change them—in case you are using a TDD’d gem for example. If you feel the need to tweak these legacy factories to better fit your specific test scenarios you can modify them without creating new ones or using inheritance. 
-
-You do this via **FactoryGirl.modify** and it needs to be outside of that particular **FactoryGirl.define** block that you want to change. What you can’t do is modify **sequence** or **trait**—you can override attributes defined in via **trait** though. Callbacks on the “original” factory also won’t be overridden. The callback in your **Factory.modify** block will just be run as next in line. 
-
-``` ruby
-FactoryGirl.define do
-
-  factory :spy do
-    name 'Marty McSpy'
-    skills 'Espionage and infiltration'
-    deployment { Time.now }
-  end
-	
-end
-
-FactoryGirl.modify do
-
-  sequence :mission_deployment do |number|
-    "Mission #{number} at #{DateTime.now.to_formatted_s(:short)}"
-  end
-
-  factory :spy do
-    name            'James Bond'
-    skills          'CQC and poker'
-    favorite_weapon 'Walther PPK'
-    body_count      'Classified'
-    car             'Aston Martin'
-    deployment      { generate(:mission_deployment) }
-	end
-
-end
-```
-
-In the example above we needed our spies to be a bit more “sophisticated” and use a better mechanism to handle deployment. I have seen examples where gem authors had to deal with time differently than where it was handy to modify factory objects by simply overriding stuff you need to tweak.
-
-Let’s bring it all together in the next two sections about *associations* and *traits*. If you have paid attention and remember stuff from the first article everthing should fall into place quite neatly.
-
-+ ### Associations
-
-
 
 
 + ### Traits
@@ -548,6 +662,10 @@ You can pack callbacks and associations also neatly into traits of course.
 If you define the same attributes for multiple traits, the last one defined gets precedence of course. 
 
 Last words of wisdom: Change is your constant companion—needing to change attributes or data types happens all the time. Design decisions like these evolve. Traits will ease the pain with that and helps you manage your data sets. Imagine if you’d have used an options hash for instantiation and that requirement totally changed. How many potential places in your tests might break and will now need attention?. Straight up, **trait** is a very effective tool for eliminating duplication in your test suite. But with all that convenience, don’t be lazy and forget your unit tests on the columns for your models that are represented by your traits! That way you give them the same amount of care as the barebones attributes needed for valid objects.
+
++ ### Final Thoughts
+
+There is a bit more to discover in FactoryGirl and I’m confident you are now more than well equipped to to put the pieces together when you need them. Have fun playing with this gem. I hope your TDD habits will benefit from it. 
 
 {% img /images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png %}
 
