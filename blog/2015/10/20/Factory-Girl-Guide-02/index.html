@@ -689,8 +689,8 @@
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">spy_gun</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:gun</span><span class="p">)</span>
 </span><span class='line'><span class="n">spy_gun</span><span class="o">.</span><span class="n">cartridges</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 0</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">loaded_spy_gun</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:gun_with_ammo</span><span class="p">)</span>
-</span><span class='line'><span class="n">loaded_spy_gun</span><span class="o">.</span><span class="n">cartridges</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 10</span>
+</span><span class='line'><span class="n">spy_gun_with_ammo</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:gun_with_ammo</span><span class="p">)</span>
+</span><span class='line'><span class="n">spy_gun_with_ammo</span><span class="o">.</span><span class="n">cartridges</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 10</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1067,7 +1067,7 @@
 
 <p>Reads much better no? Especially when no variable names are involved.</p>
 
-<p>You can even reuse traits as attributes on other traits and factories:</p>
+<p>You can even reuse traits as attributes on other traits and factories. If you define the same attributes for multiple traits, the last one defined gets precedence of course.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1173,14 +1173,65 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>!!! association with traits
-association :user, :admin, :spy</p>
+<p>Wouldn’t it be cool to use associations with traits? Of course you can pack callbacks and associations neatly into traits. Duh!</p>
 
-<p>You can pack callbacks and associations also neatly into traits of course.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:cartridge</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">caliber</span> <span class="s1">&#39;7.65&#39;</span>
+</span><span class='line'>    <span class="n">gun</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:gun</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">model_name</span> <span class="s1">&#39;Walther PPK&#39;</span>
+</span><span class='line'>    <span class="n">ammunition</span> <span class="s1">&#39;7.65mm Browning&#39;</span>
+</span><span class='line'>    <span class="n">caliber</span>    <span class="s1">&#39;7.65&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">trait</span> <span class="ss">:with_ammo</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">transient</span> <span class="k">do</span>
+</span><span class='line'>        <span class="n">magazine_size</span> <span class="mi">10</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">after</span><span class="p">(</span><span class="ss">:create</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">gun</span><span class="p">,</span> <span class="n">evaluator</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">create_list</span><span class="p">(</span><span class="ss">:cartridge</span><span class="p">,</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">magazine_size</span><span class="p">,</span> <span class="ss">gun</span><span class="p">:</span> <span class="n">gun</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>If you define the same attributes for multiple traits, the last one defined gets precedence of course.</p>
 
-<p>Last words of wisdom: Change is your constant companion—needing to change attributes or data types happens all the time. Design decisions like these evolve. Traits will ease the pain with that and helps you manage your data sets. Imagine if you’d have used an options hash for instantiation and that requirement totally changed. How many potential places in your tests might break and will now need attention?. Straight up, <strong>trait</strong> is a very effective tool for eliminating duplication in your test suite. But with all that convenience, don’t be lazy and forget your unit tests on the columns for your models that are represented by your traits! That way you give them the same amount of care as the barebones attributes needed for valid objects.</p>
+<p>How to use them should be boring by now.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gun_with_ammo</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:gun</span><span class="p">,</span> <span class="ss">:with_ammo</span><span class="p">)</span>
+</span><span class='line'><span class="n">gun_with_ammo</span><span class="o">.</span><span class="n">cartridges</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 10</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Last words of wisdom: Change is your constant companion—needing to change attributes or data types happens all the time. Design decisions like these evolve. Traits will ease the pain with that and helps you manage your data sets. Imagine if you’d have used an options hash for instantiation and that requirement totally changed. How many potential places in your tests might break and will now need attention? Straight up, <strong>trait</strong> is a very effective tool for eliminating duplication in your test suite. But with all that convenience, don’t be lazy and forget your unit tests on the columns that are represented by your traits! That way you give them the same amount of care as the barebones attributes needed for valid objects.</p>
 
 <ul>
 <li><h3>Final Thoughts</h3></li>
