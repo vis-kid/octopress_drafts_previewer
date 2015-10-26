@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Factory Girl | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/factory-girl/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-26T22:36:01+01:00</updated>
+  <updated>2015-10-26T23:14:59+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -433,6 +433,47 @@ q.computer.new_record? # =&gt; true
 
 end
 </code></pre>
+
+<p>Let’s close this chapter with an example that is <strong>polymorphic</strong>.</p>
+
+<pre><code class="ruby">class Spy &lt; ActiveRecord::Base
+  belongs_to :spyable, polymorpic: true
+end
+
+class MIFive &lt; ActiveRecord::Base
+  has_many :spies, as: :spyable
+end
+
+class MISix &lt; ActiveRecord::Base
+  has_many :spies, as: :spyable
+end
+</code></pre>
+
+<pre><code class="ruby">FactoryGirl.define do
+
+  factory :mifive do
+    name 'Military Intelligence, Section 5'
+    principal_activity 'Domestic counter-intelligence'
+  end
+
+  factory :misix do
+    name 'Military Intelligence, Section 6'
+    principal_activity 'Foreign counter-intelligence'
+
+  end
+
+  factory :mifive_spy, class: Spy do
+    association :spyable, factory: :mifive 
+  end
+
+  factory :misix_spy, class: Spy do
+    association :spyable, factory: :misix
+  end
+
+end
+</code></pre>
+
+<p>That one needs a bit more time to sink in. I recommend catching up on <a href="http://guides.rubyonrails.org/association_basics.html#polymorphic-associations"><strong>Polymorphic Associations</strong></a> if you’re unsure what’s going on here.</p>
 
 <ul>
 <li><h3>Aliases</h3></li>

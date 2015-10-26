@@ -788,6 +788,84 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>Let’s close this chapter with an example that is <strong>polymorphic</strong>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Spy</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:spyable</span><span class="p">,</span> <span class="ss">polymorpic</span><span class="p">:</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">MIFive</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:spies</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="ss">:spyable</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">MISix</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:spies</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="ss">:spyable</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:mifive</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Military Intelligence, Section 5&#39;</span>
+</span><span class='line'>    <span class="n">principal_activity</span> <span class="s1">&#39;Domestic counter-intelligence&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:misix</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Military Intelligence, Section 6&#39;</span>
+</span><span class='line'>    <span class="n">principal_activity</span> <span class="s1">&#39;Foreign counter-intelligence&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:mifive_spy</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="no">Spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">association</span> <span class="ss">:spyable</span><span class="p">,</span> <span class="ss">factory</span><span class="p">:</span> <span class="ss">:mifive</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:misix_spy</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="no">Spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">association</span> <span class="ss">:spyable</span><span class="p">,</span> <span class="ss">factory</span><span class="p">:</span> <span class="ss">:misix</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That one needs a bit more time to sink in. I recommend catching up on <a href="http://guides.rubyonrails.org/association_basics.html#polymorphic-associations"><strong>Polymorphic Associations</strong></a> if you’re unsure what’s going on here.</p>
+
 <ul>
 <li><h3>Aliases</h3></li>
 </ul>
