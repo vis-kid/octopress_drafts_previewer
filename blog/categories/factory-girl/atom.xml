@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Factory Girl | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/factory-girl/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-26T23:14:59+01:00</updated>
+  <updated>2015-10-26T23:17:29+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -473,7 +473,7 @@ end
 end
 </code></pre>
 
-<p>That one needs a bit more time to sink in. I recommend catching up on <a href="http://guides.rubyonrails.org/association_basics.html#polymorphic-associations"><strong>Polymorphic Associations</strong></a> if you’re unsure what’s going on here.</p>
+<p>Don’t feel bad if this one needs a bit more time to sink in. I recommend catching up on <a href="http://guides.rubyonrails.org/association_basics.html#polymorphic-associations"><strong>Polymorphic Associations</strong></a> if you’re unsure what’s going on here.</p>
 
 <ul>
 <li><h3>Aliases</h3></li>
