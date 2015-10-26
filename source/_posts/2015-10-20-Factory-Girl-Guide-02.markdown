@@ -368,8 +368,8 @@ Callbacks come in pretty handy with associtations huh? Now you can build a gun w
 spy_gun = create(:gun)
 spy_gun.cartridges.length # => 0
 
-loaded_spy_gun = create(:gun_with_ammo)
-loaded_spy_gun.cartridges.length # => 10
+spy_gun_with_ammo = create(:gun_with_ammo)
+spy_gun_with_ammo.cartridges.length # => 10
 ```
 
 If you need another magazine size you can pass it in via your **transient attribute**.
@@ -596,7 +596,8 @@ create(:spy_car, :cloaked, :night_vision, :submarine, :weaponized)
 
 Reads much better no? Especially when no variable names are involved.
 
-You can even reuse traits as attributes on other traits and factories:
+You can even reuse traits as attributes on other traits and factories. If you define the same attributes for multiple traits, the last one defined gets precedence of course. 
+
 
 ``` ruby
 FactoryGirl.define do
@@ -656,14 +657,41 @@ create_list(:spy_car, 3, :night_vision)
 build_list(:spy_car, 4, :submarine, :cloaked)
 ```
 
-!!! association with traits
-association :user, :admin, :spy
+Wouldn’t it be cool to use associations with traits? Of course you can pack callbacks and associations neatly into traits. Duh!
 
-You can pack callbacks and associations also neatly into traits of course.
+``` ruby
+FactoryGirl.define do
+	factory :cartridge do
+    caliber '7.65' 
+    gun
+  end
 
-If you define the same attributes for multiple traits, the last one defined gets precedence of course. 
+	factory :gun do
+    model_name 'Walther PPK'
+    ammunition '7.65mm Browning'
+    caliber    '7.65'
 
-Last words of wisdom: Change is your constant companion—needing to change attributes or data types happens all the time. Design decisions like these evolve. Traits will ease the pain with that and helps you manage your data sets. Imagine if you’d have used an options hash for instantiation and that requirement totally changed. How many potential places in your tests might break and will now need attention?. Straight up, **trait** is a very effective tool for eliminating duplication in your test suite. But with all that convenience, don’t be lazy and forget your unit tests on the columns for your models that are represented by your traits! That way you give them the same amount of care as the barebones attributes needed for valid objects.
+    trait :with_ammo do
+      transient do
+        magazine_size 10
+      end
+
+      after(:create) do |gun, evaluator|
+        create_list(:cartridge, evaluator.magazine_size, gun: gun)
+      end
+    end
+  end
+end
+```
+
+How to use them should be boring by now.
+
+``` ruby
+gun_with_ammo = create(:gun, :with_ammo)
+gun_with_ammo.cartridges.length # => 10
+```
+
+Last words of wisdom: Change is your constant companion—needing to change attributes or data types happens all the time. Design decisions like these evolve. Traits will ease the pain with that and helps you manage your data sets. Imagine if you’d have used an options hash for instantiation and that requirement totally changed. How many potential places in your tests might break and will now need attention? Straight up, **trait** is a very effective tool for eliminating duplication in your test suite. But with all that convenience, don’t be lazy and forget your unit tests on the columns that are represented by your traits! That way you give them the same amount of care as the barebones attributes needed for valid objects.
 
 + ### Final Thoughts
 
