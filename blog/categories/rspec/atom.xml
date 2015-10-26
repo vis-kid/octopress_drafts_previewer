@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rspec | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/rspec/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-25T19:39:10+01:00</updated>
+  <updated>2015-10-26T13:23:11+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -38,7 +38,7 @@
 </ul>
 
 
-<p>This is one of my favorite things about Factory Girl. In my mind, <strong>trait</strong> is the most powerful and convenient feature to keep your factory data DRY and expressive. It allows you to bundle groupls of attributes together, give them a separate name and reuse them wherever you please. Remember when I urged you to write barebones factory objects? Traits will help you achieve exactly that without sacrificing any conveniences.</p>
+<p>This is one of my favorite things about Factory Girl. In a nutshell, traits are lego-like blocks to build your factories. In my mind, <strong>trait</strong> is the most powerful and convenient function to keep your factory data DRY and expressive. It allows you to bundle groups of attributes together, give them separate names and reuse them wherever you please. Remember when I urged you to define barebones factory objects? Traits will help you achieve exactly that without sacrificing any conveniences.</p>
 
 <pre><code class="ruby">FactoryGirl.define do
 
@@ -78,7 +78,7 @@
 end
 </code></pre>
 
-<p>As you can see, if you want to change some attributes on multiple objects, you can do that now in one central place. No shotgun surgery necessary. Managing state via traits couldn’t be more convenient. With that setup you can build pretty elaborate spy cars by mixing the various attribute bundles however you like—without duplicationg anything by creating new factories.</p>
+<p>As you can see, if you want to change some attributes that are now spread over multiple objects, you can do that now in one central place. No shotgun surgery necessary. Managing state via traits couldn’t be more convenient. With that setup you can build pretty elaborate spy cars by mixing the various attribute bundles however you like—without duplicating anything via creating all sorts of new factories that account for all the various options you need.</p>
 
 <pre><code class="ruby">invisible_spy_car = create(:spy_car, :cloaked, :night_vision)
 diving_spy_car    = create(:spy_car, :submarine, :cloaked)
@@ -90,7 +90,7 @@ tank_spy_car      = create(:spy_car, :weaponized, :night_vision)
 <pre><code class="ruby">build(:spy_car, :submarine, ejection_seat: true)
 </code></pre>
 
-<p>For combinations that occur very frequently on a particular factory you can also create child factories which names best represent that data set und bundle their traits only once.</p>
+<p>For trait combinations that occur very frequently on a particular factory you can also create child factories which names best represent that data set. That way you bundle their traits only once as opposed to all the time when you create test data.</p>
 
 <pre><code class="ruby">FactoryGir.define do
 
@@ -101,29 +101,19 @@ tank_spy_car      = create(:spy_car, :weaponized, :night_vision)
     ejection_seat true
 
     trait :submarine do
-      ejection_seat              false
-      water_resistant            '100 m'
-      submarine_capabilities     true
-      air_independent_propulsion true
+      ...
     end
 
     trait :weaponized do
-      rockets           true
-      number_of_rockets '12'
-      machine_gun       true
-      rate_of_fire      '1,500 RPM'
-      tank_armour       true
+      ...
     end
 
     trait :cloaked do
-      active_camouflage true
-      radar_signatur    'reduced'
-      engine            'silenced'
+      ...
     end
 
     trait :night_vision do
-      infrared_sensors true
-      heads_up_display true
+      ...
     end
   end
 
@@ -147,7 +137,9 @@ create(:ultimate_spy_car)
 create(:spy_car, :cloaked, :night_vision, :submarine, :weaponized)
 </code></pre>
 
-<p>You can even reuse traits as attributes on other factories and traits:</p>
+<p>Reads much better no? Especially when no variable names are involved.</p>
+
+<p>You can even reuse traits as attributes on other traits and factories:</p>
 
 <pre><code class="ruby">FactoryGirl.define do
 
@@ -158,32 +150,23 @@ create(:spy_car, :cloaked, :night_vision, :submarine, :weaponized)
     ejection_seat true
 
     trait :submarine do
-      ejection_seat              false
-      water_resistant            '100 m'
-      submarine_capabilities     true
-      air_independent_propulsion true
+      ...
     end
 
     trait :weaponized do
-      rockets           true
-      number_of_rockets '12'
-      machine_gun       true
-      rate_of_fire      '1,500 RPM'
-      tank_armour       true
+      ...
     end
 
     trait :cloaked do
-      active_camouflage true
-      radar_signatur    'reduced'
-      engine            'silenced'
+      ...
     end
 
     trait :night_vision do
-      infrared_sensors true
-      heads_up_display true
+      ...
     end
 
-    trait :surveillance do
+    trait :mobile_surveillance do
+      cloaked
       night_vision
       signal_detector      true
       signal_analyzer      true
@@ -193,18 +176,19 @@ create(:spy_car, :cloaked, :night_vision, :submarine, :weaponized)
     end
   end
 
-end
+  factory :ultimate_spy_car, parent: :spy_car do
+    car_plane true
+    submarine
+    cloaked
+    night_vision
+    weaponized
+    mobile_surveillance
+  end
 
-factory :ultimate_spy_car, parent: :spy_car do
-  car_plane true
-  submarine
-  cloaked
-  night_vision
-  weaponized
 end
 </code></pre>
 
-<p>Pay attention to the <strong>surveillance</strong> trait which reuses the <strong>night_vision</strong> trait—basically as an attribute. Also the <strong>ultimate_spy_car</strong> factory, which I separated out of the <strong>spy_car</strong> factory definition this time, reuses all traits plus an additional attribute that makes it fly.</p>
+<p>Pay attention to the <strong>mobile_surveillance</strong> trait which reuses the <strong>cloaked</strong> and <strong>night_vision</strong> traits—basically as an attribute. Also the <strong>ultimate_spy_car</strong> factory, which I separated out of the <strong>spy_car</strong> factory definition for fun this time, reuses all traits plus an additional attribute that makes it fly too. Movie magic or maybe I should say FactoryGirl magic.</p>
 
 <p><strong>create_list</strong> and <strong>build_list</strong> can also make use of traits. The second parameter needs to be the number of factory instances you want.</p>
 
@@ -217,9 +201,7 @@ association :user, :admin, :spy</p>
 
 <p>You can pack callbacks and associations also neatly into traits of course.</p>
 
-<p>If you define the same attributes for multiple traits, the last one defined gets precedence of course.</p>
-
-<p>In a nutshell, traits are lego like building blocks to define your factories with traits.</p>
+<p>Last words of wisdom, if you define the same attributes for multiple traits, the last one defined gets precedence of course.</p>
 
 <ul>
 <li><h3>Dependent Attributes</h3></li>
