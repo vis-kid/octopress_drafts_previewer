@@ -4,7 +4,7 @@
   <title><![CDATA[Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-26T19:39:12+01:00</updated>
+  <updated>2015-10-26T21:55:17+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -20,7 +20,7 @@
     <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/20/Factory-Girl-Guide-02</id>
     <content type="html"><![CDATA[<p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
 
-<p>This second article about this popular and useful Ruby gem deals with a couple more nuanced topics that beginners don’t necessarily need to concern themselves right away when they get started. Again, I did my best to keep it newbie-accessible and explain every bit of lingo people new to TDD might have never heard of.</p>
+<p>This second article about this popular and useful Ruby gem deals with a couple more nuanced topics that beginners don’t necessarily need to concern themselves right away when they get started. Again, I did my best to keep it newbie-accessible and explain every bit of lingo people new to TDD might stumble over.</p>
 
 <h3>Topics</h3>
 
@@ -191,13 +191,6 @@
 </span><span class='line'><span class="c1"># =&gt; &quot;Exploding in 600 seconds at 11:53 PM&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
-
-<ul>
-<li><h3>Associations</h3></li>
-</ul>
-
-
-<p>As mentioned before, another trick up the sleeve of Factory Girl is emulating associations—relatively straightforward too I’d say.</p>
 
 <ul>
 <li><h3>Callbacks</h3></li>
@@ -447,6 +440,287 @@
 <p>If you use inheritance to compose child factories the callbacks on the parent will be inherited as well.</p>
 
 <ul>
+<li><h3>Modifying Factories</h3></li>
+</ul>
+
+
+<p>Probably not a use case you’ll run into everyday but sometimes you inherit factories from other developers and want to change them—in case you are using a TDD’d gem for example. If you feel the need to tweak these legacy factories to better fit your specific test scenarios you can modify them without creating new ones or using inheritance.</p>
+
+<p>You do this via <strong>FactoryGirl.modify</strong> and it needs to be outside of that particular <strong>FactoryGirl.define</strong> block that you want to change. What you can’t do is modify <strong>sequence</strong> or <strong>trait</strong>—you can override attributes defined in via <strong>trait</strong> though. Callbacks on the “original” factory also won’t be overridden. The callback in your <strong>Factory.modify</strong> block will just be run as next in line.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Marty McSpy&#39;</span>
+</span><span class='line'>    <span class="n">skills</span> <span class="s1">&#39;Espionage and infiltration&#39;</span>
+</span><span class='line'>    <span class="n">deployment</span> <span class="p">{</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">modify</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">sequence</span> <span class="ss">:mission_deployment</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
+</span><span class='line'>    <span class="s2">&quot;Mission </span><span class="si">#{</span><span class="n">number</span><span class="si">}</span><span class="s2"> at </span><span class="si">#{</span><span class="no">DateTime</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">to_formatted_s</span><span class="p">(</span><span class="ss">:short</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span>            <span class="s1">&#39;James Bond&#39;</span>
+</span><span class='line'>    <span class="n">skills</span>          <span class="s1">&#39;CQC and poker&#39;</span>
+</span><span class='line'>    <span class="n">favorite_weapon</span> <span class="s1">&#39;Walther PPK&#39;</span>
+</span><span class='line'>    <span class="n">body_count</span>      <span class="s1">&#39;Classified&#39;</span>
+</span><span class='line'>    <span class="n">car</span>             <span class="s1">&#39;Aston Martin&#39;</span>
+</span><span class='line'>    <span class="n">deployment</span>      <span class="p">{</span> <span class="n">generate</span><span class="p">(</span><span class="ss">:mission_deployment</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the example above we needed our spies to be a bit more “sophisticated” and use a better mechanism to handle deployment. I have seen examples where gem authors had to deal with time differently than where it was handy to modify factory objects by simply overriding stuff you need to tweak.</p>
+
+<ul>
+<li><h3>Final Spurt</h3></li>
+</ul>
+
+
+<p>Let’s bring it all together in the following sections about <em>associations</em> and <em>traits</em>—yes I also sneaked in <strong>alias</strong> because it was the best place without jumping all over the place. If you have paid attention and remember stuff from the first article everthing should fall into place quite neatly.</p>
+
+<ul>
+<li><h3>Associations</h3></li>
+</ul>
+
+
+<p>Associations are essential to every self respecting web app that has a little bit of complexity. A post that belongs to a user, a user that has many comments and so forth are the bread and butter developers have for breakfast any day of the week. Seen from that perspective makes it obvious that for more complex scenarios factories need to be bullet proof and easy to handle—at least in order to not mess with your TDD mojo. Emulating model associations via FactoryGirl is relatively straightforward I’d say. That in itself is quite amazing in my mind. Achieving a high level of ease and convenience for building complex data sets makes the practice of TDD a no-brainer and so much more effective.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:quartermaster</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Q&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:computer</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">model</span> <span class="s1">&#39;Custom Lenovo ThinkPad W Series&#39;</span>
+</span><span class='line'>    <span class="n">quartermaster</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The new Q has hacker skills and needs to own a computer right? In this case you have a <strong>Computer</strong> class and its instances belong to the <strong>Quartermaster</strong> class. Easy right? What about something a bit more involved? Let’s say our spies use a <strong>gun</strong> that has_many <strong>cartridge(s)</strong> (bullets).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Cartridge</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:gun</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Gun</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:cartridges</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:cartridge</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">caliber</span> <span class="s1">&#39;7.65&#39;</span>
+</span><span class='line'>    <span class="n">gun</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:gun</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">model_name</span> <span class="s1">&#39;Walther PPK&#39;</span>
+</span><span class='line'>    <span class="n">ammunition</span> <span class="s1">&#39;7.65mm Browning&#39;</span>
+</span><span class='line'>    <span class="n">caliber</span> <span class="s1">&#39;7.65&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">factory</span> <span class="ss">:gun_with_ammo</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">transient</span> <span class="k">do</span>
+</span><span class='line'>        <span class="n">magazine_size</span> <span class="mi">10</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">after</span><span class="p">(</span><span class="ss">:create</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">gun</span><span class="p">,</span> <span class="n">evaluator</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">create_list</span><span class="p">(</span><span class="ss">:cartridge</span><span class="p">,</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">magazine_size</span><span class="p">,</span> <span class="ss">gun</span><span class="p">:</span> <span class="n">gun</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Callbacks come in pretty handy with associtations huh? Now you can build a gun with or without ammunition.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">spy_gun</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:gun</span><span class="p">)</span>
+</span><span class='line'><span class="n">spy_gun</span><span class="o">.</span><span class="n">cartridges</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 0</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">loaded_spy_gun</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:gun_with_ammo</span><span class="p">)</span>
+</span><span class='line'><span class="n">loaded_spy_gun</span><span class="o">.</span><span class="n">cartridges</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 10</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you need another magazine size you can pass it in via your <strong>transient attribute</strong>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">big_magazine_gun</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:gun_with_ammo</span><span class="p">,</span> <span class="ss">magazine_size</span><span class="p">:</span> <span class="mi">20</span><span class="p">)</span>
+</span><span class='line'><span class="n">big_magazine_gun</span><span class="o">.</span><span class="n">cartridges</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 20</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So what about the different build strategies? Wasn’t there something fishy? Well, all you need to remember is that if you use <strong>create</strong> for associated objects both of them will be saved. So <strong>create(:quartermaster)</strong> will build and save both Q and his Thinkpad. Then I better use <strong>build</strong> then if I want to avoid hitting the database? Good idea but <strong>build</strong> would only apply to <strong>quartermaster</strong> in our example—the <strong>computer</strong> would still get saved. A bit tricky I know. Here’s what you can do if you need to avoid saving the associated object—you specify the build strategy you need for your association.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:quartermaster</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Q&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:computer</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">model</span> <span class="s1">&#39;Custom Lenovo ThinkPad W Series&#39;</span>
+</span><span class='line'>    <span class="n">association</span> <span class="ss">:quartermaster</span><span class="p">,</span> <span class="ss">strategy</span><span class="p">:</span> <span class="ss">:build</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You name the associated factory object and pass in a hash with your build strategy. You need to use the explicit <strong>association</strong> call for this to work. The example below won’t work.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">factory</span> <span class="ss">:computer</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">model</span> <span class="s1">&#39;Custom Lenovo ThinkPad W Series&#39;</span>
+</span><span class='line'>  <span class="n">quartermaster</span><span class="p">,</span> <span class="ss">strategy</span><span class="p">:</span> <span class="ss">:build</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now both objects use <strong>build</strong> and nothing gets saved to the database. We can that that assumption by using <strong>new_record?</strong> which returns <strong>true</strong> if the instance hasn’t been persisted.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">q</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="ss">:quartermaster</span><span class="p">)</span>
+</span><span class='line'><span class="n">q</span><span class="o">.</span><span class="n">new_record?</span> <span class="c1"># =&gt; true</span>
+</span><span class='line'><span class="n">q</span><span class="o">.</span><span class="n">computer</span><span class="o">.</span><span class="n">new_record?</span> <span class="c1"># =&gt; true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While we’re at it, via the explicit <strong>association</strong> call you can also refer to different factories and change attributes on the fly.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:quartermaster</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Q&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">factory</span> <span class="ss">:computer</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">model</span> <span class="s1">&#39;Custom Lenovo ThinkPad W Series&#39;</span>
+</span><span class='line'>    <span class="n">association</span> <span class="ss">:hacker</span><span class="p">,</span> <span class="ss">factory</span><span class="p">:</span> <span class="ss">:quartermaster</span><span class="p">,</span> <span class="ss">skills</span><span class="p">:</span> <span class="s1">&#39;Hacking&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
 <li><h3>Aliases</h3></li>
 </ul>
 
@@ -542,75 +816,6 @@
 <p>In the context of comments a <strong>:user</strong> could be referred to as <strong>:commenter</strong>, in the case of a <strong>:crime</strong> a <strong>:user</strong> could be aliased as a <strong>:suspect</strong> and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your temptation for duplication.</p>
 
 <ul>
-<li><h3>Modifying Factories</h3></li>
-</ul>
-
-
-<p>Probably not a use case you’ll run into everyday but sometimes you inherit factories from other developers and want to change them—in case you are using a TDD’d gem for example. If you feel the need to tweak these legacy factories to better fit your specific test scenarios you can modify them without creating new ones or using inheritance.</p>
-
-<p>You do this via <strong>FactoryGirl.modify</strong> and it needs to be outside of that particular <strong>FactoryGirl.define</strong> block that you want to change. What you can’t do is modify <strong>sequence</strong> or <strong>trait</strong>—you can override attributes defined in via <strong>trait</strong> though. Callbacks on the “original” factory also won’t be overridden. The callback in your <strong>Factory.modify</strong> block will just be run as next in line.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
-</span><span class='line'>    <span class="nb">name</span> <span class="s1">&#39;Marty McSpy&#39;</span>
-</span><span class='line'>    <span class="n">skills</span> <span class="s1">&#39;Espionage and infiltration&#39;</span>
-</span><span class='line'>    <span class="n">deployment</span> <span class="p">{</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="p">}</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>  
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">modify</span> <span class="k">do</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">sequence</span> <span class="ss">:mission_deployment</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
-</span><span class='line'>    <span class="s2">&quot;Mission </span><span class="si">#{</span><span class="n">number</span><span class="si">}</span><span class="s2"> at </span><span class="si">#{</span><span class="no">DateTime</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">to_formatted_s</span><span class="p">(</span><span class="ss">:short</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">factory</span> <span class="ss">:spy</span> <span class="k">do</span>
-</span><span class='line'>    <span class="nb">name</span>            <span class="s1">&#39;James Bond&#39;</span>
-</span><span class='line'>    <span class="n">skills</span>          <span class="s1">&#39;CQC and poker&#39;</span>
-</span><span class='line'>    <span class="n">favorite_weapon</span> <span class="s1">&#39;Walther PPK&#39;</span>
-</span><span class='line'>    <span class="n">body_count</span>      <span class="s1">&#39;Classified&#39;</span>
-</span><span class='line'>    <span class="n">car</span>             <span class="s1">&#39;Aston Martin&#39;</span>
-</span><span class='line'>    <span class="n">deployment</span>      <span class="p">{</span> <span class="n">generate</span><span class="p">(</span><span class="ss">:mission_deployment</span><span class="p">)</span> <span class="p">}</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In the example above we needed our spies to be a bit more “sophisticated” and use a better mechanism to handle deployment. I have seen examples where gem authors had to deal with time differently than where it was handy to modify factory objects by simply overriding stuff you need to tweak.</p>
-
-<p>Let’s bring it all together in the next two sections about <em>associations</em> and <em>traits</em>. If you have paid attention and remember stuff from the first article everthing should fall into place quite neatly.</p>
-
-<ul>
-<li><h3>Associations</h3></li>
 <li><h3>Traits</h3></li>
 </ul>
 
@@ -911,6 +1116,13 @@ association :user, :admin, :spy</p>
 <p>If you define the same attributes for multiple traits, the last one defined gets precedence of course.</p>
 
 <p>Last words of wisdom: Change is your constant companion—needing to change attributes or data types happens all the time. Design decisions like these evolve. Traits will ease the pain with that and helps you manage your data sets. Imagine if you’d have used an options hash for instantiation and that requirement totally changed. How many potential places in your tests might break and will now need attention?. Straight up, <strong>trait</strong> is a very effective tool for eliminating duplication in your test suite. But with all that convenience, don’t be lazy and forget your unit tests on the columns for your models that are represented by your traits! That way you give them the same amount of care as the barebones attributes needed for valid objects.</p>
+
+<ul>
+<li><h3>Final Thoughts</h3></li>
+</ul>
+
+
+<p>There is a bit more to discover in FactoryGirl and I’m confident you are now more than well equipped to to put the pieces together when you need them. Have fun playing with this gem. I hope your TDD habits will benefit from it.</p>
 
 <p><img src="http://vis-kid.github.io/octopress_drafts_previewer/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
 
