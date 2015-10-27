@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bdd | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/bdd/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-27T18:51:50+01:00</updated>
+  <updated>2015-10-27T19:27:44+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -693,11 +693,13 @@ build_list(:spy_car, 4, :submarine, :cloaked)
 
 <pre><code class="ruby">FactoryGirl.define do
     factory :cartridge do
-    caliber '7.65' 
+    kind       'Small calliber pistol ammunition'
+    caliber    '7.65' 
+    projectile 'lead'
     gun
 
-    trait :golden_bullet do
-      ammo_type '23-carat gold bullet'
+    factory :golden_cartridge do
+      projectile 'gold'
       association: :gun, :golden
     end
   end
@@ -730,12 +732,16 @@ end
 <pre><code class="ruby">gun_with_ammo = create(:gun, :with_ammo)
 gun_with_ammo.model_name # =&gt; 'Walther PPK'
 gun_with_ammo.ammunition # =&gt; '7.65mm Browning' 
-gun_with_ammo.cartridges.length # =&gt; 10
+gun_with_ammo.cartridge.length # =&gt; 10
+gun_with_ammo.cartridge.projectice # =&gt; 'lead'
+gun_with_ammo.cartridge.caliber # =&gt; '7.65'
 
 golden_gun_with_ammo = create(:gun, :golden, :with_ammo)
 golden_gun_with_ammo.model_name # =&gt; 'Custom Lazar'
 golden_gun_with_ammo.ammunition # =&gt; '23-carat gold bullet' 
-golden_gun_with_ammo.cartridges.length # =&gt; 10
+golden_gun_with_ammo.golden_cartridge.length # =&gt; 10
+golden_gun_with_ammo.golden_cartridge.projectice # =&gt; 'gold'
+golden_gun_with_ammo.golden_cartridge.caliber # =&gt; '7.65'
 </code></pre>
 
 <p>Last words of wisdom: Change is your constant companion—needing to change attributes or data types happens all the time. Design decisions like these evolve. Traits will ease the pain with that and helps you manage your data sets. Imagine if you’d have used an options hash for instantiation and that requirement totally changed. How many potential places in your tests might break and will now need attention? Straight up, <strong>trait</strong> is a very effective tool for eliminating duplication in your test suite. But with all that convenience, don’t be lazy and forget your unit tests on the columns that are represented by your traits! That way you give them the same amount of care as the barebones attributes needed for valid objects.</p>

@@ -4,7 +4,7 @@
   <title><![CDATA[Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-27T18:51:50+01:00</updated>
+  <updated>2015-10-27T19:27:44+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -1207,13 +1207,17 @@
 <span class='line-number'>30</span>
 <span class='line-number'>31</span>
 <span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
 </span><span class='line'>  <span class="n">factory</span> <span class="ss">:cartridge</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">caliber</span> <span class="s1">&#39;7.65&#39;</span>
+</span><span class='line'>    <span class="n">kind</span>       <span class="s1">&#39;Small calliber pistol ammunition&#39;</span>
+</span><span class='line'>    <span class="n">caliber</span>    <span class="s1">&#39;7.65&#39;</span>
+</span><span class='line'>    <span class="n">projectile</span> <span class="s1">&#39;lead&#39;</span>
 </span><span class='line'>    <span class="n">gun</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">trait</span> <span class="ss">:golden_bullet</span> <span class="k">do</span>
-</span><span class='line'>      <span class="n">ammo_type</span> <span class="s1">&#39;23-carat gold bullet&#39;</span>
+</span><span class='line'>    <span class="n">factory</span> <span class="ss">:golden_cartridge</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">projectile</span> <span class="s1">&#39;gold&#39;</span>
 </span><span class='line'>      <span class="ss">association</span><span class="p">:</span> <span class="ss">:gun</span><span class="p">,</span> <span class="ss">:golden</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>  <span class="k">end</span>
@@ -1253,15 +1257,23 @@
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gun_with_ammo</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:gun</span><span class="p">,</span> <span class="ss">:with_ammo</span><span class="p">)</span>
 </span><span class='line'><span class="n">gun_with_ammo</span><span class="o">.</span><span class="n">model_name</span> <span class="c1"># =&gt; &#39;Walther PPK&#39;</span>
 </span><span class='line'><span class="n">gun_with_ammo</span><span class="o">.</span><span class="n">ammunition</span> <span class="c1"># =&gt; &#39;7.65mm Browning&#39; </span>
-</span><span class='line'><span class="n">gun_with_ammo</span><span class="o">.</span><span class="n">cartridges</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 10</span>
+</span><span class='line'><span class="n">gun_with_ammo</span><span class="o">.</span><span class="n">cartridge</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 10</span>
+</span><span class='line'><span class="n">gun_with_ammo</span><span class="o">.</span><span class="n">cartridge</span><span class="o">.</span><span class="n">projectice</span> <span class="c1"># =&gt; &#39;lead&#39;</span>
+</span><span class='line'><span class="n">gun_with_ammo</span><span class="o">.</span><span class="n">cartridge</span><span class="o">.</span><span class="n">caliber</span> <span class="c1"># =&gt; &#39;7.65&#39;</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">golden_gun_with_ammo</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="ss">:gun</span><span class="p">,</span> <span class="ss">:golden</span><span class="p">,</span> <span class="ss">:with_ammo</span><span class="p">)</span>
 </span><span class='line'><span class="n">golden_gun_with_ammo</span><span class="o">.</span><span class="n">model_name</span> <span class="c1"># =&gt; &#39;Custom Lazar&#39;</span>
 </span><span class='line'><span class="n">golden_gun_with_ammo</span><span class="o">.</span><span class="n">ammunition</span> <span class="c1"># =&gt; &#39;23-carat gold bullet&#39; </span>
-</span><span class='line'><span class="n">golden_gun_with_ammo</span><span class="o">.</span><span class="n">cartridges</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 10</span>
+</span><span class='line'><span class="n">golden_gun_with_ammo</span><span class="o">.</span><span class="n">golden_cartridge</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 10</span>
+</span><span class='line'><span class="n">golden_gun_with_ammo</span><span class="o">.</span><span class="n">golden_cartridge</span><span class="o">.</span><span class="n">projectice</span> <span class="c1"># =&gt; &#39;gold&#39;</span>
+</span><span class='line'><span class="n">golden_gun_with_ammo</span><span class="o">.</span><span class="n">golden_cartridge</span><span class="o">.</span><span class="n">caliber</span> <span class="c1"># =&gt; &#39;7.65&#39;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
