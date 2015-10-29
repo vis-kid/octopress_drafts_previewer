@@ -98,15 +98,11 @@ Feature specs are very similar to acceptance tests—sometimes I feel the differ
 
 + ### When & Why?
 
-Its a good idea to apply this design pattern a little bit later in a projects life cycle—when you have amassed a little bit of complexity in your feature specs and when you can identify repeating patterns like DOM structures or other commonalities that are consistent on your pages. So you maybe you shouldn’t start writing Page Objects right away. You approach these refactorings gradually when the complexity and size of your application and their tests grow. Duplication that need a better home through Page Objects will be easy to spot over time.
+Its a good idea to apply this design pattern a little bit later in a project’s life cycle—when you have amassed a little bit of complexity in your feature specs and when you can identify repeating patterns like DOM structures or other commonalities that are consistent on your pages. So you maybe you shouldn’t start writing Page Objects right away. You approach these refactorings gradually when the complexity and size of your application and their tests grow. Duplication that need a better home through Page Objects will be easier to spot over time.
 
-Page Objects provide you the opportunity to write clearer specs that read better and are overall a lot more expressive because they are more high-level. Beside that, they offer a nice abstraction for everybody who like to write OO code.
+Page Objects provide you the opportunity to write clearer specs that read better and are overall a lot more expressive because they are more high-level. Besides that, they offer a nice abstraction for everybody who likes to write OO code. They hide the specifics of the DOM and also enable you to have private methods that do the dirty work while being unexposed to the public API. Extracted methods in your feature specs don’t offer the same luxury. The API of Page Objects don’t need to share the nitty-gritty Capybare details
 
-When design implementation change, your description of how your app should work doesn’t need to change via Page Objects. These feature specs are more focused with the user level and not so much about the specifics of the DOM implementations.
-
-Page Objects hide the specifics of the DOM and also enable you to have private methods that do the dirty work and which are unexposed to the public API. Extracted methods in your feature specs don’t offer the same luxury. The API of Page Objects don’t need to share the nitty-gritty Capybare details
-
-Page Objects become critical when applications grow and aids also the understanding when the size of the application also means drastically increased complexity.
+There is also the scenario when design implementations change. Your description of how your app should work doesn’t need to change when you use Page Objects because your feature specs are more focused with user level interactions and not so much about the specifics of the DOM implementations. Since change is inevitable, Page Objects become critical when applications grow and also aid the understanding when the sheer size of the application means drastically increased complexity.
 
 
 
