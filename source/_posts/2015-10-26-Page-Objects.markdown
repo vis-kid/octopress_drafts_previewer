@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Page Ojbects for Capybara Connoisseurs
+title: Page Objects for Capybara Connoisseurs
 date: 2015-10-26 04:29:10 +0100
 comments: true
 sharing: true
@@ -24,11 +24,28 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 + ### What are Page Objects?
 
+I’ll give you the short answer first. Its a design pattern to encapsulate markup and page interactions. They offer you to write high-level feature specs that are very expressive and DRY. You might ask, isn’t code written in Capybara already high-level and expressive? Sure, for a developer who write codes on a daily basis, Capybara specs read just fine.
+
+``` ruby
+feature 'M assigns a mission' do
+  scenario 'they see the foobar on the page' do
+    visit new_mission_path
+
+    fill_in 'Name',  with: 'Secret mission name'
+    fill_in 'Agent', with: 'James Bond'
+    click_button 'Create Mission'
+
+    expect(page).to have_css '.mission-name', 'Secret mission name'
+  end
+end
+```
+
+When you look at this example of such a feature spec, where do you see opportunities to make this read better and how could you extract information to avoid duplication? Also, is this high-level enough for easy modeling of user stories and for non-technical stakeholders to understand? In my mind, there are a couple of ways to improve this and to make everybody happy—developers who can avoid fiddling with the details of interacting with the DOM while applying OOP and other team members having no trouble working with these tests.
+
 Encapsulation is the key concept with Page Objects.
 
 Its a way to encapsulate behaviour driving through a test flow.
 
-You encapsulate markup and page interactions
 
 It caputures interactions with a particular set of elements on a page.
 
@@ -75,8 +92,15 @@ UI interaction tests have now same quality as test for application code.
 Due to changes, Capybara selectors introduce breakpoints. Let’s say a designer wantes to change the text on a button. Do you want to make that change in cone central wrapper for that provides that element to your specs or do you prefer to do that all over the place? I thought so!
 
 
++ ### Acceptance Tests / Feature Specs
 
+Before we move on to the heart of the matter, I’d like to take a step back for people new to the whole testing business and clear up some of the lingo that is important in this context. People more familiar with TDD won’t miss much if they skip ahead.
 
+What are we talking about here? Acceptance testing usually comes in at a later stage of projects to evaluate if you have been building something of value for your product owner, users or whatever stakeholder. These tests are usually run by customers or your users. Its sort of a check if the requirements are being met or not. There is something like a testing pyramid for all sorts of testing layers and acceptance tests are near the top. Because this process includes often non-technical folks, a high-level language for writing these tests is a valuable asset to communicate back and forth.
+
+Feature specs on the other hand, are a bit lower in the testing food chain. A lot more high-level than unit tests which focus on the technial details and business logic of your models, feature specs describe flows on and in between your pages. Tools like [Capybara](http://jnicklas.github.io/capybara/) help you to avoid to do this manually—meaning that you rarely have to open your browser to test stuff manually—like filling in forms, clicking links, buttons and the like which is not only less elegant but also a lot more time consuming. Btw, you don’t use **get**, **put**, **post**, **delete** like with request specs. With these kinds of tests, we like to automate these taks as much as possible. Feature specs drive the interaction through the browser and write assertions against pages.
+
+Feature specs are very similar to acceptance tests—sometimes I feel the differences are too blurry to really care about the terminology. You write tests that exercise your whole application which often involves a multi-step flow of user actions. These tests show if your components work in harmony when they are brought together. In Ruby land, they are the main protagonist when we’re dealing with Page Objects. Feature specs themselves are already very expressive but they can be optimized and cleaned up by extracting their data, behaviour and markup into separate classes. I felt clearing up this blurry terminology will help you see that Page Objects are somehow a way to do acceptance level testing while writing feature specs.
 
 + ### When & Why?
 
@@ -106,7 +130,6 @@ Page Objects become critical when applications grow and aids also the understand
 + ### Refactoing
 
 You identify commonalities, like a structure in your markup that is consistent within your pages. Something like a <ul><li> for example. This is unlikely to change and easy to reuse in your tests. Forms are another common example. Through these refactorings your Page Objects become the canonical place to centralize the elements and behaviour sets that you need. And you specify the flow in one place too.
-
 
 
 
