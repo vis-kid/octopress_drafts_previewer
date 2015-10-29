@@ -8,7 +8,7 @@ published: true
 categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Factory Girl]
 ---
 
-{% img /images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png %}
+{% img /images/Page_Objects/capybara_bigger.png %}
 
 
 ### Topics
@@ -119,6 +119,7 @@ feature 'M creates mission' do
   end
 
   def create_classified_mission(title)
+    visit missions_path
     click_on 'Create Mission' 
     fill_in  'Mission Name', with: title
     click_on 'Submit'
@@ -126,7 +127,7 @@ feature 'M creates mission' do
 
   def sign_in_as(email)
     visit root_path
-    fill_in 'Email', with: email
+    fill_in  'Email', with: email
     click_on 'Submit'
   end
 end
@@ -151,6 +152,7 @@ feature 'Agent completes mission' do
   end
 
   def create_classified_mission(title)
+    visit missions_path
     click_on 'Create Mission' 
     fill_in  'Mission Name', with: title
     click_on 'Submit'
@@ -158,7 +160,7 @@ feature 'Agent completes mission' do
 
   def sign_in_as(email)
     visit root_path
-    fill_in 'Email', with: email
+    fill_in  'Email', with: email
     click_on 'Submit'
   end
 end
@@ -174,8 +176,8 @@ require 'rails_helper'
 
 feature 'M creates mission' do
   scenario 'successfully' do
-    mission_page = Pages::Missions.new
     sign_in_as 'M'
+    mission_page = Pages::Missions.new
 
     mission_page.create_classified_mission title: 'Project Moonraker'
 
@@ -191,8 +193,8 @@ require 'rails_helper'
 
 feature 'Agent completes mission' do
   scenario 'successfully' do
-    mission_page = Pages::Missions.new
     sign_in_as 'M'
+    mission_page = Pages::Missions.new
 
     mission_page.create_classified_mission title: 'Project Moonraker'
     mission_page.mark_complete 'Project Moonraker'
@@ -202,10 +204,43 @@ feature 'Agent completes mission' do
 end
 ```
 
+Doesn’t this read a whole lot better? You basically create expressive wrapper methods on your Page Objects that deal with high-level concepts—instead of fiddling everywhere with the intestines of your markup all the time. You basically extract methods that do this kind of dirty work into Page Objects. That way [**Shotgun surgery**](https://en.wikipedia.org/wiki/Shotgun_surgery) is not your problem anymore too. Put differently, you abstract away a lot of the noisy, down in the weeds code that deals with interacting with the DOM. 
 
-You create expressive methods on your Page Objects which are more high-level and read better. You basically extract methods into Page Objects. You do the fiddling with the intestines of your markup behind these methods. Shotgun surgery is not your problem anymore that way.
+**specs/support/features/pages/missions.rb**
 
-You abstract away a lot of the noisy down in the weeds code about interacting the the DOM. 
+``` ruby
+module Pages
+  class Missions
+    include Capybara::DSL
+
+    def create_classified_mission(title)
+      visit missions_path
+      click_on 'Create Mission' 
+      fill_in  'Mission Name', with: title
+      click_on 'Submit'
+    end
+
+    def mark_complete(title)
+      within "li:contains('#{title}')" do
+      click_on 'Mission completed'
+    end
+
+    def has_mission_with_title?(title)
+      mission_list.has_css? 'li', text: 'Project Moonraker' 
+    end
+
+    def has_completed_mission_with_title?(title)
+      mission_list.has_css? 'li.completed', text: 'Project Moonraker'
+    end
+  end
+
+  private
+
+  def mission_list do
+    find('ul.missions')
+  end
+end
+```
 
 You create largely a language via the API that a user or a non-technical stakeholder on a team might use. Ask yourself the question: How would a user describe the flow? That should be a good measure for method names on Page Objects. 
 
