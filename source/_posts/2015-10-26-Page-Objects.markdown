@@ -24,7 +24,7 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 + ### What are Page Objects?
 
-I’ll give you the short answer first. Its a design pattern to encapsulate markup and page interactions. They offer you to write high-level feature specs that are very expressive and DRY. You might ask, isn’t code written in Capybara already high-level and expressive? Sure, for a developer who write codes on a daily basis, Capybara specs read just fine.
+I’ll give you the short answer first. Its a design pattern to encapsulate markup and page interactions. They offer you to write high-level feature specs that are very expressive and DRY. You might ask, aren’t specs written with Capybara already high-level and expressive? Sure, for a developer who write codes on a daily basis, Capybara specs read just fine.
 
 ``` ruby
 feature 'M assigns a mission' do
@@ -40,20 +40,17 @@ feature 'M assigns a mission' do
 end
 ```
 
-When you look at this example of such a feature spec, where do you see opportunities to make this read better and how could you extract information to avoid duplication? Also, is this high-level enough for easy modeling of user stories and for non-technical stakeholders to understand? In my mind, there are a couple of ways to improve this and to make everybody happy—developers who can avoid fiddling with the details of interacting with the DOM while applying OOP and other team members having no trouble working with these tests.
+When you look at this example of such a feature spec, where do you see opportunities to make this read better and how could you extract information to avoid duplication? Also, is this high-level enough for easy modeling of user stories and for non-technical stakeholders to understand? In my mind, there are a couple of ways to improve this and to make everybody happy—developers who can avoid fiddling with the details of interacting with the DOM while applying OOP and other team members having no trouble jumping between user stories and these tests.
 
-Encapsulation is the key concept with Page Objects.
-
-Its a way to encapsulate behaviour driving through a test flow.
+Encapsulation is the key concept with Page Objects. When you write your feature specs you benefit from a way to extract the behaviour that is driving through a test flow. For quality code you want to capture the interactions with particular sets of elements on your pages—especially if you stumble upon repeating patterns. As your application grows, you want / need a strategy to avoid spreading that logic all over your specs. There are many refactorings possible for your feature specs but Page Objects offer the cleanest abstractions for encapsulating user facing behaviour for pages or more complex flows. You don’t have to simulate the whole page(s) though—focus on the essential bits that are necessary for user flows. No need to overdo it!
 
 
-It caputures interactions with a particular set of elements on a page.
+// as opposed to spreading that logic across a lot of your specs -> DRY
 
 might describe the full page itself
 
 or multiple pages in sequences as you go through a flow
 
-as opposed to spreading that logic across a lot of your specs -> DRY
 
 Its a mixture of a couple of refactoring techniques: 
 Extract class
@@ -61,15 +58,12 @@ Extract method
 
 They are even more high-level than Capybara feature specs
 
-There are many refactorings possible for your feature specs but Page Objects offerthe cleanest abstractions for encapsulating user facing behaviour on and page or flows.
-
 Testing against web pages means the need to refer to DOM elements and interact with them. Doint this without Page Objects introduces duplication and brittle tests when the UI changes.
 
 You create an APi that is specific to your application and your feature spec needs. 
 
 That way you can play with Pages and their elements—all without fiddling around with DOM elements. -> You can emulate the human experience quite expressively.
 
-You don’t have to simulate the whole page though—focus on the essential bits that are necessary for user flows. No need to overdo it!
 
 Its a good design principle to floww when complexity of your feature specs increase.
 
