@@ -104,18 +104,13 @@ Page Objects provide you the opportunity to write clearer specs that read better
 
 There is also the scenario when design implementations change. Your description of how your app should work doesn’t need to change when you use Page Objects because your feature specs are more focused with user level interactions and not so much about the specifics of the DOM implementations. Since change is inevitable, Page Objects become critical when applications grow and also aid the understanding when the sheer size of the application means drastically increased complexity.
 
++ ### Page Objects Types
 
+**Components** represent the smallest units and are more focused—like a form object for example. 
 
-+ ### Different type of Page Objects
+**Pages** combine more of these components and are abstractions of a full page.
 
-+ Components
-+ Pages
-+ Experiences
-
-*Components* represent the smallest units and are more focused—like a form object for example. *Pages* combine more of these components and are abstractions of a full page. And you guessed it by now, *experiences* span the whole flow across potentially many different pages. They are more high-level. The focus on the flow the user experiences while they interact with various pages. A checkout flow which has a couple of steps is a good example to illustrate this idea.
-
-
-
+And you guessed it by now, **experiences** span the whole flow across potentially many different pages. They are more high-level. The focus on the flow the user experiences while they interact with various pages. A checkout flow which has a couple of steps is a good example to illustrate this idea.
 
 + ### Refactoing
 
