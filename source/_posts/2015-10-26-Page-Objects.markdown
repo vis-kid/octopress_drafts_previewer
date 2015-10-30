@@ -265,6 +265,18 @@ normally you don’t instantiate Page Objects with data.
 You hide away the Capybara specifics you need.
 
 
+#### Attention!
+
+Setup stuff like factory data belongs in the specs and not in Page Objects. Also assertions are probably better placed outside of your Page Objects to achieve a separation of concerns. There are two differnt perspectives on the topic:
+
+Advocates for putting assertions into Page Objects say it helps with duplication of assertions. You can provide better error messages and achieve a better “Tell, Don’t Ask” style. On the other hand, advocates for assertion-free Page Objects argue that its better to not mix responsibilities. Providing access to page data and assertion logic are two separate concerns and lead to bloated Page Objects when mixed. Page Object’s responsibility is access to the state of pages and assertion logic belongs to specs.
+
+
+
+
+
+
+
 
 
 
@@ -287,26 +299,6 @@ And you guessed it by now, **experiences** span the whole flow across potentiall
 + ### Refactoing
 
 You identify commonalities, like a structure in your markup that is consistent within your pages. Something like a <ul><li> for example. This is unlikely to change and easy to reuse in your tests. Forms are another common example. Through these refactorings your Page Objects become the canonical place to centralize the elements and behaviour sets that you need. And you specify the flow in one place too.
-
-
-
-
-
-#### Attention!
-
-Setup like factory data belongs in the specs and not into Page Objects.
-
-Also assertions are probably better be outside of your Page Objects to achieve a separation of concerns.
-
-There are two differnt perspectives on the topic:
-Having assertions on Page Objects or just providing data for specs that do the assertions.
-
-Advocates for putting assertions into Page Objects say it helps with duplication of assertions. You can provide better error messages and achieve a better Tell-Don’t-Ask style.
-
-Advocates for assertion-free Page Objects argue that its better to not mix responsibilities. Providing access to page data and assertion logic are two separate concerns and lead to bloated Page Objects when mixed. Page Objects responsibilities is access to the state of pages and assertion logic belongs to specs.
-
-
-
 
 
 
