@@ -207,7 +207,7 @@ FactoryGirl.define do
   end
 
   factory :shuriken do
-    name 'Hira-shuriken'
+    name             'Hira-shuriken'
     number_of_spikes 'Four'
     ninja
   end
@@ -215,13 +215,13 @@ FactoryGirl.define do
 end
 
 ninja = create(:ninja)
-ninja.shuriken # => 0
+ninja.shurikens.length # => 0
 
 ninja = create(:ninja_with_shuriken)
-ninja.shuriken # => 10
+ninja.shurikens.length # => 10
 
 ninja = create(:ninja_with_shuriken, number_of_shuriken: 20)
-ninja.shuriken # => 20
+ninja.shurikens.length # => 20
 ```
 
 Also, through the evaluator object you have access to transient attributes too. That gives you the option to pass in addtional information when you “create” factory objects and need to tweak them on the fly. That gives you all the flexibility needed to play with associations and write expressive test data.   
@@ -233,7 +233,7 @@ FactoryGirl.define do
   
 	factory :henchman do
     name 'Mr. Hinx'
-    after(:create) { |henchman| send_on_kill_mission(henchman)  }
+    after(:create) { |henchman| henchman.send_on_kill_mission }
     after(:create) { send_cleaner }
 	end
 
@@ -245,7 +245,7 @@ FactoryGirl.define do
   
 	factory :bond_girl do
     name 'Lucia Sciarra'
-    after(:build)  { |bond_girl| hide_secret_documents(bond_girl)  }
+    after(:build)  { |bond_girl| bond_girl.hide_secret_documents  }
     after(:create) { close_hidden_safe_compartment }
 	end
 
@@ -261,7 +261,7 @@ FactoryGirl.define do
   
 	factory :spy do
     name 'Marty McFly'
-    after(:stub, :build) { |spy| assign_new_mission(spy) }
+    after(:stub, :build) { |spy| spy.assign_new_mission }
 	end
 
 end
@@ -274,7 +274,7 @@ Last but not least, you can even setup something like “global” callbacks tha
 ``` ruby
 FactoryGirl.define do
 
-  before(:stub, :build, :create) { |object| assign_serial_number(object) }
+  before(:stub, :build, :create) { |object| object.assign_serial_number }
 
 	factory :spy_gun do
     model_name 'Walther PPK'
@@ -284,7 +284,7 @@ FactoryGirl.define do
 	  factory :golden_gun do
       model_name 'Custom Lazar'
       ammunition '23-carat gold bullet'
-	  	after(:create) { |golden_gun| erase_serial_number(golden_gun) } 
+	  	after(:create) { |golden_gun| golden_gun.erase_serial_number } 
 	  end
 	end
 
@@ -457,14 +457,39 @@ FactoryGirl.define do
   end
 
   factory :mifive_spy, class: Spy do
+    name '005'
     association :spyable, factory: :mifive 
   end
 
   factory :misix_spy, class: Spy do
+	  name '006'
     association :spyable, factory: :misix
   end
 
 end
+
+# MI5 agents
+mifive = create(:mifive)
+mifive_spy = create(:mifive_spy)
+mifive.spies << mifive_spy
+
+mifive.name # => "Military Intelligence, Section 5"
+mifive_spy.name = '005'
+mifive.spies.length # => 1
+mifive.spies.first.name = '005'
+
+
+# MI6 agents
+misix = create(:misix)
+misix_spy_01 = create(:misix_spy, name: 'James Bond')
+misix_spy_02 = create(:misix_spy)
+misix.spies << misix_spy_01
+misix.spies << misix_spy_02
+
+misix.name # => "Military Intelligence, Section 6"
+misix_spy.name = '006'
+misix.spies.length # => 2
+mifive.spies.first.name = 'James Bond'
 ```
 
 Don’t feel bad if this one needs a bit more time to sink in. I recommend catching up on [**Polymorphic Associations**](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations) if you’re unsure what’s going on here.
