@@ -242,30 +242,45 @@ module Pages
 end
 ```
 
-You create largely a language via the API that a user or a non-technical stakeholder on a team might use. Ask yourself the question: How would a user describe the flow? That should be a good measure for method names on Page Objects. 
+What you see is plain old Ruby object—Page Objects are in essence very simple classes really. Normally you don’t instantiate Page Objects with data and you create mostly a language via the API that a user or a non-technical stakeholder on a team might use. When you think about naming your methods, I think its good advice to ask yourself the question: How would a user describe the flow?
 
-No concern about the DOM structure
+Btw, **spec/support/features/pages** is a solid place to store your Page Objects. I should also probably add that without including Capybara the music stops pretty fast.
 
-You can focus on the functionality and less on the actual structure of the markup which is now encapsulated in a Page Object.
 
-RSpec generates matchers based on predicate methods on your Page Objects. has_? becomes RSpec matcher. RSpec converts them by removing the ? and changes has to have. Boom, matchers from scratch without much fuzz! A bit magic, I’ll give you that, but the good kind of wizardry I’d say. 
-
-spec/support/features/pages
-
-Plain old Ruby object.
-
-Page Objects are in essence very simple classes really. 
-
+``` ruby
 include Capybara::DSL
+```
 
-for finding elements, clicking links etc.
-
-normally you don’t instantiate Page Objects with data. 
-
-You hide away the Capybara specifics you need.
+Overall, you aim to hide away the Capybara specifics—like finding elements, clicking links etc—you need for your tests so that you can focus on the functionality and less on the actual structure of the markup which is now encapsulated in a Page Object—the DOM structure should be the least of your concerns when you test something as high-level as feature specs.
 
 
-#### Attention!
+
+
+You probably wonder how these custom matchers work: 
+
+``` ruby
+def has_completed_mission_with_title?(title)
+  ...
+end
+
+def has_mission_with_title?(title)
+  ...
+end
+
+expect(page).to have_completed_mission_with_title
+expect(page).to have_mission_with_title
+```
+
+RSpec generates these custom matchers based on predicate methods on your Page Objects. RSpec converts them by removing the **?** and changes **has** to **have**. Boom, matchers from scratch without much fuzz! A bit magic, I’ll give you that, but the good kind of wizardry I’d say.
+
+
+
+
+
+
+
+
+### Attention!
 
 Setup stuff like factory data belongs in the specs and not in Page Objects. Also assertions are probably better placed outside of your Page Objects to achieve a separation of concerns. There are two differnt perspectives on the topic:
 
