@@ -277,12 +277,12 @@ FactoryGirl.define do
   before(:stub, :build, :create) { |object| object.assign_serial_number }
 
 	factory :spy_gun do
-    model_name 'Walther PPK'
+    name 'Walther PPK'
     ammunition '7.65mm Browning'
     association :owner
 
 	  factory :golden_gun do
-      model_name 'Custom Lazar'
+      name 'Custom Lazar'
       ammunition '23-carat gold bullet'
 	  	after(:create) { |golden_gun| golden_gun.erase_serial_number } 
 	  end
@@ -340,7 +340,7 @@ FactoryGirl.define do
   end
 
 	factory :gun do
-    model_name 'Walther PPK'
+    name 'Walther PPK'
     ammunition '7.65mm Browning'
     caliber    '7.65'
 
@@ -586,7 +586,7 @@ FactoryGirl.define do
     
     trait :cloaked do
       active_camouflage true
-      radar_signatur    'reduced'
+      radar_signature   'reduced'
       engine            'silenced'
     end
     
@@ -742,12 +742,12 @@ FactoryGirl.define do
   end
 
 	factory :gun do
-    model_name 'Walther PPK'
+    name 'Walther PPK'
     ammunition '7.65mm Browning'
     caliber    '7.65'
 
 	  trait :golden do
-      model_name 'Custom Lazar'
+      name 'Custom Lazar'
       ammunition '23-carat gold bullet'
 	  end
 
@@ -768,14 +768,14 @@ How to use them should be boring by now.
 
 ``` ruby
 gun_with_ammo = create(:gun, :with_ammo)
-gun_with_ammo.model_name # => 'Walther PPK'
+gun_with_ammo.name # => 'Walther PPK'
 gun_with_ammo.ammunition # => '7.65mm Browning' 
 gun_with_ammo.cartridge.length # => 10
 gun_with_ammo.cartridge.projectice # => 'lead'
 gun_with_ammo.cartridge.caliber # => '7.65'
 
 golden_gun_with_ammo = create(:gun, :golden, :with_ammo)
-golden_gun_with_ammo.model_name # => 'Custom Lazar'
+golden_gun_with_ammo.name # => 'Custom Lazar'
 golden_gun_with_ammo.ammunition # => '23-carat gold bullet' 
 golden_gun_with_ammo.golden_cartridge.length # => 10
 golden_gun_with_ammo.golden_cartridge.projectice # => 'gold'
