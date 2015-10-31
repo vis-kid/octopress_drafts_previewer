@@ -517,7 +517,7 @@ FactoryGirl.define do
   factory :law_enforcement_vehicle do
     name 'Oldsmobile Achieva'
     kind 'Compact car'
-    owner
+    :owner
   end
 
   factory :spy_car do
@@ -528,6 +528,11 @@ FactoryGirl.define do
 
 end
 ```
+
+#### Attention!
+
+Don’t forget to add a colon in front of the aliased factory (**:owner**) when you use them for associations in your factories. The documentation and many blog posts use them without colons in these cases. All you get is probably a **NoMethodError** because you are missing a setter method for that alias now. (I’ll better open a pull request) The first time I ran into this baffled me and took me a a bit get passed it. Remember to sometimes selectively distrust documentations and blogs posts. Yours truly as well of course.
+
  I think you’ll agree that using aliases it not only reads better but it also gives you or the person who comes after you a bit more context about the objects in question. Yeah, you need to use plural **:aliases** also if you have only a single alias. 
 
 You could write this a bit different as well—a lot more verbose.
