@@ -283,7 +283,7 @@ FactoryGirl.define do
 
 	  factory :golden_gun do
       name 'Custom Lazar'
-      ammunition '23-carat gold bullet'
+      ammunition '24-carat gold bullet'
 	  	after(:create) { |golden_gun| golden_gun.erase_serial_number } 
 	  end
 	end
@@ -558,7 +558,7 @@ In the context of comments, a **:user** could be referred to as **:commenter**, 
 
 + ### Traits
 
-This is one of my favorite things about Factory Girl. In a nutshell, traits are lego-like blocks to build your factories and mix in behaviour. In my mind, **trait** is the most powerful and convenient function to keep your factory data DRY and expressive. It allows you to bundle groups of attributes together, give them separate names and reuse them wherever you please. Remember when I urged you to define barebones factory objects? Traits will help you achieve exactly that without sacrificing any conveniences.
+This is one of my favorite things about Factory Girl. In a nutshell, traits are lego-like blocks to build your factories and mix in behaviour. They are comma separated lists of symbol traits / attributes that you wanna add-on to a particular factory and they are also defined in your factories file(s). In my mind, **trait** is the most powerful and convenient function to keep your factory data DRY and expressive at the same time. It allows you to bundle groups of attributes together, give them separate names and reuse them wherever you please. Remember when I urged you to define barebones factory objects? Traits will help you achieve exactly that without sacrificing any conveniences.
 
 ``` ruby
 FactoryGirl.define do
@@ -729,35 +729,42 @@ Wouldn’t it be cool to use associations with traits? Of course you can pack ca
 
 ``` ruby
 FactoryGirl.define do
-	factory :cartridge do
-    kind       'Small calliber pistol ammunition'
-    caliber    '7.65' 
-    projectile 'lead'
-    gun
 
+  factory :cartridge do
+    kind       'Small calliber pistol ammunition'
+    caliber    '7.65'
+    projectile 'Lead'
+    gun
+  
     factory :golden_cartridge do
-      projectile 'gold'
-      association: :gun, :golden
+      projectile 'Gold'
+      association :gun, :golden
     end
   end
-
-	factory :gun do
+  
+  factory :gun do
     name 'Walther PPK'
     ammunition '7.65mm Browning'
     caliber    '7.65'
-
-	  trait :golden do
+  
+    transient do
+      magazine_size 10
+    end
+  
+    trait :golden do
       name 'Custom Lazar'
       ammunition '23-carat gold bullet'
-	  end
-
+    end
+  
     trait :with_ammo do
-      transient do
-        magazine_size 10
-      end
-
       after(:create) do |gun, evaluator|
         create_list(:cartridge, evaluator.magazine_size, gun: gun)
+      end
+    end
+  
+    trait :with_golden_ammo do
+      after(:create) do |golden_gun, evaluator|
+        create_list(:golden_cartridge, evaluator.magazine_size, gun: golden_gun)
       end
     end
   end
@@ -767,19 +774,32 @@ end
 How to use them should be boring by now.
 
 ``` ruby
-gun_with_ammo = create(:gun, :with_ammo)
-gun_with_ammo.name # => 'Walther PPK'
-gun_with_ammo.ammunition # => '7.65mm Browning' 
-gun_with_ammo.cartridge.length # => 10
-gun_with_ammo.cartridge.projectice # => 'lead'
-gun_with_ammo.cartridge.caliber # => '7.65'
 
-golden_gun_with_ammo = create(:gun, :golden, :with_ammo)
-golden_gun_with_ammo.name # => 'Custom Lazar'
-golden_gun_with_ammo.ammunition # => '23-carat gold bullet' 
-golden_gun_with_ammo.golden_cartridge.length # => 10
-golden_gun_with_ammo.golden_cartridge.projectice # => 'gold'
-golden_gun_with_ammo.golden_cartridge.caliber # => '7.65'
+cartridge = create(:cartridge)
+cartridge.projectile     # => 'Lead'
+cartridge.gun.name       # => 'Walther PPK'
+cartridge.gun.ammunition # => '7.65mm Browning'
+cartridge.gun.caliber    # => '7.65'
+
+golden_cartridge = create(:golden_cartridge)
+golden_cartridge.projectile     # => 'Gold'
+golden_cartridge.gun.name       # => 'Custom Lazar'
+golden_cartridge.gun.ammunition # => '23-carat gold bullet'
+golden_cartridge.gun.caliber    # => '7.65'
+
+gun_with_ammo = create(:gun, :with_ammo)
+gun_with_ammo.name                        # => 'Walther PPK'
+gun_with_ammo.ammunition                  # => '7.65mm Browning' 
+gun_with_ammo.cartridges.length           # => 10
+gun_with_ammo.cartridges.first.projectile # => 'Lead'
+gun_with_ammo.cartridges.first.caliber    # => '7.65'
+
+golden_gun_with_golden_ammo = create(:gun, :golden, :with_golden_ammo)
+golden_gun_with_golden_ammo.name                        # => 'Custom Lazar'
+golden_gun_with_golden_ammo.ammunition                  # => '24-carat gold bullet' 
+golden_gun_with_golden_ammo.cartridges.length           # => 10
+golden_gun_with_golden_ammo.cartridges.first.projectile # => 'Gold'
+golden_gun_with_golden_ammo.cartridges.first.caliber    # => '7.65'
 ```
 
 Last words of wisdom: Change is your constant companion—needing to change attributes or data types happens all the time. Design decisions like these evolve. Traits will ease the pain with that and helps you manage your data sets. Imagine if you’d have used an options hash for instantiation and that requirement totally changed. How many potential places in your tests might break and will now need attention? Straight up, **trait** is a very effective tool for eliminating duplication in your test suite. But with all that convenience, don’t be lazy and forget your unit tests on the columns that are represented by your traits! That way you give them the same amount of care as the barebones attributes needed for valid objects.
@@ -787,115 +807,3 @@ Last words of wisdom: Change is your constant companion—needing to change attr
 + ### Final Thoughts
 
 There is a bit more to discover in FactoryGirl and I’m confident you are now more than well equipped to to put the pieces together when you need them. Have fun playing with this gem. I hope your TDD habits will benefit from it. 
-
-{% img /images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png %}
-
-##### /spec/factories.rb
-
-``` ruby
-FactoryGirl.define do
-  
-  factory :spy do
-    name "Marty McSpy"
-    favorite_gadget "Hoverboard"
-    skills "Infiltration and espionage"
-  end
-
-end
-```
-##### /spec/spy_spec.rb
-``` ruby
-require 'rails_helper'
- 
-describe Spy do
-  it 'returns alias of a spy' do
-    spy = create(:spy)
-    
-    expect(spy).to be_instance_of(Spy)
-    expect(spy.name).to eq('Marty McSpy')
-    expect(spy.function).to eq('Covert agent')
-    expect(spy.skills).to eq('Infiltration and espionage')
-  end
-end
-
-```
-
-
-
-
-
-
-
-``` ruby
-FactoryGirl.define do
-  
-  factory :spy do
-    name "Marty McSpy"
-    function "Covert agent"
-    skills "Infiltration and espionage"
-    date_of_birth Date.new(1968, 6, 9) 
-  end
-
-  factory :quartermaster, class: Spy do
-    name "Q"
-    function "Quartermaster"
-    skills "Inventing gizmos and hacking"
-    date_of_birth nil
-  end
-
-  factory :00 agent, class: Spy do
-    name "James Bond"
-    function "Covert agent"
-    skills "Getting Bond Girls killed and covert infiltration"
-    date_of_birth nil
-  end
-
-end
-```
-
-
-
-Notes:
-Factory girl is a ruby gem
-
-it was data stored in yaml
-
-have post with cretain attributes
-can have associations(references to other factories), callbacks(for you create data), traits(mix in behaviour)
-
-
-references to related data
-
-override on the fly
-
-attribute order does not matter
-
-uses a lot of metaprogramming with a lot of dynamic method definitions
-
-you can refer to attributes on objects even if you haven’t defined them in your factory. that means you can define factories with the absolute bare minimum to make them valid objects and assign attributes needed for your tests on the fly.
-
-
-Want to have it DRY
-
-create is actually going to persist the data. the goal is declaring bare bones factories and either have child factories and assign different attribues that mutate the data in a certain manner or that you use traits where you can mutate multiple columns (attributes) and change a handful of columns at at time or you can add associations or different callbacks. 
-
-Being able to define traits as a concept. for example flag on a post. published boolean and then requirements change and you need timestamp. later it changes again because you need state machine with published, not published, draft and so one. Instead of building a factory girl object and putting that column when you create this record ends up being a painfpoint because everything needs to change now when you refer to published-> all through your tests. -> traits just referring to this concept which lets you apply and affect changes in only one central DRY place. Imagine if you’d have used an options hash for instantiation and that requirement totally changed how many potential places in your tests might break and need attention now. with traits your test dont necessarily care about how its stored in the database. 
-
-traits are comma separated list of symbol traits / attributes that you wanna addon to a particular factory. traits are also defined in your factories file(s). traits is a tool for eliminating duplication in your test suite. 
-
-And because you still do (hopefully) unit tests on the columns  for your models that are represented in traits you give them you still give them the same amount of care than the attributes that are needed to have valid objects. 
-
-
-The more date you put in your global test space the more pain you are gonna have maintainance wise. Don’t be lazy!
-
-When unit-testing most methods, however, Factory Girl (and even persisting data to the database) is unnecessary.
-
-Outro
-
-That’s also one more reason why only defining only the absolute basic objects and their attributes goes a long way in avoiding the side effects of global coupling. -> Bare minimum factory definitions and segregating related objects into separate factories or factories witht traits is the key thing to remember whatever you do. 
-
-
-A lot of times you actually dont need factory girl to write some of your unit tests. Josh would be the first to attest to that. Bigger systems with lots of data and collaborators and stuff that that you dont need for your unit tests. If you write unit tests and your data doesnt need any associations, it doesnt need persistance, you dont care about callbacks, dont use factory girl or at least use build (stubbed??) which instantiates the record and assignes all the attriubutes, gives it an id and raises if you interact with the database at all.  which gives you fake data that looks like its been persisted - gives you a full-fledged object that looks like its been saved. A lot faster. nothing hits the database at all. 
-
-Global coupling. Data is global in your test suite? it can become painful. When you change some attribute and tests start to break. Idea is to declare factories and then segregate them -> Something is different is named differently. A user with admin flag becomes admin in separate factory or trait. Regular user vs admin user -> Different type of users. Splitting up the data types helps ease some of the pain of the fact that they are global. So like changes to admin are less likely to break global things. 
-
