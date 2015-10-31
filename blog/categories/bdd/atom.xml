@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bdd | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/bdd/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-27T19:27:44+01:00</updated>
+  <updated>2015-10-31T20:15:05+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,305 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Page Objects for Capybara Connoisseurs]]></title>
+    <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/26/Page-Objects/"/>
+    <updated>2015-10-26T04:29:10+01:00</updated>
+    <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/26/Page-Objects</id>
+    <content type="html"><![CDATA[<p><img src="/images/Page_Objects/capybara_bigger.png"></p>
+
+<h3>Topics</h3>
+
+<ul>
+<li>What are Page Objects</li>
+<li>When and why?</li>
+<li>Different type of Page Objects</li>
+<li>Acceptance test / feature specs</li>
+<li>Refactoring</li>
+<li>How?</li>
+<li>Design Patterns?</li>
+<li><p>Tell-Don’t-Ask</p></li>
+<li><h3>What are Page Objects?</h3></li>
+</ul>
+
+
+<p>I’ll give you the short answer first. Its a design pattern to encapsulate markup and page interactions. They offer you to write high-level feature specs that are very expressive and DRY. You might ask, aren’t specs written with Capybara already high-level and expressive? Sure, for a developer who write codes on a daily basis, Capybara specs read just fine.</p>
+
+<pre><code class="ruby">feature 'M assigns a mission' do
+  scenario 'they see the foobar on the page' do
+    visit new_mission_path
+
+    fill_in 'Name',  with: 'Secret mission name'
+    fill_in 'Agent', with: 'James Bond'
+    click_button 'Create Mission'
+
+    expect(page).to have_css '.mission-name', 'Secret mission name'
+  end
+end
+</code></pre>
+
+<p>When you look at this example of such a feature spec, where do you see opportunities to make this read better and how could you extract information to avoid duplication? Also, is this high-level enough for easy modeling of user stories and for non-technical stakeholders to understand? In my mind, there are a couple of ways to improve this and to make everybody happy—developers who can avoid fiddling with the details of interacting with the DOM while applying OOP and other team members having no trouble jumping between user stories and these tests.</p>
+
+<p>Encapsulation is the key concept with Page Objects. When you write your feature specs you benefit from a way to extract the behaviour that is driving through a test flow. For quality code you want to capture the interactions with particular sets of elements on your pages—especially if you stumble upon repeating patterns. As your application grows, you want / need a strategy to avoid spreading that logic all over your specs. There are many refactorings possible for your feature specs but Page Objects offer the cleanest abstractions for encapsulating user facing behaviour for pages or more complex flows. You don’t have to simulate the whole page(s) though—focus on the essential bits that are necessary for user flows. No need to overdo it!</p>
+
+<p>// as opposed to spreading that logic across a lot of your specs -> DRY</p>
+
+<p>might describe the full page itself</p>
+
+<p>or multiple pages in sequences as you go through a flow</p>
+
+<p>Its a mixture of a couple of refactoring techniques:
+Extract class
+Extract method</p>
+
+<p>They are even more high-level than Capybara feature specs</p>
+
+<p>Testing against web pages means the need to refer to DOM elements and interact with them. Doint this without Page Objects introduces duplication and brittle tests when the UI changes.</p>
+
+<p>You create an APi that is specific to your application and your feature spec needs.</p>
+
+<p>That way you can play with Pages and their elements—all without fiddling around with DOM elements. -> You can emulate the human experience quite expressively.</p>
+
+<p>Its a good design principle to floww when complexity of your feature specs increase.</p>
+
+<p>Tests for client code become easier to understand.</p>
+
+<p>It promotes reuse
+centralizing UI elements and isolate impact of changes
+Expressive DSL</p>
+
+<p>A design pattern to refactor your feature specs</p>
+
+<p>Write acceptance tests with application language</p>
+
+<p>HTML implementation details in one p lace.</p>
+
+<p>Tests are more stable</p>
+
+<p>UI interaction tests have now same quality as test for application code.</p>
+
+<p>Due to changes, Capybara selectors introduce breakpoints. Let’s say a designer wantes to change the text on a button. Do you want to make that change in cone central wrapper for that provides that element to your specs or do you prefer to do that all over the place? I thought so!</p>
+
+<ul>
+<li><h3>Acceptance Tests / Feature Specs</h3></li>
+</ul>
+
+
+<p>Before we move on to the heart of the matter, I’d like to take a step back for people new to the whole testing business and clear up some of the lingo that is important in this context. People more familiar with TDD won’t miss much if they skip ahead.</p>
+
+<p>What are we talking about here? Acceptance testing usually comes in at a later stage of projects to evaluate if you have been building something of value for your product owner, users or whatever stakeholder. These tests are usually run by customers or your users. Its sort of a check if the requirements are being met or not. There is something like a testing pyramid for all sorts of testing layers and acceptance tests are near the top. Because this process includes often non-technical folks, a high-level language for writing these tests is a valuable asset to communicate back and forth.</p>
+
+<p>Feature specs on the other hand, are a bit lower in the testing food chain. A lot more high-level than unit tests which focus on the technial details and business logic of your models, feature specs describe flows on and in between your pages. Tools like <a href="http://jnicklas.github.io/capybara/">Capybara</a> help you to avoid to do this manually—meaning that you rarely have to open your browser to test stuff manually. Btw, you don’t use <strong>get</strong>, <strong>put</strong>, <strong>post</strong>, <strong>delete</strong> like with request specs. With these kinds of tests we like to automate these tasks as much as possible and test drive the interaction through the browser while writing assertions against pages.</p>
+
+<p>Feature specs are very similar to acceptance tests—sometimes I feel the differences are too blurry to really care about the terminology. You write tests that exercise your whole application which often involves a multi-step flow of user actions. These tests show if your components work in harmony when they are brought together. In Ruby land, they are the main protagonist when we’re dealing with Page Objects. Feature specs themselves are already very expressive but they can be optimized and cleaned up by extracting their data, behaviour and markup into separate classes. I felt clearing up this blurry terminology will help you see that having Page Objects is a bit like doing acceptance level testing while writing feature specs.</p>
+
+<h3>Capybara</h3>
+
+<p>Maybe we should go over this really quickly as well. This library describes itself as an “Acceptance test framework for web applications”. You can simulate user interactions with your pages via a very powerful and convenient domain-specific language. In my personal opinion, RSpec paired with Capybara offers atm the best way to write your feature specs. It lets you visit pages, fill in forms, click on links and buttons, look for markup on your pages and you are able to easily combine all kinds of these commands to interact with your pages.</p>
+
+<p>You basically can avoid opening the browser yourself to test this stuff manually most of the time—which is not only less elegant but also a lot more time consuming and error-prone. Without this tool, the process of “Outside-in-testing”–you drive your code from high-level tests down into your unit-level tests—would be a lot more painful and possibly therefore more neglected. In other words you start writing these feature tests which are based on your user stories and from there you go down the rabbit whole until your unit tests provide the coverage you need. After that, when your tests are green of course, the game starts anew and you go back up to continue with a fresh feature test.</p>
+
+<ul>
+<li><h3>How?</h3></li>
+</ul>
+
+
+<p>Let’s look at a simple example of a feature spec that lets M create classified missions that can be completed. In the markup, you have a list of missions and a successful completion creates an addtional <strong>li</strong> with the class <strong>completed</strong>. Straightforward stuff right?</p>
+
+<p><strong>spec/features/m_creates_a_mission_spec.rb</strong></p>
+
+<pre><code class="ruby">require 'rails_helper'
+
+feature 'M creates mission' do
+  scenario 'successfully' do
+    sign_in_as 'M'
+
+    create_classified_mission title: 'Project Moonraker'
+
+    expect(page).to have_css 'ul.missions', text: 'Project Moonraker'
+  end
+
+  def create_classified_mission(title)
+    visit missions_path
+    click_on 'Create Mission' 
+    fill_in  'Mission Name', with: title
+    click_on 'Submit'
+  end
+
+  def sign_in_as(email)
+    visit root_path
+    fill_in  'Email', with: email
+    click_on 'Submit'
+  end
+end
+</code></pre>
+
+<p><strong>spec/features/agent_completes_a_mission_spec.rb</strong></p>
+
+<pre><code class="ruby">require 'rails_helper'
+
+feature 'Agent completes mission' do
+  scenario 'successfully' do
+    sign_in_as 'M'
+
+    create_classified_mission title: 'Project Moonraker'
+
+    within "li:contains('Project Moonraker')" do
+      click_on 'Mission completed'
+    end
+
+    expect(page).to have_css 'ul.missions li.completed', text: 'Project Moonraker'
+  end
+
+  def create_classified_mission(title)
+    visit missions_path
+    click_on 'Create Mission' 
+    fill_in  'Mission Name', with: title
+    click_on 'Submit'
+  end
+
+  def sign_in_as(email)
+    visit root_path
+    fill_in  'Email', with: email
+    click_on 'Submit'
+  end
+end
+</code></pre>
+
+<p>Although there are ways of course to create helpers for stuff like <strong>sign_in_as</strong> and <strong>create_classified_mission</strong>, its easy to see how fast these things can start to suck. UI related specs often don’t get the OO treatment they need I think. They have the reputation of providing too little bang for the buck and of course developers are not most fond of times when they have to touch the markup much. In my mind, that makes it even more important to DRY these specs up and make it fun to deal with them by throwing in a couple of Ruby classes.</p>
+
+<p>Let’s do a little magic trick where I hide the Page Objects implementation for now and only show you the end result applied to the feature specs above:</p>
+
+<pre><code class="ruby">require 'rails_helper'
+
+feature 'M creates mission' do
+  scenario 'successfully' do
+    sign_in_as 'M'
+    mission_page = Pages::Missions.new
+
+    mission_page.create_classified_mission title: 'Project Moonraker'
+
+    expect(page).to have_mission_with_title 'Project Moonraker'
+  end
+end
+</code></pre>
+
+<p><strong>spec/features/agent_completes_a_mission_spec.rb</strong></p>
+
+<pre><code class="ruby">require 'rails_helper'
+
+feature 'Agent completes mission' do
+  scenario 'successfully' do
+    sign_in_as 'M'
+    mission_page = Pages::Missions.new
+
+    mission_page.create_classified_mission title: 'Project Moonraker'
+    mission_page.mark_complete 'Project Moonraker'
+
+    expect(page).to have_completed_mission_with_title 'Project Moonraker'
+  end
+end
+</code></pre>
+
+<p>Doesn’t this read a whole lot better? You basically create expressive wrapper methods on your Page Objects that deal with high-level concepts—instead of fiddling everywhere with the intestines of your markup all the time. You basically extract methods that do this kind of dirty work into Page Objects. That way <a href="https://en.wikipedia.org/wiki/Shotgun_surgery"><strong>Shotgun surgery</strong></a> is not your problem anymore too. Put differently, you abstract away a lot of the noisy, down in the weeds code that deals with interacting with the DOM.</p>
+
+<p><strong>specs/support/features/pages/missions.rb</strong></p>
+
+<pre><code class="ruby">module Pages
+  class Missions
+    include Capybara::DSL
+
+    def create_classified_mission(title)
+      visit missions_path
+      click_on 'Create Mission' 
+      fill_in  'Mission Name', with: title
+      click_on 'Submit'
+    end
+
+    def mark_complete(title)
+      within "li:contains('#{title}')" do
+      click_on 'Mission completed'
+    end
+
+    def has_mission_with_title?(title)
+      mission_list.has_css? 'li', text: 'Project Moonraker' 
+    end
+
+    def has_completed_mission_with_title?(title)
+      mission_list.has_css? 'li.completed', text: 'Project Moonraker'
+    end
+  end
+
+  private
+
+  def mission_list do
+    find('ul.missions')
+  end
+end
+</code></pre>
+
+<p>What you see is plain old Ruby object—Page Objects are in essence very simple classes really. Normally you don’t instantiate Page Objects with data and you create mostly a language via the API that a user or a non-technical stakeholder on a team might use. When you think about naming your methods, I think its good advice to ask yourself the question: How would a user describe the flow?</p>
+
+<p>Btw, <strong>spec/support/features/pages</strong> is a solid place to store your Page Objects. I should also probably add that without including Capybara the music stops pretty fast.</p>
+
+<pre><code class="ruby">include Capybara::DSL
+</code></pre>
+
+<p>Overall, you aim to hide away the Capybara specifics—like finding elements, clicking links etc—you need for your tests so that you can focus on the functionality and less on the actual structure of the markup which is now encapsulated in a Page Object—the DOM structure should be the least of your concerns when you test something as high-level as feature specs.</p>
+
+<p>You probably wonder how these custom matchers work:</p>
+
+<pre><code class="ruby">def has_completed_mission_with_title?(title)
+  ...
+end
+
+def has_mission_with_title?(title)
+  ...
+end
+
+expect(page).to have_completed_mission_with_title
+expect(page).to have_mission_with_title
+</code></pre>
+
+<p>RSpec generates these custom matchers based on predicate methods on your Page Objects. RSpec converts them by removing the <strong>?</strong> and changes <strong>has</strong> to <strong>have</strong>. Boom, matchers from scratch without much fuzz! A bit magic, I’ll give you that, but the good kind of wizardry I’d say.</p>
+
+<h3>Attention!</h3>
+
+<p>Setup stuff like factory data belongs in the specs and not in Page Objects. Also assertions are probably better placed outside of your Page Objects to achieve a separation of concerns. There are two differnt perspectives on the topic:</p>
+
+<p>Advocates for putting assertions into Page Objects say it helps with duplication of assertions. You can provide better error messages and achieve a better “Tell, Don’t Ask” style. On the other hand, advocates for assertion-free Page Objects argue that its better to not mix responsibilities. Providing access to page data and assertion logic are two separate concerns and lead to bloated Page Objects when mixed. Page Object’s responsibility is access to the state of pages and assertion logic belongs to specs.</p>
+
+<ul>
+<li><h3>When &amp; Why?</h3></li>
+</ul>
+
+
+<p>Its a good idea to apply this design pattern a little bit later in a project’s life cycle—when you have amassed a little bit of complexity in your feature specs and when you can identify repeating patterns like DOM structures or other commonalities that are consistent on your pages. So you maybe you shouldn’t start writing Page Objects right away. You approach these refactorings gradually when the complexity and size of your application and their tests grow. Duplication that need a better home through Page Objects will be easier to spot over time.</p>
+
+<p>Page Objects provide you the opportunity to write clearer specs that read better and are overall a lot more expressive because they are more high-level. Besides that, they offer a nice abstraction for everybody who likes to write OO code. They hide the specifics of the DOM and also enable you to have private methods that do the dirty work while being unexposed to the public API. Extracted methods in your feature specs don’t offer the same luxury. The API of Page Objects don’t need to share the nitty-gritty Capybare details</p>
+
+<p>There is also the scenario when design implementations change. Your description of how your app should work doesn’t need to change when you use Page Objects because your feature specs are more focused with user level interactions and not so much about the specifics of the DOM implementations. Since change is inevitable, Page Objects become critical when applications grow and also aid the understanding when the sheer size of the application means drastically increased complexity.</p>
+
+<ul>
+<li><h3>Page Objects Types</h3></li>
+</ul>
+
+
+<p><strong>Components</strong> represent the smallest units and are more focused—like a form object for example.</p>
+
+<p><strong>Pages</strong> combine more of these components and are abstractions of a full page.</p>
+
+<p>And you guessed it by now, <strong>experiences</strong> span the whole flow across potentially many different pages. They are more high-level. The focus on the flow the user experiences while they interact with various pages. A checkout flow which has a couple of steps is a good example to illustrate this idea.</p>
+
+<ul>
+<li><h3>Refactoing</h3></li>
+</ul>
+
+
+<p>You identify commonalities, like a structure in your markup that is consistent within your pages. Something like a <ul><li> for example. This is unlikely to change and easy to reuse in your tests. Forms are another common example. Through these refactorings your Page Objects become the canonical place to centralize the elements and behaviour sets that you need. And you specify the flow in one place too.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Factory Girl 201]]></title>
@@ -220,7 +519,7 @@ end
   end
 
   factory :shuriken do
-    name 'Hira-shuriken'
+    name             'Hira-shuriken'
     number_of_spikes 'Four'
     ninja
   end
@@ -228,13 +527,13 @@ end
 end
 
 ninja = create(:ninja)
-ninja.shuriken # =&gt; 0
+ninja.shurikens.length # =&gt; 0
 
 ninja = create(:ninja_with_shuriken)
-ninja.shuriken # =&gt; 10
+ninja.shurikens.length # =&gt; 10
 
 ninja = create(:ninja_with_shuriken, number_of_shuriken: 20)
-ninja.shuriken # =&gt; 20
+ninja.shurikens.length # =&gt; 20
 </code></pre>
 
 <p>Also, through the evaluator object you have access to transient attributes too. That gives you the option to pass in addtional information when you “create” factory objects and need to tweak them on the fly. That gives you all the flexibility needed to play with associations and write expressive test data.</p>
@@ -245,7 +544,7 @@ ninja.shuriken # =&gt; 20
 
     factory :henchman do
     name 'Mr. Hinx'
-    after(:create) { |henchman| send_on_kill_mission(henchman)  }
+    after(:create) { |henchman| henchman.send_on_kill_mission }
     after(:create) { send_cleaner }
     end
 
@@ -256,7 +555,7 @@ end
 
     factory :bond_girl do
     name 'Lucia Sciarra'
-    after(:build)  { |bond_girl| hide_secret_documents(bond_girl)  }
+    after(:build)  { |bond_girl| bond_girl.hide_secret_documents  }
     after(:create) { close_hidden_safe_compartment }
     end
 
@@ -271,7 +570,7 @@ end
 
     factory :spy do
     name 'Marty McFly'
-    after(:stub, :build) { |spy| assign_new_mission(spy) }
+    after(:stub, :build) { |spy| spy.assign_new_mission }
     end
 
 end
@@ -283,17 +582,17 @@ end
 
 <pre><code class="ruby">FactoryGirl.define do
 
-  before(:stub, :build, :create) { |object| assign_serial_number(object) }
+  before(:stub, :build, :create) { |object| object.assign_serial_number }
 
     factory :spy_gun do
-    model_name 'Walther PPK'
+    name 'Walther PPK'
     ammunition '7.65mm Browning'
-    owner
+    association :owner
 
       factory :golden_gun do
-      model_name 'Custom Lazar'
-      ammunition '23-carat gold bullet'
-        after(:create) { |golden_gun| erase_serial_number(golden_gun) } 
+      name 'Custom Lazar'
+      ammunition '24-carat gold bullet'
+        after(:create) { |golden_gun| golden_gun.erase_serial_number } 
       end
     end
 
@@ -349,7 +648,7 @@ end
   end
 
     factory :gun do
-    model_name 'Walther PPK'
+    name 'Walther PPK'
     ammunition '7.65mm Browning'
     caliber    '7.65'
 
@@ -457,14 +756,40 @@ end
   end
 
   factory :mifive_spy, class: Spy do
+    name '005'
     association :spyable, factory: :mifive 
   end
 
   factory :misix_spy, class: Spy do
+      name '006'
     association :spyable, factory: :misix
   end
 
 end
+
+# MI5 agents
+mifive = create(:mifive)
+mifive_spy = create(:mifive_spy)
+mifive.spies &lt;&lt; mifive_spy
+
+mifive.name             # =&gt; "Military Intelligence, Section 5"
+mifive_spy.name         # =&gt; '005'
+mifive.spies.length     # =&gt; 1
+mifive.spies.first.name # =&gt; '005'
+
+
+# MI6 agents
+misix = create(:misix)
+misix_spy_01 = create(:misix_spy, name: '007')
+misix_spy_02 = create(:misix_spy)
+misix.spies &lt;&lt; misix_spy_01
+misix.spies &lt;&lt; misix_spy_02
+
+misix.name              # =&gt; "Military Intelligence, Section 6"
+misix.spies.length      # =&gt; 2
+misix_spy_01.name       # =&gt; '007'
+misix_spy_02.name       # =&gt; '006'
+misix.spies.first.name  # =&gt; '007'
 </code></pre>
 
 <p>Don’t feel bad if this one needs a bit more time to sink in. I recommend catching up on <a href="http://guides.rubyonrails.org/association_basics.html#polymorphic-associations"><strong>Polymorphic Associations</strong></a> if you’re unsure what’s going on here.</p>
@@ -493,7 +818,7 @@ end
   factory :law_enforcement_vehicle do
     name 'Oldsmobile Achieva'
     kind 'Compact car'
-    owner
+    :owner
   end
 
   factory :spy_car do
@@ -504,6 +829,10 @@ end
 
 end
 </code></pre>
+
+<h4>Attention!</h4>
+
+<p>Don’t forget to add a colon in front of the aliased factory (<strong>:owner</strong>) when you use them for associations in your factories. The documentation and many blog posts use them without colons in these cases. All you get is probably a <strong>NoMethodError</strong> because you are missing a setter method for that alias now. (I’ll better open a pull request) The first time I ran into this baffled me and took me a a bit get passed it. Remember to sometimes selectively distrust documentations and blogs posts. Yours truly as well of course.</p>
 
 <p> I think you’ll agree that using aliases it not only reads better but it also gives you or the person who comes after you a bit more context about the objects in question. Yeah, you need to use plural <strong>:aliases</strong> also if you have only a single alias.</p>
 
@@ -531,7 +860,7 @@ end
 </ul>
 
 
-<p>This is one of my favorite things about Factory Girl. In a nutshell, traits are lego-like blocks to build your factories and mix in behaviour. In my mind, <strong>trait</strong> is the most powerful and convenient function to keep your factory data DRY and expressive. It allows you to bundle groups of attributes together, give them separate names and reuse them wherever you please. Remember when I urged you to define barebones factory objects? Traits will help you achieve exactly that without sacrificing any conveniences.</p>
+<p>This is one of my favorite things about Factory Girl. In a nutshell, traits are lego-like blocks to build your factories and mix in behaviour. They are comma separated lists of symbol traits / attributes that you wanna add-on to a particular factory and they are also defined in your factories file(s). In my mind, <strong>trait</strong> is the most powerful and convenient function to keep your factory data DRY and expressive at the same time. It allows you to bundle groups of attributes together, give them separate names and reuse them wherever you please. Remember when I urged you to define barebones factory objects? Traits will help you achieve exactly that without sacrificing any conveniences.</p>
 
 <pre><code class="ruby">FactoryGirl.define do
 
@@ -558,7 +887,7 @@ end
 
     trait :cloaked do
       active_camouflage true
-      radar_signatur    'reduced'
+      radar_signature   'reduced'
       engine            'silenced'
     end
 
@@ -692,35 +1021,42 @@ build_list(:spy_car, 4, :submarine, :cloaked)
 <p>Wouldn’t it be cool to use associations with traits? Of course you can pack callbacks and associations neatly into traits. Duh!</p>
 
 <pre><code class="ruby">FactoryGirl.define do
-    factory :cartridge do
+
+  factory :cartridge do
     kind       'Small calliber pistol ammunition'
-    caliber    '7.65' 
-    projectile 'lead'
+    caliber    '7.65'
+    projectile 'Lead'
     gun
 
     factory :golden_cartridge do
-      projectile 'gold'
-      association: :gun, :golden
+      projectile 'Gold'
+      association :gun, :golden
     end
   end
 
-    factory :gun do
-    model_name 'Walther PPK'
+  factory :gun do
+    name 'Walther PPK'
     ammunition '7.65mm Browning'
     caliber    '7.65'
 
-      trait :golden do
-      model_name 'Custom Lazar'
+    transient do
+      magazine_size 10
+    end
+
+    trait :golden do
+      name 'Custom Lazar'
       ammunition '23-carat gold bullet'
-      end
+    end
 
     trait :with_ammo do
-      transient do
-        magazine_size 10
-      end
-
       after(:create) do |gun, evaluator|
         create_list(:cartridge, evaluator.magazine_size, gun: gun)
+      end
+    end
+
+    trait :with_golden_ammo do
+      after(:create) do |golden_gun, evaluator|
+        create_list(:golden_cartridge, evaluator.magazine_size, gun: golden_gun)
       end
     end
   end
@@ -729,19 +1065,32 @@ end
 
 <p>How to use them should be boring by now.</p>
 
-<pre><code class="ruby">gun_with_ammo = create(:gun, :with_ammo)
-gun_with_ammo.model_name # =&gt; 'Walther PPK'
-gun_with_ammo.ammunition # =&gt; '7.65mm Browning' 
-gun_with_ammo.cartridge.length # =&gt; 10
-gun_with_ammo.cartridge.projectice # =&gt; 'lead'
-gun_with_ammo.cartridge.caliber # =&gt; '7.65'
+<pre><code class="ruby">
+cartridge = create(:cartridge)
+cartridge.projectile     # =&gt; 'Lead'
+cartridge.gun.name       # =&gt; 'Walther PPK'
+cartridge.gun.ammunition # =&gt; '7.65mm Browning'
+cartridge.gun.caliber    # =&gt; '7.65'
 
-golden_gun_with_ammo = create(:gun, :golden, :with_ammo)
-golden_gun_with_ammo.model_name # =&gt; 'Custom Lazar'
-golden_gun_with_ammo.ammunition # =&gt; '23-carat gold bullet' 
-golden_gun_with_ammo.golden_cartridge.length # =&gt; 10
-golden_gun_with_ammo.golden_cartridge.projectice # =&gt; 'gold'
-golden_gun_with_ammo.golden_cartridge.caliber # =&gt; '7.65'
+golden_cartridge = create(:golden_cartridge)
+golden_cartridge.projectile     # =&gt; 'Gold'
+golden_cartridge.gun.name       # =&gt; 'Custom Lazar'
+golden_cartridge.gun.ammunition # =&gt; '23-carat gold bullet'
+golden_cartridge.gun.caliber    # =&gt; '7.65'
+
+gun_with_ammo = create(:gun, :with_ammo)
+gun_with_ammo.name                        # =&gt; 'Walther PPK'
+gun_with_ammo.ammunition                  # =&gt; '7.65mm Browning' 
+gun_with_ammo.cartridges.length           # =&gt; 10
+gun_with_ammo.cartridges.first.projectile # =&gt; 'Lead'
+gun_with_ammo.cartridges.first.caliber    # =&gt; '7.65'
+
+golden_gun_with_golden_ammo = create(:gun, :golden, :with_golden_ammo)
+golden_gun_with_golden_ammo.name                        # =&gt; 'Custom Lazar'
+golden_gun_with_golden_ammo.ammunition                  # =&gt; '24-carat gold bullet' 
+golden_gun_with_golden_ammo.cartridges.length           # =&gt; 10
+golden_gun_with_golden_ammo.cartridges.first.projectile # =&gt; 'Gold'
+golden_gun_with_golden_ammo.cartridges.first.caliber    # =&gt; '7.65'
 </code></pre>
 
 <p>Last words of wisdom: Change is your constant companion—needing to change attributes or data types happens all the time. Design decisions like these evolve. Traits will ease the pain with that and helps you manage your data sets. Imagine if you’d have used an options hash for instantiation and that requirement totally changed. How many potential places in your tests might break and will now need attention? Straight up, <strong>trait</strong> is a very effective tool for eliminating duplication in your test suite. But with all that convenience, don’t be lazy and forget your unit tests on the columns that are represented by your traits! That way you give them the same amount of care as the barebones attributes needed for valid objects.</p>
@@ -752,103 +1101,6 @@ golden_gun_with_ammo.golden_cartridge.caliber # =&gt; '7.65'
 
 
 <p>There is a bit more to discover in FactoryGirl and I’m confident you are now more than well equipped to to put the pieces together when you need them. Have fun playing with this gem. I hope your TDD habits will benefit from it.</p>
-
-<p><img src="/images/Factory-Girl-Guide/Factory_Guide_Association_cropped.png"></p>
-
-<h5>/spec/factories.rb</h5>
-
-<pre><code class="ruby">FactoryGirl.define do
-
-  factory :spy do
-    name "Marty McSpy"
-    favorite_gadget "Hoverboard"
-    skills "Infiltration and espionage"
-  end
-
-end
-</code></pre>
-
-<h5>/spec/spy_spec.rb</h5>
-
-<pre><code class="ruby">require 'rails_helper'
-
-describe Spy do
-  it 'returns alias of a spy' do
-    spy = create(:spy)
-
-    expect(spy).to be_instance_of(Spy)
-    expect(spy.name).to eq('Marty McSpy')
-    expect(spy.function).to eq('Covert agent')
-    expect(spy.skills).to eq('Infiltration and espionage')
-  end
-end
-</code></pre>
-
-<pre><code class="ruby">FactoryGirl.define do
-
-  factory :spy do
-    name "Marty McSpy"
-    function "Covert agent"
-    skills "Infiltration and espionage"
-    date_of_birth Date.new(1968, 6, 9) 
-  end
-
-  factory :quartermaster, class: Spy do
-    name "Q"
-    function "Quartermaster"
-    skills "Inventing gizmos and hacking"
-    date_of_birth nil
-  end
-
-  factory :00 agent, class: Spy do
-    name "James Bond"
-    function "Covert agent"
-    skills "Getting Bond Girls killed and covert infiltration"
-    date_of_birth nil
-  end
-
-end
-</code></pre>
-
-<p>Notes:
-Factory girl is a ruby gem</p>
-
-<p>it was data stored in yaml</p>
-
-<p>have post with cretain attributes
-can have associations(references to other factories), callbacks(for you create data), traits(mix in behaviour)</p>
-
-<p>references to related data</p>
-
-<p>override on the fly</p>
-
-<p>attribute order does not matter</p>
-
-<p>uses a lot of metaprogramming with a lot of dynamic method definitions</p>
-
-<p>you can refer to attributes on objects even if you haven’t defined them in your factory. that means you can define factories with the absolute bare minimum to make them valid objects and assign attributes needed for your tests on the fly.</p>
-
-<p>Want to have it DRY</p>
-
-<p>create is actually going to persist the data. the goal is declaring bare bones factories and either have child factories and assign different attribues that mutate the data in a certain manner or that you use traits where you can mutate multiple columns (attributes) and change a handful of columns at at time or you can add associations or different callbacks.</p>
-
-<p>Being able to define traits as a concept. for example flag on a post. published boolean and then requirements change and you need timestamp. later it changes again because you need state machine with published, not published, draft and so one. Instead of building a factory girl object and putting that column when you create this record ends up being a painfpoint because everything needs to change now when you refer to published-> all through your tests. -> traits just referring to this concept which lets you apply and affect changes in only one central DRY place. Imagine if you’d have used an options hash for instantiation and that requirement totally changed how many potential places in your tests might break and need attention now. with traits your test dont necessarily care about how its stored in the database.</p>
-
-<p>traits are comma separated list of symbol traits / attributes that you wanna addon to a particular factory. traits are also defined in your factories file(s). traits is a tool for eliminating duplication in your test suite.</p>
-
-<p>And because you still do (hopefully) unit tests on the columns  for your models that are represented in traits you give them you still give them the same amount of care than the attributes that are needed to have valid objects.</p>
-
-<p>The more date you put in your global test space the more pain you are gonna have maintainance wise. Don’t be lazy!</p>
-
-<p>When unit-testing most methods, however, Factory Girl (and even persisting data to the database) is unnecessary.</p>
-
-<p>Outro</p>
-
-<p>That’s also one more reason why only defining only the absolute basic objects and their attributes goes a long way in avoiding the side effects of global coupling. -> Bare minimum factory definitions and segregating related objects into separate factories or factories witht traits is the key thing to remember whatever you do.</p>
-
-<p>A lot of times you actually dont need factory girl to write some of your unit tests. Josh would be the first to attest to that. Bigger systems with lots of data and collaborators and stuff that that you dont need for your unit tests. If you write unit tests and your data doesnt need any associations, it doesnt need persistance, you dont care about callbacks, dont use factory girl or at least use build (stubbed??) which instantiates the record and assignes all the attriubutes, gives it an id and raises if you interact with the database at all.  which gives you fake data that looks like its been persisted - gives you a full-fledged object that looks like its been saved. A lot faster. nothing hits the database at all.</p>
-
-<p>Global coupling. Data is global in your test suite? it can become painful. When you change some attribute and tests start to break. Idea is to declare factories and then segregate them -> Something is different is named differently. A user with admin flag becomes admin in separate factory or trait. Regular user vs admin user -> Different type of users. Splitting up the data types helps ease some of the pain of the fact that they are global. So like changes to admin are less likely to break global things.</p>
 ]]></content>
   </entry>
   

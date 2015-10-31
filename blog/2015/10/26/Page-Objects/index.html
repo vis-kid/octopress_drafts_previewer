@@ -1,0 +1,630 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Page Objects for Capybara Connoisseurs - Drafts Previewer</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Topics What are Page Objects
+When and why?
+Different type of Page Objects
+Acceptance test / feature specs
+Refactoring
+How?
+Design Patterns?
+Tell-Don &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/26/Page-Objects/">
+  <link href="/octopress_drafts_previewer/favicon.png" rel="icon">
+  <link href="/octopress_drafts_previewer/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/octopress_drafts_previewer/atom.xml" rel="alternate" title="Drafts Previewer" type="application/atom+xml">
+  <script src="/octopress_drafts_previewer/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/octopress_drafts_previewer/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/octopress_drafts_previewer/">Drafts Previewer</a></h1>
+  
+    <h2>Simple way to share my drafts for feedback</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/octopress_drafts_previewer/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="vis-kid.github.io/octopress_drafts_previewer">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/octopress_drafts_previewer/">Blog</a></li>
+  <li><a href="/octopress_drafts_previewer/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Page Objects for Capybara Connoisseurs</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-26T04:29:10+01:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>4:29 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img src="/octopress_drafts_previewer/images/Page_Objects/capybara_bigger.png"></p>
+
+<h3>Topics</h3>
+
+<ul>
+<li>What are Page Objects</li>
+<li>When and why?</li>
+<li>Different type of Page Objects</li>
+<li>Acceptance test / feature specs</li>
+<li>Refactoring</li>
+<li>How?</li>
+<li>Design Patterns?</li>
+<li><p>Tell-Don’t-Ask</p></li>
+<li><h3>What are Page Objects?</h3></li>
+</ul>
+
+
+<p>I’ll give you the short answer first. Its a design pattern to encapsulate markup and page interactions. They offer you to write high-level feature specs that are very expressive and DRY. You might ask, aren’t specs written with Capybara already high-level and expressive? Sure, for a developer who write codes on a daily basis, Capybara specs read just fine.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">feature</span> <span class="s1">&#39;M assigns a mission&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;they see the foobar on the page&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">visit</span> <span class="n">new_mission_path</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">fill_in</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span>  <span class="ss">with</span><span class="p">:</span> <span class="s1">&#39;Secret mission name&#39;</span>
+</span><span class='line'>    <span class="n">fill_in</span> <span class="s1">&#39;Agent&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="s1">&#39;James Bond&#39;</span>
+</span><span class='line'>    <span class="n">click_button</span> <span class="s1">&#39;Create Mission&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_css</span> <span class="s1">&#39;.mission-name&#39;</span><span class="p">,</span> <span class="s1">&#39;Secret mission name&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When you look at this example of such a feature spec, where do you see opportunities to make this read better and how could you extract information to avoid duplication? Also, is this high-level enough for easy modeling of user stories and for non-technical stakeholders to understand? In my mind, there are a couple of ways to improve this and to make everybody happy—developers who can avoid fiddling with the details of interacting with the DOM while applying OOP and other team members having no trouble jumping between user stories and these tests.</p>
+
+<p>Encapsulation is the key concept with Page Objects. When you write your feature specs you benefit from a way to extract the behaviour that is driving through a test flow. For quality code you want to capture the interactions with particular sets of elements on your pages—especially if you stumble upon repeating patterns. As your application grows, you want / need a strategy to avoid spreading that logic all over your specs. There are many refactorings possible for your feature specs but Page Objects offer the cleanest abstractions for encapsulating user facing behaviour for pages or more complex flows. You don’t have to simulate the whole page(s) though—focus on the essential bits that are necessary for user flows. No need to overdo it!</p>
+
+<p>// as opposed to spreading that logic across a lot of your specs -> DRY</p>
+
+<p>might describe the full page itself</p>
+
+<p>or multiple pages in sequences as you go through a flow</p>
+
+<p>Its a mixture of a couple of refactoring techniques:
+Extract class
+Extract method</p>
+
+<p>They are even more high-level than Capybara feature specs</p>
+
+<p>Testing against web pages means the need to refer to DOM elements and interact with them. Doint this without Page Objects introduces duplication and brittle tests when the UI changes.</p>
+
+<p>You create an APi that is specific to your application and your feature spec needs.</p>
+
+<p>That way you can play with Pages and their elements—all without fiddling around with DOM elements. -> You can emulate the human experience quite expressively.</p>
+
+<p>Its a good design principle to floww when complexity of your feature specs increase.</p>
+
+<p>Tests for client code become easier to understand.</p>
+
+<p>It promotes reuse
+centralizing UI elements and isolate impact of changes
+Expressive DSL</p>
+
+<p>A design pattern to refactor your feature specs</p>
+
+<p>Write acceptance tests with application language</p>
+
+<p>HTML implementation details in one p lace.</p>
+
+<p>Tests are more stable</p>
+
+<p>UI interaction tests have now same quality as test for application code.</p>
+
+<p>Due to changes, Capybara selectors introduce breakpoints. Let’s say a designer wantes to change the text on a button. Do you want to make that change in cone central wrapper for that provides that element to your specs or do you prefer to do that all over the place? I thought so!</p>
+
+<ul>
+<li><h3>Acceptance Tests / Feature Specs</h3></li>
+</ul>
+
+
+<p>Before we move on to the heart of the matter, I’d like to take a step back for people new to the whole testing business and clear up some of the lingo that is important in this context. People more familiar with TDD won’t miss much if they skip ahead.</p>
+
+<p>What are we talking about here? Acceptance testing usually comes in at a later stage of projects to evaluate if you have been building something of value for your product owner, users or whatever stakeholder. These tests are usually run by customers or your users. Its sort of a check if the requirements are being met or not. There is something like a testing pyramid for all sorts of testing layers and acceptance tests are near the top. Because this process includes often non-technical folks, a high-level language for writing these tests is a valuable asset to communicate back and forth.</p>
+
+<p>Feature specs on the other hand, are a bit lower in the testing food chain. A lot more high-level than unit tests which focus on the technial details and business logic of your models, feature specs describe flows on and in between your pages. Tools like <a href="http://jnicklas.github.io/capybara/">Capybara</a> help you to avoid to do this manually—meaning that you rarely have to open your browser to test stuff manually. Btw, you don’t use <strong>get</strong>, <strong>put</strong>, <strong>post</strong>, <strong>delete</strong> like with request specs. With these kinds of tests we like to automate these tasks as much as possible and test drive the interaction through the browser while writing assertions against pages.</p>
+
+<p>Feature specs are very similar to acceptance tests—sometimes I feel the differences are too blurry to really care about the terminology. You write tests that exercise your whole application which often involves a multi-step flow of user actions. These tests show if your components work in harmony when they are brought together. In Ruby land, they are the main protagonist when we’re dealing with Page Objects. Feature specs themselves are already very expressive but they can be optimized and cleaned up by extracting their data, behaviour and markup into separate classes. I felt clearing up this blurry terminology will help you see that having Page Objects is a bit like doing acceptance level testing while writing feature specs.</p>
+
+<h3>Capybara</h3>
+
+<p>Maybe we should go over this really quickly as well. This library describes itself as an “Acceptance test framework for web applications”. You can simulate user interactions with your pages via a very powerful and convenient domain-specific language. In my personal opinion, RSpec paired with Capybara offers atm the best way to write your feature specs. It lets you visit pages, fill in forms, click on links and buttons, look for markup on your pages and you are able to easily combine all kinds of these commands to interact with your pages.</p>
+
+<p>You basically can avoid opening the browser yourself to test this stuff manually most of the time—which is not only less elegant but also a lot more time consuming and error-prone. Without this tool, the process of “Outside-in-testing”–you drive your code from high-level tests down into your unit-level tests—would be a lot more painful and possibly therefore more neglected. In other words you start writing these feature tests which are based on your user stories and from there you go down the rabbit whole until your unit tests provide the coverage you need. After that, when your tests are green of course, the game starts anew and you go back up to continue with a fresh feature test.</p>
+
+<ul>
+<li><h3>How?</h3></li>
+</ul>
+
+
+<p>Let’s look at a simple example of a feature spec that lets M create classified missions that can be completed. In the markup, you have a list of missions and a successful completion creates an addtional <strong>li</strong> with the class <strong>completed</strong>. Straightforward stuff right?</p>
+
+<p><strong>spec/features/m_creates_a_mission_spec.rb</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">feature</span> <span class="s1">&#39;M creates mission&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;successfully&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">sign_in_as</span> <span class="s1">&#39;M&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">create_classified_mission</span> <span class="ss">title</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_css</span> <span class="s1">&#39;ul.missions&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create_classified_mission</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">visit</span> <span class="n">missions_path</span>
+</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Create Mission&#39;</span>
+</span><span class='line'>    <span class="n">fill_in</span>  <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">title</span>
+</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">sign_in_as</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">visit</span> <span class="n">root_path</span>
+</span><span class='line'>    <span class="n">fill_in</span>  <span class="s1">&#39;Email&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">email</span>
+</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>spec/features/agent_completes_a_mission_spec.rb</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">feature</span> <span class="s1">&#39;Agent completes mission&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;successfully&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">sign_in_as</span> <span class="s1">&#39;M&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">create_classified_mission</span> <span class="ss">title</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">within</span> <span class="s2">&quot;li:contains(&#39;Project Moonraker&#39;)&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">click_on</span> <span class="s1">&#39;Mission completed&#39;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_css</span> <span class="s1">&#39;ul.missions li.completed&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create_classified_mission</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">visit</span> <span class="n">missions_path</span>
+</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Create Mission&#39;</span>
+</span><span class='line'>    <span class="n">fill_in</span>  <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">title</span>
+</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">sign_in_as</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">visit</span> <span class="n">root_path</span>
+</span><span class='line'>    <span class="n">fill_in</span>  <span class="s1">&#39;Email&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">email</span>
+</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Although there are ways of course to create helpers for stuff like <strong>sign_in_as</strong> and <strong>create_classified_mission</strong>, its easy to see how fast these things can start to suck. UI related specs often don’t get the OO treatment they need I think. They have the reputation of providing too little bang for the buck and of course developers are not most fond of times when they have to touch the markup much. In my mind, that makes it even more important to DRY these specs up and make it fun to deal with them by throwing in a couple of Ruby classes.</p>
+
+<p>Let’s do a little magic trick where I hide the Page Objects implementation for now and only show you the end result applied to the feature specs above:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">feature</span> <span class="s1">&#39;M creates mission&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;successfully&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">sign_in_as</span> <span class="s1">&#39;M&#39;</span>
+</span><span class='line'>    <span class="n">mission_page</span> <span class="o">=</span> <span class="no">Pages</span><span class="o">::</span><span class="no">Missions</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">mission_page</span><span class="o">.</span><span class="n">create_classified_mission</span> <span class="ss">title</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_mission_with_title</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>spec/features/agent_completes_a_mission_spec.rb</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">feature</span> <span class="s1">&#39;Agent completes mission&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;successfully&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">sign_in_as</span> <span class="s1">&#39;M&#39;</span>
+</span><span class='line'>    <span class="n">mission_page</span> <span class="o">=</span> <span class="no">Pages</span><span class="o">::</span><span class="no">Missions</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">mission_page</span><span class="o">.</span><span class="n">create_classified_mission</span> <span class="ss">title</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>    <span class="n">mission_page</span><span class="o">.</span><span class="n">mark_complete</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_completed_mission_with_title</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Doesn’t this read a whole lot better? You basically create expressive wrapper methods on your Page Objects that deal with high-level concepts—instead of fiddling everywhere with the intestines of your markup all the time. You basically extract methods that do this kind of dirty work into Page Objects. That way <a href="https://en.wikipedia.org/wiki/Shotgun_surgery"><strong>Shotgun surgery</strong></a> is not your problem anymore too. Put differently, you abstract away a lot of the noisy, down in the weeds code that deals with interacting with the DOM.</p>
+
+<p><strong>specs/support/features/pages/missions.rb</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">Pages</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">Missions</span>
+</span><span class='line'>    <span class="kp">include</span> <span class="no">Capybara</span><span class="o">::</span><span class="no">DSL</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">create_classified_mission</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">visit</span> <span class="n">missions_path</span>
+</span><span class='line'>      <span class="n">click_on</span> <span class="s1">&#39;Create Mission&#39;</span>
+</span><span class='line'>      <span class="n">fill_in</span>  <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">title</span>
+</span><span class='line'>      <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">mark_complete</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">within</span> <span class="s2">&quot;li:contains(&#39;</span><span class="si">#{</span><span class="n">title</span><span class="si">}</span><span class="s2">&#39;)&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">click_on</span> <span class="s1">&#39;Mission completed&#39;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">has_mission_with_title?</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">mission_list</span><span class="o">.</span><span class="n">has_css?</span> <span class="s1">&#39;li&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">has_completed_mission_with_title?</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">mission_list</span><span class="o">.</span><span class="n">has_css?</span> <span class="s1">&#39;li.completed&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kp">private</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">mission_list</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">find</span><span class="p">(</span><span class="s1">&#39;ul.missions&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What you see is plain old Ruby object—Page Objects are in essence very simple classes really. Normally you don’t instantiate Page Objects with data and you create mostly a language via the API that a user or a non-technical stakeholder on a team might use. When you think about naming your methods, I think its good advice to ask yourself the question: How would a user describe the flow?</p>
+
+<p>Btw, <strong>spec/support/features/pages</strong> is a solid place to store your Page Objects. I should also probably add that without including Capybara the music stops pretty fast.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="kp">include</span> <span class="no">Capybara</span><span class="o">::</span><span class="no">DSL</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Overall, you aim to hide away the Capybara specifics—like finding elements, clicking links etc—you need for your tests so that you can focus on the functionality and less on the actual structure of the markup which is now encapsulated in a Page Object—the DOM structure should be the least of your concerns when you test something as high-level as feature specs.</p>
+
+<p>You probably wonder how these custom matchers work:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">has_completed_mission_with_title?</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">has_mission_with_title?</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_completed_mission_with_title</span>
+</span><span class='line'><span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_mission_with_title</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>RSpec generates these custom matchers based on predicate methods on your Page Objects. RSpec converts them by removing the <strong>?</strong> and changes <strong>has</strong> to <strong>have</strong>. Boom, matchers from scratch without much fuzz! A bit magic, I’ll give you that, but the good kind of wizardry I’d say.</p>
+
+<h3>Attention!</h3>
+
+<p>Setup stuff like factory data belongs in the specs and not in Page Objects. Also assertions are probably better placed outside of your Page Objects to achieve a separation of concerns. There are two differnt perspectives on the topic:</p>
+
+<p>Advocates for putting assertions into Page Objects say it helps with duplication of assertions. You can provide better error messages and achieve a better “Tell, Don’t Ask” style. On the other hand, advocates for assertion-free Page Objects argue that its better to not mix responsibilities. Providing access to page data and assertion logic are two separate concerns and lead to bloated Page Objects when mixed. Page Object’s responsibility is access to the state of pages and assertion logic belongs to specs.</p>
+
+<ul>
+<li><h3>When &amp; Why?</h3></li>
+</ul>
+
+
+<p>Its a good idea to apply this design pattern a little bit later in a project’s life cycle—when you have amassed a little bit of complexity in your feature specs and when you can identify repeating patterns like DOM structures or other commonalities that are consistent on your pages. So you maybe you shouldn’t start writing Page Objects right away. You approach these refactorings gradually when the complexity and size of your application and their tests grow. Duplication that need a better home through Page Objects will be easier to spot over time.</p>
+
+<p>Page Objects provide you the opportunity to write clearer specs that read better and are overall a lot more expressive because they are more high-level. Besides that, they offer a nice abstraction for everybody who likes to write OO code. They hide the specifics of the DOM and also enable you to have private methods that do the dirty work while being unexposed to the public API. Extracted methods in your feature specs don’t offer the same luxury. The API of Page Objects don’t need to share the nitty-gritty Capybare details</p>
+
+<p>There is also the scenario when design implementations change. Your description of how your app should work doesn’t need to change when you use Page Objects because your feature specs are more focused with user level interactions and not so much about the specifics of the DOM implementations. Since change is inevitable, Page Objects become critical when applications grow and also aid the understanding when the sheer size of the application means drastically increased complexity.</p>
+
+<ul>
+<li><h3>Page Objects Types</h3></li>
+</ul>
+
+
+<p><strong>Components</strong> represent the smallest units and are more focused—like a form object for example.</p>
+
+<p><strong>Pages</strong> combine more of these components and are abstractions of a full page.</p>
+
+<p>And you guessed it by now, <strong>experiences</strong> span the whole flow across potentially many different pages. They are more high-level. The focus on the flow the user experiences while they interact with various pages. A checkout flow which has a couple of steps is a good example to illustrate this idea.</p>
+
+<ul>
+<li><h3>Refactoing</h3></li>
+</ul>
+
+
+<p>You identify commonalities, like a structure in your markup that is consistent within your pages. Something like a <ul><li> for example. This is unlikely to change and easy to reuse in your tests. Forms are another common example. Through these refactorings your Page Objects become the canonical place to centralize the elements and behaviour sets that you need. And you specify the flow in one place too.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-10-26T04:29:10+01:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>4:29 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/octopress_drafts_previewer/blog/categories/bdd/'>bdd</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/factory-girl/'>factory girl</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/rails/'>rails</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/rspec/'>rspec</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/ruby/'>ruby</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/tdd/'>tdd</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/test-driven-design/'>test-driven-design</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/thoughtbot/'>thoughtbot</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/26/Page-Objects/" data-via="" data-counturl="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/26/Page-Objects/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/octopress_drafts_previewer/blog/2015/10/20/Factory-Girl-Guide-02/" title="Previous Post: Factory Girl 201">&laquo; Factory Girl 201</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/octopress_drafts_previewer/blog/2015/10/26/Page-Objects/">Page Objects for Capybara Connoisseurs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/octopress_drafts_previewer/blog/2015/10/20/Factory-Girl-Guide-02/">Factory Girl 201</a>
+      </li>
+    
+      <li class="post">
+        <a href="/octopress_drafts_previewer/blog/2015/10/12/Factory-Girl-Guide-01/">Factory Girl 101</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
