@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tdd | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/tdd/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-10-31T20:15:05+01:00</updated>
+  <updated>2015-10-31T22:34:01+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -397,8 +397,6 @@ narcissistic_villain.motivation
 
 <p>The example above turns out to be a bit more DRY since there was no need to create separate factories for supervillains that want to save the world or are friends with Blofeld repectively. Transient attributes give you the flexibility to make all kinds of adjustments and avoid creating a host of ever so similar factories.</p>
 
-<p>!!! Section about callbacks using transient attributes</p>
-
 <ul>
 <li><h3>Lazy attributes</h3></li>
 </ul>
@@ -432,7 +430,7 @@ ticking_device.time_of_explosion
 
 <p>Probably not a use case you’ll run into everyday but sometimes you inherit factories from other developers and you want to change them—in case you are using a TDD’d gem for example. If you feel the need to tweak these legacy factories to better fit your specific test scenarios you can modify them without creating new ones or using inheritance.</p>
 
-<p>You do this via <strong>FactoryGirl.modify</strong> and it needs to be outside of that particular <strong>FactoryGirl.define</strong> block that you want to change. What you can’t do is modify <strong>sequence</strong> or <strong>trait</strong>—you can override attributes defined in via <strong>trait</strong> though. Callbacks on the “original” factory also won’t be overridden. The callback in your <strong>Factory.modify</strong> block will just be run as next in line.</p>
+<p>You do this via <strong>FactoryGirl.modify</strong> and it needs to be outside of that particular <strong>FactoryGirl.define</strong> block that you want to change. What you can’t do is modify <strong>sequence</strong> or <strong>trait</strong>—you can override attributes defined via <strong>trait</strong> though. Callbacks on the “original” factory also won’t be overridden. The callback in your <strong>Factory.modify</strong> block will just be run as next in line.</p>
 
 <pre><code class="ruby">FactoryGirl.define do
   factory :spy do
@@ -500,7 +498,7 @@ end
 end
 </code></pre>
 
-<p>Here a <strong>Ninja</strong> has a bunch of nasty throwing stars (shuriken) at his disposal. Since you have a ninja object in the callback you can easily assign the throwing star to belong to the Ninja. Take a peek at the section about <em>associations</em> if that example leaves you with a couple of question marks.</p>
+<p>Below a <strong>Ninja</strong> has a bunch of nasty throwing stars (shuriken) at his disposal. Since you have a <strong>ninja</strong> object in the callback you can easily assign the throwing star to belong to the Ninja. Take a peek at the section about <em>associations</em> if that example leaves you with a couple of question marks.</p>
 
 <pre><code class="ruby">FactoryGirl.define do
 
@@ -599,7 +597,7 @@ end
 end
 </code></pre>
 
-<h4>Attention!</h4>
+<h3>Attention!</h3>
 
 <p>If you use inheritance to compose child factories the callbacks on the parent will be inherited as well.</p>
 
@@ -619,7 +617,8 @@ end
 <pre><code class="ruby">FactoryGirl.define do
 
   factory :quartermaster do
-    name 'Q'
+    name   'Q'
+    skills 'Inventing stuff'
   end
 
   factory :computer do
@@ -630,7 +629,7 @@ end
 end
 </code></pre>
 
-<p>What about something a bit more involved? Let’s say our spies use a <strong>gun</strong> that has_many <strong>cartridge(s)</strong> (bullets).</p>
+<p>What about something a bit more involved? Let’s say our spies use a <strong>gun</strong> that has_many <strong>cartridges</strong> (bullets).</p>
 
 <pre><code class="ruby">class Cartridge &lt; ActiveRecord::Base 
   belongs_to :gun 
@@ -680,12 +679,13 @@ spy_gun_with_ammo.cartridges.length # =&gt; 10
 big_magazine_gun.cartridges.length # =&gt; 20
 </code></pre>
 
-<p>So what about the different build strategies? Wasn’t there something fishy? Well, here’s what you need to remember: If you use <strong>create</strong> for associated objects both of them will be saved. So <strong>create(:quartermaster)</strong> will build and save both Q and his Thinkpad. I better use <strong>build</strong> then if I want to avoid hitting the database? Good idea but <strong>build</strong> would only apply to <strong>quartermaster</strong> in our example—the associated <strong>computer</strong> would still get saved. A bit tricky I know. Here’s what you can do if you need to avoid saving the associated object—you specify the build strategy you need for your association.</p>
+<p>So what about the different build strategies? Wasn’t there something fishy? Well, here’s what you need to remember: If you use <strong>create</strong> for associated objects both of them will be saved. So <strong>create(:quartermaster)</strong> will build and save both Q and his Thinkpad. I better use <strong>build</strong> then if I want to avoid hitting the database right? Good idea but <strong>build</strong> would only apply to <strong>quartermaster</strong> in our example—the associated <strong>computer</strong> would still get saved. A bit tricky I know. Here’s what you can do if you need to avoid saving the associated object—you specify the build strategy you need for your association.</p>
 
 <pre><code class="ruby">FactoryGirl.define do
 
   factory :quartermaster do
-    name 'Q'
+    name   'Q'
+    skills 'Inventing stuff'
   end
 
   factory :computer do
@@ -706,9 +706,10 @@ end
 
 <p>Now both objects use <strong>build</strong> and nothing gets saved to the database. We can check that assumption by using <strong>new_record?</strong> which returns <strong>true</strong> if the instance hasn’t been persisted.</p>
 
-<pre><code class="ruby">q = build(:quartermaster)
-q.new_record? # =&gt; true
-q.computer.new_record? # =&gt; true
+<pre><code class="ruby">thinkpad = build(:computer)
+
+thinkpad.new_record?               # =&gt; true
+thinkpad.quartermaster.new_record? # =&gt; true
 </code></pre>
 
 <p>While we’re at it, via the explicit <strong>association</strong> call you can also refer to different factory names and change attributes on the fly.</p>
@@ -838,7 +839,7 @@ end
 
 <p>You could write this a bit different as well—a lot more verbose.</p>
 
-<pre><code class="ruby">factory :agent do
+<pre><code class="ruby">factory :agent, aliases: [:mulder] do
   name   'Fox Mulder'
   job    'Chasing bad dudes'
   special_skills 'Investigation and intelligence'
@@ -853,6 +854,12 @@ end
 
 <p>Well, not that neat isn’t it?</p>
 
+<p>Of course you can use these aliases also to “build” factory objects right away.</p>
+
+<pre><code class="ruby">fbi_agent = create(:mulder)
+fbi_agent.name # =&gt; 'Fox Mulder'
+</code></pre>
+
 <p>In the context of comments, a <strong>:user</strong> could be referred to as <strong>:commenter</strong>, in the case of a <strong>:crime</strong> a <strong>:user</strong> could be aliased as a <strong>:suspect</strong> and so on. Its no rocket science really—more like convenient syntactic sugar that decreases your temptation for duplication.</p>
 
 <ul>
@@ -860,7 +867,7 @@ end
 </ul>
 
 
-<p>This is one of my favorite things about Factory Girl. In a nutshell, traits are lego-like blocks to build your factories and mix in behaviour. They are comma separated lists of symbol traits / attributes that you wanna add-on to a particular factory and they are also defined in your factories file(s). In my mind, <strong>trait</strong> is the most powerful and convenient function to keep your factory data DRY and expressive at the same time. It allows you to bundle groups of attributes together, give them separate names and reuse them wherever you please. Remember when I urged you to define barebones factory objects? Traits will help you achieve exactly that without sacrificing any conveniences.</p>
+<p>This is one of my favorite things about Factory Girl. In a nutshell, traits are lego-like blocks to build your factories and mix in behaviour. They are comma separated lists of symbol traits / attributes that you wanna add-on to a particular factory and they are also defined in your factories file(s). In my mind, <strong>trait</strong> is the most powerful and convenient function to keep your factory data DRY while being expressive at the same time. It allows you to bundle groups of attributes together, give them separate names and reuse them wherever you please. Remember when I urged you to define barebones factory objects? Traits will help you achieve exactly that without sacrificing any conveniences.</p>
 
 <pre><code class="ruby">FactoryGirl.define do
 
@@ -900,7 +907,7 @@ end
 end
 </code></pre>
 
-<p>As you can see, if you want to change some attributes that are now spread over multiple objects, you can do that now in one central place. No shotgun surgery necessary. Managing state via traits couldn’t be more convenient. With that setup you can build pretty elaborate spy cars by mixing the various attribute bundles however you like—without duplicating anything via creating all sorts of new factories that account for all the various options you need.</p>
+<p>As you can see, if you want to change some attributes that are spread over multiple objects, you can do that now in one central place. No shotgun surgery necessary. Managing state via traits couldn’t be more convenient. With that setup you can build pretty elaborate spy cars by mixing the various attribute bundles however you like—without duplicating anything via creating all sorts of new factories that account for all the various options you need.</p>
 
 <pre><code class="ruby">invisible_spy_car = create(:spy_car, :cloaked, :night_vision)
 diving_spy_car    = create(:spy_car, :submarine, :cloaked)
@@ -1001,8 +1008,6 @@ create(:spy_car, :cloaked, :night_vision, :submarine, :weaponized)
   factory :ultimate_spy_car, parent: :spy_car do
     car_plane true
     submarine
-    cloaked
-    night_vision
     weaponized
     mobile_surveillance
   end
@@ -1093,14 +1098,14 @@ golden_gun_with_golden_ammo.cartridges.first.projectile # =&gt; 'Gold'
 golden_gun_with_golden_ammo.cartridges.first.caliber    # =&gt; '7.65'
 </code></pre>
 
-<p>Last words of wisdom: Change is your constant companion—needing to change attributes or data types happens all the time. Design decisions like these evolve. Traits will ease the pain with that and helps you manage your data sets. Imagine if you’d have used an options hash for instantiation and that requirement totally changed. How many potential places in your tests might break and will now need attention? Straight up, <strong>trait</strong> is a very effective tool for eliminating duplication in your test suite. But with all that convenience, don’t be lazy and forget your unit tests on the columns that are represented by your traits! That way you give them the same amount of care as the barebones attributes needed for valid objects.</p>
-
 <ul>
 <li><h3>Final Thoughts</h3></li>
 </ul>
 
 
-<p>There is a bit more to discover in FactoryGirl and I’m confident you are now more than well equipped to to put the pieces together when you need them. Have fun playing with this gem. I hope your TDD habits will benefit from it.</p>
+<p>Last words of wisdom: Change is your constant companion—needing to change attributes or data types happens all the time. Design decisions like these evolve. Traits will ease the pain with that and helps you manage your data sets. Imagine if you’d have used an options hash for instantiation and that requirement totally changed. How many potential places in your tests might break and will now need attention? Straight up, <strong>trait</strong> is a very effective tool for eliminating duplication in your test suite. But with all that convenience, don’t be lazy and forget your unit tests on the columns that are represented by your traits! That way you give them the same amount of care as the barebones attributes needed for valid objects.</p>
+
+<p>There is a bit more to discover in FactoryGirl and I’m confident you are now more than well equipped to put the pieces together when you need them. Have fun playing with this gem. I hope your TDD habits will benefit from it.</p>
 ]]></content>
   </entry>
   
