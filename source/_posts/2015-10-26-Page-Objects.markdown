@@ -113,7 +113,7 @@ require 'rails_helper'
 
 feature 'M creates mission' do
   scenario 'successfully' do
-    sign_in_as 'M'
+    sign_in_as 'M@mi6.com'
     
     create_classified_mission title: 'Project Moonraker'
 
@@ -142,7 +142,7 @@ require 'rails_helper'
 
 feature 'Agent completes mission' do
   scenario 'successfully' do
-    sign_in_as 'M'
+    sign_in_as 'M@mi6.com'
     
     create_classified_mission title: 'Project Moonraker'
 
@@ -178,7 +178,7 @@ require 'rails_helper'
 
 feature 'M creates mission' do
   scenario 'successfully' do
-    sign_in_as 'M'
+    sign_in_as 'M@mi6.com'
     mission_page = Pages::Missions.new
 
     mission_page.create_classified_mission title: 'Project Moonraker'
@@ -195,7 +195,7 @@ require 'rails_helper'
 
 feature 'Agent completes mission' do
   scenario 'successfully' do
-    sign_in_as 'M'
+    sign_in_as 'M@mi6.com'
     mission_page = Pages::Missions.new
 
     mission_page.create_classified_mission title: 'Project Moonraker'
@@ -248,9 +248,24 @@ What you see is plain old Ruby object—Page Objects are in essence very simple 
 
 Btw, **spec/support/features/pages** is a solid place to store your Page Objects. I should also probably add that without including Capybara the music stops pretty fast.
 
-
 ``` ruby
 include Capybara::DSL
+```
+
+Also, I extracted the **sign_in_as** method into a module at **spec/support/sign_in_helper.rb** and told RSpec to include that module. This has nothing to do with Page Objects, but its a makes more sense to store functionality like sign in more globally accessible than via Page Objects.
+
+``` ruby
+module SignInHelper
+  def sign_in_as(email)
+    visit root_path
+    fill_in 'Email', with: email
+    click_on 'Submit'
+	end
+end
+
+RSpec.configure do |config|
+  config.include SignInHelper
+end
 ```
 
 Overall, you aim to hide away the Capybara specifics—like finding elements, clicking links etc—you need for your tests so that you can focus on the functionality and less on the actual structure of the markup which is now encapsulated in a Page Object—the DOM structure should be the least of your concerns when you test something as high-level as feature specs.
@@ -275,35 +290,11 @@ expect(page).to have_mission_with_title
 
 RSpec generates these custom matchers based on predicate methods on your Page Objects. RSpec converts them by removing the **?** and changes **has** to **have**. Boom, matchers from scratch without much fuzz! A bit magic, I’ll give you that, but the good kind of wizardry I’d say.
 
-
-
-
-
-
-
-
 ### Attention!
 
 Setup stuff like factory data belongs in the specs and not in Page Objects. Also assertions are probably better placed outside of your Page Objects to achieve a separation of concerns. There are two differnt perspectives on the topic:
 
 Advocates for putting assertions into Page Objects say it helps with duplication of assertions. You can provide better error messages and achieve a better “Tell, Don’t Ask” style. On the other hand, advocates for assertion-free Page Objects argue that its better to not mix responsibilities. Providing access to page data and assertion logic are two separate concerns and lead to bloated Page Objects when mixed. Page Object’s responsibility is access to the state of pages and assertion logic belongs to specs.
-
-
-
-
-
-
-
-
-
-
-+ ### When & Why?
-
-Its a good idea to apply this design pattern a little bit later in a project’s life cycle—when you have amassed a little bit of complexity in your feature specs and when you can identify repeating patterns like DOM structures or other commonalities that are consistent on your pages. So you maybe you shouldn’t start writing Page Objects right away. You approach these refactorings gradually when the complexity and size of your application and their tests grow. Duplication that need a better home through Page Objects will be easier to spot over time.
-
-Page Objects provide you the opportunity to write clearer specs that read better and are overall a lot more expressive because they are more high-level. Besides that, they offer a nice abstraction for everybody who likes to write OO code. They hide the specifics of the DOM and also enable you to have private methods that do the dirty work while being unexposed to the public API. Extracted methods in your feature specs don’t offer the same luxury. The API of Page Objects don’t need to share the nitty-gritty Capybare details
-
-There is also the scenario when design implementations change. Your description of how your app should work doesn’t need to change when you use Page Objects because your feature specs are more focused with user level interactions and not so much about the specifics of the DOM implementations. Since change is inevitable, Page Objects become critical when applications grow and also aid the understanding when the sheer size of the application means drastically increased complexity.
 
 + ### Page Objects Types
 
@@ -312,6 +303,14 @@ There is also the scenario when design implementations change. Your description 
 **Pages** combine more of these components and are abstractions of a full page.
 
 And you guessed it by now, **experiences** span the whole flow across potentially many different pages. They are more high-level. The focus on the flow the user experiences while they interact with various pages. A checkout flow which has a couple of steps is a good example to illustrate this idea.
+
++ ### When & Why?
+
+Its a good idea to apply this design pattern a little bit later in a project’s life cycle—when you have amassed a little bit of complexity in your feature specs and when you can identify repeating patterns like DOM structures or other commonalities that are consistent on your pages. So you maybe you shouldn’t start writing Page Objects right away. You approach these refactorings gradually when the complexity and size of your application and their tests grow. Duplication that need a better home through Page Objects will be easier to spot over time.
+
+Page Objects provide you the opportunity to write clearer specs that read better and are overall a lot more expressive because they are more high-level. Besides that, they offer a nice abstraction for everybody who likes to write OO code. They hide the specifics of the DOM and also enable you to have private methods that do the dirty work while being unexposed to the public API. Extracted methods in your feature specs don’t offer the same luxury. The API of Page Objects don’t need to share the nitty-gritty Capybare details
+
+There is also the scenario when design implementations change. Your description of how your app should work doesn’t need to change when you use Page Objects because your feature specs are more focused with user level interactions and not so much about the specifics of the DOM implementations. Since change is inevitable, Page Objects become critical when applications grow and also aid the understanding when the sheer size of the application means drastically increased complexity.
 
 + ### Refactoing
 
