@@ -24,26 +24,30 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 + ### What are Page Objects?
 
-I’ll give you the short answer first. Its a design pattern to encapsulate markup and page interactions. They offer you to write high-level feature specs that are very expressive and DRY. You might ask, aren’t specs written with Capybara already high-level and expressive? Sure, for a developer who write codes on a daily basis, Capybara specs read just fine.
+I’ll give you the short answer first. Its a design pattern to encapsulate markup and page interactions—specifially to refactor your feature specs. They offer you to write high-level feature specs that are very expressive and DRY. In a way they are acceptance tests with application language. You might ask, aren’t specs written with Capybara already high-level and expressive? Sure, for a developer who write codes on a daily basis, Capybara specs read just fine. Are the DRY out of the box? Certainly not!
 
 ``` ruby
 feature 'M assigns a mission' do
   scenario 'they see the foobar on the page' do
     visit new_mission_path
 
-    fill_in 'Name',  with: 'Secret mission name'
+    fill_in 'Name',  with: 'Top Secret Mission'
     fill_in 'Agent', with: 'James Bond'
     click_button 'Create Mission'
 
-    expect(page).to have_css '.mission-name', 'Secret mission name'
+    expect(page).to have_css 'li.mission-name', 'Top Secret Mission'
   end
 end
 ```
 
-When you look at this example of such a feature spec, where do you see opportunities to make this read better and how could you extract information to avoid duplication? Also, is this high-level enough for easy modeling of user stories and for non-technical stakeholders to understand? In my mind, there are a couple of ways to improve this and to make everybody happy—developers who can avoid fiddling with the details of interacting with the DOM while applying OOP and other team members having no trouble jumping between user stories and these tests.
+When you look at this example of such a feature spec, where do you see opportunities to make this read better and how could you extract information to avoid duplication? Also, is this high-level enough for easy modeling of user stories and for non-technical stakeholders to understand? In my mind, there are a couple of ways to improve this and to make everybody happy—developers who can avoid fiddling with the details of interacting with the DOM while applying OOP and other non-coding team members having no trouble jumping between user stories and these tests. The last point is nice to have for sure, but the most important benefits come mostly from making your DOM-interacting specs more robust.
 
-Encapsulation is the key concept with Page Objects. When you write your feature specs you benefit from a way to extract the behaviour that is driving through a test flow. For quality code you want to capture the interactions with particular sets of elements on your pages—especially if you stumble upon repeating patterns. As your application grows, you want / need a strategy to avoid spreading that logic all over your specs. There are many refactorings possible for your feature specs but Page Objects offer the cleanest abstractions for encapsulating user facing behaviour for pages or more complex flows. You don’t have to simulate the whole page(s) though—focus on the essential bits that are necessary for user flows. No need to overdo it!
+Encapsulation is the key concept with Page Objects. When you write your feature specs you’ll benefit from a strategy to extract the behaviour that is driving through a test flow. For quality code you want to capture the interactions with particular sets of elements on your pages—especially if you stumble upon repeating patterns. As your application grows, you want / need an approach that avoids spreading that logic all over your specs. 
 
+”Well isn’t that overkill? Capybara reads just fine!” you say? Ask yourself:
+Why wouldn’t you have all the HTML implementation details in one place while having more stable tests? Why shouldn’t UI interaction tests have the same quality as tests for application code? Do you really wanna stop there? Due to everyday changes, Capybara selectors introduce possible breakpoints. Let’s say a designer wants to change the text on a button. No biggie right, but do you want to adapt to that change in one central wrapper for that element in your specs or do you prefer to do that all over the place? I thought so!
+
+There are many refactorings possible for your feature specs but Page Objects offer the cleanest abstractions for encapsulating user facing behaviour for pages or more complex flows. You don’t have to simulate the whole page(s) though—focus on the essential bits that are necessary for user flows. No need to overdo it!
 
 // as opposed to spreading that logic across a lot of your specs -> DRY
 
@@ -82,8 +86,6 @@ HTML implementation details in one p lace.
 Tests are more stable
 
 UI interaction tests have now same quality as test for application code.
-
-Due to changes, Capybara selectors introduce breakpoints. Let’s say a designer wantes to change the text on a button. Do you want to make that change in cone central wrapper for that provides that element to your specs or do you prefer to do that all over the place? I thought so!
 
 
 + ### Acceptance Tests / Feature Specs
@@ -306,7 +308,7 @@ And you guessed it by now, **experiences** span the whole flow across potentiall
 
 + ### When & Why?
 
-Its a good idea to apply this design pattern a little bit later in a project’s life cycle—when you have amassed a little bit of complexity in your feature specs and when you can identify repeating patterns like DOM structures or other commonalities that are consistent on your pages. So you maybe you shouldn’t start writing Page Objects right away. You approach these refactorings gradually when the complexity and size of your application and their tests grow. Duplication that need a better home through Page Objects will be easier to spot over time.
+Its a good idea to apply this design pattern a little bit later in a project’s life cycle—when you have amassed a little bit of complexity in your feature specs and when you can identify repeating patterns like DOM structures or other commonalities that are consistent on your pages. So you maybe you shouldn’t start writing Page Objects right away. You approach these refactorings gradually when the complexity and size of your application / tests grow. Duplication that need a better home through Page Objects will be easier to spot over time. My recommendation is to start with extracting methods in your feature specs locally first. Once they’ll hit critical mass, they’ll look like obvious candidates for further extraction and most of them will probably fit the profile for Page Objects. Start small, premature optimization leaves nasty bite marks! 
 
 Page Objects provide you the opportunity to write clearer specs that read better and are overall a lot more expressive because they are more high-level. Besides that, they offer a nice abstraction for everybody who likes to write OO code. They hide the specifics of the DOM and also enable you to have private methods that do the dirty work while being unexposed to the public API. Extracted methods in your feature specs don’t offer the same luxury. The API of Page Objects don’t need to share the nitty-gritty Capybare details
 
