@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rspec | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/rspec/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-11-02T17:34:03+01:00</updated>
+  <updated>2015-11-02T18:12:59+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Page Objects for Capybara Connoisseurs]]></title>
+    <title type="html"><![CDATA[Ruby Page Objects for Capybara Connoisseurs]]></title>
     <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/26/Page-Objects/"/>
     <updated>2015-10-26T04:29:10+01:00</updated>
     <id>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/10/26/Page-Objects</id>
@@ -43,6 +43,7 @@
   scenario 'they see the foobar on the page' do
     visit new_mission_path
 
+    click_on 'Create Mission' 
     fill_in 'Name',  with: 'Top Secret Mission'
     fill_in 'Agent', with: 'James Bond'
     click_button 'Create Mission'
@@ -95,15 +96,15 @@ feature 'M creates mission' do
   scenario 'successfully' do
     sign_in_as 'M@mi6.com'
 
-    create_classified_mission title: 'Project Moonraker'
+    create_classified_mission 'Project Moonraker'
 
     expect(page).to have_css 'ul.missions', text: 'Project Moonraker'
   end
 
-  def create_classified_mission(title:)
+  def create_classified_mission(name)
     visit missions_path
     click_on 'Create Mission' 
-    fill_in  'Mission Name', with: title
+    fill_in  'Mission Name', with: name
     click_on 'Submit'
   end
 
@@ -123,7 +124,7 @@ feature 'Agent completes mission' do
   scenario 'successfully' do
     sign_in_as 'M@mi6.com'
 
-    create_classified_mission title: 'Project Moonraker'
+    create_classified_mission 'Project Moonraker'
 
     within "li:contains('Project Moonraker')" do
       click_on 'Mission completed'
@@ -132,10 +133,10 @@ feature 'Agent completes mission' do
     expect(page).to have_css 'ul.missions li.completed', text: 'Project Moonraker'
   end
 
-  def create_classified_mission(title:)
+  def create_classified_mission(name)
     visit missions_path
     click_on 'Create Mission' 
-    fill_in  'Mission Name', with: title
+    fill_in  'Mission Name', with: name
     click_on 'Submit'
   end
 
@@ -158,7 +159,7 @@ feature 'M creates mission' do
     sign_in_as 'M@mi6.com'
     mission_page = Pages::Missions.new
 
-    mission_page.create_classified_mission title: 'Project Moonraker'
+    mission_page.create_classified_mission 'Project Moonraker'
 
     expect(page).to have_mission_with_title 'Project Moonraker'
   end
@@ -190,23 +191,23 @@ end
   class Missions
     include Capybara::DSL
 
-    def create_classified_mission(title)
+    def create_classified_mission(name)
       visit missions_path
       click_on 'Create Mission' 
-      fill_in  'Mission Name', with: title
+      fill_in  'Mission Name', with: name
       click_on 'Submit'
     end
 
-    def mark_complete(title)
-      within "li:contains('#{title}')" do
+    def mark_complete(name)
+      within "li:contains('#{name}')" do
       click_on 'Mission completed'
     end
 
-    def has_mission_with_title?(title)
+    def has_mission_with_name?(name)
       mission_list.has_css? 'li', text: title
     end
 
-    def has_completed_mission_with_title?(title)
+    def has_completed_mission_with_name?(name)
       mission_list.has_css? 'li.completed', text: title
     end
   end
@@ -245,11 +246,11 @@ end
 
 <p>You probably wonder how these custom matchers work:</p>
 
-<pre><code class="ruby">def has_mission_with_title?(title)
+<pre><code class="ruby">def has_mission_with_name?(name)
   ...
 end
 
-def has_completed_mission_with_title?(title)
+def has_completed_mission_with_name?(name)
   ...
 end
 
