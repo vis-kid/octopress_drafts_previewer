@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Page Objects for Capybara Connoisseurs
+title: Ruby Page Objects for Capybara Connoisseurs
 date: 2015-10-26 04:29:10 +0100
 comments: true
 sharing: true
@@ -32,8 +32,9 @@ This technique offers you to write high-level feature specs that are very expres
 feature 'M assigns a mission' do
   scenario 'they see the foobar on the page' do
     visit new_mission_path
-
-    fill_in 'Name',  with: 'Top Secret Mission'
+    
+    click_on 'Create Mission' 
+    fill_in 'Mission Name',  with: 'Top Secret Mission'
     fill_in 'Agent', with: 'James Bond'
     click_button 'Create Mission'
 
@@ -80,15 +81,15 @@ feature 'M creates mission' do
   scenario 'successfully' do
     sign_in_as 'M@mi6.com'
     
-    create_classified_mission title: 'Project Moonraker'
+    create_classified_mission 'Project Moonraker'
 
     expect(page).to have_css 'ul.missions', text: 'Project Moonraker'
   end
 
-  def create_classified_mission(title:)
+  def create_classified_mission(mission_name)
     visit missions_path
     click_on 'Create Mission' 
-    fill_in  'Mission Name', with: title
+    fill_in  'Mission Name', with: mission_name
     click_on 'Submit'
   end
 
@@ -109,7 +110,7 @@ feature 'Agent completes mission' do
   scenario 'successfully' do
     sign_in_as 'M@mi6.com'
     
-    create_classified_mission title: 'Project Moonraker'
+    create_classified_mission 'Project Moonraker'
 
     within "li:contains('Project Moonraker')" do
       click_on 'Mission completed'
@@ -118,10 +119,10 @@ feature 'Agent completes mission' do
     expect(page).to have_css 'ul.missions li.completed', text: 'Project Moonraker'
   end
 
-  def create_classified_mission(title:)
+  def create_classified_mission(mission_name)
     visit missions_path
     click_on 'Create Mission' 
-    fill_in  'Mission Name', with: title
+    fill_in  'Mission Name', with: mission_name
     click_on 'Submit'
   end
 
@@ -146,7 +147,7 @@ feature 'M creates mission' do
     sign_in_as 'M@mi6.com'
     mission_page = Pages::Missions.new
 
-    mission_page.create_classified_mission title: 'Project Moonraker'
+    mission_page.create_classified_mission 'Project Moonraker'
 
     expect(page).to have_mission_with_title 'Project Moonraker'
   end
@@ -180,24 +181,24 @@ module Pages
   class Missions
     include Capybara::DSL
 
-    def create_classified_mission(title)
+    def create_classified_mission(mission_name)
       visit missions_path
       click_on 'Create Mission' 
-      fill_in  'Mission Name', with: title
+      fill_in  'Mission Name', with: mission_name
       click_on 'Submit'
     end
 
-    def mark_complete(title)
-      within "li:contains('#{title}')" do
+    def mark_complete(mission_name)
+      within "li:contains('#{mission_name}')" do
       click_on 'Mission completed'
     end
 
-    def has_mission_with_title?(title)
-      mission_list.has_css? 'li', text: title
+    def has_mission_with_name?(mission_name)
+      mission_list.has_css? 'li', text: mission_name
     end
 
-    def has_completed_mission_with_title?(title)
-      mission_list.has_css? 'li.completed', text: title
+    def has_completed_mission_with_name?(mission_name)
+      mission_list.has_css? 'li.completed', text: mission_name
     end
   end
 
@@ -241,17 +242,17 @@ Overall, its easy to see that we succeed with hiding away the Capybara specifics
 You probably wonder how these custom matchers work: 
 
 ``` ruby
-def has_mission_with_title?(title)
+def has_mission_with_name?(mission_name)
   ...
 end
 
-def has_completed_mission_with_title?(title)
+def has_completed_mission_with_name?(mission_name)
   ...
 end
 
 
-expect(page).to have_completed_mission_with_title
-expect(page).to have_mission_with_title
+expect(page).to have_mission_with_name
+expect(page).to have_completed_mission_with_name
 ```
 
 RSpec generates these custom matchers based on predicate methods on your Page Objects. RSpec converts them by removing the **?** and changes **has** to **have**. Boom, matchers from scratch without much fuzz! A bit magic, I’ll give you that, but the good kind of wizardry I’d say.
