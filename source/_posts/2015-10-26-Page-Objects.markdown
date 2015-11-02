@@ -24,7 +24,9 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 + ### What are Page Objects?
 
-I’ll give you the short answer first. Its a design pattern to encapsulate markup and page interactions—specifially to refactor your feature specs. They offer you to write high-level feature specs that are very expressive and DRY. In a way they are acceptance tests with application language. You might ask, aren’t specs written with Capybara already high-level and expressive? Sure, for a developer who write codes on a daily basis, Capybara specs read just fine. Are the DRY out of the box? Certainly not!
+I’ll give you the short answer first. Its a design pattern to encapsulate markup and page interactions—specifially to refactor your feature specs. Its a combination of a two very common refactoring techniques: *Extract class* and  *Extract method*—which don’t have to happen at the same time because you can gradually build up to extracting a whole class via a new Page Object. 
+
+This technique offers you to write high-level feature specs that are very expressive and DRY. In a way they are acceptance tests with application language. You might ask, aren’t specs written with Capybara already high-level and expressive? Sure, for a developers who write codes on a daily basis, Capybara specs read just fine. Are the DRY out of the box? Certainly not!
 
 ``` ruby
 feature 'M assigns a mission' do
@@ -49,52 +51,13 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 
 There are many refactorings possible for your feature specs but Page Objects offer the cleanest abstractions for encapsulating user facing behaviour for pages or more complex flows. You don’t have to simulate the whole page(s) though—focus on the essential bits that are necessary for user flows. No need to overdo it!
 
-// as opposed to spreading that logic across a lot of your specs -> DRY
-
-might describe the full page itself
-
-or multiple pages in sequences as you go through a flow
-
-
-Its a mixture of a couple of refactoring techniques: 
-Extract class
-Extract method
-
-They are even more high-level than Capybara feature specs
-
-Testing against web pages means the need to refer to DOM elements and interact with them. Doint this without Page Objects introduces duplication and brittle tests when the UI changes.
-
-You create an APi that is specific to your application and your feature spec needs. 
-
-That way you can play with Pages and their elements—all without fiddling around with DOM elements. -> You can emulate the human experience quite expressively.
-
-
-Its a good design principle to floww when complexity of your feature specs increase.
-
-Tests for client code become easier to understand.
-
-It promotes reuse
-centralizing UI elements and isolate impact of changes
-Expressive DSL
-
-A design pattern to refactor your feature specs
-
-Write acceptance tests with application language
-
-HTML implementation details in one p lace.
-
-Tests are more stable
-
-UI interaction tests have now same quality as test for application code.
-
-
 + ### Acceptance Tests / Feature Specs
 
 Before we move on to the heart of the matter, I’d like to take a step back for people new to the whole testing business and clear up some of the lingo that is important in this context. People more familiar with TDD won’t miss much if they skip ahead.
 
-What are we talking about here? Acceptance testing usually comes in at a later stage of projects to evaluate if you have been building something of value for your product owner, users or whatever stakeholder. These tests are usually run by customers or your users. Its sort of a check if the requirements are being met or not. There is something like a testing pyramid for all sorts of testing layers and acceptance tests are near the top. Because this process includes often non-technical folks, a high-level language for writing these tests is a valuable asset to communicate back and forth.
+What are we talking about here? Acceptance testing usually comes in at a later stage of projects to evaluate if you have been building something of value for your users, product owner, or whatever stakeholder. These tests are usually run by customers or your users. Its sort of a check if the requirements are being met or not. There is something like a pyramid for all sorts of testing layers and acceptance tests are near the very top. Because this process includes often non-technical folks, a high-level language for writing these tests is a valuable asset to communicate back and forth.
 
-Feature specs on the other hand, are a bit lower in the testing food chain. A lot more high-level than unit tests which focus on the technial details and business logic of your models, feature specs describe flows on and in between your pages. Tools like [Capybara](http://jnicklas.github.io/capybara/) help you to avoid to do this manually—meaning that you rarely have to open your browser to test stuff manually. Btw, you don’t use **get**, **put**, **post**, **delete** like with request specs. With these kinds of tests we like to automate these tasks as much as possible and test drive the interaction through the browser while writing assertions against pages.
+Feature specs on the other hand, are a bit lower in the testing food chain. A lot more high-level than unit tests which focus on the technial details and business logic of your models, feature specs describe flows on and in between your pages. Tools like [Capybara](http://jnicklas.github.io/capybara/) help you to avoid doing this manually—meaning that you rarely have to open your browser to test stuff manually. With these kinds of tests we like to automate these tasks as much as possible and test drive the interaction through the browser while writing assertions against pages. Btw, you don’t use **get**, **put**, **post** or **delete** like with request specs. 
 
 Feature specs are very similar to acceptance tests—sometimes I feel the differences are too blurry to really care about the terminology. You write tests that exercise your whole application which often involves a multi-step flow of user actions. These tests show if your components work in harmony when they are brought together. In Ruby land, they are the main protagonist when we’re dealing with Page Objects. Feature specs themselves are already very expressive but they can be optimized and cleaned up by extracting their data, behaviour and markup into separate classes. I felt clearing up this blurry terminology will help you see that having Page Objects is a bit like doing acceptance level testing while writing feature specs.
 
@@ -122,7 +85,7 @@ feature 'M creates mission' do
     expect(page).to have_css 'ul.missions', text: 'Project Moonraker'
   end
 
-  def create_classified_mission(title)
+  def create_classified_mission(title:)
     visit missions_path
     click_on 'Create Mission' 
     fill_in  'Mission Name', with: title
@@ -155,7 +118,7 @@ feature 'Agent completes mission' do
     expect(page).to have_css 'ul.missions li.completed', text: 'Project Moonraker'
   end
 
-  def create_classified_mission(title)
+  def create_classified_mission(title:)
     visit missions_path
     click_on 'Create Mission' 
     fill_in  'Mission Name', with: title
@@ -171,7 +134,7 @@ end
 ```
 
 
-Although there are ways of course to create helpers for stuff like **sign_in_as** and **create_classified_mission**, its easy to see how fast these things can start to suck. UI related specs often don’t get the OO treatment they need I think. They have the reputation of providing too little bang for the buck and of course developers are not most fond of times when they have to touch the markup much. In my mind, that makes it even more important to DRY these specs up and make it fun to deal with them by throwing in a couple of Ruby classes.
+Although there are other ways of course to deal with stuff like **sign_in_as** and **create_classified_mission**, its easy to see how fast these things can start to suck. UI related specs often don’t get the OO treatment they need I think. They have the reputation of providing too little bang for the buck and of course developers are not most fond of times when they have to touch the markup much. In my mind, that makes it even more important to DRY these specs up and make it fun to deal with them by throwing in a couple of Ruby classes.
 
 Let’s do a little magic trick where I hide the Page Objects implementation for now and only show you the end result applied to the feature specs above:
 
@@ -208,7 +171,7 @@ feature 'Agent completes mission' do
 end
 ```
 
-Doesn’t this read a whole lot better? You basically create expressive wrapper methods on your Page Objects that deal with high-level concepts—instead of fiddling everywhere with the intestines of your markup all the time. You basically extract methods that do this kind of dirty work into Page Objects. That way [**Shotgun surgery**](https://en.wikipedia.org/wiki/Shotgun_surgery) is not your problem anymore too. Put differently, you abstract away a lot of the noisy, down in the weeds code that deals with interacting with the DOM. 
+Doesn’t this read a whole lot better? You basically create expressive wrapper methods on your Page Objects that deal with high-level concepts—instead of fiddling everywhere with the intestines of your markup all the time. You basically extract methods that do this kind of dirty work and that way [**Shotgun surgery**](https://en.wikipedia.org/wiki/Shotgun_surgery) is not your problem anymore. Put differently, you abstract away a lot of the noisy, down in the weeds DOM interacting code. Let’s take a look at the implementation: 
 
 **specs/support/features/pages/missions.rb**
 
@@ -230,11 +193,11 @@ module Pages
     end
 
     def has_mission_with_title?(title)
-      mission_list.has_css? 'li', text: 'Project Moonraker' 
+      mission_list.has_css? 'li', text: title
     end
 
     def has_completed_mission_with_title?(title)
-      mission_list.has_css? 'li.completed', text: 'Project Moonraker'
+      mission_list.has_css? 'li.completed', text: title
     end
   end
 
@@ -246,7 +209,7 @@ module Pages
 end
 ```
 
-What you see is plain old Ruby object—Page Objects are in essence very simple classes really. Normally you don’t instantiate Page Objects with data and you create mostly a language via the API that a user or a non-technical stakeholder on a team might use. When you think about naming your methods, I think its good advice to ask yourself the question: How would a user describe the flow?
+What you see is plain old Ruby object—Page Objects are in essence very simple classes really. Normally you don’t instantiate Page Objects with data and you create mostly a language via the API that a user or a non-technical stakeholder on a team might use. When you think about naming your methods, I think its good advice to ask yourself the question: How would a user describe the flow or the action taken?
 
 Btw, **spec/support/features/pages** is a solid place to store your Page Objects. I should also probably add that without including Capybara the music stops pretty fast.
 
@@ -254,7 +217,7 @@ Btw, **spec/support/features/pages** is a solid place to store your Page Objects
 include Capybara::DSL
 ```
 
-Also, I extracted the **sign_in_as** method into a module at **spec/support/sign_in_helper.rb** and told RSpec to include that module. This has nothing to do with Page Objects, but its a makes more sense to store functionality like sign in more globally accessible than via Page Objects.
+If you’re curious what happened to the **sign_in_as** method, I extracted it into a module at **spec/support/sign_in_helper.rb** and told RSpec to include that module. This has nothing to do with Page Objects, but its a makes more sense to store functionality like sign in more globally accessible than via Page Objects.
 
 ``` ruby
 module SignInHelper
@@ -270,7 +233,7 @@ RSpec.configure do |config|
 end
 ```
 
-Overall, you aim to hide away the Capybara specifics—like finding elements, clicking links etc—you need for your tests so that you can focus on the functionality and less on the actual structure of the markup which is now encapsulated in a Page Object—the DOM structure should be the least of your concerns when you test something as high-level as feature specs.
+Overall, its easy to see that we succeed with hiding away the Capybara specifics—like finding elements, clicking links etc—you need for your tests so that you can focus on the functionality and less on the actual structure of the markup which is now encapsulated in a Page Object—the DOM structure should be the least of your concerns when you test something as high-level as feature specs.
 
 
 
@@ -278,13 +241,14 @@ Overall, you aim to hide away the Capybara specifics—like finding elements, cl
 You probably wonder how these custom matchers work: 
 
 ``` ruby
+def has_mission_with_title?(title)
+  ...
+end
+
 def has_completed_mission_with_title?(title)
   ...
 end
 
-def has_mission_with_title?(title)
-  ...
-end
 
 expect(page).to have_completed_mission_with_title
 expect(page).to have_mission_with_title
@@ -296,7 +260,7 @@ RSpec generates these custom matchers based on predicate methods on your Page Ob
 
 Setup stuff like factory data belongs in the specs and not in Page Objects. Also assertions are probably better placed outside of your Page Objects to achieve a separation of concerns. There are two differnt perspectives on the topic:
 
-Advocates for putting assertions into Page Objects say it helps with duplication of assertions. You can provide better error messages and achieve a better “Tell, Don’t Ask” style. On the other hand, advocates for assertion-free Page Objects argue that its better to not mix responsibilities. Providing access to page data and assertion logic are two separate concerns and lead to bloated Page Objects when mixed. Page Object’s responsibility is access to the state of pages and assertion logic belongs to specs.
+Advocates for putting assertions into Page Objects say it helps with avoiding duplication of assertions. You can provide better error messages and achieve a better “Tell, Don’t Ask” style. On the other hand, advocates for assertion-free Page Objects argue that its better to not mix responsibilities. Providing access to page data and assertion logic are two separate concerns and lead to bloated Page Objects when mixed. Page Object’s responsibility is access to the state of pages and assertion logic belongs to specs.
 
 + ### Page Objects Types
 
@@ -304,21 +268,14 @@ Advocates for putting assertions into Page Objects say it helps with duplication
 
 **Pages** combine more of these components and are abstractions of a full page.
 
-And you guessed it by now, **experiences** span the whole flow across potentially many different pages. They are more high-level. The focus on the flow the user experiences while they interact with various pages. A checkout flow which has a couple of steps is a good example to illustrate this idea.
+**Experiences**, as you guessed by now, span the whole flow across potentially many different pages. They are more high-level. They focus on the flow the user experiences while they interact with various pages. A checkout flow which has a couple of steps is a good example to think about this.
 
 + ### When & Why?
 
-Its a good idea to apply this design pattern a little bit later in a project’s life cycle—when you have amassed a little bit of complexity in your feature specs and when you can identify repeating patterns like DOM structures or other commonalities that are consistent on your pages. So you maybe you shouldn’t start writing Page Objects right away. You approach these refactorings gradually when the complexity and size of your application / tests grow. Duplication that need a better home through Page Objects will be easier to spot over time. My recommendation is to start with extracting methods in your feature specs locally first. Once they’ll hit critical mass, they’ll look like obvious candidates for further extraction and most of them will probably fit the profile for Page Objects. Start small, premature optimization leaves nasty bite marks! 
+Its a good idea to apply this design pattern a little bit later in a project’s life cycle—when you have amassed a little bit of complexity in your feature specs and when you can identify repeating patterns like DOM structures or other commonalities that are consistent on your pages. So you probably shouldn’t start writing Page Objects right away. You approach these refactorings gradually when the complexity and size of your application / tests grow. Duplications and refactorings that need a better home through Page Objects will be easier to spot over time. My recommendation is to start with extracting methods in your feature specs locally first. Once they’ll hit critical mass, they’ll look like obvious candidates for further extraction and most of them will probably fit the profile for Page Objects. Start small, premature optimization leaves nasty bite marks! 
+
++ ### Final Thoughts
 
 Page Objects provide you the opportunity to write clearer specs that read better and are overall a lot more expressive because they are more high-level. Besides that, they offer a nice abstraction for everybody who likes to write OO code. They hide the specifics of the DOM and also enable you to have private methods that do the dirty work while being unexposed to the public API. Extracted methods in your feature specs don’t offer the same luxury. The API of Page Objects don’t need to share the nitty-gritty Capybare details
 
-There is also the scenario when design implementations change. Your description of how your app should work doesn’t need to change when you use Page Objects because your feature specs are more focused with user level interactions and not so much about the specifics of the DOM implementations. Since change is inevitable, Page Objects become critical when applications grow and also aid the understanding when the sheer size of the application means drastically increased complexity.
-
-+ ### Refactoing
-
-You identify commonalities, like a structure in your markup that is consistent within your pages. Something like a <ul><li> for example. This is unlikely to change and easy to reuse in your tests. Forms are another common example. Through these refactorings your Page Objects become the canonical place to centralize the elements and behaviour sets that you need. And you specify the flow in one place too.
-
-
-
-
-
+For all the scenarios when design implementations change, your descriptions of how your app should work doesn’t need to change when you use Page Objects—your feature specs are more focused with user level interactions and don’t care so much about the specifics of the DOM implementations. Since change is inevitable, Page Objects become critical when applications grow and also aid the understanding when the sheer size of the application means drastically increased complexity.
