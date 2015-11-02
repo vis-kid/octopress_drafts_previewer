@@ -4,7 +4,7 @@
   <title><![CDATA[Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-11-02T18:12:59+01:00</updated>
+  <updated>2015-11-02T18:19:52+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -56,7 +56,7 @@
 </span><span class='line'>    <span class="n">visit</span> <span class="n">new_mission_path</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Create Mission&#39;</span>
-</span><span class='line'>    <span class="n">fill_in</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span>  <span class="ss">with</span><span class="p">:</span> <span class="s1">&#39;Top Secret Mission&#39;</span>
+</span><span class='line'>    <span class="n">fill_in</span> <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span>  <span class="ss">with</span><span class="p">:</span> <span class="s1">&#39;Top Secret Mission&#39;</span>
 </span><span class='line'>    <span class="n">fill_in</span> <span class="s1">&#39;Agent&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="s1">&#39;James Bond&#39;</span>
 </span><span class='line'>    <span class="n">click_button</span> <span class="s1">&#39;Create Mission&#39;</span>
 </span><span class='line'>
@@ -138,10 +138,10 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 </span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_css</span> <span class="s1">&#39;ul.missions&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">create_classified_mission</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create_classified_mission</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
 </span><span class='line'>    <span class="n">visit</span> <span class="n">missions_path</span>
 </span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Create Mission&#39;</span>
-</span><span class='line'>    <span class="n">fill_in</span>  <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="nb">name</span>
+</span><span class='line'>    <span class="n">fill_in</span>  <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">mission_name</span>
 </span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
@@ -199,10 +199,10 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 </span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_css</span> <span class="s1">&#39;ul.missions li.completed&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">create_classified_mission</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create_classified_mission</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
 </span><span class='line'>    <span class="n">visit</span> <span class="n">missions_path</span>
 </span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Create Mission&#39;</span>
-</span><span class='line'>    <span class="n">fill_in</span>  <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="nb">name</span>
+</span><span class='line'>    <span class="n">fill_in</span>  <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">mission_name</span>
 </span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
@@ -316,24 +316,24 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 </span><span class='line'>  <span class="k">class</span> <span class="nc">Missions</span>
 </span><span class='line'>    <span class="kp">include</span> <span class="no">Capybara</span><span class="o">::</span><span class="no">DSL</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">create_classified_mission</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">create_classified_mission</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
 </span><span class='line'>      <span class="n">visit</span> <span class="n">missions_path</span>
 </span><span class='line'>      <span class="n">click_on</span> <span class="s1">&#39;Create Mission&#39;</span>
-</span><span class='line'>      <span class="n">fill_in</span>  <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="nb">name</span>
+</span><span class='line'>      <span class="n">fill_in</span>  <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">mission_name</span>
 </span><span class='line'>      <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">mark_complete</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-</span><span class='line'>      <span class="n">within</span> <span class="s2">&quot;li:contains(&#39;</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">&#39;)&quot;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">mark_complete</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">within</span> <span class="s2">&quot;li:contains(&#39;</span><span class="si">#{</span><span class="n">mission_name</span><span class="si">}</span><span class="s2">&#39;)&quot;</span> <span class="k">do</span>
 </span><span class='line'>      <span class="n">click_on</span> <span class="s1">&#39;Mission completed&#39;</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">has_mission_with_name?</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-</span><span class='line'>      <span class="n">mission_list</span><span class="o">.</span><span class="n">has_css?</span> <span class="s1">&#39;li&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="n">title</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">has_mission_with_name?</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">mission_list</span><span class="o">.</span><span class="n">has_css?</span> <span class="s1">&#39;li&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="n">mission_name</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">has_completed_mission_with_name?</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-</span><span class='line'>      <span class="n">mission_list</span><span class="o">.</span><span class="n">has_css?</span> <span class="s1">&#39;li.completed&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="n">title</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">has_completed_mission_with_name?</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">mission_list</span><span class="o">.</span><span class="n">has_css?</span> <span class="s1">&#39;li.completed&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="n">mission_name</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
@@ -397,17 +397,17 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">has_mission_with_name?</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">has_mission_with_name?</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
 </span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">has_completed_mission_with_name?</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">has_completed_mission_with_name?</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
 </span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>
-</span><span class='line'><span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_completed_mission_with_title</span>
-</span><span class='line'><span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_mission_with_title</span>
+</span><span class='line'><span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_mission_with_name</span>
+</span><span class='line'><span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_completed_mission_with_name</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

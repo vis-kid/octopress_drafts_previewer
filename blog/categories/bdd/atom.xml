@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bdd | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/bdd/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-11-02T18:12:59+01:00</updated>
+  <updated>2015-11-02T18:19:52+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -44,7 +44,7 @@
     visit new_mission_path
 
     click_on 'Create Mission' 
-    fill_in 'Name',  with: 'Top Secret Mission'
+    fill_in 'Mission Name',  with: 'Top Secret Mission'
     fill_in 'Agent', with: 'James Bond'
     click_button 'Create Mission'
 
@@ -101,10 +101,10 @@ feature 'M creates mission' do
     expect(page).to have_css 'ul.missions', text: 'Project Moonraker'
   end
 
-  def create_classified_mission(name)
+  def create_classified_mission(mission_name)
     visit missions_path
     click_on 'Create Mission' 
-    fill_in  'Mission Name', with: name
+    fill_in  'Mission Name', with: mission_name
     click_on 'Submit'
   end
 
@@ -133,10 +133,10 @@ feature 'Agent completes mission' do
     expect(page).to have_css 'ul.missions li.completed', text: 'Project Moonraker'
   end
 
-  def create_classified_mission(name)
+  def create_classified_mission(mission_name)
     visit missions_path
     click_on 'Create Mission' 
-    fill_in  'Mission Name', with: name
+    fill_in  'Mission Name', with: mission_name
     click_on 'Submit'
   end
 
@@ -191,24 +191,24 @@ end
   class Missions
     include Capybara::DSL
 
-    def create_classified_mission(name)
+    def create_classified_mission(mission_name)
       visit missions_path
       click_on 'Create Mission' 
-      fill_in  'Mission Name', with: name
+      fill_in  'Mission Name', with: mission_name
       click_on 'Submit'
     end
 
-    def mark_complete(name)
-      within "li:contains('#{name}')" do
+    def mark_complete(mission_name)
+      within "li:contains('#{mission_name}')" do
       click_on 'Mission completed'
     end
 
-    def has_mission_with_name?(name)
-      mission_list.has_css? 'li', text: title
+    def has_mission_with_name?(mission_name)
+      mission_list.has_css? 'li', text: mission_name
     end
 
-    def has_completed_mission_with_name?(name)
-      mission_list.has_css? 'li.completed', text: title
+    def has_completed_mission_with_name?(mission_name)
+      mission_list.has_css? 'li.completed', text: mission_name
     end
   end
 
@@ -246,17 +246,17 @@ end
 
 <p>You probably wonder how these custom matchers work:</p>
 
-<pre><code class="ruby">def has_mission_with_name?(name)
+<pre><code class="ruby">def has_mission_with_name?(mission_name)
   ...
 end
 
-def has_completed_mission_with_name?(name)
+def has_completed_mission_with_name?(mission_name)
   ...
 end
 
 
-expect(page).to have_completed_mission_with_title
-expect(page).to have_mission_with_title
+expect(page).to have_mission_with_name
+expect(page).to have_completed_mission_with_name
 </code></pre>
 
 <p>RSpec generates these custom matchers based on predicate methods on your Page Objects. RSpec converts them by removing the <strong>?</strong> and changes <strong>has</strong> to <strong>have</strong>. Boom, matchers from scratch without much fuzz! A bit magic, I’ll give you that, but the good kind of wizardry I’d say.</p>
