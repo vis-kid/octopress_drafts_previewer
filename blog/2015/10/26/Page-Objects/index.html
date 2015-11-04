@@ -9,14 +9,12 @@
   <meta name="author" content="Your Name">
 
   
-  <meta name="description" content="Topics What are Page Objects
-When and why?
+  <meta name="description" content="Topics Acceptance test / feature specs
 Different type of Page Objects
-Acceptance test / feature specs
-Refactoring
+What are Page Objects
+When and why?
 How?
-Design Patterns?
-Tell-Don &hellip;">
+What are Page Objects? I’ll give you &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -96,14 +94,11 @@ Tell-Don &hellip;">
 <h3>Topics</h3>
 
 <ul>
+<li>Acceptance test / feature specs</li>
+<li>Different type of Page Objects</li>
 <li>What are Page Objects</li>
 <li>When and why?</li>
-<li>Different type of Page Objects</li>
-<li>Acceptance test / feature specs</li>
-<li>Refactoring</li>
-<li>How?</li>
-<li>Design Patterns?</li>
-<li><p>Tell-Don’t-Ask</p></li>
+<li><p>How?</p></li>
 <li><h3>What are Page Objects?</h3></li>
 </ul>
 
@@ -124,22 +119,59 @@ Tell-Don &hellip;">
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">feature</span> <span class="s1">&#39;M assigns a mission&#39;</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;they see the foobar on the page&#39;</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">visit</span> <span class="n">new_mission_path</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">feature</span> <span class="s1">&#39;M creates a mission&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;successully&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">sign_in_as</span> <span class="s1">&#39;M@mi6.com&#39;</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Create Mission&#39;</span>
-</span><span class='line'>    <span class="n">fill_in</span> <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span>  <span class="ss">with</span><span class="p">:</span> <span class="s1">&#39;Top Secret Mission&#39;</span>
-</span><span class='line'>    <span class="n">fill_in</span> <span class="s1">&#39;Agent&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="s1">&#39;James Bond&#39;</span>
-</span><span class='line'>    <span class="n">click_button</span> <span class="s1">&#39;Create Mission&#39;</span>
+</span><span class='line'>    <span class="n">visit</span> <span class="n">missions_path</span>
+</span><span class='line'>    <span class="n">click_on</span>     <span class="s1">&#39;Create Mission&#39;</span>
+</span><span class='line'>    <span class="n">fill_in</span>      <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span>  <span class="ss">with</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>    <span class="n">click_button</span> <span class="s1">&#39;Submit&#39;</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_css</span> <span class="s1">&#39;li.mission-name&#39;</span><span class="p">,</span> <span class="s1">&#39;Top Secret Mission&#39;</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_css</span> <span class="s1">&#39;li.mission-name&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>When you look at this example of such a feature spec, where do you see opportunities to make this read better and how could you extract information to avoid duplication? Also, is this high-level enough for easy modeling of user stories and for non-technical stakeholders to understand? In my mind, there are a couple of ways to improve this and to make everybody happy—developers who can avoid fiddling with the details of interacting with the DOM while applying OOP and other non-coding team members having no trouble jumping between user stories and these tests. The last point is nice to have for sure, but the most important benefits come mostly from making your DOM-interacting specs more robust.</p>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">feature</span> <span class="s1">&#39;M marks mission as complete&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;successfully&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">sign_in_as</span> <span class="s1">&#39;M@mi6.com&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">visit</span> <span class="n">missions_path</span>
+</span><span class='line'>    <span class="n">click_on</span>     <span class="s1">&#39;Create Mission&#39;</span>
+</span><span class='line'>    <span class="n">fill_in</span>      <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="s1">&#39;Octopussy&#39;</span>
+</span><span class='line'>    <span class="n">click_button</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">within</span> <span class="s2">&quot;li:contains(&#39;Octopussy&#39;)&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">click_on</span> <span class="s1">&#39;Mission completed&#39;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_css</span> <span class="s1">&#39;ul.missions li.mission-name.completed&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="s1">&#39;Octopussy&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When you look at these examples of such feature specs, where do you see opportunities to make this read better and how could you extract information to avoid duplication? Also, is this high-level enough for easy modeling of user stories and for non-technical stakeholders to understand? In my mind, there are a couple of ways to improve this and to make everybody happy—developers who can avoid fiddling with the details of interacting with the DOM while applying OOP and other non-coding team members having no trouble jumping between user stories and these tests. The last point is nice to have for sure, but the most important benefits come mostly from making your DOM-interacting specs more robust.</p>
 
 <p>Encapsulation is the key concept with Page Objects. When you write your feature specs you’ll benefit from a strategy to extract the behaviour that is driving through a test flow. For quality code you want to capture the interactions with particular sets of elements on your pages—especially if you stumble upon repeating patterns. As your application grows, you want / need an approach that avoids spreading that logic all over your specs.</p>
 
@@ -159,7 +191,7 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 
 <p>Feature specs on the other hand, are a bit lower in the testing food chain. A lot more high-level than unit tests which focus on the technial details and business logic of your models, feature specs describe flows on and in between your pages. Tools like <a href="http://jnicklas.github.io/capybara/">Capybara</a> help you to avoid doing this manually—meaning that you rarely have to open your browser to test stuff manually. With these kinds of tests we like to automate these tasks as much as possible and test drive the interaction through the browser while writing assertions against pages. Btw, you don’t use <strong>get</strong>, <strong>put</strong>, <strong>post</strong> or <strong>delete</strong> like with request specs.</p>
 
-<p>Feature specs are very similar to acceptance tests—sometimes I feel the differences are too blurry to really care about the terminology. You write tests that exercise your whole application which often involves a multi-step flow of user actions. These tests show if your components work in harmony when they are brought together. In Ruby land, they are the main protagonist when we’re dealing with Page Objects. Feature specs themselves are already very expressive but they can be optimized and cleaned up by extracting their data, behaviour and markup into separate classes. I felt clearing up this blurry terminology will help you see that having Page Objects is a bit like doing acceptance level testing while writing feature specs.</p>
+<p>Feature specs are very similar to acceptance tests—sometimes I feel the differences are too blurry to really care about the terminology. You write tests that exercise your whole application which often involves a multi-step flow of user actions. These interaction tests show if your components work in harmony when they are brought together. In Ruby land, they are the main protagonist when we’re dealing with Page Objects. Feature specs themselves are already very expressive but they can be optimized and cleaned up by extracting their data, behaviour and markup into separate classes. I felt clearing up this blurry terminology will help you see that having Page Objects is a bit like doing acceptance level testing while writing feature specs.</p>
 
 <h3>Capybara</h3>
 
@@ -172,7 +204,7 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 </ul>
 
 
-<p>Let’s look at a simple example of a feature spec that lets M create classified missions that can be completed. In the markup, you have a list of missions and a successful completion creates an addtional <strong>li</strong> with the class <strong>completed</strong>. Straightforward stuff right?</p>
+<p>Let’s look at a simple example of a feature spec that lets M create classified missions which can be completed. In the markup, you have a list of missions and a successful completion creates an addtional <strong>li</strong> with the class <strong>completed</strong>. Straightforward stuff right? As a first approach, I started with small, very common refactorings that extract common behaviour into methods.</p>
 
 <p><strong>spec/features/m_creates_a_mission_spec.rb</strong></p>
 
@@ -200,28 +232,36 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 <span class='line-number'>22</span>
 <span class='line-number'>23</span>
 <span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">feature</span> <span class="s1">&#39;M creates mission&#39;</span> <span class="k">do</span>
 </span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;successfully&#39;</span> <span class="k">do</span>
 </span><span class='line'>    <span class="n">sign_in_as</span> <span class="s1">&#39;M@mi6.com&#39;</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">create_classified_mission</span> <span class="s1">&#39;Project Moonraker&#39;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_css</span> <span class="s1">&#39;ul.missions&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>    <span class="n">create_classified_mission_named</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>      
+</span><span class='line'>    <span class="n">agent_sees_mission</span>              <span class="s1">&#39;Project Moonraker&#39;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">create_classified_mission</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create_classified_mission_named</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
 </span><span class='line'>    <span class="n">visit</span> <span class="n">missions_path</span>
-</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Create Mission&#39;</span>
-</span><span class='line'>    <span class="n">fill_in</span>  <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">mission_name</span>
-</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>    <span class="n">click_on</span>     <span class="s1">&#39;Create Mission&#39;</span>
+</span><span class='line'>    <span class="n">fill_in</span>      <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">mission_name</span>
+</span><span class='line'>    <span class="n">click_button</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">agent_sees_mission</span><span class="p">(</span><span class="n">mission_mame</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_css</span> <span class="s1">&#39;li.mission-name&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="n">mission_name</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">def</span> <span class="nf">sign_in_as</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
 </span><span class='line'>    <span class="n">visit</span> <span class="n">root_path</span>
-</span><span class='line'>    <span class="n">fill_in</span>  <span class="s1">&#39;Email&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">email</span>
-</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>    <span class="n">fill_in</span>      <span class="s1">&#39;Email&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">email</span>
+</span><span class='line'>    <span class="n">click_button</span> <span class="s1">&#39;Submit&#39;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -257,40 +297,56 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 <span class='line-number'>26</span>
 <span class='line-number'>27</span>
 <span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">feature</span> <span class="s1">&#39;Agent completes mission&#39;</span> <span class="k">do</span>
+</span><span class='line'><span class="n">feature</span> <span class="s1">&#39;M marks mission as complete&#39;</span> <span class="k">do</span>
 </span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;successfully&#39;</span> <span class="k">do</span>
 </span><span class='line'>    <span class="n">sign_in_as</span> <span class="s1">&#39;M@mi6.com&#39;</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">create_classified_mission</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>    <span class="n">create_classified_mission_named</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>    <span class="n">mark_mission_as_complete</span>        <span class="s1">&#39;Project Moonraker&#39;</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">within</span> <span class="s2">&quot;li:contains(&#39;Project Moonraker&#39;)&quot;</span> <span class="k">do</span>
-</span><span class='line'>      <span class="n">click_on</span> <span class="s1">&#39;Mission completed&#39;</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_css</span> <span class="s1">&#39;ul.missions li.completed&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>    <span class="n">agent_sees_completed_mission</span>    <span class="s1">&#39;Project Moonraker&#39;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">create_classified_mission</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create_classified_mission_named</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
 </span><span class='line'>    <span class="n">visit</span> <span class="n">missions_path</span>
-</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Create Mission&#39;</span>
-</span><span class='line'>    <span class="n">fill_in</span>  <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">mission_name</span>
-</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>    <span class="n">click_on</span>     <span class="s1">&#39;Create Mission&#39;</span>
+</span><span class='line'>    <span class="n">fill_in</span>      <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">mission_name</span>
+</span><span class='line'>    <span class="n">click_button</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">mark_mission_as_complete</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">within</span> <span class="s2">&quot;li:contains(&#39;</span><span class="si">#{</span><span class="n">mission_name</span><span class="si">}</span><span class="s2">&#39;)&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">click_on</span> <span class="s1">&#39;Mission completed&#39;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">agent_sees_completed_mission</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_css</span> <span class="s1">&#39;ul.missions li.mission-name.completed&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="n">mission_name</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">def</span> <span class="nf">sign_in_as</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
 </span><span class='line'>    <span class="n">visit</span> <span class="n">root_path</span>
-</span><span class='line'>    <span class="n">fill_in</span>  <span class="s1">&#39;Email&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">email</span>
-</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>    <span class="n">fill_in</span>      <span class="s1">&#39;Email&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">email</span>
+</span><span class='line'>    <span class="n">click_button</span> <span class="s1">&#39;Submit&#39;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Although there are other ways of course to deal with stuff like <strong>sign_in_as</strong> and <strong>create_classified_mission</strong>, its easy to see how fast these things can start to suck. UI related specs often don’t get the OO treatment they need I think. They have the reputation of providing too little bang for the buck and of course developers are not most fond of times when they have to touch the markup much. In my mind, that makes it even more important to DRY these specs up and make it fun to deal with them by throwing in a couple of Ruby classes.</p>
+<p>Although there are other ways of course to deal with stuff like <strong>sign_in_as</strong> and <strong>create_classified_mission_named</strong>, its easy to see how fast these things can start to suck and to pile up. UI related specs often don’t get the OO treatment they need I think. They have the reputation of providing too little bang for the buck and of course developers are not most fond of times when they have to touch the markup much. In my mind, that makes it even more important to DRY these specs up and make it fun to deal with them by throwing in a couple of Ruby classes.</p>
 
 <p>Let’s do a little magic trick where I hide the Page Objects implementation for now and only show you the end result applied to the feature specs above:</p>
+
+<p><strong>spec/features/m_creates_a_mission_spec.rb</strong></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -304,16 +360,18 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
+<span class='line-number'>13</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">feature</span> <span class="s1">&#39;M creates mission&#39;</span> <span class="k">do</span>
 </span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;successfully&#39;</span> <span class="k">do</span>
 </span><span class='line'>    <span class="n">sign_in_as</span> <span class="s1">&#39;M@mi6.com&#39;</span>
+</span><span class='line'>    <span class="n">visit</span> <span class="n">missions_path</span>
 </span><span class='line'>    <span class="n">mission_page</span> <span class="o">=</span> <span class="no">Pages</span><span class="o">::</span><span class="no">Missions</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>      
+</span><span class='line'>    <span class="n">mission_page</span><span class="o">.</span><span class="n">create_classified_mission_named</span> <span class="s1">&#39;Project Moonraker&#39;</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">mission_page</span><span class="o">.</span><span class="n">create_classified_mission</span> <span class="s1">&#39;Project Moonraker&#39;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_mission_with_title</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">mission_page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_mission_named</span>   <span class="s1">&#39;Project Moonraker&#39;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -334,23 +392,25 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
+<span class='line-number'>14</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">feature</span> <span class="s1">&#39;Agent completes mission&#39;</span> <span class="k">do</span>
+</span><span class='line'><span class="n">feature</span> <span class="s1">&#39;M marks mission as complete&#39;</span> <span class="k">do</span>
 </span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;successfully&#39;</span> <span class="k">do</span>
 </span><span class='line'>    <span class="n">sign_in_as</span> <span class="s1">&#39;M@mi6.com&#39;</span>
+</span><span class='line'>    <span class="n">visit</span> <span class="n">missions_path</span>
 </span><span class='line'>    <span class="n">mission_page</span> <span class="o">=</span> <span class="no">Pages</span><span class="o">::</span><span class="no">Missions</span><span class="o">.</span><span class="n">new</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">mission_page</span><span class="o">.</span><span class="n">create_classified_mission</span> <span class="ss">title</span><span class="p">:</span> <span class="s1">&#39;Project Moonraker&#39;</span>
-</span><span class='line'>    <span class="n">mission_page</span><span class="o">.</span><span class="n">mark_complete</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>    <span class="n">mission_page</span><span class="o">.</span><span class="n">create_classified_mission_named</span>         <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>    <span class="n">mission_page</span><span class="o">.</span><span class="n">mark_mission_as_complete</span>                <span class="s1">&#39;Project Moonraker&#39;</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_completed_mission_with_title</span> <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">mission_page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_completed_mission_named</span> <span class="s1">&#39;Project Moonraker&#39;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Doesn’t this read a whole lot better? You basically create expressive wrapper methods on your Page Objects that deal with high-level concepts—instead of fiddling everywhere with the intestines of your markup all the time. You basically extract methods that do this kind of dirty work and that way <a href="https://en.wikipedia.org/wiki/Shotgun_surgery"><strong>Shotgun surgery</strong></a> is not your problem anymore. Put differently, you abstract away a lot of the noisy, down in the weeds DOM interacting code. Let’s take a look at the implementation:</p>
+<p>Doesn’t read too bad huh? You basically create expressive wrapper methods on your Page Objects that let you deal with high-level concepts—instead of fiddling everywhere with the intestines of your markup all the time. Your extracted methods that do this kind of dirty work and that way <a href="https://en.wikipedia.org/wiki/Shotgun_surgery"><strong>Shotgun surgery</strong></a> is not your problem anymore. Put differently, you encapsulate most of the noisy, down in the weeds DOM interacting code. Gotta say though, sometimes intelligently extracted methods in your feature specs are sufficient and read a bit better since you can avoid dealing with Page Object instances. Anyway, let’s take a look at the implementation:</p>
 
 <p><strong>specs/support/features/pages/missions.rb</strong></p>
 
@@ -389,73 +449,37 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 </span><span class='line'>  <span class="k">class</span> <span class="nc">Missions</span>
 </span><span class='line'>    <span class="kp">include</span> <span class="no">Capybara</span><span class="o">::</span><span class="no">DSL</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">create_classified_mission</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
-</span><span class='line'>      <span class="n">visit</span> <span class="n">missions_path</span>
-</span><span class='line'>      <span class="n">click_on</span> <span class="s1">&#39;Create Mission&#39;</span>
-</span><span class='line'>      <span class="n">fill_in</span>  <span class="s1">&#39;Mission Name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">mission_name</span>
-</span><span class='line'>      <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">create_classified_mission_named</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">click_on</span>     <span class="s1">&#39;Create Mission&#39;</span>
+</span><span class='line'>      <span class="n">fill_in</span>      <span class="s1">&#39;Mission name&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">mission_name</span>
+</span><span class='line'>      <span class="n">click_button</span> <span class="s1">&#39;Submit&#39;</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">mark_complete</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">mark_mission_as_complete</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
 </span><span class='line'>      <span class="n">within</span> <span class="s2">&quot;li:contains(&#39;</span><span class="si">#{</span><span class="n">mission_name</span><span class="si">}</span><span class="s2">&#39;)&quot;</span> <span class="k">do</span>
-</span><span class='line'>      <span class="n">click_on</span> <span class="s1">&#39;Mission completed&#39;</span>
+</span><span class='line'>        <span class="n">click_on</span> <span class="s1">&#39;Mission completed&#39;</span>
+</span><span class='line'>      <span class="k">end</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">has_mission_with_name?</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">has_mission_named?</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
 </span><span class='line'>      <span class="n">mission_list</span><span class="o">.</span><span class="n">has_css?</span> <span class="s1">&#39;li&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="n">mission_name</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">has_completed_mission_with_name?</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
-</span><span class='line'>      <span class="n">mission_list</span><span class="o">.</span><span class="n">has_css?</span> <span class="s1">&#39;li.completed&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="n">mission_name</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">has_completed_mission_named?</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">mission_list</span><span class="o">.</span><span class="n">has_css?</span> <span class="s1">&#39;li.mission-name.completed&#39;</span><span class="p">,</span> <span class="ss">text</span><span class="p">:</span> <span class="n">mission_name</span>
 </span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="kp">private</span>
+</span><span class='line'>    <span class="kp">private</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">mission_list</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">find</span><span class="p">(</span><span class="s1">&#39;ul.missions&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">mission_list</span>
+</span><span class='line'>      <span class="n">find</span><span class="p">(</span><span class="s1">&#39;ul.missions&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>What you see is plain old Ruby object—Page Objects are in essence very simple classes really. Normally you don’t instantiate Page Objects with data and you create mostly a language via the API that a user or a non-technical stakeholder on a team might use. When you think about naming your methods, I think its good advice to ask yourself the question: How would a user describe the flow or the action taken?</p>
-
-<p>Btw, <strong>spec/support/features/pages</strong> is a solid place to store your Page Objects. I should also probably add that without including Capybara the music stops pretty fast.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="kp">include</span> <span class="no">Capybara</span><span class="o">::</span><span class="no">DSL</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you’re curious what happened to the <strong>sign_in_as</strong> method, I extracted it into a module at <strong>spec/support/sign_in_helper.rb</strong> and told RSpec to include that module. This has nothing to do with Page Objects, but its a makes more sense to store functionality like sign in more globally accessible than via Page Objects.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">SignInHelper</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">sign_in_as</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">visit</span> <span class="n">root_path</span>
-</span><span class='line'>    <span class="n">fill_in</span> <span class="s1">&#39;Email&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">email</span>
-</span><span class='line'>    <span class="n">click_on</span> <span class="s1">&#39;Submit&#39;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
-</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">include</span> <span class="no">SignInHelper</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Overall, its easy to see that we succeed with hiding away the Capybara specifics—like finding elements, clicking links etc—you need for your tests so that you can focus on the functionality and less on the actual structure of the markup which is now encapsulated in a Page Object—the DOM structure should be the least of your concerns when you test something as high-level as feature specs.</p>
 
 <p>You probably wonder how these custom matchers work:</p>
 
@@ -470,21 +494,81 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">has_mission_with_name?</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">has_mission_named?</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
 </span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">has_completed_mission_with_name?</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">has_completed_mission_named?</span><span class="p">(</span><span class="n">mission_name</span><span class="p">)</span>
 </span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>
-</span><span class='line'><span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_mission_with_name</span>
-</span><span class='line'><span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_completed_mission_with_name</span>
+</span><span class='line'><span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_mission_named</span>           <span class="s1">&#39;Project Moonraker&#39;</span>
+</span><span class='line'><span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_completed_mission_named</span> <span class="s1">&#39;Project Moonraker&#39;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>RSpec generates these custom matchers based on predicate methods on your Page Objects. RSpec converts them by removing the <strong>?</strong> and changes <strong>has</strong> to <strong>have</strong>. Boom, matchers from scratch without much fuzz! A bit magic, I’ll give you that, but the good kind of wizardry I’d say.</p>
+
+<p>Since you parked your Page Object at <strong>specs/support/features/pages/missions.rb</strong> you also need to make sure that the following is not commented out in <strong>spec/rails_helper.rb</strong>. If you run into a <strong>NameError</strong> with an <strong>uninitialized constant Pages</strong> you’ll know what to do.</p>
+
+<p><strong>spec/rails_helper.rb</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Dir</span><span class="o">[</span><span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;spec/support/**/*.rb&#39;</span><span class="p">)</span><span class="o">].</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="nb">require</span> <span class="n">f</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I should also probably add that without including Capybara the music stops pretty fast.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="kp">include</span> <span class="no">Capybara</span><span class="o">::</span><span class="no">DSL</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you’re curious what happened to the <strong>sign_in_as</strong> method, I extracted it into a module at <strong>spec/support/sign_in_helper.rb</strong> and told RSpec to include that module. This has nothing to do with Page Objects directly, it just makes more sense to store functionality like sign in more globally accessible than via a Page Object.</p>
+
+<p><strong>spec/support/sign_in_helper.rb</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">SignInHelper</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">sign_in_as</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">visit</span> <span class="n">root_path</span>
+</span><span class='line'>    <span class="n">fill_in</span>      <span class="s1">&#39;Email&#39;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="n">email</span>
+</span><span class='line'>    <span class="n">click_button</span> <span class="s1">&#39;Submit&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And you need to let RSpec know that you want access to this helper module:</p>
+
+<p><strong>spec/spec_helper.rb</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;support/sign_in_helper&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">include</span> <span class="no">SignInHelper</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Overall, its easy to see that we succeeded in hiding away the Capybara specifics—like finding elements, clicking links etc. We can now focus on the functionality and less on the actual structure of the markup which is now encapsulated in a Page Object—the DOM structure should be the least of your concerns when you test something as high-level as feature specs.</p>
 
 <h3>Attention!</h3>
 
