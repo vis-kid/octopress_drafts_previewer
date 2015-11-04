@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Test-driven-design | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/test-driven-design/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-11-04T02:30:56+01:00</updated>
+  <updated>2015-11-04T15:16:29+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -24,7 +24,7 @@
 
 <ul>
 <li>Acceptance test / feature specs</li>
-<li>Different type of Page Objects</li>
+<li>Different types of Page Objects</li>
 <li>What are Page Objects</li>
 <li>When and why?</li>
 <li><p>How?</p></li>
@@ -32,9 +32,9 @@
 </ul>
 
 
-<p>I’ll give you the short answer first. Its a design pattern to encapsulate markup and page interactions—specifially to refactor your feature specs. Its a combination of a two very common refactoring techniques: <em>Extract class</em> and  <em>Extract method</em>—which don’t have to happen at the same time because you can gradually build up to extracting a whole class via a new Page Object.</p>
+<p>I’ll give you the short pitch first. Its a design pattern to encapsulate markup and page interactions—specifically to refactor your feature specs. Its a combination of a two very common refactoring techniques: <em>Extract class</em> and  <em>Extract method</em>—which don’t have to happen at the same time because you can gradually build up to extracting a whole class via a new Page Object.</p>
 
-<p>This technique offers you to write high-level feature specs that are very expressive and DRY. In a way they are acceptance tests with application language. You might ask, aren’t specs written with Capybara already high-level and expressive? Sure, for a developers who write codes on a daily basis, Capybara specs read just fine. Are the DRY out of the box? Certainly not!</p>
+<p>This technique offers you to write high-level feature specs that are very expressive and DRY. In a way they are acceptance tests with application language. You might ask, aren’t specs written with Capybara already high-level and expressive? Sure, for developers who write code on a daily basis, Capybara specs read just fine. Are the DRY out of the box? Not really—actually, certainly not!</p>
 
 <pre><code class="ruby">feature 'M creates a mission' do
   scenario 'successully' do
@@ -68,12 +68,12 @@ end
 end
 </code></pre>
 
-<p>When you look at these examples of such feature specs, where do you see opportunities to make this read better and how could you extract information to avoid duplication? Also, is this high-level enough for easy modeling of user stories and for non-technical stakeholders to understand? In my mind, there are a couple of ways to improve this and to make everybody happy—developers who can avoid fiddling with the details of interacting with the DOM while applying OOP and other non-coding team members having no trouble jumping between user stories and these tests. The last point is nice to have for sure, but the most important benefits come mostly from making your DOM-interacting specs more robust.</p>
+<p>When you look at these examples of feature specs, where do you see opportunities to make this read better and how could you extract information to avoid duplication? Also, is this high-level enough for easy modeling of user stories and for non-technical stakeholders to understand? In my mind, there are a couple of ways to improve this and to make everybody happy—developers who can avoid fiddling with the details of interacting with the DOM while applying OOP and other non-coding team members having no trouble jumping between user stories and these tests. The last point is nice to have for sure, but the most important benefits come mostly from making your DOM-interacting specs more robust.</p>
 
 <p>Encapsulation is the key concept with Page Objects. When you write your feature specs you’ll benefit from a strategy to extract the behaviour that is driving through a test flow. For quality code you want to capture the interactions with particular sets of elements on your pages—especially if you stumble upon repeating patterns. As your application grows, you want / need an approach that avoids spreading that logic all over your specs.</p>
 
 <p>”Well isn’t that overkill? Capybara reads just fine!” you say? Ask yourself:
-Why wouldn’t you have all the HTML implementation details in one place while having more stable tests? Why shouldn’t UI interaction tests have the same quality as tests for application code? Do you really wanna stop there? Due to everyday changes, Capybara selectors introduce possible breakpoints. Let’s say a designer wants to change the text on a button. No biggie right, but do you want to adapt to that change in one central wrapper for that element in your specs or do you prefer to do that all over the place? I thought so!</p>
+Why wouldn’t you have all the HTML implementation details in one place while having more stable tests? Why shouldn’t UI interaction tests have the same quality as tests for application code? Do you really wanna stop there? Due to everyday changes, your Capybara code is vulnerable when spread all over—it introduces possible breakpoints. Let’s say a designer wants to change the text on a button. No biggie right, but do you want to adapt to that change in one central wrapper for that element in your specs or do you prefer to do that all over the place? I thought so!</p>
 
 <p>There are many refactorings possible for your feature specs but Page Objects offer the cleanest abstractions for encapsulating user facing behaviour for pages or more complex flows. You don’t have to simulate the whole page(s) though—focus on the essential bits that are necessary for user flows. No need to overdo it!</p>
 
@@ -88,20 +88,20 @@ Why wouldn’t you have all the HTML implementation details in one place while h
 
 <p>Feature specs on the other hand, are a bit lower in the testing food chain. A lot more high-level than unit tests which focus on the technial details and business logic of your models, feature specs describe flows on and in between your pages. Tools like <a href="http://jnicklas.github.io/capybara/">Capybara</a> help you to avoid doing this manually—meaning that you rarely have to open your browser to test stuff manually. With these kinds of tests we like to automate these tasks as much as possible and test drive the interaction through the browser while writing assertions against pages. Btw, you don’t use <strong>get</strong>, <strong>put</strong>, <strong>post</strong> or <strong>delete</strong> like with request specs.</p>
 
-<p>Feature specs are very similar to acceptance tests—sometimes I feel the differences are too blurry to really care about the terminology. You write tests that exercise your whole application which often involves a multi-step flow of user actions. These interaction tests show if your components work in harmony when they are brought together. In Ruby land, they are the main protagonist when we’re dealing with Page Objects. Feature specs themselves are already very expressive but they can be optimized and cleaned up by extracting their data, behaviour and markup into separate classes. I felt clearing up this blurry terminology will help you see that having Page Objects is a bit like doing acceptance level testing while writing feature specs.</p>
+<p>Feature specs are very similar to acceptance tests—sometimes I feel the differences are too blurry to really care about the terminology. You write tests that exercise your whole application which often involves a multi-step flow of user actions. These interaction tests show if your components work in harmony when they are brought together. In Ruby land, they are the main protagonist when we’re dealing with Page Objects. Feature specs themselves are already very expressive but they can be optimized and cleaned up by extracting their data, behaviour and markup into (a) separate classe(s). I felt clearing up this blurry terminology will help you see that having Page Objects is a bit like doing acceptance level testing while writing feature specs.</p>
 
 <h3>Capybara</h3>
 
-<p>Maybe we should go over this really quickly as well. This library describes itself as an “Acceptance test framework for web applications”. You can simulate user interactions with your pages via a very powerful and convenient domain-specific language. In my personal opinion, RSpec paired with Capybara offers atm the best way to write your feature specs. It lets you visit pages, fill in forms, click on links and buttons, look for markup on your pages and you are able to easily combine all kinds of these commands to interact with your pages.</p>
+<p>Maybe we should go over this really quickly as well. This library describes itself as an “Acceptance test framework for web applications”. You can simulate user interactions with your pages via a very powerful and convenient domain-specific language. In my personal opinion, RSpec paired with Capybara offers atm the best way to write your feature specs. It lets you visit pages, fill in forms, click on links and buttons, look for markup on your pages and you are able to easily combine all kinds of these commands to interact with your pages through your tests.</p>
 
-<p>You basically can avoid opening the browser yourself to test this stuff manually most of the time—which is not only less elegant but also a lot more time consuming and error-prone. Without this tool, the process of “Outside-in-testing”–you drive your code from high-level tests down into your unit-level tests—would be a lot more painful and possibly therefore more neglected. In other words you start writing these feature tests which are based on your user stories and from there you go down the rabbit whole until your unit tests provide the coverage you need. After that, when your tests are green of course, the game starts anew and you go back up to continue with a fresh feature test.</p>
+<p>You basically can avoid opening the browser yourself to test this stuff manually most of the time—which is not only less elegant but also a lot more time consuming and error-prone. Without this tool, the process of “Outside-in-testing”–you drive your code from high-level tests down into your unit-level tests—would be a lot more painful and possibly therefore more neglected. In other words you start writing these feature tests which are based on your user stories and from there you go down the rabbit whole until your unit tests provide the coverage your feature specs needed. After that, when your tests are green of course, the game starts anew and you go back up to continue with a fresh feature test.</p>
 
 <ul>
 <li><h3>How?</h3></li>
 </ul>
 
 
-<p>Let’s look at a simple example of a feature spec that lets M create classified missions which can be completed. In the markup, you have a list of missions and a successful completion creates an addtional <strong>li</strong> with the class <strong>completed</strong>. Straightforward stuff right? As a first approach, I started with small, very common refactorings that extract common behaviour into methods.</p>
+<p>Let’s look at two simple examples of feature specs that lets M create classified missions which can then be completed. In the markup, you have a list of missions and a successful completion creates an addtional class <strong>completed</strong> on the <strong>li</strong> of that particular mission. Straightforward stuff right? As a first approach, I started with small, very common refactorings that extract common behaviour into methods.</p>
 
 <p><strong>spec/features/m_creates_a_mission_spec.rb</strong></p>
 
@@ -174,9 +174,9 @@ feature 'M marks mission as complete' do
 end
 </code></pre>
 
-<p>Although there are other ways of course to deal with stuff like <strong>sign_in_as</strong> and <strong>create_classified_mission_named</strong>, its easy to see how fast these things can start to suck and to pile up. UI related specs often don’t get the OO treatment they need I think. They have the reputation of providing too little bang for the buck and of course developers are not most fond of times when they have to touch the markup much. In my mind, that makes it even more important to DRY these specs up and make it fun to deal with them by throwing in a couple of Ruby classes.</p>
+<p>Although there are other ways of course to deal with stuff like <strong>sign_in_as</strong>, <strong>create_classified_mission_named</strong> and so on, its easy to see how fast these things can start to suck and to pile up. UI related specs often don’t get the OO treatment they need / deserve I think. They have the reputation of providing too little bang for the buck and of course developers are not most fond of times when they have to touch markup stuff much. In my mind, that makes it even more important to DRY these specs up and make it fun to deal with them by throwing in a couple of Ruby classes.</p>
 
-<p>Let’s do a little magic trick where I hide the Page Objects implementation for now and only show you the end result applied to the feature specs above:</p>
+<p>Let’s do a little magic trick where I hide the Page Object’s implementation for now and only show you the end result applied to the feature specs above:</p>
 
 <p><strong>spec/features/m_creates_a_mission_spec.rb</strong></p>
 
@@ -213,7 +213,7 @@ feature 'M marks mission as complete' do
 end
 </code></pre>
 
-<p>Doesn’t read too bad huh? You basically create expressive wrapper methods on your Page Objects that let you deal with high-level concepts—instead of fiddling everywhere with the intestines of your markup all the time. Your extracted methods that do this kind of dirty work and that way <a href="https://en.wikipedia.org/wiki/Shotgun_surgery"><strong>Shotgun surgery</strong></a> is not your problem anymore. Put differently, you encapsulate most of the noisy, down in the weeds DOM interacting code. Gotta say though, sometimes intelligently extracted methods in your feature specs are sufficient and read a bit better since you can avoid dealing with Page Object instances. Anyway, let’s take a look at the implementation:</p>
+<p>Doesn’t read too bad huh? You basically create expressive wrapper methods on your Page Objects that let you deal with high-level concepts—instead of fiddling everywhere with the intestines of your markup all the time. Your extracted methods do this kind of dirty work now and that way <a href="https://en.wikipedia.org/wiki/Shotgun_surgery"><strong>Shotgun surgery</strong></a> is not your problem anymore. Put differently, you encapsulate most of the noisy, down in the weeds DOM interacting code. Gotta say though, sometimes intelligently extracted methods in your feature specs are sufficient and read a bit better since you can avoid dealing with Page Object instances. Anyway, let’s take a look at the implementation:</p>
 
 <p><strong>specs/support/features/pages/missions.rb</strong></p>
 
@@ -250,38 +250,37 @@ end
 end
 </code></pre>
 
-<p>What you see is plain old Ruby object—Page Objects are in essence very simple classes really. Normally you don’t instantiate Page Objects with data and you create mostly a language via the API that a user or a non-technical stakeholder on a team might use. When you think about naming your methods, I think its good advice to ask yourself the question: How would a user describe the flow or the action taken?</p>
+<p>What you see is a plain old Ruby object—Page Objects are in essence very simple classes really. Normally you don’t instantiate Page Objects with data (when the need occurs you can of course) and you create mostly a language via the API that a user or a non-technical stakeholder on a team might use. When you think about naming your methods, I think its good advice to ask yourself the question: How would a user describe the flow or the action taken?</p>
+
+<p>I should maybe add that without including Capybara the music stops pretty fast.</p>
+
+<pre><code class="ruby">include Capybara::DSL
+</code></pre>
 
 <p>You probably wonder how these custom matchers work:</p>
 
-<pre><code class="ruby">def has_mission_named?(mission_name)
+<pre><code class="ruby">expect(page).to have_mission_named           'Project Moonraker'
+expect(page).to have_completed_mission_named 'Project Moonraker'
+
+def has_mission_named?(mission_name)
   ...
 end
 
 def has_completed_mission_named?(mission_name)
   ...
 end
-
-
-expect(page).to have_mission_named           'Project Moonraker'
-expect(page).to have_completed_mission_named 'Project Moonraker'
 </code></pre>
 
 <p>RSpec generates these custom matchers based on predicate methods on your Page Objects. RSpec converts them by removing the <strong>?</strong> and changes <strong>has</strong> to <strong>have</strong>. Boom, matchers from scratch without much fuzz! A bit magic, I’ll give you that, but the good kind of wizardry I’d say.</p>
 
-<p>Since you parked your Page Object at <strong>specs/support/features/pages/missions.rb</strong> you also need to make sure that the following is not commented out in <strong>spec/rails_helper.rb</strong>. If you run into a <strong>NameError</strong> with an <strong>uninitialized constant Pages</strong> you’ll know what to do.</p>
-
-<p><strong>spec/rails_helper.rb</strong></p>
+<p>Since we parked our Page Object at <strong>specs/support/features/pages/missions.rb</strong> you also need to make sure that the following is not commented out in <strong>spec/rails_helper.rb</strong>.</p>
 
 <pre><code class="ruby">Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 </code></pre>
 
-<p>I should also probably add that without including Capybara the music stops pretty fast.</p>
+<p>If you run into a <strong>NameError</strong> with an <strong>uninitialized constant Pages</strong> you’ll know what to do.</p>
 
-<pre><code class="ruby">include Capybara::DSL
-</code></pre>
-
-<p>If you’re curious what happened to the <strong>sign_in_as</strong> method, I extracted it into a module at <strong>spec/support/sign_in_helper.rb</strong> and told RSpec to include that module. This has nothing to do with Page Objects directly, it just makes more sense to store functionality like sign in more globally accessible than via a Page Object.</p>
+<p>If you’re curious what happened to the <strong>sign_in_as</strong> method, I extracted it into a module at <strong>spec/support/sign_in_helper.rb</strong> and told RSpec to include that module. This has nothing to do with Page Objects directly—it just makes more sense to store test functionality like <strong>sign in</strong> more globally accessible than via a Page Object.</p>
 
 <p><strong>spec/support/sign_in_helper.rb</strong></p>
 
@@ -331,14 +330,14 @@ end
 </ul>
 
 
-<p>Its a good idea to apply this design pattern a little bit later in a project’s life cycle—when you have amassed a little bit of complexity in your feature specs and when you can identify repeating patterns like DOM structures or other commonalities that are consistent on your pages. So you probably shouldn’t start writing Page Objects right away. You approach these refactorings gradually when the complexity and size of your application / tests grow. Duplications and refactorings that need a better home through Page Objects will be easier to spot over time. My recommendation is to start with extracting methods in your feature specs locally first. Once they’ll hit critical mass, they’ll look like obvious candidates for further extraction and most of them will probably fit the profile for Page Objects. Start small, premature optimization leaves nasty bite marks!</p>
+<p>Its a good idea to apply this design pattern a little bit later in a project’s life cycle—when you have amassed a little bit of complexity in your feature specs and when you can identify repeating patterns like DOM structures, extracted methods or other commonalities that are consistent on your pages. So you probably shouldn’t start writing Page Objects right away. You approach these refactorings gradually when the complexity and size of your application / tests grow. Duplications and refactorings that need a better home through Page Objects will be easier to spot over time. My recommendation is to start with extracting methods in your feature specs locally first. Once they’ll hit critical mass, they’ll look like obvious candidates for further extraction and most of them will probably fit the profile for Page Objects. Start small, premature optimization leaves nasty bite marks!</p>
 
 <ul>
 <li><h3>Final Thoughts</h3></li>
 </ul>
 
 
-<p>Page Objects provide you the opportunity to write clearer specs that read better and are overall a lot more expressive because they are more high-level. Besides that, they offer a nice abstraction for everybody who likes to write OO code. They hide the specifics of the DOM and also enable you to have private methods that do the dirty work while being unexposed to the public API. Extracted methods in your feature specs don’t offer the same luxury. The API of Page Objects don’t need to share the nitty-gritty Capybare details</p>
+<p>Page Objects provide you the opportunity to write clearer specs that read better and are overall a lot more expressive because they are more high-level. Besides that, they offer a nice abstraction for everybody who likes to write OO code. They hide the specifics of the DOM and also enable you to have private methods that do the dirty work while being unexposed to the public API. Extracted methods in your feature specs don’t offer quite the same luxury. The API of Page Objects don’t need to share the nitty-gritty Capybare details</p>
 
 <p>For all the scenarios when design implementations change, your descriptions of how your app should work doesn’t need to change when you use Page Objects—your feature specs are more focused with user level interactions and don’t care so much about the specifics of the DOM implementations. Since change is inevitable, Page Objects become critical when applications grow and also aid the understanding when the sheer size of the application means drastically increased complexity.</p>
 ]]></content>
