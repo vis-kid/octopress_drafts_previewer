@@ -29,3 +29,29 @@ Thankfully its not as complicated as dealing with the human body—and psyche of
 #### Resistance
 
 If the quality of your code makes the inclusion of new code harder—like deciding where to put new code is a pain or comes with a lot of ripple effects throughout your codebase for example—you’ll experience resistance from your existing code. As a guideline for code quality you can measure it always by how easy it is to introduce changes. If that is getting harder and harder its definitely time to refactor and to take the last part of *red-green-REFACTOR* more seriously.
+
++ ### Extract Class
+
+Let’s start with something fancy sounding—“God classes”—because I think they are particular easy to grasp for beginners. God classes are a special case of a code smell called **Large Class**. In this section I’ll address both of them. If you have spent a little bit of time in Rails land you probably have seen them so often that they look normal to you. 
+
+You surely remember the “fat models, skinny controller” mantra? Well actually, skinny is good for all these classes but as a guideline its good advice for newbies I suppose. God classes are objects that attract all sorts of knowledge and behaviour like a black hole. Your usual suspects most often include the User model and whatever your app is trying to solve first and foremost. A todo app might bulk up on the **Todos** model, a shopping app on **Products**, a photo app on **Photos**—you get the drift. People call these god classes because they know too much. They have too many connections with other classes—mostly because someone was lazy modeling them.
+
+
+The problem with them is that they become harder and harder to understand—especially for new team members—harder to change and reuse becomes less and less of an option the more gravity they amassed. Oh yeah, you’re right, your tests are unnecessarily harder to write as well. In short, there is not really an upside to having large classes and god classes in particular.
+
+There are a couple of common symptoms / signs that your class needs some surgery:
+
++ You need to scroll!
++ Tons of private methods?
++ Does your class have seven or more methods on it?
++ Hard to tell what your class really does—concisely!
++ Does your class have many reasons to change when your code evolves?
+
+Also, if you squint at your class and think “Eh? Ew!” you might be on to something too. If all that sounds familiar, chances are good that you found yourself a fine specimen.
+
+
+
+
+{% img /images/code_smells/code_smell_01.jpeg %}
+
+ —I’m not taking about a facial or a nose job but a less cosmetic procedure like a Gastric Bypass which makes you restrict the amount of food you can eat.
