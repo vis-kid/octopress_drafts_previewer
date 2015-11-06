@@ -1,0 +1,34 @@
+---
+layout: post
+title: Middleman Basics 01
+date: 2015-11-05 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Factory Girl]
+---
+
+{% img /images/middleman/Three_Stooges_1959.jpg %}
+
+### Topics
+
++ Middleman & Static Pages
++ Installation & Development Cycle
++ Configuration
++ A new Site
++ Structure
++ Build vs Deploy
++ Frontmatter
++ Templating
++ Helpers
++ Layouts
++ Partials
++ Extensions
+
++ ### Middleman & Static Pages
+
+What’s all the fuzz lately about static sites? Easy, they’re fast, pretty straightforward to set up and lightweight I’d say. Because you’re not serving anything database related, static sites are pretty reliable and speedy. HTML, CSS and JS—that’s all. What’s it for? Well, a lot of people use it to set up their blogs and personal pages. Landing pages that are hit by traffic heavily are also a good candidate. [HealthCare.gov](https://www.healthcare.gov/) from the Obama administration famously used Jekyll, another static site generator, for their site. Its not a Swiss Army knife for every purpose but if you need something quick and easy that is able to scale out of the box, static site can be amazing. Especially if you can host them for free on [GitHub Pages](https://pages.github.com/) or [Heroku](https://www.heroku.com/). 
+
+I guess the whole static site hipness got slowly started a few years back when [Jekyll](http://jekyllrb.com/) came along. Of course, static sites are as old as the first “Hello World!” from Sir Tim Berners-Lee but over the past 15 years, database backed apps were mostly “all that mattered”. Couple of years back, one of the co-founders of GitHub needed a better way to write blogs and he came up with Jekyll—this hip static site generator for “Blogging like a hacker”. Its pretty amazing! I’ve used it on a couple of occasions and have only good things to report. The core team is awesome too. Anyhow, for this series my editor and I agreed it would be more interesting to cover [Middleman](https://middlemanapp.com/). It might be fair to say that Middleman is a bit less “blog-aware” out of the box but none the less equally as powerful and great quality-wise.
+
+What a lot of these static site frameworks have in common is that they are pretty straightforward to use. I actually believe its a good idea to teach people coding by playing with one of these ruby based static sites—instead of jumping into Rails or Sinatra right away. (Sure, Sinatra is small too but there are still more concepts at work compared to Middleman for example.) There are not as many moving parts, not that much magic—not that I’m one of these magic naggers—and they are easy to learn imho. Next time someone wants to learn to program in Ruby and asks me for directions I’ll probably point them towards Middleman or Jekyll.
