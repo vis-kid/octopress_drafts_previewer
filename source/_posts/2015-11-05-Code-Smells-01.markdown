@@ -13,8 +13,8 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 ### Topics
 
 + Smelly Code
-+ Extract Class
-+ Extract Method
++ Large Class / God Class
++ Long Method
 
 + ### Smelly Code
 
