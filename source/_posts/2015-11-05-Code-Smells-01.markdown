@@ -1,0 +1,25 @@
+---
+layout: post
+title: Ruby / Rails Code Smells 01
+date: 2015-11-05 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Factory Girl]
+---
+
+{% img /images/code_smells/code_smell_01.jpeg %}
+
+### Topics
+
++ Smelly Code
++ Extract Class
++ Extract Method
+
++ ### Smelly Code
+
+This article is meant for a bit more experienced Ruby developers and starters as well. I had the impression that code smells and their refactorings can be very daunting and intimidating to newbies—especially if they are not in the fortunate position to have mentors who can mystical programming concepts into shining light bulbs.
+
+So what are we talking about exactly when people mention code smells? Is it always a problem in your code? Not necessarily! Can you avoid them completely? I don’t think so! Do you mean code smells are broken code? Well, sometimes and sometimes not. Should it be my priority to fix them right away? Same answer I fear, sometimes yes and sometimes you certainly should fry bigger fish first. Are you insane? Fair question at this point!
+
+It seems to me that code smells are a bit hard to wrap up in a nicely labeled box. There are all kinds of smells with various different options to address them. I imagine also that different programming languages and framework are prone to different kind of smells—but there are definitely a lot of common DNA strains.
