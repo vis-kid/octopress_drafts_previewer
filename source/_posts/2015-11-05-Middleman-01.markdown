@@ -13,7 +13,7 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 ### Topics
 
 + Middleman & Static Pages
-+ Installation & Development Cycle
++ Installation & Getting Started
 + Configuration
 + A new Site
 + Structure
@@ -35,5 +35,83 @@ Middleman uses Ruby and offers a pretty extensive set of features to build cool 
 
 So in this article I’ll assume that you are at least a bit interested in Ruby and have it installed on your system. Knowing how to deal with RubyGems is necessary too. I’ll do my best to not go over your head with programming concepts but I won’t cover basics like loops, code blocks and such. For the newbies among you, don’t worry, Middleman has not that many moving parts or tons of magic—not that I’m one of those magic naggers—and they I believe its easy to learn too. 
 
++ ### Installation & Getting Started
 
-+ ### Installation & Development Cycle
+So you got Ruby and RubyGems under your belt? Great, then we’re good to go.
+
+**Terminal**:
+
+``` ruby
+gem install middleman
+```
+
+After this process has finished, you’ll be able to use three handy commands in your shell.
+
++ **middleman init**
+
+This command initiates a new project. It also takes arguments like which template you wanna start with. More about this later.
+
+**Terminal**:
+
+``` ruby
+middleman init your_fancy_app
+```
+
+You can use templates for your apps right from the start. There are a couple of ready out of the box, like one for blogs for example and you can use your won custom ones. More on that in a later article.  
+
+**Terminal**:
+
+``` ruby 
+middleman init your_fancy_blog --template=blog
+```
+
+``` ruby
+middleman init your_fancy_mobile_app --template=mobile
+```
+
++ **middleman server**
+
+Middleman comes with a server for your development of course. If you start it up you’ll be able to see your site at **http://localhost:4567/ **. If you just type **middleman** without any additional argument, your server gets also fired up. Shutdown your server with **CTRL-c**.
+
++ **middleman build**
+
+Once you have something you are ready to put on a internet-facing server you need to **build** your site. That means that whatever you have prepared in your **source** folder gets processed, especially interesting for your files that need preprocessors like [Slim](http://slim-lang.com/about.html), [Haml](http://haml.info/), [Sass](http://sass-lang.com/), [CoffeeScript](http://coffeescript.org/) get translated into their respective counterparts and put into your **build** directory which your server will host.
+
+So let’s get get started with **source** and **build** folders. Between them is the dividing line that separates your development and production sections. When you use your local web server for development, **source** gets used to serve your app. The **build** folder is used by your non-local servers to serve your static pages and gets built every time you use **middleman build** in your command line—it overrides every new folder in **source** was in there before. Therefore you should be careful to not accidentally spend your time coding in **build** because it will disappear after the build process. Sure there is Git but in general, all your development is supposed to happen in **source**.
+
+#### Attention!
+
+Do yourself a favor right away and activate [LiveReload](http://livereload.com/) to instantly refresh your pages automatically after changes to your HTML, Sass or JS files. This is of great convenience during development—you won’t regret it! In the past it was sometimes a pain to set up but Middleman offers *LiveReload* out of the box—you just need to uncomment the following line in **config.rb**:
+
+``` ruby
+# Reload the browser automatically whenever files change
+activate :livereload
+```
+
+Let’s check out the skelleton structure of a Middleman appthen. The main components are:
+
++ images
++ javascripts
++ layouts
++ stylesheets
++ config.rb
++ An index.html.erb file
++ A Gemfile
+
+As you see, the most Jazz goes on in the **source** folder. What I like about Middleman apps is their organization—even if you are a newbie, its pretty hard to get lost in here. One of the reasons I recommend beginners to play with Middleman first. 
+
+#### Screenshot:
+
+{% img /images/middleman/source_structure.png %}
+
+If you are unhappy with the naming of some of these folders you can change that in your configurations (**config.rb**) of course. The same names will be used then for your finished **build** folder. 
+
+``` ruby
+set :css_dir,    'custom_foler_name'
+
+set :js_dir,     'custom_foler_name'
+
+set :images_dir, 'custom_foler_name'
+``` 
+
+When you have your server running, you can check out other options to configure Middleman right in your browser: http://localhost:4567/__middleman/config/. Not all of them might make sense or are even important to know. Give it a glance and a mental bookmark is totally sufficient for now.
