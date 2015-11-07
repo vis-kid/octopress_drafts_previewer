@@ -30,11 +30,11 @@ Thankfully its not as complicated as dealing with the human body—and psyche of
 
 If the quality of your code makes the inclusion of new code harder—like deciding where to put new code is a pain or comes with a lot of ripple effects throughout your codebase for example—you’ll experience resistance from your existing code. As a guideline for code quality you can measure it always by how easy it is to introduce changes. If that is getting harder and harder its definitely time to refactor and to take the last part of *red-green-REFACTOR* more seriously.
 
-+ ### Extract Class
++ ### Large Class / God Class
 
 Let’s start with something fancy sounding—“God classes”—because I think they are particular easy to grasp for beginners. God classes are a special case of a code smell called **Large Class**. In this section I’ll address both of them. If you have spent a little bit of time in Rails land you probably have seen them so often that they look normal to you. 
 
-You surely remember the “fat models, skinny controller” mantra? Well actually, skinny is good for all these classes but as a guideline its good advice for newbies I suppose. God classes are objects that attract all sorts of knowledge and behaviour like a black hole. Your usual suspects most often include the User model and whatever your app is trying to solve first and foremost. A todo app might bulk up on the **Todos** model, a shopping app on **Products**, a photo app on **Photos**—you get the drift. People call these god classes because they know too much. They have too many connections with other classes—mostly because someone was lazy modeling them.
+You surely remember the “fat models, skinny controller” mantra? Well actually, skinny is good for all these classes but as a guideline its good advice for newbies I suppose. God classes are objects that attract all sorts of knowledge and behaviour like a black hole. Your usual suspects most often include the User model and whatever problem (hopefully ;) your app is trying to solve—first and foremost at least. A todo app might bulk up on the **Todos** model, a shopping app on **Products**, a photo app on **Photos**—you get the drift. People call these god classes because they know too much. They have too many connections with other classes—mostly because someone was lazy modeling them. It is hard work though to keep God classes in check. They make it really easy to dump more responsibilities on them and it takes skill to divide and conquer them.
 
 
 The problem with them is that they become harder and harder to understand—especially for new team members—harder to change and reuse becomes less and less of an option the more gravity they amassed. Oh yeah, you’re right, your tests are unnecessarily harder to write as well. In short, there is not really an upside to having large classes and god classes in particular.
@@ -50,6 +50,182 @@ There are a couple of common symptoms / signs that your class needs some surgery
 Also, if you squint at your class and think “Eh? Ew!” you might be on to something too. If all that sounds familiar, chances are good that you found yourself a fine specimen.
 
 
+``` ruby
+class CastingInviter
+  EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/
+
+  attr_reader :message, :invitees, :casting
+
+  def initialize(attributes = {})
+    @message  = attributes[:message]  || ''
+    @invitees = attributes[:invitees] || ''
+    @sender   = attributes[:sender]
+    @casting  = attributes[:casting]
+  end
+
+  def valid?
+    valid_message? && valid_invitees?
+  end
+
+  def deliver
+    if valid?
+      invitee_list.each do |email|
+        invitation = create_invitation(email)
+        Mailer.invitation_notification(invitation, @message)
+      end
+    else
+      failure_message  = "Your #{ @casting } message couldn’t be sent. Invitees emails or message are invalid"
+      invitation = create_invitation(@sender)
+      Mailer.invitation_notification(invitation, failure_message )
+    end
+  end
+
+  private
+
+  def invalid_invitees
+    @invalid_invitees ||= invitee_list.map do |item|
+      unless item.match(EMAIL_REGEX)
+        item
+      end
+    end.compact
+  end
+
+  def invitee_list
+    @invitee_list ||= @invitees.gsub(/\s+/, '').split(/[\n,;]+/)
+  end
+
+  def valid_message?
+    @message.present?
+  end
+
+  def valid_invitees?
+    invalid_invitees.empty?
+  end
+
+  def create_invitation(email)
+    Invitation.create(
+      casting:       @casting,
+      sender:        @sender,
+      invitee_email: email,
+      status:        'pending'
+    )
+  end
+end
+```
+
+Can you see how much nastyness is bundled in here? Of course I put a little cherry on top, but you will run into code like that sooner or later. Let’s think about what responsibilities this **CastingInviter** class has to juggle. Should all of this be dumped on an **Inviter** who just wants to deliver a casting call via **deliver**? Certainly not!
+
++ Delivering email
++ Checking for valid messages and email addresses
++ Getting rid of white space
++ Splitting email addresses on commas and semicolons
+
+This class doesn’t need to know most of these details. That’s more the responsibility of some class that is specialized in dealing with email related stuff. You’ll find many reasons to change your code as well. If your method of invitation changes you can expect to run into some [Shotgun surgery](https://en.wikipedia.org/wiki/Shotgun_surgery). 
+
+In the solution below, you’ll not only see how reasonable this separation of concerns affects your code quality, it also reads a lot better and becomes easier to digest. 
+
+Here we delegate methods to a new class that is specialized to deal with delivering these invitations via email. You have one dedicated place that checks of the messages and invitees are valid and how they need to be delivered. **CastingInviter** doesn’t need to know anything about these details.
+
+``` ruby
+class CastingInviter
+
+  attr_reader :message, :invitees, :casting
+
+  def initialize(attributes = {})
+   @message  = attributes[:message]  || ''
+   @invitees = attributes[:invitees] || ''
+   @casting  = attributes[:casting]
+   @sender   = attributes[:sender]
+ end
+
+  def valid?
+    casting_email_handler.valid?
+  end
+
+  def deliver
+    casting_email_handler.deliver
+  end
+
+  private
+
+  def casting_email_handler
+    @casting_email_handler = CastingEmailHandler.new(
+      message:  message, 
+      invitees: invitees, 
+      casting:  casting, 
+      sender:   @sender)
+  end
+end
+```
+
+``` ruby
+class CastingEmailHandler 
+  EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/
+
+  def initialize(attr = {})
+    @message  = attr[:message]  || ''
+    @invitees = attr[:invitees] || ''
+    @casting  = attr[:casting]
+    @sender   = attr[:sender]
+  end
+
+  def valid?
+    valid_message? && valid_invitees?
+  end
+
+  def deliver
+    if valid?
+      invitee_list.each do |email|
+        invitation = create_invitation(email)
+        Mailer.invitation_notification(invitation, @message)
+      end
+    else
+      failure_message  = "Your #{ @casting } message couldn’t be sent. Invitees emails or message are invalid"
+      invitation = create_invitation(@sender)
+      Mailer.invitation_notification(invitation, failure_message )
+    end
+  end
+
+   private
+
+   def invalid_invitees
+    @invalid_invitees ||= invitee_list.map do |item|
+      unless item.match(EMAIL_REGEX)
+        item
+      end
+    end.compact
+  end
+
+  def invitee_list
+    @invitee_list ||= @invitees.gsub(/\s+/, '').split(/[\n,;]+/)
+  end
+
+  def valid_invitees?
+    invalid_invitees.empty?
+  end
+
+  def valid_message?
+    @message.present?
+  end
+
+  def create_invitation(email)
+    Invitation.create(
+      casting:       @casting,
+      sender:        @sender,
+      invitee_email: email,
+      status:        'pending'
+    )
+  end
+end
+```
+
+In case you’re wondering about the **valid?** method on **CastingEmailHandler** and **CastingInviter**. This one is for RSpec to create a custom matcher. This lets me write something like
+
+``` ruby
+expect(casting_inviter).to be_valid
+```
+
+Pretty handy I think.
 
 
 {% img /images/code_smells/code_smell_01.jpeg %}
