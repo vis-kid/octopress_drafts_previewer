@@ -16,8 +16,8 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 + Installation & Getting Started
 + Configuration
 + A new Site
++ Source vs Build vs Deploy(GitHub Pages)
 + Structure
-+ Build vs Deploy
 + Frontmatter
 + Templating
 + Helpers
@@ -27,11 +27,11 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 + ### Middleman & Static Pages
 
-What’s all the fuzz lately about static sites? Easy, they’re fast, pretty straightforward to set up and lightweight I’d say. Because you’re not serving anything database related, static sites are pretty reliable and speedy. HTML, CSS and JS—that’s all. What’s it for? Well, a lot of people use it to set up their blogs and personal pages. Landing pages that are hit by traffic heavily are also a good candidate. [HealthCare.gov](https://www.healthcare.gov/) from the Obama administration famously used Jekyll, another static site generator, for their site. Its not a Swiss Army knife for every purpose but if you need something quick and easy that is able to scale out of the box, static site can be amazing. Especially if you can host them for free on [GitHub Pages](https://pages.github.com/) or [Heroku](https://www.heroku.com/). 
+What’s all the fuzz lately with static sites? Easy, they’re fast, pretty straightforward to set up and lightweight I’d say. Because you’re not serving anything database related, static sites are pretty reliable and speedy. HTML, CSS and JS—that’s all. What’s it for? Well, a lot of people use it to set up their blogs and personal pages. Landing pages that are hit by traffic heavily are also a good candidate. [HealthCare.gov](https://www.healthcare.gov/) from the Obama administration famously used Jekyll, another static site generator, for their site. Its not a Swiss Army knife for every purpose but if you need something quick and easy that is able to scale out of the box, static sites can be amazing. Especially if you can host them for free on [GitHub Pages](https://pages.github.com/) or [Heroku](https://www.heroku.com/). 
 
 I guess the whole static site hipness got slowly started a few years back when [Jekyll](http://jekyllrb.com/) came along. Of course, static sites are as old as the first “Hello World!” from Sir Tim Berners-Lee but over the past 15 years, database backed apps were mostly “all that mattered”. Couple of years back, one of the co-founders of GitHub needed a better way to write blogs and he came up with Jekyll—this hip static site generator for “Blogging like a hacker”. Its pretty amazing! I’ve used it on a couple of occasions and have only good things to report. The core team is awesome too. Anyhow, for this series my editor and I agreed it would be more interesting to cover [Middleman](https://middlemanapp.com/). It might be fair to say that Middleman is a bit less “blog-aware” out of the box but none the less equally as powerful and great quality-wise.
 
-Middleman uses Ruby and offers a pretty extensive set of features to build cool stuff. Couple of my favorite blogs use Middleman. If you’ve ever used Rails or Sinatra you’ll feel at home right away. Middleman, as well as Jekyll, are the go-to options for static sites in the Ruby community. I have heard more and more designers argue that they like using them too—for prototyping and for setting up their own personal pages. What a lot of these static site frameworks have in common is that they are pretty straightforward to use. I actually believe its a good idea to teach people coding by playing with one of these ruby based static sites—instead of jumping into Rails or Sinatra right away. (Sure, Sinatra is small too but there are still more concepts at work compared to Middleman for example.) Next time someone wants to learn to program in Ruby and asks me for directions I’ll probably point them towards Middleman or Jekyll.
+Middleman uses Ruby and offers a pretty extensive set of features to build cool stuff. Couple of my favorite blogs use Middleman. If you’ve ever used Rails or Sinatra you’ll feel right at home. It seems Middleman and Jekyll are the go-to options for static sites in the Ruby community. I have heard more and more designers argue that they like using them too—for prototyping and for setting up their own personal pages. What a lot of these static site frameworks have in common is that they are pretty straightforward to use. I actually believe its a good idea to teach people coding by playing with one of these ruby based static site frameworks—instead of jumping into Rails or Sinatra right away. (Sure, Sinatra is small too but there are still more concepts at work compared to Middleman for example.) Next time someone wants to learn to program in Ruby and asks me for directions I’ll probably point them towards Middleman or Jekyll.
 
 So in this article I’ll assume that you are at least a bit interested in Ruby and have it installed on your system. Knowing how to deal with RubyGems is necessary too. I’ll do my best to not go over your head with programming concepts but I won’t cover basics like loops, code blocks and such. For the newbies among you, don’t worry, Middleman has not that many moving parts or tons of magic—not that I’m one of those magic naggers—and they I believe its easy to learn too. 
 
@@ -39,45 +39,46 @@ So in this article I’ll assume that you are at least a bit interested in Ruby 
 
 So you got Ruby and RubyGems under your belt? Great, then we’re good to go.
 
-**Terminal**:
+Terminal:
 
-``` ruby
+``` bash
 gem install middleman
 ```
 
-After this process has finished, you’ll be able to use three handy commands in your shell.
+After this process has finished, you’ll be able to use a couple of handy commands in your shell.
 
 + **middleman init**
 
-This command initiates a new project. It also takes arguments like which template you wanna start with. More about this later.
+This command initiates a new project—you just have to provide it with the name of your app. 
 
-**Terminal**:
+Terminal:
 
-``` ruby
+``` bash
 middleman init your_fancy_app
 ```
+It also takes additional arguments like which template you wanna start with. This makes it really handy to customize your apps with templates right from the start—cuts down on repetetive setup tasks quite a bit! There are a couple ones ready out of the box—like one for blogs for example and you can use your own custom ones too of course. More on that in a later article.  
 
-You can use templates for your apps right from the start. There are a couple of ready out of the box, like one for blogs for example and you can use your won custom ones. More on that in a later article.  
+Terminal:
 
-**Terminal**:
-
-``` ruby 
+``` bash 
 middleman init your_fancy_blog --template=blog
 ```
 
-``` ruby
+``` bash
 middleman init your_fancy_mobile_app --template=mobile
 ```
 
 + **middleman server**
 
-Middleman comes with a server for your development of course. If you start it up you’ll be able to see your site at **http://localhost:4567/ **. If you just type **middleman** without any additional argument, your server gets also fired up. Shutdown your server with **CTRL-c**.
+Middleman comes with a local server for your development. Starting it up lets you see your site at **http://localhost:4567/ **. If you just type **middleman** without any additional argument, your server gets also fired up. Shut down your server with **CTRL-c**.
 
 + **middleman build**
 
-Once you have something you are ready to put on a internet-facing server you need to **build** your site. That means that whatever you have prepared in your **source** folder gets processed, especially interesting for your files that need preprocessors like [Slim](http://slim-lang.com/about.html), [Haml](http://haml.info/), [Sass](http://sass-lang.com/), [CoffeeScript](http://coffeescript.org/) get translated into their respective counterparts and put into your **build** directory which your server will host.
+Once you have something you are ready to put on an internet-facing server you need to **build** your site. That means that whatever you have prepared in your **/source** folder gets processed and the final output goes into the **/build** folder that middleman also creates for you. All your files that use preprocessors like [Slim](http://slim-lang.com/about.html), [Haml](http://haml.info/), [Sass](http://sass-lang.com/), [CoffeeScript](http://coffeescript.org/) get translated into their respective counterparts and put into your /build directory which your server will host.
 
-So let’s get get started with **source** and **build** folders. Between them is the dividing line that separates your development and production sections. When you use your local web server for development, **source** gets used to serve your app. The **build** folder is used by your non-local servers to serve your static pages and gets built every time you use **middleman build** in your command line—it overrides every new folder in **source** was in there before. Therefore you should be careful to not accidentally spend your time coding in **build** because it will disappear after the build process. Sure there is Git but in general, all your development is supposed to happen in **source**.
++ **middleman deploy**
+
+Once your site is ready to face the internet, this command deploys your **/build** folder onto your web server. So every update you have finished goes through that process. Its the equivalent to depoying with Git to Heroku if you have played with that in the past. 
 
 #### Attention!
 
@@ -88,23 +89,102 @@ Do yourself a favor right away and activate [LiveReload](http://livereload.com/)
 activate :livereload
 ```
 
-Let’s check out the skelleton structure of a Middleman appthen. The main components are:
++ ### Source vs Build vs Deploy(GitHub Pages)
 
-+ images
-+ javascripts
-+ layouts
-+ stylesheets
-+ config.rb
-+ An index.html.erb file
-+ A Gemfile
+So let’s get get started with **/source** and **/build** folders. Between them is the dividing line that separates your development and production sections. When you use your local web server for development, /source gets used to serve your app. The /build folder is used by your non-local servers to serve your static pages. /build gets created every time you use **middleman build** in your command line. Therefore you should be careful to not accidentally spend your time coding in /build because it will disappear after the build process. Sure there is Git if you’re lucky but in general, all your development is supposed to happen in /source.
 
-As you see, the most Jazz goes on in the **source** folder. What I like about Middleman apps is their organization—even if you are a newbie, its pretty hard to get lost in here. One of the reasons I recommend beginners to play with Middleman first. 
+The build process creates the static sites that you want your server to host. Each file in your **/source** folder will get processed and then stored in **/build**. That means that your Sass, CoffeeScript, Slim / Haml and partials will translante themselves into CSS, JavaScript and HTML files. All the layouts will be pieced together as well. If you have activated compression for these files, this is the moment they get “uglified” too. During this whole shabang, the /build folder gets rejuvinated by getting rid of files that have no reference in /source anymore. During **middleman build**, any changes you made to files in /source will trigger a regeneration of new corresponding static files for /build.
+
+The deployment process is the last step. With the **/build** directory in place you have everything you need to put your app out there. My recommendation is to do this early and avoid running into any surprises. I’ll show you how to deploy via [GitHub Pages](https://pages.github.com/). You’ll see, it couldn’t be any easier or more convenient. Assuming that you already initiated Git (**git init**) It’s basically five simple steps: 
+
+### Project Page For Users & Organizations
+
+#### Step 00
+
+We’ll need to start with adding a Gem for deployment to your **Gemfile**:
+
+``` ruby
+gem "middleman-deploy"
+```
+
+#### Step 01
+
+In your terminal run
+
+``` bash
+bundle install
+```
+
+#### Step 02
+
+Open your **config.rb** file and add the following:
+
+``` ruby
+activate :deploy do |deploy|
+  deploy.method = :git
+  deploy.branch = 'gh-pages'
+  deploy.build_before = true
+end
+```
+
+#### Attention!
+
+The most important bit is the branch `'gh-pages`. That way you can setup a **prject page** which means that for every repo you can possibly have your own GitHub pages page. Prettty neat!
+
+#### Step 03
+
+Create a new repository on GitHub and add the remote branch—so everthing you’d normally do when you follow GitHub’s instructions. 
+
+``` bash
+git remote add origin https://github.com/yourusername/repositoryname.git
+```
+
+If you want you can back up your master branch the same way as always too.
+(optional):
+
+``` bash
+git push -u origin master
+```
+
+#### Step 04
+
+``` bash
+middleman deploy
+```
+
+Boom, that’s it! If you forget to run **middleman build**, with this setup the build process gets initiated automatically before the files in **/build** get deployed to GitHub Pages. Once you’re finished you’ll find your app under `username.github.io/projectname` or `organisationname.github.io/projectname` for organizations.
+
+You now have a **gh-pages** branch on GitHub which is used for serving your app. If you have optionally pushed your master branch also then it will be there too of course. At its most basic, this branch consists of the following folders:
+
++ **/images**
++ **/javascripts**
++ **/stylesheets**
+
+and an **index.html** file.
+
+### User & Organization Pages
+
+If you want your middleman app to be a *User* or *Organization* page on GitHub Pages you’d need to change a little bit of configuration that is concerned with the deploy branch. These pages reside under your `username.github.io`—why you obviously can only have one of these pages. Quite honestly I don’t see the need for these, after all you’d set up your own domain name for it anyway if the app is of any importance to you. Therefore I’ll stop here and let you figure this out on your own if you find a good reason not to use plain project pages. Its not tricky or anything, the main differnce is that the content from your master branch is used to build and publish this page for you.
+
++ ### Skelleton Structure
+
+Let’s check out the skelleton structure of a Middleman app then. The main components are:
+
++ **images**
++ **javascripts**
++ **layouts**
++ **stylesheets**
++ **config.rb**
++ **An index.html.erb file**
++ **A Gemfile**
+
+As you see below, the most Jazz goes into the **/source** folder. What I like about Middleman apps is their simple organization—even if you are a newbie, its pretty hard to get lost in here. One of the reasons I recommend beginners to play with Middleman first. 
 
 #### Screenshot:
 
 {% img /images/middleman/source_structure.png %}
 
-If you are unhappy with the naming of some of these folders you can change that in your configurations (**config.rb**) of course. The same names will be used then for your finished **build** folder. 
+If you are unhappy with the naming of some of these folders you can change that in your configurations (**config.rb**) of course. The same names will be used then for your finished **/build** folder. 
 
 ``` ruby
 set :css_dir,    'custom_foler_name'
@@ -115,3 +195,7 @@ set :images_dir, 'custom_foler_name'
 ``` 
 
 When you have your server running, you can check out other options to configure Middleman right in your browser: http://localhost:4567/__middleman/config/. Not all of them might make sense or are even important to know. Give it a glance and a mental bookmark is totally sufficient for now.
+
+One you run **middleman build** you can peak into the **/build** folder. All the plain HTML, CSS and JS files you need to serve your static site.
+{% img /images/middleman/build_structure.png %}
+
