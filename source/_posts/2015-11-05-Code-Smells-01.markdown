@@ -36,7 +36,6 @@ Let’s start with something fancy sounding—“God classes”—because I thin
 
 You surely remember the “fat models, skinny controller” mantra? Well actually, skinny is good for all these classes but as a guideline its good advice for newbies I suppose. God classes are objects that attract all sorts of knowledge and behaviour like a black hole. Your usual suspects most often include the User model and whatever problem (hopefully ;) your app is trying to solve—first and foremost at least. A todo app might bulk up on the **Todos** model, a shopping app on **Products**, a photo app on **Photos**—you get the drift. People call these god classes because they know too much. They have too many connections with other classes—mostly because someone was lazy modeling them. It is hard work though to keep God classes in check. They make it really easy to dump more responsibilities on them and it takes skill to divide and conquer them.
 
-
 The problem with them is that they become harder and harder to understand—especially for new team members—harder to change and reuse becomes less and less of an option the more gravity they amassed. Oh yeah, you’re right, your tests are unnecessarily harder to write as well. In short, there is not really an upside to having large classes and god classes in particular.
 
 There are a couple of common symptoms / signs that your class needs some surgery:
@@ -47,8 +46,7 @@ There are a couple of common symptoms / signs that your class needs some surgery
 + Hard to tell what your class really does—concisely!
 + Does your class have many reasons to change when your code evolves?
 
-Also, if you squint at your class and think “Eh? Ew!” you might be on to something too. If all that sounds familiar, chances are good that you found yourself a fine specimen.
-
+Also, if you squint at your class and think “Eh? Ew!” you might be on to something too. If all that sounds familiar, chances are good that you found yourself a fine specimen. 
 
 ``` ruby
 class CastingInviter
@@ -113,18 +111,18 @@ class CastingInviter
 end
 ```
 
-Can you see how much nastyness is bundled in here? Of course I put a little cherry on top, but you will run into code like that sooner or later. Let’s think about what responsibilities this **CastingInviter** class has to juggle. Should all of this be dumped on an **Inviter** who just wants to deliver a casting call via **deliver**? Certainly not!
+Can you see how much nastyness is bundled in here? Of course I put a little cherry on top, but you will run into code like this sooner or later.  Let’s think about what responsibilities this **CastingInviter** class has to juggle. 
 
 + Delivering email
 + Checking for valid messages and email addresses
 + Getting rid of white space
 + Splitting email addresses on commas and semicolons
 
-This class doesn’t need to know most of these details. That’s more the responsibility of some class that is specialized in dealing with email related stuff. You’ll find many reasons to change your code as well. If your method of invitation changes you can expect to run into some [Shotgun surgery](https://en.wikipedia.org/wiki/Shotgun_surgery). 
+Should all of this be dumped on a class which just wants to deliver a casting call via **deliver**? Certainly not! CastingInviter doesn’t need to know most of these details. That’s more the responsibility of some class that is specialized in dealing with email related stuff. You’ll find many reasons to change your code as well. If your method of invitation changes you can expect to run into some [Shotgun surgery](https://en.wikipedia.org/wiki/Shotgun_surgery). 
 
-In the solution below, you’ll not only see how reasonable this separation of concerns affects your code quality, it also reads a lot better and becomes easier to digest. 
+So how should we deal with this. Often, extracting a class will present itself as a reasonable solution to such problems. Once you find enough coherent meat that seems to belong into a specialized object of its own you can extract that functionality into a new class.
 
-Here we delegate methods to a new class that is specialized to deal with delivering these invitations via email. You have one dedicated place that checks of the messages and invitees are valid and how they need to be delivered. **CastingInviter** doesn’t need to know anything about these details.
+You create a new class and gradually move the functionality over—one by one. Move each method separately and rename them if you see the reason to. Then reference the new class in the orignal one and delegate the needed functionality. Good thing you have test coverage (hopefull!) that lets you check if things still work properly. Its easier to see how its done in action so lets read some code:
 
 ``` ruby
 class CastingInviter
@@ -218,6 +216,10 @@ class CastingEmailHandler
   end
 end
 ```
+
+In this solution, you’ll not only see how this separation of concerns affects your code quality, it also reads a lot better and becomes easier to digest. Here we delegate methods to a new class that is specialized to deal with delivering these invitations via email. You have one dedicated place that checks if the messages and invitees are valid and how they need to be delivered. **CastingInviter** doesn’t need to know anything about these details so we delegate these responsibilities to a new class **CastingEmailHandler**.
+
+The knowledge of how to deliver and check for validity of these casting invitation emails is now all contained in our new extracted class. Do we have more code now? You bet! Was it worth it to separate concerns? Pretty sure! Can we go beyond that and refactor **CastingEmailHandler** some more? Absolutely! Knock yourself out!
 
 In case you’re wondering about the **valid?** method on **CastingEmailHandler** and **CastingInviter**. This one is for RSpec to create a custom matcher. This lets me write something like
 
