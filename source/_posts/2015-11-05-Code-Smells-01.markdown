@@ -18,27 +18,27 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 + ### Smelly Code
 
-The following short series of articles is meant for a bit more experienced Ruby developers and starters as well. I had the impression that code smells and their refactorings can be very daunting and intimidating to newbies—especially if they are not in the fortunate position to have mentors who turn can mystical programming concepts into shining light bulbs.
+The following short series of articles is meant for slightly more experienced Ruby developers and starters alike. I had the impression that code smells and their refactorings can be very daunting and intimidating to newbies—especially if they are not in the fortunate position to have mentors who can turn mystical programming concepts into shining light bulbs.
 
 So what are we talking about exactly when people mention code smells? Is it always a problem in your code? Not necessarily! Can you avoid them completely? I don’t think so! Do you mean code smells are broken code? Well, sometimes and sometimes not. Should it be my priority to fix them right away? Same answer I fear, sometimes yes and sometimes you certainly should fry bigger fish first. Are you insane? Fair question at this point! Before you continue diving into this whole smelly business, remember to take away one thing from all of this: Don’t try to fix every smell you encounter—this is most certainly a waste of your time!
 
-It seems to me that code smells are a bit hard to wrap up in a nicely labeled box. There are all kinds of smells with various different options to address them. I imagine also that different programming languages and framework are prone to different kind of smells—but there are definitely a lot of common “genetic” strains among them. My attempt to describe code smells is to compare them with medical symptoms that tell you that you might have a problem. They can point to all sorts of possible problems and have a wide variety of solutions if proven to be in need of treatment. 
+It seems to me that code smells are a bit hard to wrap up in a nicely labeled box. There are all kinds of smells with various different options to address them. I imagine also that different programming languages and framework are prone to different kind of smells—but there are definitely a lot of common “genetic” strains among them. My attempt to describe code smells is to compare them with medical symptoms that tell you that you might have a problem. They can point to all sorts of latent problems and have a wide variety of solutions if diagnosed.
 
-Thankfully its not as complicated as dealing with the human body—and psyche of course. Its a fair example though because some of these symptoms need to be treated right away and some others give you ample time to come up with a solution that is best for the patient’s overall well-being. If you have working code and you run into something smelly you’ll have to make the hard decision if its worth the time to find a fix and if that refactoring improves the stability of your app. That being said, if you stumble upon code which you can improve right away its good advice to leave the code better than what you’d found—even a tiny bit better adds up substantially over time.
+Thankfully its not as complicated as dealing with the human body—and psyche of course. Its a fair comparison though because some of these symptoms need to be treated right away and some others give you ample time to come up with a solution that is best for the “patient’s” overall well-being. If you have working code and you run into something smelly you’ll have to make the hard decision if its worth the time to find a fix and if that refactoring improves the stability of your app. That being said, if you stumble upon code which you can improve right away its good advice to leave the code behind a bit better—even a tiny bit better adds up substantially over time.
 
 #### Resistance
 
-If the quality of your code makes the inclusion of new code harder—like deciding where to put new code is a pain or comes with a lot of ripple effects throughout your codebase for example—you’ll experience resistance from your existing code. As a guideline for code quality you can measure it always by how easy it is to introduce changes. If that is getting harder and harder its definitely time to refactor and to take the last part of *red-green-REFACTOR* more seriously.
+If the quality of your code makes the inclusion of new code harder—like deciding where to put new code is a pain or comes with a lot of ripple effects throughout your codebase for example—you’ll experience resistance from your existing code. As a guideline for code quality you can measure it always by how easy it is to introduce changes. If that is getting harder and harder its definitely time to refactor and to take the last part of *red-green-REFACTOR* more seriously in the future.
 
 + ### Large Class / God Class
 
 Let’s start with something fancy sounding—“God classes”—because I think they are particular easy to grasp for beginners. God classes are a special case of a code smell called **Large Class**. In this section I’ll address both of them. If you have spent a little bit of time in Rails land you probably have seen them so often that they look normal to you. 
 
-You surely remember the “fat models, skinny controller” mantra? Well actually, skinny is good for all these classes but as a guideline its good advice for newbies I suppose. God classes are objects that attract all sorts of knowledge and behaviour like a black hole. Your usual suspects most often include the User model and whatever problem (hopefully ;) your app is trying to solve—first and foremost at least. A todo app might bulk up on the **Todos** model, a shopping app on **Products**, a photo app on **Photos**—you get the drift. People call these god classes because they know too much. They have too many connections with other classes—mostly because someone was lazy modeling them. It is hard work though to keep God classes in check. They make it really easy to dump more responsibilities on them and it takes skill to divide and conquer them.
+You surely remember the “fat models, skinny controller” mantra? Well actually, skinny is good for all these classes but as a guideline its good advice for newbies I suppose. God classes are objects that attract all sorts of knowledge and behaviour like a black hole. Your usual suspects most often include the User model and whatever problem (hopefully ;) your app is trying to solve—first and foremost at least. A todo app might bulk up on the **Todos** model, a shopping app on **Products**, a photo app on **Photos**—you get the drift. People call them god classes because they know too much. They have too many connections with other classes—mostly because someone was lazy modeling them. It is hard work though to keep God classes in check. They make it really easy to dump more responsibilities onto them and as lots of greek heroes would attest, it takes a bit of skill to divide and conquer “gods”.
 
-The problem with them is that they become harder and harder to understand—especially for new team members—harder to change and reuse becomes less and less of an option the more gravity they amassed. Oh yeah, you’re right, your tests are unnecessarily harder to write as well. In short, there is not really an upside to having large classes and god classes in particular.
+The problem with them is that they become harder and harder to understand, especially for new team members, harder to change and reuse becomes less and less of an option the more gravity they amassed. Oh yeah, you’re right, your tests are unnecessarily harder to write as well. In short, there is not really an upside to having large classes and god classes in particular.
 
-There are a couple of common symptoms / signs that your class needs some surgery:
+There are a couple of common symptoms / signs that your class needs some heroism / surgery:
 
 + You need to scroll!
 + Tons of private methods?
@@ -118,13 +118,13 @@ Can you see how much nastyness is bundled in here? Of course I put a little cher
 + Getting rid of white space
 + Splitting email addresses on commas and semicolons
 
-Should all of this be dumped on a class which just wants to deliver a casting call via **deliver**? Certainly not! CastingInviter doesn’t need to know most of these details. That’s more the responsibility of some class that is specialized in dealing with email related stuff. You’ll find many reasons to change your code as well. If your method of invitation changes you can expect to run into some [Shotgun surgery](https://en.wikipedia.org/wiki/Shotgun_surgery). 
+Should all of this be dumped on a class which just wants to deliver a casting call via **deliver**? Certainly not! If your method of invitation changes you can expect to run into some [Shotgun surgery](https://en.wikipedia.org/wiki/Shotgun_surgery). CastingInviter doesn’t need to know most of these details. That’s more the responsibility of some class that is specialized in dealing with email related stuff. You’ll find many reasons to change your code as well. 
 
 ### Extract Class
 
-So how should we deal with this? Often, extracting a class is a handy refactoring pattern that will present itself as a reasonable solution to such problems as big, convoluted classes—especially when the class in question deals with multiple responsibilities. Private methods are often good targets to start with—and easy too. Sometimes you’ll need to extract even more than one class from such a bad boy—just don’t do it all in one step. Once you find enough coherent meat that seems to belong into a specialized object of its own you can extract that functionality into a new class.
+So how should we deal with this? Often, extracting a class is a handy refactoring pattern that will present itself as a reasonable solution to such problems as big, convoluted classes—especially when the class in question deals with multiple responsibilities. Private methods are often good candidates to start with—and easy too. Sometimes you’ll need to extract even more than one class from such a bad boy—just don’t do it all in one step. Once you find enough coherent meat that seems to belong into a specialized object of its own you can extract that functionality into a new class.
 
-You create a new class and gradually move the functionality over—one by one. Move each method separately and rename them if you see the reason to. Then reference the new class in the orignal one and delegate the needed functionality. Good thing you have test coverage (hopefull!) that lets you check if things still work properly. Aim at being able to reuse your extracted classes as well. Its easier to see how its done in action so lets read some code:
+You create a new class and gradually move the functionality over—one by one. Move each method separately and rename them if you see the reason to. Then reference the new class in the orignal one and delegate the needed functionality. Good thing you have test coverage (hopefull!) that lets you check if things still work properly every step of the way. Aim at being able to reuse your extracted classes as well. Its easier to see how its done in action so lets read some code:
 
 ``` ruby
 class CastingInviter
@@ -219,7 +219,7 @@ class CastingEmailHandler
 end
 ```
 
-In this solution, you’ll not only see how this separation of concerns affects your code quality, it also reads a lot better and becomes easier to digest. Here we delegate methods to a new class that is specialized to deal with delivering these invitations via email. You have one dedicated place that checks if the messages and invitees are valid and how they need to be delivered. **CastingInviter** doesn’t need to know anything about these details so we delegate these responsibilities to a new class **CastingEmailHandler**.
+In this solution, you’ll not only see how this separation of concerns affects your code quality, it also reads a lot better and becomes easier to digest. Here we delegate methods to a new class that is specialized in dealing with delivering these invitations via email. You have one dedicated place that checks if the messages and invitees are valid and how they need to be delivered. **CastingInviter** doesn’t need to know anything about these details so we delegate these responsibilities to a new class **CastingEmailHandler**.
 
 The knowledge of how to deliver and check for validity of these casting invitation emails is now all contained in our new extracted class. Do we have more code now? You bet! Was it worth it to separate concerns? Pretty sure! Can we go beyond that and refactor **CastingEmailHandler** some more? Absolutely! Knock yourself out!
 
@@ -231,13 +231,13 @@ expect(casting_inviter).to be_valid
 
 Pretty handy I think.
 
-There are more than one techniques for dealing with large classes / god objects and over the course of this series you’ll learn a couple of ways to refactor such objects. There is no fixed prescription how you need to deal with these cases—it always depends and its a case-by-case judgement call if you need to bring the big guns or if smaller, incremental refactoring techniques oblige best. I know, a bit frustrating at times. Following the [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle) (SRP) will go a long way though and is a good nose to follow.
+There are more techniques for dealing with large classes / god objects and over the course of this series you’ll learn a couple of ways to refactor such objects. There is no fixed prescription how you need to deal with these cases—it always depends and its a case-by-case judgement call if you need to bring the big guns or if smaller, incremental refactoring techniques oblige best. I know, a bit frustrating at times. Following the [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle) (SRP) will go a long way though and is a good nose to follow.
 
 + ### Long Method
 
-Having methods that got a little big is one of the most common things you encounter as a developer. You want to know at a glance what a method is supposed to do. It should also have only one level of nesting or one level of abstraction. In short, avoid to write complicated methods. I know this sounds hard and it often is. A solution that comes up frequently is extracting parts of the method into one or more new functions. This refactoring technique is called **extract method**—its one of the simplest but none the less very effective. As a nice side effect, your code becomes more readable if you name your methods appropriately.
+Having methods that got a little big is one of the most common things you encounter as a developer. In general, you want to know at a glance what a method is supposed to do. It should also have only one level of nesting or one level of abstraction. In short, avoid to write complicated methods. I know this sounds hard and it often is. A solution that comes up frequently is extracting parts of the method into one or more new functions. This refactoring technique is called **extract method**—its one of the simplest but none the less very effective. As a nice side effect, your code becomes more readable if you name your methods appropriately.
 
-Let’s take a look at a feature spec where you’ll need this technique a lot. I remember getting introduced to *extract method* while writing such feature specs and how amazing it felt when the lightbulb went on. Because feature specs like this are easy to understand they are a good candiate for extracting methods. Plus you’ll need run into exactly this scenario over and over when you write specs. 
+Let’s take a look at feature specs where you’ll need this technique a lot. I remember getting introduced to *extract method* while writing such feature specs and how amazing it felt when the lightbulb went on. Because feature specs like this are easy to understand they are a good candiate for demonstration. Plus you’ll run into similar scenarios over and over when you write your specs.
 
 **spec/features/some_feature_spec.rb**
 
@@ -262,7 +262,7 @@ feature 'M marks mission as complete' do
 end
 ```
 
-As you can easily see, there is a lot going on in this scenario. You go to the index page, sign in and create a mission for the setup, then exercise via marking the mission as complete and finally you verify the behaviour. No rocket science, but also not clean and definitely not composed for reuseability.
+As you can easily see, there is a lot going on in this scenario. You go to the index page, sign in and create a mission for the setup, then exercise via marking the mission as complete and finally you verify the behaviour. No rocket science, but also not clean and definitely not composed for reuseability. We can do better than that:
 
 **spec/features/some_feature_spec.rb**
 
@@ -306,7 +306,7 @@ end
 
 Here we extracted four methods that can be easily reused in other tests now. I hope its clear that we hit three birds with one stone. The feature is a lot more consise, it reads better and is made up of extracted components without duplication. Let’s imagine you have written all kinds of similar scenarios without extracting these methods and you want to change some implementation. Now you wish you’d taken the time to refactor your tests and have one central place to apply your changes.
 
-Sure there is an even better way to deal with feature specs like this, Page Objects for example, but that’s not our scope for today.
+Sure there is an even better way to deal with feature specs like this—Page Objects for example—but that’s not our scope for today. I guess that’s all you need to know about extracting methods. You can apply this refactoring pattern everywhere in your code—not only in specs of course. In terms of fequency of use, my guess is that it will be your number one technique to improve the quality of your code. Have fun!
 
 
 
