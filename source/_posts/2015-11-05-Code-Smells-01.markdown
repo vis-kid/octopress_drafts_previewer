@@ -233,6 +233,84 @@ Pretty handy I think.
 
 There are more than one techniques for dealing with large classes / god objects and over the course of this series you’ll learn a couple of ways to refactor such objects. There is no fixed prescription how you need to deal with these cases—it always depends and its a case-by-case judgement call if you need to bring the big guns or if smaller, incremental refactoring techniques oblige best. I know, a bit frustrating at times. Following the [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle) (SRP) will go a long way though and is a good nose to follow.
 
++ ### Long Method
+
+Having methods that got a little big is one of the most common things you encounter as a developer. You want to know at a glance what a method is supposed to do. It should also have only one level of nesting or one level of abstraction. In short, avoid to write complicated methods. I know this sounds hard and it often is. A solution that comes up frequently is extracting parts of the method into one or more new functions. This refactoring technique is called **extract method**—its one of the simplest but none the less very effective. As a nice side effect, your code becomes more readable if you name your methods appropriately.
+
+Let’s take a look at a feature spec where you’ll need this technique a lot. I remember getting introduced to *extract method* while writing such feature specs and how amazing it felt when the lightbulb went on. Because feature specs like this are easy to understand they are a good candiate for extracting methods. Plus you’ll need run into exactly this scenario over and over when you write specs. 
+
+**spec/features/some_feature_spec.rb**
+
+``` ruby
+feature 'M marks mission as complete' do
+  scenario 'successfully' do
+    visit_root_path
+    fill_in      'Email', with: email
+    click_button 'Submit'
+    sign_in_as   'M@mi6.com'
+    visit missions_path
+    click_on     'Create Mission' 
+    fill_in      'Mission Name', with: 'Project Moonraker'
+    click_button 'Submit'
+
+    within "li:contains('Project Moonraker')" do
+      click_on 'Mission completed'
+    end
+
+    expect(page).to have_css 'ul.missions li.mission-name.completed', text: 'Project Moonraker'
+  end
+end
+```
+
+As you can easily see, there is a lot going on in this scenario. You go to the index page, sign in and create a mission for the setup, then exercise via marking the mission as complete and finally you verify the behaviour. No rocket science, but also not clean and definitely not composed for reuseability.
+
+**spec/features/some_feature_spec.rb**
+
+``` ruby
+require 'rails_helper'
+
+feature 'M marks mission as complete' do
+  scenario 'successfully' do
+    sign_in_as 'M@mi6.com'
+    create_classified_mission_named 'Project Moonraker'
+
+    mark_mission_as_complete        'Project Moonraker'
+
+    agent_sees_completed_mission    'Project Moonraker'
+  end
+end
+
+def create_classified_mission_named(mission_name)
+  visit missions_path
+  click_on     'Create Mission' 
+  fill_in      'Mission Name', with: mission_name
+  click_button 'Submit'
+end
+
+def mark_mission_as_complete(mission_name)
+  within "li:contains('#{mission_name}')" do
+    click_on 'Mission completed'
+  end
+end
+
+def agent_sees_completed_mission(mission_name)
+  expect(page).to have_css 'ul.missions li.mission-name.completed', text: mission_name
+end
+
+def sign_in_as(email)
+  visit root_path
+  fill_in      'Email', with: email
+  click_button 'Submit'
+end
+```
+
+Here we extracted four methods that can be easily reused in other tests now. I hope its clear that we hit three birds with one stone. The feature is a lot more consise, it reads better and is made up of extracted components without duplication. Let’s imagine you have written all kinds of similar scenarios without extracting these methods and you want to change some implementation. Now you wish you’d taken the time to refactor your tests and have one central place to apply your changes.
+
+Sure there is an even better way to deal with feature specs like this, Page Objects for example, but that’s not our scope for today.
+
+
+
+
 {% img /images/code_smells/code_smell_01.jpeg %}
 
  —I’m not taking about a facial or a nose job but a less cosmetic procedure like a Gastric Bypass which makes you restrict the amount of food you can eat.
