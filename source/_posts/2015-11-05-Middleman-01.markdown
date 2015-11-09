@@ -168,12 +168,12 @@ If you want your middleman app to be a *User* or *Organization* page on GitHub P
 
 + ### Skelleton Structure
 
-Let’s check out the skelleton structure of a Middleman app then. The main components are:
+Let’s check out the basic structure of a Middleman app. The main components are:
 
-+ **images**
-+ **javascripts**
-+ **layouts**
-+ **stylesheets**
++ **/images**
++ **/javascripts**
++ **/layouts**
++ **/stylesheets**
 + **config.rb**
 + **An index.html.erb file**
 + **A Gemfile**
@@ -197,5 +197,48 @@ set :images_dir, 'custom_foler_name'
 When you have your server running, you can check out other options to configure Middleman right in your browser: http://localhost:4567/__middleman/config/. Not all of them might make sense or are even important to know. Give it a glance and a mental bookmark is totally sufficient for now.
 
 One you run **middleman build** you can peak into the **/build** folder. All the plain HTML, CSS and JS files you need to serve your static site.
+
 {% img /images/middleman/build_structure.png %}
 
+That’s pretty much all you need to know to get started and to orient yourself.
+
++ ### Frontmatter
+
+I know, naming is hard! Anyway, every page allows you to have variables that can be stored right at the top inside a leading and a trailing triple hyphen—3 minus signs top and bottom. I’ll show you:
+
+**some.html.erb**
+
+``` erb
+---
+
+layout: Bond
+title:  Favorite bond girl names
+date:   2015-11-09
+tags:   bond, 007
+
+some_secret: I won’t get rendered until you use me.
+
+bond_girls:
+  - Strawberry Fields 
+  - Jill Masterson
+  - Tiffany Case
+
+---
+
+<h1>Top three names for Bond girls</h1>
+<ul>
+  <% current_page.data.bond_girls.each do |name| %>
+    <li><%= name %></li>
+  <% end %>
+</ul>
+
+
+```
+
+The YAML variables look just like a hash. You can access that local data through the **current_page** object: 
+
+``` ruby
+current_page.data.some_variable
+```
+
+You often use it to store tags, dates, titles and configuration options like which layout you wanna use for particular pages. Frontmatter is a [YAML](https://en.wikipedia.org/wiki/YAML) store for your variables. You can also use [JSON](https://en.wikipedia.org/wiki/JSON) if you prefer that. See, sounds way more complicated than it is. You can think of it as a place for putting data that could normally reside in a database—I mean obviously a very trimmed down version of that. I will discuss the various options and uses along the way when they come up. 
