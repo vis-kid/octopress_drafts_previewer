@@ -15,6 +15,7 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 + Smelly Code
 + Large Class / God Class
 + Long Method
++ Long Parameter List
 
 + ### Smelly Code
 
@@ -311,9 +312,9 @@ Here we extracted four methods that can be easily reused in other tests now. I h
 
 Sure there is an even better way to deal with feature specs like this—Page Objects for example—but that’s not our scope for today. I guess that’s all you need to know about extracting methods. You can apply this refactoring pattern everywhere in your code—not only in specs of course. In terms of fequency of use, my guess is that it will be your number one technique to improve the quality of your code. Have fun!
 
-+ ### Parameter Object
++ ### Long Parameter List
 
-Let’s close this article with an example how you can slim down your parameters. It gets tedious pretty fast when you have to feed your methods more than one or two arguments. Wouldn’t it be nice to drop in one object instead? That’s exactly what you can do if you introduce a parameter object.
+Let’s close this article with an example how you can slim down your parameters. It gets tedious pretty fast when you have to feed your methods more than one or two arguments. Wouldn’t it be nice to drop in one object instead? That’s exactly what you can do if you introduce a *parameter object*.
 
 All these parameters are not only a pain to write and to keep in order, it can also lead to code duplication—and we certainly want to avoid that wherever possible. What I like especially about this refactoring technique is how this affects other methods inside as well. You often are able to get rid of a lot of parameter junk down in the foodchain as well. 
 
