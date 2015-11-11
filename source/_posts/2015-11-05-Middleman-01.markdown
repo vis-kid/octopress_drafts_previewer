@@ -316,3 +316,50 @@ page "/sales/*", :layout => "sales"
 I personally like to put this layout info in the frontmatter. Its very explicit and not too repetetive. If I had a whole bunch of them though I’d rather use the wildcard approach.
 
 For any decent app, layouts can be nested of course—which means more than one **yield** block and they can be turned off as well. Maybe we’ll visit that later when we get into building something. For now that’s all you need to know about layouts.
+
++ ### Partials
+
+These lovely fellas provide you with the means to encapsulate  view code that you can reuse wherever you need. You just need to tell your view where to insert a partial and it gets rendered right in there. Partials are a very common technique for DRYing up your code—at least in Ruby land and therefore Middleman has it baked in as well.
+
+Very common examples include navbars, footers and **head** sections—which you don’t want to duplicate all over the place. Files for partials start with an underscore. For starters you can place them under **/source**. Your layouts are a good place to start with collecting code extract into partials. There are tons of ways to make use of them though. Whenever you find something you should encapsulate and reuse, partials will be a handy friend. Just like layouts, you can nest partials as well. Just try to avoid making it too confusing to follow their breadcrumbs.
+
+**/source/layouts.layout.erb**
+
+``` html
+
+<!doctype html>
+<html>
+  <head>
+    <%= partial "head" %>
+  </head>
+
+  <body class="<%= page_classes %>">
+    <%= partial "navbar" %>
+    <%= yield %>
+    <%= partial "footer" %>
+  </body>
+</html>
+
+```
+
+**source/_head.html.erb**
+
+``` html
+
+<meta charset="utf-8">
+
+<!-- Always force latest IE rendering engine or request Chrome Frame -->
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+<!-- Use title if it's in the page YAML frontmatter -->
+<title><%= current_page.data.title || "The Middleman" %></title>
+
+<%= stylesheet_link_tag "normalize", "all" %>
+<%= javascript_include_tag  "all" %>
+
+```
+
+Sometimes you want to extract a partial not just for avoiding duplication but to make your views more readable. Over time, **head** sections are notorious for becoming quite loaded for example. Within them you can have other partials that only deal with style or JS files. 
+
+You’ll realize how convenient partials are once you can apply changes that ripple through your entire app—wherever you included the partial. No need to go through a bunch of files to apply the same change over and over. If you’ve never used partials before you’ll soon learn that there is no way you wanna go back and do it any other way. Frameworks that are not smart about this soon become pale in comparison—I guess most of them have caught up by now though. 
+
