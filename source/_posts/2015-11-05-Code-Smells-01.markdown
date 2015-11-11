@@ -18,17 +18,17 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 + ### Smelly Code
 
-The following short series of articles is meant for slightly more experienced Ruby developers and starters alike. I had the impression that code smells and their refactorings can be very daunting and intimidating to newbies—especially if they are not in the fortunate position to have mentors who can turn mystical programming concepts into shining light bulbs.
+The following short series of articles is meant for slightly experienced Ruby developers and starters alike. I had the impression that code smells and their refactorings can be very daunting and intimidating to newbies—especially if they are not in the fortunate position to have mentors who can turn mystical programming concepts into shining light bulbs.
 
-So what are we talking about exactly when people mention code smells? Is it always a problem in your code? Not necessarily! Can you avoid them completely? I don’t think so! Do you mean code smells are broken code? Well, sometimes and sometimes not. Should it be my priority to fix them right away? Same answer I fear, sometimes yes and sometimes you certainly should fry bigger fish first. Are you insane? Fair question at this point! Before you continue diving into this whole smelly business, remember to take away one thing from all of this: Don’t try to fix every smell you encounter—this is most certainly a waste of your time!
+So what are we talking about exactly when people mention code smells? Is it always a problem in your code? Not necessarily! Can you avoid them completely? I don’t think so! Do you mean code smells lead to broken code? Well, sometimes and sometimes not. Should it be my priority to fix them right away? Same answer I fear, sometimes yes and sometimes you certainly should fry bigger fish first. Are you insane? Fair question at this point! Before you continue diving into this whole smelly business, remember to take away one thing from all of this: Don’t try to fix every smell you encounter—this is most certainly a waste of your time!
 
-It seems to me that code smells are a bit hard to wrap up in a nicely labeled box. There are all kinds of smells with various different options to address them. I imagine also that different programming languages and framework are prone to different kind of smells—but there are definitely a lot of common “genetic” strains among them. My attempt to describe code smells is to compare them with medical symptoms that tell you that you might have a problem. They can point to all sorts of latent problems and have a wide variety of solutions if diagnosed.
+It seems to me that code smells are a bit hard to wrap up in a nicely labeled box. There are all kinds of smells with various different options to address them. Also, different programming languages and frameworks are prone to different kind of smells—but there are definitely a lot of common “genetic” strains among them. My attempt to describe code smells is to compare them with medical symptoms that tell you that you might have a problem. They can point to all sorts of latent problems and have a wide variety of solutions if diagnosed.
 
-Thankfully its not as complicated as dealing with the human body—and psyche of course. Its a fair comparison though because some of these symptoms need to be treated right away and some others give you ample time to come up with a solution that is best for the “patient’s” overall well-being. If you have working code and you run into something smelly you’ll have to make the hard decision if its worth the time to find a fix and if that refactoring improves the stability of your app. That being said, if you stumble upon code which you can improve right away its good advice to leave the code behind a bit better—even a tiny bit better adds up substantially over time.
+Thankfully they’re overall not as complicated as dealing with the human body—and psyche of course. Its a fair comparison though because some of these symptoms need to be treated right away and some others give you ample time to come up with a solution that is best for the “patient’s” overall well-being. If you have working code and you run into something smelly you’ll have to make the hard decision if its worth the time to find a fix and if that refactoring improves the stability of your app. That being said, if you stumble upon code which you can improve right away its good advice to leave the code behind a bit better than before—even a tiny bit better adds up substantially over time.
 
 #### Resistance
 
-If the quality of your code makes the inclusion of new code harder—like deciding where to put new code is a pain or comes with a lot of ripple effects throughout your codebase for example—you’ll experience resistance from your existing code. As a guideline for code quality you can measure it always by how easy it is to introduce changes. If that is getting harder and harder its definitely time to refactor and to take the last part of *red-green-REFACTOR* more seriously in the future.
+The quality of your code becomes questionable if the inclusion of new code becomes harder—like deciding where to put new code is a pain or comes with a lot of ripple effects throughout your codebase for example. This is called resistance. As a guideline for code quality you can measure it always by how easy it is to introduce changes. If that is getting harder and harder its definitely time to refactor and to take the last part of *red-green-REFACTOR* more seriously in the future.
 
 + ### Large Class / God Class
 
@@ -55,50 +55,50 @@ class CastingInviter
   attr_reader :message, :invitees, :casting
 
   def initialize(attributes = {})
-    @message  = attributes[:message]  || ''
-    @invitees = attributes[:invitees] || ''
-    @sender   = attributes[:sender]
-    @casting  = attributes[:casting]
-  end
+	  @message  = attributes[:message]  || ''
+	  @invitees = attributes[:invitees] || ''
+	  @sender   = attributes[:sender]
+	  @casting  = attributes[:casting]
+	end
 
-  def valid?
-    valid_message? && valid_invitees?
-  end
+	def valid?
+	  valid_message? && valid_invitees?
+	end
 
-  def deliver
+	def deliver
     if valid?
       invitee_list.each do |email|
         invitation = create_invitation(email)
         Mailer.invitation_notification(invitation, @message)
       end
-    else
-      failure_message  = "Your #{ @casting } message couldn’t be sent. Invitees emails or message are invalid"
-      invitation = create_invitation(@sender)
+	  else
+	    failure_message  = "Your #{ @casting } message couldn’t be sent. Invitees emails or message are invalid"
+	    invitation = create_invitation(@sender)
       Mailer.invitation_notification(invitation, failure_message )
-    end
-  end
+	  end
+	end
 
-  private
+	private
 
-  def invalid_invitees
-    @invalid_invitees ||= invitee_list.map do |item|
+	def invalid_invitees
+	  @invalid_invitees ||= invitee_list.map do |item|
       unless item.match(EMAIL_REGEX)
-        item
-      end
-    end.compact
-  end
+	      item
+	    end
+	  end.compact
+	end
 
-  def invitee_list
-    @invitee_list ||= @invitees.gsub(/\s+/, '').split(/[\n,;]+/)
-  end
+	def invitee_list
+	  @invitee_list ||= @invitees.gsub(/\s+/, '').split(/[\n,;]+/)
+	end
 
-  def valid_message?
-    @message.present?
-  end
+	def valid_message?
+	  @message.present?
+	end
 
-  def valid_invitees?
-    invalid_invitees.empty?
-  end
+	def valid_invitees?
+	  invalid_invitees.empty?
+	end
 
   def create_invitation(email)
     Invitation.create(
@@ -129,31 +129,32 @@ You create a new class and gradually move the functionality over—one by one. M
 ``` ruby
 class CastingInviter
 
-  attr_reader :message, :invitees, :casting
+attr_reader :message, :invitees, :casting
 
   def initialize(attributes = {})
-   @message  = attributes[:message]  || ''
-   @invitees = attributes[:invitees] || ''
-   @casting  = attributes[:casting]
-   @sender   = attributes[:sender]
- end
-
-  def valid?
-    casting_email_handler.valid?
+  	@message  = attributes[:message]  || ''
+  	@invitees = attributes[:invitees] || ''
+  	@casting  = attributes[:casting]
+  	@sender   = attributes[:sender]
   end
-
+  
+  def valid?
+  	casting_email_handler.valid?
+  end
+  
   def deliver
     casting_email_handler.deliver
   end
-
+  
   private
-
+  
   def casting_email_handler
     @casting_email_handler = CastingEmailHandler.new(
       message:  message, 
       invitees: invitees, 
       casting:  casting, 
-      sender:   @sender)
+      sender:   @sender
+    )
   end
 end
 ```
@@ -163,17 +164,17 @@ class CastingEmailHandler
   EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/
 
   def initialize(attr = {})
-    @message  = attr[:message]  || ''
-    @invitees = attr[:invitees] || ''
-    @casting  = attr[:casting]
-    @sender   = attr[:sender]
+  	@message  = attr[:message]  || ''
+  	@invitees = attr[:invitees] || ''
+  	@casting  = attr[:casting]
+  	@sender   = attr[:sender]
   end
 
-  def valid?
-    valid_message? && valid_invitees?
-  end
+	def valid?
+	  valid_message? && valid_invitees?
+	end
 
-  def deliver
+	def deliver
     if valid?
       invitee_list.each do |email|
         invitation = create_invitation(email)
@@ -184,29 +185,29 @@ class CastingEmailHandler
       invitation = create_invitation(@sender)
       Mailer.invitation_notification(invitation, failure_message )
     end
-  end
+	end
 
-   private
+	private
 
-   def invalid_invitees
-    @invalid_invitees ||= invitee_list.map do |item|
+	def invalid_invitees
+	  @invalid_invitees ||= invitee_list.map do |item|
       unless item.match(EMAIL_REGEX)
-        item
-      end
-    end.compact
-  end
+	      item
+	    end
+	  end.compact
+	end
 
-  def invitee_list
-    @invitee_list ||= @invitees.gsub(/\s+/, '').split(/[\n,;]+/)
-  end
+	def invitee_list
+	  @invitee_list ||= @invitees.gsub(/\s+/, '').split(/[\n,;]+/)
+	end
 
-  def valid_invitees?
-    invalid_invitees.empty?
-  end
+	def valid_invitees?
+	  invalid_invitees.empty?
+	end
 
-  def valid_message?
-    @message.present?
-  end
+	def valid_message?
+	  @message.present?
+	end
 
   def create_invitation(email)
     Invitation.create(
@@ -247,60 +248,36 @@ feature 'M marks mission as complete' do
     visit_root_path
     fill_in      'Email', with: email
     click_button 'Submit'
-    sign_in_as   'M@mi6.com'
-    visit missions_path
-    click_on     'Create Mission' 
-    fill_in      'Mission Name', with: 'Project Moonraker'
-    click_button 'Submit'
-
-    within "li:contains('Project Moonraker')" do
-      click_on 'Mission completed'
-    end
-
-    expect(page).to have_css 'ul.missions li.mission-name.completed', text: 'Project Moonraker'
-  end
-end
-```
-
-As you can easily see, there is a lot going on in this scenario. You go to the index page, sign in and create a mission for the setup, then exercise via marking the mission as complete and finally you verify the behaviour. No rocket science, but also not clean and definitely not composed for reuseability. We can do better than that:
-
-**spec/features/some_feature_spec.rb**
-
-``` ruby
-require 'rails_helper'
-
-feature 'M marks mission as complete' do
-  scenario 'successfully' do
     sign_in_as 'M@mi6.com'
-    create_classified_mission_named 'Project Moonraker'
-
-    mark_mission_as_complete        'Project Moonraker'
-
-    agent_sees_completed_mission    'Project Moonraker'
+  create_classified_mission_named 'Project Moonraker'
+  
+  mark_mission_as_complete        'Project Moonraker'
+  
+  agent_sees_completed_mission    'Project Moonraker'
   end
 end
-
+  
 def create_classified_mission_named(mission_name)
-  visit missions_path
-  click_on     'Create Mission' 
-  fill_in      'Mission Name', with: mission_name
-  click_button 'Submit'
-end
+	visit missions_path
+	click_on     'Create Mission' 
+	fill_in      'Mission Name', with: mission_name
+	click_button 'Submit'
+	end
 
 def mark_mission_as_complete(mission_name)
-  within "li:contains('#{mission_name}')" do
-    click_on 'Mission completed'
-  end
+	within "li:contains('#{mission_name}')" do
+	  click_on 'Mission completed'
+	end
 end
 
 def agent_sees_completed_mission(mission_name)
-  expect(page).to have_css 'ul.missions li.mission-name.completed', text: mission_name
+	expect(page).to have_css 'ul.missions li.mission-name.completed', text: mission_name
 end
 
 def sign_in_as(email)
-  visit root_path
-  fill_in      'Email', with: email
-  click_button 'Submit'
+	visit root_path
+	fill_in      'Email', with: email
+	click_button 'Submit'
 end
 ```
 
@@ -308,9 +285,75 @@ Here we extracted four methods that can be easily reused in other tests now. I h
 
 Sure there is an even better way to deal with feature specs like this—Page Objects for example—but that’s not our scope for today. I guess that’s all you need to know about extracting methods. You can apply this refactoring pattern everywhere in your code—not only in specs of course. In terms of fequency of use, my guess is that it will be your number one technique to improve the quality of your code. Have fun!
 
++ ### Parameter Object
+
+Let’s close this article with an example how you can slim down your parameters. It gets tedious pretty fast when you have to feed your methods more than one or two arguments. Wouldn’t it be nice to drop in one object instead? That’s exactly what happens if you introduce a parameter object.
+
+All these parameters are not only a pain to write and to keep in order, it can also lead to code duplication—and we certainly want to avoid that wherever possible. What I like especially about this refactoring technique is how this affects other methods inside as well. You often are able to get rid of a lot of parameter junk down in the foodchain as well. 
+
+Let’s go over this simple example. M can assign a new mission and needs needs a mission name, an agent, an objective and is also able to switch between double 0 status.
 
 
+``` ruby
+class M
+  def assign_new_mission(mission_name, agent_name, objective, licence_to_kill: nil)
+    print "Mission #{mission_name} has been assigned to #{agent_name} with the objective to #{objective}."
+    if licence_to_kill
+      print " The licence to kill has been granted."
+    else
+      print "The licence to kill has not been granted."
+    end
+  end
+end
+
+m = M.new
+m.assign_new_mission('Octopussy', 'James Bond', 'find the nuclear device', licence_to_kill: true)
+# => Mission Octopussy has been assigned to James Bond with the objective to find the nuclear device. The licence to kill has been granted. 
+```
+
+When you look at this and ask what happens when the mission grows in complexity then you’re already onto something. That’s a pain point that you can only solve if you pass in a single object that has all the information you need. More often than not, you can stay away from changing #**assign_new_mission** in the future that way. As a nice side effect, we have now also separated concerns quite nicely—M handles mission asssignments and what not and doesn’t need to know much about the missions internals.
+
+``` ruby
+class Mission
+  attr_reader :mission_name, :agent_name, :objective, :licence_to_kill
+
+  def initialize(mission_name: mission_name, agent_name: agent_name, objective: objective, licence_to_kill: licence_to_kill)
+	  @mission_name    = mission_name
+	  @agent_name      = agent_name
+	  @objective       = objective
+	  @licence_to_kill = licence_to_kill
+	end
+
+	def assign
+	  print "Mission #{mission_name} has been assigned to #{agent_name} with the objective to #{objective}."
+	  if licence_to_kill
+	    print " The licence to kill has been granted."
+	  else
+	    print " The licence to kill has not been granted."
+	  end
+	end
+end
+
+class M
+  def assign_new_mission(mission)
+	  mission.assign
+	end
+end
+
+m = M.new
+mission = Mission.new(mission_name: 'Octopussy', agent_name: 'James Bond', objective: 'find the nuclear device', licence_to_kill: true)
+m.assign_new_mission(mission)
+# => Mission Octopussy has been assigned to James Bond with the objective to find the nuclear device. The licence to kill has been granted.
+```
+
+So we created a new object, **Mission**, that is soley focused on providing **M** with the information needed to assign a new mission. No need to pass in these pesky parameters yourself. Instead you tell the object to reveal the information you need inside the method itself. Additionally, we also extracted some behaviour—the information how to print into the new **Mission** object. Why should M neeed to know about printing. The new #**print_mission** also benefitted by loosing some weight. What’s also handy about this is that **Mission** might have all sorts of additional methods or states that are nicely encapsulated in one place and ready for you to access.
+
+With this technique you’ll end up with methods that are more concise, they tend to read betteri and you avoid repeating the same group of parameters all over the place. Getting rid of identical groups of parameters is also an important strategy for DRY code. Try to look out for extracting more than just your data. If you can place behaviour in the new class as well you’ll have objects that are more useful—otherwise they’ll quickly start to smell as well.  
+
+Sure, most of the time you’ll run into more complicated versions of that—and your tests will certainly also need to be adapted simultaneously during such refactorings—but if you have that simple example under your belt you’ll be ready for action.
+
+I’m gonna watch the new Bond now. Hears its not that good though…
 
 {% img /images/code_smells/code_smell_01.jpeg %}
 
- —I’m not taking about a facial or a nose job but a less cosmetic procedure like a Gastric Bypass which makes you restrict the amount of food you can eat.
+—I’m not taking about a facial or a nose job but a less cosmetic procedure like a Gastric Bypass which makes you restrict the amount of food you can eat.
