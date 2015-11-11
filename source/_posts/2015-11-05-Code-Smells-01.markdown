@@ -34,9 +34,9 @@ The quality of your code becomes questionable if the inclusion of new code becom
 
 Let’s start with something fancy sounding—“God classes”—because I think they are particular easy to grasp for beginners. God classes are a special case of a code smell called **Large Class**. In this section I’ll address both of them. If you have spent a little bit of time in Rails land you probably have seen them so often that they look normal to you. 
 
-You surely remember the “fat models, skinny controller” mantra? Well actually, skinny is good for all these classes but as a guideline its good advice for newbies I suppose. God classes are objects that attract all sorts of knowledge and behaviour like a black hole. Your usual suspects most often include the User model and whatever problem (hopefully ;) your app is trying to solve—first and foremost at least. A todo app might bulk up on the **Todos** model, a shopping app on **Products**, a photo app on **Photos**—you get the drift. People call them god classes because they know too much. They have too many connections with other classes—mostly because someone was lazy modeling them. It is hard work though to keep God classes in check. They make it really easy to dump more responsibilities onto them and as lots of greek heroes would attest, it takes a bit of skill to divide and conquer “gods”.
+You surely remember the “fat models, skinny controller” mantra? Well actually, skinny is good for all these classes but as a guideline its good advice for newbies I suppose. God classes are objects that attract all sorts of knowledge and behaviour like a black hole. Your usual suspects most often include the User model and whatever problem (hopefully ;) your app is trying to solve—first and foremost at least. A todo app might bulk up on the **Todos** model, a shopping app on **Products**, a photo app on **Photos**—you get the drift. People call them god classes because they know too much. They have too many connections with other classes—mostly because someone was modeling them lazily. It is hard work though to keep God classes in check. They make it really easy to dump more responsibilities onto them and as lots of greek heroes would attest, it takes a bit of skill to divide and conquer “gods”.
 
-The problem with them is that they become harder and harder to understand, especially for new team members, harder to change and reuse becomes less and less of an option the more gravity they amassed. Oh yeah, you’re right, your tests are unnecessarily harder to write as well. In short, there is not really an upside to having large classes and god classes in particular.
+The problem with them is that they become harder and harder to understand, especially for new team members, harder to change and reuse becomes less and less of an option the more gravity they’ve amassed. Oh yeah, you’re right, your tests are unnecessarily harder to write as well. In short, there is not really an upside to having large classes and god classes in particular.
 
 There are a couple of common symptoms / signs that your class needs some heroism / surgery:
 
@@ -111,35 +111,35 @@ class CastingInviter
 end
 ```
 
-Can you see how much nastyness is bundled in here? Of course I put a little cherry on top, but you will run into code like this sooner or later.  Let’s think about what responsibilities this **CastingInviter** class has to juggle. 
+Ugly fella huh? Can you see how much nastyness is bundled in here? Of course I put a little cherry on top, but you will run into code like this sooner or later.  Let’s think about what responsibilities this **CastingInviter** class has to juggle. 
 
 + Delivering email
 + Checking for valid messages and email addresses
 + Getting rid of white space
 + Splitting email addresses on commas and semicolons
 
-Should all of this be dumped on a class which just wants to deliver a casting call via **deliver**? Certainly not! If your method of invitation changes you can expect to run into some [Shotgun surgery](https://en.wikipedia.org/wiki/Shotgun_surgery). CastingInviter doesn’t need to know most of these details. That’s more the responsibility of some class that is specialized in dealing with email related stuff. You’ll find many reasons to change your code as well. 
+Should all of this be dumped on a class which just wants to deliver a casting call via **deliver**? Certainly not! If your method of invitation changes you can expect to run into some [Shotgun surgery](https://en.wikipedia.org/wiki/Shotgun_surgery). CastingInviter doesn’t need to know most of these details. That’s more the responsibility of some class that is specialized in dealing with email related stuff. In the future, you’ll find many reasons to change your code in here as well.
 
 ### Extract Class
 
-So how should we deal with this? Often, extracting a class is a handy refactoring pattern that will present itself as a reasonable solution to such problems as big, convoluted classes—especially when the class in question deals with multiple responsibilities. Private methods are often good candidates to start with—and easy too. Sometimes you’ll need to extract even more than one class from such a bad boy—just don’t do it all in one step. Once you find enough coherent meat that seems to belong into a specialized object of its own you can extract that functionality into a new class.
+So how should we deal with this? Often, extracting a class is a handy refactoring pattern that will present itself as a reasonable solution to such problems as big, convoluted classes—especially when the class in question deals with multiple responsibilities. Private methods are often good candidates to start with—and easy marks as well. Sometimes you’ll need to extract even more than one class from such a bad boy—just don’t do it all in one step. Once you find enough coherent meat that seems to belong into a specialized object of its own you can extract that functionality into a new class.
 
-You create a new class and gradually move the functionality over—one by one. Move each method separately and rename them if you see the reason to. Then reference the new class in the orignal one and delegate the needed functionality. Good thing you have test coverage (hopefull!) that lets you check if things still work properly every step of the way. Aim at being able to reuse your extracted classes as well. Its easier to see how its done in action so lets read some code:
+You create a new class and gradually move the functionality over—one by one. Move each method separately and rename them if you see a reason to. Then reference the new class in the orignal one and delegate the needed functionality. Good thing you have test coverage (hopefully!) that lets you check if things still work properly every step of the way. Aim at being able to reuse your extracted classes as well. Its easier to see how its done in action so lets read some code:
 
 ``` ruby
 class CastingInviter
 
-attr_reader :message, :invitees, :casting
+  attr_reader :message, :invitees, :casting
 
   def initialize(attributes = {})
-  	@message  = attributes[:message]  || ''
-  	@invitees = attributes[:invitees] || ''
-  	@casting  = attributes[:casting]
-  	@sender   = attributes[:sender]
+    @message  = attributes[:message]  || ''
+    @invitees = attributes[:invitees] || ''
+    @casting  = attributes[:casting]
+    @sender   = attributes[:sender]
   end
   
   def valid?
-  	casting_email_handler.valid?
+    casting_email_handler.valid?
   end
   
   def deliver
@@ -164,17 +164,17 @@ class CastingEmailHandler
   EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/
 
   def initialize(attr = {})
-  	@message  = attr[:message]  || ''
-  	@invitees = attr[:invitees] || ''
-  	@casting  = attr[:casting]
-  	@sender   = attr[:sender]
+    @message  = attr[:message]  || ''
+    @invitees = attr[:invitees] || ''
+    @casting  = attr[:casting]
+    @sender   = attr[:sender]
   end
 
-	def valid?
-	  valid_message? && valid_invitees?
-	end
+  def valid?
+    valid_message? && valid_invitees?
+  end
 
-	def deliver
+  def deliver
     if valid?
       invitee_list.each do |email|
         invitation = create_invitation(email)
@@ -185,29 +185,29 @@ class CastingEmailHandler
       invitation = create_invitation(@sender)
       Mailer.invitation_notification(invitation, failure_message )
     end
-	end
+  end
 
-	private
+  private
 
-	def invalid_invitees
-	  @invalid_invitees ||= invitee_list.map do |item|
+  def invalid_invitees
+    @invalid_invitees ||= invitee_list.map do |item|
       unless item.match(EMAIL_REGEX)
-	      item
-	    end
-	  end.compact
-	end
+        item
+      end
+    end.compact
+  end
 
-	def invitee_list
-	  @invitee_list ||= @invitees.gsub(/\s+/, '').split(/[\n,;]+/)
-	end
-
-	def valid_invitees?
-	  invalid_invitees.empty?
-	end
-
-	def valid_message?
-	  @message.present?
-	end
+  def invitee_list
+    @invitee_list ||= @invitees.gsub(/\s+/, '').split(/[\n,;]+/)
+  end
+  
+  def valid_invitees?
+    invalid_invitees.empty?
+  end
+  
+  def valid_message?
+    @message.present?
+  end
 
   def create_invitation(email)
     Invitation.create(
@@ -240,20 +240,46 @@ Having methods that got a little big is one of the most common things you encoun
 
 Let’s take a look at feature specs where you’ll need this technique a lot. I remember getting introduced to *extract method* while writing such feature specs and how amazing it felt when the lightbulb went on. Because feature specs like this are easy to understand they are a good candiate for demonstration. Plus you’ll run into similar scenarios over and over when you write your specs.
 
+
 **spec/features/some_feature_spec.rb**
 
 ``` ruby
+require 'rails_helper'
+
 feature 'M marks mission as complete' do
   scenario 'successfully' do
     visit_root_path
-    fill_in      'Email', with: email
+    fill_in      'Email', with: 'M@mi6.com'
     click_button 'Submit'
+    visit missions_path
+    click_on     'Create Mission' 
+    fill_in      'Mission Name', with: 'Project Moonraker'
+    click_button 'Submit'
+
+    within "li:contains('Project Moonraker')" do
+      click_on 'Mission completed'
+    end
+
+    expect(page).to have_css 'ul.missions li.mission-name.completed', text: 'Project Moonraker'
+  end
+end
+```
+
+As you can easily see, there is a lot going on in this scenario. You go to the index page, sign in and create a mission for the setup, then exercise via marking the mission as complete and finally you verify the behaviour. No rocket science, but also not clean and definitely not composed for reuseability. We can do better than that:
+
+**spec/features/some_feature_spec.rb**
+
+``` ruby
+require 'rails_helper'
+
+feature 'M marks mission as complete' do
+  scenario 'successfully' do
     sign_in_as 'M@mi6.com'
-  create_classified_mission_named 'Project Moonraker'
+    create_classified_mission_named 'Project Moonraker'
   
-  mark_mission_as_complete        'Project Moonraker'
+    mark_mission_as_complete        'Project Moonraker'
   
-  agent_sees_completed_mission    'Project Moonraker'
+    agent_sees_completed_mission    'Project Moonraker'
   end
 end
   
@@ -281,17 +307,17 @@ def sign_in_as(email)
 end
 ```
 
-Here we extracted four methods that can be easily reused in other tests now. I hope its clear that we hit three birds with one stone. The feature is a lot more consise, it reads better and is made up of extracted components without duplication. Let’s imagine you have written all kinds of similar scenarios without extracting these methods and you want to change some implementation. Now you wish you’d taken the time to refactor your tests and have one central place to apply your changes.
+Here we extracted four methods that can be easily reused in other tests now. I hope its clear that we hit three birds with one stone. The feature is a lot more consise, it reads better and is made up of extracted components without duplication. Let’s imagine you’d have written all kinds of similar scenarios without extracting these methods and you want to change some implementation. Now you wish you’d taken the time to refactor your tests and have one central place to apply your changes.
 
 Sure there is an even better way to deal with feature specs like this—Page Objects for example—but that’s not our scope for today. I guess that’s all you need to know about extracting methods. You can apply this refactoring pattern everywhere in your code—not only in specs of course. In terms of fequency of use, my guess is that it will be your number one technique to improve the quality of your code. Have fun!
 
 + ### Parameter Object
 
-Let’s close this article with an example how you can slim down your parameters. It gets tedious pretty fast when you have to feed your methods more than one or two arguments. Wouldn’t it be nice to drop in one object instead? That’s exactly what happens if you introduce a parameter object.
+Let’s close this article with an example how you can slim down your parameters. It gets tedious pretty fast when you have to feed your methods more than one or two arguments. Wouldn’t it be nice to drop in one object instead? That’s exactly what you can do if you introduce a parameter object.
 
 All these parameters are not only a pain to write and to keep in order, it can also lead to code duplication—and we certainly want to avoid that wherever possible. What I like especially about this refactoring technique is how this affects other methods inside as well. You often are able to get rid of a lot of parameter junk down in the foodchain as well. 
 
-Let’s go over this simple example. M can assign a new mission and needs needs a mission name, an agent, an objective and is also able to switch between double 0 status.
+Let’s go over this simple example. M can assign a new mission and needs needs a mission name, an agent, an objective and is also able to switch between double 0 status—meaning their licence to kill.
 
 
 ``` ruby
@@ -311,7 +337,7 @@ m.assign_new_mission('Octopussy', 'James Bond', 'find the nuclear device', licen
 # => Mission Octopussy has been assigned to James Bond with the objective to find the nuclear device. The licence to kill has been granted. 
 ```
 
-When you look at this and ask what happens when the mission grows in complexity then you’re already onto something. That’s a pain point that you can only solve if you pass in a single object that has all the information you need. More often than not, you can stay away from changing #**assign_new_mission** in the future that way. As a nice side effect, we have now also separated concerns quite nicely—M handles mission asssignments and what not and doesn’t need to know much about the missions internals.
+When you look at this and ask what happens when the mission “parameters” grow in complexity then you’re already onto something. That’s a pain point that you can only solve if you pass in a single object that has all the information you need. More often than not, this also helps you to stay away from changing the method if the parameter object changes for some reason. 
 
 ``` ruby
 class Mission
@@ -346,14 +372,13 @@ m.assign_new_mission(mission)
 # => Mission Octopussy has been assigned to James Bond with the objective to find the nuclear device. The licence to kill has been granted.
 ```
 
-So we created a new object, **Mission**, that is soley focused on providing **M** with the information needed to assign a new mission. No need to pass in these pesky parameters yourself. Instead you tell the object to reveal the information you need inside the method itself. Additionally, we also extracted some behaviour—the information how to print into the new **Mission** object. Why should M neeed to know about printing. The new #**print_mission** also benefitted by loosing some weight. What’s also handy about this is that **Mission** might have all sorts of additional methods or states that are nicely encapsulated in one place and ready for you to access.
+So we created a new object, **Mission**, that is soley focused on providing **M** with the information needed to assign a new mission and provide #**assign_new_mission** with a singular paramter object. No need to pass in these pesky parameters yourself. Instead you tell the object to reveal the information you need inside the method itself. Additionally, we also extracted some behaviour—the information how to print—into the new **Mission** object. 
 
-With this technique you’ll end up with methods that are more concise, they tend to read betteri and you avoid repeating the same group of parameters all over the place. Getting rid of identical groups of parameters is also an important strategy for DRY code. Try to look out for extracting more than just your data. If you can place behaviour in the new class as well you’ll have objects that are more useful—otherwise they’ll quickly start to smell as well.  
+Why should **M** need to know about how to print mission assignments? The new #**assign** also benefitted from extraction by loosing some weight because we didn’t need to pass in the parameter object—so no need to write stuff like **mission.mission_name**, **mission.agent_name** and so on. Now we just use our **attr_reader**(s) which is much cleaner than without the extraction. You dig? What’s also handy about this is that **Mission** might collect all sorts of additional methods or states that are nicely encapsulated in one place and ready for you to access.
+
+With this technique you’ll end up with methods that are more concise, they tend to read better and you avoid repeating the same group of parameters all over the place. Pretty good deal! Getting rid of identical groups of parameters is also an important strategy for DRY code. Try to look out for extracting more than just your data. If you can place behaviour in the new class as well you’ll have objects that are more useful—otherwise they’ll quickly start to smell as well.  
 
 Sure, most of the time you’ll run into more complicated versions of that—and your tests will certainly also need to be adapted simultaneously during such refactorings—but if you have that simple example under your belt you’ll be ready for action.
 
-I’m gonna watch the new Bond now. Hears its not that good though…
-
-{% img /images/code_smells/code_smell_01.jpeg %}
-
-—I’m not taking about a facial or a nose job but a less cosmetic procedure like a Gastric Bypass which makes you restrict the amount of food you can eat.
+I’m gonna watch the new Bond now. Heard its not that good though…
+Update: Saw Spectre. My verdict: compared to Skyfall—which was MEH imho—Spectre was wawawiwa!
