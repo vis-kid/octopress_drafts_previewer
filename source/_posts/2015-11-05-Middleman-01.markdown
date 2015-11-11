@@ -12,18 +12,16 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 ### Topics
 
-+ Middleman & Static Pages
-+ Installation & Getting Started
-+ Configuration
-+ A new Site
-+ Source vs Build vs Deploy(GitHub Pages)
-+ Structure
-+ Frontmatter
-+ Templating
 + Helpers
 + Layouts
 + Partials
-+ Extensions
++ Structure
++ A new Site
++ Frontmatter
++ Configuration
++ Middleman & Static Pages
++ Installation & Getting Started
++ Source vs Build vs Deploy(GitHub Pages)
 
 + ### Middleman & Static Pages
 
@@ -242,3 +240,5 @@ current_page.data.some_variable
 ```
 
 You often use it to store tags, dates, titles and configuration options like which layout you wanna use for particular pages. Frontmatter is a [YAML](https://en.wikipedia.org/wiki/YAML) store for your variables. You can also use [JSON](https://en.wikipedia.org/wiki/JSON) if you prefer that. See, sounds way more complicated than it is. You can think of it as a place for putting data that could normally reside in a database—I mean obviously a very trimmed down version of that. I will discuss the various options and uses along the way when they come up. 
+
+
