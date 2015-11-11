@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Drafts Previewer]]></title>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://vis-kid.github.io/octopress_drafts_previewer/"/>
-  <updated>2015-11-11T17:33:52+01:00</updated>
+  <updated>2015-11-11T17:53:08+01:00</updated>
   <id>http://vis-kid.github.io/octopress_drafts_previewer/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -288,7 +288,8 @@ The YAML variables look just like a hash. You can access that local data through
 <ul>
 <li>Smelly Code</li>
 <li>Large Class / God Class</li>
-<li><p>Long Method</p></li>
+<li>Long Method</li>
+<li><p>Long Parameter List</p></li>
 <li><h3>Smelly Code</h3></li>
 </ul>
 
@@ -592,11 +593,11 @@ end
 <p>Sure there is an even better way to deal with feature specs like this—Page Objects for example—but that’s not our scope for today. I guess that’s all you need to know about extracting methods. You can apply this refactoring pattern everywhere in your code—not only in specs of course. In terms of fequency of use, my guess is that it will be your number one technique to improve the quality of your code. Have fun!</p>
 
 <ul>
-<li><h3>Parameter Object</h3></li>
+<li><h3>Long Parameter List</h3></li>
 </ul>
 
 
-<p>Let’s close this article with an example how you can slim down your parameters. It gets tedious pretty fast when you have to feed your methods more than one or two arguments. Wouldn’t it be nice to drop in one object instead? That’s exactly what you can do if you introduce a parameter object.</p>
+<p>Let’s close this article with an example how you can slim down your parameters. It gets tedious pretty fast when you have to feed your methods more than one or two arguments. Wouldn’t it be nice to drop in one object instead? That’s exactly what you can do if you introduce a <em>parameter object</em>.</p>
 
 <p>All these parameters are not only a pain to write and to keep in order, it can also lead to code duplication—and we certainly want to avoid that wherever possible. What I like especially about this refactoring technique is how this affects other methods inside as well. You often are able to get rid of a lot of parameter junk down in the foodchain as well.</p>
 
