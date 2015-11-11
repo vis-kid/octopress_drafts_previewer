@@ -241,4 +241,78 @@ current_page.data.some_variable
 
 You often use it to store tags, dates, titles and configuration options like which layout you wanna use for particular pages. Frontmatter is a [YAML](https://en.wikipedia.org/wiki/YAML) store for your variables. You can also use [JSON](https://en.wikipedia.org/wiki/JSON) if you prefer that. See, sounds way more complicated than it is. You can think of it as a place for putting data that could normally reside in a database—I mean obviously a very trimmed down version of that. I will discuss the various options and uses along the way when they come up. 
 
++ ### Layouts
 
+The concepts of layouts and partials are closely related. Let me give you a little whirlwind tour in case you haven’t played with Rails, Sinatra or similar before. I think I should start with **layouts**first.
+
+Layouts provide you with the structure to share common markup among different pages. Its a tool to avoid duplication and to speed up your work. Instead of writing the same HTML skelleton all over the place you compose layouts for particular use cases. Popular examples are templates for both an admin and a “normal” user. They usually have a very different experience looking at the “same” page.
+
+When you initiate a simple middleman app, you’ll automatically get on **layout.erb** file in **source/layouts**. Take notice that this file is ending in **.erb** and not **.html.erb**. Layouts should not be rendered to HTML and Middleman will throw an error if you create layouts with an leftmost **.html** extension. If you use a different templating languate like Slim or Haml, layouts should have their extensions instead or **.erb** of course. As the default suggests, you should put all your layouts into the **/layouts** folder in **source**. 
+
+**source/layouts/layout.erb**
+
+``` html
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title><%= current_page.data.title || "The Middleman" %></title>
+
+    <%= stylesheet_link_tag "normalize", "all" %>
+    <%= javascript_include_tag  "all" %>
+  </head>
+
+  <body class="<%= page_classes %>">
+    <%= yield %>
+  </body>
+</html>
+```
+
+This default layout is pretty barebones but provides you all you need to get started. Let’s have a look. Basically this provides you with a skelleton that all your pages need to get going:
+
++ A little bit of meta information.
++ A dynamic page title that reads data from every pages frontmatter.
++ Helper methods that include style and JavaScript files.
++ And finally a body tag that wraps your content which is “yielded” into the layout via **<%= yield %>**.
+
+And from there you can customize this layout to your every need. Its a starting point really. The only confusing part for Ruby newbies is maybe the **yield** thingy—it just means that it passes through the rest of the content you create. In other words, **yield** is a placeholder for your views which will get rendered into it. If that concept is completely alien to you just remember to not touch it for now or your app might not work as expected. Whenever you create your own layouts, having **yield** in there is most essential. Otherwise your content whon’t show. You’ll get the hang of it in no time though.
+
+If you created different layouts you can specify via the frontmatter which layout you wanna use on a page-by-page basis. Let’s say you have a special layout for welcoming users that is a bit more salesy.
+
+**welcome.html.erb**
+
+``` html
+---
+layout: sales
+---
+
+<h1>Hello there!</h1>
+<h2> Guess what, we’re trying to sell you some stuff?</h2>
+```
+
+Alternatively you can specify layouts also in your config file.
+
+**config.rb**
+
+``` ruby
+page "/welcome.html", :layout => "sales"
+
+```
+
+If you want to avoid doing this for every page manually, you can collect them in one place. You use a wildcard (**\***) to collect a bunch of pages that use the same layout. 
+
+**config.rb**
+
+``` ruby
+page "/sales/*", :layout => "sales"
+
+```
+
+I personally like to put this layout info in the frontmatter. Its very explicit and not too repetetive. If I had a whole bunch of them though I’d rather use the wildcard approach.
+
+For any decent app, layouts can be nested of course—which means more than one **yield** block and they can be turned off as well. Maybe we’ll visit that later when we get into building something. For now that’s all you need to know about layouts.
