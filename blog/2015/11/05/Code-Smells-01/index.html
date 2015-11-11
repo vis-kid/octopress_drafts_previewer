@@ -5,16 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Drafts Previewer</title>
+  <title>Ruby / Rails Code Smells 01 - Drafts Previewer</title>
   <meta name="author" content="Your Name">
 
   
-  <meta name="description" content="Topics Middleman &amp; Static Pages
-Installation &amp; Getting Started
-Configuration
-A new Site
-Source vs Build vs Deploy(GitHub Pages)
-Structure &hellip;">
+  <meta name="description" content="Topics Smelly Code
+Large Class / God Class
+Long Method
+Smelly Code The following short series of articles is meant for slightly experienced Ruby &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,7 +21,7 @@ Structure &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://vis-kid.github.io/octopress_drafts_previewer/">
+  <link rel="canonical" href="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/11/05/Code-Smells-01/">
   <link href="/octopress_drafts_previewer/favicon.png" rel="icon">
   <link href="/octopress_drafts_previewer/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/octopress_drafts_previewer/atom.xml" rel="alternate" title="Drafts Previewer" type="application/atom+xml">
@@ -68,15 +66,12 @@ Structure &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/octopress_drafts_previewer/blog/2015/11/05/Middleman-01/">Middleman Basics 01</a></h1>
+      <h1 class="entry-title">Ruby / Rails Code Smells 01</h1>
     
     
       <p class="meta">
@@ -92,348 +87,7 @@ Structure &hellip;">
   </header>
 
 
-  <div class="entry-content"><p><img src="/octopress_drafts_previewer/images/middleman/Three_Stooges_1959.jpg"></p>
-
-<h3>Topics</h3>
-
-<ul>
-<li>Middleman &amp; Static Pages</li>
-<li>Installation &amp; Getting Started</li>
-<li>Configuration</li>
-<li>A new Site</li>
-<li>Source vs Build vs Deploy(GitHub Pages)</li>
-<li>Structure</li>
-<li>Frontmatter</li>
-<li>Templating</li>
-<li>Helpers</li>
-<li>Layouts</li>
-<li>Partials</li>
-<li><p>Extensions</p></li>
-<li><h3>Middleman &amp; Static Pages</h3></li>
-</ul>
-
-
-<p>What’s all the fuzz lately with static sites? Easy, they’re fast, pretty straightforward to set up and lightweight I’d say. Because you’re not serving anything database related, static sites are pretty reliable and speedy. HTML, CSS and JS—that’s all. What’s it for? Well, a lot of people use it to set up their blogs and personal pages. Landing pages that are hit by traffic heavily are also a good candidate. <a href="https://www.healthcare.gov/">HealthCare.gov</a> from the Obama administration famously used Jekyll, another static site generator, for their site. Its not a Swiss Army knife for every purpose but if you need something quick and easy that is able to scale out of the box, static sites can be amazing. Especially if you can host them for free on <a href="https://pages.github.com/">GitHub Pages</a> or <a href="https://www.heroku.com/">Heroku</a>.</p>
-
-<p>I guess the whole static site hipness got slowly started a few years back when <a href="http://jekyllrb.com/">Jekyll</a> came along. Of course, static sites are as old as the first “Hello World!” from Sir Tim Berners-Lee but over the past 15 years, database backed apps were mostly “all that mattered”. Couple of years back, one of the co-founders of GitHub needed a better way to write blogs and he came up with Jekyll—this hip static site generator for “Blogging like a hacker”. Its pretty amazing! I’ve used it on a couple of occasions and have only good things to report. The core team is awesome too. Anyhow, for this series my editor and I agreed it would be more interesting to cover <a href="https://middlemanapp.com/">Middleman</a>. It might be fair to say that Middleman is a bit less “blog-aware” out of the box but none the less equally as powerful and great quality-wise.</p>
-
-<p>Middleman uses Ruby and offers a pretty extensive set of features to build cool stuff. Couple of my favorite blogs use Middleman. If you’ve ever used Rails or Sinatra you’ll feel right at home. It seems Middleman and Jekyll are the go-to options for static sites in the Ruby community. I have heard more and more designers argue that they like using them too—for prototyping and for setting up their own personal pages. What a lot of these static site frameworks have in common is that they are pretty straightforward to use. I actually believe its a good idea to teach people coding by playing with one of these ruby based static site frameworks—instead of jumping into Rails or Sinatra right away. (Sure, Sinatra is small too but there are still more concepts at work compared to Middleman for example.) Next time someone wants to learn to program in Ruby and asks me for directions I’ll probably point them towards Middleman or Jekyll.</p>
-
-<p>So in this article I’ll assume that you are at least a bit interested in Ruby and have it installed on your system. Knowing how to deal with RubyGems is necessary too. I’ll do my best to not go over your head with programming concepts but I won’t cover basics like loops, code blocks and such. For the newbies among you, don’t worry, Middleman has not that many moving parts or tons of magic—not that I’m one of those magic naggers—and they I believe its easy to learn too.</p>
-
-<ul>
-<li><h3>Installation &amp; Getting Started</h3></li>
-</ul>
-
-
-<p>So you got Ruby and RubyGems under your belt? Great, then we’re good to go.</p>
-
-<p>Terminal:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>gem install middleman
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>After this process has finished, you’ll be able to use a couple of handy commands in your shell.</p>
-
-<ul>
-<li><strong>middleman init</strong></li>
-</ul>
-
-
-<p>This command initiates a new project—you just have to provide it with the name of your app.</p>
-
-<p>Terminal:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>middleman init your_fancy_app
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It also takes additional arguments like which template you wanna start with. This makes it really handy to customize your apps with templates right from the start—cuts down on repetetive setup tasks quite a bit! There are a couple ones ready out of the box—like one for blogs for example and you can use your own custom ones too of course. More on that in a later article.</p>
-
-<p>Terminal:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>middleman init your_fancy_blog --template<span class="o">=</span>blog
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>middleman init your_fancy_mobile_app --template<span class="o">=</span>mobile
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><strong>middleman server</strong></li>
-</ul>
-
-
-<p>Middleman comes with a local server for your development. Starting it up lets you see your site at <strong><a href="http://localhost:4567/">http://localhost:4567/</a> </strong>. If you just type <strong>middleman</strong> without any additional argument, your server gets also fired up. Shut down your server with <strong>CTRL-c</strong>.</p>
-
-<ul>
-<li><strong>middleman build</strong></li>
-</ul>
-
-
-<p>Once you have something you are ready to put on an internet-facing server you need to <strong>build</strong> your site. That means that whatever you have prepared in your <strong>/source</strong> folder gets processed and the final output goes into the <strong>/build</strong> folder that middleman also creates for you. All your files that use preprocessors like <a href="http://slim-lang.com/about.html">Slim</a>, <a href="http://haml.info/">Haml</a>, <a href="http://sass-lang.com/">Sass</a>, <a href="http://coffeescript.org/">CoffeeScript</a> get translated into their respective counterparts and put into your /build directory which your server will host.</p>
-
-<ul>
-<li><strong>middleman deploy</strong></li>
-</ul>
-
-
-<p>Once your site is ready to face the internet, this command deploys your <strong>/build</strong> folder onto your web server. So every update you have finished goes through that process. Its the equivalent to depoying with Git to Heroku if you have played with that in the past.</p>
-
-<h4>Attention!</h4>
-
-<p>Do yourself a favor right away and activate <a href="http://livereload.com/">LiveReload</a> to instantly refresh your pages automatically after changes to your HTML, Sass or JS files. This is of great convenience during development—you won’t regret it! In the past it was sometimes a pain to set up but Middleman offers <em>LiveReload</em> out of the box—you just need to uncomment the following line in <strong>config.rb</strong>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Reload the browser automatically whenever files change</span>
-</span><span class='line'><span class="n">activate</span> <span class="ss">:livereload</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><h3>Source vs Build vs Deploy(GitHub Pages)</h3></li>
-</ul>
-
-
-<p>So let’s get get started with <strong>/source</strong> and <strong>/build</strong> folders. Between them is the dividing line that separates your development and production sections. When you use your local web server for development, /source gets used to serve your app. The /build folder is used by your non-local servers to serve your static pages. /build gets created every time you use <strong>middleman build</strong> in your command line. Therefore you should be careful to not accidentally spend your time coding in /build because it will disappear after the build process. Sure there is Git if you’re lucky but in general, all your development is supposed to happen in /source.</p>
-
-<p>The build process creates the static sites that you want your server to host. Each file in your <strong>/source</strong> folder will get processed and then stored in <strong>/build</strong>. That means that your Sass, CoffeeScript, Slim / Haml and partials will translante themselves into CSS, JavaScript and HTML files. All the layouts will be pieced together as well. If you have activated compression for these files, this is the moment they get “uglified” too. During this whole shabang, the /build folder gets rejuvinated by getting rid of files that have no reference in /source anymore. During <strong>middleman build</strong>, any changes you made to files in /source will trigger a regeneration of new corresponding static files for /build.</p>
-
-<p>The deployment process is the last step. With the <strong>/build</strong> directory in place you have everything you need to put your app out there. My recommendation is to do this early and avoid running into any surprises. I’ll show you how to deploy via <a href="https://pages.github.com/">GitHub Pages</a>. You’ll see, it couldn’t be any easier or more convenient. Assuming that you already initiated Git (<strong>git init</strong>) It’s basically five simple steps:</p>
-
-<h3>Project Page For Users &amp; Organizations</h3>
-
-<h4>Step 00</h4>
-
-<p>We’ll need to start with adding a Gem for deployment to your <strong>Gemfile</strong>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s2">&quot;middleman-deploy&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>Step 01</h4>
-
-<p>In your terminal run</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>bundle install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>Step 02</h4>
-
-<p>Open your <strong>config.rb</strong> file and add the following:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">activate</span> <span class="ss">:deploy</span> <span class="k">do</span> <span class="o">|</span><span class="n">deploy</span><span class="o">|</span>
-</span><span class='line'>  <span class="n">deploy</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="ss">:git</span>
-</span><span class='line'>  <span class="n">deploy</span><span class="o">.</span><span class="n">branch</span> <span class="o">=</span> <span class="s1">&#39;gh-pages&#39;</span>
-</span><span class='line'>  <span class="n">deploy</span><span class="o">.</span><span class="n">build_before</span> <span class="o">=</span> <span class="kp">true</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>Attention!</h4>
-
-<p>The most important bit is the branch <code>'gh-pages</code>. That way you can setup a <strong>prject page</strong> which means that for every repo you can possibly have your own GitHub pages page. Prettty neat!</p>
-
-<h4>Step 03</h4>
-
-<p>Create a new repository on GitHub and add the remote branch—so everthing you’d normally do when you follow GitHub’s instructions.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git remote add origin https://github.com/yourusername/repositoryname.git
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you want you can back up your master branch the same way as always too.
-(optional):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git push -u origin master
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>Step 04</h4>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>middleman deploy
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Boom, that’s it! If you forget to run <strong>middleman build</strong>, with this setup the build process gets initiated automatically before the files in <strong>/build</strong> get deployed to GitHub Pages. Once you’re finished you’ll find your app under <code>username.github.io/projectname</code> or <code>organisationname.github.io/projectname</code> for organizations.</p>
-
-<p>You now have a <strong>gh-pages</strong> branch on GitHub which is used for serving your app. If you have optionally pushed your master branch also then it will be there too of course. At its most basic, this branch consists of the following folders:</p>
-
-<ul>
-<li><strong>/images</strong></li>
-<li><strong>/javascripts</strong></li>
-<li><strong>/stylesheets</strong></li>
-</ul>
-
-
-<p>and an <strong>index.html</strong> file.</p>
-
-<h3>User &amp; Organization Pages</h3>
-
-<p>If you want your middleman app to be a <em>User</em> or <em>Organization</em> page on GitHub Pages you’d need to change a little bit of configuration that is concerned with the deploy branch. These pages reside under your <code>username.github.io</code>—why you obviously can only have one of these pages. Quite honestly I don’t see the need for these, after all you’d set up your own domain name for it anyway if the app is of any importance to you. Therefore I’ll stop here and let you figure this out on your own if you find a good reason not to use plain project pages. Its not tricky or anything, the main differnce is that the content from your master branch is used to build and publish this page for you.</p>
-
-<ul>
-<li><h3>Skelleton Structure</h3></li>
-</ul>
-
-
-<p>Let’s check out the basic structure of a Middleman app. The main components are:</p>
-
-<ul>
-<li><strong>/images</strong></li>
-<li><strong>/javascripts</strong></li>
-<li><strong>/layouts</strong></li>
-<li><strong>/stylesheets</strong></li>
-<li><strong>config.rb</strong></li>
-<li><strong>An index.html.erb file</strong></li>
-<li><strong>A Gemfile</strong></li>
-</ul>
-
-
-<p>As you see below, the most Jazz goes into the <strong>/source</strong> folder. What I like about Middleman apps is their simple organization—even if you are a newbie, its pretty hard to get lost in here. One of the reasons I recommend beginners to play with Middleman first.</p>
-
-<h4>Screenshot:</h4>
-
-<p><img src="/octopress_drafts_previewer/images/middleman/source_structure.png"></p>
-
-<p>If you are unhappy with the naming of some of these folders you can change that in your configurations (<strong>config.rb</strong>) of course. The same names will be used then for your finished <strong>/build</strong> folder.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">set</span> <span class="ss">:css_dir</span><span class="p">,</span>    <span class="s1">&#39;custom_foler_name&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">set</span> <span class="ss">:js_dir</span><span class="p">,</span>     <span class="s1">&#39;custom_foler_name&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">set</span> <span class="ss">:images_dir</span><span class="p">,</span> <span class="s1">&#39;custom_foler_name&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<p>When you have your server running, you can check out other options to configure Middleman right in your browser: <a href="http://localhost:4567/__middleman/config/.">http://localhost:4567/__middleman/config/.</a> Not all of them might make sense or are even important to know. Give it a glance and a mental bookmark is totally sufficient for now.</p>
-
-<p>One you run <strong>middleman build</strong> you can peak into the <strong>/build</strong> folder. All the plain HTML, CSS and JS files you need to serve your static site.</p>
-
-<p><img src="/octopress_drafts_previewer/images/middleman/build_structure.png"></p>
-
-<p>That’s pretty much all you need to know to get started and to orient yourself.</p>
-
-<ul>
-<li><h3>Frontmatter</h3></li>
-</ul>
-
-
-<p>I know, naming is hard! Anyway, every page allows you to have variables that can be stored right at the top inside a leading and a trailing triple hyphen—3 minus signs top and bottom. I’ll show you:</p>
-
-<p><strong>some.html.erb</strong></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='erb'><span class='line'><span class="x">---</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">layout: Bond</span>
-</span><span class='line'><span class="x">title:  Favorite bond girl names</span>
-</span><span class='line'><span class="x">date:   2015-11-09</span>
-</span><span class='line'><span class="x">tags:   bond, 007</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">some_secret: I won’t get rendered until you use me.</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">bond_girls:</span>
-</span><span class='line'><span class="x">  - Strawberry Fields </span>
-</span><span class='line'><span class="x">  - Jill Masterson</span>
-</span><span class='line'><span class="x">  - Tiffany Case</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">---</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;h1&gt;Top three names for Bond girls&lt;/h1&gt;</span>
-</span><span class='line'><span class="x">&lt;ul&gt;</span>
-</span><span class='line'><span class="x">  </span><span class="cp">&lt;%</span> <span class="n">current_page</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">bond_girls</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="o">|</span> <span class="cp">%&gt;</span><span class="x"></span>
-</span><span class='line'><span class="x">    &lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="nb">name</span> <span class="cp">%&gt;</span><span class="x">&lt;/li&gt;</span>
-</span><span class='line'><span class="x">  </span><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span><span class="x"></span>
-</span><span class='line'><span class="x">&lt;/ul&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The YAML variables look just like a hash. You can access that local data through the <strong>current_page</strong> object:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">current_page</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">some_variable</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You often use it to store tags, dates, titles and configuration options like which layout you wanna use for particular pages. Frontmatter is a <a href="https://en.wikipedia.org/wiki/YAML">YAML</a> store for your variables. You can also use <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> if you prefer that. See, sounds way more complicated than it is. You can think of it as a place for putting data that could normally reside in a database—I mean obviously a very trimmed down version of that. I will discuss the various options and uses along the way when they come up.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/octopress_drafts_previewer/blog/2015/11/05/Code-Smells-01/">Ruby / Rails Code Smells 01</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-11-05T04:29:10+01:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>4:29 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/octopress_drafts_previewer/images/code_smells/code_smell_01.jpeg"></p>
+<div class="entry-content"><p><img src="/octopress_drafts_previewer/images/code_smells/code_smell_01.jpeg"></p>
 
 <h3>Topics</h3>
 
@@ -1072,18 +726,52 @@ Structure &hellip;">
 <p>I’m gonna watch the new Bond now. Heard its not that good though…
 Update: Saw Spectre. My verdict: compared to Skyfall—which was MEH imho—Spectre was wawawiwa!</p>
 </div>
-  
-  
 
 
-    </article>
+  <footer>
+    <p class="meta">
+      
   
-  <div class="pagination">
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-11-05T04:29:10+01:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>4:29 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/octopress_drafts_previewer/blog/categories/bdd/'>bdd</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/factory-girl/'>factory girl</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/rails/'>rails</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/rspec/'>rspec</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/ruby/'>ruby</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/tdd/'>tdd</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/test-driven-design/'>test-driven-design</a>, <a class='category' href='/octopress_drafts_previewer/blog/categories/thoughtbot/'>thoughtbot</a>
+  
+</span>
+
+
+    </p>
     
-    <a href="/octopress_drafts_previewer/blog/archives">Blog Archives</a>
-    
-  </div>
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/11/05/Code-Smells-01/" data-via="" data-counturl="http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/11/05/Code-Smells-01/" >Tweet</a>
+  
+  
+  
 </div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/octopress_drafts_previewer/blog/2015/11/05/Middleman-01/" title="Next Post: Middleman Basics 01">Middleman Basics 01 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -1107,6 +795,7 @@ Update: Saw Spectre. My verdict: compared to Skyfall—which was MEH imho—Spec
 
   
 </aside>
+
 
     </div>
   </div>
