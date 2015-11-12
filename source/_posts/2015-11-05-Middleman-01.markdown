@@ -338,7 +338,7 @@ These lovely fellas provide you with the means to encapsulate  view code that yo
 
 Very common examples include navbars, footers and **head** sections—which you don’t want to duplicate all over the place. Files for partials start with an underscore. For starters you can place them under **/source**. Your layouts are a good place to start with collecting code extract into partials. There are tons of ways to make use of them though. Whenever you find something you should encapsulate and reuse, partials will be a handy friend. Just like layouts, you can nest partials as well. Just try to avoid making it too confusing to follow their breadcrumbs.
 
-**/source/layouts.layout.erb**
+**/source/layouts/layout.erb**
 
 ``` html
 
@@ -380,17 +380,183 @@ You’ll realize how convenient partials are once you can apply changes that rip
 
 + ### Helpers
 
-Here’s an overview what’s at your disposal:
+Helpers are methods that you can use for a lot of everyday taks in your views. I believe this was pioneerd in Rails land and quickly became ubiquitous for web modern web development. You’ve already seen helpers to include stylesheets and JavaScript files. There’s a lot more where this is coming from though.
+
+**/source/_head.html.erb**
+
+``` html
+
+<head>
+  <%= stylesheet_link_tag "normalize", "all" %>
+  <%= javascript_include_tag  "all" %>
+</head>
+
+```
+
+They are meant to help you write cleaner and more concise view code. In the helpers list below you’ll find a lot of useful stuff that comes out of the box. You are not limited by that though. Write your own helper methods in **config.rb** or collect them separately in a module. Totally up to you.
+
+It works like this: In your **config.rb** you create a **helpers** block and put all your helper methods inside. That’s it. Now your views have access to them.
+
+**/source/_navbar.erb**
+
+``` html
+
+<nav>
+  <%= random_username %>
+  <%= random_image %>
+</nav>
+
+```
+
+**config.rb**
+
+``` ruby
+
+helpers do
+
+  def random_username
+    "#{lorem.first_name} #{lorem.last_name}"
+	end
+
+	def random_image
+    image_tag "#{lorem.image('30x40', :background_color => '333', :color => 'fff')}"
+	end
+
+end
+
+```
+
+These simple helpers might come in handy when I quickly wanna prototype something and want to avoid setting up dummy images and text myself. Just drop in a helper in your view, test how it looks and replace it when you have real content for exmaple. Overall, you should look out for code that you’d like to be more concise or that you duplicate over and over again. Helpers are often a good home for that.
+
+Inside these custom helpers I used other Middleman helpers for creating **img** tags through **image_tag** as well as the **lorem** object for some random user names and image placeholders. These lorem thingies can be a bit customized to suit your needs. 
+
+Using the module approach, you need a separate file for your module. Create a **lib** directory in your root folder—same level as **source** and **build**—and create a file for your helpers.
+
+**/lib/helpers.rb**
+
+``` ruby
+
+module PrototypingHelpers
+	def random_image
+    image_tag "#{lorem.image('300x400', :background_color => '333', :color => 'fff')}"
+	end
+
+  def random_username
+    "#{lorem.first_name} #{lorem.last_name}"
+	end
+end
+
+```
+
+Then you’ll need to let your **config.rb** file know that you wanna use these helpers:
+
+**config.rb**
+
+``` ruby
+
+require 'lib/helpers'
+helpers PrototypingHelpers
+
+```
+
+Boom! You’re ready to roll. In general, I’d go with the module approach right away. Feels a lot cleaner to me—plus you avoid polluting your config file with too much stuff.
+
+I’d also like to look into output helpers and **content_for** in particular—since they can be a bit confusing for newbies. This let’s you capture a bunch of content that you can yield / reuse someplace else. Its a minature partial of sorts if you like. I personally would go with a partial most of the time I guess but every now and then when you wanna apply on-off changes more surgically this is handy to know. I’ll show you how you can play with this one:
+
+
+**index.html.erb**
+
+``` html
+
+<% content_for :navigation do %>
+  <ul>
+    <li>Home</li>
+    <li>Posts</li>
+    <li>About</li>
+    <li>Contact</li>
+  </ul>
+<% end %>
+
+<h1> Hello new user!</h1>
+...
+
+```
+
+**admin_index.html.erb**
+
+``` html
+
+<% content_for :admin_navigation do %>
+  <ul>
+    <li>Stats</li>
+    <li>Edit articles</li>
+    <li>Home</li>
+    <li>Posts</li>
+    <li>About</li>
+    <li>Contact</li>
+  </ul>
+<% end %>
+
+<% content_for :admin_javascript do %>
+  <%= javascript_include_tag  "admin" %>
+  <%= javascript_include_tag  "some_library" %>
+<% end %>
+
+<h1> Hello Ms. Admin!</h1>
+...
+
+```
+
+**layout.erb**
+
+``` html
+
+<html>
+  <head>
+      <% if content_for?(:admin_javascript) %> 
+        <%= yield_content :admin_javascript %>
+      <% else %>
+        <%= javascript_include_tag  "all" %>
+      <% end %>
+  </head>
+
+  <body class="<%= page_classes %>">
+    <nav>
+      <% if content_for?(:admin_navigation) %> 
+        <%= yield_content :admin_navigation %>
+      <% else %>
+        <%= yield_content :navigation %>
+      <% end %>
+    </nav>
+
+    <%= yield %>
+
+    <%= partial "footer" %>
+  </body>
+</html>
+
+```
+
+The key is using **yield_content** which is putting your collected content on the page—if found. When you need to make this a bit more involved, use **content_for?** to check for specific content blocks before you insert them. It is handy when you want to make small adaptions for sections that differ only slightly. Its kinda cool that you can save this content a bit like a configuration on the relevant pages themselves and “activate” it only where needed. You probably shouldn’t get too clever with these things though.
+
+Below is an overview what helpers are out-of-the-box at your disposal. I think the names are mostly self-explanatory and I shouldn’t go over what each of these can help you with. Make a mental bookmark what’s out there and check back with the documentation if they give you any trouble. By now, I’m pretty sure you got this. If not, nothing wrong with that either. Hang in there! 
 
 ### Tag Helpers
 
 + **tag**
 + **link_to**
 + **input_tag**
-+ **content_for**
 + **favicon_tag**
 + **stylesheet_link_tag**
 + **javascript_include_tag**
+
+### Output Helpers
+
++ **content_for**
++ **content_for?**
++ **capture_html**
++ **yield_content**
++ **concat_content**
 
 ### Form Helpers
 
@@ -398,9 +564,9 @@ Here’s an overview what’s at your disposal:
 + **label_tag**
 + **submit_tag**
 + **select_tag**
-+ **check_box_tag**
 + **field_set_tag**
 + **text_field_tag**
++ **check_box_tag**
 + **password_field_tag**
 
 ### Format Helpers
