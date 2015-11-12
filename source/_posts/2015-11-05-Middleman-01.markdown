@@ -200,6 +200,10 @@ One you run **middleman build** you can peak into the **/build** folder. All the
 
 That’s pretty much all you need to know to get started and to orient yourself.
 
+#### Suggestion
+
+At this pont it would make a lot of sense if you start with initiating a test app yourself—in case you haven’t already. Look around and get a feel how things are organized and how the pieces fit together. You can go on without of course but I believe its easier to understand if you try it out a bit along the way.
+
 + ### Frontmatter
 
 I know, naming is hard! Anyway, every page allows you to have variables that can be stored right at the top inside a leading and a trailing triple hyphen—3 minus signs top and bottom. I’ll show you:
