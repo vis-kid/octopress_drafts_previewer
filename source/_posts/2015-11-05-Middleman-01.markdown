@@ -379,3 +379,51 @@ Sometimes you want to extract a partial not just for avoiding duplication but to
 You’ll realize how convenient partials are once you can apply changes that ripple through your entire app—wherever you included the partial. No need to go through a bunch of files to apply the same change over and over. If you’ve never used partials before you’ll soon learn that there is no way you wanna go back and do it any other way. Frameworks that are not smart about this soon become pale in comparison—I guess most of them have caught up by now though. 
 
 + ### Helpers
+
+Here’s an overview what’s at your disposal:
+
+### Tag Helpers
+
++ **tag**
++ **link_to**
++ **input_tag**
++ **content_for**
++ **favicon_tag**
++ **stylesheet_link_tag**
++ **javascript_include_tag**
+
+### Form Helpers
+
++ **form_tag**
++ **label_tag**
++ **submit_tag**
++ **select_tag**
++ **check_box_tag**
++ **field_set_tag**
++ **text_field_tag**
++ **password_field_tag**
+
+### Format Helpers
+
++ **truncate**
++ **word_wrap**
++ **pluralize**
++ **escape_html**
++ **simple_format**
++ **js_escape_html**
++ **time_ago_in_words**
++ **distance_of_time_in_words**
+
+### Lorem Helpers
+
++ **lorem.date**
++ **lorem.name**
++ **lorem.words**
++ **lorem.word**
++ **lorem.email**
++ **lorem.image**
++ **lorem.sentence**
++ **lorem.last_name**
++ **lorem.paragraph**
++ **lorem.paragraphs**
++ **lorem.first_name**
