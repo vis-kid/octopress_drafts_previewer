@@ -241,6 +241,21 @@ current_page.data.some_variable
 
 You often use it to store tags, dates, titles and configuration options like which layout you wanna use for particular pages. Frontmatter is a [YAML](https://en.wikipedia.org/wiki/YAML) store for your variables. You can also use [JSON](https://en.wikipedia.org/wiki/JSON) if you prefer that. See, sounds way more complicated than it is. You can think of it as a place for putting data that could normally reside in a database—I mean obviously a very trimmed down version of that. I will discuss the various options and uses along the way when they come up. 
 
+Maybe we should use this opportunity to briefly go over Erb lingo. Erb let’s you create dynamic templates that have embedded code in them. Your filenames need to have and **.erb** extension and you need to put your code in the following two “containers”.
+
+For code that gets exectuted but not “pinted” onto the page you use this:
+
+``` erb
+<% %>
+```
+
+Otherwise, for return values that you wanna see show up you need to add an equals sign as well. That’s it.
+
+``` erb
+<%= %>
+```
+
+
 + ### Layouts
 
 The concepts of layouts and partials are closely related. Let me give you a little whirlwind tour in case you haven’t played with Rails, Sinatra or similar before. I think I should start with **layouts**first.
@@ -363,3 +378,4 @@ Sometimes you want to extract a partial not just for avoiding duplication but to
 
 You’ll realize how convenient partials are once you can apply changes that ripple through your entire app—wherever you included the partial. No need to go through a bunch of files to apply the same change over and over. If you’ve never used partials before you’ll soon learn that there is no way you wanna go back and do it any other way. Frameworks that are not smart about this soon become pale in comparison—I guess most of them have caught up by now though. 
 
++ ### Helpers
