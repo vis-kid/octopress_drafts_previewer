@@ -15,7 +15,6 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 + Helpers
 + Layouts
 + Partials
-+ Structure
 + A new Site
 + Frontmatter
 + Configuration
@@ -25,13 +24,13 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 + ### Middleman & Static Pages
 
-What’s all the fuzz lately with static sites? Easy, they’re fast, pretty straightforward to set up and lightweight I’d say. Because you’re not serving anything database related, static sites are pretty reliable and speedy. HTML, CSS and JS—that’s all. What’s it for? Well, a lot of people use it to set up their blogs and personal pages. Landing pages that are hit by traffic heavily are also a good candidate. [HealthCare.gov](https://www.healthcare.gov/) from the Obama administration famously used Jekyll, another static site generator, for their site. Its not a Swiss Army knife for every purpose but if you need something quick and easy that is able to scale out of the box, static sites can be amazing. Especially if you can host them for free on [GitHub Pages](https://pages.github.com/) or [Heroku](https://www.heroku.com/). 
+What’s all the fuzz lately with static sites? Easy, they’re fast, pretty straightforward to set up and lightweight I’d say. Because you’re not serving anything database related, static sites are pretty reliable and speedy. HTML, CSS and if needed JS—that’s all. What’s it for? Well, a lot of people use it to set up their blogs and personal pages. Landing pages that are hit by traffic heavily are also a good candidate. [HealthCare.gov](https://www.healthcare.gov/) from the Obama administration famously used Jekyll, another static site generator, for their site. Its not a Swiss Army knife for every purpose but if you need something quick and easy that is able to scale out of the box, static sites can be amazing. Especially if you can host them for free on [GitHub Pages](https://pages.github.com/) or [Heroku](https://www.heroku.com/). 
 
 I guess the whole static site hipness got slowly started a few years back when [Jekyll](http://jekyllrb.com/) came along. Of course, static sites are as old as the first “Hello World!” from Sir Tim Berners-Lee but over the past 15 years, database backed apps were mostly “all that mattered”. Couple of years back, one of the co-founders of GitHub needed a better way to write blogs and he came up with Jekyll—this hip static site generator for “Blogging like a hacker”. Its pretty amazing! I’ve used it on a couple of occasions and have only good things to report. The core team is awesome too. Anyhow, for this series my editor and I agreed it would be more interesting to cover [Middleman](https://middlemanapp.com/). It might be fair to say that Middleman is a bit less “blog-aware” out of the box but none the less equally as powerful and great quality-wise.
 
-Middleman uses Ruby and offers a pretty extensive set of features to build cool stuff. Couple of my favorite blogs use Middleman. If you’ve ever used Rails or Sinatra you’ll feel right at home. It seems Middleman and Jekyll are the go-to options for static sites in the Ruby community. I have heard more and more designers argue that they like using them too—for prototyping and for setting up their own personal pages. What a lot of these static site frameworks have in common is that they are pretty straightforward to use. I actually believe its a good idea to teach people coding by playing with one of these ruby based static site frameworks—instead of jumping into Rails or Sinatra right away. (Sure, Sinatra is small too but there are still more concepts at work compared to Middleman for example.) Next time someone wants to learn to program in Ruby and asks me for directions I’ll probably point them towards Middleman or Jekyll.
+Middleman uses Ruby and offers a pretty extensive set of features to build cool stuff. Couple of my favorite blogs use Middleman. If you’ve ever used Rails or Sinatra you’ll feel right at home. It seems Middleman and Jekyll are the go-to options for static sites in the Ruby community. I have also heard more and more designers argue that they like using them for prototyping and for setting up their own personal pages. What a lot of these static site frameworks have in common is that they are pretty straightforward to use. I actually believe its a good idea to teach people coding by playing with one of these ruby based static site frameworks—instead of jumping into Rails or Sinatra right away. (Sure, Sinatra is small too but there are still more concepts at work compared to Middleman for example.) Next time someone wants to learn to program in Ruby and asks me for directions I’ll probably point them towards Middleman or Jekyll.
 
-So in this article I’ll assume that you are at least a bit interested in Ruby and have it installed on your system. Knowing how to deal with RubyGems is necessary too. I’ll do my best to not go over your head with programming concepts but I won’t cover basics like loops, code blocks and such. For the newbies among you, don’t worry, Middleman has not that many moving parts or tons of magic—not that I’m one of those magic naggers—and they I believe its easy to learn too. 
+So in this article I’ll assume that you are at least a bit interested in Ruby and have it installed on your system. Knowing how to deal with RubyGems is necessary too. I’ll do my best to not go over your head with programming concepts but I won’t cover basics like loops, code blocks and such. For the newbies among you, don’t worry, Middleman has not that many moving parts or tons of magic—not that I’m one of those magic naggers—and I believe its easy to learn too. 
 
 + ### Installation & Getting Started
 
@@ -54,7 +53,7 @@ Terminal:
 ``` bash
 middleman init your_fancy_app
 ```
-It also takes additional arguments like which template you wanna start with. This makes it really handy to customize your apps with templates right from the start—cuts down on repetetive setup tasks quite a bit! There are a couple ones ready out of the box—like one for blogs for example and you can use your own custom ones too of course. More on that in a later article.  
+It also takes additional arguments like which template you wanna start with. This makes it really handy to customize your apps with templates right from the start—cuts down on repetitive setup tasks quite a bit! There are a couple ones ready out of the box—like one for blogs for example and you can use your own custom ones too of course. More on that in a later article.  
 
 Terminal:
 
@@ -89,11 +88,11 @@ activate :livereload
 
 + ### Source vs Build vs Deploy(GitHub Pages)
 
-So let’s get get started with **/source** and **/build** folders. Between them is the dividing line that separates your development and production sections. When you use your local web server for development, /source gets used to serve your app. The /build folder is used by your non-local servers to serve your static pages. /build gets created every time you use **middleman build** in your command line. Therefore you should be careful to not accidentally spend your time coding in /build because it will disappear after the build process. Sure there is Git if you’re lucky but in general, all your development is supposed to happen in /source.
+So let’s get get started with **/source** and **/build** folders. Between them is the dividing line that separates your development and production sections. When you use your local web server for development, /source gets used to serve your app. The /build folder is used by your non-local servers to serve your static pages. /build gets created every time you use **middleman build** in your command line. Therefore you should be careful to not accidentally spend your time coding in /build because this work will disappear after the build process. Sure there is Git if you’re lucky but in general, all your development is supposed to happen in /source.
 
 The build process creates the static sites that you want your server to host. Each file in your **/source** folder will get processed and then stored in **/build**. That means that your Sass, CoffeeScript, Slim / Haml and partials will translante themselves into CSS, JavaScript and HTML files. All the layouts will be pieced together as well. If you have activated compression for these files, this is the moment they get “uglified” too. During this whole shabang, the /build folder gets rejuvinated by getting rid of files that have no reference in /source anymore. During **middleman build**, any changes you made to files in /source will trigger a regeneration of new corresponding static files for /build.
 
-The deployment process is the last step. With the **/build** directory in place you have everything you need to put your app out there. My recommendation is to do this early and avoid running into any surprises. I’ll show you how to deploy via [GitHub Pages](https://pages.github.com/). You’ll see, it couldn’t be any easier or more convenient. Assuming that you already initiated Git (**git init**) It’s basically five simple steps: 
+The deployment process is the last step. With the **/build** directory in place you have everything you need to put your app out there. My recommendation is to do this early and avoid running into any surprises. I’ll show you how to deploy via [GitHub Pages](https://pages.github.com/). You’ll see, it couldn’t be any easier or more convenient. Assuming that you already initiated Git (**git init**) it’s basically five simple steps: 
 
 ### Project Page For Users & Organizations
 
@@ -127,7 +126,7 @@ end
 
 #### Attention!
 
-The most important bit is the branch `'gh-pages`. That way you can setup a **prject page** which means that for every repo you can possibly have your own GitHub pages page. Prettty neat!
+The most important bit is the branch `'gh-pages`. That way you can setup a **project page** which means that for every GitHub repo you can possibly have your own GitHub pages page. Prettty neat!
 
 #### Step 03
 
@@ -137,8 +136,9 @@ Create a new repository on GitHub and add the remote branch—so everthing you�
 git remote add origin https://github.com/yourusername/repositoryname.git
 ```
 
-If you want you can back up your master branch the same way as always too.
-(optional):
+#### Optional Step
+
+If you want you can back up your master branch the same way as always **add** / **commit** your changes as well and push them up. That way you’ll have both a **master** and a **gh-pages** branch in your remote repo.
 
 ``` bash
 git push -u origin master
@@ -150,9 +150,9 @@ git push -u origin master
 middleman deploy
 ```
 
-Boom, that’s it! If you forget to run **middleman build**, with this setup the build process gets initiated automatically before the files in **/build** get deployed to GitHub Pages. Once you’re finished you’ll find your app under `username.github.io/projectname` or `organisationname.github.io/projectname` for organizations.
+Boom, that’s it! Your site is live! Now you have a **gh-pages** branch in your repo on GitHub and it will be used for all the heavy lifting of deploying your app for you. With this setup, if you forget to run **middleman build** yourself, the build process gets initiated automatically before the files in **/build** get deployed to GitHub Pages. Once you’re finished you’ll find your app under `username.github.io/projectname` or `organisationname.github.io/projectname` for organizations.
 
-You now have a **gh-pages** branch on GitHub which is used for serving your app. If you have optionally pushed your master branch also then it will be there too of course. At its most basic, this branch consists of the following folders:
+At its most basic, the **gh-pages** branch in your repo consists of the following folders:
 
 + **/images**
 + **/javascripts**
@@ -164,7 +164,7 @@ and an **index.html** file.
 
 If you want your middleman app to be a *User* or *Organization* page on GitHub Pages you’d need to change a little bit of configuration that is concerned with the deploy branch. These pages reside under your `username.github.io`—why you obviously can only have one of these pages. Quite honestly I don’t see the need for these, after all you’d set up your own domain name for it anyway if the app is of any importance to you. Therefore I’ll stop here and let you figure this out on your own if you find a good reason not to use plain project pages. Its not tricky or anything, the main differnce is that the content from your master branch is used to build and publish this page for you.
 
-+ ### Skelleton Structure
++ ### A New Site
 
 Let’s check out the basic structure of a Middleman app. The main components are:
 
@@ -176,7 +176,7 @@ Let’s check out the basic structure of a Middleman app. The main components ar
 + **An index.html.erb file**
 + **A Gemfile**
 
-As you see below, the most Jazz goes into the **/source** folder. What I like about Middleman apps is their simple organization—even if you are a newbie, its pretty hard to get lost in here. One of the reasons I recommend beginners to play with Middleman first. 
+As you can see below, the most Jazz goes into the **/source** folder. What I like about Middleman apps is their simple organization—even if you are a newbie, its pretty hard to get lost in here. One of the reasons I recommend beginners to play with Middleman first. 
 
 #### Screenshot:
 
@@ -206,7 +206,7 @@ At this pont it would make a lot of sense if you start with initiating a test ap
 
 + ### Frontmatter
 
-I know, naming is hard! Anyway, every page allows you to have variables that can be stored right at the top inside a leading and a trailing triple hyphen—3 minus signs top and bottom. I’ll show you:
+I know, naming is hard! Comes from book publishing or whatever. Anyway, every page allows you to have variables that can be stored right at the top inside a leading and a trailing triple hyphen—3 minus signs top and bottom. I’ll show you:
 
 **some.html.erb**
 
@@ -243,17 +243,19 @@ The YAML variables look just like a hash. You can access that local data through
 current_page.data.some_variable
 ```
 
-You often use it to store tags, dates, titles and configuration options like which layout you wanna use for particular pages. Frontmatter is a [YAML](https://en.wikipedia.org/wiki/YAML) store for your variables. You can also use [JSON](https://en.wikipedia.org/wiki/JSON) if you prefer that. See, sounds way more complicated than it is. You can think of it as a place for putting data that could normally reside in a database—I mean obviously a very trimmed down version of that. I will discuss the various options and uses along the way when they come up. 
+You often use it to store tags, dates, titles and configuration options—like which layout you wanna use for particular pages. Frontmatter is a [YAML](https://en.wikipedia.org/wiki/YAML) store for your variables. You can also use [JSON](https://en.wikipedia.org/wiki/JSON) if you prefer that. Hopefully this doesn’t sound way more complicated than it is. You can think of it as a place for putting data that could normally reside in a database—I mean obviously a very trimmed down version of that. I will discuss the various options and uses along the way when they come up. 
 
 Maybe we should use this opportunity to briefly go over Erb lingo. Erb let’s you create dynamic templates that have embedded code in them. Your filenames need to have and **.erb** extension and you need to put your code in the following two “containers”.
 
-For code that gets exectuted but not “pinted” onto the page you use this:
+For code that gets exectuted but not “printed” onto the page you use this:
 
 ``` erb
 <% %>
 ```
 
-Otherwise, for return values that you wanna see show up you need to add an equals sign as well. That’s it.
+Think of it as “computation only”.
+
+Otherwise, for return values that you wanna see show up “printed” on the page you need to add an equals sign as well. That’s it.
 
 ``` erb
 <%= %>
@@ -262,11 +264,11 @@ Otherwise, for return values that you wanna see show up you need to add an equal
 
 + ### Layouts
 
-The concepts of layouts and partials are closely related. Let me give you a little whirlwind tour in case you haven’t played with Rails, Sinatra or similar before. I think I should start with **layouts**first.
+The concepts of layouts and partials are closely related. Let me give you a little whirlwind tour in case you haven’t played with Rails, Sinatra or similar before. I think I should start with **layouts** first.
 
-Layouts provide you with the structure to share common markup among different pages. Its a tool to avoid duplication and to speed up your work. Instead of writing the same HTML skelleton all over the place you compose layouts for particular use cases. Popular examples are templates for both an admin and a “normal” user. They usually have a very different experience looking at the “same” page.
+Layouts provide you with the structure to share common markup among different pages—that belong to the same “family” of pages if you will. Its a tool to avoid duplication and to speed up your work. Instead of writing the same HTML skelleton all over the place you compose layouts for particular use cases. Popular examples are two different layouts for both an admin and a “normal” user. They usually have a very different experience looking at the “same” page.
 
-When you initiate a simple middleman app, you’ll automatically get on **layout.erb** file in **source/layouts**. Take notice that this file is ending in **.erb** and not **.html.erb**. Layouts should not be rendered to HTML and Middleman will throw an error if you create layouts with an leftmost **.html** extension. If you use a different templating languate like Slim or Haml, layouts should have their extensions instead or **.erb** of course. As the default suggests, you should put all your layouts into the **/layouts** folder in **source**. 
+When you initiate a simple middleman app, you’ll automatically get a **layout.erb** file in **source/layouts**. Take notice that this file is ending in **.erb** and not **.html.erb**. Layouts should not be rendered to HTML and Middleman will throw an error if you create layouts with an leftmost **.html** extension. If you use a different templating languate like Slim or Haml, layouts should have their extensions instead or **.erb** of course. As the default suggests, you should put all your layouts into the **/layouts** folder in **source**. 
 
 **source/layouts/layout.erb**
 
@@ -292,14 +294,14 @@ When you initiate a simple middleman app, you’ll automatically get on **layout
 </html>
 ```
 
-This default layout is pretty barebones but provides you all you need to get started. Let’s have a look. Basically this provides you with a skelleton that all your pages need to get going:
+This default layout is pretty barebones but provides all you need to get started. Let’s have a look: 
 
 + A little bit of meta information.
-+ A dynamic page title that reads data from every pages frontmatter.
++ A dynamic page title that reads data from every pages’ frontmatter.
 + Helper methods that include style and JavaScript files.
 + And finally a body tag that wraps your content which is “yielded” into the layout via **<%= yield %>**.
 
-And from there you can customize this layout to your every need. Its a starting point really. The only confusing part for Ruby newbies is maybe the **yield** thingy—it just means that it passes through the rest of the content you create. In other words, **yield** is a placeholder for your views which will get rendered into it. If that concept is completely alien to you just remember to not touch it for now or your app might not work as expected. Whenever you create your own layouts, having **yield** in there is most essential. Otherwise your content whon’t show. You’ll get the hang of it in no time though.
+And from there you can customize this layout to your every need. Its a starting point really. The only confusing part for Ruby newbies is maybe the **yield** thingy—it just means that it passes through the rest of the content you create. In other words, **yield** is a placeholder for your views which will get rendered into it. If that concept is completely alien to you just remember to not touch it for now or your app might not work as expected. Whenever you create your own layouts, having **yield** in there is most essential. Otherwise your content won’t show. You’ll get the hang of it in no time though.
 
 If you created different layouts you can specify via the frontmatter which layout you wanna use on a page-by-page basis. Let’s say you have a special layout for welcoming users that is a bit more salesy.
 
@@ -334,13 +336,13 @@ page "/sales/*", :layout => "sales"
 
 I personally like to put this layout info in the frontmatter. Its very explicit and not too repetetive. If I had a whole bunch of them though I’d rather use the wildcard approach.
 
-For any decent app, layouts can be nested of course—which means more than one **yield** block and they can be turned off as well. Maybe we’ll visit that later when we get into building something. For now that’s all you need to know about layouts.
+For any decent app, layouts can be nested of course—which means nested **yield** blocks as well. Layouts can be turned off as well. Maybe we’ll visit that later when we get into building something. For now that’s all you need to know about layouts.
 
 + ### Partials
 
 These lovely fellas provide you with the means to encapsulate  view code that you can reuse wherever you need. You just need to tell your view where to insert a partial and it gets rendered right in there. Partials are a very common technique for DRYing up your code—at least in Ruby land and therefore Middleman has it baked in as well.
 
-Very common examples include navbars, footers and **head** sections—which you don’t want to duplicate all over the place. Files for partials start with an underscore. For starters you can place them under **/source**. Your layouts are a good place to start with collecting code extract into partials. There are tons of ways to make use of them though. Whenever you find something you should encapsulate and reuse, partials will be a handy friend. Just like layouts, you can nest partials as well. Just try to avoid making it too confusing to follow their breadcrumbs.
+Very common examples include navbars, footers and **head** sections—which you don’t want to duplicate all over the place. Files for partials start with an underscore. For starters you can place them under **/source**. Your layouts are a good place to start with collecting code to extract into partials. There are tons of ways to make use of them though. Whenever you find something you should encapsulate and reuse, partials will be a handy friend. Just like layouts, you can nest partials as well. Just try to avoid making it too confusing to follow their breadcrumbs.
 
 **/source/layouts/layout.erb**
 
@@ -384,7 +386,7 @@ You’ll realize how convenient partials are once you can apply changes that rip
 
 + ### Helpers
 
-Helpers are methods that you can use for a lot of everyday taks in your views. I believe this was pioneerd in Rails land and quickly became ubiquitous for web modern web development. You’ve already seen helpers to include stylesheets and JavaScript files. There’s a lot more where this is coming from though.
+Helpers are methods that you can use for a lot of everyday taks in your views. I believe this was pioneered in Rails land and quickly became ubiquitous for web modern web development. You’ve already seen helpers that include stylesheets and JavaScript files. There’s a lot more where this is coming from though.
 
 **/source/_head.html.erb**
 
@@ -430,11 +432,11 @@ end
 
 ```
 
-These simple helpers might come in handy when I quickly wanna prototype something and want to avoid setting up dummy images and text myself. Just drop in a helper in your view, test how it looks and replace it when you have real content for exmaple. Overall, you should look out for code that you’d like to be more concise or that you duplicate over and over again. Helpers are often a good home for that.
+These simple helpers might come in handy when I quickly wanna prototype something and want to avoid setting up dummy images and text myself. Just drop in a helper in your view, test how it looks and replace it when you have real content for example. Overall, you should look out for code that you’d like to be more concise or that you duplicate over and over again. Helpers are often a good home for that.
 
 Inside these custom helpers I used other Middleman helpers for creating **img** tags through **image_tag** as well as the **lorem** object for some random user names and image placeholders. These lorem thingies can be a bit customized to suit your needs. 
 
-Using the module approach, you need a separate file for your module. Create a **lib** directory in your root folder—same level as **source** and **build**—and create a file for your helpers.
+Using the module approach however, you need a separate file for your module. Create a **lib** directory in your root folder—same level as **source** and **build**—and create a file for your helpers.
 
 **/lib/helpers.rb**
 
@@ -465,7 +467,7 @@ helpers PrototypingHelpers
 
 Boom! You’re ready to roll. In general, I’d go with the module approach right away. Feels a lot cleaner to me—plus you avoid polluting your config file with too much stuff.
 
-I’d also like to look into output helpers and **content_for** in particular—since they can be a bit confusing for newbies. This let’s you capture a bunch of content that you can yield / reuse someplace else. Its a minature partial of sorts if you like. I personally would go with a partial most of the time I guess but every now and then when you wanna apply on-off changes more surgically this is handy to know. I’ll show you how you can play with this one:
+I’d also like to look into output helpers and **content_for** in particular—since they can be a bit confusing for newbies. This let’s you capture a bunch of content that you can yield / reuse someplace else. Its a minature partial of sorts if you like. I personally would go with a partial most of the time I guess but every now and then when you wanna apply on-off changes more surgically this is handy to know:
 
 
 **index.html.erb**
@@ -474,10 +476,10 @@ I’d also like to look into output helpers and **content_for** in particular—
 
 <% content_for :navigation do %>
   <ul>
-    <li>Home</li>
-    <li>Posts</li>
-    <li>About</li>
-    <li>Contact</li>
+    <li><%= link_to 'Home',    '#' %></li>
+    <li><%= link_to 'Posts',   '#' %></li>
+    <li><%= link_to 'About',   '#' %></li>
+    <li><%= link_to 'Contact', '#' %></li>
   </ul>
 <% end %>
 
@@ -492,12 +494,12 @@ I’d also like to look into output helpers and **content_for** in particular—
 
 <% content_for :admin_navigation do %>
   <ul>
-    <li>Stats</li>
-    <li>Edit articles</li>
-    <li>Home</li>
-    <li>Posts</li>
-    <li>About</li>
-    <li>Contact</li>
+    <li><%= link_to 'Home',    '#' %></li>
+    <li><%= link_to 'Stats',   '#' %></li>
+    <li><%= link_to 'Edit',    '#' %></li>
+    <li><%= link_to 'Posts',   '#' %></li>
+    <li><%= link_to 'About',   '#' %></li>
+    <li><%= link_to 'Contact', '#' %></li>
   </ul>
 <% end %>
 
@@ -541,8 +543,10 @@ I’d also like to look into output helpers and **content_for** in particular—
 
 ```
 
-The key is using **yield_content** which is putting your collected content on the page—if found. When you need to make this a bit more involved, use **content_for?** to check for specific content blocks before you insert them. It is handy when you want to make small adaptions for sections that differ only slightly. Its kinda cool that you can save this content a bit like a configuration on the relevant pages themselves and “activate” it only where needed. You probably shouldn’t get too clever with these things though.
+The key is using **yield_content** which is putting your collected content from the individual page into the layout—if found. No need to just use them only with layouts btw. When you need to make this a bit more involved, use **content_for?** to check for specific content blocks before you insert them. It is handy when you want to make small adaptions for sections that differ only slightly. Its kinda cool that you can save this content a bit like a configuration on the relevant pages themselves and “activate” it only where needed. You probably shouldn’t get too clever with these things though.
 
+A word about the **link_to** helper I used above. This is probaly the one you’ll use / run into the most. You basically feed the method a name and a url or path where this link should point to. I replaced the last part with a placeholder for brevity.
+ 
 Below is an overview what helpers are out-of-the-box at your disposal. I think the names are mostly self-explanatory and I shouldn’t go over what each of these can help you with. Make a mental bookmark what’s out there and check back with the documentation if they give you any trouble. By now, I’m pretty sure you got this. If not, nothing wrong with that either. Hang in there! 
 
 ### Tag Helpers
