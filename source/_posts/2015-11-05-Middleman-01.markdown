@@ -566,8 +566,8 @@ Below is an overview what helpers are out-of-the-box at your disposal. I think t
 
 + **form_tag**
 + **label_tag**
-+ **submit_tag**
 + **select_tag**
++ **submit_tag**
 + **field_set_tag**
 + **text_field_tag**
 + **check_box_tag**
@@ -576,8 +576,8 @@ Below is an overview what helpers are out-of-the-box at your disposal. I think t
 ### Format Helpers
 
 + **truncate**
-+ **word_wrap**
 + **pluralize**
++ **word_wrap**
 + **escape_html**
 + **simple_format**
 + **js_escape_html**
@@ -597,3 +597,7 @@ Below is an overview what helpers are out-of-the-box at your disposal. I think t
 + **lorem.paragraph**
 + **lorem.paragraphs**
 + **lorem.first_name**
+
++ ### Final Thoughts
+
+I believe this is a good basis to start playing around with a toy app. You should have a good sense what Middleman offers and how to navigate the framework. In part two of this series we’ll take it further and dive a bit deeper into the framework. The Middleman team has really done a great job with designing the API and with keeping things simple. Hopefully you can see by now why this framework has gained in popularity and why it is a good choice for all sorts of static projects—also why you should maybe give it a shot for teaching somebody to code in case a newbie who’s interested in Ruby comes along.
