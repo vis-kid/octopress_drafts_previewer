@@ -17,7 +17,6 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 + Partials
 + A new Site
 + Frontmatter
-+ Configuration
 + Middleman & Static Pages
 + Installation & Getting Started
 + Source vs Build vs Deploy(GitHub Pages)
