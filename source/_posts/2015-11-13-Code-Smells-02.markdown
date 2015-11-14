@@ -16,7 +16,7 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 + ### Feature Envy
 
-Let’s revisit an example from the previous article. We extracted a long list of parameters for **#assign_new_mission** into an *parameter object* via the **Mission** class. So far so cool. And then we also extracted the method for assigning new missions—because of feature envy.
+Let’s revisit an example from the previous article. We extracted a long list of parameters for **#assign_new_mission** into an *parameter object* via the **Mission** class. So far so cool.
 
 **M with feature envy**
 
@@ -53,7 +53,7 @@ m.assign_new_mission(mission)
 
 ```
 
-I briefly mentioned that we can simplyfy the **M** class even more by moving the method to **assign_new_mission**(s) to the new class for the parameter object. What I didn’t address was the fact that **M** had an easily curable form of *feature envy* as well. She was way too nosy about the missions attributes. Its not only a bad case of micromanagement but also a very common code smell.
+I briefly mentioned why we can simplyfy the **M** class even more by moving the method to **assign_new_mission**(s) to the new class for the parameter object. What I didn’t address was the fact that **M** had an easily curable form of *feature envy* as well. She was way too nosy about the missions attributes. Its not only a bad case of micromanagement but also a very common code smell.
 
 Let me show you what I mean. In **M#assign_new_mission**, **M** is “envious” about the data in the new parameter object and wants to access it all over the place. 
 
@@ -69,6 +69,12 @@ This whole situation tells you basically that **#assign_new_mission** wants to b
 **M without feature envy**
 
 ``` ruby
+class M
+  def assign_new_mission(mission)
+    mission.assign
+  end
+end
+
 class Mission
   attr_reader :mission_name, :agent_name, :objective, :licence_to_kill
 
@@ -89,80 +95,15 @@ class Mission
   end
 end
 
-class M
-  def assign_new_mission(mission)
-    mission.assign
-  end
-end
-
 m = M.new
 mission = Mission.new(mission_name: 'Octopussy', agent_name: 'James Bond', objective: 'find the nuclear device', licence_to_kill: true)
 m.assign_new_mission(mission)
 
 ```
 
-As you can see, we simplified things quite a bit. **M** does not request missions data anymore and certainly stays away from getting involved in how printing assigments are done. Now she can focus on her real job and doesn’t need to be disturbed if any details of mission assignments change. More time for mind games and hunting down rogue agents. Win-win!
+As you can see, we simplified things quite a bit. The method slimmed down significantly and delegates the behaviour to the object in charge. **M** does not request missions data anymore and certainly stays away from getting involved in how printing assigments are done. Now she can focus on her real job and doesn’t need to be disturbed if any details of mission assignments change. More time for mind games and hunting down rogue agents. Win-win!
 
-This smell breads entanglement—by that I don’t mean the good kind, the one that let’s information travel faster than light spookingly—I’m talking about the one that might let your development momentum grind to an every more increasing halt. Not good! Bad entanglement!
+This smell breads entanglement—by that I don’t mean the good kind, the one that let’s information travel faster than light spookingly—I’m talking about the one that over time might let your development momentum grind to an every more approaching halt. Not good! Bad entanglement!
 
-Why so? Well because you wanna design classes that are concerned mostly about their own stuff and have—if possible—single responsibilities. In short, classes should be otaku loners. They keep their business to themselves and are too busy managing their own collections of vital pop-cultural achievemtns and therefore have no time peaking into their neighbors windows.
+Why so? Ripple effects throughout your code! You wanna design classes that are concerned mostly about their own stuff and have—if possible—single responsibilities. In short, classes should be something like friendly otakus. They keep their business to themselves, are too busy managing their own collections of vital pop-cultural achievemtens and therefore have no time for extracurricular stuff. Socially that might not be the healthiest of behaviours but for designing classes it often is a reasonable guideline.
 
-
-
-
-
-
-
-
-
-``` ruby
-class M
-  def assign_new_mission(mission_name, agent_name, objective, licence_to_kill: nil)
-    print "Mission #{mission_name} has been assigned to #{agent_name} with the objective to #{objective}."
-    if licence_to_kill
-      print " The licence to kill has been granted."
-    else
-      print "The licence to kill has not been granted."
-    end
-  end
-end
-
-m = M.new
-m.assign_new_mission('Octopussy', 'James Bond', 'find the nuclear device', licence_to_kill: true)
-# => Mission Octopussy has been assigned to James Bond with the objective to find the nuclear device. The licence to kill has been granted. 
-```
-
-When you look at this and ask what happens when the mission “parameters” grow in complexity then you’re already onto something. That’s a pain point that you can only solve if you pass in a single object that has all the information you need. More often than not, this also helps you to stay away from changing the method if the parameter object changes for some reason. 
-
-``` ruby
-class Mission
-  attr_reader :mission_name, :agent_name, :objective, :licence_to_kill
-
-  def initialize(mission_name: mission_name, agent_name: agent_name, objective: objective, licence_to_kill: licence_to_kill)
-	  @mission_name    = mission_name
-	  @agent_name      = agent_name
-	  @objective       = objective
-	  @licence_to_kill = licence_to_kill
-	end
-
-	def assign
-	  print "Mission #{mission_name} has been assigned to #{agent_name} with the objective to #{objective}."
-	  if licence_to_kill
-	    print " The licence to kill has been granted."
-	  else
-	    print " The licence to kill has not been granted."
-	  end
-	end
-end
-
-class M
-  def assign_new_mission(mission)
-	  mission.assign
-	end
-end
-
-m = M.new
-mission = Mission.new(mission_name: 'Octopussy', agent_name: 'James Bond', objective: 'find the nuclear device', licence_to_kill: true)
-m.assign_new_mission(mission)
-# => Mission Octopussy has been assigned to James Bond with the objective to find the nuclear device. The licence to kill has been granted.
-```
