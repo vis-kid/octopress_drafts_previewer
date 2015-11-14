@@ -44,7 +44,7 @@ movies:
 <ol>
   <% data.bond.movies.each do |movie| %>
     <li>
-          <%= image_tag movie.imge %>
+          <%= image_tag movie.image %>
       <h3><%= movie.title %></h3>
       <h6><%= movie.year %></h6>
       <p> <%= movie.text %></p>
@@ -54,3 +54,41 @@ movies:
 ```
 
 Forgive my habit of unnecessarily aligning even these little things—I feel dirty if its all rugged up. Anyway, one of the advantages of these data files is surely that they aren’t very susceptible to getting hacked. Even your **/data** directory with all the YAML or JSON data won’t get pushed to your branch that is responsible for hosting—like your **gh-pages** branch if you host your Middleman app on GitHub Pages. During the **build** phase, your data gets injected into your templates localy before it gets deployed. After that, the data in your views is just plain static HTML. Pretty cool!
+
+A word about naming here. When you have data files in a **data** directory you get access to a **data** object. Middleman then creates “objects” for every **.yml**, **.yaml** or **.json** file which you can access through the inital **data** object by chaining it on. Lastly, the object stored in your data files are added on to that—which in turn give you access to the attributes you have stored on that object. In our case, we have a movies YAML “object” with the attributes **title**, **year**, **text** and **image**.
+
+
+``` erb
+<%= data.data_file_name.yaml_or_json_object.attribute %>
+
+<%= data.bond.movies.title %>
+```
+
+If you have subdirectories, you just need to tuck them on. Let’s say you have your bond movies data file under a **spy_movies** directory (**/data/spy_movies/bond.yaml**) You’d now access it like so:
+
+``` erb
+<%= data.spy_movies.bond.movies.title %>
+```
+
+Lastly I should add that storing it in JSON might be cooler but all the excess commas, brackets and braces turn me off tbh. Not only in data files but in frontmatter sections as well. Up to you what suits you best of course. See for yourself:
+
+**some_file.yaml**
+
+``` yaml
+bond_girls:
+  - Strawberry Fields 
+  - Jill Masterson
+  - Tiffany Case
+```
+
+**some_file.json**
+
+``` javascript
+{
+  "bond_girls": [
+    "Strawberry Fields",
+    "Jill Masterson",
+    "Tiffany Case"
+  ]
+}
+```
