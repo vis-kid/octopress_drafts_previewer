@@ -8,7 +8,7 @@ published: true
 categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Factory Girl]
 ---
 
-{% img /images/code_smells/code_smell_01.jpeg %}
+{% img /images/code_smells/code_smell_01_600_mirrored.jpg %}
 
 ### Topics
 
@@ -16,7 +16,7 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 + ### Feature Envy
 
-Let’s revisit an example from the previous article. We extracted a long list of parameters for **#assign_new_mission** into an *parameter object* via the **Mission** class. So far so cool.
+Let’s revisit an example from the previous article. We extracted a long list of parameters for **#assign_new_mission** into a *parameter object* via the **Mission** class. So far so cool.
 
 **M with feature envy**
 
@@ -24,11 +24,11 @@ Let’s revisit an example from the previous article. We extracted a long list o
 class M
   def assign_new_mission(mission)
     print "Mission #{mission.mission_name} has been assigned to #{mission.agent_name} with the objective to #{mission.objective}."
-      if mission.licence_to_kill
-        print " The licence to kill has been granted."
-      else
-        print " The licence to kill has not been granted."
-      end
+    if mission.licence_to_kill
+      print " The licence to kill has been granted."
+    else
+      print " The licence to kill has not been granted."
+    end
   end
 end
 
@@ -64,7 +64,7 @@ Let me show you what I mean. In **M#assign_new_mission**, **M** is “envious”
 
 Additionally to that you also have a parameter object **Mission** that is only responsible for data right now—which is another smell.
 
-This whole situation tells you basically that **#assign_new_mission** wants to be somewhere else and **M** doesn’t need to know the details of how missions get assigned. After all, why wouldn’t it be a missions’ responsibility to assign new missions?
+This whole situation tells you basically that **#assign_new_mission** wants to be somewhere else and **M** doesn’t need to know the details of how missions get assigned. After all, why wouldn’t it be a missions’ responsibility to assign new missions? Remember to always to put things together that also change together.
 
 **M without feature envy**
 
@@ -87,11 +87,11 @@ class Mission
 
   def assign
     print "Mission #{mission_name} has been assigned to #{agent_name} with the objective to #{objective}."
-      if licence_to_kill
-        print " The licence to kill has been granted."
-      else
-        print " The licence to kill has not been granted."
-      end
+    if licence_to_kill
+      print " The licence to kill has been granted."
+    else
+      print " The licence to kill has not been granted."
+    end
   end
 end
 
@@ -101,9 +101,9 @@ m.assign_new_mission(mission)
 
 ```
 
-As you can see, we simplified things quite a bit. The method slimmed down significantly and delegates the behaviour to the object in charge. **M** does not request missions data anymore and certainly stays away from getting involved in how printing assigments are done. Now she can focus on her real job and doesn’t need to be disturbed if any details of mission assignments change. More time for mind games and hunting down rogue agents. Win-win!
+As you can see, we simplified things quite a bit. The method slimmed down significantly and delegates the behaviour to the object in charge. **M** does not request missions data specifics anymore and certainly stays away from getting involved in how printing assigments are done. Now she can focus on her real job and doesn’t need to be disturbed if any details of mission assignments change. More time for mind games and hunting down rogue agents. Win-win!
 
-This smell breads entanglement—by that I don’t mean the good kind, the one that let’s information travel faster than light spookingly—I’m talking about the one that over time might let your development momentum grind to an every more approaching halt. Not good! Bad entanglement!
+This smell breads entanglement—by that I don’t mean the good kind, the one that let’s information travel faster than light spookingly—I’m talking about the one that over time might let your development momentum grind to an every more approaching halt. Not good! Bad entanglement! Why so? Ripple effects throughout your code! A change in one place butterflies through all kinds of stuff and you end up as a kite in a hurricane. (Ok, a bit overly dramatic, but I give myself a B+ for the Bond reference in there.) 
 
-Why so? Ripple effects throughout your code! You wanna design classes that are concerned mostly about their own stuff and have—if possible—single responsibilities. In short, classes should be something like friendly otakus. They keep their business to themselves, are too busy managing their own collections of vital pop-cultural achievemtens and therefore have no time for extracurricular stuff. Socially that might not be the healthiest of behaviours but for designing classes it often is a reasonable guideline.
+As a general antidote for feature envy, you wanna aim for designing classes that are concerned mostly about their own stuff and have—if possible—single responsibilities. In short, classes should be something like friendly otakus. They keep their business to themselves, are too busy managing their own collections of vital pop-cultural achievemtens and therefore have no time for too many friends or extracurricular stuff. Socially that might not be the healthiest of behaviours but for designing classes it often is a reasonable guidelineto keep your momentum where it should be—moving forward!
 
