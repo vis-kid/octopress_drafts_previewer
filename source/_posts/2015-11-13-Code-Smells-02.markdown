@@ -116,3 +116,66 @@ This smell breads entanglement—by that I don’t mean the good kind, the one t
 As a general antidote for feature envy, you wanna aim for designing classes that are concerned mostly about their own stuff and have—if possible—single responsibilities. In short, classes should be something like friendly otakus. They keep their business to themselves, are too busy managing their own collections of vital pop-cultural achievemtens and therefore have no time for too many friends or extracurricular stuff. Socially that might not be the healthiest of behaviours but for designing classes it often is a reasonable guidelineto keep your momentum where it should be—moving forward!
 
 + ### Shotgun Surgery
+
+A little bit silly the naming isn’t? But at the same time its a pretty accurate description and funny too—definitely with a touch of nerdiness. Sounds like serious business though. It is! But luckily its not that hard to grasp. None the less its one of the nastier code smells. Why? Because it breeds dupliction like no other and its easy to loose sight of all the changes you’d need to make to fix things. What happens is you make a change in one class / file and you need to touch many other classes / files as well. 
+
+For example, if you’re in a situation where you think you can get away with one little change in one place and then realize that you have to wade through a whole bunch of files to make either the same change or fix something else that is broken because of it. NOT good, not at all! That sounds more like a good reason why people start to hate the code they’re dealing with. If you have a spectrum with DRY code on one side then code that needs often shotgun surgery is pretty much on the opposite end. Don’t be lazy and let yourself go there. I’m sure you’d rather open one file and apply your changes there. That’s the kind of lazy you should strive for!
+
+To avoid this smell here’s a short list you can look out for right away:
+
++ Code Duplication
++ Long Parameter List
++ Feature Envy
++ Coupling
+
+What do we mean when we talk about code that is coupled. Let’s say we have objects **A** and **B**. If they are not coupled then you can change one of them without affecting the other. Otherwise you’ll more often than not also have to deal with the other object as well. This is a problem and shotgun surgery is a symptom for tight coupling as well. So worry about how easy you can change your code—ALWAYS!—because that also means that your level of coupling is acceptably low. Having said that, I realize that your expectations would be  undrealistic if you want to avoid it all the time at all costs. That’s not gonna happen! You will find good reasons like replacing conditionals with *Polymorphism*. In such a case, a litle bit of coupling, shotgun surgery and keeping the API of objects in sync is well worth getting rid of a ton of case statements via a **Null Object** for example.(More on that in a later piece)  
+
+Most commonly you can apply one of the following refactorings to heal the wounds:
+
++ Move Method
++ Move Field
++ Extract Class
++ Inline Class
+
+``` ruby
+class Spectre
+  STANDARD_AMOUNT = 10000000
+  BONUS_AMOUNT    = 10000000
+
+  def charge_for_initializing_operation
+    evil_client_id = PaymentGem.find(email).client_id
+    PaymentGem.charge(evil_client_id, STANDARD_AMOUNT)
+  end
+
+  def charge_for_successful_operation
+    evil_client_id = PaymentGem.find(email).client_id
+    PaymentGem.charge(evil_client_id, BONUS_AMOUNT)
+  end
+
+  def accept_new_customer(email)
+    PaymentGem.create_customer(email)
+  end
+end
+
+class Refund
+  def process!
+    transaction_id = PaymentGem.find_transaction(order.client_id)
+    PaymentGem.refund(transaction_id, amount)
+  end
+end 
+
+class Bonus
+
+  BONUS_AMOUNT    = 1000000
+  STANDARD_AMOUNT = 200000
+
+  def process!
+    if operation.enemy_agent == 'James Bond' && operation.enemy_agent_status == 'Killed in action'
+      spectre_agent_id = PaymentGem.find(email).agent_id
+      PaymentGem.transfer_funds(spectre_agent_id, BONUS_AMOUNT)
+    else
+      PaymentGem.transfer_funds(spectre_agent_id, STANDARD_AMOUNT)
+    end
+  end
+end
+```
