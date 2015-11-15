@@ -13,11 +13,14 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 ### Topics
 
 + Feature Envy
++ Shotgun Surgery
 
 
 What you’ll quickly realize with code smells is that some of them are very close cousins, even their refactorings are sometimes related—like **Inline Class** and **Extract Class** are not that very different. With inlining a class you extract the whole class and get rid of the original one—well, been there, done that. Haven’t we? More on that in a later piece though. The point I’m trying to make is that you shouldn’t feel overwhelmed with the number of smells, refactorings and certainly not by their clever naming scheme. Things like **Shotgun Surgery**, **Feature Envy**, **Divergent Change** might sound fancy and intimidating to people new to code. Maybe I’m wrong of course.
 
 If you get into the topic and played with a couple of refactorings for code smells yourself you’ll quickly see that they often end up in the same alley and are simply different strategies to get there. Having classes that are concise, well organized and focused on a small amount of responsibilites. I think its fair to say that if you can achieve that you’ll be ahead of the pack most of the time—not that being ahead of others is so important but its simply often missing in code from people before they’re considered “experts”. So why not get into the game early and build a concrete foundation for designing your code. Don’t believe your possibly own narrative that this is an advanced topic that you should maybe put off for a while until you’re ready. Even if you’re a newbie, if you take small steps you can make sense of smells and their refactorings a lot earlier than you think.   
+
+Before we dive into the mechanics, I wanna repeat an important point from the first article. Not every smell is inherently bad and not every refactoring is always worth it. You gotta decide on the spot when you have all the relevant information at your disposal if your code is more stable after and if its worth your time to fix the smell.
 
 + ### Feature Envy
 
