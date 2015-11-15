@@ -14,6 +14,11 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 + Feature Envy
 
+
+What you’ll quickly realize with code smells is that some of them are very close cousins, even their refactorings are sometimes related—like **Inline Class** and **Extract Class** are not that very different. With inlining a class you extract the whole class and get rid of the original one—well, been there, done that. Haven’t we? More on that in a later piece though. The point I’m trying to make is that you shouldn’t feel overwhelmed with the number of smells, refactorings and certainly not by their clever naming scheme. Things like **Shotgun Surgery**, **Feature Envy**, **Divergent Change** might sound fancy and intimidating to people new to code. Maybe I’m wrong of course.
+
+If you get into the topic and played with a couple of refactorings for code smells yourself you’ll quickly see that they often end up in the same alley and are simply different strategies to get there. Having classes that are concise, well organized and focused on a small amount of responsibilites. I think its fair to say that if you can achieve that you’ll be ahead of the pack most of the time—not that being ahead of others is so important but its simply often missing in code from people before they’re considered “experts”. So why not get into the game early and build a concrete foundation for designing your code. Don’t believe your possibly own narrative that this is an advanced topic that you should maybe put off for a while until you’re ready. Even if you’re a newbie, if you take small steps you can make sense of smells and their refactorings a lot earlier than you think.   
+
 + ### Feature Envy
 
 Let’s revisit an example from the previous article. We extracted a long list of parameters for **#assign_new_mission** into a *parameter object* via the **Mission** class. So far so cool.
@@ -107,3 +112,4 @@ This smell breads entanglement—by that I don’t mean the good kind, the one t
 
 As a general antidote for feature envy, you wanna aim for designing classes that are concerned mostly about their own stuff and have—if possible—single responsibilities. In short, classes should be something like friendly otakus. They keep their business to themselves, are too busy managing their own collections of vital pop-cultural achievemtens and therefore have no time for too many friends or extracurricular stuff. Socially that might not be the healthiest of behaviours but for designing classes it often is a reasonable guidelineto keep your momentum where it should be—moving forward!
 
++ ### Shotgun Surgery
