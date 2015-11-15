@@ -13,6 +13,7 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 ### Topics
 
 + Data Files
++ Pretty URLs
 
 + ### Data Files
 
@@ -38,6 +39,8 @@ movies:
   image: "bond_movie_03.png"
 ...
 ```
+
+**source/bond-movies.html.erb**
 
 ``` erb
 <h2>Bond movies</h2>
@@ -92,3 +95,62 @@ bond_girls:
   ]
 }
 ```
++ ### Pretty URLs
+
+If you have a file like **source/bond-movies.html.erb** it will end up as http://appname.com/bond-movies.html. During the build process the we lose the **.erb** file extension and end up with the final **html** version of that page which is mirrored in the URL. That’s alright, normal stuff. For fancier URLs like http://appname.com/bond-movies we gotta work a little.
+
+You need to activate the **Directory Indexes** extension in your config.rb. This creates a folder for every **.html** file. During **middleman build** the finished page ends up in that folder as the index file of that folder—meaning that as an index file it won’t need to show up in URL. When you looked closely, you might have already seen that with the standard **index.html** file that gets created for every Middleman project. It also does not show up in the final URL. Fire up your server and see for yourself.
+
+**config.rb**
+
+``` ruby
+activate :directory_indexes
+```
+
+Let’s see what happened to your **bond-movies.html.erb** file if you activated that extension. Middleman created a **build/bond-movies** folder and your original filename changed to **index.html**. **build/bond-movies/index.html**.
+
+**Shell output**
+
+``` bash
+create  build/bond-movies/index.html
+```
+
+There is one little caveat though. Before you activated pretty URLs you could rely on using the assets path. Now with directory indexes in place you need to supply assets with their full absolute path. So calling an image just by its name for example won’t fly anymore. 
+????
+????
+????
+
+If for some reason you want to override the extension for particular file you can.
+
+**config.rb**
+
+``` ruby
+page "/bond-movies.html", :directory_index => false
+```
+
+**Shell output** if you change it back for **bond-movies.html.erb**:
+
+``` bash
+create  build/bond-movies.html
+remove  build/bond-movies/index.html
+remove  build/bond-movies
+```
+
+Now its URL business as usual for that file again. (http://appname.com/bond-movies.html)
+
+Btw, you can opt-out of the directory index naming scheme locally in your individual pages’ frontmatter as well.
+
+**source/bond-movies.html.erb**
+
+``` erb
+
+---
+directory_index: false
+---
+
+<h1>Bond movies</h1>
+...
+
+```
+
+If you wanna build that structure with folder and their respective index files yourself, Middleman is not gonna mess with you. It functions the same way and middleman ignores them if you mix and match that approach.
