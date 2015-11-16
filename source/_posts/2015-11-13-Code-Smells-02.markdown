@@ -137,46 +137,126 @@ Most commonly you can apply one of the following refactorings to heal the wounds
 + Extract Class
 + Inline Class
 
+Let’s look at some code. This example is a slice of how Spectre handles payments between their contractors and evil clients. I simplified the payments a bit by having standard fees for both contractors and clients. So it doesn’t matter if Spectre is tasked to kidnap a cat or extort a whole country, the fee stays the same. Same goes for what they pay their contractors. Spectre uses some proprietory payment gem that is basically a placeholder for any kind of payment processor. In the first example below it would be a pain if Spectre decides to use another library to handle payments. There would be more moving parts involved but for demonstrating shotgun surgery this amount of complexity will do I think:
+
+**Example with shotgun surgery smell**:
+
 ``` ruby
-class Spectre
+class EvilClient
   STANDARD_AMOUNT = 10000000
   BONUS_AMOUNT    = 10000000
 
+  def accept_new_client
+    PaymentGem.create_client(email)
+  end
+
   def charge_for_initializing_operation
-    evil_client_id = PaymentGem.find(email).client_id
+    evil_client_id = PaymentGem.find_client(email).payments_id
     PaymentGem.charge(evil_client_id, STANDARD_AMOUNT)
   end
 
   def charge_for_successful_operation
-    evil_client_id = PaymentGem.find(email).client_id
+    evil_client_id = PaymentGem.find_client(email).payments_id
     PaymentGem.charge(evil_client_id, BONUS_AMOUNT)
-  end
-
-  def accept_new_customer(email)
-    PaymentGem.create_customer(email)
   end
 end
 
-class Refund
-  STANDARD_AMOUNT = 10000000
+class RefundOperation
+  REFUND_AMOUNT = 10000000
 
   def process(operation)
-    transaction_id = PaymentGem.find_transaction(operation.client_id)
-    PaymentGem.refund(transaction_id, STANDARD_AMOUNT)
+    transaction_id = PaymentGem.find_transaction(operation.payments_id)
+    PaymentGem.refund(transaction_id, REFUND_AMOUNT)
   end
 end 
 
-class ContractorPayout
-  STANDARD_AMOUNT = 200000
-  BONUS_AMOUNT    = 1000000
+class Contractor
+  STANDARD_PAYOUT = 200000
+  BONUS_PAYOUT    = 1000000
 
-  def process(operation)
-    spectre_agent_id = PaymentGem.find(operation.spectre_agent_id)
+  def process_payout(operation)
+    spectre_agent_id = PaymentGem.find_contractor(operation.contractor_id).payments_id
     if operation.enemy_agent == 'James Bond' && operation.enemy_agent_status == 'Killed in action'
-      PaymentGem.transfer_funds(spectre_agent_id, BONUS_AMOUNT)
+      PaymentGem.transfer_funds(spectre_agent_id, BONUS_PAYOUT)
     else
-      PaymentGem.transfer_funds(spectre_agent_id, STANDARD_AMOUNT)
+      PaymentGem.transfer_funds(spectre_agent_id, STANDARD_PAYOUT)
     end
   end
 end
+```
+
+When you look at this code you should ask yourself, should the **Spectre** class be really concerned about how to accept new evil clients and charge them for operations? Of course not! Is it a good idea to spread the amounts to pay all over the place? Should the implementation details of the payments processor be showing up in any of these classes. Most definitely not!
+
+Look at it from that way. If you wanna change stuff on the way you handle payments, why would you need to open the Spectre class? In other cases it could be user ur customer. If you think about it, it doesn’t make any sense to involve them. In this example it should be easy to see that changes to the way you accept and transfer payments create ripple effects throughout your code. Also, if you wanna change the amount you charge or transfer to your contractors you’d need addtional changes all over the place. Prime examples of shotgun surgery. And in this case we’re only dealing with three classes. Imagine your pain if a bit more realistic complexity is involved. Yep, you got it, that’s the stuff nightmares are made of. Let’s look at an example that is a bit more sane:
+
+
+**Example with extracted class and without shotgun surgery smell**:
+
+``` ruby
+class PaymentHandler
+  STANDARD_CHARGE            = 10000000
+  BONUS_CHARGE               = 10000000
+  REFUND_AMOUNT              = 10000000
+  STANDARD_CONTRACTOR_PAYOUT = 200000
+  BONUS_CONTRACTOR_PAYOUT    = 1000000
+
+  def initialize(payment_handler = PaymentGem)
+    @payment_handler = payment_handler
+  end
+
+  def accept_new_client(evil_client)
+    @payment_handler.create_client(evil_client.email)
+  end
+
+  def charge_for_initializing_operation(evil_client)
+    evil_client_id = @payment_handler.find_client(evil_client.email).payments_id
+    @payment_handler.charge(evil_client_id, STANDARD_CHARGE)
+  end
+
+  def charge_for_successful_operation(evil_client)
+    evil_client_id = @payment_handler.find_client(evil_client.email).payments_id
+    @payment_handler.charge(evil_client_id, BONUS_CHARGE)
+  end
+
+  def refund(operation)
+    transaction_id = @payment_handler.find_transaction(operation.payments_id)
+    @payment_handler.refund(transaction_id, REFUND_AMOUNT)
+  end
+
+  def contractor_payout(operation)
+    spectre_agent_id = @payment_handler.find_contractor(operation.contractor_id)
+    if operation.enemy_agent == 'James Bond' && operation.enemy_agent_status == 'Killed in action'
+      @payment_handler.transfer_funds(spectre_agent_id, BONUS_CONTRACTOR_PAYOUT)
+    else
+      @payment_handler.transfer_funds(spectre_agent_id, STANDARD_CONTRACTOR_PAYOUT)
+    end
+  end
+end
+
+class EvilClient
+  def accept_new_client
+    PaymentHandler.new.accept_new_client(evil_client)    
+  end
+
+  def charge_for_initializing_operation
+    PaymentHandler.new.charge_for_initializing_operation(self) 
+  end
+
+  def charge_for_successful_operation(operation)
+    PaymentHandler.new.charge_for_successful_operation(self) 
+  end
+end
+
+class RefundOperation
+  def process
+    PaymentHandler.new.refund(self)
+  end
+end
+
+class Contractor
+  def process_payout
+    PaymentHandler.new.contractor_payout(operation)
+  end
+end
+
 ```
