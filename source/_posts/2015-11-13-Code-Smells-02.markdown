@@ -158,20 +158,21 @@ class Spectre
 end
 
 class Refund
-  def process!
-    transaction_id = PaymentGem.find_transaction(order.client_id)
-    PaymentGem.refund(transaction_id, amount)
+  STANDARD_AMOUNT = 10000000
+
+  def process(operation)
+    transaction_id = PaymentGem.find_transaction(operation.client_id)
+    PaymentGem.refund(transaction_id, STANDARD_AMOUNT)
   end
 end 
 
-class Bonus
-
-  BONUS_AMOUNT    = 1000000
+class ContractorPayout
   STANDARD_AMOUNT = 200000
+  BONUS_AMOUNT    = 1000000
 
-  def process!
+  def process(operation)
+    spectre_agent_id = PaymentGem.find(operation.spectre_agent_id)
     if operation.enemy_agent == 'James Bond' && operation.enemy_agent_status == 'Killed in action'
-      spectre_agent_id = PaymentGem.find(email).agent_id
       PaymentGem.transfer_funds(spectre_agent_id, BONUS_AMOUNT)
     else
       PaymentGem.transfer_funds(spectre_agent_id, STANDARD_AMOUNT)
