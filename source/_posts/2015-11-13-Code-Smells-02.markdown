@@ -137,12 +137,14 @@ Most commonly you can apply one of the following refactorings to heal the wounds
 + Extract Class
 + Inline Class
 
-Let’s look at some code. This example is a slice of how Spectre handles payments between their contractors and evil clients. I simplified the payments a bit by having standard fees for both contractors and clients. So it doesn’t matter if Spectre is tasked to kidnap a cat or extort a whole country, the fee stays the same. Same goes for what they pay their contractors. Spectre uses some proprietory payment gem that is basically a placeholder for any kind of payment processor. In the first example below it would be a pain if Spectre decides to use another library to handle payments. There would be more moving parts involved but for demonstrating shotgun surgery this amount of complexity will do I think:
+Let’s look at some code. This example is a slice of how a Spectre app handles payments between their contractors and evil clients. I simplified the payments a bit by having standard fees for both contractors and clients. So it doesn’t matter if Spectre is tasked to kidnap a cat or extort a whole country, the fee stays the same. Same goes for what they pay their contractors. In case an operation goes south and another Nr. 1 has to literally jump the shark, Spectre offers a full refund to keep evil clients happy. Spectre uses some proprietory payment gem that is basically a placeholder for any kind of payment processor. In the first example below it would be a pain if Spectre decides to use another library to handle payments. There would be more moving parts involved but for demonstrating shotgun surgery this amount of complexity will do I think:
 
 **Example with shotgun surgery smell**:
 
 ``` ruby
 class EvilClient
+  #...
+
   STANDARD_AMOUNT = 10000000
   BONUS_AMOUNT    = 10000000
 
@@ -162,6 +164,8 @@ class EvilClient
 end
 
 class RefundOperation
+  #...
+
   REFUND_AMOUNT = 10000000
 
   def process(operation)
@@ -171,11 +175,13 @@ class RefundOperation
 end 
 
 class Contractor
+  #...
+
   STANDARD_PAYOUT = 200000
   BONUS_PAYOUT    = 1000000
 
-  def process_payout(operation)
-    spectre_agent_id = PaymentGem.find_contractor(operation.contractor_id).payments_id
+  def process_payout
+    spectre_agent_id = PaymentGem.find_contractor(email).payments_id
     if operation.enemy_agent == 'James Bond' && operation.enemy_agent_status == 'Killed in action'
       PaymentGem.transfer_funds(spectre_agent_id, BONUS_PAYOUT)
     else
@@ -185,9 +191,9 @@ class Contractor
 end
 ```
 
-When you look at this code you should ask yourself, should the **Spectre** class be really concerned about how to accept new evil clients and charge them for operations? Of course not! Is it a good idea to spread the amounts to pay all over the place? Should the implementation details of the payments processor be showing up in any of these classes. Most definitely not!
+When you look at this code you should ask yourself, should the **EvilClients** class be really concerned about how to the payment processor accepts new evil clients and charge them for operations? Of course not! Is it a good idea to spread the various amounts to pay all over the place? Should the implementation details of the payments processor be showing up in any of these classes. Most definitely not!
 
-Look at it from that way. If you wanna change stuff on the way you handle payments, why would you need to open the Spectre class? In other cases it could be user ur customer. If you think about it, it doesn’t make any sense to involve them. In this example it should be easy to see that changes to the way you accept and transfer payments create ripple effects throughout your code. Also, if you wanna change the amount you charge or transfer to your contractors you’d need addtional changes all over the place. Prime examples of shotgun surgery. And in this case we’re only dealing with three classes. Imagine your pain if a bit more realistic complexity is involved. Yep, you got it, that’s the stuff nightmares are made of. Let’s look at an example that is a bit more sane:
+Look at it from that way. If you wanna change stuff on the way you handle payments, why would you need to open the **EvilClient** class? In other cases it could be user ur customer. If you think about it, it doesn’t make any sense to involve them. In this example it should be easy to see that changes to the way you accept and transfer payments create ripple effects throughout your code. Also, if you wanna change the amount you charge or transfer to your contractors you’d need addtional changes all over the place. Prime examples of shotgun surgery. And in this case we’re only dealing with three classes. Imagine your pain if a bit more realistic complexity is involved. Yep, you got it, that’s the stuff nightmares are made of. Let’s look at an example that is a bit more sane:
 
 
 **Example with extracted class and without shotgun surgery smell**:
@@ -223,8 +229,8 @@ class PaymentHandler
     @payment_handler.refund(transaction_id, REFUND_AMOUNT)
   end
 
-  def contractor_payout(operation)
-    spectre_agent_id = @payment_handler.find_contractor(operation.contractor_id)
+  def contractor_payout(contractor)
+    spectre_agent_id = @payment_handler.find_contractor(contractor.email).payments_id
     if operation.enemy_agent == 'James Bond' && operation.enemy_agent_status == 'Killed in action'
       @payment_handler.transfer_funds(spectre_agent_id, BONUS_CONTRACTOR_PAYOUT)
     else
@@ -234,28 +240,34 @@ class PaymentHandler
 end
 
 class EvilClient
+  #...
+
   def accept_new_client
-    PaymentHandler.new.accept_new_client(evil_client)    
+    PaymentHandler.new.accept_new_client(self)
   end
 
   def charge_for_initializing_operation
-    PaymentHandler.new.charge_for_initializing_operation(self) 
+    PaymentHandler.new.charge_for_initializing_operation(self)
   end
 
   def charge_for_successful_operation(operation)
-    PaymentHandler.new.charge_for_successful_operation(self) 
+    PaymentHandler.new.charge_for_successful_operation(self)
   end
 end
 
 class RefundOperation
+  #...
+
   def process
     PaymentHandler.new.refund(self)
   end
 end
 
 class Contractor
+  #...
+
   def process_payout
-    PaymentHandler.new.contractor_payout(operation)
+    PaymentHandler.new.contractor_payout(self)
   end
 end
 
