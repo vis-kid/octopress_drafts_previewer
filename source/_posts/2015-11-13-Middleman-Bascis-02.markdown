@@ -15,6 +15,7 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 + Data Files
 + Pretty URLs
 + Asset Pipleline
++ Project Templates
 
 + ### Data Files
 
@@ -27,17 +28,17 @@ Let’s say you have the rights to sell all James Bond movies. We could put a li
 ``` ruby
 movies:
 - title: "Dr. No"
-  year:  "1962"
-  text:  "John Strangways, the British Intelligence (SIS) Station Chief in Jamaica, is killed. In response, British agent James Bond—also known as 007—is sent to Jamaica to investigate the circumstances. During his investigation Bond meets Quarrel, a Cayman fisherman, who had been working with Strangways around the nearby islands to collect mineral samples. One of the islands was Crab Key, home to the reclusive Dr. No."
-  image: "bond_movie_01.png"
+year:  "1962"
+text:  "John Strangways, the British Intelligence (SIS) Station Chief in Jamaica, is killed. In response, British agent James Bond—also known as 007—is sent to Jamaica to investigate the circumstances. During his investigation Bond meets Quarrel, a Cayman fisherman, who had been working with Strangways around the nearby islands to collect mineral samples. One of the islands was Crab Key, home to the reclusive Dr. No."
+image: "bond_movie_01.png"
 - title: "From Russia with Love"
-  year:  "1963"
-  text:  "SPECTRE's expert planner Kronsteen devises a plot to steal a Lektor cryptographic device from the Soviets and sell it back to them while exacting revenge on Bond for killing their agent Dr. No; ex-SMERSH operative Rosa Klebb is in charge of the mission. She recruits Donald "Red" Grant as an assassin and Tatiana Romanova, a cipher clerk at the Soviet consulate in Istanbul, as the unwitting bait."
-  image: "bond_movie_02.png"
+year:  "1963"
+text:  "SPECTRE's expert planner Kronsteen devises a plot to steal a Lektor cryptographic device from the Soviets and sell it back to them while exacting revenge on Bond for killing their agent Dr. No; ex-SMERSH operative Rosa Klebb is in charge of the mission. She recruits Donald "Red" Grant as an assassin and Tatiana Romanova, a cipher clerk at the Soviet consulate in Istanbul, as the unwitting bait."
+image: "bond_movie_02.png"
 - title: "Goldfinger"
-  year:  "1964"
-  text:  "Bond is ordered to observe bullion dealer Auric Goldfinger: he sees Goldfinger cheating at cards and stops him by distracting his employee, who is subsequently killed by Goldfinger's Korean manservant Oddjob. Bond is then instructed to investigate Goldfinger's gold smuggling and he follows the dealer to Switzerland. Bond is captured when he reconnoitres Goldfinger's plant and is drugged; he is taken to Goldfinger's Kentucky stud farm and is imprisoned. He escapes briefly to witness Goldfinger's meeting with U.S. mafiosi, who have brought the materials he needs for an operation to rob Fort Knox."
-  image: "bond_movie_03.png"
+year:  "1964"
+text:  "Bond is ordered to observe bullion dealer Auric Goldfinger: he sees Goldfinger cheating at cards and stops him by distracting his employee, who is subsequently killed by Goldfinger's Korean manservant Oddjob. Bond is then instructed to investigate Goldfinger's gold smuggling and he follows the dealer to Switzerland. Bond is captured when he reconnoitres Goldfinger's plant and is drugged; he is taken to Goldfinger's Kentucky stud farm and is imprisoned. He escapes briefly to witness Goldfinger's meeting with U.S. mafiosi, who have brought the materials he needs for an operation to rob Fort Knox."
+image: "bond_movie_03.png"
 ...
 ```
 
@@ -46,14 +47,14 @@ movies:
 ``` erb
 <h2>Bond movies</h2>
 <ol>
-  <% data.bond.movies.each do |movie| %>
-    <li>
-          <%= image_tag movie.image %>
-      <h3><%= movie.title %></h3>
-      <h6><%= movie.year %></h6>
-      <p> <%= movie.text %></p>
-    </li>
-  <% end %>
+<% data.bond.movies.each do |movie| %>
+<li>
+<%= image_tag movie.image %>
+<h3><%= movie.title %></h3>
+<h6><%= movie.year %></h6>
+<p> <%= movie.text %></p>
+</li>
+<% end %>
 </ol>
 ```
 
@@ -80,20 +81,20 @@ Lastly I should add that storing it in JSON might be cooler but all the excess c
 
 ``` yaml
 bond_girls:
-  - Strawberry Fields 
-  - Jill Masterson
-  - Tiffany Case
+- Strawberry Fields 
+- Jill Masterson
+- Tiffany Case
 ```
 
 **some_file.json**
 
 ``` javascript
 {
-  "bond_girls": [
-    "Strawberry Fields",
-    "Jill Masterson",
-    "Tiffany Case"
-  ]
+	"bond_girls": [
+		"Strawberry Fields",
+		"Jill Masterson",
+		"Tiffany Case"
+			]
 }
 ```
 + ### Pretty URLs
@@ -226,8 +227,8 @@ To get started you’ll need to add the following to your **config.rb** file. Ac
 ``` ruby
 
 configure :build do
-  activate :minify_css
-  activate :minify_javascript
+activate :minify_css
+activate :minify_javascript
 end
 
 ```
@@ -290,6 +291,70 @@ sprockets.append_path '/some/other/assets_folder/'
 
 In this example, now other assets in **source/some/other/assets_folder/other.css** are also at Middleman’s disposal via this path. Same goes for **.js** files as well of course.
 
++ ### Project Templates
 
+Middleman comes with a couple of handy project templates that you should at least know about. These templates give you a good starting point when you initiate a new Middleman app for example. You can add these templates at any time later as well though.
 
++ SMACSS Template
++ Blog Template(via a gem)
++ Mobile Boilerplate Template
++ HTML5 Boilerplate  Template
 
+You can use them like this:
+
+**Shell**
+
+``` bash
+
+middleman init your_fancy_app --template=smacss
+
+```
+The template will provide you with all the files and folders that it needs. If you already have an app and want to add a template you use the same command without mentioning your app’s name. Same deal:
+
+``` bash
+
+middleman init --template=smacss
+
+```
+
+Now comes my favorite part of Middleman. Its super straightforward to build your own templates and reuse them whenever you like. You start by createting a **~/.middleman** folder in your root directory. Within that directory you create new folders for your templates. For example **/.middleman/podcast** would be a *podcast* template. Then you fill this podcast dirctory with all the files and folders you need. For example, if you want to have additional stylesheets available for your Middleman app then you need to simulate Middleman’s filepath to make it super easy to use them.
+
+In the screenshot below I have prepared a dummy example that has a couple of files that I might need for every project and put them in a **bourbon** folder. Now I have a bourbon template.
+
+**Screenshot for ~/.middleman/bourbon**:
+
+{% img /images/middleman/basics_02/bourbon_template_screenshot.png %}
+
+Since I simulated Middleman’s file structure, these stylesheets will show up exactly where I need them after I initiated that template. They are now under **/source/stylesheets** also ready to be imported into my **/source/stylesheets/all.css.scss** file. 
+
+**Screenshot for /middleman_app/source/stylesheets**:
+
+{% img /images/middleman/basics_02/source_bourbon_screenshot.png %}
+
+Since I already made my template styles partials its business as usual:
+
+**source/stylesheets/all.css.scss**
+
+``` scss
+
+@import 'bourbon_mixins/mixins';
+@import 'bourbon_neat/grids';
+@import 'bourbon_refills/cards';
+...
+
+```
+
+Boom! Finished! One thing you should be careful about though. When we use **middleman build** now to create our new **build** directory these files will get absorbed by **all.css** and none of the bourbon template folders will show up there. However, if you forget to have a leadgin underscore in your filenames for these styles, the complete folder will transfer into **/build**—with the prospective **.css** files of course. The **@import** statements in **all.css.scss** didn’t make a difference. 
+
+If you have a ton of templates and wanna just check the list for a name you can use the following command:
+
+**Shell**:
+
+``` bash
+middleman init --help
+
+# =>  # Use a project template: default, html5, mobile, smacss, bourbon
+
+```
+
+If you have never played much with templates, I recommend initiating a dummy app and take them for a spin. See what files get created or overwritten. Poke around a little bit. Then build a dummy folder with a couple of Sass files for a template under **~/.middleman** and see what happens when you initiate this template. Nothing beats learning by doing these little experiemnts along the way!
