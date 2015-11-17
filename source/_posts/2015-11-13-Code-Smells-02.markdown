@@ -145,8 +145,8 @@ Let’s look at some code. This example is a slice of how a Spectre app handles 
 class EvilClient
   #...
 
-  STANDARD_AMOUNT = 10000000
-  BONUS_AMOUNT    = 10000000
+  STANDARD_CHARGE = 10000000
+  BONUS_CHARGE    = 10000000
 
   def accept_new_client
     PaymentGem.create_client(email)
@@ -154,12 +154,12 @@ class EvilClient
 
   def charge_for_initializing_operation
     evil_client_id = PaymentGem.find_client(email).payments_id
-    PaymentGem.charge(evil_client_id, STANDARD_AMOUNT)
+    PaymentGem.charge(evil_client_id, STANDARD_CHARGE)
   end
 
   def charge_for_successful_operation
     evil_client_id = PaymentGem.find_client(email).payments_id
-    PaymentGem.charge(evil_client_id, BONUS_AMOUNT)
+    PaymentGem.charge(evil_client_id, BONUS_CHARGE)
   end
 end
 
@@ -272,3 +272,11 @@ class Contractor
 end
 
 ```
+
+What we did here is wrap the **PaymentGem** API in our own class. Now we have one central place where we apply our changes if we decide that for example a **SpectrePaymentGem** would work better for us. No more touching of multiple—to payments’ internals unrelated—files if we have to adapt to changes. In the other classes that need to deal with payments we simply instantiated the **PaymentHandler** and delegate the needed functionality. Easy, stable and no reason to change.
+
+And not only have we contained everything to a single file. Within the **PaymentsHandler** class, there is only one place we need to swap out and reference a possible new payement processor—in **initialize**. That is rad in my book. Sure, if the new payment service has a completely different API you need to tweak the bodies of a couple of methods in **PaymentHandler**. It’s a tiny price to pay compared to full on shotgun surgery—that’s more like surgery for a splinter in your finger really. Good deal!  
+
+If you’re not careful when you write tests for a payment processor like this—or any external service you need to rely on—you are possibly in for serious headaches when they change their API. And the question is not will they change their API, only when. Through our encapsulation we’re in a much better postion to stub our methods for the payment processor. Why? Because the methods we stub are our own and they only change when we want them to. That is a big win. If you’re new to testing and this is not completely clear to your don’t worry about it. Take your time, this topic can be tricky at first. Because its such an advantage I just wanted to mention it for completeness sake.
+
+I could have cleaned this class some more but the point was to clearly demonstrate the smell and how you can get rid of it through abstraction. If you’re not completely happy with this class and see opportunities for refactoring I salute you and take credit for it. I recommend you knock yourself out! A good start might be dealing with the way you find **payments_id**s. 
