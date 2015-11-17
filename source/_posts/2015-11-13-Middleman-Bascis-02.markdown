@@ -275,3 +275,21 @@ image_path('nested_folder/some.png')
 # => images/nested_folder/some.png
 
 ```
+
+### Import Path
+
+The asset pipeline uses *import paths* via Sprockets for your assets. By default **:js_dir** and **:css_dir** are already added to that path. That means that files put in **/source/javascripts** and **/source/stylesheets** are available and automatically imported. On the other hand, if you have assets that you wanna keep in other directories you can also add them to the import path like this:
+
+**config.rb**
+
+``` ruby
+
+sprockets.append_path '/some/other/assets_folder/'
+
+```
+
+In this example, now other assets in **source/some/other/assets_folder/other.css** are also at Middleman’s disposal via this path. Same goes for **.js** files as well of course.
+
+
+
+
