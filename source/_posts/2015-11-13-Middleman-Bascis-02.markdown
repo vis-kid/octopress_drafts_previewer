@@ -14,6 +14,7 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 + Data Files
 + Pretty URLs
++ Asset Pipleline
 
 + ### Data Files
 
@@ -154,3 +155,123 @@ directory_index: false
 ```
 
 If you wanna build that structure with folder and their respective index files yourself, Middleman is not gonna mess with you. It functions the same way and middleman ignores them if you mix and match that approach.
+
++ ### Asset Pipleline
+
+I wanna cut to the chase with this one and only show you the pieces that I think are really relevant about the asset pipeline. You can do stuff with Bower and Compass for example but since I’m personally not a huge fan I spare us both the time. O.K. then.
+
+The “asset pipleline” is Rails lingo imported into Middleman and under the hood a gem called [Sprockets](https://github.com/sstephenson/sprockets) does all the heavy lifting. It helps you with handling dependency management, combining assets plus with concatenation and minifyfication—which helps with slimming down your assets. A few helper methods to concisely reference assets are also at your disposal. Beyond that you are also provided with the means to write Sass and CoffeeScript code—right out of the box. Awesome! 
+
+### Concatenation
+
+Concatenation is one of the most important features of the asset pipline. Instead of having a lot of separate HTML requests for every CSS and JS file, you can reduce them drastically by concatenating them into one or a handful of files. The fewer requests you cause the faster your application will load. Simple math. 
+
+### JS Concatenation
+
+By default, Sprockets will press all JS files into a single **.js** file. After **middleman build** this file will be under **/build/javascripts/all.js**. The same goes for your CSS. After build you’ll have all Sass files concatenated together in **build/stylesheets/all.css**.
+
+You combine you JS assets by using partials—whoose filenames start with an underscore—for all your JS files and then **require** them at the very top in your **source/javascripts/all.js** file (I added a **.coffee** extension but it works exactly the same). As you can imagine order does matter for this process.
+
+**source/javascript/all.js**
+
+``` javascript
+
+//= require "_jquery"
+//= require "_lib_code"
+//= require "_animations"
+
+```
+
+**Screenshot**:
+
+{% img /images/middleman/basics_02/source_javascripts_screenshot.png %}
+
+When you take a look into your new **/build** directory, you’ll only find one **.js** file under **/javascripts** which “digested” the rest of your files—namely **all.js**. 
+
+**Screenshot**:
+
+{% img /images/middleman/basics_02/build_javascripts_screenshot.png %}
+
+### CSS Concatenation
+
+For your Sass code its bascially the same—except that you should use Sass’s **@import** instead of require from Sprockets. Again, place it at the very top and order matters here as well. Unlike requiring JS partials, you leave of the underscore from the partial name for Sass imports.
+
+**/source/stylesheets/all.css.scss**
+
+``` sass
+
+@import 'normalize';
+@import 'header';
+@import 'navigation';
+@import 'footer';
+
+```
+
+**Screenshot**:
+
+{% img /images/middleman/basics_02/source_stylesheets_screenshot.png %}
+
+**source/stylesheets.all.css.scss**
+
+**Screenshot**:
+
+{% img /images/middleman/basics_02/build_stylesheets_screenshot.png %}
+
+### Compression / Minification
+
+Another cool feature of sprockets is compression of these files—also called minification. This process cuts out a lot of the fat like getting rid of unnecessary whitespace and comments. People also call this process *uglify*—and of course there is a gem called [uglifier](https://github.com/lautis/uglifier) which does a beautiful job at this. Names like this makes me love programming even more. Compared to JS asset minification CSS uglification is not that complicated. Behind the scenes , the JS part is a bit more involved and needs more finesse.
+
+To get started you’ll need to add the following to your **config.rb** file. Actually you just need to uncomment these lines under your **:build** block. 
+
+``` ruby
+
+configure :build do
+  activate :minify_css
+  activate :minify_javascript
+end
+
+```
+
+The next time you use **middleman build** the assets in your **/build** folder will all by uglified and slim. Below are two small examples how this code actually ends up looking:
+
+**Minified CSS under /build/stylesheets/all.css**:
+
+``` css
+
+body{background-color:#d0e4fe}h1{color:orange;text-align:center}p{font-family:"Times New Roman";font-size:20px}
+
+```
+
+**Minified JS under /build/javascripts/all.js**:
+
+``` javascript
+
+switch((new Date).getDay()){case 0:day="Sunday";break;case 1:day="Monday";break;case 2:day="Tuesday";break;case 3:day="Wednesday";break;case 4:day="Thursday";break;case 5:day="Friday";break;case 6:day="Saturday"}
+
+```
+
+Without the asset pipleline you’d have to set up your own thing to write your JS and CSS via a higher-level language like CoffeeScript and Sass. I believe for beginners this setup part can be a pain and therefore the asset pipleline helps newbies to get going. Doing this by hand is a good exercise and important to grasp—but not right away. CoffeeScript and Sass are supported by default.
+
+Awesome, faster websites with fewer requests right out of the gate without any extra work. Take that 2010!
+
+### Asset Pipeline Helpers
+
+For your Sass files you have four helpers at your disposal:
+
++ image_path()
++ font_path()
++ image_url()
++ font_url()
+
+Because you followed conventions so far you can use these helpers to prepend the correct directory path to your assets. 
+
+Some Sass file:
+
+``` sass
+image_path('logo.png')
+# => images/logo.png
+
+image_path('nested_folder/some.png')
+# => images/nested_folder/some.png
+
+```
