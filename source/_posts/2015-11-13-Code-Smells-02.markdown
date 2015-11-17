@@ -14,6 +14,7 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 + Feature Envy
 + Shotgun Surgery
++ Divergent Change
 
 
 What you’ll quickly realize with code smells is that some of them are very close cousins, even their refactorings are sometimes related—like **Inline Class** and **Extract Class** are not that very different. With inlining a class you extract the whole class and get rid of the original one—well, been there, done that. Haven’t we? More on that in a later piece though. The point I’m trying to make is that you shouldn’t feel overwhelmed with the number of smells, refactorings and certainly not by their clever naming scheme. Things like **Shotgun Surgery**, **Feature Envy**, **Divergent Change** might sound fancy and intimidating to people new to code. Maybe I’m wrong of course.
@@ -279,4 +280,53 @@ And not only have we contained everything to a single file. Within the **Payment
 
 If you’re not careful when you write tests for a payment processor like this—or any external service you need to rely on—you are possibly in for serious headaches when they change their API. And the question is not will they change their API, only when. Through our encapsulation we’re in a much better postion to stub our methods for the payment processor. Why? Because the methods we stub are our own and they only change when we want them to. That is a big win. If you’re new to testing and this is not completely clear to your don’t worry about it. Take your time, this topic can be tricky at first. Because its such an advantage I just wanted to mention it for completeness sake.
 
-I could have cleaned this class some more but the point was to clearly demonstrate the smell and how you can get rid of it through abstraction. If you’re not completely happy with this class and see opportunities for refactoring I salute you and take credit for it. I recommend you knock yourself out! A good start might be dealing with the way you find **payments_id**s. 
+As you can see I simplified payments processing quite a bit in these examples. I could have cleaned the final result some more as well but the point was to clearly demonstrate the smell and how you can get rid of it through abstraction. If you’re not completely happy with this class and see opportunities for refactoring I salute you and am happy take credit for it. I recommend you knock yourself out! A good start might be dealing with the way you find **payments_id**s. 
+
++ ### Divergent Change
+
+Classes that suffer from divergent change are ones that get changed a lot. With tools like [Churn]() you can measure how often particular parts of your code needed to change. The more points you find on a class the higer the probablity that divergent change might be one of the reasons. When is this usually happening to a class? Very common symptom is that this object needs to juggle more than one responsibility. The single responsibility principle [SRP]() is most likely almost always a good guideline to write more stable code—not only to prevent this code smell.
+
+more than one reason to change
+
+violation of SRP
+
+kinda opposite of shotgun surgeryo
+
+one class is commonly changed in different ways for different reasons
+
+identify parts that change to together and extract into a separate class
+
+
+
+``` ruby
+class Spectre
+
+  STANDARD_CHARGE = 10000000
+  REFUND_AMOUNT = 10000000
+  STANDARD_PAYOUT = 200000
+
+  def charge_for_initializing_operation(client)
+    evil_client_id = PaymentGem.find_client(client.email).payments_id
+    PaymentGem.charge(evil_client_id, STANDARD_CHARGE)
+  end
+
+  def contractor_payout(contractor)
+    spectre_agent_id = PaymentGem.find_contractor(contractor.email).payments_id
+    PaymentGem.transfer_funds(spectre_agent_id, STANDARD_PAYOUT)
+  end
+
+  def assign_new_operation(operation)
+    operation.contractor = 'Some evil dude'
+    operation.objective  = 'Steal a boatload of valuable stuff'
+    operation.deadline   = 'Midnight, November 18th'
+  end
+
+  def print_operation_assignment(operation)
+    print "#{operation.contractor} is assigned to #{operation.objective}. The mission deadline ends at #{operation.deadline}."
+  end
+
+  def lecture_agent(agent)
+    puts "I have had a ton of complaints from the Minister of foreign affairs. You have been a very bad boy #{agent.code_name}."
+  end
+end
+```
