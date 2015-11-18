@@ -284,25 +284,26 @@ As you can see I simplified payments processing quite a bit in these examples. I
 
 + ### Divergent Change
 
-Classes that suffer from divergent change are ones that get changed a lot. With tools like [Churn]() you can measure how often particular parts of your code needed to change. The more points you find on a class the higer the probablity that divergent change might be one of the reasons. When is this usually happening to a class? Very common symptom is that this object needs to juggle more than one responsibility. The single responsibility principle [SRP]() is most likely almost always a good guideline to write more stable code—not only to prevent this code smell.
+Divergent change is kinda the opposite to shotgun surgery where you want to change one thing and need to blast that change through a bunch of different files. Here a single class is often changed for different reasons and in different ways. My recommendation is to identify parts that change together and extract them in a separate class that can focus on that single responsibility. These classes in turn should also have no more than one reason to change—if not, another divergent change smell is most likely conspiring to bite you.  
 
-more than one reason to change
+Classes that suffer from divergent change are ones that get changed a lot. With tools like [Churn](https://github.com/danmayer/churn) you can measure how often particular parts of your code needed to change in the past. The more points you find on a class the higher the probability that divergent change might be at work. I also wouldn’t be surprised if the same classes are ones that cause the most bugs overall. 
 
-violation of SRP
+Don’t get me wrong, getting changed often itself is not directly the smell—its a useful symptom though. Another very common and more explicit symptom is that this object needs to juggle more than one responsibilities. The *single responsibility principle* [SRP](https://en.wikipedia.org/wiki/Single_responsibility_principle) is an excellent guideline to write more stable code and to prevent this code smell in general. It can be tricky to follow though—but nevertheless still worth grinding for.
 
-kinda opposite of shotgun surgeryo
+Let’s look at this nasty example below. I modified the shotgun surgery example a bit. [Blofeld](https://en.wikipedia.org/wiki/Ernst_Stavro_Blofeld), head of *Spectre*, might be known to micromanage stuff but I doubt he would be interested in half the stuff this class is involved with. The **Spectre** class has way to many different things its concerned about:
 
-one class is commonly changed in different ways for different reasons
-
-identify parts that change to together and extract into a separate class
-
-
++ Assigning new operations
++ Charging for their dirty work
++ Printing mission assignments
++ Dealing with the PaymentGem internals
++ Killing unsuccessful spectre agents
++ Paying their Spectre agents / contractors
++ It also knows about the amounts of money for charging and payout
 
 ``` ruby
 class Spectre
 
   STANDARD_CHARGE = 10000000
-  REFUND_AMOUNT = 10000000
   STANDARD_PAYOUT = 200000
 
   def charge_for_initializing_operation(client)
@@ -325,8 +326,74 @@ class Spectre
     print "#{operation.contractor} is assigned to #{operation.objective}. The mission deadline ends at #{operation.deadline}."
   end
 
-  def lecture_agent(agent)
-    puts "I have had a ton of complaints from the Minister of foreign affairs. You have been a very bad boy #{agent.code_name}."
+  def dispose_of_agent(spectre_agent)
+    puts "You disappointed this organisation. You know how Spectre handles failure. Good bye #{spectre_agent.code_name}!"
   end
 end
 ```
+
+Seven different responsibilities on a single class. Not good!  You need to change how agents are disposed of? One vector for change the **Spectre** class. You wanna handle payouts differently? Another vector. You get the drift. Although this example is far from being realistic, it still tells the story how easy it is to amass behaviour that needs to change frequently in a single place for no good reason. We can do better!
+
+``` ruby
+class Spectre
+  # ...
+
+  def dispose_of_agent(spectre_agent)
+    puts "You disappointed this organisation. You know how Spectre handles failure. Good bye #{spectre_agent.code_name}!"
+  end
+end
+
+class PaymentHandler
+  STANDARD_CHARGE            = 10000000
+  STANDARD_CONTRACTOR_PAYOUT = 200000
+
+  #...
+
+  def initialize(payment_handler = PaymentGem)
+    @payment_handler = payment_handler
+  end
+
+  def charge_for_initializing_operation(evil_client)
+    evil_client_id = @payment_handler.find_client(evil_client.email).payments_id
+    @payment_handler.charge(evil_client_id, STANDARD_CHARGE)
+  end
+
+  def contractor_payout(contractor)
+    spectre_agent_id = @payment_handler.find_contractor(contractor.email).payments_id
+    @payment_handler.transfer_funds(spectre_agent_id, STANDARD_CONTRACTOR_PAYOUT)
+    end
+  end
+end
+
+class EvilClient
+  #...
+
+  def charge_for_initializing_operation
+    PaymentHandler.new.charge_for_initializing_operation(self)
+  end
+end
+
+class Contractor
+  #...
+
+  def process_payout
+    PaymentHandler.new.contractor_payout(self)
+  end
+end
+
+class Operation
+  attr_accessor :contractor, :objective, :deadline
+
+  def initialize(attrs = {})
+    @contractor = attrs[:contractor] 
+    @objective  = attrs[:objective] 
+    @deadline   = attrs[:deadline] 
+  end
+
+  def print_operation_assignment
+    print "#{contractor} is assigned to #{objective}. The mission deadline ends at #{deadline}."
+  end
+end
+```
+
+Here we extracted a bunch of classes and gave them their own unique responsiblity—and therefore their own contained reason to change. You want to handle payments differently? Now you won’t need to touch the **Spectre** class. You need to charge or payout differently? Again, no need to open the file for **Spectre**. Printing operation assignments is now the business of operation—where it belongs. That’s it. Not too complicated I think but definitely one of the more common smells you should learn to handle early imho.
