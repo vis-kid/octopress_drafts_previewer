@@ -357,4 +357,5 @@ middleman init --help
 
 ```
 
-If you have never played much with templates, I recommend initiating a dummy app and take them for a spin. See what files get created or overwritten. Poke around a little bit. Then build a dummy folder with a couple of Sass files for a template under **~/.middleman** and see what happens when you initiate this template. Nothing beats learning by doing these little experiemnts along the way!
+In case you wanna reinvent the wheel, take a look at these open sourced [templates](https://directory.middlemanapp.com/#/templates/all/). If you have never played much with templates, I recommend initiating a dummy app and take them for a spin. See what files get created or overwritten. Poke around a little bit. Then build a dummy folder with a couple of Sass files for a template under **~/.middleman** and see what happens when you initiate this template. Nothing beats learning by doing these little experiemnts along the way!
+
