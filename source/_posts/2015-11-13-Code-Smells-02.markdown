@@ -17,11 +17,11 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 + Divergent Change
 
 
-What you’ll quickly realize with code smells is that some of them are very close cousins, even their refactorings are sometimes related—like **Inline Class** and **Extract Class** are not that very different. With inlining a class you extract the whole class and get rid of the original one—well, been there, done that. Haven’t we? More on that in a later piece though. The point I’m trying to make is that you shouldn’t feel overwhelmed with the number of smells, refactorings and certainly not by their clever naming scheme. Things like **Shotgun Surgery**, **Feature Envy**, **Divergent Change** might sound fancy and intimidating to people new to code. Maybe I’m wrong of course.
+What you’ll quickly realize with code smells is that some of them are very close cousins, even their refactorings are sometimes related—like **Inline Class** and **Extract Class** are not that very different. With inlining a class for example, you extract the whole class while you get rid of the original one. So kinda extract class with a little twist. The point I’m trying to make is that you shouldn’t feel overwhelmed with the number of smells, refactorings and certainly not get discouraged by their clever names. Things like **Shotgun Surgery**, **Feature Envy**, **Divergent Change** might sound fancy and intimidating to people who just got started. Maybe I’m wrong of course.
 
-If you get into the topic and played with a couple of refactorings for code smells yourself you’ll quickly see that they often end up in the same alley and are simply different strategies to get there. Having classes that are concise, well organized and focused on a small amount of responsibilites. I think its fair to say that if you can achieve that you’ll be ahead of the pack most of the time—not that being ahead of others is so important but its simply often missing in code from people before they’re considered “experts”. So why not get into the game early and build a concrete foundation for designing your code. Don’t believe your possibly own narrative that this is an advanced topic that you should maybe put off for a while until you’re ready. Even if you’re a newbie, if you take small steps you can make sense of smells and their refactorings a lot earlier than you think.   
+If you dive a little into this whole topic and play with a couple of refactorings for code smells yourself you’ll quickly see that they often end up in the same ball park. A lot of refactorings are simply different strategies to get to a point where you have classes that are concise, well organized and focused on a small amount of responsibilites. I think its fair to say that if you can achieve that you’ll be ahead of the pack most of the time—not that being ahead of others is so important but such class design is simply often missing in code from people before they’re considered “experts”. So why not get into the game early and build a concrete foundation for designing your code. Don’t believe your possibly own narrative that this is an advanced topic that you should maybe put off for a while until you’re ready. Even if you’re a newbie, if you take small steps you can wrap your head around smells and their refactorings a lot earlier than you might think.
 
-Before we dive into the mechanics, I wanna repeat an important point from the first article. Not every smell is inherently bad and not every refactoring is always worth it. You gotta decide on the spot when you have all the relevant information at your disposal if your code is more stable after and if its worth your time to fix the smell.
+Before we dive into the mechanics, I wanna repeat an important point from the first article. Not every smell is inherently bad and not every refactoring is always worth it. You gotta decide on the spot—when you have all the relevant information at your disposal—if your code is more stable after a refactoring and if its worth your time to fix the smell.
 
 + ### Feature Envy
 
@@ -62,7 +62,7 @@ m.assign_new_mission(mission)
 
 ```
 
-I briefly mentioned why we can simplyfy the **M** class even more by moving the method to **assign_new_mission**(s) to the new class for the parameter object. What I didn’t address was the fact that **M** had an easily curable form of *feature envy* as well. She was way too nosy about the missions attributes. Its not only a bad case of micromanagement but also a very common code smell.
+I briefly mentioned how we can simplyfy the **M** class even more by moving the method **#assign_new_mission** to the new class for the parameter object. What I didn’t address was the fact that **M** had an easily curable form of *feature envy* as well. **M** was way too nosy about attributes of **Mission**. Put differently, she asked way to many “questions” about the mission object. Its not only a bad case of micromanagement but also a very common code smell.
 
 Let me show you what I mean. In **M#assign_new_mission**, **M** is “envious” about the data in the new parameter object and wants to access it all over the place. 
 
@@ -71,7 +71,7 @@ Let me show you what I mean. In **M#assign_new_mission**, **M** is “envious”
 + **mission.objective**
 + **mission.licence_to_kill**
 
-Additionally to that you also have a parameter object **Mission** that is only responsible for data right now—which is another smell.
+In addition to that, you also have a parameter object **Mission** that is only responsible for data right now—which is another smell, a *Data Class*.
 
 This whole situation tells you basically that **#assign_new_mission** wants to be somewhere else and **M** doesn’t need to know the details of how missions get assigned. After all, why wouldn’t it be a missions’ responsibility to assign new missions? Remember to always to put things together that also change together.
 
@@ -110,11 +110,11 @@ m.assign_new_mission(mission)
 
 ```
 
-As you can see, we simplified things quite a bit. The method slimmed down significantly and delegates the behaviour to the object in charge. **M** does not request missions data specifics anymore and certainly stays away from getting involved in how printing assigments are done. Now she can focus on her real job and doesn’t need to be disturbed if any details of mission assignments change. More time for mind games and hunting down rogue agents. Win-win!
+As you can see, we simplified things quite a bit. The method slimmed down significantly and delegates the behaviour to the object in charge. **M** does not request mission data specifics anymore and certainly stays away from getting involved in how assigments get printed. Now she can focus on her real job and doesn’t need to be disturbed if any details of mission assignments change. More time for mind games and hunting down rogue agents. Win-win!
 
-This smell breads entanglement—by that I don’t mean the good kind, the one that let’s information travel faster than light spookingly—I’m talking about the one that over time might let your development momentum grind to an every more approaching halt. Not good! Bad entanglement! Why so? Ripple effects throughout your code! A change in one place butterflies through all kinds of stuff and you end up as a kite in a hurricane. (Ok, a bit overly dramatic, but I give myself a B+ for the Bond reference in there.) 
+Feature envy breeds entanglement—by that I don’t mean the good kind, the one that let’s information travel faster than light spookingly—I’m talking about the one that over time might let your development momentum grind to an every more approaching halt. Not good! Why so? Ripple effects throughout your code will create resitance! A change in one place butterflies through all kinds of stuff and you end up as a kite in a hurricane. (Ok, a bit overly dramatic, but I give myself a B+ for the Bond reference in there.) 
 
-As a general antidote for feature envy, you wanna aim for designing classes that are concerned mostly about their own stuff and have—if possible—single responsibilities. In short, classes should be something like friendly otakus. They keep their business to themselves, are too busy managing their own collections of vital pop-cultural achievemtens and therefore have no time for too many friends or extracurricular stuff. Socially that might not be the healthiest of behaviours but for designing classes it often is a reasonable guidelineto keep your momentum where it should be—moving forward!
+As a general antidote for feature envy, you wanna aim for designing classes that are concerned mostly about their own stuff and have—if possible—single responsibilities. In short, classes should be something like friendly otakus. Socially that might not be the healthiest of behaviours but for designing classes it often is a reasonable guideline to keep your momentum where it should be—moving forward!
 
 + ### Shotgun Surgery
 
