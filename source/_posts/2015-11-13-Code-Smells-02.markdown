@@ -284,21 +284,13 @@ As you can see I simplified payments processing quite a bit in this silly exampl
 
 + ### Divergent Change
 
-Divergent change is kinda the opposite to shotgun surgery where you want to change one thing and need to blast that change through a bunch of different files. Here a single class is often changed for different reasons and in different ways. My recommendation is to identify parts that change together and extract them in a separate class that can focus on that single responsibility. These classes in turn should also have no more than one reason to change—if not, another divergent change smell is most likely conspiring to bite you.  
+Divergent change is kinda the opposite of shotgun surgery—where you want to change one thing and need to blast that change through a bunch of different files. Here a single class is often changed for different reasons and in different ways. My recommendation is to identify parts that change together and extract them in a separate class that can focus on that single responsibility. These classes in turn should also have no more than one reason to change—if not, another divergent change smell is most likely waiting to bite you.  
 
-Classes that suffer from divergent change are ones that get changed a lot. With tools like [Churn](https://github.com/danmayer/churn) you can measure how often particular parts of your code needed to change in the past. The more points you find on a class the higher the probability that divergent change might be at work. I also wouldn’t be surprised if the same classes are ones that cause the most bugs overall. 
+Classes that suffer from divergent change are ones that get changed a lot. With tools like [Churn](https://github.com/danmayer/churn) you can measure how often particular parts of your code needed to change in the past. The more points you find on a class the higher the probability that divergent change might be at work. I also wouldn’t be surprised if exactly these classes are ones that cause the most bugs overall. 
 
-Don’t get me wrong, getting changed often itself is not directly the smell—its a useful symptom though. Another very common and more explicit symptom is that this object needs to juggle more than one responsibilities. The *single responsibility principle* [SRP](https://en.wikipedia.org/wiki/Single_responsibility_principle) is an excellent guideline to write more stable code and to prevent this code smell in general. It can be tricky to follow though—but nevertheless still worth grinding for.
+Don’t get me wrong, getting changed often itself is not directly the smell—its a useful symptom though. Another very common and more explicit symptom is that this object needs to juggle more than one responsibility. The *single responsibility principle* [SRP](https://en.wikipedia.org/wiki/Single_responsibility_principle) is an excellent guideline to prevent this code smell and to write more stable code in general. It can be tricky to follow though—but nevertheless still worth the grind.
 
-Let’s look at this nasty example below. I modified the shotgun surgery example a bit. [Blofeld](https://en.wikipedia.org/wiki/Ernst_Stavro_Blofeld), head of *Spectre*, might be known to micromanage stuff but I doubt he would be interested in half the stuff this class is involved with. The **Spectre** class has way to many different things its concerned about:
-
-+ Assigning new operations
-+ Charging for their dirty work
-+ Printing mission assignments
-+ Dealing with the PaymentGem internals
-+ Killing unsuccessful spectre agents
-+ Paying their Spectre agents / contractors
-+ It also knows about the amounts of money for charging and payout
+Let’s look at this nasty example below. I modified the shotgun surgery example a bit. [Blofeld](https://en.wikipedia.org/wiki/Ernst_Stavro_Blofeld), head of *Spectre*, might be known to micromanage stuff but I doubt he would be interested in half the stuff this class is involved with. 
 
 ``` ruby
 class Spectre
@@ -332,7 +324,18 @@ class Spectre
 end
 ```
 
-Seven different responsibilities on a single class. Not good!  You need to change how agents are disposed of? One vector for change the **Spectre** class. You wanna handle payouts differently? Another vector. You get the drift. Although this example is far from being realistic, it still tells the story how easy it is to amass behaviour that needs to change frequently in a single place for no good reason. We can do better!
+The **Spectre** class has way too many different things it is concerned about:
+
++ Assigning new operations
++ Charging for their dirty work
++ Printing mission assignments
++ Killing unsuccessful spectre agents
++ Dealing with the PaymentGem internals
++ Paying their Spectre agents / contractors
++ It also knows about the amounts of money for charging and payout
+
+
+Seven different responsibilities on a single class. Not good!  You need to change how agents are disposed of? One vector for changing the **Spectre** class. You wanna handle payouts differently? Another vector. You get the drift. Although this example is far from being realistic, it still tells the story how easy it is to uneccessarily amass behaviour that needs to change frequently in a single place. We can do better!
 
 ``` ruby
 class Spectre
@@ -396,4 +399,5 @@ class Operation
 end
 ```
 
-Here we extracted a bunch of classes and gave them their own unique responsiblity—and therefore their own contained reason to change. You want to handle payments differently? Now you won’t need to touch the **Spectre** class. You need to charge or payout differently? Again, no need to open the file for **Spectre**. Printing operation assignments is now the business of operation—where it belongs. That’s it. Not too complicated I think but definitely one of the more common smells you should learn to handle early imho.
+Here we extracted a bunch of classes and gave them their own unique responsiblities—and therefore their own contained reason to change. You want to handle payments differently? Now you won’t need to touch the **Spectre** class. You need to charge or payout differently? Again, no need to open the file for **Spectre**. Printing operation assignments is now the business of operation—where it belongs. That’s it. Not too complicated I think but definitely one of the more common smells you should learn to handle early imho.
+
