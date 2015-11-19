@@ -10,6 +10,10 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 {% img /images/code_smells/code_smell_01_600_mirrored.jpg %}
 
+### Heads Up
+
+This article was mostly written for folks a little more new to coding. Having obviously walked in these shoes myself, I remembered that it felt unneccessary foggy to get into code smells and refactorings. On the one hand, authors expect a certain level of proficiency and therefore might not feel super compelled to provide the reader with the same amount of context as a newbie might need to comfortably dive into this world sooner. As a consequence maybe, newbies on the other hand form the impression that they should wait a bit longer until they are more advanced to learn about smells and refactorings. I do not agree with that approach and think that making this topic more approachable will help them design better software earlier in their career. At least I hope it helps to provide junior peeps with a solid head start.
+
 ### Topics
 
 + Feature Envy
