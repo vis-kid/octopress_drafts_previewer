@@ -401,3 +401,6 @@ end
 
 Here we extracted a bunch of classes and gave them their own unique responsiblities—and therefore their own contained reason to change. You want to handle payments differently? Now you won’t need to touch the **Spectre** class. You need to charge or payout differently? Again, no need to open the file for **Spectre**. Printing operation assignments is now the business of operation—where it belongs. That’s it. Not too complicated I think but definitely one of the more common smells you should learn to handle early imho.
 
+### Final Thoughts
+
+I hope you got to the point where you feel ready to try these refactorings in your own code and have an easier time identifying code smells around you. Beware that we just got started but that you already tackled a couple of big ones. I bet it was not as tricky as you once might have thought! Sure, real world examples will be a lot more challenging, but if you have understood the mechanics and patterns to spot smells, you’ll surely be able to adapt quickly to realistic complexities. 
