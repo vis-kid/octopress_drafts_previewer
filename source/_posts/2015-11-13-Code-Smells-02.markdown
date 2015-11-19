@@ -118,27 +118,27 @@ As a general antidote for feature envy, you wanna aim for designing classes that
 
 + ### Shotgun Surgery
 
-A little bit silly the naming isn’t? But at the same time its a pretty accurate description and funny too—definitely with a touch of nerdiness. Sounds like serious business though. It is! But luckily its not that hard to grasp. None the less its one of the nastier code smells. Why? Because it breeds dupliction like no other and its easy to loose sight of all the changes you’d need to make to fix things. What happens is you make a change in one class / file and you need to touch many other classes / files as well. 
+The name is a little bit silly, isn’t? But at the same time its a pretty accurate description. Sounds like serious business and it kinda is! Luckily its not that hard to grasp but none the less its one of the nastier code smells. Why? Because it breeds dupliction like no other and its easy to loose sight of all the changes you’d need to make to fix things. What happens during shotgun surgery is you make a change in one class / file and you need to touch many other classes / files as wellthat need to be updated. Hope that doesn’t sound like a good time you’re in for. 
 
-For example, if you’re in a situation where you think you can get away with one little change in one place and then realize that you have to wade through a whole bunch of files to make either the same change or fix something else that is broken because of it. NOT good, not at all! That sounds more like a good reason why people start to hate the code they’re dealing with. If you have a spectrum with DRY code on one side then code that needs often shotgun surgery is pretty much on the opposite end. Don’t be lazy and let yourself go there. I’m sure you’d rather open one file and apply your changes there. That’s the kind of lazy you should strive for!
+For example, if you’re in a situation where you think you can get away with one little change in one place and then realize that you have to wade through a whole bunch of files to make either the same change or fix something else that is broken because of it. NOT good, not at all! That sounds more like a good reason why people start to hate the code they’re dealing with. If you have a spectrum with DRY code on one side then code that often needs shotgun surgery is pretty much on the opposite end. Don’t be lazy and let yourself enter that territory. I’m sure you’d rather open one file and apply your changes there and be done with it. That’s the kind of lazy you should strive for!
 
-To avoid this smell here’s a short list you can look out for right away:
+To avoid this smell here’s a short list of symptoms you can look out for:
 
-+ Code Duplication
-+ Long Parameter List
 + Feature Envy
-+ Coupling
++ Tight coupling
++ Long Parameter List
++ Any form of code duplication
 
-What do we mean when we talk about code that is coupled. Let’s say we have objects **A** and **B**. If they are not coupled then you can change one of them without affecting the other. Otherwise you’ll more often than not also have to deal with the other object as well. This is a problem and shotgun surgery is a symptom for tight coupling as well. So worry about how easy you can change your code—ALWAYS!—because that also means that your level of coupling is acceptably low. Having said that, I realize that your expectations would be  undrealistic if you want to avoid it all the time at all costs. That’s not gonna happen! You will find good reasons like replacing conditionals with *Polymorphism*. In such a case, a litle bit of coupling, shotgun surgery and keeping the API of objects in sync is well worth getting rid of a ton of case statements via a **Null Object** for example.(More on that in a later piece)  
+What do we mean when we talk about code that is coupled. Let’s say we have objects **A** and **B**. If they are not coupled then you can change one of them without affecting the other. Otherwise you’ll more often than not also have to deal with the other object as well. This is a problem and shotgun surgery is a symptom for tight coupling as well. So always watch out how easy you can change your code. If its relatively easy it means that your level of coupling is acceptably low. Having said that, I realize that your expectations would be  unrealistic if you expect to be able to avoid coupling all the time at all costs. That’s not gonna happen! You will find good reasons to decide against that urge—like replacing conditionals with *Polymorphism*. In such a case, a litle bit of coupling, shotgun surgery and keeping the API of objects in sync is well worth getting rid of a ton of case statements via a **Null Object** (More on that in a later piece).  
 
 Most commonly you can apply one of the following refactorings to heal the wounds:
 
-+ Move Method
 + Move Field
-+ Extract Class
 + Inline Class
++ Extract Class
++ Move Method
 
-Let’s look at some code. This example is a slice of how a Spectre app handles payments between their contractors and evil clients. I simplified the payments a bit by having standard fees for both contractors and clients. So it doesn’t matter if Spectre is tasked to kidnap a cat or extort a whole country, the fee stays the same. Same goes for what they pay their contractors. In case an operation goes south and another Nr. 1 has to literally jump the shark, Spectre offers a full refund to keep evil clients happy. Spectre uses some proprietory payment gem that is basically a placeholder for any kind of payment processor. In the first example below it would be a pain if Spectre decides to use another library to handle payments. There would be more moving parts involved but for demonstrating shotgun surgery this amount of complexity will do I think:
+Let’s look at some code. This example is a slice of how a Spectre app handles payments between their contractors and evil clients. I simplified the payments a bit by having standard fees for both contractors and clients. So it doesn’t matter if Spectre is tasked to kidnap a cat or extort a whole country, the fee stays the same. Same goes for what they pay their contractors. In the rare case an operation goes south and another Nr. 2 has to literally jump the shark, Spectre offers a full refund to keep evil clients happy. Spectre uses some proprietory payment gem that is basically a placeholder for any kind of payment processor. In the first example below it would be a pain if Spectre decides to use another library to handle payments. There would be more moving parts involved but for demonstrating shotgun surgery this amount of complexity will do I think:
 
 **Example with shotgun surgery smell**:
 
@@ -164,13 +164,13 @@ class EvilClient
   end
 end
 
-class RefundOperation
+class Operation
   #...
 
   REFUND_AMOUNT = 10000000
 
-  def process(operation)
-    transaction_id = PaymentGem.find_transaction(operation.payments_id)
+  def refund
+    transaction_id = PaymentGem.find_transaction(payments_id)
     PaymentGem.refund(transaction_id, REFUND_AMOUNT)
   end
 end 
@@ -192,12 +192,12 @@ class Contractor
 end
 ```
 
-When you look at this code you should ask yourself, should the **EvilClients** class be really concerned about how to the payment processor accepts new evil clients and charge them for operations? Of course not! Is it a good idea to spread the various amounts to pay all over the place? Should the implementation details of the payments processor be showing up in any of these classes. Most definitely not!
+When you look at this code you should ask yourself, should the **EvilClients** class be really concerned about how the payment processor accepts new evil clients and how they are charged for operations? Of course not! Is it a good idea to spread the various amounts to pay all over the place? Should the implementation details of the payments processor be showing up in any of these classes. Most definitely not!
 
-Look at it from that way. If you wanna change stuff on the way you handle payments, why would you need to open the **EvilClient** class? In other cases it could be user ur customer. If you think about it, it doesn’t make any sense to involve them. In this example it should be easy to see that changes to the way you accept and transfer payments create ripple effects throughout your code. Also, if you wanna change the amount you charge or transfer to your contractors you’d need addtional changes all over the place. Prime examples of shotgun surgery. And in this case we’re only dealing with three classes. Imagine your pain if a bit more realistic complexity is involved. Yep, you got it, that’s the stuff nightmares are made of. Let’s look at an example that is a bit more sane:
+Look at it from that way. If you wanna change stuff on the way you handle payments, why would you need to open the **EvilClient** class? In other cases it could be user or customer. If you think about it, it doesn’t make any sense to familiarize them with this process. In this example it should be easy to see that changes to the way you accept and transfer payments create ripple effects throughout your code. Also, if you wanna change the amount you charge or transfer to your contractors you’d need addtional changes all over the place. Prime examples of shotgun surgery. And in this case we’re only dealing with three classes. Imagine your pain if a bit more realistic complexity is involved. Yep, that’s the stuff nightmares are made of. Let’s look at an example that is a bit more sane:
 
 
-**Example with extracted class and without shotgun surgery smell**:
+**Example without shotgun surgery smell and extracted class**:
 
 ``` ruby
 class PaymentHandler
@@ -256,10 +256,10 @@ class EvilClient
   end
 end
 
-class RefundOperation
+class Operation
   #...
 
-  def process
+  def refund
     PaymentHandler.new.refund(self)
   end
 end
@@ -274,13 +274,13 @@ end
 
 ```
 
-What we did here is wrap the **PaymentGem** API in our own class. Now we have one central place where we apply our changes if we decide that for example a **SpectrePaymentGem** would work better for us. No more touching of multiple—to payments’ internals unrelated—files if we have to adapt to changes. In the other classes that need to deal with payments we simply instantiated the **PaymentHandler** and delegate the needed functionality. Easy, stable and no reason to change.
+What we did here is wrap the **PaymentGem** API in our own class. Now we have one central place where we apply our changes if we decide that for example a **SpectrePaymentGem** would work better for us. No more touching of multiple—to payments’ internals unrelated—files if we need to adapt to changes. In the classes that deal with payments we simply instantiated the **PaymentHandler** and delegate the needed functionality. Easy, stable and no reason to change.
 
-And not only have we contained everything to a single file. Within the **PaymentsHandler** class, there is only one place we need to swap out and reference a possible new payement processor—in **initialize**. That is rad in my book. Sure, if the new payment service has a completely different API you need to tweak the bodies of a couple of methods in **PaymentHandler**. It’s a tiny price to pay compared to full on shotgun surgery—that’s more like surgery for a splinter in your finger really. Good deal!  
+And not only have we contained everything in a single file. Within the **PaymentsHandler** class, there is only one place we need to swap out and reference a possible new payement processor—in **initialize**. That is rad in my book. Sure, if the new payment service has a completely different API you need to tweak the bodies of a couple of methods in **PaymentHandler**. It’s a tiny price to pay compared to full on shotgun surgery—that’s more like surgery for a small splinter in your finger. Good deal!  
 
-If you’re not careful when you write tests for a payment processor like this—or any external service you need to rely on—you are possibly in for serious headaches when they change their API. And the question is not will they change their API, only when. Through our encapsulation we’re in a much better postion to stub our methods for the payment processor. Why? Because the methods we stub are our own and they only change when we want them to. That is a big win. If you’re new to testing and this is not completely clear to your don’t worry about it. Take your time, this topic can be tricky at first. Because its such an advantage I just wanted to mention it for completeness sake.
+If you’re not careful when you write tests for a payment processor like this—or any external service you need to rely on—you are possibly in for serious headaches when they change their API. They “suffer from change” as well of course. And the question is not will they change their API, only when. Through our encapsulation we’re in a much better postion to stub our methods for the payment processor. Why? Because the methods we stub are our own and they only change when we want them to. That is a big win. If you’re new to testing and this is not completely clear to your don’t worry about it. Take your time, this topic can be tricky at first. Because its such an advantage I just wanted to mention it for completeness sake.
 
-As you can see I simplified payments processing quite a bit in these examples. I could have cleaned the final result some more as well but the point was to clearly demonstrate the smell and how you can get rid of it through abstraction. If you’re not completely happy with this class and see opportunities for refactoring I salute you and am happy take credit for it. I recommend you knock yourself out! A good start might be dealing with the way you find **payments_id**s. 
+As you can see I simplified payments processing quite a bit in this silly example. I could have cleaned the final result some more as well but the point was to clearly demonstrate the smell and how you can get rid of it through abstraction. If you’re not completely happy with this class and see opportunities for refactoring I salute you—and am happy take credit for it. I recommend you knock yourself out! A good start might be dealing with the way you find **payments_id**s. The class itself also got a bit crowded already… 
 
 + ### Divergent Change
 
