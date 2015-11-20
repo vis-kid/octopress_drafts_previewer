@@ -213,8 +213,6 @@ For your Sass code its bascially the same but you should use Sass’s **@import*
 
 {% img /images/middleman/basics_02/source_stylesheets_screenshot.png %}
 
-**source/stylesheets.all.css.scss**
-
 **Screenshot**:
 
 {% img /images/middleman/basics_02/build_stylesheets_screenshot.png %}
