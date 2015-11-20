@@ -1,41 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/11/05/Middleman-01/</loc>
-    <lastmod>2015-11-05T04:29:10+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/2015/11/05/Code-Smells-01/</loc>
-    <lastmod>2015-11-05T04:29:10+01:00</lastmod>
-  </url>
-  <url>
     <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/archives/</loc>
   </url>
   <url>
     <loc>http://vis-kid.github.io/octopress_drafts_previewer/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/ruby/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/rails/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/thoughtbot/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/tdd/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/bdd/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/test-driven-design/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/rspec/</loc>
-  </url>
-  <url>
-    <loc>http://vis-kid.github.io/octopress_drafts_previewer/blog/categories/factory-girl/</loc>
   </url>
 </urlset>
