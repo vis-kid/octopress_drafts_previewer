@@ -21,7 +21,7 @@ categories: [Ruby, Rails, thoughtbot, TDD, BDD, Test-Driven-Design, RSpec, Facto
 
 So you have already learned how to play with data that you stored in the triple-hyphen-delimited frontmatter sections of individual pages. You can write separate data files in YAML or JSON and put them in a **/data** directory. I guess this is mostly useful if you have more complex sites with data that rarely changes and where you don’t want to maintain that data directly in your HTML.
 
-Let’s say you have the rights to sell all James Bond movies. We could put a list of them in a data file and iterate over them in our view. If we’d need to change or update that data when a new movie is available you’d only need to apply that change in your .yaml or .json data file. I would not recommend doing that for data that is in any way complex—to a degree doable, but feels very iffy and wrong.
+Let’s say you have the rights to sell all James Bond movies. We could put a list of them in a data file and iterate over them in our view. If we’d need to change or update that data when a new movie is available you’d only need to apply that change in your **.yaml** or **.json** data file. I would not recommend doing that for data that is in any way complex—to a degree doable, but feels very iffy and wrong.
 
 
 **/data/bond.yaml**
@@ -61,7 +61,7 @@ movies:
 
 One of the advantages of these data files is surely that they aren’t very susceptible to getting hacked. Even better, your **/data** directory with all the YAML or JSON data won’t get pushed to your branch that is responsible for hosting—like your **gh-pages** branch if you host your Middleman app on GitHub Pages. During the **build** phase, your data gets injected into your templates localy before it gets deployed. After that, the data in your views is just plain static HTML. Pretty cool!
 
-A word about naming conventions here. When you have data files in a **data** directory you get access to a **data** object. Middleman then creates “objects” for every **.yml**, **.yaml** or **.json** file which you can access through the inital **data** object by chaining it on. Lastly, the object stored in your data files are added on to that—which in turn give you access to the attributes you have stored on that object. In our case, we have a movies YAML “object” with the attributes **title**, **year**, **text** and **image**.
+A word about naming conventions here. When you have data files in a **data** directory you get access to a **data** object. Middleman then creates “objects” for every **.yml**, **.yaml** or **.json** file which you can access through the inital **data** object by chaining it on. Lastly, the object stored in your data files are added on to that—which in turn give you access to the attributes you have stored on that object. In our case, we have a **movies** YAML “object” with the attributes **title**, **year**, **text** and **image**.
 
 
 ``` erb
@@ -105,7 +105,7 @@ bond_girls:
 
 If you have a file like **source/bond-movies.html.erb** it will end up as http://appname.com/bond-movies.html. During the build process we loose the **.erb** file extension and end up with the final **html** version of that page which is mirrored in the URL. That’s alright, normal stuff. For fancier URLs like http://appname.com/bond-movies we gotta work a little.
 
-You need to activate the **Directory Indexes** extension in your config.rb. This creates a folder for every **.html** file. During **middleman build** the finished page ends up in that folder as the index file of that folder—meaning that as an index file its extension won’t need to show up in the URL. If you paid attention, you might have already seen this at work with the standard **index.html** file that gets created for every Middleman project as a landing page. It also does not show up in the final URL. Fire up your server and see for yourself.
+You need to activate the **Directory Indexes** extension in your config.rb. This creates a folder for every **.html** file. During **middleman build** the finished page ends up as the index file of that folder—meaning that as an index file its extension won’t need to show up in the URL. If you paid attention, you might have already seen this at work with the standard **index.html** file that gets created for every Middleman project as a landing page. It also does not show up in the final URL. Fire up your server and see for yourself.
 
 **config.rb**
 
@@ -113,7 +113,7 @@ You need to activate the **Directory Indexes** extension in your config.rb. This
 activate :directory_indexes
 ```
 
-Let’s see what happened after **middleman build** to your **bond-movies.html.erb** file if you activated that extension. Middleman created a **build/bond-movies** folder and your original filename changed to **index.html**. **build/bond-movies/index.html**.
+Let’s see what happened after **middleman build** to your **bond-movies.html.erb** file if you activated that extension. Middleman created a **build/bond-movies** folder and your original filename changed to **index.html** => **build/bond-movies/index.html**.
 
 **Shell output**
 
@@ -162,7 +162,7 @@ If you wanna build that structure with folder and their respective index files y
 
 I wanna cut to the chase with this one and only show you the pieces that I think are really relevant about the asset pipeline. You can do stuff with Bower and Compass for example but since I’m personally not a huge fan I spare us both the time. O.K. then.
 
-The “asset pipleline” is Rails lingo imported into Middleman and under the hood a gem called [Sprockets](https://github.com/sstephenson/sprockets) does all the heavy lifting. It helps you with handling dependency management, combining assets plus with minification—which helps with slimming down your assets significantly. A few helper methods to concisely reference assets are also at your disposal. Beyond that you are also provided with the means to write Sass and CoffeeScript code—right out of the box. Awesome! 
+The “asset pipleline” is Rails lingo imported into Middleman and under the hood a gem called [Sprockets](https://github.com/sstephenson/sprockets) does all the heavy lifting. It helps you with handling dependency management, combining assets plus with minification—which helps slimming down your assets significantly. A few helper methods to concisely reference assets are also at your disposal. Beyond that you are also provided with the means to write Sass and CoffeeScript code—right out of the box. Awesome! 
 
 ### Concatenation
 
@@ -170,9 +170,9 @@ Concatenation is one of the most important features of the asset pipline. Instea
 
 ### JS Concatenation
 
-By default, Sprockets will press all JS files into a single **.js** file. After **middleman build** this file will be under **/build/javascripts/all.js**. The same goes for your CSS. After build you’ll have all Sass files concatenated together in **build/stylesheets/all.css**.
+By default, Sprockets will press all JS files into a single **.js** file. After **middleman build**, this file will be under **/build/javascripts/all.js**. The same goes for your CSS. After the build process, you’ll have all Sass files concatenated together in **build/stylesheets/all.css**.
 
-You combine your JS assets by using partials—whoose filenames start with an underscore—for all your JS files and then **require** them at the very top in your **source/javascripts/all.js** file (I added a **.coffee** extension but it works exactly the same). As you can imagine order does matter for this process.
+You combine your JS assets by using partials—whoose filenames start with an underscore—for all your JS files and then **require** them at the very top in your **source/javascripts/all.js** file (Files with an added **.coffee** extension work exactly the same). As you can imagine order does matter for this process.
 
 **source/javascript/all.js**
 
@@ -196,7 +196,7 @@ When you take a look into your new **/build** directory, you’ll only find one 
 
 ### CSS Concatenation
 
-For your Sass code its bascially the same—except that you should use Sass’s **@import** instead of require from Sprockets. Again, place it the “required” files at the very top and order matters here as well. Unlike requiring JS partials, you leave off the underscore from the partial name for Sass imports.
+For your Sass code its bascially the same but you should use Sass’s **@import** for importing your partials—instead of require from Sprockets. Again, place the “required” files at the very top and order matters here as well. Unlike requiring JS partials, you leave off the underscore from the partial name when you import Sass partials.
 
 **/source/stylesheets/all.css.scss**
 
@@ -221,9 +221,9 @@ For your Sass code its bascially the same—except that you should use Sass’s 
 
 ### Compression / Minification
 
-Another cool feature of sprockets is compression of these files—also called minification. This process cuts out a lot of the fat like getting rid of unnecessary whitespace and comments. People also call this process *uglify*—and of course there is a gem called [uglifier](https://github.com/lautis/uglifier) which does a beautiful job at this. Names like this makes me love programming even more. Compared to JS asset minification CSS uglification is not that complicated. Behind the scenes , the JS part is a bit more involved and needs more finesse.
+Another cool feature of sprockets is compression of these files—also called minification. This process cuts out a lot of the fat like getting rid of unnecessary whitespace and comments. People also call this process *uglify*—and of course there is a gem called [uglifier](https://github.com/lautis/uglifier) which does a beautiful job at this. Names like this makes me love programming even more. Compared to JS asset minification CSS uglification is not that complicated. FYI, behind the scenes , the JS part is a bit more involved and needs more finesse.
 
-To get started you’ll need to add the following to your **config.rb** file. Actually you just need to uncomment these lines under your **:build** block. 
+To get started you’ll need to add the following to your **config.rb** file:
 
 ``` ruby
 
@@ -233,8 +233,7 @@ configure :build do
 end
 
 ```
-
-The next time you use **middleman build** the assets in your **/build** folder will all be uglified and slim. Below are two small examples how this code actually ends up looking:
+Actually you just need to uncomment these lines under your **:build** block. The next time you use **middleman build** the assets in your **/build** folder will all be uglified and slim. Below are two small examples how this code actually ends up looking:
 
 **Minified CSS under /build/stylesheets/all.css**:
 
@@ -252,7 +251,7 @@ switch((new Date).getDay()){case 0:day="Sunday";break;case 1:day="Monday";break;
 
 ```
 
-Without the asset pipleline you’d have to set up your own thing to write your JS and CSS via a higher-level language like CoffeeScript and Sass. I believe for beginners this setup part can be a pain and therefore the asset pipleline helps newbies to get going faster. Doing this by hand is a good exercise and important to grasp—but not right away. CoffeeScript and Sass are supported by default.
+Without the asset pipleline you’d have to set up your own thing to write your JS and CSS via a higher-level language like CoffeeScript and Sass. I believe for beginners this setup part can be a pain and therefore the asset pipleline helps newbies to get going and play with cool toys faster. Doing this by hand is a good exercise and important to grasp—but not right away. CoffeeScript and Sass are supported by default.
 
 Awesome, minified, faster websites with fewer requests right out of the gate without any extra work. Take that 2010!
 
@@ -290,16 +289,16 @@ sprockets.append_path '/some/other/assets_folder/'
 
 ```
 
-In this example, now other assets in **source/some/other/assets_folder/other.css** are also at Middleman’s disposal via this path. Same goes for **.js** files as well of course.
+In this example, other assets in **source/some/other/assets_folder/other.css** are also at Middleman’s disposal via this path. Same goes for **.js** files as well of course.
 
 + ### Project Templates
 
 Middleman comes with a couple of handy project templates that you should at least know about. These templates give you a good starting point when you initiate a new Middleman app for example. You can add these templates at any time later as well though.
 
-+ SMACSS Template
-+ Mobile Boilerplate Template
-+ HTML5 Boilerplate  Template
-+ Blog Template(needs extra gem)
++ **SMACSS** Template
++ **Mobile** Boilerplate Template
++ **HTML5** Boilerplate  Template
++ **Blog** Template(needs extra gem)
 
 You can use them like this:
 
@@ -318,7 +317,7 @@ middleman init --template=smacss
 
 ```
 
-Now comes my favorite part of Middleman. Its super straightforward to build your own templates and reuse them whenever you like. You start by creating a **~/.middleman** folder in your root directory. Within that directory you create new folders for your templates. For example **/.middleman/podcast** would be a *podcast* template. Then you fill this podcast dirctory with all the files and folders you need. For example, if you want to have additional stylesheets available for your Middleman app then you need to simulate Middleman’s filepath to make it super easy to use them.
+Now comes my favorite part of Middleman. Its super straightforward to build your own templates and reuse them whenever you like. You start by creating a **~/.middleman** folder in your root directory (Don’t forget the dot in front of the name). Within that directory you create new folders for your templates. For example **/.middleman/podcast** would be a *podcast* template. Then you fill this podcast dirctory with all the files and folders you need. For example, if you want to have additional stylesheets available for your Middleman app then you need to simulate Middleman’s filepath to make it super easy to use them.
 
 In the screenshot below I have prepared a dummy example that has a couple of files that I might need for every project and put them in a **bourbon** folder. Now I have a bourbon template.
 
@@ -326,7 +325,7 @@ In the screenshot below I have prepared a dummy example that has a couple of fil
 
 {% img /images/middleman/basics_02/bourbon_template_screenshot.png %}
 
-Since I simulated Middleman’s file structure, these stylesheets will show up exactly where I need them after I initiated that template. They are now under **/source/stylesheets** and also ready to be imported into my **/source/stylesheets/all.css.scss** file. 
+Since I simulated Middleman’s file structure, these stylesheets will show up exactly where I need them after I initiated that template. After initiating the template, my files are now under **/source/stylesheets** and also ready to be imported into my **/source/stylesheets/all.css.scss** file. 
 
 **Screenshot for /middleman_app/source/stylesheets**:
 
@@ -358,9 +357,9 @@ middleman init --help
 
 ```
 
-In case you wanna reinvent the wheel, take a look at these open sourced [templates](https://directory.middlemanapp.com/#/templates/all/). If you have never played much with templates, I recommend initiating a dummy app and take them for a spin. See what files get created or overwritten. Poke around a little bit. Then build a dummy folder with a couple of Sass files for a template under **~/.middleman** and see what happens when you initiate this template. Nothing beats learning by doing these little experiemnts along the way!
+In case you wanna reinvent the wheel, take a look at these open sourced [templates](https://directory.middlemanapp.com/#/templates/all/). If you have never played much with templates, I recommend initiating a dummy app and take them for a spin. See what files get created or overwritten. Poke around a little bit. Then build a dummy folder with a couple of Sass files for a template under **~/.middleman** and see what happens when you initiate this template. Nothing beats learning by doing these little experiments along the way!
 
 ### Final Thoughts
 
-I believe you are now more than ready to start building some little app with Middleman. There are a few things left for you to learn on your own but I presented you with the most important pieces of the puzzle. Middleman is a lot of fun and a good choice technology-wise. Sure there are the purists who mumble about technical implementations but these people are rarely satisfied with implementations other than their own. They might be right, but at this stage in your career you’re most likely not at that point yet where you need to worry about this and therefore should selectively ignore this snobbery. Middleman is powerful, easy to use with a straightforward API that is beginner friendly—that’s all that matters for now. Have fun! 
+I believe you are now more than ready to start building some little app with Middleman. There are a few things left for you to learn on your own but I presented you with the most important pieces of the puzzle. Middleman is a lot of fun and a good choice technology-wise. Sure there are the purists who mumble about technical implementations but these people are rarely satisfied with implementations other than their own. They might be right, but at this stage in your career you’re most likely not at that point yet where you need to worry about this and therefore should selectively ignore this snobbery. Middleman is powerful, easy to use and has a straightforward API that is beginner friendly—that’s all that matters for now. Have fun! 
 
