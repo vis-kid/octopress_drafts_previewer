@@ -27,6 +27,7 @@ Let’s say you have the rights to sell all James Bond movies. We could put a li
 **/data/bond.yaml**
 
 ``` ruby
+
 movies:
 - title: "Dr. No"
   year:  "1962"
@@ -41,11 +42,13 @@ movies:
   text:  "Bond is ordered to observe bullion dealer Auric Goldfinger: he sees Goldfinger cheating at cards and stops him by distracting his employee, who is subsequently killed by Goldfinger's Korean manservant Oddjob. Bond is then instructed to investigate Goldfinger's gold smuggling and he follows the dealer to Switzerland. Bond is captured when he reconnoitres Goldfinger's plant and is drugged; he is taken to Goldfinger's Kentucky stud farm and is imprisoned. He escapes briefly to witness Goldfinger's meeting with U.S. mafiosi, who have brought the materials he needs for an operation to rob Fort Knox."
   image: "bond_movie_03.png"
 ...
+
 ```
 
 **source/bond-movies.html.erb**
 
 ``` erb
+
 <h2>Bond movies</h2>
 <ol>
 <% data.bond.movies.each do |movie| %>
@@ -57,6 +60,7 @@ movies:
   </li>
 <% end %>
 </ol>
+
 ```
 
 One of the advantages of these data files is surely that they aren’t very susceptible to getting hacked. Even better, your **/data** directory with all the YAML or JSON data won’t get pushed to your branch that is responsible for hosting—like your **gh-pages** branch if you host your Middleman app on GitHub Pages. During the **build** phase, your data gets injected into your templates localy before it gets deployed. After that, the data in your views is just plain static HTML. Pretty cool!
@@ -65,18 +69,22 @@ A word about naming conventions here. When you have data files in a **data** dir
 
 
 ``` erb
+
 <%= data.data_file_name.yaml_or_json_object.attribute %>
 
 <%= data.bond.movies.image %>
 <%= data.bond.movies.title %>
 <%= data.bond.movies.year %>
 <%= data.bond.movies.text %>
+
 ```
 
 If you have subdirectories, you just need to tuck them on. Let’s say you have your bond movies data file under a **spy_movies** directory (**/data/spy_movies/bond.yaml**) You’d now access it like so:
 
 ``` erb
+
 <%= data.spy_movies.bond.movies.title %>
+
 ```
 
 Lastly I should add that storing it in JSON might be cooler but all the excess commas, brackets and braces turn me off tbh. Not only in data files but in frontmatter sections as well. Up to you what suits you best of course. See for yourself:
@@ -84,15 +92,18 @@ Lastly I should add that storing it in JSON might be cooler but all the excess c
 **some_file.yaml**
 
 ``` yaml
+
 bond_girls:
 - Strawberry Fields 
 - Jill Masterson
 - Tiffany Case
+
 ```
 
 **some_file.json**
 
 ``` javascript
+
 {
   "bond_girls": [
     "Strawberry Fields",
@@ -100,7 +111,9 @@ bond_girls:
     "Tiffany Case"
   ]
 }
+
 ```
+
 + ### Pretty URLs
 
 If you have a file like **source/bond-movies.html.erb** it will end up as http://appname.com/bond-movies.html. During the build process we loose the **.erb** file extension and end up with the final **html** version of that page which is mirrored in the URL. That’s alright, normal stuff. For fancier URLs like http://appname.com/bond-movies we gotta work a little.
@@ -110,7 +123,9 @@ You need to activate the **Directory Indexes** extension in your config.rb. This
 **config.rb**
 
 ``` ruby
+
 activate :directory_indexes
+
 ```
 
 Let’s see what happened after **middleman build** to your **bond-movies.html.erb** file if you activated that extension. Middleman created a **build/bond-movies** folder and your original filename changed to **index.html** => **build/bond-movies/index.html**.
@@ -118,7 +133,9 @@ Let’s see what happened after **middleman build** to your **bond-movies.html.e
 **Shell output**
 
 ``` bash
+
 create  build/bond-movies/index.html
+
 ```
 
 There is one little caveat though. Before you activated pretty URLs you could rely on using the assets path. Now with directory indexes in place you need to supply assets with their full absolute path. So calling an image just by its name for example won’t fly anymore. 
@@ -128,15 +145,19 @@ If for some reason you want to override the behaviour of that extension for a pa
 **config.rb**
 
 ``` ruby
+
 page "/bond-movies.html", :directory_index => false
+
 ```
 
 **Shell output** if you change it back for **bond-movies.html.erb**:
 
 ``` bash
+
 create  build/bond-movies.html
 remove  build/bond-movies/index.html
 remove  build/bond-movies
+
 ```
 
 Now its’ URL is back to normal for that file again. (http://appname.com/bond-movies.html)

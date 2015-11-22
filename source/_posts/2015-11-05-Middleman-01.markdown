@@ -38,7 +38,9 @@ So you got Ruby and RubyGems under your belt? Great, then we’re good to go.
 Terminal:
 
 ``` bash
+
 gem install middleman
+
 ```
 
 After this process has finished, you’ll be able to use a couple of handy commands in your shell.
@@ -50,18 +52,25 @@ This command initiates a new project—you just have to provide it with the name
 Terminal:
 
 ``` bash
+
 middleman init your_fancy_app
+
 ```
+
 It also takes additional arguments like which template you wanna start with. This makes it really handy to customize your apps with templates right from the start—cuts down on repetitive setup tasks quite a bit! There are a couple ones ready out of the box—like one for blogs for example and you can use your own custom ones too of course. More on that in a later article.  
 
 Terminal:
 
 ``` bash 
+
 middleman init your_fancy_blog --template=blog
+
 ```
 
 ``` bash
+
 middleman init your_fancy_mobile_app --template=mobile
+
 ```
 
 + **middleman server**
@@ -81,8 +90,10 @@ Once your site is ready to face the internet, this command deploys your **/build
 Do yourself a favor right away and activate [LiveReload](http://livereload.com/) to instantly refresh your pages automatically after changes to your HTML, Sass or JS files. This is of great convenience during development—you won’t regret it! In the past it was sometimes a pain to set up but Middleman offers *LiveReload* out of the box—you just need to uncomment the following line in **config.rb**:
 
 ``` ruby
+
 # Reload the browser automatically whenever files change
 activate :livereload
+
 ```
 
 + ### Source vs Build vs Deploy(GitHub Pages)
@@ -100,7 +111,9 @@ The deployment process is the last step. With the **/build** directory in place 
 We’ll need to start with adding a Gem for deployment to your **Gemfile**:
 
 ``` ruby
+
 gem "middleman-deploy"
+
 ```
 
 #### Step 01
@@ -108,7 +121,9 @@ gem "middleman-deploy"
 In your terminal run
 
 ``` bash
+
 bundle install
+
 ```
 
 #### Step 02
@@ -116,11 +131,13 @@ bundle install
 Open your **config.rb** file and add the following:
 
 ``` ruby
+
 activate :deploy do |deploy|
   deploy.method = :git
   deploy.branch = 'gh-pages'
   deploy.build_before = true
 end
+
 ```
 
 #### Attention!
@@ -132,7 +149,9 @@ The most important bit is the branch `'gh-pages`. That way you can setup a **pro
 Create a new repository on GitHub and add the remote branch—so everthing you’d normally do when you follow GitHub’s instructions. 
 
 ``` bash
+
 git remote add origin https://github.com/yourusername/repositoryname.git
+
 ```
 
 #### Optional Step
@@ -140,13 +159,17 @@ git remote add origin https://github.com/yourusername/repositoryname.git
 If you want you can back up your master branch the same way as always **add** / **commit** your changes as well and push them up. That way you’ll have both a **master** and a **gh-pages** branch in your remote repo.
 
 ``` bash
+
 git push -u origin master
+
 ```
 
 #### Step 04
 
 ``` bash
+
 middleman deploy
+
 ```
 
 Boom, that’s it! Your site is live! Now you have a **gh-pages** branch in your repo on GitHub and it will be used for all the heavy lifting of deploying your app for you. With this setup, if you forget to run **middleman build** yourself, the build process gets initiated automatically before the files in **/build** get deployed to GitHub Pages. Once you’re finished you’ll find your app under `username.github.io/projectname` or `organisationname.github.io/projectname` for organizations.
@@ -184,11 +207,13 @@ As you can see below, the most Jazz goes into the **/source** folder. What I lik
 If you are unhappy with the naming of some of these folders you can change that in your configurations (**config.rb**) of course. The same names will be used then for your finished **/build** folder. 
 
 ``` ruby
+
 set :css_dir,    'custom_foler_name'
 
 set :js_dir,     'custom_foler_name'
 
 set :images_dir, 'custom_foler_name'
+
 ``` 
 
 When you have your server running, you can check out other options to configure Middleman right in your browser: http://localhost:4567/__middleman/config/. Not all of them might make sense or are even important to know. Give it a glance and a mental bookmark is totally sufficient for now.
@@ -210,6 +235,7 @@ I know, naming is hard! Comes from book publishing or whatever. Anyway, every pa
 **some.html.erb**
 
 ``` erb
+
 ---
 
 layout: Bond
@@ -233,13 +259,14 @@ bond_girls:
   <% end %>
 </ul>
 
-
 ```
 
 The YAML variables look just like a hash. You can access that local data through the **current_page** object: 
 
 ``` ruby
+
 current_page.data.some_variable
+
 ```
 
 You often use it to store tags, dates, titles and configuration options—like which layout you wanna use for particular pages. Frontmatter is a [YAML](https://en.wikipedia.org/wiki/YAML) store for your variables. You can also use [JSON](https://en.wikipedia.org/wiki/JSON) if you prefer that. Hopefully this doesn’t sound way more complicated than it is. You can think of it as a place for putting data that could normally reside in a database—I mean obviously a very trimmed down version of that. I will discuss the various options and uses along the way when they come up. 
@@ -249,7 +276,9 @@ Maybe we should use this opportunity to briefly go over Erb lingo. Erb let’s y
 For code that gets exectuted but not “printed” onto the page you use this:
 
 ``` erb
+
 <% %>
+
 ```
 
 Think of it as “computation only”.
@@ -257,7 +286,9 @@ Think of it as “computation only”.
 Otherwise, for return values that you wanna see show up “printed” on the page you need to add an equals sign as well. That’s it.
 
 ``` erb
+
 <%= %>
+
 ```
 
 
@@ -272,6 +303,7 @@ When you initiate a simple middleman app, you’ll automatically get a **layout.
 **source/layouts/layout.erb**
 
 ``` html
+
 <!doctype html>
 <html>
   <head>
@@ -291,6 +323,7 @@ When you initiate a simple middleman app, you’ll automatically get a **layout.
     <%= yield %>
   </body>
 </html>
+
 ```
 
 This default layout is pretty barebones but provides all you need to get started. Let’s have a look: 
@@ -307,12 +340,14 @@ If you created different layouts you can specify via the frontmatter which layou
 **welcome.html.erb**
 
 ``` html
+
 ---
 layout: sales
 ---
 
 <h1>Hello there!</h1>
 <h2> Guess what, we’re trying to sell you some stuff?</h2>
+
 ```
 
 Alternatively you can specify layouts also in your config file.
@@ -320,6 +355,7 @@ Alternatively you can specify layouts also in your config file.
 **config.rb**
 
 ``` ruby
+
 page "/welcome.html", :layout => "sales"
 
 ```
@@ -329,6 +365,7 @@ If you want to avoid doing this for every page manually, you can collect them in
 **config.rb**
 
 ``` ruby
+
 page "/sales/*", :layout => "sales"
 
 ```
