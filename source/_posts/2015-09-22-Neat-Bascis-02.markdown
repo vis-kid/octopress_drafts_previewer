@@ -1,0 +1,617 @@
+---
+layout: post
+title: Bourbon Neat-Mixins 02
+date: 2015-09-22 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [ Sass,  Bourbon, Neat, Thoughtbot, SCSS, CSS, Design ]
+---
+
+{% img /images/Neat_01/Neat-pour.jpg %}
+
+[{% img /images/bourbon-neat/Bourbon-Neat-Logo.png  250 450 %}](http://neat.bourbon.io/)
+
+Now that you should have the basics under your belt, in the second article about Neat mixins I’ll dive a little deeper and explore the following function and mixins:
+
+#### Function
+
++ new-breakpoint
+
+#### Mixins
+
++ reset-layout-direction
++ direction-context
++ display-context
++ reset-display
++ fill-parent
++ reset-all
++ media
++ row
+
+
++ ### media
+
+I assume you haven’t lived under a rock for the past couple of years and that you know about the importance of flexible designs that respond to the ever evolving landscape of screen sizes and types of devices. Bourbon Neat has your back and provides you with an elegant approach to manage media queries for your grids. Through the use of clever targeted media queries, your layout can be adapted to a wide range of devices without making a mess. Responsive design is here to stay and a responsible and sustainable use of media queries is king.
+
+Something to avoid is what you could call query spagetthi—which basically is a tangled mess of media queries that becomes tricky to maintain lightening fast. So whatever you can do to keep these things neat and clean you should pay extra attention to I think. This mixin is no perfect antidote but definitly encourages a DRY approach to dealing with media queries sanely—especially when paired with the **new-breakpoint** function. How so?
+
+You can write media query blocks that can take grid contexts. Say you have two elements that add up to **12** columns—as defined in **$total-columns** in your **_grid-settings** file. These elements span **3** and **9** columns respectively on desktop size screens which allow for **1088px** wide outer containers. For smaller devices / viewport sizes, just let the **media** (query) mixin know at what size the context of **12** columns overall needs to change to another number and adjust the size for the responsive elements within that new context accordingly. Boom!
+
+Haml:
+```haml
+.container
+  %aside 3 columns / 1 column
+  %article 9 columns / 2 columns
+```
+
+Sass:
+```sass
+body
+  color: white
+  background-color: white
+
+.container
+  +outer-container
+  margin-top: 10px
+  background-color: tomato
+
+aside, article
+  margin-bottom: 5px
+  height: 200px  
+
+aside
+  +span-columns(3)
+	background-color: LightSkyBlue 
+	+media(max-width 700px, 4)
+    +span-columns(1)
+
+article
+  +span-columns(9)
+	background-color: Olive
+	+media(max-width 700px, 4)
+    +span-columns(2)
+```
+
+##### Screenshot without media query:
+
+{% img /images/Neat_02/without-media-query.png %}
+
+##### Screenshot with media query at 700px viewport size and 4 columns as grid context:
+
+{% img /images/Neat_02/with-media-query.png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/wKzJXM)
+
+
+I just provided the **media** mixin with a [media feature](http://www.w3.org/TR/css3-mediaqueries/#media1) via **max-width 700px** and a new grid context of **4** columns for the **$total-columns** **max-width** of the element. Having established a new grid context for both the **aside** and **article** elements for the viewport size of **700px** max, I only needed to tell the elements how many columns they can now span within the new total of **4** columns.  I think this is pretty darn readable and easy to organize. It get’s even cooler once you reuse *media contexts* ( media query / grid context ) via the **new-breakpoint** function and save them to a Sass variable . 
+
+#### Attention!
+If you provide this mixin with only a pixel value without any specific media feature
+
+Sass:
+```sass
+.some-responsive-element
+  +span-columns(8)
+  +media(700px)
+    +span-columns(4)
+```
+
+then Neat is going to use **$default-feature** which is **min-width**. Also, providing a grid context is optional and defaults to whatever is set through **$total-columns** in your **_grid-settings** partial. 
+
++ ### new-breakpoint
+
+So you’re probably thinking about what’s up with the DRY approach I mentioned a couple of paragraphs earlier right? That’s the spirit!
+
+I’d say this handy custom Sass function is the Robin to your **media** Batman and keeps you from repeating yourself over and over again. If you want to make your media queries a lot more readable and reuseable, I don’t see a good reason why you won’t be using this sidekick to fight media query crimes.
+
+Put simply, all it does is save media contexts ( media query / grid context ) through variables and gives you the opportunity to reuse them at will in all your **media** mixins. In my book, that’s one hell of a useful extraction! Let’s take a look.
+
+Sass:
+``` sass
+$tablet: new-breakpoint(min-width 768px max-width 1024px 4)
+
+.some-responsive-element
+  +span-columns(3)
+  +media($tablet)
+    +span-columns(1)
+
+.some-other-responsive-element
+  +span-columns(9)
+  +media($tablet)
+    +span-columns(2)
+```
+
+[codepen example](http://codepen.io/vis-kid/pen/merKVe)
+
+Super readable right? To be extra sure we’re on the same page: You just provide all the media features you need—but no commas, colons, **or**, **and**—plus the number of columns for the new grid context and save it to a Sass variable. All that is left to do is feed your **media** mixins with the appropriate variable and DRY they are. 
+
+I hope you’ll appreciate how clean this reads and how easy it is to tweak your layouts for various breakpoints—all in one central place. Gone are the days where managing tons of layout related media queries could quickly get you in a fantasy fist fight with your former self.
+
++ ### row
+
+#### Basics
+
+I wanna take a little extra time to explore this one. If you’re not using tables very often in your designs—as you probably shouldn’t since we kissed the days of using tables for layout purposes goodbye—this one can be tricky to jump into right away. You have two main options for using this mixin: with the argument **table** or without any argument.
+
+Sass:
+``` sass
+.some-row-element
+  +row
+```
+
+Using row without the **table** argument, a **clearfix** is added and **$display** stays set to default which is **block**. Effectively that means that whatever comes after the designated element using **row** needs to start its own thing on a separare “row”.
+
+Sass:
+``` sass
+.some-table-row-element
+  +row(table)
+```
+
+On the other hand, using **row(table)**, you guessed it, makes this row part of a table layout. What happens under the hood, among other things, is that this mixin sets `display: table` and `table-layout: fixed`. 
+
+There is one more option you can provide this mixin with. You can pass an argument($direction with **LTR** or **RTL**) that changes the direction—*left-to-right* or vice versa—of your layout for that particular row.
+
+Sass:
+``` sass
+.some-row-element
+  +row($direction: RTL)
+```
+
+But let’s start at the beginning. The following dummy example has 16 **img** elements and the first four are nested under a **.row** container which uses the **row** mixin. Let’s see what happens if you leave off the **table** argument. 
+
+Haml:
+``` haml
+.container
+
+  .row
+    %img
+    %img
+    %img
+    %img
+  
+  %img
+  %img
+  %img
+  %img
+  
+  %img
+  %img
+  %img
+  %img
+  
+  %img
+  %img
+  %img
+  %img
+```
+
+Sass:
+``` sass
+.container
+  +outer-container
+  background-color: tomato
+
+.row
+  +row
+
+img
+  +span-columns(1)
+  height: 60px
+  margin-bottom: 5px
+  background-color: Olive
+```
+
+##### Screenshot:
+
+{% img /images/Neat_02/img-row-without-argument.png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/ojYgMa)
+
+As you can see, the browser treats the first four elements as part of one row and puts the following **img** elements on a separate row. The elements below the .row container are not bound to a particular row and just float downwards as long as they have space available to them.
+
+Two **.row** containers result in the same trick, stacked on top of each other.
+
+Haml:
+``` haml
+.container
+
+  .row
+    %img
+    %img
+    %img
+    %img
+  
+  .row
+    %img
+    %img
+    %img
+    %img
+  
+  %img
+  %img
+  %img
+  %img
+  
+  %img
+  %img
+  %img
+  %img
+```
+
+##### Screenshot:
+
+{% img /images/Neat_02/img-2-rows-without-argument.png%}
+
+[codepen example](http://codepen.io/vis-kid/pen/ZbBJjK)
+
+Not too tricky I guess. Although I’m not sure how useful this would be because instinctively I’d rather use the **omega** mixin for such an occasion—but I might change my mind if I’d run against a wall of sorts with that approach. What seems pretty useless though is using **row(table)** here. You’d just get one very long column that stacks all 16 elements above each other. I’ll spare you the nasty screenshot but check out the [codepen example](http://codepen.io/vis-kid/pen/ZbBJqK) if you’re curious.
+
+### Using row without an argument on a table
+
+Above I wanted to show you the basic mechanics of this mixin, especially if you are new to the game. Now we’re approaching useful territory. Let’s play with an actual table:
+
+If you haven’t fooled with tables before, I recommend firing up Google before you proceed. Below is a little survival guide for those who only need to refresh a couple of terms.
+
+Here we have a **table** element that uses the **thead** tag which has one row that displays the various column names / headers via the **th** tag. Underneath you’ll find the **tbody** tag that houses the actual data for each table row (**tr**) via the **td** tag.
+
+Haml:
+``` haml
+.container
+
+  %table
+  
+    %thead
+      %tr
+        %th Username
+        %th User_ID
+        %th Favorite Pizza
+        %th Pet
+        %th Pet Name
+        %th Favorite Game
+    
+    %tbody
+      %tr
+        %td Joe
+        %td 112233
+        %td Pepperoni
+        %td Cat
+        %td Gordon
+        %td Splinter Cell
+      %tr
+        %td Jane
+        %td 223311
+        %td Mushrooms
+        %td Dog
+        %td Fluffy
+        %td Metal Gear Solid V
+      %tr
+        %td Bob
+        %td 331122
+        %td Onions
+        %td Fish
+        %td Sharky
+        %td Little Big Planet 2
+```
+
+Sass:
+``` sass
+body
+  color: white
+  background-color: white
+
+.container
+  +outer-container
+  background-color: tomato
+
+tr
+  +row()
+  text-align: center
+  
+th
+  padding:
+  top: 10px
+  bottom: 20px
+  
+td
+  height: 50px
+  background: Olive
+  padding-top: 2px
+```
+This results in an uneven nasty table blob that only spans as far as the content in these table data cells go. Obviously not super useful and a pain if you want to manually fix this using a bunch of CSS rules to even things out.
+
+Sreenshot: 
+
+{% img /images/Neat_02/row-without-table.png%}
+
+[codepen example](http://codepen.io/vis-kid/pen/avBzXK)
+
+### Using row(table)
+
+There should be a simple solution to this right? Adding **table** as an argument and `display: table` and `table-layout: fixed` come to the rescue! Not too mention with a little topping of **fill-parent** under the hood. That’s it! That’s all you need to do for a nice table for your data—no need for an aspirin!
+
+Sass:
+``` sass
+tr
+  +row(table)
+  text-align: center
+```
+
+##### Screenshot
+
+{% img /images/Neat_02/row-with-table.png%}
+
+[codepen example](http://codepen.io/vis-kid/pen/rOWzGy)
+
+#### Attention!
+A fixed table-layout like that has the advantage of not only laying out the table faster, but the width of the columns is not dependent on the contents (their length) of the table cells. That basically means that you’ll get evenly laid out rows in your table grid that span over the width of the table container. Remove one table data cell (**td**) and you’ll see that the other elements will divide up the space in that row evenly. Booyakasha! 
+
+##### Screenshot with irregular number of columns:
+
+{% img /images/Neat_02/table-with-varying-length-table-data.png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/KdNXzq)
+
+
+### Without row
+
+Let’s close with an example that shows the default behaviour of tables without using the **row** mixin at all. (With a little padding and stuff though)
+
+Sass
+``` sass
+body
+  color: white
+  background-color: white
+
+.container
+  +outer-container
+  background-color: tomato
+
+tr
+  text-align: center
+
+th
+  padding:
+  top: 10px
+  bottom: 20px
+
+td
+  height: 50px
+  background: Olive
+  padding-top: 2px
+```
+
+#### Screenshot:
+
+{% img /images/Neat_02/table-without-row.png%}
+
+[codepen example](http://codepen.io/vis-kid/pen/bVBrXp)
+
+Easy to see that cells for every column are spaced evenly but don’t use all the appropriated space that is available to them. They simply orient themselves on the longest data / content per column and adjust their cells to align themselves along these lines.
+
+Apologies for being overly verbose about **row** but I hope this section made any headaches you might have with tables / rows a little less likely.
+
++ ### fill-parent
+
+Neat offers you an easy solution if you want some element to quickly fill its parent by spanning the same number of columns. You don’t have to provide any arguments. This mixin is nothing fancy but might come in handy when you deal with media queries or tables. 
+#### Attention!
+Using **span-columns(12)** instead of **fill-parent** to span the whole width of an outer-container for example would not be the right approach in such a case—it would just add unnecessary baggage. 
+
+Haml:
+``` haml
+.container
+  %aside Aside 3 columns | fill-parent
+  %article Article 5 columns | fill-parent
+```
+
+Sass:
+``` sass
+body
+  color: white
+  background-color: white
+
+.container
+  +outer-container
+  margin-top: 10px
+  background-color: tomato
+
+aside, article
+  margin-bottom: 5px
+  height: 200px  
+
+aside
+  +span-columns(3)
+  +fill-parent
+  background-color: LightSkyBlue
+
+article
+  +span-columns(5)
+  +fill-parent
+  background-color: Olive
+```
+
+[codepen example](http://codepen.io/vis-kid/pen/Kdgebx)
+
+Let’s look at a couple of screenshots for comparison:
+
+##### Screenshot without **fill-parent**:
+
+{% img /images/Neat_02/without-fill-parent.png%}
+
+##### Screenshot with only one element that uses **fill-parent**:
+
+{% img /images/Neat_02/single-fill-parent.png%}
+
+##### Screenshot with both elements using **fill-parent**:
+
+{% img /images/Neat_02/both-fill-parent.png%}
+
+Just wanted to show you that elements using **fill-parent** ignore other elements in the same row and aim to span the full width of its parent without considering its neighbors. I guess this one is straightforward enough, let’s move on!
+
++ ### direction-context
+
+Every element in your Neat grid has a **$default-layout-direction** which is set to **LTR** (left-to-right) in **settings/_grid.scss**. This simply means that behind the scenes Neat is always using a **direction-context** with **left-to-right**. It is an obivious decision of course since most cultures are used to digest content from left to right.
+
+Under the hood, this mixin does nothing else than change the float direction of the applied element. What is neat is that within some directional context, let’s say **left-to-right**, you can gather a bunch of grid elements and change their direction to **right-to-left** all at once under one code block. Again, this solution makes things mostly more compact and readable for yourself as well as easier to understand / navigate for someone who’s not that familiar with a certain project.
+
+Haml:
+``` haml
+.container
+  %aside 3 columns
+  %article 9 columns
+```
+
+Sass:
+``` sass
+body
+  color: white
+  background-color: white
+
+.container
+  +outer-container
+  margin-top: 10px
+  background-color: tomato
+
+aside, article
+  margin-bottom: 5px
+  height: 200px
+
++direction-context(right-to-left)
+  aside
+    +span-columns(3)
+    background-color: LightSkyBlue
+
+  article
+    +span-columns(9)
+    background-color: Olive
+```
+
+[codepen example](http://codepen.io/vis-kid/pen/OyRKPq)
+
+##### Screenshot with **direction-context(right-to-left)**:
+
+{% img /images/Neat_02/with-direction-context.png %}
+
+##### Screenshot “without” **direction-context**:
+
+{% img /images/Neat_02/without-direction-context.png %}
+
+Just for the heck of it, here’s another example. Nothing new here for now—just the columns are of equal size now and also flow from **right-to-left**.
+
+Haml:
+``` haml
+.container
+  %aside 3 columns
+  %article 3 columns
+```
+
+Sass:
+``` sass
+body
+  color: white
+  background-color: white
+
+.container
+  +outer-container
+  margin-top: 10px
+  background-color: tomato
+
+aside, article
+  margin-bottom: 5px
+  height: 200px
+
++direction-context(right-to-left)
+  aside
+    +span-columns(3)
+    background-color: LightSkyBlue
+
+  article
+    +span-columns(3)
+    background-color: Olive
+```
+
+##### Screenshot:
+
+{% img /images/Neat_02/3-column-elements-with-direction-context-rtl.png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/ZbpgWp)
+
+The following little tweak only has one of these 3-column elements use the mixin and therefore both float on the opposite side of the container. Nothing too magic, but might be handy to have in your bag of tricks. Over time, not needing to fiddle around with floats on every element manually because you can do it on a high level that extracts the details is not small potatoes. Et voilà!
+
+Sass:
+``` sass
+body
+  color: white
+  background-color: white
+
+.container
+  +outer-container
+  margin-top: 10px
+  background-color: tomato
+
+aside, article
+  margin-bottom: 5px
+  height: 200px
+
+aside
+  +span-columns(3)
+  background-color: LightSkyBlue
+
++direction-context(right-to-left)
+  article
+    +span-columns(3)
+    background-color: Olive
+```
+
+{% img /images/Neat_02/one-3-column-element-with-direction-context-rtl.png %}
+
+[codepen example](http://codepen.io/vis-kid/pen/yYamVJ)
+
++ ### reset-layout-direction
+
+Not much to say about this one. You’ve changed the layout direction for whatever reason and want to switch back to the **$default-layout-direction** (**left-to-right**)? Here you go, the default context is restored! No argument needed. When might this be useful? Good question! The documentation says mostly when you need to change direction in a single row. I personally wouldn’t bother too much. First of all it’s gonna be deprecated in favor of a **direction** mixin anyway and also it gave me a surprising headache when I wanted to make it work with media queries. 
+
++ ### display-context
+
+To create a code block that changes the display properties used by mixins within itself you have two options you can pass to this mixin: **block** and **table**. The first one is obvious of course and **table** adds `display: table-cell` for you. **table-cell** let’s an element behave like a **<td\>** element.
+
+Sass:
+``` sass
++display-context(table)
+  .some-cell {
+    +span-columns(9)
+  .some-other-cell
+    +span-columns(3)
+```
+
++ ### reset-display
+
+Let’s say you have changed the active display to **table** like in the example above, you can easily switch back to **block** through this mixin. Takes no argument as well. The documentation says it’s most useful if applied to single rows that changed their display values. 
+
+Sass:
+``` sass
++display-context(table)
+  .some-cell {
+    +span-columns(9)
+  .some-other-cell
+    +span-columns(3)
+  +media(700px)
+    .some-cell, .some-other-cell
+      +reset-display
+```
+
++ ### reset-all
+
+If you want to combine **reset-display** and **reset-layout-direction** in one go, that’s what you’ll get—no arguments required. Let’s say one some row you changed the display to **table** and the **$default-layout-direction** to **RTL** and want to switch back.
+
+Sass:
+``` sass
+.some-element
+  +row(table, RTL)
+  +media(700px)
+    +reset-all
+```
+
+### Final thoughts
+
+Well, that was a long one. Thanks for making it through and I hope it was an interesting journey through Neat mixin land. There is one more thing to discuss though, namely all the variables that you have at your disposal to tweak the framework for your needs. The next article is a shorter one but then the Neat module should be complete for now. Thanks for taking the time!
