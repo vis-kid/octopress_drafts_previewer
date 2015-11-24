@@ -1,0 +1,144 @@
+---
+layout: post
+title: Ruby / Rails Code Smell Basics 03
+date: 2015-11-13 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [Ruby, Rails, Code Smells, Refactoring, Object Oriented Programming ]
+---
+
+{% img /images/code_smells/code_smell_01_600_mirrored.jpg %}
+
+### Heads Up
+
+This article was mostly written for folks a little more new to coding. Having obviously walked in these shoes myself, I remembered that it felt unneccessary foggy to get into code smells and refactorings. On the one hand, authors expect a certain level of proficiency and therefore might not feel super compelled to provide the reader with the same amount of context as a newbie might need to comfortably dive into this world sooner. As a consequence maybe, newbies on the other hand form the impression that they should wait a bit longer until they are more advanced to learn about smells and refactorings. I do not agree with that approach and think that making this topic more approachable will help them design better software earlier in their career. At least I hope it helps to provide junior peeps with a solid head start.
+
+### Topics
+
++ Case Statements
+
++ ### Case Statements
+
+maybe Id rather call it check list smell-just an idea
+
+case
+
+els if
+
+type code
+
+harder extraction, clutter, reuse harder
+
+also leads to unneccessary big classes because all these methods that respond to the various and possibly growing case scenarios often end up in the same class that then has all kinds of mixed responsibilities. Not a rare case that you have a lot of private methods that would normall scream at you that they want to live in classes of their own.
+
+if you wanna expand the case statements you have the need to change that method—possibly again and again. A great way to breed bugs. As you might remember, we want to be open for extension but closed for modification. Here modification is inevitable and just a matter of time.
+
+If view code depends on such a case statement, you duplicate the smell and are in for a round of shotgun surgery if you need to change some logic. Ouch!
+render view partials polymorphically
+render @question
+to_partial_path
+
+So for each “question” you want to address in case statements you implement separate classes with the same method
+
+ same set of conditions appears in many places 
+
+solutions
+replace conditional with polymorphism
+
+   bility in computer programming to present the same interface for differing  
+
+objects whose behavior varies depending on their types.
+
+ just create a new class and provide the appropriate methods
+
+replace conditional with null object which is a special form of above?
+
+implement a method differently on various classes instead of conditional
+you extract code to class that can best make that decision. These classes wont need to change if more conditional cases are added. Instead a new class with that single responsibitlty with the same method name gets addedo
+
+also achieves tell dont ask. with conditionals you create an ever growing checklist of things you need to ask first before you make a decision which method gets to do the job
+
+dynamic dispatch
+
+checking for nil all over the place is a special kind of case statement. checks for nil are also a kind of condition. 
+
+collection of all possible conditionals and their hidden versions
+
+drawbacks:
+
+drawbacks
+adding a new behaviour will mean finding every type and adding a new method. Understanding the behaviour becomes more difficult because the implementations are spread among the types.
+
+nothing special about a NilClass. its just a class that handles nil
+
+treat null object just like a real object. dont ask it questions eitherG
+
+``` ruby
+
+class Operation
+  def price
+    case @mission_tpe
+      when :counter_intelligence
+        @standard_fee + @counter_intelligence_fee
+      when :terrorism
+        @standard_fee + @terrorism_fee
+      when :revenge
+        @standard_fee + @revenge_fee
+      when :extortion
+        @standard_fee + @extortion_fee
+    end
+  end
+end
+
+counter_intel_op = Operation.new(mission_type: :counter_intelligence)
+counter_intel_op.price
+
+terror_op = Operation.new(mission_type: :terrorism)
+terror_op.price
+
+revenge_op = Operation.new(mission_type: :revenge)
+revenge_op.price
+
+extortion_op = Operation.new(mission_type: :extortion)
+extortion_op.price
+```
+
+``` ruby
+
+class CounterIntelligenceOperation
+  def price 
+    @standard_fee + @counter_intelligence_fee
+  end
+end
+
+class TerrorismOperation
+  def price 
+    @standard_fee + @terrorism_fee
+  end
+end
+
+class RevengeOperation
+  def price
+    @standard_fee + @revenge_fee
+  end
+end
+
+class ExtoritionOperation
+  def price
+    @standard_fee + @extortion_fee
+  end
+end
+
+counter_intel_op = CounterIntelligenceOperation.new
+counter_intel_op.price
+
+terror_op = CounterIntelligenceOperation.new
+terror_op.price
+
+revenge_op = CounterIntelligenceOperation.new
+revenge_op.price
+
+extortion_op = CounterIntelligenceOperation.new
+extortion_op.price
+```
