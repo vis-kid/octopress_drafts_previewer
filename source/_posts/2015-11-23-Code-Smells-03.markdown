@@ -17,62 +17,24 @@ This article was mostly written for folks a little more new to coding. Having ob
 ### Topics
 
 + Case Statements
++ Polymorphism
++ Null Objects
 
 + ### Case Statements
 
-maybe Id rather call it check list smell-just an idea
+Case statements could also be named “checklist smell” or something. They are a smell because they cause duplication—they are often inelegant as well. They can also lead to unneccessary big classes because all these methods that respond to the various (and potentially growing) case scenarios often end up in the same class—which then has all kinds of mixed responsibilities. Not a rare case that you have a lot of private methods that would be better off in classes of their own.
 
-case
+A big problem with case statements occurs if you wanna expand the case statements. Then you have to change that particular method—possibly again and again. And not only there, often they have twins repeated all over the place who now need an update as well. A great way to breed bugs for sure. As you might remember, we want to be open for extension but closed for modification. Here modification is inevitable and just a matter of time.
 
-els if
 
-type code
+You make it harder for yourself to extract and reuse code, plus it is a ticking clutter bomb. Often view code depends on such a case statements—which then duplicate the smell and open the gate wide open for a round of shotgun surgery in the future. Ouch! Also, interrogating an object before you find the right method to execute is a nasty violation of the “Tell-Don’t-Ask” principle.
 
-harder extraction, clutter, reuse harder
+### Polymorphism
+There is a good technique to handle the need for case statemens. Fancy word incoming! **Polymorphism**. This allows you to create the same interface for different objects and use whatever object needed for different scenarios. You can just swap the appropriate object and it can adapt because it has the same methods on it. Their behaviour behind these methods is different but as long as the objects asked respond to the same interface Ruby does not care. For example, **VegetarianDish.new.order** and **VeganDish.new.order** behave differently but both respond to **#order** the same way. You just want to order and don’t answer tons of questions like if you eat meat or not.
 
-also leads to unneccessary big classes because all these methods that respond to the various and possibly growing case scenarios often end up in the same class that then has all kinds of mixed responsibilities. Not a rare case that you have a lot of private methods that would normall scream at you that they want to live in classes of their own.
+Polymorphism is implement by extracting a class for the neccessary case statement and by moving that logic into a new method on that class. You continue to do that for every leg in the conditional tree and give them all the same method name. That way you encapsulate that behaviour to an object that is best suited to make that kind of decision and has no reason to further change. See, that way you can avoid all these nagging questions on an object—you just tell it what its supposed to do. When the need arises for more conditional cases, you just create another class that takes care of that single responsibility under the same method name.  
 
-if you wanna expand the case statements you have the need to change that method—possibly again and again. A great way to breed bugs. As you might remember, we want to be open for extension but closed for modification. Here modification is inevitable and just a matter of time.
-
-If view code depends on such a case statement, you duplicate the smell and are in for a round of shotgun surgery if you need to change some logic. Ouch!
-render view partials polymorphically
-render @question
-to_partial_path
-
-So for each “question” you want to address in case statements you implement separate classes with the same method
-
- same set of conditions appears in many places 
-
-solutions
-replace conditional with polymorphism
-
-   bility in computer programming to present the same interface for differing  
-
-objects whose behavior varies depending on their types.
-
- just create a new class and provide the appropriate methods
-
-replace conditional with null object which is a special form of above?
-
-implement a method differently on various classes instead of conditional
-you extract code to class that can best make that decision. These classes wont need to change if more conditional cases are added. Instead a new class with that single responsibitlty with the same method name gets addedo
-
-also achieves tell dont ask. with conditionals you create an ever growing checklist of things you need to ask first before you make a decision which method gets to do the job
-
-dynamic dispatch
-
-checking for nil all over the place is a special kind of case statement. checks for nil are also a kind of condition. 
-
-collection of all possible conditionals and their hidden versions
-
-drawbacks:
-
-drawbacks
-adding a new behaviour will mean finding every type and adding a new method. Understanding the behaviour becomes more difficult because the implementations are spread among the types.
-
-nothing special about a NilClass. its just a class that handles nil
-
-treat null object just like a real object. dont ask it questions eitherG
+**Case Statement logic**
 
 ``` ruby
 
@@ -103,6 +65,8 @@ revenge_op.price
 extortion_op = Operation.new(mission_type: :extortion)
 extortion_op.price
 ```
+
+**Polymorphic Classes**
 
 ``` ruby
 
@@ -142,3 +106,177 @@ revenge_op.price
 extortion_op = CounterIntelligenceOperation.new
 extortion_op.price
 ```
+
+In our example here we have an **Operation** class that needs to ask around about its **mission_type** before it can tell you its price. Its easy to see that this **price** method just waits to change when a new kind of operation gets added. When you want to display that in your view as well, you will need to apply that change there also. (FYI, for views you can use polymorphic partials in Rails to avoid having these case statements blasted all over your view)
+
+So instead of going down that rabbit hole, we created a bunch of operation classes that have their own knowledge how much their fees add up to the final price. We can just tell them to give us their price. You don’t have to neccessarily get rid of the original **Operation** class—only when you find that you have extracted all the knowledge it had.
+
+I think the logic behind case statements is unavoidable. Scenarious where you have to go through some sort of checklist before you find the object / behavior who gets to do the job is just too common. The question is simply how are they are handled best. I’m in favor of not repeating them and use the tools object oriented programming offer me for designing discrete classes that can be swapped out through their interface.
+
++ ### Null Objects
+
+Null objects are ordinary classes. There is nothing special about them—just a “fancy name”. You extract some conditional logic related to **nil** and you deal with it polymorphically then. You contain that behaviour and control the flow of your app via these classes and also have objects that are open for other extensions that suite them. Think about how a **Trial** (**NullSubscription**) class could grow over time. Not only is it more DRY and yadda-yadda-yadda, its also way more descriptive and stable. Another big benefit of using null objects is that things can’t blow up as easily. These objects respond to the same messages as the objects emulated—you don’t always need to copy the whole API over to null objects of course—which gives your app little reason to go crazy. However, note that null objects encapusulate conditional logic without completely removing it. You just find a better home for it.
+
+Asking an object about nil is often kinda a hidden case statement. Handling nil can take the form of **object.nil?**, **object.present?**, **object.try** and then some sort of action in the case **nil** shows up at your party. Another more sneaky question is to ask an object about its truthiness—ergo if it exists or if its nil—and then take some action. Looks harmelss but its just a disguise. Don’t be fooled, ternary operators or `||` operators also fall into this category of course. Put differently, conditinanls not only show up clearly indentifiable as **unless**, **if-else** statments or conditionals. They have more subtle ways to crash your party as well. Don’t ask objects for their nil-ness but tell them if the object for your happy paths is absent that null object is now in charge to respond to your messages.
+
+Since having a lot of nil related action in your app is pretty contagious and unhealthy for your app I like to think of null objects as the “Nil Containment Pattern” (Please don’t sue me!). Why contagious? Because if you pass **nil** around some place else in your hierarchy, another method is sooner or later also forced to ask if **nil** is in town—which then leads to another round of taking counter measures to deal with that case. Put differently, nil is not cool to hang out with because asking for its presence becomes contagious. Asking objects for **nil** is most likely always a symptom of poor design—no offense and don’t feel bad!—we’ve all been there. I don’t wanna go “willy-nilly” about how unfriendly nil can be but a few things need to be mentioned:
+
++ Nil is a party pooper (sorry nil, had to be said).
++ Nil is not helpful because it lacks meaning.
++ Nil does not respond to anything and violates idea of “[Duck Typing](https://en.wikipedia.org/wiki/Duck_typing)”.
++ Nil error messages are often a pain to deal with.
++ Its always gonna bite you.
+
+
+
+Overall, the scenario that an object is missing something comes up very frequently. An often cited example is an app that has a registered **User** and a nil **User**. But since you can’t have a user that doesn’t exist (yet)—after all he is maybe browsing your app before signing up for an account you can have a “Guest”. A missing subscription could be a “Trial”, a zero charge could be a “Freebie” and so on. Naming your Null Objects is sometimes obvious and easy, sometimes super hard. But try to stay away from naming all null objects will a leading “Null” or “No”. You can do better! Providing a little bit of context goes a long way I think. Choose a name that is more specific and meaningful, something that mirrors the actual use case. That way you communicate more clearly to other team members and your future self of course. 
+
+
+
+
+There are a couple of ways to implement this technique. I’ll show you the one I think is straighforward and beginner-friendly. I hope its a good basis for understanding more involved approaches. When you repeatedly? encounter some sort of conditional that deal with nil you simply create a new class and move that behaviour over and let the original class know that this new player deals with nothingness. 
+
+``` ruby
+
+class Spectre
+  include ActiveModel::Model
+  attr_accessor :credit_card, :evil_operation
+
+  def charge
+    unless evil_operation.nil?
+      evil_operation.charge(credit_card)
+    end
+  end
+
+  def has_discount?
+    evil_operation.present? && evil_operation.has_discount?
+  end
+
+  def price
+    evil_operation.try(:price) || 0
+  end
+end
+
+class EvilOperation
+  include ActiveModel::Model
+  attr_accessor :discount, :price
+
+  def has_discount?
+    discount  
+  end
+
+  def charge(credit_card)
+    credit_card.charge(price)
+  end
+end
+
+```
+
+``` ruby
+
+class Spectre
+  include ActiveModel::Model
+  attr_accessor :credit_card, :evil_operation
+
+  def charge
+    evil_operation.charge(credit_card)
+  end
+
+  def has_discount?
+    evil_operation.has_discount?
+  end
+
+  def price
+    evil_operation.price
+  end
+
+  private
+
+  def evil_operation 
+    @evil_operation || NoOperation.new
+  end
+end
+
+class EvilOperation
+  include ActiveModel::Model
+  attr_accessor :discount, :price
+
+  def has_discount?
+    discount
+  end
+
+  def charge(credit_card)
+    credit_card.charge(price)
+  end
+end
+
+class NoOperation
+  def charge(creditcard)
+    "No evil operation registered"
+  end
+
+  def has_discount?
+    false
+  end
+
+  def price
+    0
+  end
+end
+
+```
+
+evil_operation will never return nil anymore
+
+it must first check to make sure that an operation exists in order to get the discount
+
+dont check objects if they are inclined to do something. Create objects that handle the absence of stuff. Act like an army person who just tells folks what to do and let the objects figure out if they can handle it. As ever so often, probably not cool in real life but good advice for Object Oriented Programming.
+
+
+
+
+You kinda simulate the API of the existing object and swapp in the NullObject with the return values needed in case it would normally end up as nill. 
+
+In general, all the benefits from using Polymrophism instead of case statements apply for Null Objects as well. After all its just a special case of case statements. The same goes for drawbacks:
+
+
+
+render view partials polymorphically
+render @question
+to_partial_path
+
+
+case
+
+els if
+
+type code
+
+
+So for each “question” you want to address in case statements you implement separate classes with the same method
+
+ same set of conditions appears in many places 
+
+solutions
+replace conditional with polymorphism
+
+
+ just create a new class and provide the appropriate methods
+
+replace conditional with null object which is a special form of above?
+
+dynamic dispatch
+
+checking for nil all over the place is a special kind of case statement. checks for nil are also a kind of condition. 
+
+collection of all possible conditionals and their hidden versions
+
+drawbacks:
+
+drawbacks
+adding a new behaviour will mean finding every type and adding a new method. Understanding the behaviour becomes more difficult because the implementations are spread among the types.
+
+nothing special about a NilClass. its just a class that handles nil
+
+treat null object just like a real object. dont ask it questions eitherG
+
