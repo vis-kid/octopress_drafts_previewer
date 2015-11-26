@@ -13,7 +13,10 @@ categories: [Ruby, Rails, thoughtbot, Bourbon, Neat, Refills, Middleman]
 ### Topics
 
 + Roadmap
-+ Basic Setup
++ Basic Blog Setup
++ LiveReload
++ Organizing Posts
++ GitHub Pages Deployment
 + Smarter Assets
 
 + ### Roadmap
@@ -29,7 +32,7 @@ We will use Middleman for generating the static site and the Bourbon suite for a
 
 For all things styling, I heavily rely on Bourbon. Also I really dig the indented Sass syntax—I never really got why people are keen to write all that extra junk with the **.scss** syntax. The **.sass** syntax is the only (probably) unfamiliar bit I wanna throw at newbies because its really worth it and I’d kick myself writing it “sassy-ly”. Originally I wanted to use Slim instead of HTML and ERB but I decided against that since I don’t want to introduce too many unknowns for newbies. I want to do something similar with Slim though in the future—mainly because I feel it is the best solution to write concise and intelligent markup out there at the moment. So raincheck. Why not Haml? Simple, Slim is more awesome!
 
-+ ### Basic Setup
++ ### Basic Blog Setup
 
 Let’s initiate a new app for our podcast site:
 
@@ -57,8 +60,6 @@ git commit -m 'Initital commit'
 # => commits changes
 
 ```
-
-### Blog Basis
 
 Now we add the blog template to the mix. The blog template is a good basis for our podcast site. Later we will adjust the articles to display your podcast audio tracks. For now, its just a blog though:
 
@@ -230,7 +231,7 @@ middleman article 'My awesome 3rd article'
 
 ```
 
-### Deployment
+### GitHub Pages Deployment
 
 For me, pushing static sites to GitHub Pages is such a convenient solution that I don’t wanna put you through deploying via Heroku or Amazon’s S3 service. Let’s keep it simple!
 
@@ -274,7 +275,17 @@ middleman deploy
 
 ```
 
-Boom! Your site is live under `yourusername.github.io/projectname`. I love this process—couldn’t be easier and more user friendly. Great job GitHub!
+In order for GitHub Pages to find your CSS and JS assets you need to activate the following in **config.rb**:
+
+``` ruby
+
+configure :build do
+  activate :relative_assets
+end
+
+```
+
+Boom! Your site is live under `yourusername.github.io/projectname` and your assets should be sorted out. I love this process—couldn’t be easier and more user friendly. Great job GitHub!
 
 **Git**
 
@@ -285,9 +296,9 @@ gco -m 'Adds setup for GitHub Pages deployment'
 
 ```
 
-### CSS Cleanup
+### Smarter Assets
 
-In the last step before we get into the Bourbon setup, I’d like to get rid of the styles that come with Middleman. Go to **source/stylesheets/all.css** and delete its content. Just keep the first line:
+In the last step before we get into the Bourbon setup, I’d like to get rid of the styles that come with Middleman and optimize the assets for a better performance in the browser—asset minification and concatenation. Go to **source/stylesheets/all.css** and delete its content. Just keep the first line:
 
 ``` css
 @charset "utf-8";
@@ -296,11 +307,88 @@ In the last step before we get into the Bourbon setup, I’d like to get rid of 
 **Git**
 
 ``` bash
+
 git add --all
 git commit -m 'Removes unneccessary Middleman styles'
+
 ```
 
-Your index page should look pretty barebones now. 
+Next we want to activate a couple of options to optimize for performance in **config.rb**:
+
+``` ruby
+
+configure :build do
+  activate :asset_hash
+  activate :minify_javascript
+  activate :css
+  activate :gzip
+end
+
+```
+
+**Git**
+
+``` bash
+
+git add --all
+git commit -m 'Activates performance optimizations'
+
+```
+
+Let me quickly explain what we did here:
+
++ **:gzip**
+
+At the moment, gzip is the most popular and effective compression method. Its compression algorithm finds similar strings within a file and compresses them. For HTML, which is full of white space and matching tags, this is very effective and adds up to reducing the HTTP response size by a whopping 70%. Activating this, not only gzips your HTML, but also CSS and JSS files. During build Middleman creates your files as usual but also duplicates them with a **.gz** version. When a browser gets in touch with your files it can choose if he can serve gzip compressed files or regular ones. gzipping is supported heavily by web and mobile browsers. 
+ 
++ **:minify_css**
+
+This process strips out all unneccessary junk from your styles and reduces their file size significantly.
+
++ **:minify_javascript**
+
+Same as **minify_css** but a bit more involved and sophisticated. For both techniques you end up with a long blob of compressed text that is not meant to be read by humans.
+
++ **:asset_hash**
+
+This activates hasing of your assets. It means that your asset filenames change and receive some extra information—during the build process—that informs browsers if they need to re-download assets or not. Now, the name of a file is dependent on the contents of that file. Hashed assets get cached by browsers and your sites get rendered faster. Another word for this is “fingerprinting” because it provides a simple solution to inform browsers whether or not two versions of a file are indentical. The deployment date does not matter—only the contents. Take a look below how hashed assets’ files look like: 
+
+**Screenshots**
+
+{% img /images/middleman/basics_03_build/asset_hash_css.png %}
+
+{% img /images/middleman/basics_03_build/asset_hash_images.png %}
+
+{% img /images/middleman/basics_03_build/asset_hash_js.png %}
+
+Now your images, stylesheets and JavaScript files get a unique name through this added “random” code—what is called a (unique) hash. Every time you change an asset and go through the build process again, this hash changes which in turn signals to browsers that then, and only then, they need to re-download that particular file—because it kinda expired. This is called “cache busting”. Btw, you can refer to your files the same way as before but during build the references in your HTML and what not get updated to use these hashed names. Take a look:
+
+**/build/index.html(.gz)**
+
+``` html
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+		 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <title>Blog Title</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+    <link href="stylesheets/normalize-6197e73d.css" rel="stylesheet" type="text/css" /><link href="stylesheets/all-0355b587.css" rel="stylesheet" type="text/css" />
+    <script src="javascripts/all-da39a3ee.js" type="text/javascript"></script>
+  </head>
+  <body>
+
+  ...
+
+```
+
+See in your **/build** folder, JS and CSS files get referenced with the hashed asset names automatically. As a result of this hashing busines, when you go through different pages in the same session or revisit a page again later, these assets have been cached and don’t need to be requested again—only until you change something. This process cuts down your number of requests by a staggering amount. Isn’t that cool? All of that with one line of code in **config.rb** and some *Sprockets* wizardry. Booyakasha!
+
+The key with all these asset optimization techniques is to minimize the number of requests and the request size of your files / assets. Middleman offers great performance boosts right out the box without any work on your end really. Just activate this stuff and sleep tight. GitHub Pages has everthing gzipped and minified out of the box btw. Doesn’t hurt thought to make sure everything is in place—especially if you later decide to host your app somewhere else you don’t need to think about solving this problem again. 
+
+Let’s have a look where we’re at. Your index page should look pretty barebones now: 
 
 **Screenshot**
 
