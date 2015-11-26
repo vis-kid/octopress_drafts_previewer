@@ -115,26 +115,25 @@ I think the logic behind case statements is unavoidable. Scenarious where you ha
 
 + ### Null Objects
 
-Null objects are ordinary classes. There is nothing special about them—just a “fancy name”. You extract some conditional logic related to **nil** and you deal with it polymorphically then. You contain that behaviour and control the flow of your app via these classes and also have objects that are open for other extensions that suite them. Think about how a **Trial** (**NullSubscription**) class could grow over time. Not only is it more DRY and yadda-yadda-yadda, its also way more descriptive and stable. Another big benefit of using null objects is that things can’t blow up as easily. These objects respond to the same messages as the objects emulated—you don’t always need to copy the whole API over to null objects of course—which gives your app little reason to go crazy. However, note that null objects encapusulate conditional logic without completely removing it. You just find a better home for it.
+Checking for nil all over the place is often a special kind of case statement smell. Asking an object about nil is often kinda a hidden case statement. Handling nil conditionally can take the form of **object.nil?**, **object.present?**, **object.try** and then some sort of action in the case **nil** shows up at your party. Another more sneaky question is to ask an object about its truthiness—ergo if it exists or if its nil—and then take some action. Looks harmelss but its just a disguise. Don’t be fooled, ternary operators or `||` operators also fall into this category of course. Put differently, conditionals not only show up clearly indentifiable as **unless**, **if-else** or **case** statments. They have more subtle ways to crash your party. Don’t ask objects for their nil-ness but tell them if the object for your happy path is absent that a null object is now in charge to respond to your messages.
 
-Asking an object about nil is often kinda a hidden case statement. Handling nil can take the form of **object.nil?**, **object.present?**, **object.try** and then some sort of action in the case **nil** shows up at your party. Another more sneaky question is to ask an object about its truthiness—ergo if it exists or if its nil—and then take some action. Looks harmelss but its just a disguise. Don’t be fooled, ternary operators or `||` operators also fall into this category of course. Put differently, conditinanls not only show up clearly indentifiable as **unless**, **if-else** statments or conditionals. They have more subtle ways to crash your party as well. Don’t ask objects for their nil-ness but tell them if the object for your happy paths is absent that null object is now in charge to respond to your messages.
+Null objects are ordinary classes. There is nothing special about them—just a “fancy name”. You extract some conditional logic related to **nil** and then you deal with it polymorphically. You contain that behaviour and control the flow of your app via these classes and also have objects that are open for other extensions that suite them. Think about how a **Trial** (**NullSubscription**) class could grow over time. Not only is it more DRY and yadda-yadda-yadda, its also way more descriptive and stable. A big benefit of using null objects is that things can’t blow up as easily. These objects respond to the same messages as the objects emulated—you don’t always need to copy the whole API over to null objects of course—which gives your app little reason to go crazy. However, note that null objects encapusulate conditional logic without completely removing it. You just find a better home for it.
+
+
 
 Since having a lot of nil related action in your app is pretty contagious and unhealthy for your app I like to think of null objects as the “Nil Containment Pattern” (Please don’t sue me!). Why contagious? Because if you pass **nil** around some place else in your hierarchy, another method is sooner or later also forced to ask if **nil** is in town—which then leads to another round of taking counter measures to deal with that case. Put differently, nil is not cool to hang out with because asking for its presence becomes contagious. Asking objects for **nil** is most likely always a symptom of poor design—no offense and don’t feel bad!—we’ve all been there. I don’t wanna go “willy-nilly” about how unfriendly nil can be but a few things need to be mentioned:
 
 + Nil is a party pooper (sorry nil, had to be said).
 + Nil is not helpful because it lacks meaning.
-+ Nil does not respond to anything and violates idea of “[Duck Typing](https://en.wikipedia.org/wiki/Duck_typing)”.
++ Nil does not respond to anything and violates the idea of “[Duck Typing](https://en.wikipedia.org/wiki/Duck_typing)”.
 + Nil error messages are often a pain to deal with.
-+ Its always gonna bite you.
++ Nil is gonna bite you—sooner or later.
 
+Overall, the scenario that an object is missing something comes up very frequently. An often cited example is an app that has a registered **User** and a **NilUser**. But since users that don’t exist is a silly concept if that person is clearly browsing your app—its probably cooler to have a **Guest** that hasn’t signed up yet. A missing subscription could be a **Trial**, a zero charge could be a **Freebie** and so on. Naming your null objects is sometimes obvious and easy, sometimes super hard. But try to stay away from naming all null objects will a leading “Null” or “No”. You can do better! Providing a little bit of context goes a long way I think. Choose a name that is more specific and meaningful, something that mirrors the actual use case. That way you communicate more clearly to other team members and your future self of course. 
 
+There are a couple of ways to implement this technique. I’ll show you one that I think is straighforward and beginner-friendly. I hope its a good basis for understanding more involved approaches. When you repeatedly encounter some sort of conditional that deals with **nil** you know its time to simply create a new class and move that behaviour over. After that you let the original class know that this new player deals now with nothingness. 
 
-Overall, the scenario that an object is missing something comes up very frequently. An often cited example is an app that has a registered **User** and a nil **User**. But since you can’t have a user that doesn’t exist (yet)—after all he is maybe browsing your app before signing up for an account you can have a “Guest”. A missing subscription could be a “Trial”, a zero charge could be a “Freebie” and so on. Naming your Null Objects is sometimes obvious and easy, sometimes super hard. But try to stay away from naming all null objects will a leading “Null” or “No”. You can do better! Providing a little bit of context goes a long way I think. Choose a name that is more specific and meaningful, something that mirrors the actual use case. That way you communicate more clearly to other team members and your future self of course. 
-
-
-
-
-There are a couple of ways to implement this technique. I’ll show you the one I think is straighforward and beginner-friendly. I hope its a good basis for understanding more involved approaches. When you repeatedly? encounter some sort of conditional that deal with nil you simply create a new class and move that behaviour over and let the original class know that this new player deals with nothingness. 
+In the example below you can see that the **Spectre** class asks a bit much about **nil** and clutters up the code unneccessarily. It wants to make sure that we have an **evil_operation** before it dares to charge. Can you see the violation of “Tell-Don’t-Ask”? Another problematic part is why would Spectre need to care about the implementation of a zero price. The **try** method also asks sneakily if the **evil_operation** has a **price** to handle nothingness via the **or** (**||**) statement. **evil_operation.present?** does make the same mistake. We can simplify this:
 
 ``` ruby
 
@@ -174,6 +173,20 @@ end
 
 ``` ruby
 
+class NoOperation
+  def charge(creditcard)
+    "No evil operation registered"
+  end
+
+  def has_discount?
+    false
+  end
+
+  def price
+    0
+  end
+end
+
 class Spectre
   include ActiveModel::Model
   attr_accessor :credit_card, :evil_operation
@@ -210,73 +223,22 @@ class EvilOperation
   end
 end
 
-class NoOperation
-  def charge(creditcard)
-    "No evil operation registered"
-  end
-
-  def has_discount?
-    false
-  end
-
-  def price
-    0
-  end
-end
-
 ```
 
-evil_operation will never return nil anymore
+I guess this example is simple enough to see right away how elegant null objects can be. In our case, we have a **NoOperation** null class that knows how to deal with a non-existing evil operation via:
 
-it must first check to make sure that an operation exists in order to get the discount
++ Handling charges of **0** amounts.
++ Knows that non-existing operations also have no discount.
++ Returns a little informative error string when the card is charged. 
 
-dont check objects if they are inclined to do something. Create objects that handle the absence of stuff. Act like an army person who just tells folks what to do and let the objects figure out if they can handle it. As ever so often, probably not cool in real life but good advice for Object Oriented Programming.
+We created this new class that deals with nothingness, an object that handles the absence of stuff, and swap it into the old class if **nil** shows up. The API is the key herebecause if it matches that of the original class you can swap in the null object with the return values we need seamlessly. That’s exactly what we did in the private method **Spectre#evil_operation**. If we have the **evil_operation** object we need we use that, if not, we use our **nil** chameleon that knows how to deal with these messages, **evil_operation** will never return nil anymore. Duck typing at its best. 
 
+Our problematic conditional logic is now wrapped in one place and our null object is in charge of the behaviour **Spectre** is looking for. DRY! We kinda rebuilt the same interface from the orginal object that nil couldn’t handle . Remember, nil does a poor job at receiving messages—nobody home, always! From now on its just telling objects what to do without asking them first for their “permission”. What’s also cool is that there was no need to touch the **EvilOpertion** class at all.
 
-
-
-You kinda simulate the API of the existing object and swapp in the NullObject with the return values needed in case it would normally end up as nill. 
+Last but now least, I got rid of the check if an evil operation is present in **Spectre#has_discount?**. No need to make sure that an operation exists in order to get the discount. As a result of the null object, the **Spectre** class is much slimmer and does not share other classes responsibilities as much. A good guideline to take away from this is to not check objects if they are inclined to do something. Command them like a drill sergant. As ever so often, probably not cool in real life but good advice for Object Oriented Programming. “Now give me 20!” 
 
 In general, all the benefits from using Polymrophism instead of case statements apply for Null Objects as well. After all its just a special case of case statements. The same goes for drawbacks:
 
++ Understanding the implementation and behaviour can become tricky because code is spread around and null objects are not super explicit about their existence.
 
-
-render view partials polymorphically
-render @question
-to_partial_path
-
-
-case
-
-els if
-
-type code
-
-
-So for each “question” you want to address in case statements you implement separate classes with the same method
-
- same set of conditions appears in many places 
-
-solutions
-replace conditional with polymorphism
-
-
- just create a new class and provide the appropriate methods
-
-replace conditional with null object which is a special form of above?
-
-dynamic dispatch
-
-checking for nil all over the place is a special kind of case statement. checks for nil are also a kind of condition. 
-
-collection of all possible conditionals and their hidden versions
-
-drawbacks:
-
-drawbacks
-adding a new behaviour will mean finding every type and adding a new method. Understanding the behaviour becomes more difficult because the implementations are spread among the types.
-
-nothing special about a NilClass. its just a class that handles nil
-
-treat null object just like a real object. dont ask it questions eitherG
-
++ Adding new behaviour might need to be kept in sync between null objects and their counterparts.
