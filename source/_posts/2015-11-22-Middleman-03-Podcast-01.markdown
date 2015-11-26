@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Middleman Basics 03-Podcast Site
+title: Middleman Basics 03-Podcast Site (Part 01)
 date: 2015-11-22 04:29:10 +0100
 comments: true
 sharing: true
@@ -18,6 +18,8 @@ categories: [Ruby, Rails, thoughtbot, Bourbon, Neat, Refills, Middleman]
 + Organizing Posts
 + GitHub Pages Deployment
 + Smarter Assets
++ Bourbon Setup
++ jQuery & Normalize
 
 + ### Roadmap
 
@@ -393,3 +395,175 @@ Let’s have a look where we’re at. Your index page should look pretty barebon
 **Screenshot**
 
 {% img /images/middleman/basics_03_build/matchanerdz_screen_01.png %}
+
++ ### Bourbon Setup
+
+For this project I want to use three gems from Bourbon:
+
++ Bourbon
++ Neat
++ Bitters
+
+Let’s add them to our **Gemfile** and bundle:
+
+``` ruby
+
+gem 'bourbon'
+gem 'neat'
+gem 'bitters'
+
+```
+
+**Shell**
+
+``` bash
+
+bundle
+
+```
+
+Bourbon and Neat are now good to go (almost). Bitters needs to install a few things first though. You need to change into your stylesheets directory and activate a generator that places a bunch of Bitters files in a **/base** folder.
+
+**Shell**
+
+``` bash
+
+cd source/styleheets
+bitters install
+
+```
+
+Take a look what we got after this:
+
+**Screenshot**
+
+{% img /images/middleman/basics_03_build/install_bitters_base.png %}
+
+Bitters is something like a baseline for your designs. It gives you a couple of sane designs for stuff like buttons, type, forms, error messages and so on. Bitters also prepared a **grid-settings** file for your **Neat** grid which we also have to set up by uncommenting the following line in **source/stylesheets/base/_base.scss**:
+
+``` scss
+@import "grid-settings";
+```
+
+To complete our Bourbon settings for now I’d like to add the following variables to our grid-settings. They lay the groundwork for sizing our grid and activate a visual grid to better align our design.
+
+**/source/stylesheets/base/_grid-settings.scss**
+
+``` scss
+
+$column: 90px;
+$gutter: 30px;
+$grid-columns: 12;
+$max-width: 1200px;
+
+$visual-grid: true;
+$visual-grid-index: back;
+$visual-grid-opacity: 0.15;
+$visual-grid-color: red;
+
+```
+
+The final step to make this work is rename **/stylesheets/all.css** to **/stylesheets.all.sass** and import our Bourbon files.
+
+**all.css.scss**
+
+``` sass
+
+@import 'bourbon'
+@import 'base/base'
+@import 'neat'
+
+```
+
+We import Bitters’ base file here right after Bourbon because we need access to Neat’s **grid-settings** file—which is in the **/base** folder before we import Neat.
+
+**Git**
+
+``` bash
+
+git add --all
+git commit -m 'Sets up Bourbon and activates grid settings'
+```
+
+Let’s have a look how things look now. You can see the red visual grid and also that the type already improved a bit due to Bitters presets. Nice!
+
+**Screenshot**
+
+{% img /images/middleman/basics_03_build/bourbon_installed_visual_grid.png %}
+
++ ### jQuery & Normalize
+
+Let’s get this out of the way also, shall we? Middleman comes with a [Normalize](https://necolas.github.io/normalize.css/) file which gets not imported into **all.css** by default. That’s one unneccessary asset request we can easily get rid of:
+
+Rename **source/stylesheets/normalize.css** to **source/stylesheets/_normalize.css.scss** first. Now we have a partial that we need to import right at the top after **@charset** in **source/stylesheets/all.sass**:
+
+``` sass
+
+@charset "utf-8"
+
+@import 'normalize'
+
+@import 'bourbon'
+@import 'base/base'
+@import 'neat'
+@import 'normalize'
+
+```
+
+In case you’re wondering about what *Normalize* does, think of it as leveling the playing field between the default styles that browsers like to add. One browser likes to add padding here, another has useless margins there, etc. Projects like Normalize try to reset that behaviour so that all elements get rendered more consistently by browsers. 
+
+One thing we shouldn’t overlook is the link for our stylesheets in your layout does not need to link to **normalize.css** anymore—a link to **all.sass** is enough:
+
+**source/layouts/layout.erb**
+
+``` erb
+
+<%= stylesheet_link_tag "all" %>
+
+```
+
+**Git**
+
+``` bash
+
+git rm source/stylesheets/normalize.css
+git add --all
+git commit -m 'Imports normalize partial properly'
+
+```
+
+Finally, before we take a break, we need to add jQuery which we’ll need later on.
+
+**Gemfile**
+
+``` ruby
+gem "jquery-middleman"
+```
+
+**Shell**
+
+``` bash
+bundle
+
+```
+
+Since I wanna user CoffeeScript for this project, we need to rename **source/javascripts/all.js** to **source/javascripts/all.coffee**. In there we require jQuery for Sprockets / Asset Pipeline and we’re all set.
+
+**all.coffee**
+
+``` javascript
+//= require jquery
+```
+
+**Git**
+
+``` bash
+git rm source/javascripts/all.js
+git add -all
+git commit 'Adds jQuery to the Mix
+            Renames gobal js file to coffee'
+```
+
++ ### Break
+
+Let’s take a break. We got quite a few boring setup steps out of the way with this one. Hope you got a clear picture what you need for a solid basis when you start a new Middleman project. Next we’ll expand on what we’ve built here and continue working towards a decent site for our podcast. 
