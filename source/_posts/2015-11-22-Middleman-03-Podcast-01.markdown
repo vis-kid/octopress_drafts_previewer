@@ -564,6 +564,14 @@ git commit 'Adds jQuery to the Mix
             Renames gobal js file to coffee'
 ```
 
+Let’s deploy and open our site on GitHub Pages to see if everyting works as expected. Nice!
+
+**Shell**
+
+``` bash
+middleman deploy
+```
+
 + ### Break
 
 Let’s take a break. We got quite a few boring setup steps out of the way with this one. Hope you got a clear picture what you need for a solid basis when you start a new Middleman project. Next we’ll expand on what we’ve built here and continue working towards a decent site for our podcast. 
