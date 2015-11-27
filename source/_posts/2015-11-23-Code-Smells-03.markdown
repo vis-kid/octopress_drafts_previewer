@@ -19,6 +19,7 @@ This article was mostly written for folks a little more new to coding. Having ob
 + Case Statements
 + Polymorphism
 + Null Objects
++ Data Class
 
 + ### Case Statements
 
@@ -242,3 +243,9 @@ In general, all the benefits from using Polymrophism instead of case statements 
 + Understanding the implementation and behaviour can become tricky because code is spread around and null objects are not super explicit about their existence.
 
 + Adding new behaviour might need to be kept in sync between null objects and their counterparts.
+
++ ### Data Class
+
+Let’s close this article with something light. This is a smell because its a class that has no behaviour except getting and setting its data—its basically nothing more than a data container without extra methods that do something with that data. That makes them passive in nature because this data is kept there to be used by other classes. And we know already that this is not an ideal scenario because it screams *feature envy*. Generally speaking, we want to have classes that have state, meaning data they take care of as well as behaviour via methods that can act on that data without much hindrance or snooping into other classes. 
+
+You can start refactoring classes like these by possibly extracting the behavior from other classes that act on the data into your data class. By that you might slowly attact useful behaviour for that data and give it a proper home. Its totally fine if these classes grow behaviour over time. Sometimes you can move a whole method over easily and sometimes you need / can extract parts of a bigger method first and then extract it into the data class. When in doubt, if you can reduce that access other classes have on your data class you should definitely go for it and move that behaviour over. Your goal should be to retire at some point the getters / setters that gave other objects access to that data. As a result you will have lower coupling between classes—which is always a win!
