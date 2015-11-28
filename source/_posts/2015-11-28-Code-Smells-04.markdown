@@ -17,3 +17,10 @@ This article was mostly written for folks a little more new to coding. Having ob
 ### Topics
 
 + Case Statements
+
+
+
+
++ ### A Final Whiff
+
+The last article in this mini series is something like a bonus round. I wanted to introduce you to a another couple of smells that can be addressed quickly and without much fuzz. One for the road so to speak. I think with the knowledge you gathered from the previous articles, most of them won’t even need code examples to wrap your head around. When you open a book about refactoring you will easily find more smells than we have discussed. However, with these major ones under your belt you will be well prepared to deal with any of them. 
