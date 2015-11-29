@@ -17,6 +17,7 @@ This article was mostly written for folks a little more new to coding. Having ob
 ### Topics
 
 + Comments
++ Callbacks
 
 
 
@@ -61,3 +62,9 @@ click_button 'Submit'
 ```
 
 What is easier to read? A no brainer of course! Use the free mileage you get by naming things properly via extracted methods. It makes your code so much smarter and easier to digest. And if you have had a habit of writing comments everywhere, I bet it will help you to trim them down by a very significant amount.
+
++ ### Callbacks
+
+This is a simple one. Don’t use callbacks that are not related to persistence logic! Your objects have a persistence life cycle—creating, saving and deleting objects so to speak—and you don’t want to “pollute” that logic with other behaviour like business logic of your classes. Keep it simple, remember? Typical examples of what to avoid is sending emails, processing  payments and stuff. Why not? Because debugging and refactoring your code should be as easy as possible and messy callbacks have a reputation of interfering with these plans. Callbacks make it a bit too easy to muddy the waters and to shoot yourself in the foot multiple times. 
+
+Another point that is problematic about callbacks is that it can hide the implementation of business logic in methods like **#save** or **#create**. So don’t be lazy and abuse them just because it seems convenient!  The biggest concern is coupling of concerns of course. Why let the create method of **SpectreAgent** for example deal with the delivery of a **#mission_assignment** or something. As so often, just because we can do it—easily—doesn’t mean we should. Its a guaranteed bite in the ass waiting to happen. The solution is actually pretty straightforward. If a callback’s behaviour has nothing to do with persistence simply create another method for it and you’re done. 
