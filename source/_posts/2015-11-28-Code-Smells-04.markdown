@@ -47,7 +47,7 @@ Its also useful to break out parts of methods via *extract method* and giving th
 ``` ruby
 
 def create_new_agent
- ...
+...
 end
 
 ...
@@ -74,4 +74,4 @@ Another point that is problematic about callbacks is that it can hide the implem
 
 Sorry to be so blunt, but just calling poor naming choices uncommunicative or simply bad doesn’t do the consequences justice I think. In effect, you are wasting other peoples’s time with bad naming choices—or even better your own if you have to revisit that piece of code in the future. The code you write are instructions to be read by you and other people and therefore a purely logical, super prosaic, overly clever, or worse, a plain lazy approach to naming things is one of the worst things you can leave behind. Aim to make your code easier to understand by providing better names. 
 
-Clarity trumps false cleverness or unneccessary conciseness any day of the week! Work hard on naming methods, variables! and classes that make it easy to follow some sort of thread. I don’t wanna go as far as to say that you should aim for trying to tell a story but if you can, go for it! Machines are not the ones who need to “read” your code—its run by them of course. Maybe one reason why the term “Software Writer” grew on me a bit as of lately is to not because the engeneering is to be diminished but writing software is more than writing soulles instructions for machines—at least software that is elegant and sparks joy to work with. Don’t freak out if this turns out to be a lot more difficult than you thought. Naming is notoriously hard!
+Clarity trumps false cleverness or unneccessary conciseness any day of the week! Work hard on naming methods, variables! and classes that make it easy to follow some sort of thread. I don’t wanna go as far as to say that you should aim for trying to tell a story but if you can, go for it! Machines are not the ones who need to “read” your code—its run by them of course. Maybe its one reason why the term “Software Writer” grew on me a bit as of lately—not because the engineering aspect should be diminished—writing software is more than writing soulles instructions for machines—at least software that is elegant and sparks joy to work with. Don’t freak out if this turns out to be a lot more difficult than you thought. Naming is notoriously hard!
