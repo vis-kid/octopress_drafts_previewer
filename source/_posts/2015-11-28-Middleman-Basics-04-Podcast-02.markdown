@@ -150,3 +150,172 @@ git commit -m 'Adjusts size for title and body text
                Adds .erb extension to dummy posts'
 
 ```
+
+I think we should take care of these helpless floating elements on the bottom first. Let’s pack “Recent Articles” and “Tags” in a footer and get rid of “By Year”. This markup is part of the global layout in **source/layouts/layout.erb**. Find the code in the **aside** tag below **yield** and adapt it like this:
+
+**source/layouts/layout.erb**
+
+``` erb
+
+<footer>
+
+  <div class='recent-posts'>
+    <h3>Recent Posts</h3>
+    <ol>
+      <% blog.articles[0...10].each do |article| %>
+        <li><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></li>
+      <% end %>
+    </ol>
+  </div>
+
+  <div class='footer-tags'>
+    <h3>Tags</h3>
+    <ol>
+      <% blog.tags.each do |tag, articles| %>
+        <li><%= link_to "#{tag} (#{articles.size})", tag_path(tag) %></li>
+      <% end %>
+    </ol>
+  </div>
+
+</footer>
+
+```
+
+The above default of looping through our posts and tags that comes with Middleman is fine. I want to have it a bit smarter though and introduce shuffling to both recent posts and tags. That way, the user doesn’t only see that last ten articles or a huge list of tags but a randomized version of both that is always ten items long—which does not consume a whole lot of space and let’s me align both items in the footer more beautifully.
+
+**source/layouts/layout.erb**
+
+``` erb
+
+<footer>
+
+  <div class='recent-posts'>
+    <h3>Recent Posts</h3>
+    <ol>
+      <% blog.articles.shuffle[0...10].each do |article| %>
+        <li><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></li>
+      <% end %>
+    </ol>
+  </div>
+
+  <div class='footer-tags'>
+    <h3>Tags</h3>
+    <ol>
+      <% blog.tags.to_a.shuffle[0...10].each do |tag, articles| %>
+        <li><%= link_to "#{tag} (#{articles.size})", tag_path(tag) %></li>
+      <% end %>
+    </ol>
+  </div>
+
+</footer>
+
+```
+
+I think we improved the user experience quite a bit through that little enhancement. Ruby made our job super easy.
+
+
+
+No this markup only need a little push for better alignment. We create a new Sass partial for just the footer.
+
+**source/stylesheets/_footer.sass**
+
+``` sass
+
+footer
+  +outer-container
+  border-top: 1px solid $base-border-color
+  padding-top: 4em
+  padding-bottom: 4em
+
+.recent-posts, .footer-tags
+  h3
+    font-size: 1.7em
+  li
+    font-size: 1.05em
+
+.recent-posts
+  +span-columns(6)
+  +shift(2)
+  background-color: tomato
+
+.footer-tags
+  +span-columns(2)
+  background-color: cyan
+
+```
+
+**source/stylesheets/all.sass**
+
+``` sass
+
+@import 'footer'
+
+```
+
+In order to have some tangible test data, I added a couple more example posts via the middleman generator and gave it some dummy lorem text.
+
+**Shell**
+
+``` bash
+
+middleman article 'Your fancy title'
+
+```
+I should probably mention that I needed to add an **.erb** extension to these new posts —needs ruby. In order to make the lorem dummy text work, I also added a couple of dummy tags in the frontmatter of the example posts. 
+
+**source/posts/2012-01-01-example-article.html.markdown.erb"**
+
+``` html
+
+---
+title: Example Post
+date: 2012-01-01
+tags: example, bourbon, neat, middleman
+---
+
+This is an example article. You probably want to delete it and write your own articles!
+<%= lorem.sentences 5 %>
+
+```
+
+The goal was to have at least ten posts and tags to see if everything aligns properly. Let’s see what we got here:
+
+**Screenshot with dummy bg**
+
+{% img /images/middleman/middleman_04_build/footer-shuffled-10-items-span-columns.png %}
+
+Ok, now the background colors have fullfilled their duty for now. Let’s kill them for a moment and check if we’re happy with the actual result:
+
+**Screenshot without dummy bg**
+
+{% img /images/middleman/middleman_04_build/footer-shuffled-10-items-span-columns-without-bg.png %}
+
+I think it looks decent and we can leave like that for now. Time to commit our changes.
+
+**Git**
+
+``` bash
+git add  ../layouts/layout.erb
+gco -m 'Adapts layout and adds footer'
+
+git add ../posts/*.markdown.erb
+git commit -m 'Adds a bunch of dummy posts with:
+              dummy lorem text
+              dummy tags'
+
+git add ../stylesheets/_footer.sass ../stylesheets/all.sass
+git commit -m 'Adds styles for footer and imports Sass partial'
+
+```
+
+Before we move on we should deploy to GitHub Pages, check our progress and make sure we’re not running into any surprises.
+
+**Shell**
+
+``` bash
+
+middleman deploy
+
+```
+
+Open your browser and go to `yourusername.github.io/your_project_name` and see if you’re happy with your site so far.
