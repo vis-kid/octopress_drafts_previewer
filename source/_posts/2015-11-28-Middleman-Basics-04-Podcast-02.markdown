@@ -12,9 +12,10 @@ categories: [Ruby, Rails, thoughtbot, Bourbon, Neat, Refills, Middleman]
 
 ### Topics
 
-+ Neat Grid
++ Posts Index
++ Footer
 
-+ ### Neat Grid 
++ ### Posts Index
 
 Where were we? Right now our site doesn’t look to sexy.
 
@@ -55,7 +56,6 @@ Then we need to create a new Sass partial for our index styles and apply some ma
 
 .posts
   +outer-container
-  background-color: green
 
 ```
 
@@ -97,7 +97,6 @@ Recent articles, tags, and calendar stuff is in **layout.erb** and doesn’t con
 .posts p, .post-title
   +shift(2)
   +span-columns(8)
-  background-color: yellow
 
 ```
 
@@ -150,6 +149,8 @@ git commit -m 'Adjusts size for title and body text
                Adds .erb extension to dummy posts'
 
 ```
+
++ ### Footer
 
 I think we should take care of these helpless floating elements on the bottom first. Let’s pack “Recent Articles” and “Tags” in a footer and get rid of “By Year”. This markup is part of the global layout in **source/layouts/layout.erb**. Find the code in the **aside** tag below **yield** and adapt it like this:
 
@@ -236,11 +237,9 @@ footer
 .recent-posts
   +span-columns(6)
   +shift(2)
-  background-color: tomato
 
 .footer-tags
   +span-columns(2)
-  background-color: cyan
 
 ```
 
