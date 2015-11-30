@@ -19,6 +19,7 @@ This article was mostly written for folks a little more new to coding. Having ob
 + Comments
 + Callbacks
 + Shitty Names
++ Mixins
 
 
 
@@ -75,3 +76,15 @@ Another point that is problematic about callbacks is that it can hide the implem
 Sorry to be so blunt, but just calling poor naming choices uncommunicative or simply bad doesn’t do the consequences justice I think. In effect, you are wasting other peoples’s time with bad naming choices—or even better your own if you have to revisit that piece of code in the future. The code you write are instructions to be read by you and other people and therefore a purely logical, super prosaic, overly clever, or worse, a plain lazy approach to naming things is one of the worst things you can leave behind. Aim to make your code easier to understand by providing better names. 
 
 Clarity trumps false cleverness or unneccessary conciseness any day of the week! Work hard on naming methods, variables! and classes that make it easy to follow some sort of thread. I don’t wanna go as far as to say that you should aim for trying to tell a story but if you can, go for it! Machines are not the ones who need to “read” your code—its run by them of course. Maybe its one reason why the term “Software Writer” grew on me a bit as of lately—not because the engineering aspect should be diminished—writing software is more than writing soulles instructions for machines—at least software that is elegant and sparks joy to work with. Don’t freak out if this turns out to be a lot more difficult than you thought. Naming is notoriously hard!
+
++ ### Mixins
+
+Mixins are a smell? Well, let’s say they can be smelly. Multiple inheritance through Mixins can be useful but there are a couple of things that make them less useful than you might have thought when you started out with OOP:
+
++ They are trickier to test.
++ They can’t have their own state.
++ They “pollute” the namespace a bit.
++ Its not always super clear where functionality comes from—since its mixed in.
++ They can inflate the size of classes / number of methods drastically. Small classes rule, remember? 
+
+ I suggest you read up a bit on “[Composition Over Inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance)”. The gist of it is that you should rely more on reuse of your own composed classes than through inheritance / subclassing. Mixins are a form of inheritance that can be put to good use but also something you should be a bit suspicious about.
