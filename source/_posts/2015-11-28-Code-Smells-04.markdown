@@ -20,6 +20,7 @@ This article was mostly written for folks a little more new to coding. Having ob
 + Callbacks
 + Shitty Names
 + Mixins
++ Data Clumps
 
 
 
@@ -88,3 +89,9 @@ Mixins are a smell? Well, let’s say they can be smelly. Multiple inheritance t
 + They can inflate the size of classes / number of methods drastically. Small classes rule, remember? 
 
  I suggest you read up a bit on “[Composition Over Inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance)”. The gist of it is that you should rely more on reuse of your own composed classes than through inheritance / subclassing. Mixins are a form of inheritance that can be put to good use but also something you should be a bit suspicious about.
+
+ + ### Data Clumps
+
+ Watch out for repeatedly passing the same multiple arguments into your methods. That often suggests that they have a relationship that can be extracted into a class of its own—which can in turn often drastically simplify feeding these methods with data by reducing the size of arguments.
+
+ This is another form of subtle duplication that we can handle better. A good example is passing a long list of arguments that make up an address and credit card info. Why not package these infos in an existing class or extract a new class first and pass in the address and credit card instead. Another way to think about is having a range object instead of a start and an end.
