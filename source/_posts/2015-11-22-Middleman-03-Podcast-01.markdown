@@ -19,20 +19,19 @@ categories: [Ruby, Rails, thoughtbot, Bourbon, Neat, Refills, Middleman]
 + GitHub Pages Deployment
 + Smarter Assets
 + Bourbon Setup
-+ jQuery & Normalize
++ Normalize & jQuery
 
 + ### Roadmap
 
-Let’s start with a little heads up where this is going. Over the next two articles I’m gonna build a small static site for a ficticious podcast called “Matcha Nerdz” where people dive into all things powdered green tea. It will have the follwing pages:
+Let’s start with a little heads up where this is going. Over the next couple of articles I’m gonna build a small static site for a fictitious podcast called “Matcha Nerdz”—a podcast for people who wanna dive into all things powdered green tea. It will have the following pages:
 
-+ A calendar page
 + A page for each tag
 + A detail page for every episode
 + An index page for previous podcasts
 
-We will use Middleman for generating the static site and the Bourbon suite for all things styling. I expect (hope) that you have taken a look at my articles about Bourbon, Neat and Middleman before you came here. If not, see you in a bit—unless you feel you are already prepared enough of course. I will explain what’s going on along the way but I will not cover the basics as I did previously.
+We will use Middleman for generating the static site and the Bourbon suite for all things styling. I expect / hope that you have taken a look at my articles about Bourbon, Neat and Middleman before you came here. If not, see you in a bit—unless you feel you are already prepared enough of course. I will explain what’s going on along the way but I will not cover the basics as I did previously.
 
-For all things styling, I heavily rely on Bourbon. Also I really dig the indented Sass syntax—I never really got why people are keen to write all that extra junk with the **.scss** syntax. The **.sass** syntax is the only (probably) unfamiliar bit I wanna throw at newbies because its really worth it and I’d kick myself writing it “sassy-ly”. Originally I wanted to use Slim instead of HTML and ERB but I decided against that since I don’t want to introduce too many unknowns for newbies. I want to do something similar with Slim though in the future—mainly because I feel it is the best solution to write concise and intelligent markup out there at the moment. So raincheck. Why not Haml? Simple, Slim is more awesome!
+For all things styling, I heavily rely on Bourbon for quite a while. Also I really dig the indented Sass syntax—I never really got why people are keen to write all that extra junk with the **.scss** syntax. The **.sass** syntax is the only (probably) unfamiliar bit I wanna throw at newbies because it’s really worth it and I’d kick myself writing it “sassyly”. Originally I wanted to use Slim instead of HTML and ERB but I decided against that since I don’t want to introduce too many unknowns for newbies. I want to do something similar with Slim though in the future—mainly because I feel it’s the best solution to write concise and intelligent markup out there at the moment. So raincheck. Why not Haml? Simple, Slim is more awesome!
 
 + ### Basic Blog Setup
 
@@ -63,7 +62,7 @@ git commit -m 'Initital commit'
 
 ```
 
-Now we add the blog template to the mix. The blog template is a good basis for our podcast site. Later we will adjust the articles to display your podcast audio tracks. For now, its just a blog though:
+Now we add the blog template to the mix. The blog template is a good basis for our podcast site. Later we will adjust the articles to display podcast audio tracks from SoundCloud. For now, it’s just a blog though:
 
 **Gemfile**
 
@@ -83,7 +82,7 @@ bundle exec middleman
 middleman init --template=blog
 ```
 
-This will update your **matcha_nerdz** folder. **config.rb** and your index template get updated. On top of that you get new templates for your feed, tags page, calendar page, an example article and a new layout. Check the output from the terminal:
+This will update your **matcha_nerdz** folder. **.config.rb** and your index template get a little update as well. On top of that you get new templates for your feed, tags page, calendar page, an example article and a new layout. Check the output from the terminal:
 
 ``` bash
 identical  .gitignore
@@ -116,9 +115,7 @@ middleman article 'My new fancy second article'
 #=> create  source/2015-11-22-my-wonderful-second-article.html.markdown
 ```
 
-This creates a new markdown article under source. Not optimal yet storage wise but we’ll get there.
-
-Fire up your server to see your first example blog article:
+This creates a new markdown article under **/source**. Not optimal storage-wise but we’ll get there. Fire up your server to see your first example blog article:
 
 **Shell**
 
@@ -137,7 +134,7 @@ rm source/layouts/layout.erb
 mv source/layout.erb source/layouts/
 ```
 
-We also need to update the new **layout.erb** with stuff that was in the deleted layout file. Add this to your **head** tag:
+We also need to update the new **layout.erb** with stuff that was deleted in the layout file. Add this to your **head** tag:
 
 **source/layouts/layout.erb**
 
@@ -192,11 +189,11 @@ git commit -m 'Activates LiveReload'
 With this activated, restart your server and your page refreshes automatically whenever you change content on the page, styles or behaviour. Life saver, trust me!
 
 ### Attention!
-Word of caution. If you have another local server running LiveReload may not play ball. So you’d need to kill that server for now. Weird bug to hunt down if you don’t expect this.
+Word of caution. If you have another local server running, LiveReload may not play ball. So you’d need to kill that other server for now. Weird bug to hunt down if you don’t expect ports being already taken. Also, sometimes killing the Wi-Fi and restarting the server solved local host issues. But to be honest I don’t remember if I ran into that issue in the past with Middleman or Jekyll. Anyway, keep it in mind.
 
 ### Organizing Posts
 
-When you look where articles are stored right now, you’ll quickly realize that this organization directly under **/source** becomes very quickly very tedious. After the third article that is stored there things get messy. What we can do is create a dirctory under /source for all your posts, move your article(s) in there and let Middleman know where to find them. 
+When you look where articles are stored right now, you’ll quickly realize that this organization directly under **/source** becomes very quickly very tedious. Couple of articles and you drown in posts. No need to be that messy. What we can do is create a dirctory under /source for all your posts, move your article(s) in there and let Middleman know where to find them. 
 
 
 **Shell**
@@ -223,7 +220,7 @@ git add --all
 gco -m 'Adds new folder for posts and adds source in config.rb'
 ```
 
-That’s it. Nothing should have changed and you should see the example article as before. They are just stored a bit more sane. What’s also cool is that if you create new articles via the command line, your new posts will get stored in **/post** automatically. Awesome!
+That’s it. Nothing should have changed and you should see the example article as before. Storage of posts however is a lot more sane. What’s also cool is that if you create new articles via the command line, your new posts will get stored in **/post** automatically. Awesome!
 
 **Shell**
 
@@ -265,7 +262,18 @@ end
 
 ```
 
-Then create the repo on GitHub and add the remote:
+In order for GitHub Pages to find your CSS and JS assets you need to activate the following in **config.rb** as well:
+
+``` ruby
+
+configure :build do
+  activate :relative_assets
+end
+
+```
+
+
+Then create a repo on GitHub, add the remote and deploy:
 
 **Shell**
 
@@ -274,16 +282,6 @@ Then create the repo on GitHub and add the remote:
 git remote add origin https://github.com/yourusername/repositoryname.git
 
 middleman deploy
-
-```
-
-In order for GitHub Pages to find your CSS and JS assets you need to activate the following in **config.rb**:
-
-``` ruby
-
-configure :build do
-  activate :relative_assets
-end
 
 ```
 
@@ -300,7 +298,7 @@ gco -m 'Adds setup for GitHub Pages deployment'
 
 ### Smarter Assets
 
-In the last step before we get into the Bourbon setup, I’d like to get rid of the styles that come with Middleman and optimize the assets for a better performance in the browser—asset minification and concatenation. Go to **source/stylesheets/all.css** and delete its content. Just keep the first line:
+In the last step before we get into the Bourbon setup, I’d like to get rid of the styles that come with Middleman and optimize the assets for a better performance in the browser—asset minification and concatenation. Go to **source/stylesheets/all.css** and delete it’s content. Just keep the first line:
 
 ``` css
 @charset "utf-8";
@@ -341,19 +339,19 @@ Let me quickly explain what we did here:
 
 + **:gzip**
 
-At the moment, gzip is the most popular and effective compression method. Its compression algorithm finds similar strings within a file and compresses them. For HTML, which is full of white space and matching tags, this is very effective and adds up to reducing the HTTP response size by a whopping 70%. Activating this, not only gzips your HTML, but also CSS and JSS files. During build Middleman creates your files as usual but also duplicates them with a **.gz** version. When a browser gets in touch with your files it can choose if he can serve gzip compressed files or regular ones. gzipping is supported heavily by web and mobile browsers. 
+At the moment, gzip is the most popular and effective compression method. It’s compression algorithm finds similar strings within a file and compresses them. For HTML, which is full of white space and matching tags, this is very effective and adds up to reducing the HTTP response size by a whopping 70%. Activating this, not only gzips your HTML, but also CSS and JSS files. During build, Middleman creates your files as usual but also duplicates them with a **.gz** version. When a browser gets in touch with your files, it can choose if it can serve gzip compressed files or regular ones. gzipping is supported heavily by web and mobile browsers. 
  
 + **:minify_css**
 
-This process strips out all unneccessary junk from your styles and reduces their file size significantly.
+This process strips out all unneccessary junk from your styles and reduces their file size significantly. Bascially, your CSS becomes one big blob—optimized for being read by a machine. Definitely not friendly on the eyes.
 
 + **:minify_javascript**
 
-Same as **minify_css** but a bit more involved and sophisticated. For both techniques you end up with a long blob of compressed text that is not meant to be read by humans.
+Same as **minify_css** but a bit more involved and sophisticated.
 
 + **:asset_hash**
 
-This activates hasing of your assets. It means that your asset filenames change and receive some extra information—during the build process—that informs browsers if they need to re-download assets or not. Now, the name of a file is dependent on the contents of that file. Hashed assets get cached by browsers and your sites get rendered faster. Another word for this is “fingerprinting” because it provides a simple solution to inform browsers whether or not two versions of a file are indentical. The deployment date does not matter—only the contents. Take a look below how hashed assets’ files look like: 
+This activates hashing of your assets. It means that your asset filenames change and receive some extra information—during the build process—that informs browsers if they need to re-download assets or not. Now, the name of a file is dependent on the contents of that file. Hashed assets get cached by browsers and your sites get rendered faster. Another word for this is “fingerprinting” because it provides a simple solution to inform browsers whether or not two versions of a file are indentical. The deployment date does not matter—only the contents. Take a look below how hashed assets’ files look like: 
 
 **Screenshots**
 
@@ -363,7 +361,7 @@ This activates hasing of your assets. It means that your asset filenames change 
 
 {% img /images/middleman/basics_03_build/asset_hash_js.png %}
 
-Now your images, stylesheets and JavaScript files get a unique name through this added “random” code—what is called a (unique) hash. Every time you change an asset and go through the build process again, this hash changes which in turn signals to browsers that then, and only then, they need to re-download that particular file—because it kinda expired. This is called “cache busting”. Btw, you can refer to your files the same way as before but during build the references in your HTML and what not get updated to use these hashed names. Take a look:
+Looks nasty, but now your images, stylesheets and JavaScript files get a unique name through this added “random” code—what is called a (unique) hash. Every time you change an asset and go through the build process again, this hash changes which in turn signals to browsers that then, and only then, they need to re-download that particular file. The files then sorta expired. This is called “cache busting”. Btw, you can refer to your files the same way as before but during build the references in your HTML and what not get updated to use these hashed names. Take a look:
 
 **/build/index.html(.gz)**
 
@@ -386,9 +384,9 @@ Now your images, stylesheets and JavaScript files get a unique name through this
 
 ```
 
-See in your **/build** folder, JS and CSS files get referenced with the hashed asset names automatically. As a result of this hashing busines, when you go through different pages in the same session or revisit a page again later, these assets have been cached and don’t need to be requested again—only until you change something. This process cuts down your number of requests by a staggering amount. Isn’t that cool? All of that with one line of code in **config.rb** and some *Sprockets* wizardry. Booyakasha!
+See, in your **/build** folder, JS and CSS files get referenced with the hashed asset names automatically. As a result of this hashing business, when you go through different pages in the same session or revisit a page again later, these assets have been cached and don’t need to be requested again—only until you change something. This process cuts down your number of requests by a staggering amount. Isn’t that cool? All of that with one line of code in **config.rb** and some *Sprockets* wizardry. Booyakasha!
 
-The key with all these asset optimization techniques is to minimize the number of requests and the request size of your files / assets. Middleman offers great performance boosts right out the box without any work on your end really. Just activate this stuff and sleep tight. GitHub Pages has everthing gzipped and minified out of the box btw. Doesn’t hurt thought to make sure everything is in place—especially if you later decide to host your app somewhere else you don’t need to think about solving this problem again. 
+The key with all these asset optimization techniques is to minimize the number of requests and the request size of your files / assets. Middleman offers great performance boosts right out the box without any work on your end really. Just activate this stuff and sleep tight. GitHub Pages has everthing gzipped and minified out of the box btw. Doesn’t hurt though to make sure everything is in place—especially if you later decide to host your app somewhere else. By then, you don’t need to think about solving this problem again. 
 
 Let’s have a look where we’re at. Your index page should look pretty barebones now: 
 
@@ -445,7 +443,7 @@ Bitters is something like a baseline for your designs. It gives you a couple of 
 @import "grid-settings";
 ```
 
-To complete our Bourbon settings for now I’d like to add the following variables to our grid-settings. They lay the groundwork for sizing our grid and activate a visual grid to better align our design.
+To complete our Bourbon settings for now I’d like to add the following variables to our grid-settings. They lay the groundwork for sizing our grid and activate a visual grid that helps us to better align our design.
 
 **/source/stylesheets/base/_grid-settings.scss**
 
@@ -463,11 +461,12 @@ $visual-grid-color: red;
 
 ```
 
-The final step to make this work is rename **/stylesheets/all.css** to **/stylesheets.all.sass** and import our Bourbon files.
+The final step to make this work is rename **/stylesheets/all.css** to **/stylesheets.all.sass** and import our Bourbon files.(Since we switched to the indented Sass syntax, we also need to kill the semicolon at the end of the **@charset** line.)
 
 **all.css.scss**
 
 ``` sass
+@charset "utf-8"
 
 @import 'bourbon'
 @import 'base/base'
@@ -475,7 +474,7 @@ The final step to make this work is rename **/stylesheets/all.css** to **/styles
 
 ```
 
-We import Bitters’ base file here right after Bourbon because we need access to Neat’s **grid-settings** file—which is in the **/base** folder before we import Neat.
+We import Bitters’ base file here right after Bourbon because we need access to Neat’s **grid-settings** file—which is in the **/base** folder—before we import Neat.
 
 **Git**
 
@@ -485,17 +484,15 @@ git add --all
 git commit -m 'Sets up Bourbon and activates grid settings'
 ```
 
-Let’s have a look how things look now. You can see the red visual grid and also that the type already improved a bit due to Bitters presets. Nice!
+Let’s have a look! You can see the red visual grid and also that thanks to Bitters, our typography already improved a bit beyond browser defaults.
 
 **Screenshot**
 
 {% img /images/middleman/basics_03_build/bourbon_installed_visual_grid.png %}
 
-+ ### jQuery & Normalize
++ ### Normalize & jQuery
 
-Let’s get this out of the way also, shall we? Middleman comes with a [Normalize](https://necolas.github.io/normalize.css/) file which gets not imported into **all.css** by default. That’s one unneccessary asset request we can easily get rid of:
-
-Rename **source/stylesheets/normalize.css** to **source/stylesheets/_normalize.css.scss** first. Now we have a partial that we need to import right at the top after **@charset** in **source/stylesheets/all.sass**:
+Let’s get this out of the way also, shall we? Middleman comes with a [Normalize](https://necolas.github.io/normalize.css/) file which gets not imported into **all.css** by default. That’s one unneccessary asset request we can easily get rid of. Rename **source/stylesheets/normalize.css** to **source/stylesheets/_normalize.css.scss** first. Now we have a partial that we need to import right at the top after **@charset** in **source/stylesheets/all.sass**:
 
 ``` sass
 
@@ -510,9 +507,9 @@ Rename **source/stylesheets/normalize.css** to **source/stylesheets/_normalize.c
 
 ```
 
-In case you’re wondering about what *Normalize* does, think of it as leveling the playing field between the default styles that browsers like to add. One browser likes to add padding here, another has useless margins there, etc. Projects like Normalize try to reset that behaviour so that all elements get rendered more consistently by browsers. 
+In case you’re wondering about what *Normalize* does, think of it as leveling the playing field between the default styles that browsers like to add. One browser likes to add padding here, another has useless margins there, etc. Projects like Normalize try to reset that behaviour so that all elements / designs get rendered more consistently across browsers. 
 
-One thing we shouldn’t overlook is the link for our stylesheets in your layout does not need to link to **normalize.css** anymore—a link to **all.sass** is enough:
+One thing we shouldn’t overlook is the link for our stylesheets in our layout. Since we’re using Sass partials that all get imported into a final, “global” stylesheet, we do not need a link to **normalize.css** anymore—a link to **all.sass** is enough:
 
 **source/layouts/layout.erb**
 
@@ -547,7 +544,7 @@ bundle
 
 ```
 
-Since I wanna user CoffeeScript for this project, we need to rename **source/javascripts/all.js** to **source/javascripts/all.coffee**. In there we require jQuery for Sprockets / Asset Pipeline and we’re all set.
+Since I wanna use CoffeeScript for this project, we need to rename **source/javascripts/all.js** to **source/javascripts/all.coffee**. In there we require jQuery for Sprockets / Asset Pipeline and we’re all set.
 
 **all.coffee**
 
@@ -564,13 +561,14 @@ git commit 'Adds jQuery to the Mix
             Renames gobal js file to coffee'
 ```
 
-Let’s deploy and open our site on GitHub Pages to see if everyting works as expected. Nice!
-
 **Shell**
 
 ``` bash
 middleman deploy
 ```
+
+
+After deploying, open your site on GitHub Pages to see if everyting works as expected. Nice job!
 
 + ### Break
 
