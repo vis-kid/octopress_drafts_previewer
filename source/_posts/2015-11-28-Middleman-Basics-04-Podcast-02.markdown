@@ -184,7 +184,7 @@ I think we should take care of these helpless floating elements on the bottom fi
 
 ```
 
-The above default of looping through our posts and tags that comes with Middleman is fine. I want to have it a bit smarter though and introduce shuffling to both recent posts and tags. That way, the user doesn’t only see that last ten articles or a huge list of tags but a randomized version of both that is always ten items long—which does not consume a whole lot of space and let’s me align both items in the footer more beautifully.
+The above default of looping through our posts and tags that comes with Middleman is fine. I want to have it a bit smarter though and introduce shuffling to both recent posts and tags. That way, the user doesn’t only see the last ten articles or a huge list of tags but a randomized version of both that is always ten items long—which does not consume a whole lot of space and let’s me align both items in the footer more beautifully. I renamed the **h3** for posts as well.
 
 **source/layouts/layout.erb**
 
@@ -193,7 +193,7 @@ The above default of looping through our posts and tags that comes with Middlema
 <footer>
 
   <div class='recent-posts'>
-    <h3>Recent Posts</h3>
+    <h3>Random Posts</h3>
     <ol>
       <% blog.articles.shuffle[0...10].each do |article| %>
         <li><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></li>
@@ -320,3 +320,5 @@ middleman deploy
 ```
 
 Open your browser and go to `yourusername.github.io/your_project_name` and see if you’re happy with your site so far.
+
+What should we do next? You’re right, the footer screams in bigh letters EXTRACTION!
