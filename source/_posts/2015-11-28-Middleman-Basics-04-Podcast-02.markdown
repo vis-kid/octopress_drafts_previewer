@@ -77,7 +77,7 @@ git commit -m 'Adds Sass partial for index posts
 
 Recent articles, tags, and calendar stuff is in **layout.erb** and doesn’t concern us atm. We’ll leave it as is for now. Let’s focus instead of making this index list of posts pop. Let’s give the **h2** title a class **post-title** and let title and paragraphs span for 8 (out of twelve) columns across the page. We needed to shift the posts for two columns as well. We want to avoid having our copy running across the whole page and therby exceeding a healthy reading width of 65-85 characters.
 
-**source/stylesheets/_index_posts.sass**
+**source/index.html.erb**
 
 ``` erb
 
@@ -91,6 +91,8 @@ Recent articles, tags, and calendar stuff is in **layout.erb** and doesn’t con
 </div>
 
 ```
+
+**source/stylesheets/_index_posts.sass**
 
 ``` sass
 
@@ -119,7 +121,7 @@ This is an example article. You probably want to delete it and write your own ar
 
 I’ll show you in a minute what what got here, but first a few more styles as well.
 
-**source/stylehseets/_index_posts.sass**
+**source/stylesheets/_index_posts.sass**
 
 ``` sass
 
