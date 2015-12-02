@@ -531,6 +531,28 @@ git commit -m 'First attempt at tuning colors
 
 ```
 
+One little thing that bugs me now is the line height of the body copy. Let’s tweak that a little too.
+
+**source/stylesheets/_index_posts.sass**
+
+``` sass
+
+.posts p
+  line-height: 1.35em
+
+```
+
+**Screenshot**
+
+{% img /images/middleman/middleman_04_build/index-body-copy-line-height.png %}
+
+**Git**
+
+``` bash
+git add ../source/stylesheets/_index_posts.sass
+git commit -m 'Adjusts line-height for body copy on index'
+```
+
 **Shell**
 
 ``` bash
