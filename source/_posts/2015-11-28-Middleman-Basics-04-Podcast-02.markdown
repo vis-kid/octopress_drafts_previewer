@@ -14,6 +14,7 @@ categories: [Ruby, Rails, thoughtbot, Bourbon, Neat, Refills, Middleman]
 
 + Posts Index
 + Footer
++ Color
 
 + ### Posts Index
 
@@ -321,4 +322,222 @@ middleman deploy
 
 Open your browser and go to `yourusername.github.io/your_project_name` and see if you’re happy with your site so far.
 
-What should we do next? You’re right, the footer screams in bigh letters EXTRACTION!
+What should we do next? You’re right, the footer screams in bigh letters EXTRACTION! We’re gonna take the **footer**, create a new folder for partials and put the markup in there. In turn, we need to render that partial from **layout.erb**.
+
+**source/layouts/layout.erb**
+
+``` erb
+
+<body>
+  
+  <div id="main" role="main">
+    <%= yield %>
+  </div>
+
+  <%= partial "partials/footer" %>
+  
+</body>
+
+```
+
+**source/partials/_footer.erb**
+
+``` erb
+
+<footer>
+
+  <div class='recent-posts'>
+    <h3>Random Posts</h3>
+    <ol>
+      <% blog.articles.shuffle[0...10].each do |article| %>
+        <li><%= link_to article.title, article %></li>
+      <% end %>
+    </ol>
+  </div>
+
+
+  <div class='footer-tags'>
+    <h3>Tags</h3>
+    <ol>
+      <% blog.tags.to_a.shuffle[0...10].each do |tag, articles| %>
+        <li><%= link_to "#{tag}", tag_path(tag) %></li>
+      <% end %>
+    </ol>
+  </div>
+
+</footer>
+
+```
+
+I suppose you paid close attention and saw that I got rid of the date for the list of articles in the footer. I did this for two reasons. First of all we’re gonna save a bit more space so that we don’t easily run in the scenario that the alignment with the tags breaks when the title for the post is a bit longer. Secondly, I thought it is a bit distracting and doesn’t add too much. This list of randomzied articles in the footer are a sneaky way for the audience to discover new stuff. The date doesn’t play a big role in that. The same goes for the number of articles for the tag links. They waste space without adding too much value. Also, if you don’t have too many articles for a certain tag, it doesn’t look empty right away. I’d rather have more space for a stable layout. It also feels a bit more clean, but that is clearly very subjective.
+
+**Screenshot**
+
+{% img /images/middleman/middleman_04_build/footer-posts-without-date-tagnumbers.png %}
+
+**Git**
+
+``` bash
+
+git add --all
+git commit -m 'Extracts footer into partial 
+               Removes date from posts in footer'
+
+               Removes number of articles for tags in footer
+               Didn’t provide enough value to sacrifice space 
+
+```
+
+While we’re at it. Let’s take care of the date in the titles. I think in size it’s way too prominent which does not improve our visual hierarchy and I don’t like having it at the end of the title. I’d rather stick it on the other side and use it as a visual anchor that doesn’t jump around with varying title lengths.
+
+**source/index.html.erb**
+
+``` erb
+
+<div class='posts'>
+  <% page_articles.each_with_index do |article, i| %>
+    <h2 class='post-title'><span class='post-date'><%= article.date.strftime('%b %e') %></span> <%= link_to article.title, article %></h2>
+    <%= article.body %>
+  <% end %>
+</div>
+
+```
+
+**source/stylesheets/_index_posts.sass**
+
+``` sass
+
+.post-date
+  font-size: 0.7em
+  margin:
+    left: em(-80px)
+    right: em(20px)
+
+```
+
+The title of the post is reordered and starts with the span hat contains the date. I left a little whitespace between the span and the link to the article because if I align the date with the article body text for smaller screens then I have a natural one character space between the date and the title—and don’t need to use Sass unneccessarily.
+
+The Sass code is straightforward. The negative margin helps me to visually anchor the date to the left of the title and I used a Bourbon function to convert the pixels into **em*s. Simple but I like the hierarchy we achieved. The eyes have something to jump to via the dates and the rest has enough whitespace so that we can stay away from using borders to divide our posts. Me, happy!
+
+**Git**
+
+``` bash
+
+git add ../index.html.erb ../stylesheets/_index_posts.sass
+git commit -m 'Changes order for date and post title on index page
+               Styles date to create visual anchor'
+
+```
+
+**Shell**
+
+``` bash
+
+middleman deploy
+
+```
+
+**Screenshot**
+
+{% img /images/middleman/middleman_04_build/post-title-smaller-anchors.png %}
+
++ ### Color
+
+Let’s bring this thing to life a bit—but not too much. Less is more! I went to [COLOURlovers](http://www.colourlovers.com/) and played with a couple of color palettes. Sites with various palletes can help to give you ideas where you wanna go. Watch out for solutions that can enhance your visual hierarchy but stay away from colors that are screamishly loud. I realize that this is vague since colors can be very subjective and culturally loaded—that’s how I approach it atm anyway. 
+
+Overall, it’s not an easy topic and I wish people would pay more attention to it. You certainly shouldn’t just poke around on a color wheel when you lack the experience. If you’re new to this, educate yourself and don’t just pick a color because you feel like it or because it looks cool or something. A reasonable use of color can be very powerful—on the other hand it can look very comical very quickly as well.
+
+Back to business, after playing with some ideas, I added two new global colors to my Sass variables file from Bitters. **$matcha-green** is now the color I wanna use for my identity and can reuse this variable wherever I please. Should I change my mind about what green I want, I will need to change it only in once place! Also, I wasn’t too happy with the default color for body copy. Using a Sass function I darkened one of the preset colors from Bitters by 20 percent and stored that as **$text-color**.
+
+**source/stylesheets/base/_variables.scss**
+
+``` scss
+
+$matcha-green: #78B69D;
+$text-color: darken($medium-gray, 20%);
+
+```
+
+Post titles on hover, as well as dates and body copy got the new text color. The default was too dark imho.
+
+I also added a slight transition through a Bourbon mixin for hovering over **.post-title**. This changes from **$matcha-green** to **$text-color** over **.4** seconds. Check my articles about Bourbon Mixins if you wanna know more. In case you wonder about the **ease-in-out** part, it’s one of 32 ways to time transitional behaviour. ($ease-in-out, as a **$**variable, like in the documentation will through an error) It’s a small enhancement but looks a lot better than browser defaults. To make this work I also had to uncomment the default transition behaviour from Bitters first. 
+
+**source/stylesheets/base_typography.scss**
+
+``` scss
+
+// transition: color $base-duration $base-timing;
+
+```
+**source/stylesheets/_index_posts.sass**
+
+``` sass
+
+.post-title
+  font-size: 1.7em
+  a
+    +transition(color .4s ease-in-out)
+    color: $matcha-green
+    &:hover
+      color: $text-color
+
+.post-date
+  color: $text-color
+
+.posts p
+  color: $text-color
+
+```
+
+Lastly, I adapted the colors for the footer as well. This gives us a coherent appearance and hopefully a bit understatement. The transitional behavior needed to speed up for the links in the footer. Since they are grouped so tight together I felt it wold be better if they are a bit snappier and underlined as well. In terms of color, I did the oposite as with the titles in the index list. Since the footer list doesn’t need to be as present on the page—especially with so little distance between them—I gave them the default gray text color and only use the **$matcha-green** when hovering. In this example we “only” use whitespace and the size of the type to achieve hierarchy. Oh, and the border above the footer needed a bit opacity via the Sass **rgba** function. I figured that 30 percent opacity is just enough to do its job without sticking out too much.
+
+**source/stylesheets/_footer.sass**
+
+``` sass
+
+footer
+  border-top: 1px solid rgba($text-color, .3)
+
+.recent-posts, .footer-tags
+  color: darken($medium-gray, 20%)
+  a
+    +transition(all .1s ease-in-out)
+    color: $text-color
+    &:hover
+      color: $matcha-green
+      border-bottom: 2px solid $matcha-green
+
+```
+
+Not too shabby for such a small amount of code. Exactly how I like it—the less “code” you write the less bugs you bite!
+
+**Screenshot**
+
+{% img /images/middleman/middleman_04_build/after-color-changes-index.png %}
+
+**Git**
+
+``` bash
+git add --all
+
+git commit -m 'First attempt at tuning colors
+               Adds new brand color as $matcha-green
+               Adds new $text-color:
+                 Body copy
+                 Post titles hover
+                 Footer headers
+               Takes care of hover transitions
+                 Comments out Bitters default transition'
+
+```
+
+**Shell**
+
+``` bash
+
+middleman deploy
+
+``` 
+
+Todo
+change screenshot for tags with removed numbers. After commiting newest changes checkout the relevant commit
