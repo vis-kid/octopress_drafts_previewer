@@ -55,22 +55,39 @@ class Spectre < ActiveRecord::Base
     puts "Mossad agent #{enemy_agent.name} turned over to Spectre"
   end
 
-  def kill_james_bond(spectre_agent)
-    #clever code
+  def kill_double_o_seven(spectre_agent)
+    spectre_agent.kill_james_bond
   end
 
-  def assign_new_operation(spectre_agent)
-    #clever code
-  end
+  def dispose_of_cabinet_member(number)
+    spectre_member = SpectreMember.find_by_id(number)
 
-  def dispose_of_cabinet_member(spectre_member)
-    puts "A certain culprit has failed the absolute integrity of this fraternity. The appropriate act is to smoke number #{spectre_member.number} in his chair. His services won’t be greatly missed"
+    puts "A certain culprit has failed the absolute integrity of this fraternity. The appropriate act is to smoke number #{number} in his chair. His services won’t be greatly missed"
+    spectre_member.die
   end
 
   def print_assignment(operation)
+    puts "Operation #{operation.name}’s objective is to #{operation.objective}."
+  end
+
+  private
+
+  def enemy_agent
     #clever code
   end
+
+  def spectre_agent
+    #clever code
+  end
+
+  def operation
+    #clever code
+  end
+
+  ...
+
 end
+
 ```
 
 ``` ruby
@@ -111,10 +128,8 @@ class EnemyAgent < ActiveRecord::Base
   belongs_to :agency
 
   def turn
-    puts 'Agent is turning'
-    agency = "Spectre"
+    puts 'After extensive brainwashing, torture and hoards of cash…'
   end
-  
 end
 
 class MI6Agent < EnemyAgent
@@ -140,32 +155,36 @@ end
 
 class NumberOne < ActiveRecord::Base
   def dispose_of_cabinet_member(number)
-    spectre_member = SpectreMember.new(number)
-    puts "A certain culprit has failed the absolute integrity of this fraternity. The appropriate act is to smoke number #{spectre_member} in his chair. His services won’t be greatly missed"
+    spectre_member = SpectreMember.find_by_id(number)
+
+    puts "A certain culprit has failed the absolute integrity of this fraternity. The appropriate act is to smoke number #{number} in his chair. His services won’t be greatly missed"
+    spectre_member.die
+  end
+end
+
+class Operation < ActiveRecord::Base
+  has_many :spectre_agents
+  belongs_to :spectre
+
+  def print_assignment
+    puts "Operation #{name}’s objective is to #{objective}."
   end
 end
 
 class SpectreAgent < ActiveRecord::Base
+  belongs_to :operation
   belongs_to :spectre
 
   def kill_james_bond
-    #clever code
-  end
-
-  def assign_new_operation(operation)
-    #clever code
+    puts "Mr. Bond, I expect you to die!"
   end
 end
 
 class SpectreMember < ActiveRecord::Base
   belongs_to :spectre
-end
-
-class Operation < ActiveRecord::Base
-  belongs_to :spectre
-
-  def print_assignment
-    #clever code
+  
+  def die
+    puts "Nooo, nooo, it wasn’t meeeeeeeee! ZCHUNK!"
   end
 end
 
