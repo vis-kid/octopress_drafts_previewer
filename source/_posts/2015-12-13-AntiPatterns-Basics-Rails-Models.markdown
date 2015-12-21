@@ -34,7 +34,7 @@ The real problem that you deal with here is complexity—unnecessarily so I’d 
 
 “Skinnier models” achieve one thing advanced folks in the coding business (probably a lot more professions than code and design) appreciate and what we all should absolutely strive for—simplicity! Or at least more of it which is a fair compromise if complexity is hard to eradicate. What tools does Ruby offer to make our lives easier in that regard and let’s us trim the fat out of our models? Simple, other classes and modules. You identify coherent code that you could extract into another object and thereby build a model layer that consists of reasonably sized agents that have their own unique, distinctive responsibilities. Think about it in terms of a talented performer. In real life, such a person might be able to rap, break, write lyrics and produce her own tunes. In programming, you prefer the dynamics of a band—here with at least four distinctive members—where each person is in charge of as few things as possible. 
 
-Let’s look at an example of a fat model and play with a couple of options to handle its obesity. The example is a dummy one of course and by telling this small little story I hope it will be easier to digest and follow for newbies. We have a Spectre class that has too many responsibilities and has therefore grown unnecessarily.
+Let’s look at an example of a fat model and play with a couple of options to handle its obesity. The example is a dummy one of course and by telling this goofy little story I hope it will be easier to digest and follow for newbies. We have a Spectre class that has too many responsibilities and has therefore grown unnecessarily. Besides these methods, I think it’s easy to imagine that such a specimen already accumulated lots of other stuff as well—represented by the three little dots. Spectre is well under way to become a [god class](https://robots.thoughtbot.com/how-much-should-i-refactor) (Sorry, couldn’t resist to throw that in there. Chances are pretty low to sensibly formulate such a sentence again;).
 
 ``` ruby
 class Spectre < ActiveRecord::Base
@@ -91,6 +91,8 @@ class Spectre < ActiveRecord::Base
 end
 
 ```
+
+Spectre turns various kinds of enemy agents, delegates killing 007, grills Spectre’s cabinet member when they fail and also prints out operational assignments. A clear case of micromanagement and definitely a violation of the “Single Responsibility Principle”. Private methods are also stashing up fast. This class doesn’t need to know most of the stuff that’s currently in it. We will split this functionality into a couple of classes and see if the complexity of having a couple more classes/objects is worth the liposuction.
 
 ``` ruby
 
@@ -191,6 +193,14 @@ class SpectreMember < ActiveRecord::Base
 end
 
 ```
+
+I think the most important part that you should pay attention to is how we used a plain Ruby class like `Interrogator` to handle the turning of agents from different agencies. If you don’t need the full functionality of Active Record classes, why use them if a simple Ruby class can do the trick as well? A little less rope to hang ourselves. 
+
+So the Spectre class leaves the nasty business of turning agents to the `Interrogator` class and just delegates to it. This one has now the single responsibility of torturing and brainwashing captured agents. So far so good. But why did we create separate classes for each agent? Simple. Instead of just directly extracting the various turn methods like `turn_mi6_agent` over to `Interrogator` we gave them a better home in their own respective class. As a result, we can make effective use of polymorphism and don’t care about individual cases for turning agents. We just tell these different agent objects to turn and each of them knows what to do. The `Interrogator` doesn’t have to know that business either. Since all these agents are Active Record objects, we created a generic one, `EnemyAgent` that has a general sense of what turning an agent means and we encapsulate that bit for all agents in one place by subclassing it. We make use of this behaviour by supplying the `turn` methods of the various agents with `super` and get therefore access to the brainwashing and torture business—without duplication. Single responsibility and no duplication is a good starting point to move on.
+
+The other Active Record classes take on various responsibilities that Spectre now doesn’t need to care about. “Number One” usually does the grilling of failed cabinet members himself so why not let a dedicated object handle electrification. Same goes for `Operation` which now prints its assignments itself. No need to waste the time of Spectre with peanuts like that. Killing James Bond is usually attempted by an agent in the field, so `kill_james_bond` is now a method of `SpectreAgent`. Goldfinger would have handled that differently of course. Gotta play with that laser if you have one I guess. Last but not least, failing Spectre members know how to die themselves when being electrocuted by `NumberOne` via a funny chair.
+
+As you can clearly see, we basically now have ten classes where we previously had only one. Isn’t that too much? It can be for sure. It is an issue you’ll need to weigh every time you split up such responsibilities. Looking at this from anther angle might help though. Do we have lightweight, skinny classes that are better suited to handle their behaviours? Pretty sure! Are we painting a clearer picture of who is involved and is in charge for certain responsibilities? I guess so! Is it easier to digest what each object is doing? For sure! Does this represent a better quality of object oriented programming? Since we used composition to set up these objects, you bet! Have we separated concerns? Yes! Does it feel more clean? I hope so!
 
 + ### Missing Test Suite 
 
