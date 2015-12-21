@@ -194,13 +194,35 @@ end
 
 ```
 
-I think the most important part that you should pay attention to is how we used a plain Ruby class like `Interrogator` to handle the turning of agents from different agencies. If you don’t need the full functionality of Active Record classes, why use them if a simple Ruby class can do the trick as well? A little less rope to hang ourselves. 
+I think the most important part that you should pay attention to is how we used a plain Ruby class like `Interrogator` to handle the turning of agents from different agencies. Real world examples could represent a converter that, say, transforms a HTML document into pdf and vice versa. If you don’t need the full functionality of Active Record classes, why use them if a simple Ruby class can do the trick as well? A little less rope to hang ourselves. 
 
-So the Spectre class leaves the nasty business of turning agents to the `Interrogator` class and just delegates to it. This one has now the single responsibility of torturing and brainwashing captured agents. So far so good. But why did we create separate classes for each agent? Simple. Instead of just directly extracting the various turn methods like `turn_mi6_agent` over to `Interrogator` we gave them a better home in their own respective class. As a result, we can make effective use of polymorphism and don’t care about individual cases for turning agents. We just tell these different agent objects to turn and each of them knows what to do. The `Interrogator` doesn’t have to know that business either. Since all these agents are Active Record objects, we created a generic one, `EnemyAgent` that has a general sense of what turning an agent means and we encapsulate that bit for all agents in one place by subclassing it. We make use of this behaviour by supplying the `turn` methods of the various agents with `super` and get therefore access to the brainwashing and torture business—without duplication. Single responsibility and no duplication is a good starting point to move on.
+The Spectre class leaves the nasty business of turning agents to the `Interrogator` class and just delegates to it. This one has now the single responsibility of torturing and brainwashing captured agents. So far so good. But why did we create separate classes for each agent? Simple. Instead of just directly extracting the various turn methods like `turn_mi6_agent` over to `Interrogator` we gave them a better home in their own respective class. As a result, we can make effective use of polymorphism and don’t care about individual cases for turning agents. We just tell these different agent objects to turn and each of them knows what to do. The `Interrogator` doesn’t need to know the specifics about how each agent turns.
 
-The other Active Record classes take on various responsibilities that Spectre now doesn’t need to care about. “Number One” usually does the grilling of failed cabinet members himself so why not let a dedicated object handle electrification. Same goes for `Operation` which now prints its assignments itself. No need to waste the time of Spectre with peanuts like that. Killing James Bond is usually attempted by an agent in the field, so `kill_james_bond` is now a method of `SpectreAgent`. Goldfinger would have handled that differently of course. Gotta play with that laser if you have one I guess. Last but not least, failing Spectre members know how to die themselves when being electrocuted by `NumberOne` via a funny chair.
+Since all these agents are Active Record objects, we created a generic one, `EnemyAgent`, that has a general sense of what turning an agent means and we encapsulate that bit for all agents in one place by subclassing it. We make use of this inheritance by supplying the `turn` methods of the various agents with `super` and get therefore access to the brainwashing and torture business—without duplication. Single responsibilities and no duplication is a good starting point for moving on.
 
-As you can clearly see, we basically now have ten classes where we previously had only one. Isn’t that too much? It can be for sure. It is an issue you’ll need to weigh every time you split up such responsibilities. Looking at this from anther angle might help though. Do we have lightweight, skinny classes that are better suited to handle their behaviours? Pretty sure! Are we painting a clearer picture of who is involved and is in charge for certain responsibilities? I guess so! Is it easier to digest what each object is doing? For sure! Does this represent a better quality of object oriented programming? Since we used composition to set up these objects, you bet! Have we separated concerns? Yes! Does it feel more clean? I hope so!
+The other Active Record classes take on various responsibilities that Spectre doesn’t need to care about. “Number One” usually does the grilling of failed Spectre cabinet members himself so why not let a dedicated object handle electrocution. On the other hand, failing Spectre members know how to die themselves when being smoked by `NumberOne` in a funny chair. `Operation` now prints its assignments itself as well—no need to waste the time of Spectre with peanuts like that. Last but not least, killing James Bond is usually attempted by an agent in the field, so `kill_james_bond` is now a method on `SpectreAgent`. Goldfinger would have handled that differently of course—gotta play with that laser thingie if you have one I guess.
+
+As you can clearly see, we basically have now ten classes where we previously had only one. Isn’t that too much? It can be for sure. It’s an issue you’ll need to wrestle with most of the time you split up such responsibilities. You can definitely overdue this. But looking at this from anther angle might help: 
+
++ Have we separated concerns? Absolutely!
+
++ Do we have lightweight, skinny classes that are better suited to handle singular responsibilities. Pretty sure!
+
++ Do we tell a “story”, are we painting a clearer picture of who is involved and is in charge for certain actions? I hope so!
+
++ Is it easier to digest what each class is doing? For sure!
+
++ Have we cut down on the number of private methods? A little bit!
+
++ Does this represent a better quality of object oriented programming? Since we used composition and referred to inheritance only where needed for setting up these objects, you bet!
+
++ Does it feel more clean? Yes!
+ 
++ Are we better equipped to change our code without making a mess? Sure thing!
+
++ Was it worth it? What do you think?
+
+I’m not implying that these questions need to be checked off your list every time but these are the things you probably should start asking yourself while slimming down your models. Designing skinny models can be hard but it’s an essential measure to keep your applications healthy and agile. These are also not the only constructive ways to deal with fat models but it’s a good start, especially for newbies.
 
 + ### Missing Test Suite 
 
