@@ -232,9 +232,11 @@ Am I overestimating? I really don’t think so! You want to have a very extensiv
 
 + ### Voyeuristic Models
 
-These are models that are kinda too nosy and want to gather too much information about other models. That is in stark contrast of one of the most fundamental ideas in Object Oriented Programming—encapsulation. We rather want to strive for self-contained classes / models that manage their internal affairs themselves as much as possible. In terms of programming concepts, these voyeuristic models basically violate the “Principle of Least Knowledge”, aka the “Law of Demeter”—however you wanna pronounce it. 
+### Law of Demeter
 
-Why is this a problem? It is a form of duplication—a subtle one—and also leads to code that is a lot more brittle than anticipated. The Law of Demeter is pretty much the most reliable code smell that you can always attack without being worried about the possible downsides. Guess calling this one “The Law” was not as pretentious as it might sound at first. Dig into this one, you will need it a lot in your projects. It basically states that in term of objects, you can call methods on your objects friend but not on your friend’s friend. This is a common way to explain it and it all boils down to using not more than a single dot for your method calls.
+These are models that are kinda too nosy and want to gather too much information about other models. That is in stark contrast to one of the most fundamental ideas in Object Oriented Programming—encapsulation. We rather want to strive for self-contained classes / models that manage their internal affairs themselves as much as possible. In terms of programming concepts, these voyeuristic models basically violate the “Principle of Least Knowledge”, aka the “Law of Demeter”—however you wanna pronounce it. 
+
+Why is this a problem? It is a form of duplication—a subtle one—and also leads to code that is a lot more brittle than anticipated. The Law of Demeter is pretty much the most reliable code smell that you can always attack without being worried about the possible downsides. I guess calling this one “The Law” was not as pretentious as it might sound at first. Dig into this one, you will need it a lot in your projects. It basically states that in term of objects, you can call methods on your objects friend but not on your friend’s friend. This is a common way to explain it and it all boils down to using not more than a single dot for your method calls.
 
 #### Law of Demeter violations
 
@@ -248,6 +250,6 @@ Why is this a problem? It is a form of duplication—a subtle one—and also lea
 
 ```
 
-As you can see, these method calls peek too much into the business of other objects. The most important and obvious negative consequence is changing a bunch of these method calls all over the place if the structure of these objects need to change—which they will eventually. The only constant yadda yadda yadda. Also, it looks really nasty—not easy on the eyes at all. But when you don’t know that this is problematic, Rails let’s you take this very far without screaming at you. A lot of rope, remember?
+As you can see, these method calls peek too much into the business of other objects. The most important and obvious negative consequence is changing a bunch of these method calls all over the place if the structure of these objects need to change—which they will eventually because the only constant in software development is yadda yadda yadda. Also, it looks really nasty—not easy on the eyes at all. When you don’t know that this is a problematic approach, Rails let’s you take this very far anyway—without screaming at you. A lot of rope, remember?
 
 So what can we do about this? After all we want to get that information somehow. On the one hand we can compose our objects a bit more to fit our needs and we can make clever us of delegation to keep our models slim at the same time. Let’s dive into some code to show you what I mean.
