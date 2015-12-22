@@ -267,3 +267,49 @@ To get the hang of it, here are a few more fictional ones.
 Doesn’t look good, does it? As you can see, these method calls peek too much into the business of other objects. The most important and obvious negative consequence is changing a bunch of these method calls all over the place if the structure of these objects need to change—which they will eventually because the only constant in software development is yadda yadda yadda. Also, it looks really nasty—not easy on the eyes at all. When you don’t know that this is a problematic approach, Rails let’s you take this very far anyway—without screaming at you. A lot of rope, remember?
 
 So what can we do about this? After all we want to get that information somehow. On the one hand we can compose our objects a bit more to fit our needs and we can make clever us of delegation to keep our models slim at the same time. Let’s dive into some code to show you what I mean.
+
+``` ruby
+
+class SpectreMember < ActiveRecord::Base
+  has_many :operations
+  has_many :spectre_agents
+  
+  ...
+
+end
+
+class Operation < ActiveRecord::Base
+  belongs_to :spectre_member
+
+  ...
+
+end
+
+class SpectreAgent < ActiveRecord::Base
+  belongs_to :spectre_member
+
+  ...
+
+end
+
+@operation.spectre_member.name
+@spectre_member.operation.print_assignment
+@operation.spectre_member.spectre_agent.name
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
