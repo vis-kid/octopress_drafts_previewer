@@ -19,8 +19,8 @@ AntiPatterns—as the name implies—on the other hand represent pretty much the
 ### Topics
 
 + Fat Models
-+ Missing Test Suite
 + Voyeuristic Models
++ Missing Test Suite
 + Law of Demeter
 + Spaghetti SQL
 
@@ -28,7 +28,7 @@ AntiPatterns—as the name implies—on the other hand represent pretty much the
 
 I’m sure you have heard the “Fat models, skinny controllers” sing-song tons of times when you first started out with Rails. OK, now forget that! Sure, the business logic needs to be solved in the model layer but you shouldn’t feel inclined to stuff everything in there senselessly just to avoid crossing the lines into controller territory. Here’s a new target you should aim for: “Skinny models, skinny controllers”. You might ask, “well, how should we arrange code to achieve that—after all it’s a zero-sum game?” Good point! The name of the game is composition and Ruby is well equipped to give you lots of options to avoid model obesity.  
 
-In most (Rails) web applications that are database backed, the majority of your attention and work will be centered around the model layer. Naturally, nothing wrong with that. Inherently your models will have more gravity and attract more complexity. The questions is just how you intend to manage that complexity. Active Record definitely gives you plenty of rope to hang yourself while making your lives incredibly easy—like watering down on proper encapsulation and poor organization. It is a tempting approach to design your model layer by just following the path of highest immediate convenience. Nevertheless, a future proof architecture takes a lot more consideration than cultivating huge classes and stuffing everything into Active Record objects.
+In most (Rails) web applications that are database backed, the majority of your attention and work will be centered around the model layer. Naturally, nothing wrong with that. Inherently your models will have more gravity and attract more complexity. The questions is just how you intend to manage that complexity. Active Record definitely gives you plenty of rope to hang yourself while making your lives incredibly easy. It is a tempting approach to design your model layer by just following the path of highest immediate convenience. Nevertheless, a future proof architecture takes a lot more consideration than cultivating huge classes and stuffing everything into Active Record objects.
 
 The real problem that you deal with here is complexity—unnecessarily so I’d say. Classes that amass tons of code become complex just by their size alone. They are more difficult to maintain, difficult to parse and understand as well as increasingly harder to change because their composition probably lacks decoupling. These models often exceed their recommended capacity of handling one single responsibility and are rather all over the place. Worst case they become like garbage trucks, handling every trash that is lazily thrown at them. We can do better! If you think complexity is not a big deal—after all you are special, smart and all—think again! Complexity is the most notorious serial project killer out there—not your friendly neighborhood “Dark Defender”.
 
@@ -229,3 +229,25 @@ I’m not implying that these questions need to be checked off your list every t
 That is probably the most obvious AntiPattern. Coming from the test-driven side of things, touching a mature app that has not test coverage can be one of the most painful experiences you can encounter. If you wanna hate the world and your own profession more than anything, just spend six months on such a project and you’ll learn how much of a misanthrope is potentially in you. Kidding of course, but I doubt it will make you happier and that you wanna do it again—ever. Maybe a week will do as well. I’m pretty sure, the word torture will pop into your mind more often than you think. If testing was not part of your process so far and that kinda pain feels normal to your work, maybe you should consider that testing is not that bad nor your enemy. When your code related joy levels are more or less constantly above zero and you can fearlessly change your code then the overall quality of your work will be a lot higher compared to output that is tainted by anxiety and suffering. 
 
 Am I overestimating? I really don’t think so! You want to have a very extensive test coverage, not only because it is a great design tool for only writing code that you actually need but also you will need to change your code at some point in the future. You will be a lot better equipped to engage with your codebase—and a lot more confident—if you have a test harness that aides and guides refactorings, maintenance and extensions. They will occur for sure down the road, zero doubts about that. This is also the point where a test suite starts to pay off the second round of dividends because the increased speed with which you can securely make these quality changes can not be achieved by a long shot in apps are made by people who think writing tests is nonsense or cost too much time. 
+
++ ### Voyeuristic Models
+
+These are models that are kinda too nosy and want to gather too much information about other models. That is in stark contrast of one of the most fundamental ideas in Object Oriented Programming—encapsulation. We rather want to strive for self-contained classes / models that manage their internal affairs themselves as much as possible. In terms of programming concepts, these voyeuristic models basically violate the “Principle of Least Knowledge”, aka the “Law of Demeter”—however you wanna pronounce it. 
+
+Why is this a problem? It is a form of duplication—a subtle one—and also leads to code that is a lot more brittle than anticipated. The Law of Demeter is pretty much the most reliable code smell that you can always attack without being worried about the possible downsides. Guess calling this one “The Law” was not as pretentious as it might sound at first. Dig into this one, you will need it a lot in your projects. It basically states that in term of objects, you can call methods on your objects friend but not on your friend’s friend. This is a common way to explain it and it all boils down to using not more than a single dot for your method calls.
+
+#### Law of Demeter violations
+
+``` ruby
+
+@quartermaster.gizmos.non_lethal.favorite
+
+@mi6.operation.agent.favorite_weapon
+
+@mission.agent.name
+
+```
+
+As you can see, these method calls peek too much into the business of other objects. The most important and obvious negative consequence is changing a bunch of these method calls all over the place if the structure of these objects need to change—which they will eventually. The only constant yadda yadda yadda. Also, it looks really nasty—not easy on the eyes at all. But when you don’t know that this is problematic, Rails let’s you take this very far without screaming at you. A lot of rope, remember?
+
+So what can we do about this? After all we want to get that information somehow. On the one hand we can compose our objects a bit more to fit our needs and we can make clever us of delegation to keep our models slim at the same time. Let’s dive into some code to show you what I mean.
