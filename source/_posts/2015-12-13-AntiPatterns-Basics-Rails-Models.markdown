@@ -311,23 +311,18 @@ class SpectreMember < ActiveRecord::Base
   
   ...
 
-  def best_agent
-    spectre_agents.find_by_id(1).name
-  end
-
   def list_of_agents
     spectre_agents.all
   end
 
-  def operation_details(name)
-    operation = operations.find_by_name(name)
-    puts "This operation’s name is #{operation.name}"
-  end
- 
-  def print_last_operation
-    operations.last.print_assignment
+  def best_agent
+    spectre_agents.best_agent
   end
 
+  def print_operation_details(name)
+    operation = Operation.find_by_name(name)
+    operation.print_operation_details
+  end
 end
 
 class Operation < ActiveRecord::Base
@@ -335,50 +330,41 @@ class Operation < ActiveRecord::Base
 
   ...
 
-  def spectre_agent_in_charge
-    spectre_member.best_agent
-  end
-
   def spectre_member_name
     spectre_member.name
   end
 
+  def spectre_agent_in_charge
+    spectre_member.best_agent
+  end
+
+  def print_operation_details
+    puts "This operation’s objective is #{objective}. The target is #{target}"
+  end
 end
 
 class SpectreAgent < ActiveRecord::Base
   belongs_to :spectre_member
 
-  def spectre_member_number
-    spectre_member.number
-  end
+  ...
 
   def best_agent
     spectre_agents.find_by_id(1).name
   end
 
-  ...
-
+  def spectre_member_number
+    puts "My boss is number #{spectre_member.number}"
+  end
 end
 
-@spectre_agent.best_agent
-@operation.spectre_member_name
 @spectre_member.list_of_agents
+@spectre_member.best_agent
+@spectre_member.print_operation_details(name)
+
+@operation.spectre_member_name
 @operation.spectre_agent_in_charge
+
+@spectre_agent.best_agent
 @spectre_agent.spectre_member_number
-@spectre_member.print_last_operation
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
