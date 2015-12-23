@@ -293,12 +293,81 @@ class SpectreAgent < ActiveRecord::Base
 end
 
 @operation.spectre_member.name
-@spectre_member.operation.print_assignment
-@operation.spectre_member.spectre_agent.name
+@spectre_agent.spectre_member.number
+???
+@spectre_member.spectre_agents.all
+???
+@spectre_member.operations.last.print_assignment
+@spectre_member.spectre_agents.find_by_id(1).name
+@operation.spectre_member.spectre_agents.first.name
 
 ```
 
+``` ruby
 
+class SpectreMember < ActiveRecord::Base
+  has_many :operations
+  has_many :spectre_agents
+  
+  ...
+
+  def best_agent
+    spectre_agents.find_by_id(1).name
+  end
+
+  def list_of_agents
+    spectre_agents.all
+  end
+
+  def operation_details(name)
+    operation = operations.find_by_name(name)
+    puts "This operation’s name is #{operation.name}"
+  end
+ 
+  def print_last_operation
+    operations.last.print_assignment
+  end
+
+end
+
+class Operation < ActiveRecord::Base
+  belongs_to :spectre_member
+
+  ...
+
+  def spectre_agent_in_charge
+    spectre_member.best_agent
+  end
+
+  def spectre_member_name
+    spectre_member.name
+  end
+
+end
+
+class SpectreAgent < ActiveRecord::Base
+  belongs_to :spectre_member
+
+  def spectre_member_number
+    spectre_member.number
+  end
+
+  def best_agent
+    spectre_agents.find_by_id(1).name
+  end
+
+  ...
+
+end
+
+@spectre_agent.best_agent
+@operation.spectre_member_name
+@spectre_member.list_of_agents
+@operation.spectre_agent_in_charge
+@spectre_agent.spectre_member_number
+@spectre_member.print_last_operation
+
+```
 
 
 
