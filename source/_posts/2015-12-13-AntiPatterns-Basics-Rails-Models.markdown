@@ -234,9 +234,9 @@ Am I overestimating? I really don’t think so! You want to have a very extensiv
 
 ### Law of Demeter
 
-These are models that are kinda too nosy and want to gather too much information about other models. That is in stark contrast to one of the most fundamental ideas in Object Oriented Programming—encapsulation. We rather want to strive for self-contained classes / models that manage their internal affairs themselves as much as possible. In terms of programming concepts, these voyeuristic models basically violate the “Principle of Least Knowledge”, aka the “Law of Demeter”—however you wanna pronounce it. 
+These are models that are kinda super nosy and want to gather too much information about other objects / models. That is in stark contrast to one of the most fundamental ideas in Object Oriented Programming—encapsulation. We rather want to strive for self-contained classes / models that manage their internal affairs themselves as much as possible. In terms of programming concepts, these voyeuristic models basically violate the “Principle of Least Knowledge”, aka the “Law of Demeter”—however you wanna pronounce it. 
 
-Why is this a problem? It is a form of duplication—a subtle one—and also leads to code that is a lot more brittle than anticipated. The Law of Demeter is pretty much the most reliable code smell that you can always attack without being worried about the possible downsides. I guess calling this one “The Law” was not as pretentious as it might sound at first. Dig into this one, you will need it a lot in your projects. It basically states that in term of objects, you can call methods on your objects friend but not on your friend’s friend. This is a common way to explain it and it all boils down to using not more than a single dot for your method calls.
+Why is this a problem? It is a form of duplication—a subtle one—and also leads to code that is a lot more brittle than anticipated. The Law of Demeter is pretty much the most reliable code smell that you can always attack without being worried about the possible downsides. I guess calling this one a “law” was not as pretentious as it might sound at first. Dig into this smell, you will need it a lot in your projects. It basically states that in terms of objects, you can call methods on your objects friend but not on your friend’s friend. This is a common way to explain it and it all boils down to using not more than a single dot for your method calls.
 
 #### Law of Demeter violations
 
@@ -264,9 +264,9 @@ To get the hang of it, here are a few more fictional ones.
 
 ```
 
-Bananas, right? Doesn’t look good, does it? As you can see, these method calls peek too much into the business of other objects. The most important and obvious negative consequence is changing a bunch of these method calls all over the place if the structure of these objects need to change—which they will eventually because the only constant in software development is yadda yadda yadda. Also, it looks really nasty—not easy on the eyes at all. When you don’t know that this is a problematic approach, Rails let’s you take this very far anyway—without screaming at you. A lot of rope, remember?
+Bananas, right? Doesn’t look good, does it? As you can see, these method calls peek too much into the business of other objects. The most important and obvious negative consequence is changing a bunch of these method calls all over the place if the structure of these objects need to change—which they will eventually because the only constant in software development is—you guessed it—change (maybe feeling stupid every now and then but I’m not so sure about this one). Also, it looks really nasty, not easy on the eyes at all. When you don’t know that this is a problematic approach, Rails let’s you take this very far anyway—without screaming at you. A lot of rope, remember?
 
-So what can we do about this? After all we want to get that information somehow. On the one hand we can compose our objects a bit more to fit our needs and we can make clever us of delegation to keep our models slim at the same time. Let’s dive into some code to show you what I mean.
+So what can we do about this? After all we want to get that information somehow. On the one hand you can compose our objects to fit our needs and we can make clever us of delegation to keep our models slim at the same time. Let’s dive into some code to show you what I mean.
 
 ``` ruby
 
@@ -292,14 +292,14 @@ class SpectreAgent < ActiveRecord::Base
 
 end
 
-@operation.spectre_member.name
-@spectre_agent.spectre_member.number
-???
 @spectre_member.spectre_agents.all
-???
 @spectre_member.operations.last.print_assignment
 @spectre_member.spectre_agents.find_by_id(1).name
+
+@operation.spectre_member.name
 @operation.spectre_member.spectre_agents.first.name
+
+@spectre_agent.spectre_member.number
 
 ```
 
@@ -358,8 +358,8 @@ class SpectreAgent < ActiveRecord::Base
 end
 
 @spectre_member.list_of_agents
-@spectre_member.best_agent
 @spectre_member.print_operation_details(name)
+@spectre_member.best_agent
 
 @operation.spectre_member_name
 @operation.spectre_agent_in_charge
