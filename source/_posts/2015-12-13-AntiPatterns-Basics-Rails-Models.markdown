@@ -297,6 +297,7 @@ end
 @spectre_member.spectre_agents.find_by_id(1).name
 
 @operation.spectre_member.name
+@operation.spectre_member.number
 @operation.spectre_member.spectre_agents.first.name
 
 @spectre_agent.spectre_member.number
@@ -315,12 +316,8 @@ class SpectreMember < ActiveRecord::Base
     spectre_agents.all
   end
 
-  def best_agent
-    spectre_agents.best_agent
-  end
-
-  def print_operation_details(name)
-    operation = Operation.find_by_name(name)
+  def print_operation_details
+    operation = Operation.last
     operation.print_operation_details
   end
 end
@@ -334,8 +331,8 @@ class Operation < ActiveRecord::Base
     spectre_member.name
   end
 
-  def spectre_agent_in_charge
-    spectre_member.best_agent
+  def spectre_member_number
+    spectre_member.number
   end
 
   def print_operation_details
@@ -348,27 +345,68 @@ class SpectreAgent < ActiveRecord::Base
 
   ...
 
-  def best_agent
-    spectre_agents.find_by_id(1).name
-  end
-
-  def spectre_member_number
+  def superior_in_charge
     puts "My boss is number #{spectre_member.number}"
   end
 end
 
 @spectre_member.list_of_agents
-@spectre_member.print_operation_details(name)
-@spectre_member.best_agent
+@spectre_member.print_operation_details
 
 @operation.spectre_member_name
-@operation.spectre_agent_in_charge
+@operation.spectre_member_number
 
-@spectre_agent.best_agent
-@spectre_agent.spectre_member_number
+@spectre_agent.superior_in_charge
 
 ```
 
 This is definitely a step in the right direction. As you can see, we packed the info we wanted to acquire in a bunch of wrapper methods. Instead of reaching across many objects directly, we abstracted these bridges and leave it to the respective models to talk to their friends about the infos we need. The downside to this approach is having all these extra wrapper methods lying around. Sometimes it’s fine and but what we really want to avoid is maintaining these methods in a bunch of places if an object changes.
 
-If possible, the dedicated place for them to change is on their object—and on their object alone. Polluting objects with methods that have little to do with the model itself is also something to look out for since this is always a potential hazard for watering down on single responsibilities. We can do better than that. Let’s delegate a bunch of method calls directly to their objects in charge and try to cut down on a few wrapper methods. Rails knows what we need and provides us with the handy `delegate` class method method to tell our objects’s friends what we need. 
+If possible, the dedicated place for them to change is on their object—and on their object alone. Polluting objects with methods that have little to do with the model itself is also something to look out for since this is always a potential hazard for watering down on single responsibilities. We can do better than that. Where possible, let’s delegate method calls directly to their objects in charge and try to cut down on wrapper methods as much as we can. Rails knows what we need and provides us with the handy `delegate` class method method to tell our object’s friends what methods we need called. 
+
+Let’s zoom in on something from the previous code example and see where we can make proper use of delegation.
+
+``` ruby
+
+class Operation < ActiveRecord::Base
+  belongs_to :spectre_member
+ 
+  delegate :name, :number, to: :spectre_member, prefix: true
+
+  ...
+
+# def spectre_member_name
+#   spectre_member.name
+# end
+
+# def spectre_member_number
+#   spectre_member.number
+# end
+
+  ...
+
+end
+
+@operation.spectre_member_name
+
+
+class SpectreAgent < ActiveRecord::Base
+  belongs_to :spectre_member
+
+  delegate :number, to: :spectre_member, prefix: true
+
+  ...
+
+  def superior_in_charge
+    puts "My boss is number #{spectre_member_number}"
+  end
+
+  ...
+
+end
+
+```
+
+As you can see we could simplify things a bit using method delegation. We got rid of `Operation#spectre_member_name` and `Operation#spectre_member_number` completely and `SpectreAgent` does not need call `number` on `spectre_member` anymore—`number` is delegated back directly to its “origin” class `SpectreMember`. 
+
+In case this is a little confusing at first, how does this work exactly? You tell delegate which `:method_name` it should delegate `to:` which `:class_name` (multiple method names are fine too). The `prefix: true` part is optional. In our case, it prefixed the snake-cased class name of the receiving class before the method name and enabled us to call `operation.spectre_member_name` instead of the potentially ambiguous `operation.name`—if we had not used the prefix option. This works really nice with `belongs_to` and `has_one` associations. On the `has_many` side of things the music will stop and you will run into trouble though. These associations provide you with a collection proxy that will throw NameErrors or NoMethodErros at you when you delegate methods to these “collections”.
