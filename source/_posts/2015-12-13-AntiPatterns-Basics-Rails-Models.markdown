@@ -410,3 +410,21 @@ end
 As you can see we could simplify things a bit using method delegation. We got rid of `Operation#spectre_member_name` and `Operation#spectre_member_number` completely and `SpectreAgent` does not need call `number` on `spectre_member` anymore—`number` is delegated back directly to its “origin” class `SpectreMember`. 
 
 In case this is a little confusing at first, how does this work exactly? You tell delegate which `:method_name` it should delegate `to:` which `:class_name` (multiple method names are fine too). The `prefix: true` part is optional. In our case, it prefixed the snake-cased class name of the receiving class before the method name and enabled us to call `operation.spectre_member_name` instead of the potentially ambiguous `operation.name`—if we had not used the prefix option. This works really nice with `belongs_to` and `has_one` associations. On the `has_many` side of things the music will stop and you will run into trouble though. These associations provide you with a collection proxy that will throw NameErrors or NoMethodErros at you when you delegate methods to these “collections”.
+
++ ### Spaghetti SQL
+
+To round off this chapter about model AntiPatterns in Rails I’d like to spend a little time on what to avoid when SQL is involved. Active Record associations provide options that make your lives substantially easier when you are aware what you should stay away from. Finder methods are a whole topic on their own—and we won’t cover them in their full depth—but I wanted to mention a few common techniques that help you even when you write very simple ones.
+
+Things that we should be concerned about echo most of what we learned so far. We want to have intention-revealing, simple and reasonably named methods for finding stuff in our models. 
+
+``` ruby
+
+class SpecialOpsController < ApplicationController
+
+  def index
+    @operation = Operation.find(params[:id])
+    @agents = Agent.where(operation_id: @operation.id, licence_to_kill: true)
+  end
+end
+
+```
