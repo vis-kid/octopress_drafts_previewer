@@ -415,11 +415,27 @@ In case this is a little confusing at first, how does this work exactly? You tel
 
 To round off this chapter about model AntiPatterns in Rails I’d like to spend a little time on what to avoid when SQL is involved. Active Record associations provide options that make your lives substantially easier when you are aware what you should stay away from. Finder methods are a whole topic on their own—and we won’t cover them in their full depth—but I wanted to mention a few common techniques that help you even when you write very simple ones.
 
-Things that we should be concerned about echo most of what we learned so far. We want to have intention-revealing, simple and reasonably named methods for finding stuff in our models. 
+Things that we should be concerned about echo most of what we learned so far. We want to have intention-revealing, simple and reasonably named methods for finding stuff in our models. Let’s dive right into code. 
 
 ``` ruby
 
-class SpecialOpsController < ApplicationController
+class Operation < ActiveRecord::Base
+
+  has_many :agents
+
+  ...
+
+end
+
+class Agent < ActiveRecord::Base
+
+  belongs_to :operation
+
+  ...
+
+end
+
+class OperationsController < ApplicationController
 
   def index
     @operation = Operation.find(params[:id])
@@ -428,3 +444,30 @@ class SpecialOpsController < ApplicationController
 end
 
 ```
+
+Looks harmless, no? We’re juuust looking for a bunch of agents that have the licence to kill for our ops page. Think again. Why should the `OperationsController` dig into the internals of `Agent`? Also, is this really the best we can do to encapsulate a finder on `Agent`? If you are thinking that you could add a class method like `Agent.find_licence_to_kill_agents` which encapsulates the finder logic you are definitely doing a step in the right direction—not nearly enough though. 
+
+``` ruby
+
+class Agent < ActiveRecord::Base
+
+  belongs_to :operation
+
+  def self.find_licence_to_kill_agents(operation)
+    where(operation_id: operation.id, licence_to_kill: true)
+  end
+  ...
+
+end
+
+class OperationsController < ApplicationController
+
+  def index
+    @operation = Operation.find(params[:id])
+    @agents = Agent.find_licence_to_kill_agents(@operation)
+  end
+end
+
+```
+
+We have to be a bit more engaged than that. First of all, this is not using the associations to our advantage and encapsulation is also suboptimal.
