@@ -470,4 +470,141 @@ end
 
 ```
 
-We have to be a bit more engaged than that. First of all, this is not using the associations to our advantage and encapsulation is also suboptimal.
+We have to be a bit more engaged than that. First of all, this is not using the associations to our advantage and encapsulation is also suboptimal. Associations like `has_many` come with the benefit that we can add on to the proxy array that we get returned. We could have done this instead:
+
+``` ruby
+
+class Operation < ActiveRecord::Base
+
+  has_many :agents
+
+  def find_licence_to_kill_agents
+    self.agents.where(licence_to_kill: true)
+  end
+  ...
+
+end
+
+class OperationsController < ApplicationController
+
+  def index
+    @operation = Operation.find(params[:id])
+    @agents = @operation.find_licence_to_kill_agents
+  end
+end
+
+```
+
+This works for sure but is also just another small step in the right direction. Yes, the controller is a bit better and we make good use of model associations but you should still be suspicious why `Operation` is concerned about the implementation of finding a certain type of `Agent`. This responsibility belongs back to the `Agent` model itself. Named scopes come in pretty handy with that. Scopes define chainable—very important—class methods for your models and thereby allow you the specify useful queries which you can use as additional method calls on top of your model associations. The following two approaches for scoping `Agent` are indifferent.
+
+``` ruby
+
+class Agent < ActiveRecord::Base
+  belongs_to :operation
+
+  scope :licenced_to_kill, -> { where(licence_to_kill: true) }
+end
+
+class Agent < ActiveRecord::Base
+  belongs_to :operation
+
+  def self.licenced_to_kill
+    where(licence_to_kill: true)
+  end
+end
+
+class OperationsController < ApplicationController
+
+  def index
+    @operation = Operation.find(params[:id])
+    @agents = @operation.agents.licenced_to_kill
+  end
+end
+
+``` 
+
+That is much better. In case the syntax of scopes is new to you, they are just (stabby) lambdas—not terribly important to look into them right away btw—and they are the proper way to call scopes since Rails 4. `Agent` is now in charge of mamaging its own search parameters and associations can just tuck on what they need to find. This approach let’s you achieve queries as single SQL calls. I personally like to use `scope` for its explicity and they are very handy to chain inside well-named finder methods—that way they increase the possiblity of reusing code and DRY-ing code. Let’s say we have something a bit more involved:
+
+``` ruby
+
+class Agent < ActiveRecord::Base
+  belongs_to :operation
+
+  scope :licenced_to_kill, -> { where(licence_to_kill: true) }
+  scope :womanizer, -> { where(womanizer: true) }
+  scope :bond, -> { where(name: 'James Bond') }
+  scope :gambler, -> { where(gambler: true) }
+end
+
+```
+
+We can now use all these scopes to custom build more comples queries.
+
+``` ruby
+
+class OperationsController < ApplicationController
+
+  def index
+    @operation = Operation.find(params[:id])
+    @double_o_agents = @operation.agents.licenced_to_kill
+  end
+
+  def show
+    @operation = Operation.find(params[:id])
+    @bond = @operation.agents.womanizer.gambler.licenced_to_kill
+  end
+
+  ...
+end
+
+```
+
+Sure that works but I’d like to suggest you go one step further.
+
+``` ruby
+
+class Agent < ActiveRecord::Base
+  belongs_to :operation
+
+  scope :licenced_to_kill, -> { where(licence_to_kill: true) }
+  scope :womanizer, -> { where(womanizer: true) }
+  scope :bond, -> { where(name: 'James Bond') }
+  scope :gambler, -> { where(gambler: true) }
+
+  def self.find_licenced_to_kill
+    licenced_to_kill
+  end
+
+  def self.find_licenced_to_kill_womanizer
+    womanizer.licenced_to_kill
+  end
+
+  def self.find_gambling_womanizer
+    gambler.womanizer
+  end
+ 
+  ...
+
+end
+
+class OperationsController < ApplicationController
+
+  def index
+    @operation = Operation.find(params[:id])
+    @double_o_agents = @operation.agents.find_licenced_to_kill
+  end
+
+  def show
+    @operation = Operation.find(params[:id])
+    bond = @operation.agents.find_licenced_to_kill_womanizer
+    or
+    @bond = @operation.agents.bond
+  end
+
+  ...
+
+end
+
+```
+
+As you can see, through this approach we reap the benefits of proper encapsulation, model associations, code reuse and expressive naming of methods—and all while doing single SQL queries. No more spaghetti code, awesome! If you are worried about violating the Law of Demeter thingie you will be pleased to hear that since we are not adding dots by reaching into the associated model but chaining them only onto their own object we are not commiting any demeter crimes.
