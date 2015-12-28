@@ -608,3 +608,7 @@ end
 ```
 
 As you can see, through this approach we reap the benefits of proper encapsulation, model associations, code reuse and expressive naming of methods—and all while doing single SQL queries. No more spaghetti code, awesome! If you are worried about violating the Law of Demeter thingie you will be pleased to hear that since we are not adding dots by reaching into the associated model but chaining them only onto their own object we are not commiting any demeter crimes.
+
++ ### Final thoughts
+
+From a beginner’s perspective I think you have learned a lot about better handling of Rails Models and how to model them more robustly without calling for a hangman. Don’t be fooled though in thinking that there isn’t a lot more to learn on this particular topic. I presented you with a few AntiPatterns that I think newbies are able to understand and handle in order to protect themselves early on. If you don’t know what you don’t know, plenty of rope is available for looping around your neck. Although this was a solid start into this topic, there are not only more aspects to AntiPatterns in Rails models but also more nuances which you’ll need to explore as well. These were the basics—very essential and important ones—and you should feel accomplished for a little while that you haven’t waited until much later in your career to figure them out.
