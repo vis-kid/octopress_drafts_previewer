@@ -13,9 +13,9 @@ categories: [Ruby, Rails, thoughtbot, Bourbon, Neat, Refills, Middleman]
 ### Topics
 
 + Posts Detail Page
++ Style Duplications
 + Relative Links
 + Index List Player
-+ Style Duplications
 + Why SoundCloud? (Optional)
 
 + ### Posts Detail Page
@@ -496,7 +496,9 @@ middleman deploy
 
 ``` 
 
++ ### Break
 
+I think you earned yourself a cool beverage at this point and we can leave it at that for now. In the next and final article we’ll tweak it a bit further and also add a little something for navigating the site.
 
 + ### Why SoundCloud? (Optional)
 
