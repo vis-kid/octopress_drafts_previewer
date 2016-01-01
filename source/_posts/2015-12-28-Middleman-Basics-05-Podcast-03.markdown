@@ -385,7 +385,7 @@ Everything should work fine now. The typography and is not perfect yet but I’d
 
 + ### Index List Player
 
-As you can see, were are missing the audio widget and the length of the displayed post is not ideal for an index list. Let’s fix that next. I want to use the smaller SoundCloud player to display the podcast episode in the index list. Therefore it does not make sense to extract a partial for the player for both the index and the detail page—each page needs their own widget. If you like to use only one of the players for both layouts you should definitely extract a partial for it. I’ll leave that steop to you since you already learned how this is done.  
+As you can see, were are missing the audio widget and the length of the displayed post is not ideal for an index list. Let’s fix that next. I want to use the smaller SoundCloud player to display the podcast episode in the index list. Therefore it does not make sense to extract a partial for the player for both the index and the detail page—each page needs their own widget. If you like to use only one of the players for both layouts you should definitely extract a partial for it. I’ll leave that step to you since you already learned how this is done.  
 
 ##### source/index.html.erb
 
@@ -422,7 +422,7 @@ The code example is focused on the section where we iterate over ```page_article
 
 {% img /images/middleman/middleman_05_build/index-list-long-with-small-podcast.png %}
 
-Getting there. Let’s shorten the displayed text as well before we apply a few styles. In the index list we only want to see something like a 300 character summary—not too much but definitely also not too little text. Experiment on your own and see what works best for your needs.
+Next I wanna shorten the displayed text as well before we apply a few styles. In the index list we only want to see something like a 300 character summary—not too much but definitely also not too little text. Experiment on your own and see what works best for your needs.
 
 First we need to add the gem `Nokogiri` to our `Gemfile`, bundle it and adjust `source/index.html.erb` a bit.
 
@@ -479,7 +479,7 @@ Nudge the spacing a bit and we’re dont.
 
 {% img /images/middleman/middleman_05_build/index-list-long-with-small-podcast-summary.png %}
 
-Alright! If you have a bit better dummy text, this should look quite decent by now. Let’s commit!
+Alright, getting there. Now we have an index list that displays both text-only and podcast episode articles—uncomplicated, without any fuzz. If you have a bit better dummy text, this should look quite decent by now. Let’s commit!
 
 ##### Shell
 
