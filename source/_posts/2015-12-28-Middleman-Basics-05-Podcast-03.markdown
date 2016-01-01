@@ -13,8 +13,9 @@ categories: [Ruby, Rails, thoughtbot, Bourbon, Neat, Refills, Middleman]
 ### Topics
 
 + Posts Detail Page
++ Relative Links
 + Index List Player
-
++ Style Duplications
 + Why SoundCloud? (Optional)
 
 + ### Posts Detail Page
@@ -232,6 +233,8 @@ git commit -m '1st attempt at post detail page w/ podcast option
 
 ```
 
++ ### Style Duplications
+
 The avid reader might have already spotted what we should clean up next. There is a bit of duplication in `_posts_detail.sass` and `_index_posts.sass`. I’d like to extract the duplicated styles into a separate Sass file called `_blog_post_extractions.sass`. I’m experimenting with this technique lately—an idea that I got from Object Oriented Programming. Things like BEM or SMACSS can be great, especially for bigger projects with bigger teams if they have settled for following conventions, but for smaller projects I’m always looking for frictionless, dead simple solutions. I’ll give this a try until the next new shiny thing convinces me of a better approach.
 
 ##### source/stylesheets/all.sass
@@ -348,6 +351,8 @@ Let’s go to our GitHub Pages page and check if everything works as expected. U
 ##### Screenshot
 
 {% img /images/middleman/middleman_05_build/404.png %}
+ 
++ ### Relative Links
 
 If you have looked closely, you might have seen that we are missing some info in our url. Now it says something like `http://your_username.github.io/2015/11/30/my-super-awesome-post.html`. What it should say is something like `http://your_username.github.io/matcha-nerdz/2015/11/30/my-super-awesome-post.html`. The `matcha-nerdz` part was completely missing. Don’t worry, this is an easy fix though. We need to activate relative links in our config file.
 
