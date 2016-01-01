@@ -452,6 +452,29 @@ In index we need to change only one line. I left a comment for what needs to be 
 
 ```
 
+##### source/stylesheets/_index_posts.sass
+
+And we should add the styles for the small SC player on `.soundcloud-player-small` to our extracted file.
+
+##### source/stylesheets/_blog_post_extractions.sass
+
+``` sass
+
+.posts p, .post-title, article.article-detail, .soundclould-player-small
+  +shift(2)
+  +span-columns(8)
+
+```
+
+Nudge the spacing a bit and we’re dont.
+
+``` sass
+
+.soundclould-player-small
+  margin-bottom: 1em
+
+```
+
 ##### Screenshot
 
 {% img /images/middleman/middleman_05_build/index-list-long-with-small-podcast-summary.png %}
@@ -464,10 +487,10 @@ Alright! If you have a bit better dummy text, this should look quite decent by n
 
 git add --all
 git commit -m 'Adds Article Summary & Small Widget to Index
+               Adds styles for index list SC widget
                Adds Nokogiri
                Adds optional SC widget to index
                Adds 300 character summary'
-
 
 middleman deploy
 
