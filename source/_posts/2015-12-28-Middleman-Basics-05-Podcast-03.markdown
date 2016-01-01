@@ -13,6 +13,7 @@ categories: [Ruby, Rails, thoughtbot, Bourbon, Neat, Refills, Middleman]
 ### Topics
 
 + Posts Detail Page
++ Why SoundCloud? (Optional)
 
 + ### Posts Detail Page
 
@@ -229,6 +230,152 @@ git commit -m '1st attempt at post detail page w/ podcast option
 
 ```
 
-##### Optional Info About Choosing SoundCloud
+The avid reader might have already spotted what we should clean up next. There is a bit of duplication in `_posts_detail.sass` and `_index_posts.sass`. I’d like to extract the duplicated styles into a separate Sass file called `_blog_post_extractions.sass`. I’m experimenting with this technique lately—an idea that I got from Object Oriented Programming. Things like BEM or SMACSS can be great, especially for bigger projects with bigger teams if they have settled for following conventions, but for smaller projects I’m always looking for frictionless, dead simple solutions. I’ll give this a try until the next new shiny thing convinces me of a better approach.
+
+##### source/stylesheets/all.sass
+
+``` sass
+
+@import 'bourbon'
+@import 'base/base'
+@import 'neat'
+
+@import 'blog_post_extractions'
+
+@import 'footer'
+@import 'index_posts'
+@import 'posts_detail'
+
+```
+
+##### source/stylesheets/_blog_post_extractions.sass
+
+``` sass
+
+#main, .posts
+  +outer-container
+
+.posts p, .post-title, article.article-detail
+  +shift(2)
+  +span-columns(8)
+
+.post-title a, .detail-post-title
+  color: $matcha-green
+
+.post-title, .detail-post-title
+  font-size: 1.7em
+
+.posts p, .article-detail p
+  font-size: 1.05em
+  line-height: 1.35em
+
+.posts p, .article-detail p, .detail-post-date, .post-date
+  color: $text-color
+
+.posts p, .article-detail p
+  margin-bottom: 4em
+
+```
+
+If you compare the above with the original files we extracted these styles from below, you can see that we got rid of a nice chunk of duplication. It is also easy to understand and find because I import such extracted files right on top in `all.sass`. It’s easy to spot these extractions for people new to the code base. In this case I use this files to collect exracted styles that apply to blog posts. A similar approach could work duplications across different appearances of sidebars, devices or similar—there should be a common thread though. 
+
+##### source/stylesheets/_index_posts.sass
+
+``` sass
+
+.post-title
+  a
+    +transition(color .4s ease-in-out)
+    &:hover
+      color: $text-color
+
+.post-date
+  font-size: 0.7em
+  margin:
+    left: em(-80px)
+    right: em(20px)
+
+```
+
+##### source/stylesheets/_posts_detail.sass
+
+``` sass
+
+.detail-post-title
+  margin-top: 40px
+
+.detail-post-date
+  font-size: 1.1em
+
+.soundclould-player-big
+  margin-bottom: 50px
+
+```
+
+The previous files are now a lot smaller, nice and tidy—exactly how I like them. Files are cheap so I don’t care if I have lots of them that all do their specific little job. A separation of concerns kinda thing. It’s not a perfect solution, but it’s so dead simple for small stuff that I like experimenting more with that approach. I’m not sure how much scaleable this is though. For a podcast site it should be O.K. though I feel.
+
+???
+Over time, one of my favorite parts of working with any code is sitting down to find duplication and erradicate it as much as possible. Not only in OOP, any form of duplication is enemy number one in killing projects—or in nastyfying them over time at least. I encourage you to learn all kinds of approaches to deal with that and also—even more importantly— to find your own strategies that work best for you and your team. This part of fronend development is a lot less guarded by programming principles, design patterns and so forth and therefore a lot more “Alice in Wonderland” rabbit holes that leave new team members or colleagues tripping out of their minds since a lot of people are cooking their own secret sauce. Anyway…
+???
+
+We should also comment out our visual grid in `source/stylesheets/base/_grid-settings.scss` and see how it looks:
+
+##### Screenshot
+
+{% img /images/middleman/middleman_05_build/detail_page_widget_with_styles-no-grid.png %}
+
+Same as before but with much cleaner styles. Me likey! Time to commit and for deploying our changes.
+
+##### Shell
+
+``` bash
+
+git add --all
+git commit -m 'Extracts styles into _blog_post_extractions
+               Extracts duplications from
+                 _index_posts.sass
+                 _posts_detail.sass
+               Imports styles' 
+
+middleman deploy
+
+```
+
+Let’s go to our GitHub Pages page and check if everything works as expected. Ups! On the first glance it looks fine but if we try to go to the detail page from index we get a `404` error message. GitHub can’t find what we need.
+
+##### Screenshot
+
+{% img /images/middleman/middleman_05_build/404.png %}
+
+If you have looked closely, you might have seen that we are missing some info in our url. Now it says something like `http://your_username.github.io/2015/11/30/my-super-awesome-post.html`. What it should say is something like `http://your_username.github.io/matcha-nerdz/2015/11/30/my-super-awesome-post.html`. The `matcha-nerdz` part was completely missing. Don’t worry, this is an easy fix though. We need to activate relative links in our config file.
+
+##### config.rb
+
+``` ruby
+
+set :relative_links, true  
+
+```
+
+Having absolute links on GitHub Pages will point in the wrong direction. With this little change, your links are namespaced relative to your app’s root. As you can see from this little example, deploying early and often is nice to catch things like that. Finding these things out of context when you are already working on something completely different and you have to dig deep where bugs might come from can mess with your flow tremendously.
+
+
+##### Shell
+
+``` bash
+git commit --all
+git commit -m 'Set relative_links in config.rb'
+
+middleman deploy
+
+```
+
+Everything should work fine now. The typography and is not perfect yet but I’d like to move on and fine tune these things once the site is setup the way we need it. Therefore we go back to the index list and adjust it a little bit. Let’s have a look:
+
+
+
+
+
++ ### Why SoundCloud? (Optional)
 
 “Why host the podcast on SoundCloud?”, you might ask. Well, my reasoning was simple: First of all, it will quite certainly be around for a long time—something that you can’t necessarily expect from a lot of projects that offer to host your podcast audio files. I don’t wanna get myself in the situation of dealing with migrating tons of already published audio tracks to another service just because someone got acquihired or went bust. Second, it’s dead cheap to host a ton of tracks and they even have a free option for folks who publish tracks only occasionally. The player and its options are alright too—hadn’t any reason to complain about speed or anything so far. The stats are useful as well and there are already people on the platform who are into podcasts and stuff—which is good for the discovery factor. Don’t get me wrong, there are plenty of reasons why I wanted to hug somebody gently around the neck when dealing with uploading and silly UX things, but compared to the downsides of bigger headaches with other hosting options, SoundCloud seemed like the most reasonable choice overall. Lastly, I don’t like the custom sites these podcast sites offer. They look super generic and I like to build my own stuff that fits my needs and let’s me also create my own visual identity. This is just my own personal opinion and I’m not affiliated to SC in any way—atm at least. Don’t plan on changing that also.
