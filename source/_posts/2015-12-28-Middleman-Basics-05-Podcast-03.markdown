@@ -13,6 +13,8 @@ categories: [Ruby, Rails, thoughtbot, Bourbon, Neat, Refills, Middleman]
 ### Topics
 
 + Posts Detail Page
++ Index List Player
+
 + Why SoundCloud? (Optional)
 
 + ### Posts Detail Page
@@ -372,7 +374,99 @@ middleman deploy
 
 Everything should work fine now. The typography and is not perfect yet but I’d like to move on and fine tune these things once the site is setup the way we need it. Therefore we go back to the index list and adjust it a little bit. Let’s have a look:
 
+##### Screenshot
 
+{% img /images/middleman/middleman_05_build/index-list-long-no-podcast.png %}
+
++ ### Index List Player
+
+As you can see, were are missing the audio widget and the length of the displayed post is not ideal for an index list. Let’s fix that next. I want to use the smaller SoundCloud player to display the podcast episode in the index list. Therefore it does not make sense to extract a partial for the player for both the index and the detail page—each page needs their own widget. If you like to use only one of the players for both layouts you should definitely extract a partial for it. I’ll leave that steop to you since you already learned how this is done.  
+
+##### source/index.html.erb
+
+``` erb
+
+...
+
+<div class='posts'>
+  <% page_articles.each_with_index do |article, i| %>
+    <h2 class='post-title'><span class='post-date'><%= article.date.strftime('%b %e') %></span> <%= link_to article.title, article %></h2>
+
+    <% if article.data.soundcloud_id %>
+    <section class='soundclould-player-small'>  
+      <iframe 
+        width="100%"
+        height="166" 
+        scrolling="no" 
+        frameborder="no" 
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/<%= article.data.soundcloud_id %>&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
+    <% end %>
+    </section>
+
+    <%= article.body %>
+  <% end %>
+</div>
+
+...
+
+```
+
+The code example is focused on the section where we iterate over ```page_articles```. I added a conditional that only displays the audio widget if the article has a ```sound_cloud_id``` in the frontmatter of the article—which we access via its data attribute. It’s very similar to the way we solved this previously. In this case we used the block parameter `article` to access the info we need.
+
+##### Screenshot
+
+{% img /images/middleman/middleman_05_build/index-list-long-with-small-podcast.png %}
+
+Getting there. Let’s shorten the displayed text as well before we apply a few styles. In the index list we only want to see something like a 300 character summary—not too much but definitely also not too little text. Experiment on your own and see what works best for your needs.
+
+First we need to add the gem `Nokogiri` to our `Gemfile`, bundle it and adjust `source/index.html.erb` a bit.
+
+##### Gemfile
+
+``` ruby
+
+gem 'nokogiri'
+
+```
+
+##### Shell
+
+``` bash
+
+bundle install
+
+```
+
+In index we need to change only one line. I left a comment for what needs to be replaced. We use the summary method and supply it with the number of characters we want to see per article in the index list.
+
+##### source/index.html.erb
+
+``` erb
+<%# article.body %>
+<%= article.summary(300) %>
+
+```
+
+##### Screenshot
+
+{% img /images/middleman/middleman_05_build/index-list-long-with-small-podcast-summary.png %}
+
+Alright! If you have a bit better dummy text, this should look quite decent by now. Let’s commit!
+
+##### Shell
+
+``` bash
+
+git add --all
+git commit -m 'Adds Article Summary & Small Widget to Index
+               Adds Nokogiri
+               Adds optional SC widget to index
+               Adds 300 character summary'
+
+
+middleman deploy
+
+``` 
 
 
 
