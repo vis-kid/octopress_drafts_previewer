@@ -8,7 +8,7 @@ published: true
 categories: [AntiPatterns, Ruby, Rails, Code Smells, Refactoring, Object Oriented Programming ]
 ---
 
-{% img /images/antipatterns-models/wheelchair-construction-fail.jpg %}
+{% img /images/AntiPatterns/Models/wheelchair-construction-fail.jpg %}
 
 ### Heads Up
 
