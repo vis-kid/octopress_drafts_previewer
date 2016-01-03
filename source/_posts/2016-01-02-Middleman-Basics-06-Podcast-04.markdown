@@ -13,6 +13,7 @@ categories: [Ruby, Rails, thoughtbot, Bourbon, Neat, Refills, Middleman]
 ### Topics
 
 + Hero Section
++ Navigation
 
 + ### Hero Section
 
@@ -249,3 +250,290 @@ middleman deploy
 {% img /images/middleman/middleman_06_build/hero-unit-preview-no-grid.png %}
 
 Without the visual grid, it doesn’t look you have much work left to adjust this page for your podcasting needs. A few things I’d recommend to do is find a typeface that communicates your project distinctively without being too exotic and adjust the size and spacing of your text so that it fits your hero unit background image. Since this is part of your branding I suggest you take your time and have some fun!
+
++ ### Navigation
+
+I think it’s a good time to add a navbar. We will also use a pattern from Refills and adapt for our own needs. I chose the “centered navigation” and you will find the code for it under “Patterns”. For this one we need to copy the HTML, SCSS—since we get rid of most stuff in the navbar I won’t copy the CoffeeScript code. If you need a more extensive navbar you might need that though.
+
+I’ll start first by adding the markup to our global `layout.erb` file
+
+### source/layouts/layout.erb
+
+``` erb
+
+<!doctype html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+		 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <title>Blog Title<%= ' - ' + current_article.title unless current_article.nil? %></title>
+    <%= feed_tag :atom, "#{blog.options.prefix.to_s}/feed.xml", title: "Atom Feed" %>
+    <%= stylesheet_link_tag "all" %>
+    <%= javascript_include_tag  "all" %>
+  </head>
+
+  <body>
+
+    <header class="centered-navigation" role="banner">
+      <div class="centered-navigation-wrapper">
+        <a href="javascript:void(0)" class="mobile-logo">
+          <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/placeholder_logo_3_dark.png" alt="Logo image">
+        </a>
+        <a href="javascript:void(0)" id="js-centered-navigation-mobile-menu" class="centered-navigation-mobile-menu">MENU</a>
+        <nav role="navigation">
+          <ul id="js-centered-navigation-menu" class="centered-navigation-menu show">
+            <li class="nav-link"><a href="javascript:void(0)">Products</a></li>
+            <li class="nav-link"><a href="javascript:void(0)">About Us</a></li>
+            <li class="nav-link"><a href="javascript:void(0)">Contact</a></li>
+            <li class="nav-link logo">
+              <a href="javascript:void(0)" class="logo">
+                <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/placeholder_logo_3_dark.png" alt="Logo image">
+              </a>
+            </li>
+            <li class="nav-link"><a href="javascript:void(0)">Testimonials</a></li>
+            <li class="nav-link more"><a href="javascript:void(0)">More</a>
+              <ul class="submenu">
+                <li><a href="javascript:void(0)">Submenu Item</a></li>
+                <li><a href="javascript:void(0)">Another Item</a></li>
+                <li class="more"><a href="javascript:void(0)">Item with submenu</a>
+                  <ul class="submenu">
+                    <li><a href="javascript:void(0)">Sub-submenu Item</a></li>
+                    <li><a href="javascript:void(0)">Another Item</a></li>
+                  </ul>
+                </li>
+                <li class="more"><a href="javascript:void(0)">Another submenu</a>
+                  <ul class="submenu">
+                    <li><a href="javascript:void(0)">Sub-submenu</a></li>
+                    <li><a href="javascript:void(0)">An Item</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-link"><a href="javascript:void(0)">Sign up</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    
+    <div id="main" role="main">
+      <%= yield %>
+    </div>
+
+    <%= partial "partials/footer" %>
+    
+  </body>
+</html>
+
+```
+
+Whoa! That’s quite a chunk of code. Are you thinking the same as me? This looks nasty, right? Let’s put this into a partial.
+
+##### source/layouts/layout.erb
+
+``` erb
+
+...
+
+  <body>
+
+    <%= partial "partials/navbar" %>
+    
+    <div id="main" role="main">
+      <%= yield %>
+    </div>
+
+    <%= partial "partials/footer" %>
+    
+  </body>
+</html>
+
+```
+
+##### source/partials/_navbar.erb
+
+``` erb
+
+<header class="centered-navigation" role="banner">
+  <div class="centered-navigation-wrapper">
+    <a href="javascript:void(0)" class="mobile-logo">
+      <img src="../images/matcha_nerdz_logo.png" alt="Logo image">
+    </a>
+    <a href="javascript:void(0)" id="js-centered-navigation-mobile-menu" class="centered-navigation-mobile-menu">MENU</a>
+    <nav role="navigation">
+      <ul id="js-centered-navigation-menu" class="centered-navigation-menu show">
+        <li class="nav-link"><%= link_to 'Home', '/' %></li>
+        <li class="nav-link logo">
+          <a href="javascript:void(0)" class="logo">
+            <img src="/images/matcha_nerdz_logo.png" alt="Logo image">
+          </a>
+        </li>
+        <li class="nav-link"><%= link_to 'About', '/pages/about.html' %></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+```
+
+I’ve also removed stuff I don’t need and only end up with my logo that I stored in `/images` and two links for home and about pages. For the two links I used the ```link_to``` helper method. It takes two arguments: The string you want users to click on and the location you want to link to. I’m sure peope who have played a bit with Rails or Sinatra are familiar with this. Handy, but no big deal. The avid reader might also have discovered that our about link links to a simple HTML page that I placed in a new directory named `pages`. I suggest you put HTML pages like contact, faq or whatever also in this directory. If you put these static pages in there you should have no problems customizing them to your needs. Just have some fun and apply what you’ve learned so far with these pages. From here on you are on your own with these but you now know everything you need. Samo, samo!
+
+The styles I copied from Refills are in a new Sass partial of course.
+
+##### source/stylesheets/_header_navbar.scss
+
+``` scss
+
+.centered-navigation {
+  $base-border-radius: 3px !default;
+  $dark-gray: #333 !default;
+  $large-screen: em(860) !default;
+  $base-font-color: white;
+  $centered-navigation-padding: 1em;
+  $centered-navigation-logo-height: 2em;
+  $centered-navigation-background: #E7F1EC;
+  $centered-navigation-color: $base-font-color;
+  $centered-navigation-color-hover: $text-color;
+  $centered-navigation-height: 60px;
+  $centered-navigation-item-padding: 1em;
+  $centered-navigation-submenu-padding: 1em;
+  $centered-navigation-item-nudge: 2.2em;
+  $horizontal-bar-mode: $large-screen;
+  background-color: $matcha-green;
+  border-bottom: 1px solid darken($matcha-green, 5%);
+  min-height: $centered-navigation-height;
+  width: 100%;
+  z-index: 9999;
+
+  // Mobile view
+
+  .mobile-logo {
+    display: inline;
+    float: left;
+    max-height: $centered-navigation-height;
+    padding-left: $centered-navigation-padding;
+
+    img {
+      max-height: $centered-navigation-height;
+      padding: .8em 0;
+    }
+
+    @include media($horizontal-bar-mode) {
+      display: none;
+    }
+  }
+
+  .centered-navigation-mobile-menu {
+    color: $centered-navigation-color;
+    display: block;
+    float: right;
+    line-height: $centered-navigation-height;
+    margin: 0;
+    padding-right: $centered-navigation-submenu-padding;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    @include media ($horizontal-bar-mode) {
+      display: none;
+    }
+
+    &:focus,
+    &:hover {
+      color: $centered-navigation-color-hover;
+    }
+  }
+
+  // Nav menu
+
+  .centered-navigation-wrapper {
+    @include outer-container;
+    @include clearfix;
+    position: relative;
+    z-index: 999;
+  }
+
+  ul.centered-navigation-menu {
+    -webkit-transform-style: preserve-3d; // stop webkit flicker
+    clear: both;
+    display: none;
+    margin: 0 auto;
+    overflow: visible;
+    padding: 0;
+    width: 100%;
+    z-index: 99999;
+
+    &.show {
+      display: block;
+    }
+
+    @include media ($horizontal-bar-mode) {
+      display: block;
+      text-align: center;
+    }
+  }
+
+  // The nav items
+
+  .nav-link:first-child {
+    @include media($horizontal-bar-mode) {
+      margin-left: $centered-navigation-item-nudge;
+      padding-right: 0px;
+    }
+  }
+
+  ul li.nav-link {
+    background: lighten($matcha-green, 8%);
+    display: block;
+    line-height: $centered-navigation-height;
+    overflow: hidden;
+    padding-right: $centered-navigation-submenu-padding;
+    text-align: right;
+    width: 100%;
+    z-index: 9999;
+
+    a {
+      color: $centered-navigation-color;
+      display: inline-block;
+      outline: none;
+      text-decoration: none;
+
+      &:focus,
+      &:hover {
+        color: $centered-navigation-color-hover;
+      }
+    }
+
+    @include media($horizontal-bar-mode) {
+      background: transparent;
+      display: inline;
+      line-height: $centered-navigation-height;
+
+      a {
+        padding-right: $centered-navigation-item-padding;
+      }
+    }
+  }
+
+  li.logo.nav-link {
+    display: none;
+    line-height: 0;
+
+    @include media($large-screen) {
+      display: inline;
+    }
+  }
+
+  .logo img {
+    margin-bottom: -$centered-navigation-logo-height / 3;
+    max-height: $centered-navigation-logo-height;
+  }
+}
+
+```
+
+Because I deleted a bunch of stuff I didn’t need from the navbar markup—like the submenu—I was able to get rid of a significant chunk of the relevant styles in this file. Since I don’t know if you need a more elaborate navbar and wanna take the code right from these examples I suggest you copy the original code if you have more items in the navbar and take it from there. Play with the Sass to fit your style, remove dead code and duplications. I simply adjusted the background color and link colors, played with the transparency of the logo, changed the border and moved on. Have fun and go crazy if you like. I just wanted to use a super simple navbar with the brand color and a centered logo. Turned out pretty good for this little work I’d say.
+
+##### Screenshot
+
+{% img /images/middleman/middleman_06_build/navbar-screenshot.png %}
