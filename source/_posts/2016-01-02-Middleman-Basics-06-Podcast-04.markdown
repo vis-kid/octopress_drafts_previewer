@@ -358,16 +358,14 @@ Whoa! That’s quite a chunk of code. Are you thinking the same as me? This look
 <header class="centered-navigation" role="banner">
   <div class="centered-navigation-wrapper">
     <a href="javascript:void(0)" class="mobile-logo">
-      <img src="../images/matcha_nerdz_logo.png" alt="Logo image">
+      <%= image_tag "matcha_nerdz_logo.png", alt: "Logo image" %>
     </a>
     <a href="javascript:void(0)" id="js-centered-navigation-mobile-menu" class="centered-navigation-mobile-menu">MENU</a>
     <nav role="navigation">
       <ul id="js-centered-navigation-menu" class="centered-navigation-menu show">
-        <li class="nav-link"><%= link_to 'Home', '/' %></li>
+        <li class="nav-link"><%= link_to 'Home', '/matcha-nerdz' %></li>
         <li class="nav-link logo">
-          <a href="javascript:void(0)" class="logo">
-            <img src="/images/matcha_nerdz_logo.png" alt="Logo image">
-          </a>
+          <%= image_tag "matcha_nerdz_logo.png", alt: "Logo image" %>
         </li>
         <li class="nav-link"><%= link_to 'About', '/pages/about.html' %></li>
       </ul>
@@ -377,9 +375,37 @@ Whoa! That’s quite a chunk of code. Are you thinking the same as me? This look
 
 ```
 
-I’ve also removed stuff I don’t need and only end up with my logo that I stored in `/images` and two links for home and about pages. For the two links I used the ```link_to``` helper method. It takes two arguments: The string you want users to click on and the location you want to link to. I’m sure peope who have played a bit with Rails or Sinatra are familiar with this. Handy, but no big deal. The avid reader might also have discovered that our about link links to a simple HTML page that I placed in a new directory named `pages`. I suggest you put HTML pages like contact, faq or whatever also in this directory. If you put these static pages in there you should have no problems customizing them to your needs. Just have some fun and apply what you’ve learned so far with these pages. From here on you are on your own with these but you now know everything you need. Samo, samo!
+I’ve removed a bunch of stuff that I don’t need and only end up with my logo that I stored in `/images` and two links for home and about pages. For the two links I used the ```link_to``` helper method. It takes two arguments: The string you want users to click on and the location you want to link to. I’m sure peope who have played a bit with Rails or Sinatra are familiar with this. Handy, but no big deal. The link for “Home” (/matcha-nerd) will break for your local host but it is working on GitHub pages where we need the namespace. 
+
+The avid reader might also have discovered that our about link links to a simple HTML page that I placed in a new directory named `pages`. I suggest you put HTML pages like contact, faq or whatever also in this directory. If you put these static pages in there you should have no problems customizing them to your needs. Just have some fun and apply what you’ve learned so far with these pages. From here on you are on your own with these but you now know everything you need. Samo, samo!
+
+A word about the image tags and the asset path on GitHub Pages. I decided to replace the plan `img` tags for the logo with a Middleman helper called ```image_tag```. It’s not only pretty concise and readable but also fixes an issue you will run into with the `img` tag when you build the site and deploy it to GitHub Pages. The url for the asset link on individual articles gets all screwed up and this is the simplest solution to fix that.
+
+``` html
+
+<img src="/images/matcha_nerdz_logo.png" alt="Logo image"> 
+
+```
+
+Before using ```image_tag```, the url for the logo looked like this: ```http://your_username.github.io/images/matcha_nerdz_logo-hash_numbers.png```
+
+``` erb
+
+<%= image_tag "matcha_nerdz_logo.png", alt: "Logo image" %>
+
+```
+
+This Middleman helper provided the url with the app name `matcha-nerdz`—it correctly namespaced the asset and gives GitHub Pages access to this image file (```http://your_username.github.io/matcha-nerdz/images/matcha_nerdz_logo-hash_numbers.png```).
 
 The styles I copied from Refills are in a new Sass partial of course.
+
+##### source/stylesheets/all.sass
+
+``` sass
+
+@import 'header_navbar'
+
+```
 
 ##### source/stylesheets/_header_navbar.scss
 
@@ -532,8 +558,31 @@ The styles I copied from Refills are in a new Sass partial of course.
 
 ```
 
-Because I deleted a bunch of stuff I didn’t need from the navbar markup—like the submenu—I was able to get rid of a significant chunk of the relevant styles in this file. Since I don’t know if you need a more elaborate navbar and wanna take the code right from these examples I suggest you copy the original code if you have more items in the navbar and take it from there. Play with the Sass to fit your style, remove dead code and duplications. I simply adjusted the background color and link colors, played with the transparency of the logo, changed the border and moved on. Have fun and go crazy if you like. I just wanted to use a super simple navbar with the brand color and a centered logo. Turned out pretty good for this little work I’d say.
+Because I deleted a bunch of stuff I didn’t need from the navbar markup—like the submenu—I was able to get rid of a significant chunk of the relevant styles in this file. Since I don’t know if you need a more elaborate navbar and wanna take the code right from these examples I suggest you copy the original code if you have bigger plans for the navbar. Play with the Sass to fit your style, remove dead code and duplications. I simply adjusted the background color and link colors, played with the transparency of the logo, changed the border and moved on. Have fun and go crazy if you like. I just wanted to use a super simple navbar with the brand color and a centered logo. Turned out pretty good for this little work I’d say.
 
-##### Screenshot
+##### Screenshot Index Page
 
 {% img /images/middleman/middleman_06_build/navbar-screenshot.png %}
+
+##### Screenshot Detail Page
+
+{% img /images/middleman/middleman_06_build/detail-page-with-navbar.png %}
+
+Time to package this into a git commit and for deployment:
+
+##### Shell
+
+``` bash
+
+git add --all
+git commit -m 'Implements a header with navbar
+               Adds header partial to layout
+               Takes care of deployed asset url for logo
+               Imports Sass partial for navbar
+               Adds logo
+               Adjusts Refills styles
+               Adjusts Refills markup'
+
+middleman deploy
+
+```
