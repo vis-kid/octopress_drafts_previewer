@@ -13,5 +13,3 @@ source/images
 vendor
 node_modules
 Gemfile.lock
-*.png
-*.jpg
