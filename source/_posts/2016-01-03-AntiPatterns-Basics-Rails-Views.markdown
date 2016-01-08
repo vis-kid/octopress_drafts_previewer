@@ -275,3 +275,53 @@ The code examples above used ```form_object``` as a block parameter. This is not
 <% end %>
 
 ```
+
+### Partials
+
+Collections are another thing we don’t want to be too verbose about. Rendering partials for individual objects of collections is so concise and straightforward—if done right—that I feel you have very little excuse not to make use of Rails’ conventions to reduce Ruby view code. Let’s turn things with this one and start with an example that shows you how you are encouraged to approach this. Along they way, I’ll explain what you can leave out as well.
+
+#### The Good
+
+###### agents/index.html.erb
+
+``` erb
+
+<%= render @agents %>
+
+```
+The ```render``` method is quite smart, this is all you need to write in your index views to iterate over a collection. If you need to change something in this view, it will be a very small change—and therefore a small cause of error. What happens here is that the framework is able to determine which partial it needs. Through the name of the object, it knows where to look for the partial—given that you adhere to the conventional naming of things. The way I see it, this is a good example that Rails is not trying to impress you with wizardry, the developers work hard to make your lives easier by cutting through repetitive red tape of sorts.
+
+###### agents/_agent.erb
+
+``` erb
+
+<h3>Agent name: <%= agent.name %></h3>
+<h4>Licence to kill: <%= agent.licence_to_kill %></h4>
+<h4>Number: <%= agent.number %></h4>
+<h4>Gambler: <%= agent.gambler %></h4>
+<h4>Womanizer: <%= agent.womanizer %></h4>
+
+```
+
+The only other thing that is necessary to make this work is placing a partial template at the appropriate path in your objects’s directory and extract the attributes you need from the object. No need to write any loops on your own. Fast and easy, handy and pragmatic I’d say. This extraction was done because the name of the partial was most of the time the name of the iterated object anyway and so it was easy to create a convention that handles this common task more effectively.
+
+#### The Bad
+
+Ok, now that we know how to handle this, let’s look what you could do and should avoid. The example below is just a bad usage of Rails but I wouldn’t call it ugly this time.
+
+###### agents/index.html.erb
+
+``` erb
+
+<% @agents.each do |agent| %>
+  <h3>Agent name: <%= agent.name %></h3>
+  <h4>Licence to kill: <%= agent.licence_to_kill %></h4>
+  <h4>Number: <%= agent.number %></h4>
+  <h4>Gambler: <%= agent.gambler %></h4>
+  <h4>Womanizer: <%= agent.womanizer %></h4>
+<% end %>
+
+```
+
+You get the same result as above but it’s def more verbose. Iterating over the collection in the view is not necessary anymore. When you use ```render``` as above, the block parameter ```agent``` is implied and you can just use it without the ```each``` loop. So, stay away from code like this—it does not make you look particularly good (but nobody will collect your head for it either). It’s just not elegant and adds to the PHPitis.
+
