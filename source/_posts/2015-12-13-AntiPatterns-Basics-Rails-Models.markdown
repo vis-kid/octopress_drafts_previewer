@@ -393,6 +393,7 @@ end
 @operation.spectre_member_number
 
 
+
 class SpectreAgent < ActiveRecord::Base
   belongs_to :spectre_member
 
