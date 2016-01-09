@@ -23,6 +23,7 @@ AntiPatterns—as the name implies—on the other hand represent pretty much the
 + Helpful Helpers
 + Forms
 + Partials
++ Conditional Content
 + Markup Mayhem
 
 ## Rails Views
@@ -325,3 +326,95 @@ Ok, now that we know how to handle this, let’s look what you could do and shou
 
 You get the same result as above but it’s def more verbose. Iterating over the collection in the view is not necessary anymore. When you use ```render``` as above, the block parameter ```agent``` is implied and you can just use it without the ```each``` loop. So, stay away from code like this—it does not make you look particularly good (but nobody will collect your head for it either). It’s just not elegant and adds to the PHPitis.
 
+## Conditional Content
+
+The helper method ```content_for``` is a handy tool for extracting content that doesn’t really fit the bill for a partial but needs a bit of encapsulation. It’s a way to store a bit of markup that you can apply on a page per page basis and yield it into the layout where needed. In size, it should be a lot smaller than partials or even layouts.
+
+This technique can also save you the step to create your own method for it. Navigational menues or sidebars are often examples where this helper becomes useful. Let’s say you want to have a spot in your menu that is only for admins but don’t need to adjust the whole layout. Or you have pages where the sidebar is not needed. With ```content_for``` you inject what you need where you need it on a page per page basis. Duplication no more!
+
+###### agents/index.html.erb
+
+``` erb
+
+<% content_for :double_o_navbar do %>
+  <li><%= link_to 'Operations', operations_path %></li>
+  <li><%= link_to 'Agents', agents_path %></li>
+  <li><%= link_to 'Messages', messages_path %></li>
+<% end %>
+
+<%= render @agents %>
+
+```
+
+###### app/view/layouts/application.html.erb
+
+``` erb
+
+...
+
+<body> 
+  <header>
+    <ul class='navbar'>
+      <li><%= link_to 'Home', root_path %></li>
+      <li><%= link_to 'About', '#' %></li>
+      <%= yield :double_o_navbar %>
+    </ul>
+  </header>
+  
+  <%= yield %>
+
+</body>
+</html>
+```
+
+Aside from that fact that this ```header``` is a good candidate for extraction into a partial, look at the ```yield :double_o_navbar``` section. This is a yielding region that inserts code from a ```content_for``` block. It will only insert code if the symbol names match. Here we want only double-o agents to have access to certain links in the navbar. Everyone else sees just `Home` and `About`. Think about the special links an admin needs to see that should never face a public interface.
+
+You can also use this helper to insert ```id``` or ```class``` attributes on HTML tags if needed. Everyone this comes in handy.
+
+Another common use is populating the ```<title>``` of a page dynamically with a ```content_for``` block.
+
+###### app/view/layouts/application.html.erb
+
+``` erb
+
+<title>
+  Spectre – <%= yield(:title).presence || "Default" %>
+</title>
+
+```
+
+
+###### app/view/some.html.erb
+
+``` erb
+
+<% content_for :title do %>
+  Some funky title
+<% end %>
+
+```
+
+You just place the title you want in a ```content_for``` block and the application layout will insert it for you. You can get more clever with that but that should suffice for now. Should you have no need for a title or forget to add one then the logical ```||``` will kick in and yield a default of your choice. In the example above we need to check for the presence of a title or the default won’t work.
+
+What you definitely don’t wanna do is create instance variables for that kinda thing. Single responsibilities, remember?
+
+``` ruby
+
+def show
+  @title = "Some page title"
+end
+
+```
+
+One more thing, you can ask if pages have a content_for block.
+
+###### app/view/layouts/application.html.erb
+
+``` erb
+
+<% if content_for?(:q_navbar) %>
+  <%= yield :q_navbar %>
+<% end %>
+```
+
+This can help you avoid duplicating markup that is relevant to styling a page which reflects if elements are on a page or not.
