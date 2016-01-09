@@ -20,6 +20,7 @@ AntiPatterns—as the name implies—on the other hand represent pretty much the
 
 + Rails Views
 + PHPitis
++ Extracting Helpers
 + Helpful Helpers
 + Forms
 + Partials
@@ -327,6 +328,40 @@ Ok, now that we know how to handle this, let’s look what you could do and shou
 
 You get the same result as above but it’s def more verbose. Iterating over the collection in the view is not necessary anymore. When you use ```render``` as above, the block parameter ```agent``` is implied and you can just use it without the ```each``` loop. So, stay away from code like this—it does not make you look particularly good (but nobody will collect your head for it either). It’s just not elegant and adds to the PHPitis.
 
+### Extracting Helpers
+
+The most obvious solution to clean up code from your views is avoiding to write any or extracting them intelligently. Let’s say we want to scrambe the names of our agents in the index list. We should not put this directly in our views. If we decide that the model is also not the appropriate layer to put this, then a custom helper in the ```app/helpers``` directory might be right.
+
+##### app/helpers/agents_helper.rb
+
+``` ruby
+
+module AgentsHelper
+  def scramble(agent)
+    agent.name.split('').shuffle.join
+  end
+end
+
+```
+
+By packaging this in a module inside the helpers directory we now have access to this method in our views. Please give specific helpers their own home and don’t put everything on ```ApplicationHelper``` which is really meant for more “global” stuff.
+
+Now I can access this little fellow in my partial template—or any view—for rendering my collection of agents. 
+
+##### app/views/agents/_agent.erb 
+
+``` erb
+
+<h3>Agent name: <%= scramble(agent) %></h3>
+<h4>Licence to kill: <%= agent.licence_to_kill %></h4>
+<h4>Number: <%= agent.number %></h4>
+<h4>Gambler: <%= agent.gambler %></h4>
+<h4>Womanizer : <%= agent.womanizer %></h4>
+
+```
+
+Your own custom helpers are a great way to keep your views clean and healthy. And as you have seen, it’s so quick and easy that there’s little excuse to be too lazy for using them to battle PHPitis
+
 ## Conditional Content
 
 The helper method ```content_for``` is a handy tool for extracting content that doesn’t really fit the bill for a partial but needs a bit of encapsulation. It’s a way to store a bit of markup that you can apply on a page per page basis and yield it into the layout where needed. In size, it should be a lot smaller than partials or even layouts.
@@ -435,4 +470,4 @@ The markup above is from the [bootstrap](http://getbootstrap.com) documentation 
 
 So what’s the deal with that? This is important because—besides the questionable naming of classes—unsemantic markup violates **separation of concerns**. Your markup should not be bothered with styling information, instead both should stand on their own and enable you to **switch out styles effortlessly**—without touching your HTML. It’s not as difficult as it might sound at first. It takes a bit of discipline though. 
 
-When you are able to keep that styling information out of your markup you have effectively achieved reducing PHPities on another front—for designers an essential one! Also, the use of **generic divs** without inherent meaning is another example of poor markup. **HTML5** gives you lots of useful elements that convey more information to your **future self**, **other developers and search engines**. Naming is supposedly hard, but HTML5 provides you with lots of **semantic elements** that make your options much easier in that regard. 
+When you are able to keep that styling information out of your markup you have effectively achieved reducing PHPitis on another front—for designers an essential one! Also, the use of **generic divs** without inherent meaning is another example of poor markup. **HTML5** gives you lots of useful elements that convey more information to your **future self**, **other developers and search engines**. Naming is supposedly hard, but HTML5 provides you with lots of **semantic elements** that make your options much easier in that regard. 
