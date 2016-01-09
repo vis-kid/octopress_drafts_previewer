@@ -24,6 +24,7 @@ AntiPatterns—as the name implies—on the other hand represent pretty much the
 + Forms
 + Partials
 + Conditional Content
++ Semantic Markup
 + Markup Mayhem
 
 ## Rails Views
@@ -418,3 +419,20 @@ One more thing, you can ask if pages have a content_for block.
 ```
 
 This can help you avoid duplicating markup that is relevant to styling a page which reflects if elements are on a page or not.
+
+## Semantic Markup
+
+This is stuff you definitely want to avoid.
+
+``` html
+<div class='container'>
+  <div class='col-lg-6'>
+    <div class='col-md-4 col-md-offset-2'>
+
+```
+
+The markup above is from the [bootstrap](http://getbootstrap.com) documentation and specifies how the columns are supposed to 'look'—information that has no semantic meaning and actually belongs into your stylesheets. That’s the stuff designers have nightmares about.
+
+So what’s the deal with that? This is important because—besides the questionable naming of classes—unsemantic markup violates **separation of concerns**. Your markup should not be bothered with styling information, instead both should stand on their own and enable you to **switch out styles effortlessly**—without touching your HTML. It’s not as difficult as it might sound at first. It takes a bit of discipline though. 
+
+When you are able to keep that styling information out of your markup you have effectively achieved reducing PHPities on another front—for designers an essential one! Also, the use of **generic divs** without inherent meaning is another example of poor markup. **HTML5** gives you lots of useful elements that convey more information to your **future self**, **other developers and search engines**. Naming is supposedly hard, but HTML5 provides you with lots of **semantic elements** that make your options much easier in that regard. 
