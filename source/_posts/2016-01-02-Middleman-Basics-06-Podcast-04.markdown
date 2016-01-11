@@ -559,6 +559,35 @@ The styles I copied from Refills are in a new Sass partial of course.
 
 ```
 
+I put the CoffeeScript code from Refills into ```all.coffee```. As soon as I had to add more code than that, I’d put it into its own designated place.
+
+##### source/javascripts/all.coffee
+
+``` javascript
+
+//= require jquery
+
+$(document).ready ->
+  menuToggle = $('#js-centered-navigation-mobile-menu').unbind()
+  $('#js-centered-navigation-menu').removeClass 'show'
+  menuToggle.on 'click', (e) ->
+    e.preventDefault()
+    $('#js-centered-navigation-menu').slideToggle ->
+      if $('#js-centered-navigation-menu').is(':hidden')
+        $('#js-centered-navigation-menu').removeAttr 'style'
+      return
+    return
+  return
+
+```
+
+This snippet is responsible for toggling the menu for smaller screens.
+
+##### Screenshot Toggle Menu
+
+{% img /images/middleman/middleman_06_build/coffeescript-menu-toggle.png %}
+
+
 Because I deleted a bunch of stuff I didn’t need from the navbar markup—like the submenu—I was able to get rid of a significant chunk of the relevant styles in this file. Since I don’t know if you need a more elaborate navbar and wanna take the code right from these examples, I suggest you copy the original code if you have bigger plans for the navbar. Play with the Sass to fit your style, remove dead code and duplications. I simply adjusted the background color and link colors, played with the transparency of the logo, changed the border and moved on. Have fun and go crazy if you like. I just wanted to use a super simple navbar with the brand color and a centered logo. Turned out pretty good for this little work I’d say.
 
 ##### Screenshot Index Page
@@ -581,6 +610,7 @@ git commit -m 'Implements a header with navbar
                Takes care of deployed asset url for logo
                Imports Sass partial for navbar
                Adds logo
+               Adds CoffeeScript code
                Adjusts Refills styles
                Adjusts Refills markup'
 
