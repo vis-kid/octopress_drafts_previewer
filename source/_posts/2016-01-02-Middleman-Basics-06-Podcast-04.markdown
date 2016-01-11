@@ -10,12 +10,14 @@ categories: [Ruby, Rails, thoughtbot, Bourbon, Neat, Refills, Middleman]
 
 {% img /images/middleman/basics_03_build/Middleman_Bourbon_Banner.png %}
 
-### Topics
+## Topics
 
 + Hero Section
 + Navigation
++ Title
++ Pagination
 
-+ ### Hero Section
+## Hero Section
 
 Why don’t we add a small hero section on top of the index site? I want something that gives us an opportunity to brand the podcast site without going full-splashy-marketing-page-apeshit. I strongly trust in “less is more” and moreover, in “don’t insult your users by bombarding them with bs”. Let’s keep it nice and simple.
 
@@ -251,7 +253,7 @@ middleman deploy
 
 Without the visual grid, it doesn’t look you have much work left to adjust this page for your podcasting needs. A few things I’d recommend to do is find a typeface that communicates your project distinctively without being too exotic and adjust the size and spacing of your text so that it fits your hero unit background image. Since this is part of your branding I suggest you take your time and have some fun!
 
-+ ### Navigation
+## Navigation
 
 I think it’s a good time to add a navbar. We will also use a pattern from Refills and adapt for our own needs. I chose the “centered navigation” and you will find the code for it under “Patterns”. For this one we need to copy the HTML, SCSS—since we get rid of most stuff in the navbar I won’t copy the CoffeeScript code. If you need a more extensive navbar you might need that though.
 
@@ -582,6 +584,153 @@ git commit -m 'Implements a header with navbar
                Adds logo
                Adjusts Refills styles
                Adjusts Refills markup'
+
+middleman deploy
+
+```
+
+## Title
+
+The next change is just a small one, just a touch really. We need to update the title tag in our layout.
+
+##### source/layouts/layout.erb
+
+``` erb
+
+<title>Matcha Nerdz<%= ' - ' + current_article.title unless current_article.nil? %></title>
+
+```
+
+This gives us a dynamic title that always starts with our site’s name and attaches the article’s title if available.
+
+##### Shell
+
+``` bash
+
+git add --all
+git commit -m 'Adjusts site’s title'
+
+middleman deploy
+
+```
+
+## Pagination
+
+When you look at the bottom of the index list of articles you’ll see something essential missing—navigating our list of posts.
+
+##### Screenshot
+
+{% img /images/middleman/middleman_06_build/index-list-no-pagination.png %}
+
+I’m not a fan of overly clever pagination links—bulky ones are also not winning any awards with me. Let’s keep it simple and provide two links for next and previous pages. Middleman makes this incredibly convenient. We just need to adjust our ```config.rb``` and tell the frontmatter of our index page to fine tune it.
+
+##### config.rb
+
+``` ruby
+
+blog.paginate = true
+
+```
+
+First uncomment the line above. After that you just tell the index page how many articles you want to see. I think 10 posts per page are enough.
+
+##### source/index.html.erb
+
+``` erb
+
+---
+
+per_page: 10
+pageable: true
+
+---
+
+```
+
+The final step before we apply some styling is to place both links conveniently at the bottom of the list. First we need to get rid of these lines of code below that I commented out. They were placed at the very top of your index page.
+
+##### source/index.html.erb
+
+``` html
+<!--
+<% if paginate && num_pages > 1 %>
+  <p>Page <%= page_number %> of <%= num_pages %></p>
+
+  <% if prev_page %>
+    <p><%= link_to 'Previous page', prev_page %></p>
+  <% end %>
+<% end %>
+-->
+
+```
+And then place this at the very bottom of this page.
+
+``` erb
+
+<% if paginate %>
+
+  <% if prev_page %>
+    <p class='pagination-link'><%= link_to '<< Previous page', prev_page %></p>
+  <% end %>
+
+  <% if next_page %>
+    <p class='pagination-link'><%= link_to 'Next page >>', next_page %></p>
+  <% end %>
+
+<% end %>
+
+```
+
+This gives us the navigational links we need side by side and supplies us with a class to tweaks a few things. I decided to go with a partial for the Sass code because it didn’t fit either in the footer or the index article styles—and it deserves one of its own, especially should it grow more in size.
+
+##### source/stylesheets/all.sass
+
+``` sass
+
+@import 'pagination'
+
+```
+
+##### source/stylesheets/_pagination.sass
+
+``` sass
+
+.pagination-link
+  +shift(2)
+  margin-bottom: 4em
+  &:first-of-type
+    float: left
+    margin-right: 4em
+  a
+    +transition(color 0.25s ease-in-out)
+    color: $text-color
+    font-size: 1.1em
+    &:hover
+      color: $matcha-green
+
+```
+
+It’s nothing tricky I think, we shift it a bit to the right, arrange the links to float next to each other—default would be block behaviour being stacked on top of each other—and applied a little transitional effect when the user hovers over the link. That’s all we need right now. Let’s have a look.
+
+##### Screenshot: Next Page
+
+{% img /images/middleman/middleman_06_build/index-pagination-next.png %}
+
+##### Screenshot: Previous Page / Next Page
+
+{% img /images/middleman/middleman_06_build/index-pagination-next-previous.png %}
+
+Alrighty, time for another commit.
+
+##### Shell
+
+```bash
+
+git add -all
+git commit -m 'Adds Pagination to index list of posts
+               Adjusts config.rb
+               Adjusts markup on index page
+               Adds styles in _pagination Sass partial'
 
 middleman deploy
 
