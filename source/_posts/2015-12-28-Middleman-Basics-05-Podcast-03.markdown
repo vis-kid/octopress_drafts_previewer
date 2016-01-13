@@ -18,7 +18,7 @@ categories: [Ruby, Rails, thoughtbot, Bourbon, Neat, Refills, Middleman]
 + Index List Player
 + Why SoundCloud? (Optional)
 
-+ ### Posts Detail Page
+## Posts Detail Page
 
 I think we should shift our attention and give our details page a little bit of basic love before we adjust the app to display our podcast episodes. We are not entirely done with the index page, if we have some room left in this tutorial I’ll probably add a couple of media queries to deal with different screen resolutions. For now I’d say let’s move on though. What’s the status quo?
 
@@ -36,7 +36,7 @@ $visual-grid: true;
 
 ```
 
-We need to create a separate layout for our detail pages for our posts. The layout will be flexible so that you can use them for pure blog posts and for posting podcast episodes as well—a little conditional will help us out with that. More on that later though. Let’s open `config.rb` and add this line. This will tell Middleman that we have a separate layout for detail pages, that it can be found in `layouts/blog-layout`. 
+We need to create a separate layout for our detail pages of our posts. The layout will be flexible so that you can use them for pure blog posts and for posting podcast episodes as well—a little conditional will help us out with that. More on that later though. Let’s open `config.rb` and add this line.
 
 ##### config.rb
 
@@ -48,7 +48,7 @@ end
 
 ```
 
-Next we need to create `layouts/blog-layout.erb`. Remember that the `.erb` is necessary without the `.html` extension to make this work properly.
+This will tell Middleman that we have a separate layout for detail pages and that it can be found in `layouts/blog-layout`. Next we need to create `layouts/blog-layout.erb`. Remember that the `.erb` is necessary without the `.html` extension to make this work properly.
 
 ##### layouts/blog-layout.erb
 
@@ -81,7 +81,7 @@ Next we need to create `layouts/blog-layout.erb`. Remember that the `.erb` is ne
 
 ```
 
-So let’s talk about what’s going on here. First of all, we need to wrap this `blog-layout` inside our general `layout`. 
+So let’s talk about what’s going on here. First of all, we need to wrap this `blog-layout` inside our general `layout`. Or, put differently, we wrap our application layout around the blog-layout. 
 
 ``` erb
 
@@ -93,9 +93,9 @@ So let’s talk about what’s going on here. First of all, we need to wrap this
 
 ```
 
-Why? Simple, because we want to reuse a lot of the stuff from the original layout and not duplicate things like the `footer` partial or the asset links in `head`. I’m sure newbies will wrap their head around this quickly. Just give it a minute or two to sink in if this looks weird to you at first. The layout we used previously was more of a global thing. Now we need a bit more specificity to fit our needs.
+Why? Simply because we want to reuse a lot of the stuff from the original layout and not duplicate things like the `footer` partial or the asset links in `head`. I’m sure newbies will wrap their head around this quickly. Just give it a minute or two to sink in if this looks weird to you at first. The layout we used previously was more of a global thing. Now we need a bit more specificity to fit our needs.
 
-Inside the `article` container we manually build what we need to template our post. It has a title, a date, an optional SoundCloud embedded widget and of course the article body itself. Inside our layouts we have access to each individual `BlogArticle`. We can use ```current_article``` to get the info for each article to build up our custom template. `title`, `date` and `body` are just methods to extract the attributes from the individual article. We also used `strftime` to format the date like we did previously on the index page.
+Inside the `article` tag container, we manually build what we need to template our post. It has a title, a date, an optional SoundCloud embedded widget and of course the article body itself. Inside our layouts, we have access to each individual `BlogArticle`. We can use ```current_article``` to get the info for each article to build up our custom template. `title`, `date` and `body` are just methods to extract the attributes from the individual article. We also used `strftime` to format the date like we did previously on the index page.
 
 ``` erb
 
@@ -104,7 +104,7 @@ Inside the `article` container we manually build what we need to template our po
 <%= current_article.body %>
 ```
 
-As already mentioned, a simple conditional is in charge of handling data that’s provided optionally for each individual post via its frontmatter—which is delimited by three dashes. 
+As already mentioned, a simple conditional is in charge of handling data that’s provided optionally for each individual post via its frontmatter—which is delimited by three dashes. Here we are looking out if the page has an id of a SoundCloud track and display the widget if so. 
 
 ``` erb
 
@@ -140,7 +140,7 @@ Your awesome podcast episode description …
 
 ```
 
-When you click on “share” on any of the SoundCloud tracks you get the option to embed an `iframe` for that track and just need to copy paste somewhere in your code. We use this iframe as a basis and use the id for the track we need to interpolate it into the url. There are two options, a big and a small widget—I chose the big one. The other has the advantage of being a bit more customizeable—you can adjust the color for the play button for example. Up to you…
+When you click on “share” on any of the SoundCloud tracks, you get the option to embed an `iframe` for that track and just need to copy paste it somewhere in your code. We use this iframe as a basis and use the id for the track we need to interpolate it into the url. There are two options, a big and a small widget—I chose the big one. The other has the advantage of being a bit more customizeable—you can adjust the color for the play button for example. Up to you…
 
 ``` erb
 
@@ -170,7 +170,7 @@ After we asked if this data is available to us via the conditional, we use the f
 
 {% img /images/middleman/middleman_05_build/detail_page_widget_no_styles.png %}
 
-Makes you wanna throw up huh? Me too. On the bright side, we have all the structure and data we need. And see, because we nested the `blog-layout` inside the `layout` layout, we get the benefit of having the footer already there at the bottom. No need to duplicate things—cool! With just a little bit of styling we might turn things around and make this look a bit more decent. 
+Makes you wanna throw up huh? Me too. Maybe not if you just arrived from the 90s via a time machine—didn’t think so. On the bright side, we have all the structure and data we need. And see, because we nested the `blog-layout` inside the `layout` layout, we get the benefit of having the footer already there at the bottom. No need to duplicate things—cool! With just a little bit of styling, we might turn things around and make this look a bit more decent. 
 
 ##### source/stylesheets/all.sass
 
@@ -225,7 +225,7 @@ Well, it’s getting there. Let’s commit for now, and do some housekeeping aft
 git add --all
 git commit -m '1st attempt at post detail page w/ podcast option
                Adds blog-layout
-               Adjust config for blog-layout
+               Adjusts config for blog-layout
                Adds styles for detail page
                Adds Sass partial
                Imports Sass partial
@@ -233,7 +233,7 @@ git commit -m '1st attempt at post detail page w/ podcast option
 
 ```
 
-+ ### Style Duplications
+## Style Duplications
 
 The avid reader might have already spotted what we should clean up next. There is a bit of duplication in `_posts_detail.sass` and `_index_posts.sass`. I’d like to extract the duplicated styles into a separate Sass file called `_blog_post_extractions.sass`. I’m experimenting with this technique lately—an idea that I got from Object Oriented Programming. Things like BEM or SMACSS can be great, especially for bigger projects with bigger teams if they have settled for following conventions, but for smaller projects I’m always looking for frictionless, dead simple solutions. I’ll give this a try until the next new shiny thing convinces me of a better approach.
 
@@ -282,7 +282,7 @@ The avid reader might have already spotted what we should clean up next. There i
 
 ```
 
-If you compare the above with the original files we extracted these styles from below, you can see that we got rid of a nice chunk of duplication. It is also easy to understand and find because I import such extracted files right on top in `all.sass`. It’s easy to spot these extractions for people new to the code base. In this case I use this files to collect exracted styles that apply to blog posts. A similar approach could work duplications across different appearances of sidebars, devices or similar—there should be a common thread though. 
+If you compare the above with the original files, you can see that we got rid of a nice chunk of duplication. It is also easy to understand and find because I import such extracted files right on top in `all.sass`. It’s easy to spot these extractions for people new to the code base. In this case, I use these files to collect extracted styles that apply to blog posts. A similar approach could work for duplications across different appearances of sidebars, devices or similar—there should be a common thread though. 
 
 ##### source/stylesheets/_index_posts.sass
 
@@ -317,13 +317,11 @@ If you compare the above with the original files we extracted these styles from 
 
 ```
 
-The previous files are now a lot smaller, nice and tidy—exactly how I like them. Files are cheap so I don’t care if I have lots of them that all do their specific little job. A separation of concerns kinda thing. It’s not a perfect solution, but it’s so dead simple for small stuff that I like experimenting more with that approach. I’m not sure how much scaleable this is though. For a podcast site it should be O.K. though I feel.
+The previous files are now a lot smaller, nice and tidy—exactly how I like them. Files are cheap so I don’t care if I have lots of them that all do their specific little job. A separation of concerns kinda thing. It’s not a perfect solution, but it’s so dead simple for small stuff that I like experimenting more with that approach. I’m not sure how much scaleable this is though. For a small podcast site it should be O.K. though I feel.
 
-???
-Over time, one of my favorite parts of working with any code is sitting down to find duplication and erradicate it as much as possible. Not only in OOP, any form of duplication is enemy number one in killing projects—or in nastyfying them over time at least. I encourage you to learn all kinds of approaches to deal with that and also—even more importantly— to find your own strategies that work best for you and your team. This part of fronend development is a lot less guarded by programming principles, design patterns and so forth and therefore a lot more “Alice in Wonderland” rabbit holes that leave new team members or colleagues tripping out of their minds since a lot of people are cooking their own secret sauce. Anyway…
-???
+Over time, one of my favorite parts of working with any code is sitting down to find duplication and erradicate it as much as possible. Not only in OOP, any form of duplication is enemy number one in killing projects—or in nastyfying them over time at least. I encourage you to learn all kinds of approaches to deal with that and also—even more importantly— to find your own strategies that work best for you and your team. This part of frontend development is a lot less guarded by programming principles, design patterns and so forth and therefore a lot more “Alice in Wonderland wandering down rabbit holes”-like and since a lot of people are cooking their own secret sauce, it can leave new team members or colleagues tripping out of their minds. Anyway…
 
-We should also comment out our visual grid in `source/stylesheets/base/_grid-settings.scss` and see how it looks:
+We should also comment out our visual grid in ```source/stylesheets/base/_grid-settings.scss``` and see how it looks:
 
 ##### Screenshot
 
@@ -346,13 +344,13 @@ middleman deploy
 
 ```
 
-Let’s go to our GitHub Pages page and check if everything works as expected. Ups! On the first glance it looks fine but if we try to go to the detail page from index we get a `404` error message. GitHub can’t find what we need.
+Let’s go to our GitHub Pages page and check if everything works as expected. Ups! On the first glance it looks fine, but if we try to go to the detail page from index, we get a `404` error message. GitHub can’t find what we need.
 
 ##### Screenshot
 
 {% img /images/middleman/middleman_05_build/404.png %}
  
-+ ### Relative Links
+## Relative Links
 
 If you have looked closely, you might have seen that we are missing some info in our url. Now it says something like `http://your_username.github.io/2015/11/30/my-super-awesome-post.html`. What it should say is something like `http://your_username.github.io/matcha-nerdz/2015/11/30/my-super-awesome-post.html`. The `matcha-nerdz` part was completely missing. Don’t worry, this is an easy fix though. We need to activate relative links in our config file.
 
@@ -366,7 +364,6 @@ set :relative_links, true
 
 Having absolute links on GitHub Pages will point in the wrong direction. With this little change, your links are namespaced relative to your app’s root. As you can see from this little example, deploying early and often is nice to catch things like that. Finding these things out of context when you are already working on something completely different and you have to dig deep where bugs might come from can mess with your flow tremendously.
 
-
 ##### Shell
 
 ``` bash
@@ -377,13 +374,13 @@ middleman deploy
 
 ```
 
-Everything should work fine now. The typography and is not perfect yet but I’d like to move on and fine tune these things once the site is setup the way we need it. Therefore we go back to the index list and adjust it a little bit. Let’s have a look:
+Everything should work fine now. The typography is not perfect yet but I’d like to move on and you can fine tune these things once the site is set up the way we need it. Let’s have a look:
 
 ##### Screenshot
 
 {% img /images/middleman/middleman_05_build/index-list-long-no-podcast.png %}
 
-+ ### Index List Player
+## Index List Player
 
 As you can see, were are missing the audio widget and the length of the displayed post is not ideal for an index list. Let’s fix that next. I want to use the smaller SoundCloud player to display the podcast episode in the index list. Therefore it does not make sense to extract a partial for the player for both the index and the detail page—each page needs their own widget. If you like to use only one of the players for both layouts you should definitely extract a partial for it. I’ll leave that step to you since you already learned how this is done.  
 
@@ -422,7 +419,7 @@ The code example is focused on the section where we iterate over ```page_article
 
 {% img /images/middleman/middleman_05_build/index-list-long-with-small-podcast.png %}
 
-Next I wanna shorten the displayed text as well before we apply a few styles. In the index list we only want to see something like a 300 character summary—not too much but definitely also not too little text. Experiment on your own and see what works best for your needs.
+Next I wanna shorten the displayed text as well before we apply a few styles. In the index list, we only want to see something like a 300 character summary—not too much but definitely also not too little text. Experiment on your own and see what works best for your needs.
 
 First we need to add the gem `Nokogiri` to our `Gemfile`, bundle it and adjust `source/index.html.erb` a bit.
 
@@ -496,10 +493,10 @@ middleman deploy
 
 ``` 
 
-+ ### Break
+## Break
 
 I think you earned yourself a cool beverage at this point and we can leave it at that for now. In the next and final article we’ll tweak it a bit further and also add a little something for navigating the site.
 
-+ ### Why SoundCloud? (Optional)
+## Why SoundCloud? (Optional)
 
 “Why host the podcast on SoundCloud?”, you might ask. Well, my reasoning was simple: First of all, it will quite certainly be around for a long time—something that you can’t necessarily expect from a lot of projects that offer to host your podcast audio files. I don’t wanna get myself in the situation of dealing with migrating tons of already published audio tracks to another service just because someone got acquihired or went bust. Second, it’s dead cheap to host a ton of tracks and they even have a free option for folks who publish tracks only occasionally. The player and its options are alright too—hadn’t any reason to complain about speed or anything so far. The stats are useful as well and there are already people on the platform who are into podcasts and stuff—which is good for the discovery factor. Don’t get me wrong, there are plenty of reasons why I wanted to hug somebody gently around the neck when dealing with uploading and silly UX things, but compared to the downsides of bigger headaches with other hosting options, SoundCloud seemed like the most reasonable choice overall. Lastly, I don’t like the custom sites these podcast sites offer. They look super generic and I like to build my own stuff that fits my needs and let’s me also create my own visual identity. This is just my own personal opinion and I’m not affiliated to SC in any way—atm at least. Don’t plan on changing that also.
