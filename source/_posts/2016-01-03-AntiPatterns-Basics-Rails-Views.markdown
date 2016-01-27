@@ -8,7 +8,7 @@ published: true
 categories: [AntiPatterns, Ruby, Rails, Code Smells, Refactoring, Object Oriented Programming ]
 ---
 
-{% img /images/AntiPatterns/Views/funky-bridge.gif %}
+{% img /images/AntiPatterns/Views/pisa-tower.1000x580.jpeg %}
 
 ## Heads Up
 
