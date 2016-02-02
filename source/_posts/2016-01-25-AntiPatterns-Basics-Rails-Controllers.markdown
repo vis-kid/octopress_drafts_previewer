@@ -46,14 +46,24 @@ class Mission < ActiveRecord::Base
   has_one :agent
   has_one :quartermaster
   accepts_nested_attributes_for :agent, :quartermaster, allow_destroy: true
+
+  validates :mission_name, presence: true
+  ...
+
 end
 
 class Agent < ActiveRecord::Base
   belongs_to :mission
+  validates :name, presence: true
+  ...
+
 end
 
 class Quartermaster < ActiveRecord::Base
   belongs_to :mission
+  validates :name, presence: true
+  ...
+
 end
 
 ```
@@ -82,8 +92,9 @@ class MissionsController < ApplicationController
 
     if @account.save and @agent.save and @quartermaster.save
       flash[:notice] = 'Mission accepted'
-      redirect_to @mission
+      redirect_to missions_path
     else
+      flash[:alert] = 'Mission not accepted'
       render :new     
     end
   end
@@ -119,82 +130,222 @@ In the view we would have an accompanying ```form_for``` for ```@mission``` and 
 <%= form_for(@mission) do |mission| %>
 
   <h3>Mission</h3>
-  <div class='mission-input'>
     <%= mission.label      :mission_name %>
     <%= mission.text_field :mission_name %>
-  </div>
 
-  <div class='mission-input'>
     <%= mission.label      :objective %>
     <%= mission.text_field :objective %>
-  </div>
 
-  <div class='mission-input'>
     <%= mission.label      :enemy %>
     <%= mission.text_field :enemy %>
-  </div>
 
   <h3>Agent</h3>
   <%= fields_for @agent do |agent| %>
-
-    <div class='mission-input'>
       <%= agent.label      :name %>
       <%= agent.text_field :name %>
-    </div>
 
-    <div class='mission-input'>
       <%= agent.label      :number %>
       <%= agent.text_field :number %>
-    </div>
 
-    <div class='mission-input'>
-      <%= agent.label     :licence_to_kill %>
-      <%= agent.check_box :licence_to_kill %>
-    </div>
-
+      <%= agent.label      :licence_to_kill %>
+      <%= agent.check_box  :licence_to_kill %>
   <% end %>
 
   <h3>Quartermaster</h3>
   <%= fields_for @quartermaster do |quartermaster| %>
-
-    <div class='mission-input'>
       <%= quartermaster.label      :name %>
       <%= quartermaster.text_field :name %>
-    </div>
 
-    <div class='mission-input'>
       <%= quartermaster.label      :number %>
       <%= quartermaster.text_field :number %>
-    </div>
 
-    <div class='mission-input'>
-      <%= quartermaster.label     :hacker %>
-      <%= quartermaster.check_box :hacker %>
-    </div>
+      <%= quartermaster.label      :hacker %>
+      <%= quartermaster.check_box  :hacker %>
 
-    <div class='mission-input'>
       <%= quartermaster.label      :expertise %>
       <%= quartermaster.text_field :expertise %>
-    </div>
 
-    <div class='mission-input'>
-      <%= quartermaster.label     :humor %>
-      <%= quartermaster.check_box :humor %>
-    </div>
-
+      <%= quartermaster.label      :humor %>
+      <%= quartermaster.check_box  :humor %>
   <% end %>
 
   <%= mission.submit %>
-
 <% end %>
 
 ```
 
-Sure, this works and all but I would not be too excited to stumble upon this.   ```fields_for``` is cool and all but handling this with OOP is a lot more dope. Here, the presenter will also aid us in having a simpler view because the form will deal with just a single object. Nesting the form becomes unnecessary that way. Testing these kind of scenarios where multiple models come together should be treated with utmost care—the simpler the objects in question, the better the testing experience. Simple really. Presenters operate in your favor on this one. Having these tests potentially tied to the controller is not the best way to approach this. Remember, unit tests are fast and cheap. Let’s do this!
+Sure, this works but I wouldn’t be too excited to stumble upon this.   ```fields_for``` is cool and all but handling this with OOP is a lot more dope. For such a case, a presenter will also aid us in having a simpler view because the form will deal with just a single object. Nesting the form becomes unnecessary that way. Btw, I left out any wrappers for styling the form to make it easier to digest visually. 
+
+## Form Object Presenter
+
+##### app/views/missions/new.html.erb
+
+``` erb
+
+<%= form_for @mission_presenter, url: missions_path do |mission| %>
+  <h3>Mission</h3>
+    <%= mission.label      :mission_name %>
+    <%= mission.text_field :mission_name %>
+
+    <%= mission.label      :objective %>
+    <%= mission.text_field :objective %>
+
+    <%= mission.label      :enemy %>
+    <%= mission.text_field :enemy %>
+
+  <h3>Agent</h3>
+    <%= mission.label      :agent_name %>
+    <%= mission.text_field :agent_name %>
+
+    <%= mission.label      :agent_number %>
+    <%= mission.text_field :agent_number %>
+
+    <%= mission.label      :licence_to_kill %>
+    <%= mission.check_box  :licence_to_kill %>
+
+  <h3>Quartermaster</h3>
+    <%= mission.label      :quartermaster_name %>
+    <%= mission.text_field :quartermaster_name %>
+
+    <%= mission.label      :quartermaster_number %>
+    <%= mission.text_field :quartermaster_number %>
+
+    <%= mission.label      :hacker %>
+    <%= mission.check_box  :hacker %>
+
+    <%= mission.label      :expertise %>
+    <%= mission.text_field :expertise %>
+
+    <%= mission.label      :humor %>
+    <%= mission.check_box  :humor %>
+
+  <%= mission.submit %>
+<% end %>
+
+```
+
+As you can easily see, our view has become much simpler—no nestings and it’s a lot more straightforward this flat. The part you need to be a bit careful is this:
+
+``` erb
+
+<%= form_for @mission_presenter, url: missions_path do |mission| %>
+
+```
+
+You need to provide ```form_for``` with a path via ```url``` so that it can ```post``` the params from this form to their proper controller, here ```MissionsController```. Without that additional argument, Rails would try to find the controller for our presenter object ```@mission_presenter```—in this case ```MissionFormPresentersController```—and blow up without one.
+
+In general, we should try our best to keep controller actions mostly as simple as dealing with the CRUD manipulation of resources—that’s what a controller does for a living and is best equiped to do without muddying the MVC distinctions. As a nice side effect, the level of complexity in your controllers will go way down as well.
+
+##### app/controllers/missions_controller.rb
+
+``` ruby
+
+class MissionsController < ApplicationController
+
+  def new
+    @mission_presenter = MissionFormPresenter.new
+  end
+
+  def create
+    @mission_presenter = MissionFormPresenter.new(mission_params)
+    if
+      @mission_presenter.save
+      flash[:notice] = 'Mission accepted'
+      redirect_to missions_path
+    else
+      flash[:alert] = 'Mission not accepted'
+      render :new
+    end
+  end
+
+  private
+
+  def mission_params
+    params.require(:mission_form_presenter).permit(whitelisted)
+  end
+
+  def whitelisted
+    [:mission_name, :objective, :enemy, :agent_name, :agent_number, :licence_to_kill, :quartermaster_name, :quartermaster_number, :hacker, :expertise, :humor]
+  end
+end
+
+```
+
+The controller is also a lot easier on the eyes, isn’t it? Much cleaner and pretty much standard controller actions. We are dealing with a single object that has one job. We instantiate a single object, the presenter, and feed it the params as usual.
+
+The only thing that bugged me was sending this long list of whitelisted strong parameters. I extracted them into a method called ```whitelisted``` which just returns an array with the complete list of parameters. Otherwise, ```mission_params``` would have looked like the following—which felt too nasty:
+
+``` ruby
+
+def mission_params
+  params.require(:mission_form_presenter).permit(:mission_name,
+                                                 :objective, :enemy,
+                                                 :agent_name, 
+                                                 :agent_number, 
+                                                 :licence_to_kill, 
+                                                 :quartermaster_name, 
+                                                 :quartermaster_number, 
+                                                 :hacker, 
+                                                 :expertise, 
+                                                 :humor)
+end
+
+```
+
+Oh, and a word about the ```:mission_form_presenter``` argument for ```params.require```. Although we named our instance variable for the presenter ```@mission_presenter```, when we use it with ```form_for```, Rails expects the key of the params hash from your form to be named after the object instantiated—not after the name given in a controller. I have seen newbies trip over this several times. That Rails is providing you with cryptic errors in such a case isn’t helping either. If you need a little refresher on params, this is a good place to dig in:
+
++ [Documentation](http://api.rubyonrails.org/classes/ActionController/Parameters.html)
++ [Free screencast](https://www.youtube.com/watch?v=y57OnWV6dRE)
+
+Now we have a skinny controller with a single responsibility and a flat form for creating multiple objects in parallel. Awesome! How did we achieve all this?  Below is the presenter that does all the work—not implying this class does a lot of work though. We want to have some sort of intermediary model without a database that juggles multiple objects. Take a look at this plain old ruby object (PORO). I think it’s fair to say that it’s not very complicated. ```MissionFormPresenter``` is a form object that now encapsulates what made our controller unnecessarily fat. As a bonus, our view is flat and simple.
+
+##### app/presenters/mission_form_presenter.rb
+
+``` ruby
+
+class MissionFormPresenter
+  include ActiveModel::Model
+
+  attr_accessor  :mission_name, :objective, :enemy, :agent_name,
+                 :agent_number, :licence_to_kill, :quartermaster_name,
+                 :quartermaster_number, :hacker, :expertise, :humor
+
+  validates :mission_name, :agent_name, :quartermaster_name, presence: true
+
+  def save
+    ActiveRecord::Base.transaction do
+      @mission = Mission.create!(mission_attributes)
+      @mission.create_agent!(agent_attributes)
+      @mission.create_quartermaster!(quartermaster_attributes)
+    end
+  end
+
+  private 
+
+  def mission_attributes
+    { mission_name: mission_name, objective: objective, enemy: enemy }
+  end
+
+  def agent_attributes
+    { name: agent_name, number: agent_number, licence_to_kill: licence_to_kill }
+  end
+
+  def quartermaster_attributes
+    { name: quartermaster_name, number: quartermaster_number, hacker: hacker, expertise: expertise, humor: humor }
+  end
+end
+
+```
+
+What happens here is that we can aggregate all the info from our form and then we create all the objects we need sequentially. The most important piece happens in our new ```save``` method. First we create the new ```Mission``` object. After that we can create the two objects assoicated with it: ```Agent``` and ```Quartermaster```. Through our ```has_one``` / ```belongs_to``` associations, we can make use of of a ```create_x``` method that adapts to the name of the associated object. For example, if we use ```has_one :agent``` we get a ```create_agent``` method. Easy, right? (FYI, actually we also get a ```build_agent``` method.) I decided to use the version with a bang(!) because it raises a ```ActiveRecord::RecordInvalid``` error if the record is invalid. Wrapped inside a ```transaction``` block, these bang methods take care that no ophaned object gets saved if some validation kicks in. The transaction block will roll back if something goes wrong during save. 
+
+How does this work with the attributes you might ask? We ask Rails for a little bit of love via ```include ActiveModel::Model``` ([API](http://api.rubyonrails.org/classes/ActiveModel/Model.html)). This allows us to initialize objects with a hash of attributes—which is exactly what we do in the controller. After that, we can use our ```attr_accessor``` methods to extract our attributes to instantiate the objects we really need. ```ActiveModel::Model``` further enables us to interact with views and controllers. Among other goodies, you can also use this for validations in such classes. Putting these validations into such dedicated form objects is a good idea for organization and also keeps your models a bit more tidy. Also, I decided to extract the long list of parameters into private methods which feed the objects that get created in ```save```. In such a presenter object, I have little concern of having a couple more private methods lying around. Why not? Feels cleaner!
+
+
+Testing these kind of scenarios where multiple models come together should be treated with utmost care—the simpler the objects in question, the better the testing experience. No rocket science really. Presenters operate in your favor on this one. Having these tests potentially tied to the controller is not the best way to approach this. Remember, unit tests are fast and cheap.
+
+If you stumble upon the Presenter Pattern and find multiple approaches or different ways to describe it, you are not going crazy. There is little clear cut agreement on what a presenter is. What is common knowledge though is that it sits between the MVC layers. We use it to manage multiple model objects that need to be created at the same time. While combining these objects it imitates an ActiveRecord model. 
 
 A word of caution. Do not overuse presenters—they should not be your first choice. Usually, the need for a presenter grows over time. For me personally, they are best used when you have data represented by multiple models that need to come together in a single view. Without a presenter, you might more often than not prepare multiple instance variables in your controller for a single view. That alone can make them real fat really quickly. A presenter combines them in a single object that can be served to the view via a single instance variable.
 
-A thing that you should consider and weigh is that presenters add objects to your codebase. At the same time, it also reduces the number of objects a controller needs to deal with and reduces complexity by that. 
-
-Let’s try to keep our controller actions mostly as simple as dealing with the CRUD manipulation of resources—that’s what a controller does for a living and is best equiped to do without muddying the MVC distinctions. As a nice side effect, the level of complexity in your controllers will go way down.
-
+A thing that you should consider and weigh is that presenters add objects to your codebase. At the same time, it also reduces the number of objects a controller needs to deal with and reduces complexity by that. Essentially, such a presenter is a class that contains the entire state for a given view. It is probably a fairly advanced technique to lose some fat, but when you want to slim down, you need to put in the work. 
