@@ -21,6 +21,7 @@ This one is exactly written for you if all this sounds rather new to you and you
 ## Topics
 
 + Fat Controllers
++ Non-RESTful Controllers
 
 ## FAT Controllers
 
@@ -349,3 +350,11 @@ If you stumble upon the Presenter Pattern and find multiple approaches or differ
 A word of caution. Do not overuse presenters—they should not be your first choice. Usually, the need for a presenter grows over time. For me personally, they are best used when you have data represented by multiple models that need to come together in a single view. Without a presenter, you might more often than not prepare multiple instance variables in your controller for a single view. That alone can make them real fat really quickly. A presenter combines them in a single object that can be served to the view via a single instance variable.
 
 A thing that you should consider and weigh is that presenters add objects to your codebase. At the same time, it also reduces the number of objects a controller needs to deal with and reduces complexity by that. Essentially, such a presenter is a class that contains the entire state for a given view. It is probably a fairly advanced technique to lose some fat, but when you want to slim down, you need to put in the work. 
+
+## Non-RESTful Controllers
+
+Not trying to adhere to the standard controller actions is most likely a bad idea. Having tons of custom controller methods is an antipattern you can avoid pretty easily. Methods like ```login_user```, ```activate_admin```, ```show_books```, and other funny business that stands in for ```new```, ```create```, ```show``` and so forth, should give you a reason to pause and to doubt your approach. Not following this REST-ful approach can easily lead to big, massive controllers, mostly likely because you’ll need to fight the framework or reinvent the wheel every once in a while. In short, not a good idea. Also, more often than not, it’s also a symptom of inexperience or carelessnes. Following the “Single Responsibility Principle” seems to be very hard under these circumstances as well—just an educated guess though.
+
+Approaching resources in your controller in a  restful manner is making your life a lot easier and your apps are becoming easier to maintain as well—which adds to the overall stability of your app. Think about handling resources REST-fully from the perspective of an object’s life cycle. You create, update, show (single or collections), update and destroy them. For most cases, this will do the job. FYI, ```new``` and ```edit``` actions aren’t really part of REST—they are more like different versions of the ```show ``` action, helping you present different stages in the resource’s life cycle. Put together, most of the time, these seven standard controller actions give you all you need to manage your resources in your controllers. Another big advantage is that other Rails developers working with your code will be able to navigate your controllers much faster.
+
+Following that line of REST-ful cool aid, this also includes the way you name your controllers. The name of the resource you work on should be mirrored in the controller object. For example, having a ```MissionsController``` that handles other resources than ```@mission``` objects is a smell that something is off. The sheer size of a controller often is also a dead giveaway that REST was ignored. Should you encounter large controllers that implement tons of customized methods that break with conventions, it can be a very effective strategy to split them into multiple distinctive controllers that have focused responsibilities—and bascially manage only a single resource while adhering to a REST-ful style. Break them apart agressively and you will have an easier time to compose their methods the Rails way.
