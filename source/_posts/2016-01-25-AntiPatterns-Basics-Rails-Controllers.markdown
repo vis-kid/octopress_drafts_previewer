@@ -42,6 +42,8 @@ Presenters can simulate a model which represents the state that your view needs 
 
 The most commonly cited scenario is some sort of form that inputs information for various different models. Like a new user account that also has input fields for credit cards and addresses or something or something. Since these parts of your application tend to be very important ones, it is definitely a good idea to keep things tidy while having the best possible option available for testing at the same time. In the example below we want to create a simple mission that ```has_one``` ```agent``` and one ```quartermaster```. No rocket science, but it’s a good example to see how quickly things can get out of hands. The controller needs to juggle multiple objects that the view needs in a nested form to tie things together. You will soon see that all of this can be cured with a nice presenter weaving things together in one central class.
 
+##### app/models/mission.rb
+
 ``` ruby
 
 class Mission < ActiveRecord::Base
@@ -73,7 +75,9 @@ end
 
 I’m mentioning the models here just for completeness sake in case you never used ```fields_for``` before—a bit simplified but working. Below is the meat of the matter. 
 
-##### Too many instance variables
+#### Too many instance variables
+
+##### app/controllers/missions_controller.rb
 
 ``` ruby
 
@@ -125,7 +129,9 @@ Even if you squint your eyes, this looks super nasty. And during saving, with va
 
 In the view we would have an accompanying ```form_for``` for ```@mission``` and the additional ```fields_for``` for ```@agent``` and ```@quartermaster``` of course.
 
-##### Messy Form With Multiple Objects
+### Messy Form With Multiple Objects
+
+##### app/views/missions/new.html.erb
 
 ``` erb
 
@@ -178,7 +184,7 @@ In the view we would have an accompanying ```form_for``` for ```@mission``` and 
 
 Sure, this works but I wouldn’t be too excited to stumble upon this.   ```fields_for``` is cool and all but handling this with OOP is a lot more dope. For such a case, a presenter will also aid us in having a simpler view because the form will deal with just a single object. Nesting the form becomes unnecessary that way. Btw, I left out any wrappers for styling the form to make it easier to digest visually. 
 
-## Form Object Presenter
+### Form Object Presenter
 
 ##### app/views/missions/new.html.erb
 
@@ -290,6 +296,24 @@ def mission_params
                                                  :hacker, 
                                                  :expertise, 
                                                  :humor)
+end
+
+```
+
+In our ```Mission``` model, we now have no need for ```accepts_nested_attributes``` anymore and can get rid of that harmless looking dreaded thing. The ```validates``` method is also irrelevant here because we add this responsibility to our form object. Same goes for our validations on ```Agent``` and ```Quartermaster``` of course. Encapsulating this validation logic directly on the presenter helps us clean our classes. In cases where you  would create these objects independent from each other, validations should stay where they currently are of course.
+
+##### app/models/mission.rb
+
+``` ruby
+
+class Mission < ActiveRecord::Base
+  has_one :agent
+  has_one :quartermaster
+  #accepts_nested_attributes_for :agent, :quartermaster, allow_destroy: true
+
+  #validates :mission_name, presence: true
+  ...
+
 end
 
 ```
