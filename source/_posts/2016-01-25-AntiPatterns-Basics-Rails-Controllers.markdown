@@ -22,6 +22,7 @@ This one is exactly written for you if all this sounds rather new to you and you
 
 + Fat Controllers
 + Non-RESTful Controllers
++ Rat’s Nest Rsources
 
 ## FAT Controllers
 
@@ -358,3 +359,154 @@ Not trying to adhere to the standard controller actions is most likely a bad ide
 Approaching resources in your controller in a  restful manner is making your life a lot easier and your apps are becoming easier to maintain as well—which adds to the overall stability of your app. Think about handling resources REST-fully from the perspective of an object’s life cycle. You create, update, show (single or collections), update and destroy them. For most cases, this will do the job. FYI, ```new``` and ```edit``` actions aren’t really part of REST—they are more like different versions of the ```show ``` action, helping you present different stages in the resource’s life cycle. Put together, most of the time, these seven standard controller actions give you all you need to manage your resources in your controllers. Another big advantage is that other Rails developers working with your code will be able to navigate your controllers much faster.
 
 Following that line of REST-ful cool aid, this also includes the way you name your controllers. The name of the resource you work on should be mirrored in the controller object. For example, having a ```MissionsController``` that handles other resources than ```@mission``` objects is a smell that something is off. The sheer size of a controller often is also a dead giveaway that REST was ignored. Should you encounter large controllers that implement tons of customized methods that break with conventions, it can be a very effective strategy to split them into multiple distinctive controllers that have focused responsibilities—and bascially manage only a single resource while adhering to a REST-ful style. Break them apart agressively and you will have an easier time to compose their methods the Rails way.
+
+## Rat’s Nest Resources
+
+Look at the following example and ask yourself what’s wrong with this:
+
+#### Nested AgentsController
+
+##### app/controllers/agents_controller.rb
+
+``` ruby
+
+class AgentsController < ApplicationController
+  def index
+    if params[:mission_id]
+      @mission = Mission.find(params[:mission_id])
+      @agents = @mission.agents
+    else
+      @agents = Agent.all
+    end
+  end
+end
+
+```
+
+Here we check if we have a nested route that provides us with the id for a possible ```@mission``` object. If so, we want to use the associated object to get the ```agents``` from it. Otherwise, we’ll fetch a list of all agents for the view. Looks harmless, especially because it’s still concise, but it’s the start of a potentially way larger rat’s nest.
+
+#### Nested Routes
+
+``` ruby
+
+resources :agents
+resources :missions do
+  resources :agents
+end
+
+```
+
+Nothing obtuse about the nested routes here. In general, there is nothing wrong about this approach. The thing we should be careful about is how the controller handles this business—and as a consequence, how the view needs to adapt to it. Not exactly squeaky clean as can see below.
+
+#### View With Unnecessary Conditional
+
+##### app/views/agents/index.html.erb
+
+``` erb
+
+<% if @mission %>
+  <h2>Mission</h2>
+  <div><%= @mission.name %></div>
+  <div><%= @mission.objective %></div>
+  <div><%= @mission.enemy %></div>
+<% end %>
+
+<h2>Agents</h2>
+<ul>
+  <% @agents.each do |agent| %>
+    <li class='agent'>
+      <div>Name:            <%= agent.name %></div>
+      <div>Number:          <%= agent.number %></div>
+      <div>Licence to kill: <%= agent.licence_to_kill %></div>
+      <div>Status:          <%= agent.status %></div>
+    </li>
+  <% end %>
+</ul>
+
+```
+
+Might also not look like a big deal, I get it. The level of complexity is not exactly real world though. Aside from that, the argument is more about dealing with resources in an object oriented way and about using Rails to your fullest advantage. I guess this is a little bit of an edge case regarding single responsibilities. It’s not exactly violating this idea too bad, even though we have a second object—@mission—for the association lingering around. But since we are using it for getting access to a specific set of agents, this is totally alright.
+
+The branching is the part that is inelegant and will most likely lead to poor design decisions—both in views and controllers. Creating two versions of ```@agents``` in the same method is the perpetrator here. I’ll make it short, this can get out of hand really quickly. Once you start nesting resources like this, chances are good new rats are hanging around soon. And the view above also needs a conditional that adapts to the situation for when you have ```@agents``` associated with a ```@mission```. As you can easily see, a little bit of sloppiness in your controller can lead to bloated views that have more code than needed. Let’s try another approach. Exterminator time! 
+
+#### Separate Controllers
+
+Instead of nesting these resources, we should be giving each version of this resource its own distinctive, focused controller—one controller for “simple”, unnested agents and one for agents that are associated with a mission. We can achieve this via namespacing one of them under a ```/missions``` folder. 
+
+##### app/controllers/missions/agents_controller.rb
+
+``` ruby
+
+module Missions
+  class AgentsController < ApplicationController
+  
+    def index
+      @mission = Mission.find(params[:mission_id])
+      @agents = @mission.agents
+    end
+  end
+end
+
+```
+
+By wrapping this controller inside a module, we can avoid that ```AgentsController``` inherits twice from ```ApplicationController```. Without it, we would run into an error like this: ```Unable to autoload constant Missions::AgentsController```. I think a module is a small price to pay for making Rails happy with autoloading. The second ```AgentsController``` can stay in the same file as before. It now only deals with one possible resource in ```index```—prepping all agents without missions that are around. 
+
+##### app/controllers/agents_controller.rb
+
+``` ruby
+
+class AgentsController < ApplicationController
+
+  def index
+    @agents = Agent.all
+  end
+end
+
+```
+
+Of course, we also need to instruct our routes to look for this new namespaced controller if agents are associated with a mission.
+
+``` ruby
+
+resources :agents
+resources :missions do
+  resources :agents, controller: 'missions/agents'
+end
+
+```
+
+After we specified that our nested resource has a namespaced controller, we’re all set. When we do a ```rake routes``` check in the terminal, we’ll see that our new controller is namespaced and that we are good to go.
+
+#### New Routes
+
+``` bash
+
+ Prefix Verb   URI Pattern                                     Controller#Action
+              root GET    /                                               agents#index
+            agents GET    /agents(.:format)                               agents#index
+                   POST   /agents(.:format)                               agents#create
+         new_agent GET    /agents/new(.:format)                           agents#new
+        edit_agent GET    /agents/:id/edit(.:format)                      agents#edit
+             agent GET    /agents/:id(.:format)                           agents#show
+                   PATCH  /agents/:id(.:format)                           agents#update
+                   PUT    /agents/:id(.:format)                           agents#update
+                   DELETE /agents/:id(.:format)                           agents#destroy
+    mission_agents GET    /missions/:mission_id/agents(.:format)          missions/agents#index
+                   POST   /missions/:mission_id/agents(.:format)          missions/agents#create
+ new_mission_agent GET    /missions/:mission_id/agents/new(.:format)      missions/agents#new
+edit_mission_agent GET    /missions/:mission_id/agents/:id/edit(.:format) missions/agents#edit
+     mission_agent GET    /missions/:mission_id/agents/:id(.:format)      missions/agents#show
+                   PATCH  /missions/:mission_id/agents/:id(.:format)      missions/agents#update
+                   PUT    /missions/:mission_id/agents/:id(.:format)      missions/agents#update
+                   DELETE /missions/:mission_id/agents/:id(.:format)      missions/agents#destroy
+
+```
+
+Our nested resource for ```agents``` is now properly redirected to ```controllers/missions/agents_controller.rb``` and each action can take care of agents that are part of a mission.
+
+## Final Thoughts
+
+I think if you as a beginner can avoid these AntipPatterns in your controllers you are off to a very good start. There is still much left to learn for you in this regard but give it time, it’s nothing that comes too easy or overnight. On the other hand if you tasted blood and like to explore more advanced techniques I’m all for. Take your time, have fun and don’t get frustrated if you need to revisit the topic because you have not all pieces of the puzzle in place yet. If you are early in the development game and started to play with design patterns, I believe you are way ahead of the game and made the right decision no to wait and get out of your comfort zone to stretch your gray matter a bit.
+
+
+
