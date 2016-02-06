@@ -526,11 +526,99 @@ edit_mission_agent GET    /missions/:mission_id/agents/:id/edit(.:format) missio
 
 ```
 
-Our nested resource for ```agents``` is now properly redirected to ```controllers/missions/agents_controller.rb``` and each action can take care of agents that are part of a mission.
+Our nested resource for ```agents``` is now properly redirected to ```controllers/missions/agents_controller.rb``` and each action can take care of agents that are part of a mission. For completeness sake, let’s have a look at our final views as well:
+
+#### Agents With Mission
+
+##### app/views/missions/agents/index.html.erb 
+
+``` erb
+
+<h2>Mission</h2>
+<div><%= @mission.mission_name %></div>
+<div><%= @mission.objective %></div>
+<div><%= @mission.enemy %></div>
+
+<h2>Agents</h2>
+<ul>
+  <% @agents.each do |agent| %>
+    <li class='agent'>
+      <div>Name:            <%= agent.name %></div>
+      <div>Number:          <%= agent.number %></div>
+      <div>Licence to kill: <%= agent.licence_to_kill %></div>
+    </li>
+  <% end %>
+</ul>
+
+```
+
+#### Agents Without Mission
+
+##### app/views/agents/index.html
+
+``` erb
+
+<h2>Agents</h2>
+<ul>
+  <% @agents.each do |agent| %>
+    <li class='agent'>
+      <div>Name:            <%= agent.name %></div>
+      <div>Number:          <%= agent.number %></div>
+      <div>Licence to kill: <%= agent.licence_to_kill %></div>
+    </li>
+  <% end %>
+</ul>
+
+```
+
+Well, let’s get rid of that little bit of duplication where we iterate over ```@agents``` also. I created a partial for rendering a list of agents and put it into a new ```shared``` directory under ```views```. 
+
+##### app/views/shared/_agents.html.erb
+
+``` erb
+
+<h2>Agents</h2>
+<ul>
+  <% @agents.each do |agent| %>
+    <li class='agent'>
+      <div>Name: <%=            agent.name %></div>
+      <div>Number: <%=          agent.number %></div>
+      <div>Licence to kill: <%= agent.licence_to_kill %></div>
+    </li>
+  <% end %>
+</ul>
+
+```
+
+Nothing new or surprising here but our views are now more DRY.
+
+#### Agents With Mission
+
+##### app/views/missions/agents/index.html.erb 
+
+``` erb
+
+<h2>Mission</h2>
+<div><%= @mission.mission_name %></div>
+<div><%= @mission.objective %></div>
+<div><%= @mission.enemy %></div>
+
+<%= render "shared/agents", collection: @agents %>
+
+```
+
+#### Agents Without Mission
+
+##### app/views/agents/index.html
+
+``` erb
+
+<%= render "shared/agents", collection: @agents %>
+
+```
+
+Dope!
 
 ## Final Thoughts
 
 I think if you as a beginner can avoid these AntipPatterns in your controllers you are off to a very good start. There is still much left to learn for you in this regard but give it time, it’s nothing that comes too easy or overnight. On the other hand if you tasted blood and like to explore more advanced techniques I’m all for. Take your time, have fun and don’t get frustrated if you need to revisit the topic because you have not all pieces of the puzzle in place yet. If you are early in the development game and started to play with design patterns, I believe you are way ahead of the game and made the right decision no to wait and get out of your comfort zone to stretch your gray matter a bit.
-
-
-
