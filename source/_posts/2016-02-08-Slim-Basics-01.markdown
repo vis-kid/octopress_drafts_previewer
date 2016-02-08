@@ -1,0 +1,49 @@
+---
+layout: post
+title: Slim Basics 01
+date: 2016-02-08 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [AntiPatterns, Ruby, Rails, Templating, Slim]
+---
+
+{% img /images/Slim/slim_fishbowl_sticker_02.png %}
+
+## Topics
+
++ What is Slim?
++ What about ERB & Haml?
++ Why Slim
++ Getting Started
++ Syntax
++ Line Indicators
++ HTML Tags
++ Helpers
++ Safety
++ Logic-less Mode
++ Performance
++ Framework Support
++ Temple & Tilt
+
+## What is Slim?
+
+“What's the minimum required to make this work”
+
+Syntax additions from influences from Haml and Jade
+
+## Why Slim?
+
++ Very minimal templates that are easy to maintain
+
++ Aesthetic
+
++ Is extensive and allows you to write plugins and extensions
+
++ Speedy
+
+## Getting Started
+
+## Syntax
+
+## Line Indicators
