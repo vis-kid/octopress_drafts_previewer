@@ -20,4 +20,173 @@ This one is exactly written for you if all this sounds rather new to you and you
 
 ## Topics
 
-+ Fat Controllers
++ Mystery Guest
++ Obscure Tests
++ RSpec DSL Puzzle
++ Brittle Tests
++ Let!
++ Slow Tests
++ Fixtures
++ Factories
+
+## Fixtures
+
+ActiveRecord database fixtures are a great examples of having tons of Mystery Guests in your test suite 
+
+!!!Factory Girl article about why not Fixtures
+
+## Mystery Guest
+It’s an RSpec DSL Puzzle really. For a while the various objects defined via RSpec DSL are not that hard to keep in check but after a while when the test suite grows you invite a lot of mystry guests into your tests and give your future self and others unnecessart context puzzles to solve. The result will be obscure tests that require you to go Sherlock Holmes on your tests and deduct which objects go where and what developer killed what object to cause failing tests that have gone brittle.
+
+Myster guest:
++ There is this object coming from?
++ What exactly is it composed of?
+
+Solution: Fresh “fixture”, where you build a local version of the object with exactly the date that you need—and not more than that! Factory Girl is a good choice for handling this. It can be considered more verbose and you might be duplicating stuff sometimes—extracting this into a method is a good idea in that case—but it is a lot more expressive and keeps tests focused and in context.
+
+``` ruby
+
+describe Mission do
+  let(:agent_01)   { build_stubbed(:agent, name: 'James Bond', number: '007') }
+  let(:agent_02)   { build_stubbed(:agent, name: 'Moneypenny', number: '24') }
+  let(:title)   { 'Moonraker' }
+  let(:mission) { build_stubbed(:mission, title: title) }
+  mission.agents << agent_01 << agent_02
+
+  #...
+  #...
+  #...
+  #lots of other tests
+
+  describe '#top_agent' do
+    it 'returns highest ranking agent associated to a mission' do
+      expect(mission.top_agent).to eq('James Bond')
+    end
+  end
+end
+ 
+```
+
+This describe block lacks clarity and context. What agent is involved and what mission are we talking about here. You force developers to go hunting for objects that are suddenly popping up in your tests. Classic example of mystery guests showing up uninvited to your party. When we have lots of code between the relevant test and the origin of these objects you increase the chances of wasting everybody’s time without good cause.
+
+``` ruby
+
+describe Mission do
+
+  #...
+  #...
+  #...
+  #lots of other tests
+
+  describe '#top_agent' do
+    it 'returns a list of all agents associated to a mission' do
+      agent_01 = build_stubbed(:agent, name: 'James Bond', number '007')
+      agent_02 = build_stubbed(:agent, name: 'Moneypenny', number '007')
+      mission  = build_stubbed(:mission, title: 'Moonraker')
+      mission.agents << agent_01 << agent_02
+  
+      expect(mission.top_agent).to eq('James Bond')
+    end
+  end
+end
+```
+
+### Obscurity
+
+This example builds all the objects in question needed for our tests in the actual test case and provides all the context one needs. The developer can stay focused on a particular test case and does not need to “download” another—possibly totally unrelated—test case for dealing with the situaion at hand. No more obscurity! A good reason to use FactoryGirl over fixtures is that fixture objects defined in yet another file are even more obscure—and I’m not even yet talking about fixtures being inflexible and non-DRY at all here. Mystery guests are not welcome to our RSpec parties.
+
+Yes, you are right, this approach means that we are not achieving the lowest level of duplication possible, but clarity in these cases is mucn more important for the quality of your test suite and therefore for the robustness of your project—the speed in which you can effectively apply changes to your tests plays also a role in that regard. Another important aspect of testing is that your test suite not only can function as documentation but absolutely should! Zero duplication is not a goal that has a positive effect for tests documenting your app. The creation of objects is an important part of providing the context needed to understand particular functionalities fast and efficient. Keeping unnecessary duplication in check is nevertheless an important goal to not loose sight of though—balance is king here!  
+
+## Brittle Tests
+
+If changes lead to seemingly unrelated failures in tests, you are likely looking at a test suite that has become fragile due to causes mentioned above. These often puzzle-like, mystery guest infested tests easily lead to tests that are more brittle than you might expect. When objects necessary for tests are defined “far away” from the actual test scenario, it’s not that hard to overlook the relationships that these objects have with their tests and when code gets deleted, adjusted or simply the setup object in question gets accidentally overriden—totally unaware how this could influence other tests around—failing tests are not a rare sight to be encountered—which easily look like they are totally unrelated failures. I think it’s fair to include such scenarios into the cateogory of tightly coupled code.
+
+``` ruby
+
+describe Mission do
+  let(:agent)   { build_stubbed(:agent, name: 'James Bond', number: '007') }
+  let(:title)   { 'Moonraker' }
+  let(:mission) { build_stubbed(:mission, title: title) }
+  mission.agents << agent_01
+
+  #...
+  #...
+  #...
+  #lots of other tests
+
+  describe '#joint_operation_agent_name' do
+    let(:agent) { build_stubbed(:agent, name: 'Felix Leiter', agency: 'CIA')
+    mission.agents << agent
+
+    it “returns mission’s joint operation’s agent name” do
+      expect(mission.joint_operation_agent_name).to eq('Felix Leiter')
+    end
+  end
+end
+
+```
+
+In this scenario we have clearly modified locally the objects’s state defined in our setup. The ```agent``` in question is now a CIA operative and has a different name. ```mission``` comes again out of nowhere as well. Not obvious but nasty stuff really. Let’s get rid of the ```let``` nonsense and build the objects we need again right where we test them—with only the attributes we need for the test case of course. 
+ 
+``` ruby
+
+describe Mission do
+
+  #...
+  #...
+  #...
+  #lots of other tests
+
+  describe '#joint_operation_agent_name' do
+    agent   = build_stubbed(:agent, name: 'Felix Leiter', agency: 'CIA')
+    mission = build_stubbed(:mission)
+    mission.agents << agent
+
+    it “returns mission’s joint operation’s agent name” do
+      expect(mission.joint_operation_agent_name).to eq('Felix Leiter')
+    end
+  end
+end
+
+```
+
+``` ruby
+
+context "mission’s agent status" do
+  let(:agent) {build_stubbed(:agent, name: 'James Bond', status: 'Missing in action') }
+
+  it 'returns the agent’s status' do
+    expect(mission.agent_status).to eq('Missing in action')
+  end
+end
+
+context "mission’s agent status" do
+  it 'returns the agent’s number' do
+    007 = build_stubbed(:agent)
+    mission = build_stubbed(:mission, agent: 007)
+
+    expect(mission.agent_status).to eq(007.status)
+  end
+end
+
+```
+
+Here we are overriding the agent that we created via ```let```. In such cases you want to be more clear about how these objects are being used and how they are related. As you can see in the second ```context```, we override the agent defined in ```let``` and  give it another specific name but don’t have the context of the agents ```status``` anymore. It is important to understand how they are related and how they are used—especially if you don’t want to send other developers on a wild goose chase to figure this out before they can continue their work on something new or totally unrelated. If it’s super hard to get a grasp quickly and a new feature needs to be implemented blazingly fast, these puzzles can not expect the highest priority, which means that new stuff get’s developed on top of that unclear context—which in turn is a brittle basis for going forward and also super inviting to bugs down the road.
+
+Also, guess what happens if somebody decides to rename the ```agent``` object defined in ```let``` and introduces another vector for failing tests that way. Loose coupling is your very best friend here as well. 
+
+The relationship between the ```007.status``` and the mission status could be confusing since it’s coming out of nowhere really due to redefining the ```agent``` variable. Also, the second version is overall not very descriptive.
+
+``` ruby
+
+context "mission’s agent status" do
+  it 'returns the agent’s number' do
+    007 = build_stubbed(:agent)
+    mission = build_stubbed(:mission, agent: 007)
+
+    expect(mission.agent_status).to eq(007.status)
+  end
+end
+
+```
+
