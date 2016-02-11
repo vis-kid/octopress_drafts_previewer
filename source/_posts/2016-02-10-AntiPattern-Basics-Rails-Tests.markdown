@@ -28,6 +28,7 @@ This one is exactly written for you if all this sounds rather new to you and you
 + Slow Tests
 + Fixtures
 + Factories
++ Uncertainty of Time???
 
 ## Fixtures
 
@@ -190,3 +191,13 @@ end
 
 ```
 
+## Let
+
+The ```let``` helper method in RSpec is very frequently (over?)used for creating instance variables that are available between multiple tests. Following this practice can easily lead to having lots of mystery guests showing up and as we learned above, that is not something we need to crash our party—ever! This has gained a bit of a reputation to be possibly causing increased test maintenance and inferior readability throughout your test suite. It sure sounds good because it’s lazily evaluated and adhering to the usually zero-defect concept of DRY seems too good not to use. I’m personally in the camp of being rather on the side of repeated setup code for each test than being overly DRY, obscure or cryptic in the test suite. I’d go always for more readablility in my tests. The test method should make clear the cause and effect of its involved pieces—defining parts of it possibly far away is not in your best interest here. If you need to extract stuff, expressive methods that encapsulate that knowledge are often a better bet.
+
+It also helps to create the setup for each test that you actually need and not cause slow tests because you have more data than needed for the individual tests methods. Good old variables, methods and classes are often all you need to provide faster, more stable and easier to read tests.
+
+
+
+
+We want to avoid distracting people who will read our tests or even worse, confuse them. That is openeing the door for bugs but can also be expensive cause it can cost valuable time to be billed. When you create your tests, try hard not to override things. It does not aid in creating clarity, it can lead to subtle, time-consuming bugs and it does not affect the aspect of documenting your code positively. Mutating data more than absolutely necessary—when you test for a mutation for example—is also worth keeping in mind. Again, this helps avoiding sending other developers or your future self on  wild goose chases.
