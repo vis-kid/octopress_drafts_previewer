@@ -30,11 +30,18 @@ This one is exactly written for you if all this sounds rather new to you and you
 + Factories
 + Uncertainty of Time???
 
+## Let
+
+The ```let``` helper method in RSpec is very frequently (over?)used for creating instance variables that are available between multiple tests. Following this practice can easily lead to having lots of mystery guests showing up and as we’ll address in just a bit , that is not something we need to crash our party—ever! This side effect has gained a bit of a reputation to be possibly causing increased test maintenance and inferior readability throughout your test suite. It sure sounds good because it’s lazily evaluated and aids adhering to the usually zero-defect concept of DRY and all, so it obviously seems too good not to use on a regular basis.
+
+I’m personally in the camp of being rather on the side of repeated setup code for each test than being overly DRY, obscure or cryptic in the test suite. I’d go always for more readablility in my tests. The test method should make clear the cause and effect of its involved pieces—defining parts of it possibly far away is not in your best interest here. If you need to extract stuff, expressive methods that encapsulate that knowledge are often a better bet. It also helps to create the setup for each test that you actually need and not cause slow tests because you have more data than needed for the individual tests methods. Good old variables, methods and classes are often all you need to provide faster, more stable and easier to read tests.
+
+
 ## Fixtures
 
 ActiveRecord database fixtures are a great examples of having tons of Mystery Guests in your test suite. In the early days of Rails and Ruby TDD, YAML fixtures were the de facto standard for setting up test data in your application. They played an important role and helped move the industry forward. Nowadays they have a reasonably bad rep though. The hash-like structure sure looks like handy and easy to use. You can reference other nodes within each other if you want to simulate associations from your models. But I think its fair to say that that’s where the music stops and many say their pain started. For data sets that are a bit more involved, YAML fixtures are difficult to maintain and hard to change without affecting other tests. I mean you can make them work of course—after all developers used them plenty in the past—but many people agreed that the price to pay for managing fixtures is just a bit stingy.
 
-To avoid breaking your test data when the inevitable changes occur, developers where happy to adopt newer strategies that offered more flexibility and dynamic behaviour. That’s where Factory Girl came in and kissed the YAML days goodbye. Another issue is the heavy dependency between the test and the .yml fixture file. Since the fixtures are defined in a separte .yml file, mystery guests are also a major pain waiting to bite you. Factory Girl let’s you avoid that by creating objects relevant to the tests inline—and only with the data needed for that specific case. The motto is, only define the bare minimum in your factory definitions and add the rest in a test-by-test basis. I think this approach is more than pretty reasonable and was one major cause why Factory Girl was so well received by the community. Complexity is a fast growing enemy that YAML fixtures are hardly equiped to take on effectively.
+To avoid breaking your test data when the inevitable changes occur, developers where happy to adopt newer strategies that offered more flexibility and dynamic behaviour. That’s where Factory Girl came in and kissed the YAML days goodbye. Another issue is the heavy dependency between the test and the .yml fixture file. Since the fixtures are defined in a separte .yml file, mystery guests are also a major pain waiting to bite you. Factory Girl let’s you avoid that by creating objects relevant to the tests inline—and only with the data needed for that specific case. The motto is, only define the bare minimum in your factory definitions and add the rest in a test-by-test basis. I think this approach is more than pretty reasonable and was one major cause why Factory Girl was so well received by the community. Complexity is a fast growing enemy that YAML fixtures are hardly equiped to take on effectively. In some way I think of fixtures also as ```let``` on steroids. You are not only placing them even further away—being in a separate file and all—you are also potentially preloading way more fixtures than you might actually need. RIP!
 
 ## Mystery Guest
 It’s an RSpec DSL Puzzle really. For a while the various objects defined via RSpec DSL are not that hard to keep in check but after a while when the test suite grows you invite a lot of mystry guests into your tests and give your future self and others unnecessart context puzzles to solve. The result will be obscure tests that require you to go Sherlock Holmes on your tests and deduct which objects go where and what developer killed what object to cause failing tests that have gone brittle.
@@ -190,12 +197,6 @@ context "mission’s agent status" do
 end
 
 ```
-
-## Let
-
-The ```let``` helper method in RSpec is very frequently (over?)used for creating instance variables that are available between multiple tests. Following this practice can easily lead to having lots of mystery guests showing up and as we learned above, that is not something we need to crash our party—ever! This has gained a bit of a reputation to be possibly causing increased test maintenance and inferior readability throughout your test suite. It sure sounds good because it’s lazily evaluated and adhering to the usually zero-defect concept of DRY seems too good not to use. I’m personally in the camp of being rather on the side of repeated setup code for each test than being overly DRY, obscure or cryptic in the test suite. I’d go always for more readablility in my tests. The test method should make clear the cause and effect of its involved pieces—defining parts of it possibly far away is not in your best interest here. If you need to extract stuff, expressive methods that encapsulate that knowledge are often a better bet.
-
-It also helps to create the setup for each test that you actually need and not cause slow tests because you have more data than needed for the individual tests methods. Good old variables, methods and classes are often all you need to provide faster, more stable and easier to read tests.
 
 
 
