@@ -20,22 +20,56 @@ This one is exactly written for you if all this sounds rather new to you and you
 
 ## Topics
 
++ Slow Tests
++ Let
 + Mystery Guest
 + Obscure Tests
 + RSpec DSL Puzzle
 + Brittle Tests
-+ Let!
-+ Slow Tests
 + Fixtures
 + Factories
 + Uncertainty of Time???
+
+## Slow Tests
+
+So, you have started to get into Test-Driven-Development and you started to appreciate what if offers. Kudos, this is great! I’m sure, neither the decision to do it nor the learning curve to get there were exactly a piece of cake. But what often happens after this step is that you try hard at having full test coverage and you start to realize that something is off. Your test suite is getting slower and slower although you think you are doing all the right things. Why am I feeling punished for this, right? Slow tests can suck—big time! There are a couple of problems with them. The most important issue is that slow tests lead to skipping tests in the long run. Once you are at a point where your test suite takes forever to finish, you will be much more willing to thing to yourself: ‘Screw this! I got better things to do than waiting for this stuff to finish.” And you are absolutely right, you have better things to do than wait.
+
+The thing is that slow test are more likely to welcome in compromises in the quality of your code than maybe obvious. Slow tests also fuel people’s arguments against TDD—unfairly so I think. When you have little time to set up your tests and super quick feeback cycles to develop each step of a new feature, TDD becomes a lot more attractive and less of an argument. Don’t even want to know what non-technical, clueless managers have to say if you have to step outside for a 20 minute coffee break just to run your test suite. Let’s not go down that road. With a little bit of work and care along the way we can avoid slow-mo tests quite effectively. Slow tests are also a killer for getting into the “zone”. You want to get as much zone time as possible. If you get taken out of the flow this frequently in your process, the quality of your overall work might also suffer by having to wait for slow tests to return from an expensive round trip.
+
+unbearably slow !!!
+
+Another issue worth mentioning in this context is that this might lead to having tests that cover your code, but because you won’t take time to finish exercising the whole suite, or write tests after the fact, your apps’ design won’t be driven by tests anymore. If you are not on the Test-Driven train this might not bother you much, but for people who have drunk this kool-aid, that aspect is essential to testing and should not be neglected. Bottom line, the faster your tests, the more you will be willing to exercise them—which is the best way to catch bugs early and often. What can we do to speed them up or to avoid to getting into snail mode? There are two speeds that are important:
+
++ The speed for getting feedback from your test suite to design your app.
++ The speed in which your tests can really execute your suite.
+
+### Getting feedback from your app / tests fast.
+
+
+You want that dialog to be fast since talking in slow-mo can be painful. Tightening this feedback cycle by using an editor that can also exercise your tests is not to be underestimated. Switching back and forth between your editor and your terminal is NOT the best solution to handle this. This gets old very quickly. If you like using Vim, you have one more reason to invest some time to become more efficient at using your editor. Sublime Text also has some option for that I remember but oher than that, you need to do a little bit of research of your own if you are into other stuff. The argument that you will hear frequently from TDD enthusiasts is that you don’t want to leave your editor because you are spending too much time overall doing that. You want to stay much more in the zone and not lose train of thought when you can do this sorta thing via a fast shortcut from inside your code editor. 
+
+Another thing to note is that you also want to be able to slice the tests that you want to run. If you don’t need to run the whole file, it’s nice to run a single test or a block that focuses just on what you need to get feedback on right now. Having shortcuts that help you run single tests, single files or just the last test again saves you a ton of time and keeps you in the zone with a high degree of convenience. I gotta say, it makes you feel god damn cool as well. It’s just amazing how awesome coding tools can be sometimes.
+
+Spring???
+Zeus???
+
+### Avoid writing to the database as much as you can.
+
+That does not mean that you should avoid it all costs, just that often you don’t need to write tests that exercise the database which can trim off a lot of time that your tests need to run. Using just ```new``` to instantiate an object is often sufficient for tests cases. Faking out objects that are not directly under test is another viable option. Creating test doubles for examples is a a nice way to make your tests faster while keeping the collaborating objects you need for your setup super focused and lightweight. Factory Girl also gives you various options to “create” your test data. But sometimes there is not way around to saving to the database and this is exactly the scenraio where you should do it. Any other time, avoid it like hell and your test suite wil stay fast and agile. In that regard you should also aim for a minimal amount of dependency, which means the minimal amount of objects that you need to get your tests to pass—and save as less as possible to the database along the way. Stubbing out objects—that are mere collaborators for tests—instead of writing to the database not only makes your setup easier to digest and simpler to create, it also gives you a nice speed boost overall.
+
+### Build your tests with the testing pyramid in mind.
+
+This means that you want to have a majority of unit test at the bottom of this hierarchy—which all focus on very specific parts of your application in isolation, and the smallest amount of integration tests at the top of this pyramid—which exercises a user going through your system and interacting with a bunch of components that are exercised around the same time. They are easy to write but not so easy to maintain—and the speed losses are not worth going the easy route. The integration tests are pretty much the opposite of unit tests in regard to them being high level and sucking in a lot of components that you need to set up in your tests—which is one major reason why they are slower than unit tests and too much integration tests can cause significant speed losses. What’s also an important issue here is that you want to have as little overlap between these two test categories as possible—you ideally want to test things only once after all. You can’t expect to have perfect separation between them, but aiming for as little as possible is a reasonable and achievable goal.
+
+In contrast to unit tests, you want to test as few details as possible with integration tests. That should already be covered by extensive, focus unit tests. Focus on the most essential parts that the interactions need to be capable of exercising! The other main reason is that a webdriver needs to simulate going through a browser and interacting with a page. This approach fakes out nothing or very little, saves the stuff to the database and really goes through the UI. That’s also one reason they can be called acceptance tests because these tests try to simulate a real user experience. Another major speed bump that you want to exercise as little as possible. If you have a ton of these, I guess more than 10% from your overall number of tests, you should slow down and reduce that number to the minimum amount possible. Also, another approach to keep in mind is not to exercise the whole app for an integration test when a smaller, focused view test would do the trick as well. You will be much faster if you rewrite a couple of your integration tests that just test a little bit of logic that does not necessitate a full integration check. That being said, intergration tests are vital to the quality of your tests and you need to find a balance of being too stingy applying them and not having too much of them around.
+
+Large, five minute plus test suites can easily lead to bad practices. A slow test suite like this does not aid you much in effectively designing your application. Quick feedback and fast iteration cycles are key to designing your objects. Once you start to keep pushing to run these tests some time later because it take so long to finish, you are loosing this advantage which is a big aid for quiality object design. Don’t wait until your Continious Intergration service of choice comes into play to test your whole application. So what’s a magic number we should aim for in terms of overall time a test suite should be taking to run all tests? Well, different people will tell you different benchmarks for this. I think that staying under 30 secons is a very reasonable number that makes it very likely to exercise a full test on a regular basis. If you leave that benchmark more and more behind, I think you have some work to do to get it back in check. It will be worth it and it will make you feel much more comfortable going forward because you can check in more regularly and can move forward a lot faster that way.
 
 ## Let
 
 The ```let``` helper method in RSpec is very frequently (over?)used for creating instance variables that are available between multiple tests. Following this practice can easily lead to having lots of mystery guests showing up and as we’ll address in just a bit , that is not something we need to crash our party—ever! This side effect has gained a bit of a reputation to be possibly causing increased test maintenance and inferior readability throughout your test suite. It sure sounds good because it’s lazily evaluated and aids adhering to the usually zero-defect concept of DRY and all, so it obviously seems too good not to use on a regular basis.
 
 I’m personally in the camp of being rather on the side of repeated setup code for each test than being overly DRY, obscure or cryptic in the test suite. I’d go always for more readablility in my tests. The test method should make clear the cause and effect of its involved pieces—defining parts of it possibly far away is not in your best interest here. If you need to extract stuff, expressive methods that encapsulate that knowledge are often a better bet. It also helps to create the setup for each test that you actually need and not cause slow tests because you have more data than needed for the individual tests methods. Good old variables, methods and classes are often all you need to provide faster, more stable and easier to read tests.
-
 
 ## Fixtures
 
@@ -199,6 +233,7 @@ context "mission’s agent status" do
 end
 
 ```
+
 
 
 
