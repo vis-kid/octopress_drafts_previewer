@@ -185,7 +185,7 @@ Following this path, the view would have an accompanying ```form_for``` for ```@
 
 ```
 
-Sure, this works but I wouldn’t be too excited to stumble upon this.   ```fields_for``` sure is handy and all but handling this with OOP is a lot more dope. For such a case, a presenter will also aid us in having a simpler view because the form will deal with just a single object. Nesting the form becomes unnecessary that way. Btw, I left out any wrappers for styling the form to make it easier to digest visually. 
+Sure, this works but I wouldn’t be too excited to stumble upon this. ```fields_for``` sure is handy and all but handling this with OOP is a lot more dope. For such a case, a presenter will also aid us in having a simpler view because the form will deal with just a single object. Nesting the form becomes unnecessary that way. Btw, I left out any wrappers for styling the form to make it easier to digest visually. 
 
 ### Form Object Presenter
 
