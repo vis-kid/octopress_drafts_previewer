@@ -234,6 +234,35 @@ end
 
 ```
 
+### Data Attributes
+
+A final useful tip for avoiding brittle tests is to use data attributes in your HTML tags. This lets you decouple the needed elements under test from the styling information that your designers might use—and change without your involvement. If you hard code a class like ```class='mission-wrapper'``` and a wise designer decides to change this name because this is probably not the best name you could come up with, your test will be affected unnecessarily. And the designer is of course not to blame because how in the world would he know that this affects part of your test suite—very unlikely at least. 
+
+``` erb
+
+<div class='mission data-role='single-mission'>
+  <h2><% = @mission.name %></h2>
+  ...
+</div>
+
+```
+
+``` ruby
+
+context "mission’s agent status" do
+  it 'does something with a mission' do
+    ...
+
+    ...
+
+    expect(page). to have_css '[data-role=single-mission]'
+  end
+end
+
+```
+
+If you expect to see some element on a page and that element can be signified by a ```data-role``` that designers have no reason to touch, you can protect yourself from brittle tests that happen due to changes on the styling side of things. Pretty effective and useful strategy that basically costs you nothing in return. The only thing that might be necessary is to have a short conversation with designers to not touch them. Piece of cake!
+
 
 
 
