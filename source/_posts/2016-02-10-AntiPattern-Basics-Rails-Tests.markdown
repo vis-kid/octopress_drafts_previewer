@@ -8,7 +8,7 @@ published: true
 categories: [AntiPatterns, TDD, BDD, Test-Driven-Development, Ruby, Rails, Code Smells, Refactoring, Object Oriented Programming ]
 ---
 
-{% img /images/AntiPatterns/Tests/rotten-pear-cropped.jpg %}
+{% img /images/AntiPatterns/Tests/electric-wiring.jpg 500 %}
 
 ## Heads Up
 
@@ -67,9 +67,21 @@ Large, five minute plus test suites can easily lead to bad practices. A slow tes
 
 ## Let
 
-The ```let``` helper method in RSpec is very frequently (over?)used for creating instance variables that are available between multiple tests. Following this practice can easily lead to having lots of mystery guests showing up and as we’ll address in just a bit , that is not something we need to crash our party—ever! This side effect has gained a bit of a reputation to be possibly causing increased test maintenance and inferior readability throughout your test suite. It sure sounds good because it’s lazily evaluated and aids adhering to the usually zero-defect concept of DRY and all, so it obviously seems too good not to use on a regular basis.
+The ```let``` helper method in RSpec is very frequently (over?)used for creating instance variables that are available between multiple tests. Following this practice can easily lead to having lots of mystery guests showing up and as we’ll address in just a bit , that is not something we need to crash our party—ever! This side effect has gained a bit of a reputation to be possibly causing increased test maintenance and inferior readability throughout your test suite. It sure sounds good because it’s lazily evaluated and aids adhering to the usually zero-defect concept of DRY and all, so it obviously seems too good not to use on a regular basis. What follows below also relates to ```subject```—which we can avoid to use also.
+
+An all-time favorite are let statements that are plastered all over nested ```describe``` blocks. I think it’s not unfair to call this a recipe for hanging your self in motion.
+
+More limited scope is generally easier to understand and follow. We don’t want to build a house of cards with semi-global let fixtures that obscure understanding and increase chances of breaking related tests. The odds of crafting quality code with this approach are stacked against us with this approach.
+
+Extracting common object setup is also easier to do via plain old ruby methods or even classes if need be.
+
+These let fixtures can amass a lot of attributes and methods that make them way too big as well.
+
+We want to have as few collaborators and as little data as possible for each test. let works not in your favor on that as well. If you start going down the let road, you will often end up with pretty big objects that try to make a lot of tests happy at the same time. Sure you can create lots of lets but that makes the whole idea of lets maybe irrelevant. That way you can just go one step further and avoid let and rely on Ruby without RSpec DSL magic.
 
 I’m personally in the camp of being rather on the side of repeated setup code for each test than being overly DRY, obscure or cryptic in the test suite. I’d go always for more readablility in my tests. The test method should make clear the cause and effect of its involved pieces—defining parts of it possibly far away is not in your best interest here. If you need to extract stuff, expressive methods that encapsulate that knowledge are often a better bet. It also helps to create the setup for each test that you actually need and not cause slow tests because you have more data than needed for the individual tests methods. Good old variables, methods and classes are often all you need to provide faster, more stable and easier to read tests.
+
+Let are largely shared fixtures which you will need to decipher first before you know exactly why this object is showing up in your test and what exactly it is made of—or which relationships it has via associations. The clarity of these details when you setup up these objects for a test scenario usually help a lot to tell developers all the info they need to work with this particular part of your test suite. In a world where you never have to revisit particular tests and even never refactor parts of your test suite that might not matter as much—but that is a pipe dream for now!
 
 ## Fixtures
 
