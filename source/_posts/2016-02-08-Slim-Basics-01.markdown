@@ -8,10 +8,16 @@ published: true
 categories: [AntiPatterns, Ruby, Rails, Templating, Slim]
 ---
 
-{% img /images/Slim/slim_fishbowl_sticker_02.png %}
+Titles
+
+Boss-level Ruby templates with Slim
+Deluxe templating with Slim
+
+{% img /images/Slim/slim-fishbowl-sticker-02.png %}
 
 ## Topics
 
++ What are Templates?
 + What is Slim?
 + What about ERB & Haml?
 + Why Slim
@@ -25,8 +31,16 @@ categories: [AntiPatterns, Ruby, Rails, Templating, Slim]
 + Performance
 + Framework Support
 + Temple & Tilt
++ Rails
++ Sinatra
+
+## What Are Templates?
+
+When people talk about templates, they mostly mean plain HTML markup with code that often is often used for flow control or object injection—for example when a controller provides you with instance variables that can be used by the view to display attributes from that object. When you started playing with Rails, you surely have been using ERB for exactly these kinds of use cases. ERB takes the plain text portions and hands them to the final document and only processes code that is marked as such. I’m not going into details how ERB works and suppose a basic familiarity before you dive into Slim. I would not recommend you to use Slim if you are not already familiar with Rails’ default way of templating since you will have a much easier time to play with Slim understanding how templating works out of the box in Rails. 
 
 ## What is Slim?
+
+Slim is a fast, lightweight templating engine with support for Rails 3 and 4. It can also be used with Sinatra and even plain Rack.
 
 “What's the minimum required to make this work”
 
@@ -34,13 +48,116 @@ Syntax additions from influences from Haml and Jade
 
 ## Why Slim?
 
-+ Very minimal templates that are easy to maintain
+If you have given Haml a shot before, you’ll probably already know a couple of the arguments I’m gonna make. I think it’s nevertheless a good idea to follow along because you might have already decided to use a more minimalistic templating engine and I’d like you to see the advantages Slim offers as well.
 
-+ Aesthetic
+So, why Slim? The answer is quite straightforward I think. Your markup should be as beautiful as possible! You should have a good time working with it and the less time you need to spend wading through tons of tag matter the better. What is beautiful you might ask? Of course ,that is not an answer I’ll try to tackle, but being minimal in that regard rarely hurts. What about becoming super cryptic because the templating engine tries to be super smart in being minimal? That is a fair concern and I hope you will be happy to hear that the team behind Slim takes this very seriously. They want to remove as much as possible from plain old HTML and reveal only the essential parts—all without becoming too cryptic. They core team tries to go even a step beyond that, they are really concerned about the aesthetics of Slim code. Pretty good deal, don’t you think? 
 
-+ Is extensive and allows you to write plugins and extensions
+Isn’t it much nicer if you can just glance at a template and be able to easily digest what’s going on? Templates can become a very ‘crowded’ place—even if you make intelligent use of partials—and as a consequence, you want to reduce the amount of noise to the absolute minimum. Have you maybe tried the indented Sass (.sass) syntax? I hope you did, it’s just awesome! If so, you probably will have a similar appreciation for what Slim has to offer. It’s also whitespace sensitive which lead to really succinct and readable code. Let’s take this piece of HTML / ERB code and compare it to Slim.
 
-+ Speedy
+``` html
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= full_title(yield(:title)) %></title>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="logo">
+        <%= link_to "sample app", 'root_path', id: "logo" %>
+        <nav>
+          <ul class="navbar-right">
+            <li><%= link_to "Home",   'root_path' %></li>
+            <li><%= link_to "Help",   'help_path' %></li>
+            <li><%= link_to "Log in", 'login_path' %></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div class="main">
+      <%= yield %>
+    </div>
+  </body>
+</html>
+
+```
+
+Let’s compare this with a Slim version.
+
+``` slim
+
+doctype html
+html
+  head
+    title
+      = full_title(yield(:title))
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  body
+    header.navbar
+      .logo
+        = link_to "sample app", 'root_path', id: "logo"
+        nav
+          ul.navbar-right
+            li
+              = link_to "Home",   'root_path'
+            li
+              = link_to "Help",   'help_path'
+            li
+              = link_to "Log in", 'login_path'
+    .main
+      = yield
+
+```
+
+Sure, you are not used to the syntax yet so it might look a bit alien at first but I’m sure you can appreciate how succinct it reads. No left / right angle brackets, no need to write divs—instead we can focus on the name their ids and classes have—it feels a lot less messy and more organized, don’t you think?
+
+For comparison, here is the Haml version. It’s really not meant as an opportunity to bash Haml, it just shows you how similar it is but also that Slim goes a step further with its choice of minimal syntax and the result is even more elegant I think. Why go so minimal and still make me type the ```%``` sign all the time. My index finger has better things to do than grabbing shift-5 all the time. Can you customize that behaviour? Pretty sure, at least I hope so! But the design seems a bit flawed and less spartan compared to Slim. I realize that this is a matter of taste though, so I’ll leave it at that.
+
+``` haml
+
+!!!
+%html
+  %head
+    %title= full_title(yield(:title))
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    %header.navbar
+      .logo
+        = link_to "sample app", 'root_path', id: "logo"
+        %nav
+          %ul.navbar-right
+            %li= link_to "Home",   'root_path'
+            %li= link_to "Help",   'help_path'
+            %li= link_to "Log in", 'login_path'
+    .main
+      = yield
+
+```
+
+
++ It’s speedy.
++ Super readable.
++ Index finger friendly.
++ It has a smart syntax.
++ Its aesthetic is minimal.
++ It is highly configurable
++ It’s boss-level templating.
++ It’s fun to write and looks dope.
++ Automatic HTML escaping by default
++ Super nice Rails and Sinatra integration
++ Very minimal templates that are easy to maintain.
++ Is extensive and allows you to write plugins and extensions.
++ There is a logic-less mode for times when you want to output HTML but have no reason to include Ruby code.
++ It has configurable shortcuts for tags—which is a pretty nice feature to customize the engine to your needs.
++ And finally because Slim’s syntax is guided by one very cool motto: “What's the minimum required to make this work”. This is very hard not to like.
+
 
 ## Getting Started
 
