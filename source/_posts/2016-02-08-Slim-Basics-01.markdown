@@ -11,16 +11,16 @@ categories: [AntiPatterns, Ruby, Rails, Templating, Slim]
 Titles
 
 Boss-level Ruby templates with Slim
+
 Deluxe templating with Slim
 
-{% img /images/Slim/slim-fishbowl-sticker-02.png %}
+{% img /images/Slim/slim-fishbowl-refined.png %}
 
 ## Topics
 
++ Why Slim?
 + What are Templates?
-+ What is Slim?
 + What about ERB & Haml?
-+ Why Slim
 + Getting Started
 + Syntax
 + Line Indicators
@@ -34,21 +34,11 @@ Deluxe templating with Slim
 + Rails
 + Sinatra
 
-## What Are Templates?
-
-When people talk about templates, they mostly mean plain HTML markup with code that often is often used for flow control or object injection—for example when a controller provides you with instance variables that can be used by the view to display attributes from that object. When you started playing with Rails, you surely have been using ERB for exactly these kinds of use cases. ERB takes the plain text portions and hands them to the final document and only processes code that is marked as such. I’m not going into details how ERB works and suppose a basic familiarity before you dive into Slim. I would not recommend you to use Slim if you are not already familiar with Rails’ default way of templating since you will have a much easier time to play with Slim understanding how templating works out of the box in Rails. 
-
-## What is Slim?
-
-Slim is a fast, lightweight templating engine with support for Rails 3 and 4. It can also be used with Sinatra and even plain Rack.
-
-“What's the minimum required to make this work”
-
-Syntax additions from influences from Haml and Jade
-
 ## Why Slim?
 
 If you have given Haml a shot before, you’ll probably already know a couple of the arguments I’m gonna make. I think it’s nevertheless a good idea to follow along because you might have already decided to use a more minimalistic templating engine and I’d like you to see the advantages Slim offers as well.
+
+Before we dive into why Slim is cool, I wanna answer real quick what Slim actually is and what it does for you. The documentation sums this up quite nicely: “Slim is a fast, lightweight templating engine with support for Rails 3 and 4”. You can also be use it with Sinatra and even plain Rack. So, if you are a bit tired of using ERB for writing your templates or you are not super satisfied with what Haml has to offer, then you are barking up exactly the right tree with Slim. In terms of syntax used, the people behind Slim were trying to find an answer to the following question: “What's the minimum required to make this work?” For writing the minimal amount of front-end code possible, this sure sounds like the right question to ask imho. Does Slim offer a perfect solution to all your templating concerns? Probably not, but quite frankly, it might just offer the best! Is easy to learn? I think so, but it’s hard to know what other people consider easy. I’d say this though,it takes a bit to get used to but it’s definitely no rocket science. So no need to feel intimidated if you are a bit new to the coding side of things. Will you have a good time with it? Absolutely! 
 
 So, why Slim? The answer is quite straightforward I think. Your markup should be as beautiful as possible! You should have a good time working with it and the less time you need to spend wading through tons of tag matter the better. What is beautiful you might ask? Of course ,that is not an answer I’ll try to tackle, but being minimal in that regard rarely hurts. What about becoming super cryptic because the templating engine tries to be super smart in being minimal? That is a fair concern and I hope you will be happy to hear that the team behind Slim takes this very seriously. They want to remove as much as possible from plain old HTML and reveal only the essential parts—all without becoming too cryptic. They core team tries to go even a step beyond that, they are really concerned about the aesthetics of Slim code. Pretty good deal, don’t you think? 
 
@@ -157,6 +147,10 @@ For comparison, here is the Haml version. It’s really not meant as an opportun
 + There is a logic-less mode for times when you want to output HTML but have no reason to include Ruby code.
 + It has configurable shortcuts for tags—which is a pretty nice feature to customize the engine to your needs.
 + And finally because Slim’s syntax is guided by one very cool motto: “What's the minimum required to make this work”. This is very hard not to like.
+
+## What Are Templates?
+
+In terms of programming experience, if you consider yourself to be more on the newbie side of things, I’ll try to give you a quick round trip to all things templating. When people talk about templates, they mostly mean plain HTML markup with code that is often used for flow control or object injection—for example when a controller provides you with instance variables that can be used by the view to display attributes from that object. When you started playing with Rails, you surely have been using ERB for exactly these kinds of use cases. ERB takes the plain text portions and hands them to the final document and only processes code that is marked as such. I’m not going into details how ERB works and suppose a basic familiarity before you dive into Slim. I would not recommend you to use Slim if you are not already familiar with Rails’ default way of templating since you will have a much easier time to play with Slim understanding how templating works out of the box in Rails. 
 
 
 ## Getting Started
