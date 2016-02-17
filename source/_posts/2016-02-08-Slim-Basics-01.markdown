@@ -150,8 +150,27 @@ For comparison, here is the Haml version. It’s really not meant as an opportun
 
 ## What Are Templates?
 
-In terms of programming experience, if you consider yourself to be more on the newbie side of things, I’ll try to give you a quick round trip to all things templating. When people talk about templates, they mostly mean plain HTML markup with code that is often used for flow control or object injection—for example when a controller provides you with instance variables that can be used by the view to display attributes from that object. When you started playing with Rails, you surely have been using ERB for exactly these kinds of use cases. ERB takes the plain text portions and hands them to the final document and only processes code that is marked as such. I’m not going into details how ERB works and suppose a basic familiarity before you dive into Slim. I would not recommend you to use Slim if you are not already familiar with Rails’ default way of templating since you will have a much easier time to play with Slim understanding how templating works out of the box in Rails. 
+In terms of programming experience, if you consider yourself to be more on the newbie side of things, I’ll try to give you a quick round trip before we start using Slim. When people talk about templates, they mostly mean plain HTML markup with dynamic code that is often used for flow control, object injection or partial template (partials) rendering. For example when a controller provides you with instance variables that can be used by the view via (instance)variable substitution to display attributes from that object. All this happens via the template processor of your choice—ERB, Haml, Slim and the likes—which combines all your web templates into a final web page. Templates can also be used to generate XML and RSS feeds as well as other forms of structured text files.
 
+You can define various “layouts” that are handling particular parts of your website and the data that needs to be displayed systematically and with the smallest amount of repetition. When you started playing with Rails, you surely have been using ERB for exactly these kinds of scenarios. ERB takes the plain text portions and hands them to the final document and only processes code that is marked as such. I’m not going into details how ERB works and suppose you have a basic familiarity before you dive into Slim. I would not recommend to use Slim if you are not already familiar with Rails’ default way of templating since you will have a much easier time to play with Slim understanding how templating works out of the box in Rails. 
+
+Below is a basic ERB example of a template that displays a collection of missions that are associated with an ```@agent``` object. Directly below, it also uses a method from a Ruby Gem to paginate the ```@missions``` collection.
+
+``` erb
+
+<% if @agent.missions.any? %>
+  <h4>Missions (<%= @agent.missions.count %>)</h4>
+  <ul class="missions">
+    <%= render @missions %>
+  </ul>
+  <%= will_paginate @missions %>
+<% end %>
+
+```
+
+This is a small section of a template that shows nicely that it’s nothing more than a static HTML part that has some dynamic injections from some Ruby code. If we wouldn’t use templates like this, we’d have to manually write code for every new object that we want to see displayed on a page. Not sure about you, but I can’t imagine a bigger nightmare or waste of time than that. Templates give us a handy tool for making our view layer smart and dynamic without repeating ourselves. As you can also see from this example, templates let us use partial templates that we can render where needed. Here we have a ```_mission.html.erb``` partial somewhere which helps us to iterate over a collection of ```@mission``` objects which in turn get listed inside our ```.missions``` class.
+
+As you can see, templates are nothing magic but are super handy to make developing web apps a lot more efficient and organized. I just wanted to make sure that we are all on the same page before diving into Slim.
 
 ## Getting Started
 
