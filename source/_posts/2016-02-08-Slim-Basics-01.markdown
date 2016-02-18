@@ -172,6 +172,10 @@ This is a small section of a template that shows nicely that it’s nothing more
 
 As you can see, templates are nothing magic but are super handy to make developing web apps a lot more efficient and organized. I just wanted to make sure that we are all on the same page before diving into Slim.
 
+## What about ERB & Haml?
+
+If you like using these tools, it’s perfectly fine. Nothing wrong with that. The thing is, if you are looking for something smarter that is more minimalistic, it’s hard to find something that goes further than Slim.
+
 ## Getting Started
 
 ## Syntax
