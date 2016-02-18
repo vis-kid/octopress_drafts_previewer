@@ -30,6 +30,7 @@ Deluxe templating with Slim
 + Logic-less Mode
 + Performance
 + Framework Support
++ Command Line Slim slimrb
 + Temple & Tilt
 + Rails
 + Sinatra
@@ -177,6 +178,158 @@ As you can see, templates are nothing magic but are super handy to make developi
 If you like using these tools, it’s perfectly fine. Nothing wrong with that. The thing is, if you are looking for something smarter that is more minimalistic, it’s hard to find something that goes further than Slim.
 
 ## Getting Started
+
+### Slim With Rails
+
+No surprise, there is a gem for that.
+
+#### Gemfile
+
+``` ruby
+
+gem 'slim-rails'
+
+```
+
+#### Shell
+
+``` bash
+
+bundle install
+
+```
+
+That’s it, we’re all set. Because you installed this gem, Slim will get loaded and initialized whenever your app loads. Also, for your convenience, when you generate controllers via ```rails g controller```, you will automatically get ```.slim``` view files for your view—```.html.erb``` files no more. Works the same with scaffolds, but I hope you are not using them really!
+
+To demonstrate this behaviour for folks who are new to using Rails’ generators, I’ll create a controller for secret service operatives that has all the standard REST controller actions:
+
+#### Shell
+
+``` bash
+
+rails generate controller SecretServiceOperatives index new create show edit update destroy
+
+```
+
+Among other stuff, you’ll get all the ```.slim``` files you need. Rails puts an extra ```.html``` in there as well—you can get rid of that if it bothers you of course. All that matters is that the slim file extension is already there and that it’s ready for preprocessing your Slim code. Yay!
+
+``` bash
+
+...
+
+invoke  slim
+     create    app/views/secret_service_operatives
+     create    app/views/secret_service_operatives/index.html.slim
+     create    app/views/secret_service_operatives/new.html.slim
+     create    app/views/secret_service_operatives/create.html.slim
+     create    app/views/secret_service_operatives/show.html.slim
+     create    app/views/secret_service_operatives/edit.html.slim
+     create    app/views/secret_service_operatives/update.html.slim
+     create    app/views/secret_service_operatives/destroy.html.slim
+
+...
+
+```
+
+The next step would be to open your application layout and to replace boilerplate code with something Slim. Also, don’t forget to rename the ```application.html.erb``` file to ```application.slim``` (or ```application.html.slim``` if you want). We have already slimmed down a bit, even the file name has lost some weight.
+
+#### app/views/layouts/application.slim
+
+``` slim
+
+doctype html
+html
+  head
+    title
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  body
+    header.navbar
+      .logo
+        = link_to "Spy app", 'root_path', id: "logo"
+        nav
+          ul.navbar-right
+            li
+              = link_to "Home",    'root_path'
+            li
+              = link_to "Help",    'help_path'
+            li
+              = link_to "Sign up", 'sign_up_path'
+            li
+              = link_to "Log in",  'login_path'
+    .main
+      h1.welcome Welcome to Boss Level Slim Templates!
+      = yield
+
+```
+
+Nothing fancy, but a good start—and as easy as can be I think.
+
+#### Screenshot
+
+{% img /images/Slim/boss-leve-slim-application-layout-welcome.png %}
+
+As a little side note, if you are ever curious which version of the gem you have installed, this little command will tell you—it’s handy for any gem as well of course:
+
+#### Shell
+
+``` bash
+
+bundle show 'slim-rails' 
+
+```
+
+It tells you where it is stored and which version this gem currently has. The output looks like this:
+
+``` bash
+
+/Library/Ruby/Gems/2.3.0/gems/slim-rails-3.0.1
+
+```
+
+### Sinatra
+
+For the Sinatra enthusiasts among you, I wanted to mention how to get started as well. First we need to install the gem of course.
+
+``` bash
+
+gem install slim
+
+``` 
+
+And after that you are almost done. In your Sinatra app, you just need to require Slim and you are good to go.
+
+#### some_sinatra_app.rb
+
+``` ruby
+
+require 'sinatra'
+require 'slim'
+
+get('/') { slim :index }
+
+__END__
+
+@@ index
+doctype html
+html
+  head
+    title Slim Templates
+    body
+      h1 Boss Level Ruby Templates With Slim
+
+
+
+```
+
+Here I used an inline template to write the Slim markup in the same file and told Sinatra that I want to use Slim for the index file when it makes a get request to the root path. I just needed to reference the inline template inside a curly braces block. What you see below the ```@@ index```—which signifies the index template—is all white spece sensitive Slim syntax.
+
+#### Screenshot
+
+{% img /images/Slim/sinatra-setup.png %}
+
+I think it’s a good time to show you how to write some Slim.
 
 ## Syntax
 
