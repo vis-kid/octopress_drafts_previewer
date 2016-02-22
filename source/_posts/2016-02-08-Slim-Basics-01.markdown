@@ -23,8 +23,8 @@ Deluxe templating with Slim
 + What about ERB & Haml?
 + Getting Started
 + Syntax
-+ Line Indicators
 + HTML Tags
++ Line Indicators
 + Helpers
 + Safety
 + Logic-less Mode
@@ -332,5 +332,240 @@ Here I used an inline template to write the Slim markup in the same file and tol
 I think it’s a good time to show you how to write some Slim.
 
 ## Syntax
+
+### HTML tags
+
+#### HTML <!DOCTYPE> Declaration
+
+Let’s start with the simplest one, the doctype declaration. As you probably know and already forgot, this must be declared on top of you HTML document—before the actual ```<html>``` tag. FYI, it’s not an HTML tag and instructs the browser about the version of the HTML page. Among the different versions for ```<!DOCTYPE>``` there is only one for HTML5: ```<!DOCTYPE html>```—thank god!—which is exactly what we get when we write ```doctype html``` or ```doctype 5``` in Slim.
+
+``` slim
+
+doctype html
+html
+  head
+
+doctype 5
+html
+  head
+
+```
+
+#### ID shortcut # and class shortcut .
+
+Writing front-end code means a ton of classes and ever so few ids—I hope you. To avoid writing these over and over again, Slim meets you more than halfway and let’s you short-circut the whole process bascically. Let me show you what I mean. The following Slim code:
+
+``` slim
+
+#logo
+h1.header
+.evil-wrapper
+  h2#author-name
+  ul.books
+
+```
+
+gets compiled to this HTML output:
+
+``` html
+
+<div id="logo"></div>
+<h1 class="header"></h1>
+<div class="evil-wrapper">
+  <h2 id="author-name"></h2>
+  <ul class="books"></ul>
+</div>
+
+```
+
+As you cann see, the dot between the HTML tag suggests to Slim that you want to use a class and the name that follows is what you want to name it. Same goes for ids—you just use the hash symbol (aka pound sign) which does the trick. Astute readers surely recognized that the versions without a leading tag trigger the creation of a div with the corresponding class or id—which can be seen for ```<div id="logo"></div>``` and ```<div class="evil-wrapper"></div>```. Pretty handy, don’t you think?
+
+You can also be more expressive in your Slim code if you want to. Nobody hinders you to write your good ol’ classes and ids by hand. If you somehow feel attached to that, go for it. I like the more succinct version because it also let’s me avoid typing quotes and repeated text all the time. Up to you, whatever makes you happy! The code below is a bit more verbose but renders the exact same HTML as above:
+
+``` slim
+
+div id='logo'
+h1 class='header'
+div class='evil-wrapper'
+  h2 id='author-name'
+  ul class='books'
+
+```
+
+Now, isn’t that a thing of beauty? Imagine all these dreaded tags that you don’t need to write yourself, plus getting rid of all the excess enclosing angle brackets. Sure, your code editor can do a lot of this work for you as well, but does your editor also read the code for you? Exactly! When you come back to read your code, you also want a succinct document that is super easy to digest visually. I think this simple examples shows best what a tool like Slim has to offer. It’s these little things that add up to a great tool and timesaver in the long run. Even if you only use it for exactly that functionality and ignore the other more advanced features for now, making the switch to Slim would already pay off big time imho.
+
+#### Text Content
+
+Writing text is as easy as you’d expect of course. Just add it on after your tags.
+
+Slim:
+
+``` slim
+
+h1#welcome-header Your funky welcome message goes here!
+
+```
+
+HTML Output:
+
+``` html
+
+<h1 id="welcome-header">
+  Your funky welcome message goes here!
+</h1>
+
+```
+
+Nothing more to add, easy as can be!
+
+#### Attributes
+
+HTML attributes which provide additional info about the tags can be included as follows:
+
+Slim:
+
+``` slim
+
+a href="http://slim-lang.com" title='Slim Homepage' Goto the Slim homepage
+
+img alt="James Bond posing together with M" src="image.png" height="90" width="90"/
+
+```
+
+HTML Output:
+
+``` html
+
+<a href="http://slim-lang.com" title="Slim Homepage">Goto the Slim homepage</a>
+
+<img alt="James Bond posing together with M" height="90" src="image.png" width="90" />
+
+```
+
+You can basically chain them on and Slim will separate it from the text content—if present. If you look closely, you can see that our ```img``` tag has a trailing slash which explicitly closes tags in Slim. For images or more convoluted tags surely useful. FYI, HTML5 does not require you to write the attribute names in lower case nor to use quotes around attribute values. It is nevertheless recommended standard practice by the W3C.
+
+#### Attribute Wrappers
+
+Slim offers you wrappers to make your attributes easier to read. Might not be necessary all the time, but it’s handy to know if a tag with lots of attributes needs some taming. You can use any of the following delimiters to wrap attributes: ```{}```, ```[]``` and ```()```.
+
+Slim:
+
+``` slim
+
+a{href="http://slim-lang.com" title='Home page'} Goto the home page
+
+a{href="http://slim-lang.com/about.html" title='About page'
+  class='link' id='about'} Goto the about page
+
+h2[id="big-header" class="agent-header tagline"] Funky headline
+
+h3(id="small-header"
+   class="agent 007 tagline") Some other funky headline
+
+```
+
+HTML Output:
+
+``` html
+
+<a href="http://slim-lang.com" title="Home page">Goto the home page</a>
+
+<a class="link" href="http://slim-lang.com/about.html" id="about" title="About page">Goto the about page</a>
+
+<h2 class="agent-header tagline" id="big-header">
+  Funky headline
+</h2>
+
+<h3 class="agent 007 tagline" id="small-header">
+  Some other funky headline
+</h3>
+
+```
+
+If that’s easier for you to organize the markup, go for it! As illustrated by the second ```a``` and the ```h3``` tags, you can even spread attributes and selectors across multiple lines. Indentation seems to be enforced very forgivingly in regards whitespace sensitivity. My guess is though that not for long and you won’t wrappers much. You‘ll get used to the barebones Slim syntax in no time and save them for special occasions—like you probably should.
+
+#### Attribute Merging
+
+Btw, if you have multiple classes or ids per tag as in the example above, you can also write them more succinctly by daisy-chaining them. They will be automatically delimited by white space.
+
+Slim:
+
+``` slim
+
+h2#big-header.agent-header.tagline Funky headline
+
+h3#small-header.agent.007.tagline Small funky headline
+
+```
+
+Not that all these ids and classes mixed up like this represents best practices or anything, but this produces the exact same HTML as above. Pretty cool huh? Careful, spreading these across multiple lines won’t work without attribute wrappers though.
+
+Another option would be to use an array with strings or just symbols to merge in attributes. In my book I’d call this one good to know but it’s not something I try to actively use. Might be handy if you want to interpolate somthing I suppose.
+
+Slim:
+
+``` slim
+
+h2 class=["agent-header","tagline"] Funky headline
+
+h3 class=:agent,:double_o_seven,:tagline Small funky headline
+
+```
+
+HTML Output:
+
+``` html
+
+<h2 class="agent-header tagline">
+  Funky headline
+</h2>
+
+<h3 class="agent double_o_seven tagline">
+  Small funky headline
+</h3>
+
+```
+
+#### Attribute Interpolation
+
+Did somebody say interpolation? Within quoted attributes, you can use Ruby to interpolate code if needed. A simple example should be enough to illustrate this behaviour:
+
+Slim:
+
+```slim
+
+a href="http://#{url}" Goto #{url}
+
+```
+
+Again, not something you might use on a daily basis but it sure is good to know to have in your bag of tricks. The attribute values will be escaped by default btw. If you need that behaviour disabled, just use a ```==```.
+
+```slim
+
+a href=="http://#{url}" Goto #{url}
+
+```
+
+You can use full-on Ruby to play with your attributes as well. Just throw an equals sign in there where you want some Ruby code to be executed and you are ready to go.
+
+``` slim
+
+ul
+  li id="agent_#{agent.id}" class=agent.role
+    a href=(path_to_agent agent) =agent.name
+
+```
+
+That of course also means that you can use simple booleans the same way in your attributes as well.
+
+``` slim
+
+input type="text" disabled=false
+input type="text" disabled=true
+input type="text" disabled=nil
+
+```
+
+Groovy, let’s move on!
 
 ## Line Indicators
