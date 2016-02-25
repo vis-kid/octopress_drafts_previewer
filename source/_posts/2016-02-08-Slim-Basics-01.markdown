@@ -22,8 +22,12 @@ Deluxe templating with Slim
 + What are Templates?
 + What about ERB & Haml?
 + Getting Started
++ Rails
++ Sinatra
 + Syntax
 + HTML Tags
++ Dynamic Content
+
 + Line Indicators
 + Helpers
 + Safety
@@ -32,18 +36,18 @@ Deluxe templating with Slim
 + Framework Support
 + Command Line Slim slimrb
 + Temple & Tilt
-+ Rails
-+ Sinatra
 
 ## Why Slim?
 
-If you have given Haml a shot before, you’ll probably already know a couple of the arguments I’m gonna make. I think it’s nevertheless a good idea to follow along because you might have already decided to use a more minimalistic templating engine and I’d like you to see the advantages Slim offers as well.
+If you live and breathe in Ruby land and have given Haml a shot before, you’ll probably already know a couple of the arguments I’m gonna make. I think it’s nevertheless a good idea to follow along because you might have already decided to use a more minimalistic templating engine and I’d like you to see the advantages Slim offers as well.
 
-Before we dive into why Slim is cool, I wanna answer real quick what Slim actually is and what it does for you. The documentation sums this up quite nicely: “Slim is a fast, lightweight templating engine with support for Rails 3 and 4”. You can also be use it with Sinatra and even plain Rack. So, if you are a bit tired of using ERB for writing your templates or you are not super satisfied with what Haml has to offer, then you are barking up exactly the right tree with Slim. In terms of syntax used, the people behind Slim were trying to find an answer to the following question: “What's the minimum required to make this work?” For writing the minimal amount of front-end code possible, this sure sounds like the right question to ask imho. Does Slim offer a perfect solution to all your templating concerns? Probably not, but quite frankly, it might just offer the best! Is easy to learn? I think so, but it’s hard to know what other people consider easy. I’d say this though,it takes a bit to get used to but it’s definitely no rocket science. So no need to feel intimidated if you are a bit new to the coding side of things. Will you have a good time with it? Absolutely! 
+Before we dive into why Slim is cool, I wanna answer real quick what Slim actually is and what it does for you. The documentation sums this up quite nicely: “Slim is a fast, lightweight templating engine with support for Rails 3 and 4”. You can also use it with Sinatra and even plain Rack. So, if you are a bit tired of using ERB for writing your templates or you are not super satisfied with what Haml has to offer, then Slim is exactly the right tree for barking up.
 
-So, why Slim? The answer is quite straightforward I think. Your markup should be as beautiful as possible! You should have a good time working with it and the less time you need to spend wading through tons of tag matter the better. What is beautiful you might ask? Of course ,that is not an answer I’ll try to tackle, but being minimal in that regard rarely hurts. What about becoming super cryptic because the templating engine tries to be super smart in being minimal? That is a fair concern and I hope you will be happy to hear that the team behind Slim takes this very seriously. They want to remove as much as possible from plain old HTML and reveal only the essential parts—all without becoming too cryptic. They core team tries to go even a step beyond that, they are really concerned about the aesthetics of Slim code. Pretty good deal, don’t you think? 
+In regards to its syntax, the people behind Slim were trying to find an answer to the following question: “What's the minimum required to make this work?” For writing the minimal amount of front-end code possible, this sure sounds like the right question to ask imho. Does Slim offer a perfect solution to all your templating concerns? Probably not, but quite frankly, it might just offer the best! Is it easy to learn? I think so, but it’s hard to know what other people consider easy. I’d say this though, it takes a bit to get used to but it’s definitely no rocket science. So no need to feel intimidated if you are a bit new to the coding side of things. Will you have a good time with it? Absolutely! 
 
-Isn’t it much nicer if you can just glance at a template and be able to easily digest what’s going on? Templates can become a very ‘crowded’ place—even if you make intelligent use of partials—and as a consequence, you want to reduce the amount of noise to the absolute minimum. Have you maybe tried the indented Sass (.sass) syntax? I hope you did, it’s just awesome! If so, you probably will have a similar appreciation for what Slim has to offer. It’s also whitespace sensitive which lead to really succinct and readable code. Let’s take this piece of HTML / ERB code and compare it to Slim.
+So, why Slim? The answer is quite straightforward I think. Your markup should be as readable and beautiful as possible! You should have a good time working with it and the less time you need to spend wading through tons of tag matter the better. What is beautiful you might ask? Of course, that is not an answer I’ll try to tackle, but being minimal in that regard rarely hurts. What about becoming super cryptic because the templating engine tries to be super smart in being minimal? That is a fair concern and you’ll be happy to hear that the team behind Slim takes this very seriously. They want to remove as much as possible from plain old HTML and reveal only the essential parts—all without becoming too cryptic. They core team tries to go even a step beyond that, they are really concerned about the aesthetics of Slim code. Pretty good deal, don’t you think? 
+
+Isn’t it much nicer if you can just glance at a template and to be able to easily digest what’s going on? Templates can become a very ‘crowded’ place—even if you make intelligent use of partials—and as a consequence, you want to reduce the amount of noise to the absolute minimum. Have you maybe tried the indented Sass (.sass) syntax? I hope you did, it’s just plain dope! If so, you probably will have a similar appreciation for what Slim has to offer. It’s also whitespace sensitive which leads to really succinct and readable code. Let’s take this piece of HTML / ERB code and compare it to Slim.
 
 ``` html
 
@@ -76,15 +80,14 @@ Isn’t it much nicer if you can just glance at a template and be able to easily
 
 ```
 
-Let’s compare this with a Slim version.
+Let’s look at the Slim equivalent:
 
 ``` slim
 
 doctype html
 html
   head
-    title
-      = full_title(yield(:title))
+    title = full_title(yield(:title))
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
@@ -105,9 +108,11 @@ html
 
 ```
 
-Sure, you are not used to the syntax yet so it might look a bit alien at first but I’m sure you can appreciate how succinct it reads. No left / right angle brackets, no need to write divs—instead we can focus on the name their ids and classes have—it feels a lot less messy and more organized, don’t you think?
+The first thing people often recognize is “hey, no closing tags!” Cool? Sure, you are not used to the syntax yet so it might look a bit alien at first but I’m sure you can appreciate how succinct it reads. No left / right angle brackets, no need to write divs and minimalistic selectors—instead we can focus on the name the ids and classes have—it feels a lot less messy and more organized, don’t you think?
 
-For comparison, here is the Haml version. It’s really not meant as an opportunity to bash Haml, it just shows you how similar it is but also that Slim goes a step further with its choice of minimal syntax and the result is even more elegant I think. Why go so minimal and still make me type the ```%``` sign all the time. My index finger has better things to do than grabbing shift-5 all the time. Can you customize that behaviour? Pretty sure, at least I hope so! But the design seems a bit flawed and less spartan compared to Slim. I realize that this is a matter of taste though, so I’ll leave it at that.
+For comparison, here is the Haml version. It’s really not meant as an opportunity to bash Haml, it just shows you how similar it is but also that Slim goes a step further with its choice of minimal syntax. The result is that it’s even more elegant than Haml I think. Why go so minimal but still make me type the ```%``` sign all over the place. My index finger has no special motivation to grab shift-5 all the time. Can you customize that behaviour? Pretty sure, at least I hope so! But the design seems a bit flawed in that regard and less spartan compared to Slim. I realize that this is also a matter of taste though, so I’ll leave it at that.
+
+#### Haml
 
 ``` haml
 
@@ -132,28 +137,29 @@ For comparison, here is the Haml version. It’s really not meant as an opportun
 
 ```
 
+Before we jump into the meaty parts, let me be puffy for a moment and sum up what I think makes learning Slim a worthy investment of your time:
 
 + It’s speedy.
 + Super readable.
-+ Index finger friendly.
 + It has a smart syntax.
 + Its aesthetic is minimal.
 + It is highly configurable
++ It’s index finger friendly.
 + It’s boss-level templating.
 + It’s fun to write and looks dope.
-+ Automatic HTML escaping by default
-+ Super nice Rails and Sinatra integration
++ Automatic HTML escaping by default.
++ Super nice Rails and Sinatra integration.
 + Very minimal templates that are easy to maintain.
 + Is extensive and allows you to write plugins and extensions.
 + There is a logic-less mode for times when you want to output HTML but have no reason to include Ruby code.
 + It has configurable shortcuts for tags—which is a pretty nice feature to customize the engine to your needs.
-+ And finally because Slim’s syntax is guided by one very cool motto: “What's the minimum required to make this work”. This is very hard not to like.
++ And finally, because Slim’s syntax is guided by one very cool motto: “What's the minimum required to make this work”. This is very hard not to like.
 
 ## What Are Templates?
 
 In terms of programming experience, if you consider yourself to be more on the newbie side of things, I’ll try to give you a quick round trip before we start using Slim. When people talk about templates, they mostly mean plain HTML markup with dynamic code that is often used for flow control, object injection or partial template (partials) rendering. For example when a controller provides you with instance variables that can be used by the view via (instance)variable substitution to display attributes from that object. All this happens via the template processor of your choice—ERB, Haml, Slim and the likes—which combines all your web templates into a final web page. Templates can also be used to generate XML and RSS feeds as well as other forms of structured text files.
 
-You can define various “layouts” that are handling particular parts of your website and the data that needs to be displayed systematically and with the smallest amount of repetition. When you started playing with Rails, you surely have been using ERB for exactly these kinds of scenarios. ERB takes the plain text portions and hands them to the final document and only processes code that is marked as such. I’m not going into details how ERB works and suppose you have a basic familiarity before you dive into Slim. I would not recommend to use Slim if you are not already familiar with Rails’ default way of templating since you will have a much easier time to play with Slim understanding how templating works out of the box in Rails. 
+With templates, you can define various “layouts” that are handling particular parts of your website as well as the the data that needs to be displayed systematically with the smallest amount of repetition. When you started playing with Rails, you surely have been using ERB for exactly these kinds of scenarios. ERB takes the plain text portions, hands them to the final document and only processes code that is marked as such. I’m not going into details how ERB works and suppose you have a basic understanding before you dive into Slim. I would not recommend to use Slim if you are not already familiar with Rails’ default way of templating since you will have a much easier time to play with Slim understanding how this works out of the box in Rails. 
 
 Below is a basic ERB example of a template that displays a collection of missions that are associated with an ```@agent``` object. Directly below, it also uses a method from a Ruby Gem to paginate the ```@missions``` collection.
 
@@ -169,13 +175,13 @@ Below is a basic ERB example of a template that displays a collection of mission
 
 ```
 
-This is a small section of a template that shows nicely that it’s nothing more than a static HTML part that has some dynamic injections from some Ruby code. If we wouldn’t use templates like this, we’d have to manually write code for every new object that we want to see displayed on a page. Not sure about you, but I can’t imagine a bigger nightmare or waste of time than that. Templates give us a handy tool for making our view layer smart and dynamic without repeating ourselves. As you can also see from this example, templates let us use partial templates that we can render where needed. Here we have a ```_mission.html.erb``` partial somewhere which helps us to iterate over a collection of ```@mission``` objects which in turn get listed inside our ```.missions``` class.
+This is a small section of a template that shows nicely that it’s nothing more than a static HTML part that has some dynamic injections from some Ruby code. If we wouldn’t use templates like this, we’d have to manually write code for every new object that we want to see displayed on a page. Not sure about you, but I can’t imagine a bigger nightmare or waste of time than that. Templates give us a handy tool for making our view layer smart and dynamic without repeating ourselves. As you can also see from this example, templates let us use partial templates that we can render where needed. Here we would have a ```_mission.html.erb``` partial somewhere which helps us to iterate over a collection of ```@mission``` objects which in turn get listed inside our ```.missions``` class.
 
-As you can see, templates are nothing magic but are super handy to make developing web apps a lot more efficient and organized. I just wanted to make sure that we are all on the same page before diving into Slim.
+As you can see, templates are nothing magic but are super handy to make developing web apps a lot more efficient and organized. I just wanted to make sure that we are all on the same page with this before diving into Slim.
 
 ## What about ERB & Haml?
 
-If you like using these tools, it’s perfectly fine. Nothing wrong with that. The thing is, if you are looking for something smarter that is more minimalistic, it’s hard to find something that goes further than Slim. To me it’s the most streamlined templating solution in Ruby land that I know. They all work fine, it’s a matter of personal preference I guess.
+If you like using these tools, it’s perfectly fine. Nothing wrong with that. The thing is, if you are looking for something smarter that is more minimalistic, it’s hard to find something that goes further than Slim. To me, it’s the most streamlined templating solution in Ruby land that I know of. They all work fine, it’s a matter of personal preference I guess.
 
 ## Getting Started
 
@@ -199,7 +205,7 @@ bundle install
 
 ```
 
-That’s it, we’re all set. Because you installed this gem, Slim will get loaded and initialized whenever your app loads. Also, for your convenience, when you generate controllers via ```rails g controller```, you will automatically get ```.slim``` view files for your view—```.html.erb``` files no more. Works the same with scaffolds, but I hope you are not using them really!
+That’s it, we’re all set. Because you installed this gem, Slim will get loaded and initialized whenever your app loads. Also, for your convenience, when you generate controllers via ```rails generate controller```, you will automatically get ```.slim``` view files for your view—```.html.erb``` files no more. Works the same with scaffolds, but I hope you are not using them really!
 
 To demonstrate this behaviour for folks who are new to using Rails’ generators, I’ll create a controller for secret service operatives that has all the standard REST controller actions:
 
@@ -288,9 +294,11 @@ It tells you where it is stored and which version this gem currently has. The ou
 
 ```
 
-### Sinatra
+### Slim With Sinatra
 
 For the Sinatra enthusiasts among you, I wanted to mention how to get started as well. First we need to install the gem of course.
+
+#### Shell
 
 ``` bash
 
@@ -323,13 +331,13 @@ html
 
 ```
 
-Here I used an inline template to write the Slim markup in the same file and told Sinatra that I want to use Slim for the index file when it makes a get request to the root path. I just needed to reference the inline template inside a curly braces block. What you see below the ```@@ index```—which signifies the index template—is all white spece sensitive Slim syntax.
+Here I used an inline template to write the Slim markup in the same file and told Sinatra that I want to use Slim for the index file when it makes a ```get``` request to the root path. I just needed to reference the inline template inside a curly braces block. What you see below the ```@@ index```—which signifies the index template—is all whitespace sensitive Slim syntax.
 
 #### Screenshot
 
 {% img /images/Slim/sinatra-setup.png %}
 
-I think it’s a good time to show you how to write some Slim.
+Time to show you how to write some Slim.
 
 ## Syntax
 
@@ -337,7 +345,7 @@ I think it’s a good time to show you how to write some Slim.
 
 #### HTML <!DOCTYPE> Declaration
 
-Let’s start with the simplest one, the doctype declaration. As you probably know and already forgot, this must be declared on top of you HTML document—before the actual ```<html>``` tag. FYI, it’s not an HTML tag and instructs the browser about the version of the HTML page. Among the different versions for ```<!DOCTYPE>``` there is only one for HTML5: ```<!DOCTYPE html>```—thank god!—which is exactly what we get when we write ```doctype html``` or ```doctype 5``` in Slim.
+Let’s start with the simplest one, the doctype declaration. As you probably know and already forgot, this must be declared on top of you HTML document—before the actual ```<html>``` tag. FYI, it’s not an HTML tag and instructs the browser about the version of the HTML page. Among the different versions for ```<!DOCTYPE>```, there is only one for HTML5: ```<!DOCTYPE html>```—thank god!—which is exactly what we get when we write ```doctype html``` or ```doctype 5``` in Slim.
 
 ``` slim
 
@@ -353,7 +361,7 @@ html
 
 #### ID shortcut # and class shortcut .
 
-Writing front-end code means a ton of classes and ever so few ids—I hope you. To avoid writing these over and over again, Slim meets you more than halfway and let’s you short-circut the whole process bascically. Let me show you what I mean. The following Slim code:
+Writing front-end code means a ton of classes and ever so few ids—I hope. To avoid writing these over and over again, Slim meets you more than halfway and let’s you short-circut the whole process bascically. Let me show you what I mean. The following Slim code:
 
 ``` slim
 
@@ -378,9 +386,11 @@ gets compiled to this HTML output:
 
 ```
 
-As you cann see, the dot between the HTML tag suggests to Slim that you want to use a class and the name that follows is what you want to name it. Same goes for ids—you just use the hash symbol (aka pound sign) which does the trick. Astute readers surely recognized that the versions without a leading tag trigger the creation of a div with the corresponding class or id—which can be seen for ```<div id="logo"></div>``` and ```<div class="evil-wrapper"></div>```. Pretty handy, don’t you think?
+As you cann see, the dot suggests to Slim that you want to use a class and the name that follows is what you want to name it. Same goes for ids—you just use the hash symbol (aka pound sign) which does the trick. Astute readers surely recognized that the versions without a leading tag trigger the creation of a div with the corresponding class or id—which can be seen for ```<div id="logo"></div>``` and ```<div class="evil-wrapper"></div>```. Pretty handy, don’t you think?
 
-You can also be more expressive in your Slim code if you want to. Nobody hinders you to write your good ol’ classes and ids by hand. If you somehow feel attached to that, go for it. I like the more succinct version because it also let’s me avoid typing quotes and repeated text all the time. Up to you, whatever makes you happy! The code below is a bit more verbose but renders the exact same HTML as above:
+You can also be more expressive in your Slim code if you want to. Nobody hinders you to write your good ol’ classes and ids by hand. If you somehow feel attached to that, go for it! I like the more succinct version because it also let’s me avoid typing quotes and repeated text all the time. Up to you, whatever makes you happy! The code below is a bit more verbose but renders the exact same HTML as above:
+
+#### Slim
 
 ``` slim
 
@@ -392,7 +402,42 @@ div class='evil-wrapper'
 
 ```
 
-Now, isn’t that a thing of beauty? Imagine all these dreaded tags that you don’t need to write yourself, plus getting rid of all the excess enclosing angle brackets. Sure, your code editor can do a lot of this work for you as well, but does your editor also read the code for you? Exactly! When you come back to read your code, you also want a succinct document that is super easy to digest visually. I think this simple examples shows best what a tool like Slim has to offer. It’s these little things that add up to a great tool and timesaver in the long run. Even if you only use it for exactly that functionality and ignore the other more advanced features for now, making the switch to Slim would already pay off big time imho.
+Now, isn’t that a thing of beauty? Imagine all these dreaded HTML tags that you don’t need to write yourself, plus getting rid of all the excess enclosing angle brackets. Sure, your code editor can do a lot of this work for you as well, but does your editor also read the code for you? Exactly! When you come back to read your code, you also want a succinct document that is super easy to digest visually. I think this simple examples shows best what a tool like Slim has to offer. It’s these little things that add up to a great tool and timesaver in the long run. Even if you only use it for exactly that functionality and ignore the other more advanced features for now, making the switch to Slim would already pay off big time imho.
+
+#### Inline Tags
+
+Let’s say you have multiple tags that you want to have inline for being more compact or whatever. So instead of breaking to a new line, you can chain them by separating these tags with a colon ```:```. Both examples below are rendering the exact same output.
+
+``` slim
+
+ul
+  li.first
+    a href="/a" A link
+  li
+    a href="/b" B link
+
+ul
+  li.first: a href="/a" A link
+  li: a href="/b" B link
+
+```
+
+HTML Output:
+
+``` html
+
+<ul>
+  <li class="link">
+    <a href="/a">A link</a>
+  </li>
+  <li>
+    <a href="/b">B link</a>
+  </li>
+</ul>
+
+```
+
+The second version is more minimal because of the inlined tags and would be my preference. After all, compact is good, no? I think this case shows nicely that Slim evenly balances between compact and cryptic. Yes, it takes a bit getting used to and in some cases additional attribute wrappers are helpful (see more about wrappers below). Call me crazy, but I’m pretty certain that you’ll read Slim like regular HTML markup in a jiffy.
 
 #### Text Content
 
@@ -420,7 +465,7 @@ Nothing more to add, easy as can be!
 
 #### Attributes
 
-HTML attributes which provide additional info about the tags can be included as follows:
+HTML attributes, which provide additional info about the tags, can be included as follows:
 
 Slim:
 
@@ -443,6 +488,63 @@ HTML Output:
 ```
 
 You can basically chain them on and Slim will separate it from the text content—if present. If you look closely, you can see that our ```img``` tag has a trailing slash which explicitly closes tags in Slim. For images or more convoluted tags surely useful. FYI, HTML5 does not require you to write the attribute names in lower case nor to use quotes around attribute values. It is nevertheless recommended standard practice by the W3C.
+
+#### Attribute Merging
+
+Btw, if you have multiple selectors like classes or ids per tag, you can also write this more succinctly by daisy-chaining them. These selectors will be automatically delimited by whitespace.
+
+Slim:
+
+``` slim
+
+h2#big-header.agent-header.tagline Funky headline
+
+h3.small-header.agent#007.tagline Small funky headline
+
+```
+
+HTML Output
+
+``` html
+
+<h2 class="agent-header tagline" id="big-header">
+  Funky headline
+</h2>
+<h3 class="small-header agent tagline" id="007">
+  Small funky headline
+</h3>
+
+```
+
+Not that all these ids and classes mixed up like this represents best practices or anything, but it’s easy to see how Slim works in such a convoluted example. Pretty cool huh? Careful though, spreading these selectors across multiple lines won’t work without attribute wrappers (see next section).
+
+Another option would be to use an array with strings or just symbols to merge in attributes.
+
+Slim:
+
+``` slim
+
+h2 class=["agent-header","tagline"] Funky headline
+
+h3 class=:agent,:double_o_seven,:tagline Small funky headline
+
+```
+
+HTML Output:
+
+``` html
+
+<h2 class="agent-header tagline">
+  Funky headline
+</h2>
+
+<h3 class="agent double_o_seven tagline">
+  Small funky headline
+</h3>
+
+```
+
+In my book, I’d call this one a good-to-know but it’s not something I try to actively use. Might be handy if you want to interpolate something I suppose.
 
 #### Attribute Wrappers
 
@@ -482,47 +584,39 @@ HTML Output:
 
 ```
 
-If that’s easier for you to organize the markup, go for it! As illustrated by the second ```a``` and the ```h3``` tags, you can even spread attributes and selectors across multiple lines. Indentation seems to be enforced very forgivingly in regards whitespace sensitivity. My guess is though that not for long and you won’t wrappers much. You‘ll get used to the barebones Slim syntax in no time and save them for special occasions—like you probably should.
+If that’s easier for you to organize the markup, go for it! As illustrated by the second ```a``` and the ```h3``` tags, you can even spread attributes and selectors across multiple lines. Indentation seems to be enforced very forgivingly in regards whitespace sensitivity. My guess is though that not for long and you won’t need wrappers much. You‘ll get used to the barebones Slim syntax in no time and save them for special occasions—like you probably should.
 
-#### Attribute Merging
-
-Btw, if you have multiple classes or ids per tag as in the example above, you can also write them more succinctly by daisy-chaining them. They will be automatically delimited by white space.
-
-Slim:
+For inlined tags, wrappers might come in handy every once in a while. As you can also observe in the example below, you can use spaces with the delimiters to make it even more readable—just a side note.
 
 ``` slim
 
-h2#big-header.agent-header.tagline Funky headline
-
-h3#small-header.agent.007.tagline Small funky headline
-
-```
-
-Not that all these ids and classes mixed up like this represents best practices or anything, but this produces the exact same HTML as above. Pretty cool huh? Careful, spreading these across multiple lines won’t work without attribute wrappers though.
-
-Another option would be to use an array with strings or just symbols to merge in attributes. In my book I’d call this one good to know but it’s not something I try to actively use. Might be handy if you want to interpolate somthing I suppose.
-
-Slim:
-
-``` slim
-
-h2 class=["agent-header","tagline"] Funky headline
-
-h3 class=:agent,:double_o_seven,:tagline Small funky headline
+ul
+  li.long-link: a{ href="http://slim-lang.com" title='Home page' } Goto the home page
+  li.long-link.class.with-id: a[ href="http://slim-lang.com/about.html" title='About page'
+                                 class='link' id='about' ] Goto the about page
+  li.c-link: a(href="/c") C link
+  li: a[href="/d"] D link
 
 ```
 
-HTML Output:
+HTML Output
 
 ``` html
 
-<h2 class="agent-header tagline">
-  Funky headline
-</h2>
-
-<h3 class="agent double_o_seven tagline">
-  Small funky headline
-</h3>
+<ul>
+  <li class="long-link">
+    <a href="http://slim-lang.com" title="Home page">Goto the home page</a>
+  </li>
+  <li class="long-link class with-id">
+    <a class="link" href="http://slim-lang.com/about.html" id="about" title="About page">Goto the about page</a>
+  </li>
+  <li class="c-link">
+    <a href="/c">C link</a>
+  </li>
+  <li>
+    <a href="/d">D link</a>
+  </li>
+</ul>
 
 ```
 
@@ -546,7 +640,7 @@ a href=="http://#{url}" Goto #{url}
 
 ```
 
-You can use full-on Ruby to play with your attributes as well. Just throw an equals sign in there where you want some Ruby code to be executed and you are ready to go.
+You can use full-on Ruby to play with your attributes as well. Just throw an equals sign in there where you want some Ruby code to be executed and you are ready to go. In the second article, you’ll find more info about outputting Ruby code in your Slim templates.
 
 ``` slim
 
@@ -568,4 +662,11 @@ input type="text" disabled=nil
 
 Groovy, let’s move on!
 
-## Line Indicators
+## Final Thoughts
+I hope you got a good sense why Slim is a good choice for all your templating needs in Ruby land. If you still prefer to use Haml or ERB at the moment you might grow an appetite for Slim over time though. I’m not saying it’s an aquired taste or anthing, just that it’s not something that many people pick up early in their careers—maybe because they haven’t yet felt the pain of writing all that excess markup over and over again. This article should provide you with the basics that you need to get started. Slim has more to offer of course—especially a few advanced features that you definitely want to take a look at. In the next article we’re gonna start with a more detailed section about outputting Ruby code into your templates—and much more of course. See you there!
+
+## Output
+
+You have already seen a bit how to use Ruby in your templates. This section gives you all you need to make use of this ...
+
+Before we take a break, we should definitely look into ways to bring Ruby into this equation. As you are hopefully aware of, tons of view code—aka tons of Ruby code in our context—is a serious smell and should be minimized at all times. Just because Slim makes it maybe even more enticing to plaster your templates with tons of logic does not mean that you should not practice constraint in that department. Done right on the other hand, Slim makes it really elegant to inject Ruby where needed.
