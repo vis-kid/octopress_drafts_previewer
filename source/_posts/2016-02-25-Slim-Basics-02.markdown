@@ -12,6 +12,7 @@ categories: [Slim, Ruby, Rails, Templating, Slim]
 
 ## Topics
 
++ Line Indicators
 + Output
 + Line Indicators
 + Helpers
@@ -22,8 +23,229 @@ categories: [Slim, Ruby, Rails, Templating, Slim]
 + Command Line Slim slimrb
 + Temple & Tilt
 
-## Output
+## Line Indicators
+
+### Output
 
 You have already seen a bit how to use Ruby in your templates. This section gives you all you need to make use of this ...
 
-Before we take a break, we should definitely look into ways to bring Ruby into this equation. As you are hopefully aware of, tons of view code—aka tons of Ruby code in our context—is a serious smell and should be minimized at all times. Just because Slim makes it maybe even more enticing to plaster your templates with tons of logic does not mean that you should not practice constraint in that department. Done right on the other hand, Slim makes it really elegant to inject Ruby where needed.
+In the first article, we have been using Ruby already in our templates. Let me remind you what I mean:
+
+#### Sim:
+
+``` slim
+
+html
+  head
+    title
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+
+```
+
+As you can see, in this head tag, we already used a couple of methods from Rails to deal with styles and JavaScript thingies. Nothing major, all you need to do to execute Ruby code is prepend it with an equals ```=``` sign. If your code needs to spread over multiple lines, just append a backslash ```\``` at the end of each line and keep going onto the next one. Should you end the line in a comma ```,```, then you don’t need the backslash.
+
+Let’s have a look at another, more concrete example. Writing forms is often a pain in the butt—lots of boilerplate code, lot’s of repetition and all these dreaded ```<%= %>``` signs in ERB. This can get messy in no time. Could be nicer huh?
+
+#### ERB:
+
+```erb
+
+<%= form_for @agent do |f| %>
+
+  <%= f.label      :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label      :number %>
+  <%= f.text_field :number %>
+
+  <%= f.label      :licence_to_kill %>
+  <%= f.check_box  :licence_to_kill %>
+
+  <%= f.label      :gambler %>
+  <%= f.check_box  :gambler %>
+
+  <%= f.label      :womanizer %>
+  <%= f.check_box  :womanizer %>
+
+  <%= f.submit %>
+
+<% end %>
+
+```
+
+A lot of stuff to write to create a new ```@agent``` object, no? Slim let’s you handle this a lot more succinct. All you need is keep the equals sign and you can get rid of most other stuff. Tadaa!
+
+#### Slim:
+
+``` slim
+
+= form_for @agent do |f|
+
+  = f.label      :name
+  = f.text_field :name
+
+  = f.label      :number
+  = f.text_field :number
+
+  = f.label      :licence_to_kill
+  = f.check_box  :licence_to_kill
+
+  = f.label      :gambler
+  = f.check_box  :gambler
+
+  = f.label      :womanizer
+  = f.check_box  :womanizer
+
+  = f.submit
+
+```
+
+Now you can clearly see why this project is called Slim. So much excess fat is gone now. Don’t tell me you don’t like what you see, I know you’re digging it! Just an ```=``` sign and you can populate your markup with Ruby code—in this case from Rails of course. And when you compare it to the HTML rendered on the final page, it’s hard to ignore how compact Slim really is. 
+
+HTML Output:
+
+``` html
+<form action="/" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+  <input type="hidden" name="authenticity_token" value="+P2I801EkEVBlsMgDo9g9/XgwwQfCBd1eoOBkFmgAHE4bxYi9HGUjEjsNwNMnEadV2tbDtYvQhFb4s/SNMXYtw==" />
+
+  <label for="agent_name">Name</label>
+  <input type="text" name="agent[name]" id="agent_name" />
+
+  <label for="agent_number">Number</label>
+  <input type="text" name="agent[number]" id="agent_number" />
+
+  <label for="agent_licence_to_kill">Licence to kill</label>
+  <input name="agent[licence_to_kill]" type="hidden" value="0" />
+  <input type="checkbox" value="1" name="agent[licence_to_kill]" id="agent_licence_to_kill" />
+
+  <label for="agent_gambler">Gambler</label>
+  <input name="agent[gambler]" type="hidden" value="0" />
+  <input type="checkbox" value="1" name="agent[gambler]" id="agent_gambler" />
+
+  <label for="agent_womanizer">Womanizer</label>
+  <input name="agent[womanizer]" type="hidden" value="0" />
+  <input type="checkbox" value="1" name="agent[womanizer]" id="agent_womanizer" />
+
+  <input type="submit" name="commit" value="Save Agent" />
+</form>
+
+```
+
+Remember the intital question that the Slim core team is guided by: “What's the minimum required to make this work?” When you look at the final HTML output, I guesss it’s fair to say that Slim has answered that question quite successfully—no complaints on my end.
+
+I wanna through in a couple more small examples to give you more opportunity to get used to how injecting Ruby code looks in Slim.
+
+This ERB snippet …
+
+``` erb
+
+<%= render "shared/agents", collection: @agents %>
+
+```
+
+… becomes this in Slim:
+
+``` slim
+
+= render "shared/agents", collection: @agents
+
+```
+
+ERB:
+
+``` erb
+
+<h2>Agents</h2>
+<ul>
+  <% @agents.each do |agent| %>
+    <li class='agent'>
+      <div>Name: <%=            agent.name %></div>
+      <div>Number: <%=          agent.number %></div>
+      <div>Licence to kill: <%= agent.licence_to_kill %></div>
+    </li>
+  <% end %>
+</ul>
+
+```
+
+Slim:
+
+``` slim
+
+h2 Agents
+ul
+  - @agents.each do |agent|
+    li.agent
+      div
+        | Name: 
+        = agent.name
+      div
+        | Number: 
+        = agent.number
+      div
+        | Licence to kill: 
+        = agent.licence_to_kill
+
+```
+
+You could also write this a bit more streamlined via interpolation. You don’t wanna go too crazy with that one though. This would look like this then:
+
+Slim:
+
+``` slim
+
+h2 2nd Agents
+ul
+  - @agents.each do |agent|
+    li.agent
+      div Name:            #{agent.name}
+      div Number:          #{agent.number}
+      div Licence to kill: #{ agent.licence_to_kill}
+
+```
+
+### Control Code
+
+One more for the road. Let’s say you want to use a couple of conditionals in your view. Similar to ERB, you signify Ruby code that is not supposed to be outputted onto the page by a simple dash ```-```. You have seen this in the example abovec where we used that to iterate over ```@agents``` without displaying that particlar part of the code. Although you should try to stay away from all kinds of conditionals in your views and try to find better OOP solutions for such cases—which is a story for another time—this would look something like this:
+
+Slim:
+
+``` slim
+
+- if current_user.role == "admin"
+  p#admintxt | Welcome back my master!
+  = link_to "Edit Profile", edit_user_path(:current)
+  = link_to "Logout", logout_path
+- elsif current_user
+  = link_to "Edit Profile", edit_user_path(:current)
+  = link_to "Logout", logout_path
+- else
+  = link_to "Register", new_user_path
+  = link_to "Login", login_path
+
+```
+
+ERB:
+
+``` erb
+
+<% if current_user.role == "admin" %>
+  <p id="admintxt">Welcome back my master!</p>
+  <%= link_to "Edit Profile", edit_user_path(:current) %>
+  <%= link_to "Logout", logout_path %>
+<% elsif current_user %>
+  <%= link_to "Edit Profile", edit_user_path(:current) %>
+  <%= link_to "Logout", logout_path %>
+<% else %>
+  <%= link_to "Register", new_user_path %>
+  <%= link_to "Login", login_path %>
+<% end %>
+
+```
+
+If you want to output code without HTML escaping in place, just use two equals sign ```==```. That’s it!
+
+
+Before we break for the next section, I definitely should take time to mention this: As you are hopefully aware of, tons of view code—aka tons of Ruby code in our context—is a serious smell and should be minimized at all times. Just because Slim makes it maybe even more enticing to plaster your templates with tons of logic, does not mean that you should. Practice constraint in that department! Done right on the other hand, Slim makes it really elegant to inject Ruby where needed.
