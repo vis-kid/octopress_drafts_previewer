@@ -1,0 +1,29 @@
+---
+layout: post
+title: Slim Basics 02
+date: 2016-02-25 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [Slim, Ruby, Rails, Templating, Slim]
+---
+
+{% img /images/Slim/slim-fishbowl-refined.png %}
+
+## Topics
+
++ Output
++ Line Indicators
++ Helpers
++ Safety
++ Logic-less Mode
++ Performance
++ Framework Support
++ Command Line Slim slimrb
++ Temple & Tilt
+
+## Output
+
+You have already seen a bit how to use Ruby in your templates. This section gives you all you need to make use of this ...
+
+Before we take a break, we should definitely look into ways to bring Ruby into this equation. As you are hopefully aware of, tons of view code—aka tons of Ruby code in our context—is a serious smell and should be minimized at all times. Just because Slim makes it maybe even more enticing to plaster your templates with tons of logic does not mean that you should not practice constraint in that department. Done right on the other hand, Slim makes it really elegant to inject Ruby where needed.
