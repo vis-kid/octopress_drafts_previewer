@@ -391,3 +391,53 @@ The output how it’s rendered into your HTML markup differs though.
   </body>
 
 ```
+
+## Comments
+
+Of course it’s necessary to comment your code every once in a while. Don’t forget though that too many comments are a smell as well. Just try to keep it to an absolute minimun!
+A forward slash ```/``` is all you need to comment out any code.
+
+Slim:
+
+``` slim
+
+body
+  /p
+    | This line is on the left margin.
+       This line will have one space in front of it.
+         This line will have two spaces in front of it.
+           And so on...
+
+
+```
+
+Boom! And now this paragraph is gone from the page. This comment leaves no trace in the final HTML markup. I like this comment because I just need to apply it to the parent selector and all its children will be commented out as well. So, even comments are slim and minimal.
+
+If on the other hand you want some HTML comment ```<!--  -->``` that shows up in the final output rendered, you just need to add an exclamation mark ```!``` after the slash.
+
+``` slim
+
+body
+  /!p
+    | This line is on the left margin.
+       This line will have one space in front of it.
+         This line will have two spaces in front of it.
+           And so on...
+
+
+```
+
+HTML Output:
+
+``` html
+
+<body>
+  <!--p
+      | This line is on the left margin.
+        This line will have one space in front of it.
+          This line will have two spaces in front of it.
+            And so on...-->
+
+```
+
+Neat!
