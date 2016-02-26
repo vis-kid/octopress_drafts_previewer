@@ -328,33 +328,33 @@ Slim:
 
 ``` slim
 
-  body
-    p
-      | This line is on the left margin.
-         This line will have one space in front of it.
-           This line will have two spaces in front of it.
-             And so on...
+body
+  p
+    | This line is on the left margin.
+       This line will have one space in front of it.
+         This line will have two spaces in front of it.
+           And so on...
 
-    p This line is on the left margin.
-         This line will have one space in front of it.
-           This line will have two spaces in front of it.
-             And so on...
+  p This line is on the left margin.
+       This line will have one space in front of it.
+         This line will have two spaces in front of it.
+           And so on...
 
-    p This line is on the left margin.
-      This line will have one space in front of it.
-      This line will have two spaces in front of it.
-      And so on...
+  p This line is on the left margin.
+    This line will have one space in front of it.
+    This line will have two spaces in front of it.
+    And so on...
 
-    p This line is on the left margin.
-      This line will have one space in front of it.
-      This line will have two spaces in front of it.
-      And so on...
+  p This line is on the left margin.
+    This line will have one space in front of it.
+    This line will have two spaces in front of it.
+    And so on...
 
-    p
-      This line is on the left margin.
-      This line will have one space in front of it.
-      This line will have two spaces in front of it.
-      And so on...
+  p
+    This line is on the left margin.
+    This line will have one space in front of it.
+    This line will have two spaces in front of it.
+    And so on...
 
 ```
 
