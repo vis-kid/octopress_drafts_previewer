@@ -247,5 +247,41 @@ ERB:
 
 If you want to output code without HTML escaping in place, just use two equals sign ```==```. That’s it!
 
+Before we move on, I definitely should take time to mention the following: As you are hopefully aware of, tons of view code—aka tons of Ruby code in our context—is a serious smell and should be minimized at all times. Just because Slim makes it maybe even more enticing to plaster your templates with tons of logic, does not mean that you should. Practice constraint in that department! Done right on the other hand, Slim makes it really elegant to inject Ruby where needed.
 
-Before we break for the next section, I definitely should take time to mention this: As you are hopefully aware of, tons of view code—aka tons of Ruby code in our context—is a serious smell and should be minimized at all times. Just because Slim makes it maybe even more enticing to plaster your templates with tons of logic, does not mean that you should. Practice constraint in that department! Done right on the other hand, Slim makes it really elegant to inject Ruby where needed.
+## Inline HTML
+
+If you have the need to write HTML in your Slim templates you have the option to. I haven’t used that feature nor would I care to use it but maybe during a transitional phase this could be helpful for newcomers. Let’s have a super quick look.
+
+Slim:
+
+``` slim
+
+doctype html
+<html>
+  head
+    title = full_title(yield(:title))
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  <body>
+    header.navbar
+      .logo
+        = link_to "sample app", 'root_path', id: "logo"
+        <nav>
+          ul.navbar-right
+            li
+              = link_to "Home",   'root_path'
+            li
+              = link_to "Help",   'help_path'
+            li
+              = link_to "Log in", 'login_path'
+        </nav>
+    .main
+      = yield
+  </body>
+</html>
+
+```
+
+When Slim encounters the left angle bracket ```<```, it knows that you want to mix in some HTML. 
