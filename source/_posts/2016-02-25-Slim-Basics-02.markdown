@@ -285,3 +285,109 @@ doctype html
 ```
 
 When Slim encounters the left angle bracket ```<```, it knows that you want to mix in some HTML. 
+
+## Verbatim Text (Word for Word)
+
+The pipe character ```|``` signals Slim that you want to have plain text—word for word—and just copies the line. In effect, this let’s you avoid any kind of processing. The documentation says that if you want to write verbatim text over multiple lines, you have to indent the text with each line break.
+Slim:
+
+``` slim
+
+body
+  p
+    | This line is on the left margin.
+       This line will have one space in front of it.
+         This line will have two spaces in front of it.
+           And so on...
+
+```
+
+
+HTML Output:
+
+``` html
+
+<body>
+  <p>
+    This line is on the left margin.
+     This line will have one space in front of it.
+       This line will have two spaces in front of it.
+         And so on...
+  </p>
+</body>
+
+```
+
+Screenshot:
+
+{% img /images/Slim/verbatim-text-screenshot.png %}
+
+The funny thing is, I played a bit around with this and found that I not only don’t I need to use the piple character to make this work but also that I don’t need to indent the text over multiple lines. Only the last example has a little hiccup you should be aware of. It swallows the first first of the sentence. 
+
+Slim:
+
+``` slim
+
+  body
+    p
+      | This line is on the left margin.
+         This line will have one space in front of it.
+           This line will have two spaces in front of it.
+             And so on...
+
+    p This line is on the left margin.
+         This line will have one space in front of it.
+           This line will have two spaces in front of it.
+             And so on...
+
+    p This line is on the left margin.
+      This line will have one space in front of it.
+      This line will have two spaces in front of it.
+      And so on...
+
+    p This line is on the left margin.
+      This line will have one space in front of it.
+      This line will have two spaces in front of it.
+      And so on...
+
+    p
+      This line is on the left margin.
+      This line will have one space in front of it.
+      This line will have two spaces in front of it.
+      And so on...
+
+```
+
+Screenshot:
+
+{% img /images/Slim/multiple-verbatim-text-screenshot.png %}
+
+The output how it’s rendered into your HTML markup differs though.
+
+``` html
+
+<body>
+    <p>
+      This line is on the left margin.
+       This line will have one space in front of it.
+         This line will have two spaces in front of it.
+           And so on...
+    </p>
+    <p>
+      This line is on the left margin.
+         This line will have one space in front of it.
+           This line will have two spaces in front of it.
+             And so on...
+    </p>
+    <p>
+      This line is on the left margin.
+      This line will have one space in front of it.
+      This line will have two spaces in front of it.
+      And so on...
+    </p>
+    <p>
+      <This>line is on the left margin.</This><This>line will have one space in front of it.</This><This>line will have two spaces in front of it.</This><And>so on...</And>
+    </p>
+  </body>
+
+```
