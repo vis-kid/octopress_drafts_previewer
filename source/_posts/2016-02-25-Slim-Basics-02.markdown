@@ -13,8 +13,7 @@ categories: [Slim, Ruby, Rails, Templating, Slim]
 ## Topics
 
 + Line Indicators
-+ Output
-+ Line Indicators
++ Custom Shortcuts
 + Helpers
 + Safety
 + Logic-less Mode
@@ -441,3 +440,139 @@ HTML Output:
 ```
 
 Neat!
+
+## Custom Shortcuts
+
+So we have been using shortcuts all along. When you type a dot ```.``` or a hash symbol ```#``` you tell Slim that you want to use predefined shortcuts for classes and ids. That’s certainly a very nice default but what can you do to expand on that and create your own little snippety snippets. We can do this for tags and attributes as well. Welcome to the awesomeness of Slim!
+
+In Rails we just need to set up an initializer with the following pattern:
+
+#### config/initializers/slim.rb
+
+``` ruby
+
+Slim::Engine.set_options shortcut: {'c' => {tag: 'container'}, '#' => {attr: 'id'}, '.' => {attr: 'class'} }
+
+```
+
+You can set options on the Slim::Engine by providing a hash with the shortcut you need. In the example above, we instrcuted Slim to user ```c``` as a shortcut for a ```container``` tag. You would use it like this in your Slim files:
+
+Slim:
+
+``` slim
+
+c.content Now you have a container tag with a .content class.
+
+```
+
+And the rendered HTML would look like this of course:
+
+HTML:
+
+``` html
+
+<container class="content">
+  Now you have a container tag with a .content class.
+</container>
+
+```
+
+Pretty nice huh? But you didn’t think that’s where the music stops, did you? We can take this further than that. Let me give you an example that is a bit more involved:
+
+#### config/initializers/slim.rb
+
+``` ruby
+
+Slim::Engine.set_options shortcut: {
+            '#' => {attr: 'id'},
+            '.' => {attr: 'class'},
+            'c' => {tag: 'container'},
+            '&' => {tag: 'input', attr: 'type'}, 
+            '@' => {attr: 'role'},
+            '^' => {attr: %w(data-role role)}
+           }
+
+```
+
+In this example I did not only create a custom tags but also provided handy custom attributes. Let’s dissect this step by step below. Also, I broke the options hash over several lines to keep it readable and to avoid having a long line of code that nobody likes to stumble upon. Reads much nicer, don’t you think?
+
+Via the ampersand symbol ```&```, we can now create an input tag and we just need to feed it a type—which immediately follows the ampersand. Btw, we can use any symbol that makes sense to use. No need to use the same that I did. Be careful though and try to make uncompromising decisions in that department.
+
+Slim:
+
+``` slim
+
+&text name="user"
+&password name="pw"
+&submit
+
+```
+
+HTML Output:
+
+``` html
+
+<input name="user" type="text">
+<input name="pw" type="password">
+<input type="submit">
+
+```
+
+When you make changes to this initializer with your custom shortcuts you shouldn’t forget to restart your local server. Without that your changes won’t be reflected during preprocessing.
+
+Next, if I need a ```role``` attribute, I just prefix it with an ```@``` symbol. 
+
+Slim:
+
+``` slim
+
+.person@admin Daniel Mendler 
+
+```
+
+HTML Output:
+
+``` html
+
+<div class="person" role="admin">
+  Daniel Mendler
+</div>
+
+```
+
+Refresher: The role attribute is a semantic approach to describe the role of the element in question—if you need to determine the purpose of the element.
+
+See, via the dot we get a ```class="person"``` class and the ```@admin``` gave us a ``` role="admin"```. Pretty handy dandy but we can take this one little step further and use an array to specify multiple attributes that should get created via one single shortcut.
+
+Slim:
+
+``` slim
+
+.nifty^hacker CrackDoctor
+
+```
+
+HTML Output:
+
+``` html
+
+<div class="nifty" data-role="hacker" role="hacker">
+  CrackDoctor
+</div>
+
+```
+
+Because we associated an array of attributes for our ```^``` shortcut, Slim creates ```data-role``` and ```role``` attributes simultaneously via a single symbol. That can come in pretty handy. Imagine if you want to output an element similar to the following and can do it concise with shortcut and some Ruby code.
+
+HTML
+
+``` html
+
+<source src="track1.mp3" type="audio/mpeg" data-duration="1min5secs" data-tempo="125bpm" data-artist="The Beatles" />
+
+```
+
+Writing all of this by hand seems not the best use of your time—we have code to do that job for us. Well, there you have it, that’s all you need to know to create your own set of awesome shortcuts—or to create a big mess when you don’t practice a bit of constraint. I would recommend to not go overboard with this—especially try to stay away from defining shortcuts that use symbols that Slim is already attached to. 
+
+Refresher: The data- attributes are used to have some private data on your page / application. Stuff that helps you filter content for example. They are custom attributes which can be used on all HTML elements. Using them for JavaScript purposes is another common practice. It is also very handy for testing elements on a page if you want to make sure that particular elements show up and you want to avoid that designers mess with your styles.
+
