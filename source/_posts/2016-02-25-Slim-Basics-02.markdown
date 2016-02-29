@@ -12,8 +12,14 @@ categories: [Slim, Ruby, Rails, Templating, Slim]
 
 ## Topics
 
-+ Line Indicators
++ Outputting Code
++ Text interpolation
++ Control Code
++ Inline HTML
++ Verbatim Text
++ Comments
 + Custom Shortcuts
+
 + Helpers
 + Safety
 + Logic-less Mode
@@ -202,6 +208,34 @@ ul
       div Name:            #{agent.name}
       div Number:          #{agent.number}
       div Licence to kill: #{ agent.licence_to_kill}
+
+```
+
+### Text Interpolation
+
+I mentioned this before briefly but since it is a form of outputting Ruby code it belongs to this section as well. You can use standard text interpolation from Ruby in your Slim templates as well of course. 
+
+Slim:
+
+``` slim
+
+ h2 Welcome Mr. #{misix_agent.surname}! I expect you to die!
+
+ h2 Welcome Mr. \#{misix_agent.surname}! I expect you to die!
+
+```
+
+HTML:
+
+``` html
+
+<h2>
+  Welcome Mr. Bond! I expect you to die!
+</h2>
+
+<h2>
+  Welcome Mr. \#{misix_agent.surname}! I expect you to die!
+</h2>
 
 ```
 
