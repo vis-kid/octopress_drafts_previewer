@@ -634,3 +634,7 @@ HTML
 Writing all of this by hand seems not the best use of your time—we have code to do that job for us. Well, there you have it, that’s all you need to know to create your own set of awesome shortcuts—or to create a big mess when you don’t practice a bit of constraint. I would recommend to not go overboard with this—especially try to stay away from defining shortcuts that use symbols that Slim is already attached to. 
 
 Refresher: The data- attributes are used to have some private data on your page / application. Stuff that helps you filter content for example. They are custom attributes which can be used on all HTML elements. Using them for JavaScript purposes is another common practice. It is also very handy for testing elements on a page if you want to make sure that particular elements show up and you want to avoid that designers mess with your styles.
+
+## Final Thoughts
+
+That’s basically it. There are a one or two more advanced topics that you should dig into if needed but I thought they are mostly not beginner-friendly nor heavily used on a day-to-day basis. I wanted to keep things simple and show you all you need to switch using this awesome, awesome templating engine. Have 
