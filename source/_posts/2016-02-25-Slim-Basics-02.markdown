@@ -635,6 +635,75 @@ Writing all of this by hand seems not the best use of your time—we have code t
 
 Refresher: The data- attributes are used to have some private data on your page / application. Stuff that helps you filter content for example. They are custom attributes which can be used on all HTML elements. Using them for JavaScript purposes is another common practice. It is also very handy for testing elements on a page if you want to make sure that particular elements show up and you want to avoid that designers mess with your styles.
 
+## Configuring Slim
+
+Before you leave, I wanted to show you a little sneak peek into the vast configuration options and how you apply them. For Rails, you’d create an enviromnent file like `config/environments/development.rb` and specify the options you need. You simply place your configuration some place inside the `Rails.application.configure` block. 
+
+
+``` ruby
+
+Rails.application.configure do
+  Slim::Engine.set_options default_tag: 'p', 
+                           tabsize: 2, 
+                           attr_list_delims: {'(' => ')', 
+                                              '[' => ']',
+                                              '{' => '}', 
+                                              '«' => '»', 
+                                              '‹' => '›'
+                                              }
+end
+
+```
+
+In this configuration I made sure the default tag that gets created if a tag name is omitted is a `<p>` tag—not a `div` tag, which is the standard setting. Also, I adjusted the tabsize to use 2 white spaces and finally added to more delimiters for wrapping attributes of tags. Now I can use `‹ ›` and `« »` as well. Not terribly useful but good for demonstration purposes. In the example below you can see that all delimiters for attribute wrappers create the same output—also that `.some-class` or `#some-id` creates `<p>` tags per default.
+
+Slim:
+
+``` slim
+
+body
+  #zeroth
+  a{href="http://slim-lang.com" title='Home page'} Goto the home page
+
+  .first
+  a[href="http://slim-lang.com" title='Home page'] Goto the home page
+
+  .second
+  a(href="http://slim-lang.com" title='Home page') Goto the home page
+
+  .third
+  a‹href="http://slim-lang.com" title='Home page'› Goto the home page
+
+  .fourth
+  a«href="http://slim-lang.com" title='Home page'» Goto the home page
+
+```
+
+HTML Output:
+
+``` html
+
+<body>
+    <p id="zeroth"></p>
+    <a href="http://slim-lang.com" title="Home page">Goto the home page</a>
+
+    <p class="first"></p>
+    <a href="http://slim-lang.com" title="Home page">Goto the home page</a>
+
+    <p class="second"></p>
+    <a href="http://slim-lang.com" title="Home page">Goto the home page</a>
+
+    <p class="third"></p>
+    <a href="http://slim-lang.com" title="Home page">Goto the home page</a>
+
+    <p class="fourth"></p>
+    <a href="http://slim-lang.com" title="Home page">Goto the home page</a>
+</body>
+
+```
+
+Alternatively, you can also set this stuff in `config/initializers/slim.rb` as I showed you in the section about custom shortcuts. For Sinatra it’s the same drill as discussed in the shortcuts section as well. Just set your options somewhere below your `require 'slim'` statement and you are good to go. Take a look at the [documentation](http://www.rubydoc.info/gems/slim/frames#Configuring_Slim) under “Available options” to read more about what is available for configuration. Slim gives you many options to play with.
+
 ## Final Thoughts
 
 That’s basically it. There are a one or two more advanced topics that you should dig into if needed but I thought they are mostly not beginner-friendly nor heavily used on a day-to-day basis. I wanted to keep things simple and show you all you need to switch using this awesome, awesome templating engine. Have 
