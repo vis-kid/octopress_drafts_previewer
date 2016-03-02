@@ -19,7 +19,10 @@ categories: [Slim, Ruby, Rails, Templating, Slim]
 + Verbatim Text
 + Comments
 + Custom Shortcuts
++ Configuring Slim
 
+
+<!---
 + Helpers
 + Safety
 + Logic-less Mode
@@ -27,6 +30,7 @@ categories: [Slim, Ruby, Rails, Templating, Slim]
 + Framework Support
 + Command Line Slim slimrb
 + Temple & Tilt
+-->
 
 ## Line Indicators
 
