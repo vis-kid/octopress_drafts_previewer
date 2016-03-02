@@ -32,9 +32,7 @@ categories: [Slim, Ruby, Rails, Templating, Slim]
 + Temple & Tilt
 -->
 
-## Line Indicators
-
-### Output
+### Outputting Code
 
 You have already seen a bit how to use Ruby in your templates. This section gives you all you need to make use of this. In the first article, we have been using Ruby already in our templates. Let me remind you what I mean:
 
@@ -140,7 +138,7 @@ HTML Output:
 
 ```
 
-Remember the intital question that the Slim core team is guided by: “What's the minimum required to make this work?” When you look at the final HTML output, I guesss it’s fair to say that Slim has answered that question quite successfully—no complaints on my end. I wanna throw in a couple more small examples to give you more opportunity to get used to how this looks in Slim.
+Remember the initial question that the Slim core team is guided by: “What's the minimum required to make this work?” When you look at the final HTML output, I guess it’s fair to say that Slim has answered that question quite successfully—no complaints on my end. I wanna throw in a couple more small examples to give you more opportunity to get used to how this looks in Slim.
 
 This ERB snippet …
 
@@ -201,7 +199,7 @@ Slim:
 
 ``` slim
 
-h2 2nd Agents
+h2 Agents
 ul
   - @agents.each do |agent|
     li.agent
@@ -243,7 +241,7 @@ As seen above, a simple leading backslash `\` escapes the interpolation.
 
 ### Control Code
 
-One more for the road. Let’s say you want to use a couple of conditionals in your view. Similar to Haml, you signify Ruby code that is not supposed to be outputted onto the page by a simple dash ```-```. You have seen this in the example above where we used that to iterate over ```@agents``` without displaying that particlar part of the code. Although you should try to stay away from all kinds of conditionals in your views where possible and try to find better OOP solutions for such cases—which is a story for another time—they would look something like this:
+One more for the road. Let’s say you want to use a couple of conditionals in your view. Similar to Haml, you signify Ruby code that is not supposed to be outputted onto the page by a simple dash ```-```. You have seen this in the example above where we used that to iterate over ```@agents``` without displaying that particular part of the code. Although you should try to stay away from all kinds of conditionals in your views where possible and try to find better OOP solutions for such cases—which is a story for another time—they would look something like this:
 
 Slim:
 
