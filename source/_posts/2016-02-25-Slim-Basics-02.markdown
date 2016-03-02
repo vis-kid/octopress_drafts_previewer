@@ -32,9 +32,7 @@ categories: [Slim, Ruby, Rails, Templating, Slim]
 
 ### Output
 
-You have already seen a bit how to use Ruby in your templates. This section gives you all you need to make use of this ...
-
-In the first article, we have been using Ruby already in our templates. Let me remind you what I mean:
+You have already seen a bit how to use Ruby in your templates. This section gives you all you need to make use of this. In the first article, we have been using Ruby already in our templates. Let me remind you what I mean:
 
 #### Sim:
 
@@ -49,11 +47,11 @@ html
 
 ```
 
-As you can see, in this head tag, we already used a couple of methods from Rails to deal with styles and JavaScript thingies. Nothing major, all you need to do to execute Ruby code is prepend it with an equals ```=``` sign. If your code needs to spread over multiple lines, just append a backslash ```\``` at the end of each line and keep going onto the next one. Should you end the line in a comma ```,```, then you don’t need the backslash.
+As you can see, inside this head tag, we already used a couple of methods from Rails to deal with styles and JavaScript stuff—nothing major. All you need to do to execute Ruby code is prepend it with an equals ```=``` sign. If your code needs to spread over multiple lines, just append a backslash ```\``` at the end of each line and keep going onto the next one. Should you end the line in a comma ```,```, then you don’t need the backslash. Nice little touch if you ask me.
 
-Let’s have a look at another, more concrete example. Writing forms is often a pain in the butt—lots of boilerplate code, lot’s of repetition and all these dreaded ```<%= %>``` signs in ERB. This can get messy in no time. Could be nicer huh?
+Let’s have a look at another, more concrete example. Writing forms is often a pain in the butt—lots of boilerplate code, lots of repetition and all these dreaded ```<%= %>``` signs in ERB. This can get messy in no time. Could be nicer huh?
 
-#### ERB:
+ERB:
 
 ```erb
 
@@ -80,9 +78,9 @@ Let’s have a look at another, more concrete example. Writing forms is often a 
 
 ```
 
-A lot of stuff to write to create a new ```@agent``` object, no? Slim let’s you handle this a lot more succinct. All you need is keep the equals sign and you can get rid of most other stuff. Tadaa!
+A lot of stuff to write for creating a new ```@agent``` object, no? Slim lets you handle this a lot more succinct. We just keep the equals sign and get rid of most other stuff. Tadaa!
 
-#### Slim:
+Slim:
 
 ``` slim
 
@@ -107,7 +105,7 @@ A lot of stuff to write to create a new ```@agent``` object, no? Slim let’s yo
 
 ```
 
-Now you can clearly see why this project is called Slim. So much excess fat is gone now. Don’t tell me you don’t like what you see, I know you’re digging it! Just an ```=``` sign and you can populate your markup with Ruby code—in this case from Rails of course. And when you compare it to the HTML rendered on the final page, it’s hard to ignore how compact Slim really is. 
+You can clearly see why this project is called Slim. So much excess fat is gone. Don’t tell me you don’t like what you see, I know you’re digging it! Just an ```=``` sign and you can populate your markup with Ruby code—in this case from Rails of course. And when you compare it to the HTML rendered on the final page, it’s hard to ignore how compact Slim really is. 
 
 HTML Output:
 
@@ -138,9 +136,7 @@ HTML Output:
 
 ```
 
-Remember the intital question that the Slim core team is guided by: “What's the minimum required to make this work?” When you look at the final HTML output, I guesss it’s fair to say that Slim has answered that question quite successfully—no complaints on my end.
-
-I wanna through in a couple more small examples to give you more opportunity to get used to how injecting Ruby code looks in Slim.
+Remember the intital question that the Slim core team is guided by: “What's the minimum required to make this work?” When you look at the final HTML output, I guesss it’s fair to say that Slim has answered that question quite successfully—no complaints on my end. I wanna throw in a couple more small examples to give you more opportunity to get used to how this looks in Slim.
 
 This ERB snippet …
 
@@ -207,7 +203,7 @@ ul
     li.agent
       div Name:            #{agent.name}
       div Number:          #{agent.number}
-      div Licence to kill: #{ agent.licence_to_kill}
+      div Licence to kill: #{agent.licence_to_kill}
 
 ```
 
@@ -239,9 +235,11 @@ HTML:
 
 ```
 
+As seen above, a simple leading backslash `\` escapes the interpolation.
+
 ### Control Code
 
-One more for the road. Let’s say you want to use a couple of conditionals in your view. Similar to ERB, you signify Ruby code that is not supposed to be outputted onto the page by a simple dash ```-```. You have seen this in the example abovec where we used that to iterate over ```@agents``` without displaying that particlar part of the code. Although you should try to stay away from all kinds of conditionals in your views and try to find better OOP solutions for such cases—which is a story for another time—this would look something like this:
+One more for the road. Let’s say you want to use a couple of conditionals in your view. Similar to Haml, you signify Ruby code that is not supposed to be outputted onto the page by a simple dash ```-```. You have seen this in the example above where we used that to iterate over ```@agents``` without displaying that particlar part of the code. Although you should try to stay away from all kinds of conditionals in your views where possible and try to find better OOP solutions for such cases—which is a story for another time—they would look something like this:
 
 Slim:
 
@@ -250,13 +248,13 @@ Slim:
 - if current_user.role == "admin"
   p#admintxt | Welcome back my master!
   = link_to "Edit Profile", edit_user_path(:current)
-  = link_to "Logout", logout_path
+  = link_to "Logout",       logout_path
 - elsif current_user
   = link_to "Edit Profile", edit_user_path(:current)
-  = link_to "Logout", logout_path
+  = link_to "Logout",       logout_path
 - else
-  = link_to "Register", new_user_path
-  = link_to "Login", login_path
+  = link_to "Register",     new_user_path
+  = link_to "Login",        login_path
 
 ```
 
@@ -267,24 +265,24 @@ ERB:
 <% if current_user.role == "admin" %>
   <p id="admintxt">Welcome back my master!</p>
   <%= link_to "Edit Profile", edit_user_path(:current) %>
-  <%= link_to "Logout", logout_path %>
+  <%= link_to "Logout",       logout_path %>
 <% elsif current_user %>
   <%= link_to "Edit Profile", edit_user_path(:current) %>
-  <%= link_to "Logout", logout_path %>
+  <%= link_to "Logout",       logout_path %>
 <% else %>
-  <%= link_to "Register", new_user_path %>
-  <%= link_to "Login", login_path %>
+  <%= link_to "Register",     new_user_path %>
+  <%= link_to "Login",        login_path %>
 <% end %>
 
 ```
 
 If you want to output code without HTML escaping in place, just use two equals sign ```==```. That’s it!
 
-Before we move on, I definitely should take time to mention the following: As you are hopefully aware of, tons of view code—aka tons of Ruby code in our context—is a serious smell and should be minimized at all times. Just because Slim makes it maybe even more enticing to plaster your templates with tons of logic, does not mean that you should. Practice constraint in that department! Done right on the other hand, Slim makes it really elegant to inject Ruby where needed.
+Before we move on, I definitely should take the time to mention this: As you are hopefully aware of, tons of view code—aka tons of Ruby code in our context—is a serious smell and should be minimized at all times. Just because Slim makes it maybe even more enticing to plaster your templates with tons of logic, does not mean that you should. Practice constraint in that department! Done right on the other hand, Slim makes it really elegant to inject Ruby where needed.
 
 ## Inline HTML
 
-If you have the need to write HTML in your Slim templates you have the option to. I haven’t used that feature nor would I care to use it but maybe during a transitional phase this could be helpful for newcomers. Let’s have a super quick look.
+If you feel the need to write HTML in your Slim templates you have the option to. I haven’t used that feature nor would I care to use it but maybe during a transitional phase this could be helpful for newcomers. Let’s have a super quick look.
 
 Slim:
 
@@ -322,16 +320,15 @@ When Slim encounters the left angle bracket ```<```, it knows that you want to m
 ## Verbatim Text (Word for Word)
 
 The pipe character ```|``` signals Slim that you want to have plain text—word for word—and just copies the line. In effect, this let’s you avoid any kind of processing. The documentation says that if you want to write verbatim text over multiple lines, you have to indent the text with each line break.
+
 Slim:
 
 ``` slim
 
 body
   p
-    | This line is on the left margin.
-       This line will have one space in front of it.
-         This line will have two spaces in front of it.
-           And so on...
+    | 
+      Slim is my new best friend. Slim is my new best friend.
 
 ```
 
@@ -342,10 +339,7 @@ HTML Output:
 
 <body>
   <p>
-    This line is on the left margin.
-     This line will have one space in front of it.
-       This line will have two spaces in front of it.
-         And so on...
+    Slim is my new best friend. Slim is my new best friend.
   </p>
 </body>
 
@@ -355,7 +349,7 @@ Screenshot:
 
 {% img /images/Slim/verbatim-text-screenshot.png %}
 
-The funny thing is, I played a bit around with this and found that I not only don’t I need to use the piple character to make this work but also that I don’t need to indent the text over multiple lines. Only the last example has a little hiccup you should be aware of. It swallows the first first of the sentence. 
+If you put the text on the same line as the pipe character, you can set the left margin after the pipe plus one single space. Out of curiosity, I fooled a bit around with this and found the following results. Only the last example variation has a little obvious hiccup you should be aware of—it swallows the first word of the sentence. 
 
 Slim:
 
@@ -363,20 +357,22 @@ Slim:
 
 body
   p
+    | 
+      This line is on the left margin.
+       This line will have one space in front of it.
+         This line will have two spaces in front of it.
+            And so on...
+
+  p
     | This line is on the left margin.
        This line will have one space in front of it.
          This line will have two spaces in front of it.
-           And so on...
+            And so on...
 
   p This line is on the left margin.
        This line will have one space in front of it.
          This line will have two spaces in front of it.
-           And so on...
-
-  p This line is on the left margin.
-    This line will have one space in front of it.
-    This line will have two spaces in front of it.
-    And so on...
+            And so on...
 
   p This line is on the left margin.
     This line will have one space in front of it.
@@ -395,11 +391,18 @@ Screenshot:
 
 {% img /images/Slim/multiple-verbatim-text-screenshot.png %}
 
-The output how it’s rendered into your HTML markup differs though.
+The output how it’s rendered into your HTML markup differs a bit.
 
 ``` html
 
 <body>
+    <p>
+      This line is on the left margin.
+       This line will have one space in front of it.
+         This line will have two spaces in front of it.
+            And so on...
+    </p>
+
     <p>
       This line is on the left margin.
        This line will have one space in front of it.
@@ -427,7 +430,7 @@ The output how it’s rendered into your HTML markup differs though.
 
 ## Comments
 
-Of course it’s necessary to comment your code every once in a while. Don’t forget though that too many comments are a smell as well. Just try to keep it to an absolute minimun!
+Of course it’s necessary to comment out your code every once in a while. Don’t forget though that too many comments are a smell as well. Just try to keep it to an absolute minimum!
 A forward slash ```/``` is all you need to comment out any code.
 
 Slim:
@@ -444,7 +447,7 @@ body
 
 ```
 
-Boom! And now this paragraph is gone from the page. This comment leaves no trace in the final HTML markup. I like this comment because I just need to apply it to the parent selector and all its children will be commented out as well. So, even comments are slim and minimal.
+Boom! And now this paragraph is gone from the page. This comment leaves no trace in the final HTML markup. You just need to apply it to the parent selector and all its children will be commented out as well. So, even comments are slim and minimal.
 
 If on the other hand you want some HTML comment ```<!--  -->``` that shows up in the final output rendered, you just need to add an exclamation mark ```!``` after the slash.
 
@@ -477,7 +480,7 @@ Neat!
 
 ## Custom Shortcuts
 
-So we have been using shortcuts all along. When you type a dot ```.``` or a hash symbol ```#``` you tell Slim that you want to use predefined shortcuts for classes and ids. That’s certainly a very nice default but what can you do to expand on that and create your own little snippety snippets. We can do this for tags and attributes as well. Welcome to the awesomeness of Slim!
+We have been using shortcuts all along. When you type a dot ```.``` or a hash symbol ```#``` you tell Slim that you want to use predefined shortcuts for classes and ids. That’s certainly a very nice default but what can you do to expand on that and create your own little snippety snippets. We can do this for tags and attributes alike. Welcome to the awesomeness of Slim!
 
 In Rails we just need to set up an initializer with the following pattern:
 
@@ -514,7 +517,7 @@ html
 
 ```
 
-You can set options on the Slim::Engine by providing a hash with the shortcut you need. In the example above, we instrucuted Slim to user ```c``` as a shortcut for a ```container``` tag. You would use it like this in your Slim files:
+You can set options on the Slim::Engine by providing a hash with the shortcut you need. In the example above, we instrucuted Slim to use ```c``` as a shortcut for a ```container``` tag. You would use it like this in your Slim files:
 
 Slim:
 
@@ -553,7 +556,7 @@ Slim::Engine.set_options shortcut: {
 
 ```
 
-In this example I did not only create a custom tags but also provided handy custom attributes. Let’s dissect this step by step below. Also, I broke the options hash over several lines to keep it readable and to avoid having a long line of code that nobody likes to stumble upon. Reads much nicer, don’t you think?
+In this example I did not only create a custom tags but also provided handy custom attributes. Let’s dissect this step by step. Btw, I broke the options hash over several lines to keep it readable and to avoid having a long line of code that nobody likes to stumble upon. Reads much nicer, don’t you think?
 
 Via the ampersand symbol ```&```, we can now create an input tag and we just need to feed it a type—which immediately follows the ampersand. Btw, we can use any symbol that makes sense to use. No need to use the same that I did. Be careful though and try to make uncompromising decisions in that department.
 
@@ -579,7 +582,7 @@ HTML Output:
 
 When you make changes to this initializer with your custom shortcuts you shouldn’t forget to restart your local server. Without that your changes won’t be reflected during preprocessing.
 
-Next, if I need a ```role``` attribute, I just prefix it with an ```@``` symbol. 
+Next, if I need a ```role``` attribute, I can now just prefix it with an ```@``` symbol. 
 
 Slim:
 
@@ -655,7 +658,7 @@ end
 
 ```
 
-In this configuration I made sure the default tag that gets created if a tag name is omitted is a `<p>` tag—not a `div` tag, which is the standard setting. Also, I adjusted the tabsize to use 2 white spaces and finally added to more delimiters for wrapping attributes of tags. Now I can use `‹ ›` and `« »` as well. Not terribly useful but good for demonstration purposes. In the example below you can see that all delimiters for attribute wrappers create the same output—also that `.some-class` or `#some-id` creates `<p>` tags per default.
+In this configuration I made sure the default tag that gets created if a tag name is omitted is a `<p>` tag—not a `div` tag, which is the standard setting. Also, I adjusted the tabsize to use 2 white spaces and finally added two more delimiters for wrapping attributes of tags. Now I can use `‹ ›` and `« »` as well for that. Not terribly useful but good for demonstration purposes. In the example below, you can see that all delimiters for attribute wrappers create the same output—also that `.some-class` or `#some-id` creates `<p>` tags per default.
 
 Slim:
 
@@ -706,4 +709,4 @@ Alternatively, you can also set this stuff in `config/initializers/slim.rb` as I
 
 ## Final Thoughts
 
-That’s basically it. There are a one or two more advanced topics that you should dig into if needed but I thought they are mostly not beginner-friendly nor heavily used on a day-to-day basis. I wanted to keep things simple and show you all you need to switch using this awesome, awesome templating engine. Have fun, hope it’s now also one of your favorite new toys!
+That’s basically it. There are a one or two more advanced topics that you should dig into if needed but I thought they are mostly not beginner-friendly nor heavily used on a day-to-day basis. I wanted to keep things simple and show you all you need for quickly switching to this awesome, awesome templating engine. Have fun, hope it’s now also one of your favorite new toys!
