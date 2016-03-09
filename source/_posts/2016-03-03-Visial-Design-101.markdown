@@ -13,12 +13,47 @@ categories: [Design, Visual Design, Product Design, Web Design, Frontend]
 ## Topics
 
 + Relationships
++ Alignment 
++ Emphasis
++ Hierarchy
+
+  + Consistency
+  + Similarity
+
++ White space
++ Balance
++ Unity
++ Figure-Ground Relationship
++ Proximity
++ Continuation
++ Closure
+
+## Relationships
 
 probably some kind of innate pattern recognition software that helped to form these visual comforts and discomforts
+
+number one priority is probably not to frustrate or alienate users while you want to communicate via your designs
+
+It should also build up confidence. The user needs to feel not only save, but also understands what is in front of him. She should never feel intimidated by the site or content
+
+Overall you want to be helpful, that should be your priority. These principles make you much more effective at that
+
+These principles help you achieve the functionality that good design is capable of. Maybe its not a bad approximation to say that it helps with the communication of your product, content or whatever by being visually functional. The user should never be negatively surprised when you follow these principles. The design becomes more invisible because you provide users little reason to stop and think about your design. Effortless design can be one of your goals and it is easier achieved with these principles in your tool belt. Maybe effortless design and invisible design go hand in hand. Not sure but they are definitely not too far apart from each other.
 
 We want to remove the guesswork from our design process as much as possible. Visual design principles are based on human psychology and help you to make better, more informed decisions about your work. Understanding these will improve the quality of your work immennsely and will probably also speed up your time spent on a particular composition. They are more of less part of your toolset and part of learning the craft. Pay attention to these, you won’t build a proper basis not knowing how to apply these principles in your work.
 
 This knowledge will help you make informed decisions about how distribute pieces of your design in the overall composition, guide you in sizing objects and make it clearer how you should apply colors. Design principles are often very closely related to each other and can’t stand too much on their own. When you put them to work, you should be able to achieve better visual hierarchy that makes it easy for the user to navigate through your work. The relationships you create in your designs are only as good as the relationships people tend to look for—psychologically I mean. That’s basically what design principles are for.
+
+Visual design is to communicate with a viewer
+co
+shapes works symbols images
+great solutions to visual problems
+
+principles are connected and influence or feed off of each other
+create relationships in your designs
+guide user through design
+can be broken, when you know when you can leave them behind.
+
 
 
 
@@ -35,20 +70,58 @@ cohesive
 ## Alignment 
 
 edges line up, grid
+align things that are reltated to each other
 relationships of elements
 align thigns that are realted to each other
-reduces visual clutter
+reduces visual clutter, Think of messy desk vs organized one. even if you like creative looking messy desks, your audience or customers might appreciate a well sorted appearance over a chaotic one. It’s also easier for them to navigate and find the relevant pieces of content of information if you can establish some sort of flow via alignment. Hierarchy is also a piece of the puzzle that gets easier established without elements floating all over the place—or even lazy arranged ones. I guess it’s also fair to say that it makes you look cheap or inexperienced—unless this is something you want to imply, or when you like to have an anarchistic vibe to it I guess. Long story short, alignment is where it all begins and you are probably never wrong taking care of it.
+The visual connection alignment creates helps you to form an overall unity between the elements in your overall composition
+
+Think of an invisible margin that holds the major pieces in your design together, guided by an invisible hand. I think, more often than not, edge alignment is more useful and applied than center alignment. Both have their place of course, but aligning content via their edges is your bread and butter when you design for the web. Center alignment for larger elements can be used to emphasize particular elements or call to actions.
 common edge
+flow between elements
+
+## Continuation (Gestalt Principle)
+
+We’ll look more into this when we cover grids in the next article, but as a teaser I should mention this one as well. Objects that follow a common direction, for example by being aligned to each other, also create the impression of being more related to each other than elements missing this guideline. Following these organized lines creates order in a layout. Letters that form words which in turn form sentences and paragraphs are a good example of how continuation creates a better sense of content belonging to each other and how to follow it to disgest the information.
 
 ## Emphasis
+
+focal point.
+one item that has focal point creates useful emphasis
+hierarchy
+elements in hierarchy need to be easily distinguished, not too close to each other
+size, color are good tools to create emphasis
 creates interest
 drives the attention, creates focus where needed
 focal point
 attention grabbing
 usually one object
 through size, color, space, texture, position
+bringing attention to crucial elements the user should focus on or pay attention to first
+You contrast elements against others
+Something that should be perceived fast and easily. It should attract your attention easily
+size, color, placement, form, white space.
+Focus emphasis on few elements or nothing will stand out anymore
 
 ## Hierarchy
+
+visual importance. Guide on what to focus first and then follow some sort of visual—subliminal—breadcrumbs. Like telling a visual story the user can cling on to.
+
+?? Reddit screenshot ?? weak hierarchy. 
+
+You don’t want to things to look equally important. That way your viewer would have a harder time to navigate your content.
+
+You are creating various level of importance that they user can follow more easily. The bigger the size, the bigger the importance usually. After you achieved a basic hierarchy through size and spacing, you can bring color to the mix to emphasize certain elements even more. If you work the other way around, starting with color, you make your job unnecessarily harder—or at least less effective.
+
+It’s a bit of giving users directions without putting signs all over the place. It’s more subtle than that, maybe more subcounciously if effectively applied
+
+You want to avoid that the user feels overwhelmed, especially when you have tons of content on a site. In such a case, clear hierarchy is even more important and distinguishes quickly between good and mediocre design solutions
+
+Users getting lost by lacking of hierarchy is the exact opposite you want to happen
+
+You are taking the viewer softly by the hand and move him through the site as you intend and more importantly, as you intend for the user to have the best possible experience.
+
+
 One should be strongly empasized
 cousin to emphasis
 layers of importance
@@ -56,67 +129,21 @@ reduces visual clutter
 significant differences
 
 ## Consistency
+
+mental model of the design or site
+similar items should look simiilar
 usability of a system improves when similar parts are displayed similarly
 example: ton of different buttons from bRad frost bank
 users dont have to learn tons of visual language for orienting on your page
 sets expectations
+next thing should not be totally different
+not using tons of different typefaces is one important application of consistency.
+user gets used to read in a particular style or typeface and you don’t want to disturb that
+also, this helps shape the design very subliminally, where you can group content just by looking similar
 finds stuff more quickly
 antipattern: tons of differnt typefaces
 
-## White space
-unmarked space between elements in a composition
-considered elegant and timeless if executed right
-luxury displays
-strong emphasis through white space
-gives eye chance to rest
-active and passive whitespace
-balance and off balance
-effects hierarchy
-
-## Balance
-All elements on page have optical equilibrium
-elements dont look havier than  rest
-symetrical and asymetrical balance
-static, rigid -> symetrical
-harder implement, more active and dynamic -> asymetrical
-
-## Unity
-Design works cohesively as a whole
-nnothing sticks out from the rest
-all pieces have relationships
-
-Gestalt Principles
-powerful tool for designers
-Psychological principals
-make it clear how to arrange design elements
-
-- Figure ground relationship
-- Law of Praegnanz
-- Uniform Connectedness
-- Good continuation
-- Closure
-- Common Fate
-- Proximity
-- Similarity
-print, web, video, photogrpahy,
-
-
-Convery a message tailored to an audience
-shapes, words, symbols, images
-
-visual problems
-goot design solves visual problems
-
-## Figure Ground Relationship
-
-This principle is very powerful and I think so fundamental that you should learn about it as early as possible.
-
-Working on your design, you should often ask yourself the simple question what consitutes elements that are bascially background or foreground. When our early ancestors were hunting, gathering or whatever, it often was of vital importance to discern what might be an immediate threat or advantage right in front of them and distinguish quickly from stuff that is just background “noise”. Think of tiger behind a bush in the jungle vs rain on the horizon. Neurologically, this visual survival strategy has probably left such a deep imprint that we won’t change this simple mechanism of perception for quite a while. Knowing this though, makes it much simpler to decide how to accentuate important elements or information for users and how to “hide” less relevant stuff in the background. Another issue might be that our eyes and brains are not super fast at processing a lot of information at the same time which leads to prioritizing what we need to focus on first. This is no rocket science of course but having this knowledge at the back of your head definitely helps placing pieces of the puzzle more effectively. Broken down to its core essence, figure ground relationship boils down to what can the user ignore at first and what should she focus on right away. For design with strong visual hierarchy, this is an essential design principle to produce quality work. Without applying this knowledge, you either stumble over a successful solution or your outcome will be significantly weaker in creating visual hierarchy.
-
-?? Blending them sometimes and breaking the clear distinction might result in nice results. ??
-
-## Similarity
-
+## Similarity (Gestalt Principle)
 
 Similar looing things create a sort of unity that you can use in your designs. They appear to be more related than disimilar things—no surprises here I guess. The related part is the thing to focus on. Design elements can create a relationship just by looking similar. That’s fantastic because it can make our lives as designers a lot easier. It also means that it can help us create consitency by repeating particular items and avoid creating tons of variations of the same things that might only confuse your users.
 
@@ -153,13 +180,87 @@ content relationships. defining the degrees of relatedness is a big part of succ
 
 elements that are similar, when put together can create strong contrasts to other elements around them which basically separates them without much effort or extra design barriers.
 
+
+## White space
+
+unmarked, negative or empty space between elements in a composition
+considered elegant and timeless if executed right
+macro whitespace for main pieces in your design. more obvious effects
+micro whitespace for minute details like spacing in text. more subtle effects
+Whitespace often makes designs appear a bit lighter or more airy. In that regard also more digestable
+luxury displays
+lesser whitespace can appear more cheap. can be a desired effect of course
+lead viewer from element to element, whitespace is considered more active
+passive whitespace is important as well since it can create small breathing rooms
+active whitespace helps emphasize the composition or structure of your content
+strong emphasis through white space
+creates focus and order if applied right
+gives eye chance to rest
+active and passive whitespace
+balance and off balance
+effects hierarchy
+white space must be active. means that it should have relationships to elements around it
+relationship to content
+inactive white space does not create the balance good designs want to achieve with that design principle
+White space, if active, can affect the hierarchy positively, inactive can make it look inconsiderate or even messy
+
+If you like that clean look of your favorite designs then the conscious application of white space was most likely one major component of it. Nothing speaks elegance and sophistication than proper user of white space.
+
+differentiation though space. lets you cut back on other elements to create distinction or borders
+
+When you read text, you see white space every day. The space between words, sentences and paragraphs is all white space and helps us to visually digest the meaning of the letters being written. It guides the eye through the content and gives us cues who the eye is most effectively moving through it
+
+?? Show Reddit page, that crams lots of stuff onto the page
+
+
+## Balance
+
+All elements, or most emphasised elements on page have optical equilibrium
+elements dont look havier than  rest
+symetrical is easy to achieve,but might be boring
+symetrical and asymetrical balance
+static, rigid -> symetrical
+harder implement, more active and dynamic -> asymetrical
+
+## Unity
+
+Design works cohesively as a whole
+nnothing sticks out from the rest
+all pieces have relationships
+
+Gestalt Principles
+powerful tool for designers
+Psychological principals
+make it clear how to arrange design elements
+
+- Figure ground relationship
+- Law of Praegnanz
+- Uniform Connectedness
+- Good continuation
+- Closure
+- Common Fate
+- Proximity
+- Similarity
+print, web, video, photogrpahy,
+
+
+Convery a message tailored to an audience
+shapes, words, symbols, images
+
+visual problems
+goot design solves visual problems
+
+## Figure Ground Relationship
+
+This principle is very powerful and I think so fundamental that you should learn about it as early as possible.
+
+Working on your design, you should often ask yourself the simple question what consitutes elements that are bascially background or foreground. When our early ancestors were hunting, gathering or whatever, it often was of vital importance to discern what might be an immediate threat or advantage right in front of them and distinguish quickly from stuff that is just background “noise”. Think of tiger behind a bush in the jungle vs rain on the horizon. Neurologically, this visual survival strategy has probably left such a deep imprint that we won’t change this simple mechanism of perception for quite a while. Knowing this though, makes it much simpler to decide how to accentuate important elements or information for users and how to “hide” less relevant stuff in the background. Another issue might be that our eyes and brains are not super fast at processing a lot of information at the same time which leads to prioritizing what we need to focus on first. This is no rocket science of course but having this knowledge at the back of your head definitely helps placing pieces of the puzzle more effectively. Broken down to its core essence, figure ground relationship boils down to what can the user ignore at first and what should she focus on right away. For design with strong visual hierarchy, this is an essential design principle to produce quality work. Without applying this knowledge, you either stumble over a successful solution or your outcome will be significantly weaker in creating visual hierarchy.
+
+?? Blending them sometimes and breaking the clear distinction might result in nice results. ??
+
 ## Proximity
 
 Design elements that are closer to each other seem to appear to be more related to each other. You can enforce that mental proximity through color and similarity of course. Handling proximity right can affect your designs positively by enabling you to leave off other elements that woule help you achieve a visual unity. Unity is what this is all about. Proxmity can be so strong that it overshadows similarity of color or form.
-
-## Continuation
-
-We’ll look more into this when we cover grids in the next article, but as a teaser I should mention this one as well. Objects that follow a common direction, for example by being aligned to each other, also create the impression of being more related to each other than elements missing this guideline. Following these organized lines creates order in a layout. Letters that form words which in turn form sentences and paragraphs are a good example of how continuation creates a better sense of content belonging to each other and how to follow it to disgest the information.
 
 ## Closure
 
@@ -180,3 +281,8 @@ The pattern seeking human brain seems to seek filling in missing pieces to famil
 It might even be a vital mechanism how we construct our realities.
 
 It is a form of suggestion I’d say. 
+
+## Final thoughts
+
+practice, practice, practice
+try to look for these principles when you take a look at other designs or art and try to understand if the creator considered these principles and worked with them or if somebody just followed their gut blindly or instinctively—which is not wrong by definition or anything but represents a limited tool set that is harder to rely on
