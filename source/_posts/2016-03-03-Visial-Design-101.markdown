@@ -13,13 +13,12 @@ categories: [Design, Visual Design, Product Design, Web Design, Frontend]
 ## Topics
 
 + Relationships
++ Design Principles
 + Alignment 
 + Emphasis
 + Hierarchy
-
-  + Consistency
-  + Similarity
-
++ Consistency
++ Similarity
 + White space
 + Balance
 + Unity
@@ -30,42 +29,21 @@ categories: [Design, Visual Design, Product Design, Web Design, Frontend]
 
 ## Relationships
 
+Let’s get this out of the way real quick—it’s all about relationships. That’s basically it, end of story. Good visual design is successful at creating distinctive and cohesive relationships. On a intellectual level, that’s easy to grasp. The hard part start when you get frustrated when you want to achieve elegance and quality by applying various design principles but the practice of the craft is between you and your glorious ideas. Long story short, the following content is relatively easy to learn and understand but it takes repeated practice to put the pieces together and achieve results that creates these relationships successfully—while effortless looking at best.
+
 probably some kind of innate pattern recognition software that helped to form these visual comforts and discomforts
 
-number one priority is probably not to frustrate or alienate users while you want to communicate via your designs
+Learning these visual design basics, I want to convey the idea that your number one priority should probably be to not to frustrate or alienate users while communicating with your viewers via your designs. I currently think that visual design—especially on the web—should also build up confidence. The user needs to feel not only save, but also understand what you put in front of her. She should never feel intimidated by the site or the content. You can apply all the visual design principles successfully, but if you fail at the afore mentioned, it will be for nothing. Overall you want to be helpful, that should be your priority. These principles make you much more effective with that goal in mind. You want to not only create relationships within your design, more importantly, you want to create successful relationships with your users. Design can help with that.
 
-It should also build up confidence. The user needs to feel not only save, but also understands what is in front of him. She should never feel intimidated by the site or content
+## Design Principles
 
-Overall you want to be helpful, that should be your priority. These principles make you much more effective at that
+The knowledge of these principles will help you make informed decisions about how distribute pieces of your design in the overall composition, guide you in sizing objects and make it clearer how you should apply colors for example. Design principles are often very closely related to each other and can’t stand too much on their own. When you put them to work, you should be able to achieve better visual hierarchy which in turn makes it easier for the user to navigate through your work. The relationships you create in your designs are only as good as the relationships people tend to look for—via psychological patterns.
 
-These principles help you achieve the functionality that good design is capable of. Maybe its not a bad approximation to say that it helps with the communication of your product, content or whatever by being visually functional. The user should never be negatively surprised when you follow these principles. The design becomes more invisible because you provide users little reason to stop and think about your design. Effortless design can be one of your goals and it is easier achieved with these principles in your tool belt. Maybe effortless design and invisible design go hand in hand. Not sure but they are definitely not too far apart from each other.
+These principles help you achieve the functionality that good design is capable of. Maybe its not a bad approximation to say that it helps with the communication of your product, content or whatever by being visually sound and functional. The user should never be negatively surprised when you apply these principles. The design becomes more invisible because you provide users little reason to stop and think. Effortless looking design can be one of your goals and it is easier achieved with these principles in your tool belt. Maybe effortless design and invisible design go hand in hand. Not sure, but they are definitely not too far apart from each other.
 
-We want to remove the guesswork from our design process as much as possible. Visual design principles are based on human psychology and help you to make better, more informed decisions about your work. Understanding these will improve the quality of your work immennsely and will probably also speed up your time spent on a particular composition. They are more of less part of your toolset and part of learning the craft. Pay attention to these, you won’t build a proper basis not knowing how to apply these principles in your work.
+Design principles want to help removing the guesswork from our design process as much as possible. They are based on human psychology and help you to make better, more informed decisions about how you compose your work. Understanding these will improve the quality of your work tremendously—and probably also speed up the time spent on particular pieces before they work. Experimentation is great, it really is, but guess work can become tedious very quickly. Accepting that design principles are more of less part of your tool set and part of learning the craft might not come easy—after all, most of us want to be unique and original. In my mind, there is no contradiction in that department though, but if you don’t pay attention to these, you won’t build a proper basis for breaking the rules gloriously. 
 
-This knowledge will help you make informed decisions about how distribute pieces of your design in the overall composition, guide you in sizing objects and make it clearer how you should apply colors. Design principles are often very closely related to each other and can’t stand too much on their own. When you put them to work, you should be able to achieve better visual hierarchy that makes it easy for the user to navigate through your work. The relationships you create in your designs are only as good as the relationships people tend to look for—psychologically I mean. That’s basically what design principles are for.
-
-Visual design is to communicate with a viewer
-co
-shapes works symbols images
-great solutions to visual problems
-
-principles are connected and influence or feed off of each other
-create relationships in your designs
-guide user through design
-can be broken, when you know when you can leave them behind.
-
-
-
-
-
-Design is communication
-guide user through content, ui, where you want them to go
-
-visual design principles
-seven principles
-all connected
-guidelines
-cohesive
+One last thing before we get to work: Design is communication! Via visual design you communicate with a viewer. Your “words” or your repertoire includes shapes, words, symbols, images, white space, textures, colors and movements(animations or implied movements like the continuation of a pattern or form). Good design work results in great communication by providing great solutions to visual problems. The principles are connected to each other, feed off each other and influence each other. You want to be a guide who takes a user through a design—where you want them to go(also where it’s best for them!). A good ui will take this concern seriously and offer appropriate solutions. It will most likely be be broken, should you you loose them or leave them behind. Below we’ll look into seven design principles and a hand full of useful gestalt principles you should be aware of. They should be taken as guidelines, not as being set in stone and help you make decisions that lead to more cohesiveness.
 
 ## Alignment 
 
@@ -180,6 +158,8 @@ content relationships. defining the degrees of relatedness is a big part of succ
 
 elements that are similar, when put together can create strong contrasts to other elements around them which basically separates them without much effort or extra design barriers.
 
+Elements that share similar characteristics appear to be more related to each other.
+
 
 ## White space
 
@@ -222,7 +202,23 @@ symetrical and asymetrical balance
 static, rigid -> symetrical
 harder implement, more active and dynamic -> asymetrical
 
+Balance is all about keeping visual weight in check. We often like to look at things that are balanced around a vertical axis—a Rohrschach test image basically. Nothing wrong with that. This is a safe pattern to follow—very formal and ordered. If you can break that balance masterfully though, create a bit of a tension or surprise, maybe to hightlight some part, your design might appear more dynamic and interesting though.
+
+When you play with visual weight, you always deal with asymmetry in a way. You need to work on keeping the various non-mirrored images in a perceived balance. The elements involved are different from each other. It is not so much about getting a ruler out and measuring all the lengths and distances or whitespaces, but about creating a visual, perceived equilibrium. Not easy to do but it can result in very beautiful and elegant solutions. It shows the experience of a well considered and crafted design.
+
+All the design factors you have at your disposal, size, color, position, shape, quantity, texture and so on can influence the perceived weight individually and playing off of each other.
+
+This balance is more friendly, less static or rigid and conveys a design that appears more playful and dynamic.
+
 ## Unity
+
+Designs should overall aim to achieve unity when you put all the elements together but also between elements that build up the structure. Maybe it would not be crazy to call it macro- and micro-unity in that regard. This implies the sort of cohesion that makes viewers more comfortable and trusting as well as understanding how they should follow the content. My impression is that the more unified a design becomes the more invisible it gets. If nothing stands in the way that could block the users attention to elements that question the overall unity, the more frictionless the user experience can take place. Don’t make users think, right?
+
+Proximity, alignment, continuation and repetition can massively help to achieve perceived union among design elements. This also helps you separate pieces of the puzzle without using additional borders.
+
+It looks more classy that way as well I think.
+
+We want to perceive the overall structure first when we look at new things. A unified whole makes this process a lot more smooth.
 
 Design works cohesively as a whole
 nnothing sticks out from the rest
@@ -261,6 +257,8 @@ Working on your design, you should often ask yourself the simple question what c
 ## Proximity
 
 Design elements that are closer to each other seem to appear to be more related to each other. You can enforce that mental proximity through color and similarity of course. Handling proximity right can affect your designs positively by enabling you to leave off other elements that woule help you achieve a visual unity. Unity is what this is all about. Proxmity can be so strong that it overshadows similarity of color or form.
+
+The distance between elements has an effect on their perceived relatedness. The closer they are arranged together, the closer the relationship is implied.
 
 ## Closure
 
