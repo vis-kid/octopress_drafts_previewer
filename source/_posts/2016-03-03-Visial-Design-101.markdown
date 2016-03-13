@@ -55,64 +55,178 @@ One last thing before we get to work: Design is communication! Via visual design
 
 Designs works best as a cohesive whole and should overall aim to achieve unity when you put all the elements together. Try to build up unified structures. Proximity, alignment, continuation and repetition can massively help to achieve perceived union among elements. This also helps you separate pieces of the puzzle without using additional borders. It looks more classy that way as well I think. As viewers, we perceive the overall structure first when we look at new things. A unified whole meets the user half way with that.
 
+{% img /images/Design_101/Visual_Design/Unity/dropbox-team.png %}
+
+###### This site does a lot of things right and makes good use of every design principle in the book. What I found most impressive though is how effortless they achieved visual unity with only a few elements on the page.
+
 Unity needs to be built up over time—doesn’t happen right away. I’d describe it as the combination of macro- and micro-unity in that regard. Smaller elements needs to convey cohesion as well when you build up an overall unified impression. Doesn’t work without paying attention to smaller details first.
 
-If you do your job right, it creates the sort of cohesion that makes viewers more comfortable. Establishing trusting and understanding how they should follow the content is a free by-product. My impression is that the more unified a design becomes the more invisible it gets. If nothing stands in the way that could block the users attention the more frictionless the user experience can take place. Don’t make users think, right?
+{% img /images/Design_101/Visual_Design/Unity/github-project-page.png %}
 
+###### GitHub does a great job in establishing unity as well. All little considerations in a content rich page like this add up to a consistent whole where all the pieces fit together and where nothing sticks out negatively. Impressive work really!
 
-In terms of style and elements used, if nothing sticks out from the rest too much and if all pieces have some sort of relationship to each other, unity can be easier achieved.
+If you do your job right, it creates the sort of cohesion that makes viewers more comfortable. Establishing trusting and understanding how they should follow the content is a free by-product. My impression is that the more unified a design becomes the more invisible it gets. If nothing stands in the way that could block the users attention the more frictionless the user experience can take place. Don’t make users think, right? In terms of style and elements used, if nothing sticks out from the rest too much and if all pieces have some sort of relationship to each other, unity can be easier achieved.
 
-Gestalt Principles
-powerful tool for designers
-Psychological principals
-make it clear how to arrange design elements
+{% img /images/Design_101/Visual_Design/Unity/github-integrations.png %}
 
-- Figure ground relationship
-- Law of Praegnanz
-- Uniform Connectedness
-- Good continuation
-- Closure
-- Common Fate
-- Proximity
-- Similarity
-print, web, video, photogrpahy,
+###### This is another example of excellent use of this principle. The block that displays the list of integrations does need very little extra elements to establish unity. Since the unity of this section is already very strong, hey could maybe even try to loose the borders.
 
 ## Alignment 
 
 This design principle is the easiest to use to reduce visual clutter. Think of messy desk vs organized one. even if you like creative looking messy desks, your audience or customers might appreciate a well sorted appearance over a chaotic one. It’s also easier for them to navigate and find the relevant pieces of information if you can establish some sort of flow via alignment. As a side effect, hierarchy gets easier established without elements floating all over the place—or even lazily arranged ones. I guess it’s fair to say that missing alignment makes you look cheap or inexperienced—unless this is something you want to imply—or when you like to have an experimental, anarchistic vibe to a design I guess. Long story short, alignment is where it all begins and you are probably never wrong taking care of it.
 
-## Continuation (Gestalt Principle)
+{% img /images/Design_101/Visual_Design/Alignment-Continuation/dropbox-help.png %}
 
-Visual alignment is actually pretty much based on the “[Gestalt principle](https://en.wikipedia.org/wiki/Gestalt_psychology)” of continuation. We’ll look more into how you can use this in your work when we cover grids in this series. I should mention this though, objects that follow a common direction, for example by being aligned to each other, create the impression of being more related to each other than elements missing this guideline. Following these organized lines of content creates order in a layout. For example, letters that form words which in turn form sentences and paragraphs are a good example of how continuation creates a better sense of content. You can clearly see they are belonging to each other and how to follow them to digest the information.
+###### Grids are maybe the most obvious use of using alignment to your advantage. This screenshot from the Dropbox help center clearly shows how tidy proper alignment can look. Visually pleasing as well I think.
+
+{% img /images/Design_101/Visual_Design/Alignment-Continuation/paravel-reynolds.png %}
+
+###### [themanyfacesof.com](http://themanyfacesof.com/burt-reynolds/), a fun side project from [Paravel](http://paravelinc.com/), made a nice little Burt Reynolds themed site that has tons of examples where you can see good alignment in action. The alignment is very subtle and mostly achieved through great typography skills and grids. 
+
+{% img /images/Design_101/Visual_Design/Alignment-Continuation/dropbox-feature-list.png %}
+
+###### The Dropbox feature list is another example that is worth studying. Simple, unpretentious and effective design work showing using alignment to maximum effect to structure content.
+
+## Gestalt Principles
+“[Gestalt principles](https://en.wikipedia.org/wiki/Gestalt_psychology)” are powerful tools for designers. They are psychological principals that can help with making it clear how to arrange design elements in your work. We will cover them a bit along the way where they fit in best. Similar to visual design principles, they can be applied with print, web, video and photography. The list below covers what you need to study first:
+
+- Figure ground relationship
+- Uniform Connectedness
+- Law of Praegnanz
+- Common Fate
+- Continuation
+- Similarity
+- Proximity
+- Closure
+
+## Continuation
+
+Visual alignment is actually pretty much based on the Gestalt principle of continuation. We’ll look more into how you can use this in your work when we cover grids in this series. I should mention this though, objects that follow a common direction, for example by being aligned to each other, create the impression of being more related to each other than elements missing this guideline. Following these organized lines of content creates order in a layout. For example, letters that form words which in turn form sentences and paragraphs are a good example of how continuation creates a better sense of content. You can clearly see they are belonging to each other and how to follow them to digest the information.
+
+{% img /images/Design_101/Visual_Design/Alignment-Continuation/color-drops.png %}
+
+###### This is a great example of both alignment and continuation. Without using borders, you can clearly see a grid at work effectively and the form of the color drops implies movement continuing down the page. I love this piece!
 
 On macro-level, you want to work on aligning things that are related to each other and position them along a common edge. That way, elements flow a lot easier in the overall composition and let users navigate effortless—if done right. This visual connection helps you to form an overall unity between small and big elements. It’s like an invisible margin that holds the major pieces in your design together and gives the eye little reason to stop for visual hiccups. More often than not, edge alignment is more useful and applied more frequently than center alignment. Both have their place of course, but aligning content via edges is definitely your bread and butter when you design for the web. Center alignment for larger elements can be used to emphasize particular elements or call to actions.
 
 ## Emphasis
 
 Emphasis is all about focal points. The less you have, the stronger their emphasis. You want to avoid making look everything important—that way nothing sticks out and all you end up with is noise. I’m sure you have seen sites that ignore that principle and plaster tons of funky colored buttons all over the place. Leaves a nasty taste, doesn’t it? That’s what a lack of emphasis can leave behind. More importantly, it does not help in creating a clear hierarchy. Your tools of choice are the usual suspects, but size and color might be the most effective at creating emphasis.
-Establishing a strong contrast with content or design elements around is another way to go.
+
+{% img /images/Design_101/Visual_Design/Emphasis/dropbox-signup-emphasis.png %}
+
+###### Establishing a strong contrast with content or design elements around is another way to go. Although this site is a bit busy, Dropbox makes a great job at highlighting the action they user is supposed to make. Visually, there is nothing standing in the way that blocks the user from focusing on signing up. The strongest emphasis is on the blue buttons that clearly stand out from the rest in the viewport. This design has good visual balance too—even better if they’d go with only one blue button.
 
 My approach these days is simple: one or two emphasised elements in a particular viewport should be enough to guide the users attention to the most important elements on the page. Which elements is maybe more difficult than it sounds like. You not only want to create interest among your users but also drive the attention where needed—fast and easily. Ask yourself, what is really so crucial to be grabbing the users focus first. Choose wisely and don’t annoy users with your decisions!
+
+{% img /images/Design_101/Visual_Design/Figure-Ground/wooden-keyboard.png %}
+
+###### The emphasis on the product is excellent in this design. Neither the description nor the background blocks the emphasis on the wooden [Orée](http://oreeartisans.com/products/oree-board) keyboard in any way. Beautiful! Symmetry is also working nicely here.
+
+{% img /images/Design_101/Visual_Design/Figure-Ground/htc-vive.png %}
+
+###### Not much to say about how HTC presented the [VIVE](http://www.htcvive.com/eu/product/). Emphasis at it’s best. Good design like this definitely sells.
+
+{% img /images/Design_101/Visual_Design/Figure-Ground/craft-email.png %}
+
+###### [Craft](http://www.invisionapp.com/craft) by Invision has made a nice landing page where they elegantly emphasised the input field for email addresses. Hard to get lost on this page. The name of the product sticks out nicely as well. The distinction between background and foreground is especially skilled and playful.
+
+## Figure Ground Relationship
+
+This principle is very powerful and I think so fundamental that you should master it as early as possible. Working on your designs, you should often ask yourself the simple question: what elements are basically background or foreground? 
+
+{% img /images/Design_101/Visual_Design/Figure-Ground/raspberry-pi-figure-ground.png %}
+
+###### You can see that the content and the button to take action clearly stick out from the background. (http://www.cayenne-mydevices.com/) A clear distinction is very important to play with the user’s focus effectively. Here the lines are a bit blurry and playful I’d say, but still very clear figure-ground distinction.
+
+When our early ancestors were hunting, gathering or whatever, it often was of vital importance to discern what might be an immediate threat or advantage—right in front of them. Distinguishing things quickly from stuff that are just background “noise” seems to still be part of our wiring for “survival”. Think of tiger behind a bush in the jungle vs rain on the horizon. Neurologically, this visual survival strategy has probably left such a deep imprint that we won’t change this simple mechanism of perception for quite a while.
+
+{% img /images/Design_101/Visual_Design/Figure-Ground/zappka.png %}
+
+###### Here we have a very prominent background image that takes a lot of attention. Should convey some sort of emotional response I guess. Nevertheless, the button to take action is cleverly placed and it’s color is emphasised nicely into the foreground. (http://zappka.com/)
+
+I know this sounds funny and mostly obsolete for digital folks, but knowing this, makes it much simpler to decide how to accentuate important elements or information for users and how to “hide” less relevant stuff in the background. Another issue might be that our eyes and brains are not super fast at processing a lot of information at the same time which leads to prioritizing what we need to focus on first. This is no rocket science of course, but having this knowledge at the back of your head definitely helps placing pieces of the design puzzle more effectively.
+
+{% img /images/Design_101/Visual_Design/Figure-Ground/startup-fucking-advice.png %}
+
+###### This works quite ok, the distinction between background and foreground works somehow. I just don’t get why they didn’t place the red button at the end of the table—where the eye is drawn naturally due to the perspective of the image. Would have been much stronger emphasis without much effort. (http://www.startupfuckingadvice.com/)
+
+Broken down to its core essence, figure ground relationship boils down to what can the user ignore at first and what should she focus on right away. For design with strong visual hierarchy, this is an essential design principle to produce quality work. Without applying this knowledge, you either stumble over a successful solution by accident or your outcome will be significantly weaker in establishing visual hierarchy.
+
+?? Blending them sometimes and breaking the clear distinction might result in nice results. ??
+
+{% img /images/Design_101/Visual_Design/Figure-Ground/samsung-360.png %}
+
+###### This one from the new Samsung [Gear 360](http://www.samsung.com/global/galaxy/gear-360/) is as good as it gets. The background and foreground work together extremely well. There is a clear distinction and the background accentuates the camera in the foreground elegantly. Pretty clever and playful too.
+
+Below are couple more examples of good emphasis / figure-ground relationship for the road:
+
+{% img /images/Design_101/Visual_Design/Figure-Ground/chewable-coffee.png %}
+
+###### [Go Cubes](https://gocub.es/)
+
+{% img /images/Design_101/Visual_Design/Figure-Ground/chewable-coffee-single.png %}
+
+###### [Go Cubes](https://gocub.es/)
+
+{% img /images/Design_101/Visual_Design/Figure-Ground/gear360-dust.png %}
+
+###### [Gear 360](http://www.samsung.com/global/galaxy/gear-360/)
 
 ## Hierarchy
 
 Hierarchy is all about visual importance and is sort of a cousin to emphasis in regards to reducing visual clutter. It’s mostly a macro guide on what to focus first and how to follow some sort of visual, subliminal breadcrumbs—like telling a visual story the user can cling on to when navigating your site. You can approach design elements like “layers of importance” that need to be arranged effectively. With only a few pieces strongly emphasized, you are taking the viewer softly by the hand and move him through the site as intended—more importantly, as you intend for the user to have the best possible experience.
 
-?? Reddit screenshot ?? weak hierarchy. 
+{% img /images/Design_101/Visual_Design/Hierarchy/reddit-index.png %}
+
+###### The screenshot of the Reddit index page is maybe not the best example of well crafted design—especially in the sense of establishing a clear and strong hierarchy. Reddit is one of these cases where the success of the site and design are not closely related I feel. It has an authentic ring to it, by being messy I mean, but I often wish their user experience would be enhanced by working more on their design. Wouldn’t need much to establish a better visual hierarchy.
 
 As we covered before, you don’t want things to look equally important. That way your viewer would have a harder time to digest your content. Instead create various level of importance that emphasise the overall structure of your composition. One strategy that works pretty much always is: the bigger the size, the bigger the importance. These differences in size or whatever should be significant differences only, avoid going overboard. After you achieved a basic hierarchy through size and spacing, you can bring color to the mix. This can help to emphasize certain elements even more. If you work the other way around, starting with color, you make your job unnecessarily harder—or at least less effective.
 
+{% img /images/Design_101/Visual_Design/Hierarchy/github-trending.png %}
+
+###### I like how the [Explore](https://github.com/trending) page at GitHub deals with typography to create a subtle and clear hierarchy. It’s very easy for the eye to follow the content downward. Color is also put to good use to create visual anchors. Same goes for their search page.
+
+{% img /images/Design_101/Visual_Design/Hierarchy/github-search.png %}
+
+###### Color, form, white space, size and alignment work together and create a solid hierarchy.
 Good visual hierarchy is a bit like giving users directions without putting signs all over the place. It’s a lot more subtle and elegant that way. Skillfully implemented hierarchy let’s you avoid that the user feels overwhelmed, especially when you have tons of content on a site. Users getting lost by lacking of hierarchy is the exact opposite you want to happen. That is easy money that you leave on the table. I sometimes wonder how many conversions are missed just because this important principle was ignored designing checkouts and stuff. A clear hierarchy distinguishes quickly between good and mediocre design solutions—also convey the skills and experience of the designer at work.
+
+{% img /images/Design_101/Visual_Design/Hierarchy/what-is-dropbox.png %}
+
+###### Another great example of how skillful designer at Dropbox execute their work. A lot more content to work with, but still successful at guiding the eye through the text. Subtle and skillful.
 
 ## Consistency
 
 If you follow the principles discussed so far but lack consistency you not only confuse your user unnecessarily but also weaken the progress you achieved applying other design principles. Consistency helps to create a mental model of the design, site or look you are going for. Similar items should look similar which makes finding stuff easier. Also, once you get into coding your designs, making your designs more DRY (Don’t Repeat Yourself) is a lot more straightforward with that in mind.
 
-Consistency sets expectations, the next thing should not look completely different—especially not to amuse the create impulses of designers making their mark. One important are is how you work with typefaces. Not using a ton of different typefaces is one of the most important application of consistency. Users gets used to read in a particular style or typeface and you don’t want to disturb that—at all! Lot’s of differnt typefaces is one nasty antipattern.
+{% img /images/Design_101/Visual_Design/Consistency/dropbox-plans.png %}
 
-For example, have you recently seen sites that use tons of different buttons instead of deciding on a few that create better consistency? I bet you have and that you didn’t like it. The usability of a system can improve a ton when similar elements like these share the same look. Why make users learn a ton of visual language for navigating your page? It doesn’t make any sense! On the bright side, this helps you shape the design very subliminally. You can group content just by looking similar without using extra elements as distinguishers.
+###### Another eye pleasing design from the Dropbox team. It shows consistency on various levels. The style and size of the illustrations are consistent—not only in this example but across the page actually. The buttons look the same—also page wide. The visual weight of all three columns are evenly distributed, aligned and share the same inner structure. Overall, simple, considered and effective.
 
-?? example: ton of different buttons from bRad frost bank
+Consistency sets expectations, the next thing should not look completely different—especially not to amuse the create impulses of designers making their mark.
+
+{% img /images/Design_101/Visual_Design/Similarity/startup-cards.png %}
+
+##### [UX Timeline](http://uxtimeline.com/)
+
+Not using a ton of different typefaces is one of the most important application of consistency. Users gets used to read in a particular style or typeface and you don’t want to disturb that—at all! Lot’s of different typefaces is one nasty antipattern.
+
+{% img /images/Design_101/Visual_Design/Consistency/type-consistency.png %}
+
+##### [Whiplash](https://www.whiplashmerch.com/)
+
+{% img /images/Design_101/Visual_Design/Similarity/soundcloud-charts.png %}
+
+##### [SoundCloud Charts](https://soundcloud.com/charts/top)
+
+Have you recently seen sites that use tons of different buttons instead of a few which would create much better consistency? I bet you have and that you didn’t like it. The buttons below belong to a interface inventory of one single site. Amazing how far you can go in the wrong direction.
+
+{% img /images/Design_101/Visual_Design/Consistency/atomic-design-buttons.png %}
+
+###### A screenshot from Brad Frost’s excellent book about [Atomic Design](http://atomicdesign.bradfrost.com/chapter-4/)
+
+The usability of a system can improve a ton when similar elements like these share the same look. Why make users learn a ton of visual language for navigating your page? It doesn’t make any sense! On the bright side, consistency helps you shape the design very subliminally without too many extra elements as distinguishers.
 
 ## Similarity (Gestalt Principle)
 
@@ -168,19 +282,6 @@ Lucky for us, symmetrical balance is easy to achieve. Might be a tad more boring
 When you play with visual balance, all the design tools are at your disposal: size, color, position, shape, quantity, texture and so on can influence the perceived weight individually and play off of each other. Getting a good grip optical equilibrium is one of the harder skills to master I think.
 
 This balance is more friendly, less static or rigid and conveys a design that appears more playful and dynamic.
-
-
-## Figure Ground Relationship(Gestalt Principle)
-
-This principle is very powerful and I think so fundamental that you should master it as early as possible. Working on your designs, you should often ask yourself the simple question: what elements are basically background or foreground? 
-
-When our early ancestors were hunting, gathering or whatever, it often was of vital importance to discern what might be an immediate threat or advantage—right in front of them. Distinguishing things quickly from stuff that are just background “noise” seems to still be part of our wiring for “survival”. Think of tiger behind a bush in the jungle vs rain on the horizon. Neurologically, this visual survival strategy has probably left such a deep imprint that we won’t change this simple mechanism of perception for quite a while.
-
-I know this sounds funny and mostly obsolete for digital folks but knowing this though, makes it much simpler to decide how to accentuate important elements or information for users and how to “hide” less relevant stuff in the background. Another issue might be that our eyes and brains are not super fast at processing a lot of information at the same time which leads to prioritizing what we need to focus on first. This is no rocket science of course, but having this knowledge at the back of your head definitely helps placing pieces of the design puzzle more effectively.
-
-Broken down to its core essence, figure ground relationship boils down to what can the user ignore at first and what should she focus on right away. For design with strong visual hierarchy, this is an essential design principle to produce quality work. Without applying this knowledge, you either stumble over a successful solution by accident or your outcome will be significantly weaker in establishing visual hierarchy.
-
-?? Blending them sometimes and breaking the clear distinction might result in nice results. ??
 
 ## Proximity(Gestalt Principle)
 
