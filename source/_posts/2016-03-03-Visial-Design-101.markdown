@@ -228,11 +228,17 @@ Have you recently seen sites that use tons of different buttons instead of a few
 
 The usability of a system can improve a ton when similar elements like these share the same look. Why make users learn a ton of visual language for navigating your page? It doesn’t make any sense! On the bright side, consistency helps you shape the design very subliminally without too many extra elements as distinguishers.
 
-## Similarity (Gestalt Principle)
+## Similarity
 
-You guessed it, consistency has it’s roots in a Gestalt principle that says that similar looking things create a sort of unity that you can use in your designs. Elements that share similar characteristics appear to be more related to each other. They appear to be more related than dissimilar things—no surprises here I guess. The being related part is the thing to focus on. Design elements can create a relationship just by looking similar. Elements that are similar, when put together can create strong contrasts to other elements around them which basically separates them without much effort or extra design barriers. 
+You guessed it, consistency has it’s roots in this Gestalt principle that says that similar looking things create a sort of unity that you can use in your designs. Elements that share similar characteristics appear to be more related to each other—more than dissimilar things. No surprises here of course. The being related part is the thing to focus on. Design elements can create a relationship just by looking similar. Elements that are similar, when put together can create strong contrasts to other elements around them which basically separates them without much effort or extra design barriers. That’s fantastic news because it can make our lives as designers a lot easier. This means that psychologically, it can help us create consistency by repeating particular elements and that avoiding to create tons of variations of the same things weaken our work—or most likely only confuse your users. Cohesion is the magic idea behind all this. 
 
-That’s fantastic news because it can make our lives as designers a lot easier. This means that psychologically, it can help us create consistency by repeating particular elements and that avoiding to create tons of variations of the same things weaken our work—or most likely only confuse your users. Cohesion is the magic idea behind all this. 
+{% img /images/Design_101/Visual_Design/Similarity/dribbble-peeps.png %}
+
+###### The user list on [Dribbble](https://dribbble.com/designers), displaying designers and their work, is a nice example how similarity can support a list of different design elements to create relationships and therefore appear more unified.
+
+{% img /images/Design_101/Visual_Design/Similarity/reddit-bad-similarity.png %}
+
+###### Reddit does not achieve great consistency by applying similarity that well. This list of posts has super long and super short titles, some headlines are indented while others aren’t. It looks a bit messy and wouldn’t take much work to create more cohesion via similarity.
 
 You can achieve similarity by:
 
@@ -247,29 +253,53 @@ You can achieve similarity by:
 
 All of them can suggest relationships when being similar. Color and shape are very strong examples to emphasize these relationships. I think that similarity of color is maybe the strongest to suggest similarity. The eye is looking for color similarity very early in the process of looking at new stuff. If you can make it easy for it to discover common threads via color, you make the user think less I guess. Although similarity is a mighty weapon to yield, it is nevertheless a tool for reinforcement of hierarchies, not one that easily creates it on its own.
 
+{% img /images/Design_101/Visual_Design/Similarity/trending-open-source-boders.png %}
+
+###### This list of trending Open Source repos on GitHub is really nice. Very simple, easy to read and digest as well as cohesive by being very similar. I think it is so successful in creating blocks of discrete content that it doesn’t even need these borders.
+
+{% img /images/Design_101/Visual_Design/Similarity/trending-open-source-no-boders.png%}
+
+###### After removing the borders in the list, you can see that the similarity is still so strong that it doesn’t change the effectiveness of this list. You can see that the consistent use of similar elements can create a rather strong unity. See, I told you, it’s all about relationships really.
+
 The subtle mental map we can create is not to be underestimated. It helps to establish a pattern for organizing content. Chaos is on the other end of that spectrum and is most likely not what we are aiming for. Imagine a page of text where the letters would not be displayed consistently on a line-by-line basis but would float randomly around the page. Not very inviting to read, huh?
 
-?? lets have look at a site that does not give a damn about similarity.
+{% img /images/Design_101/Visual_Design/Similarity/github-explore-weaker.png %}
 
-?? Hard to navigate around here,no? Wouldn’t it be much easier to decide upon your next action if things wouldn’t look this dissimilar.
+##### This is the landing page of the [Explore](https://github.com/explore) section on GitHub. Here I think that a more consistent use of size and appearance would have been a bit more effective. At first I thought that the increased size was due to an “editorial” decision to consciously highlight certain categories. After a couple of refreshes it was clear thought that this was just randomized. Lacking good reason to play with size, the unity would have been stronger by sticking to consistency. Also, you have two sorts of cards, one with just a headline for the category and one with additional text. On top of that, the hover effects are different for all three variations. Not a big issue overall, but imho not as strong as the showcases list of the same section below.
+
+{% img /images/Design_101/Visual_Design/Similarity/github-explore-cards.png %}
+
+###### Same content as above but the result is much stronger. Although the background colors are very different from each other, the cards look still very similar and consistent.
 
 In terms of functionality, similar looking elements should accomplish similar tasks for the user. When users unnecessarily need to re-learn different behaviours for similar looking things, frustration might be the least of your problems. You definitely want to avoid creating too many question marks for users in that department. Similarity helps to manage expectations of your users—that in itself is a very powerful tool in your arsenal. 
-
-?? example of good link, button design
-
-?? contrasst with inconsistent designs
 
 ## White space
 
 What exactly is considered white space? It’s unmarked, negative or empty space between elements in a composition. There is also macro whitespace for the main pieces in your design which creates more obvious effects. Micro whitespace on the other hand are for minute details, like spacings in text. It’s great if you are after more subtle effects. A good grip on white space is considered elegant and timeless if executed right.
 
+{% img /images/Design_101/Visual_Design/WhiteSpace/gear-360-white-space.png %}
+
+###### Here the excellent use of white space creates a strong and elegant emphasis on this new product. There are a couple of principles put to work successfully, but white space is playing the strongest role to make this design work so well.
+
 Site with proper white space usually appear a bit lighter or more airy. In that regard, it also leads to a composition that is more digestable. Lesser whitespace can result in looking cheap—which caw be a desired effect of course. I’m sure you have seen displays of luxury products and realized that they focus your attention by applying a ton of whitespace. It’s not so much about luxury vs cheap, but often, higher priced or valued products make good use of this principle. Instead it’s another technique that you can use to lead a viewer from element to element. That way, white space is considered active.
+
+{% img /images/Design_101/Visual_Design/WhiteSpace/foundersuite.png %}
+
+###### ([Foundersuite](https://foundersuite.com/investor_crm)) When you investigate the sizes used to establish effective white space, you see that the measures used play off of each other. Let’s have a look below:
+
+{% img /images/Design_101/Visual_Design/WhiteSpace/foundersuite-color-blocks.png %}
+
+###### As you can see, this application of white space is active. Although not perfect in execution—web browsers duh—you can easily see how little consideration it takes to play with this design principle. Doesn’t take much work to go beyond your gut feeling.
 
 To be most effective, white space must be active. It is a fuzzy description but it means that it should have relationships to elements around it. Active whitespace helps emphasize the composition or structure of your content and therefore affect the hierarchy positively. Passive whitespace is important as well since it can create small breathing rooms. But, too much inactive white space that is lacking relationships to surrounding elements and make your work look inconsiderate or even messy. It simply does not create the balance good design wants to achieve with that technique.
 
+{% img /images/Design_101/Visual_Design/WhiteSpace/ionic-white-space.png %}
+
+###### Another nice application of white space on [ionic.io](http://ionic.io/). There is a relationship in size as well as macro and micro white space playing nicely together.
+
 When you read text, see the useful application of white space every day without thinking much about it. The space between words, sentences and paragraphs is all white space and helps us to visually digest the meaning of the letters being written. It guides the eye through the content and gives us cues how the eye is most effectively moving through it the text. Both give the eyes a chance to rest and support the overall balance.
 
-?? Show Reddit page, that crams lots of stuff onto the page
+{% img /images/Design_101/Visual_Design/WhiteSpace/mighty-bell-white-space-blocks.png%}
 
 Keep in mind that you want to achieve differentiation though space. This lets you cut back on other elements to create distinctions or borders. If you like that clean look of your favorite designs then the conscious application of white space was most likely one major component of it. Nothing speaks elegance and sophistication than proper user of white space.
 
