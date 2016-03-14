@@ -105,7 +105,7 @@ Visual alignment is actually pretty much based on the Gestalt principle of conti
 
 {% img /images/Design_101/Visual_Design/Alignment-Continuation/color-drops.png %}
 
-###### This is a great example of both alignment and continuation. Without using borders, you can clearly see a grid at work effectively and the form of the color drops implies movement continuing down the page. I love this piece!
+###### This is a great example of both alignment and continuation ([LOL Colors](http://www.lolcolors.com/)). Without using borders, you can clearly see a grid at work effectively and the form of the color drops implies movement continuing down the page. I love this piece!
 
 On macro-level, you want to work on aligning things that are related to each other and position them along a common edge. That way, elements flow a lot easier in the overall composition and let users navigate effortless—if done right. This visual connection helps you to form an overall unity between small and big elements. It’s like an invisible margin that holds the major pieces in your design together and gives the eye little reason to stop for visual hiccups. More often than not, edge alignment is more useful and applied more frequently than center alignment. Both have their place of course, but aligning content via edges is definitely your bread and butter when you design for the web. Center alignment for larger elements can be used to emphasize particular elements or call to actions.
 
@@ -151,9 +151,7 @@ I know this sounds funny and mostly obsolete for digital folks, but knowing this
 
 ###### This works quite ok, the distinction between background and foreground works somehow. I just don’t get why they didn’t place the red button at the end of the table—where the eye is drawn naturally due to the perspective of the image. Would have been much stronger emphasis without much effort. (http://www.startupfuckingadvice.com/)
 
-Broken down to its core essence, figure ground relationship boils down to what can the user ignore at first and what should she focus on right away. For design with strong visual hierarchy, this is an essential design principle to produce quality work. Without applying this knowledge, you either stumble over a successful solution by accident or your outcome will be significantly weaker in establishing visual hierarchy.
-
-?? Blending them sometimes and breaking the clear distinction might result in nice results. ??
+Broken down to its core essence, figure ground relationship boils down to what can the user ignore at first and what should she focus on right away. For design with strong visual hierarchy, this is an essential design principle to produce quality work. Without applying this knowledge, you either stumble over a successful solution by accident or your outcome will be significantly weaker in establishing visual hierarchy. Blending them sometimes and breaking the clear distinction might result in nice results.
 
 {% img /images/Design_101/Visual_Design/Figure-Ground/samsung-360.png %}
 
@@ -307,26 +305,56 @@ Keep in mind that you want to achieve differentiation though space. This lets yo
 
 More often that not, you want all elements, or at least the most emphasised ones on page to have optical equilibrium. Avoid having elements that look heavier than the rest! Balance is all about keeping visual weight in check. We like to look at things that are balanced around a vertical axis—a Rohrschach test image basically. Nothing wrong with that. This is a safe pattern to follow—very formal and ordered. If you can break that balance masterfully though, create a bit of a tension or surprise, maybe to highlight some part, your design might appear more dynamic and interesting.
 
+{% img /images/Design_101/Visual_Design/Balance/blockhead-balance-01.png %}
+
+###### The site for the [Blockhead](https://tenonedesign.com/blockhead.php) adapter has a few nice examples how they craftfully applied balance to their designs. Above, the image to the right and the text achieve a nice optical equilibrium. Same goes for the image below. Balance, hierarchy, whitespace and emphasis are all nicely applied.
+
+{% img /images/Design_101/Visual_Design/Balance/blockhead-balance-02.png %}
+
 Lucky for us, symmetrical balance is easy to achieve. Might be a tad more boring but it’s mostly a save bet. The asymmetric approach is less rigid or static but expects a bit more craft to pull off successfully. You need to work on keeping the various non-mirrored parts in a perceived balance. The elements involved are different from each other. It is not so much about getting a ruler out and measuring all the lengths, distances or white spaces, but about creating a visual, perceived equilibrium. Not easy to do but it can result in very beautiful and elegant solutions. Good examples show the experience of a well considered and crafted design.
+
+{% img /images/Design_101/Visual_Design/Balance/dropbox-balance-01.png %}
+
+###### It doesn’t get any better than that. The [Dropbox](https://www.dropbox.com/) landing page makes excellent use of visual balance all over the place. You can see that the images and the text achieve a nice asymmetrical balance–especially in reference to other sections around them. An boy, don’t get me started about how they used the Koi carp to imply responsiveness and multi-device operability. Genius!
 
 When you play with visual balance, all the design tools are at your disposal: size, color, position, shape, quantity, texture and so on can influence the perceived weight individually and play off of each other. Getting a good grip optical equilibrium is one of the harder skills to master I think.
 
-This balance is more friendly, less static or rigid and conveys a design that appears more playful and dynamic.
+{% img /images/Design_101/Visual_Design/Balance/dropbox-balance-02.png %}
 
-## Proximity(Gestalt Principle)
+Asymetrcial balance is more friendly, less static or rigid and conveys a design that appears more playful and dynamic. Not that I’m a Dropbox fan boy or something, but in terms of design they are making skillful use of every design principle in the book and achieve an overall quality that can be admired.
+
+{% img /images/Design_101/Visual_Design/Balance/dropbox-balance-03.png %}
+
+##### Dropbox’s about page
+
+## Proximity
 
 Design elements that are placed closer to each other seem to appear being more related. The distance between elements has an effect on their perceived relatedness. The closer they are arranged together, the closer the relationship is implied. You can enforce that mental proximity through color and similarity of course. Handling proximity right can affect your designs positively by enabling you to leave off other elements that would help you achieve a visual unity—borders for example. Again, unity is what this is all about. Proximity can be so strong though that it overshadows similarity of color or form.
 
-## Closure(Gestalt Principle)
+{% img /images/Design_101/Visual_Design/Proximity/proximity.png %}
+
+###### On the site for [YoGrow](https://yogrow.co/ecommerce-stack) you can see how they made use of proximity. Maybe they could have used less of the background color and borders and let proximity do its magic. There is not too much to explain I think but proximity is one Gestalt principle that you want to not overlook. In the example below, proximity was you need to imply the relationships of these color palettes. Borders or background colors can be left off and generates an elegant look ([LOL Colors](http://www.lolcolors.com/)).
+
+{% img /images/Design_101/Visual_Design/Proximity/color-drops.png %}
+
+## Closure
 
 Closure is a technique where the user who watches a composition fills in the blanks of your designs—that you deliberately planted—a form of suggestion I’d say. It’s sort of a illusion that completes the image that the designer wants you to see. Maybe you can also describe it as a design that leaves out all the stuff that is unnecessary to understand the image. For the human brain, it’s easier to see a pattern than to see disorganized pieces. Thereby you can create a possibly stronger visual imprint on the viewer I’d say. It’s like we dig a deliberate hole that is for the viewer to fill after they figure it out. This is sometimes the technique behind very clever logos. Have a look below. 
 
-?? Examples of logos
+{% img /images/Design_101/Visual_Design/Closure/closure-example-list.jpeg %}
 
 The pattern-seeking human brain seems to operate by filling in missing pieces into familiar forms. It does not work well with things that are unfamiliar to us. Experience is necessary to invoke this mental trigger. Supposedly our minds are doing this on a vast scale with our everyday perception. It might even be a vital mechanism of how we construct our realities. Because we can’t fully sense what is going on around us, we cope by interpolating what’s out there—sort of I guess. This filling of the blanks let’s us focus on what’s important and probably go on with our business without being too much distracted by everything going on. Visual design learned to “exploit” that mechanism of our brain via closures. I’m not a psychologist, but this is the best description that I can come up with to summarize all that I learned about this over time.
 
+{% img /images/Design_101/Visual_Design/Closure/fedex.png %}
+
+{% img /images/Design_101/Visual_Design/Closure/girl-scouts.png %}
+
 If that really leaves the viewer with a more ingrained impression or relationship to a brand or whatever, can be questioned of course. In general, you don’t want to make it too hard for viewers to fill in these blanks though. Very few people take the time to figure this stuff out, so they need to put it together quickly in order to be effective. If it’s taking them too long, you are wasting an opportunity to leave a positive impression—or worse any significant impression at all. 
+
+{% img /images/Design_101/Visual_Design/Closure/usa-network.gif %}
+
+{% img /images/Design_101/Visual_Design/Closure/closure-v.png %}
 
 ## Final thoughts
 
-Practice, practice, practice! There is no way around it. From now on, try to look for these principles when you take a look at other designs or art. Try to understand if the creator considered these principles and applied them actively or if the creator just followed their gut blindly or instinctively—which is not wrong by definition or anything but represents a limited tool set that is harder to rely on in your work.
+Practice, practice, practice, there is no way around it! From now on, try to look for these principles when you take a look at other designs or art. Try to understand if the creators considered these principles and applied them actively or if they just followed their gut blindly or instinctively—which is not wrong by definition or anything but represents a limited tool set that is harder to rely on in your work. But most of all, have fun!
