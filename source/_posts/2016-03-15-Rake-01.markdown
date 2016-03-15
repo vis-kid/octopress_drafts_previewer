@@ -1,0 +1,277 @@
+---
+layout: post
+title: Rake Basics 01
+date: 2016-03-15 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [Rake, Ruby, Ruby on Rails, Make]
+---
+
+{% img /images/Rake/Victory-Garden-cropped.jpg 500 %}
+
+## Topics
+
++ What is Rake?
++ Task List
++ Getting Started
++ Tasks of Interest
++ Custom Rake Tasks
+
+## What is Rake?
+
+Rake de facto replaced the Unix utility 'make' as a Ruby build tool. A build tool like Rake is a tool for automating tasks of various kinds—a software for managing tasks basically. It is often used for administraion taks in Rails—which is where you most likely have run into it before—but its use cases are plenty. Some people write their ebooks in Markdown and have Rake tasks set up that convert the files in question to intermediate HTML files which then in turn get converted into ebook formats for example.
+
+What makes Rake really powerful is that these tasks can relate to one another and can be built on top of each other. Also, since it is written in Ruby, you can write any Ruby code for your tasks. Wanna use Ruby libraries in your Rake tasks? No problem! It’s a beautiful tool really! Fun fact, it is the most downloaded Ruby Gem, approaching 100 Mio downloads. So definitely something in your tool belt that you should pay a little more attention to. It was conceived by the late [Jim Weirich](https://en.wikipedia.org/wiki/Jim_Weirich), a well known and beloved developer, speaker and contributor to the Ruby ecosystem. RIP!
+
+## Task List
+
+Let’s start with a list of tasks that Rails has to offer right out of the box. I bet you are a bit surprised of what’s available if you haven’t checked before. In the relevant directory of your app or your Rakefile, you can list them by typing the following into a shell:
+
+``` bash
+
+rake --tasks
+ 
+#or
+
+rake -T
+
+```
+
+Output:
+
+``` bash
+
+rake about                              # List versions of all Rails frameworks and the environment
+rake assets:clean[keep]                 # Remove old compiled assets
+rake assets:clobber                     # Remove compiled assets
+rake assets:environment                 # Load asset compile environment
+rake assets:precompile                  # Compile all the assets named in config.assets.precompile
+rake cache_digests:dependencies         # Lookup first-level dependencies for TEMPLATE (like messages/show or comm...
+rake cache_digests:nested_dependencies  # Lookup nested dependencies for TEMPLATE (like messages/show or comments/...
+rake db:create                          # Creates the database from DATABASE_URL or config/database.yml for the cu...
+rake db:drop                            # Drops the database from DATABASE_URL or config/database.yml for the curr...
+rake db:fixtures:load                   # Load fixtures into the current environment's database
+rake db:migrate                         # Migrate the database (options: VERSION=x, VERBOSE=false, SCOPE=blog)
+rake db:migrate:status                  # Display status of migrations
+rake db:rollback                        # Rolls the schema back to the previous version (specify steps w/ STEP=n)
+rake db:schema:cache:clear              # Clear a db/schema_cache.dump file
+rake db:schema:cache:dump               # Create a db/schema_cache.dump file
+rake db:schema:dump                     # Create a db/schema.rb file that is portable against any DB supported by AR
+rake db:schema:load                     # Load a schema.rb file into the database
+rake db:seed                            # Load the seed data from db/seeds.rb
+rake db:setup                           # Create the database, load the schema, and initialize with the seed data ...
+rake db:structure:dump                  # Dump the database structure to db/structure.sql
+rake db:structure:load                  # Recreate the databases from the structure.sql file
+rake db:version                         # Retrieves the current schema version number
+rake doc:app                            # Generate docs for the app -- also available doc:rails, doc:guides (optio...
+rake log:clear                          # Truncates all *.log files in log/ to zero bytes (specify which logs with...
+rake middleware                         # Prints out your Rack middleware stack
+rake notes                              # Enumerate all annotations (use notes:optimize, :fixme, :todo for focus)
+rake notes:custom                       # Enumerate a custom annotation, specify with ANNOTATION=CUSTOM
+rake rails:template                     # Applies the template supplied by LOCATION=(/path/to/template) or URL
+rake rails:update                       # Update configs and some other initially generated files (or use just upd...
+rake routes                             # Print out all defined routes in match order, with names
+rake secret                             # Generate a cryptographically secure secret key (this is typically used t...
+rake spec                               # Run all specs in spec directory (excluding plugin specs)
+rake spec:controllers                   # Run the code examples in spec/controllers
+rake spec:features                      # Run the code examples in spec/features
+rake spec:helpers                       # Run the code examples in spec/helpers
+rake spec:models                        # Run the code examples in spec/models
+rake spec:views                         # Run the code examples in spec/views
+rake stats                              # Report code statistics (KLOCs, etc) from the application or engine
+rake time:zones:all                     # Displays all time zones, also available: time:zones:us, time:zones:local...
+rake tmp:clear                          # Clear session, cache, and socket files from tmp/ (narrow w/ tmp:sessions...
+rake tmp:create                         # Creates tmp directories for sessions, cache, sockets, and pids
+
+```
+
+The output is suprisingly plenty in a Rails app, isn’t it? A lot more than the usual `rake db:migrate` or `rake routes` that we are so familiar with and run multiple times on a daily basis. On the left you see the various tasks and on the right you see what is optionally provided as a description to every rake task. If you want to see the complete list, which among others also includes tasks that lack a description you need to add an additional flag.
+
+Shell:
+
+``` bash
+
+rake -T -A
+
+```
+
+Output:
+
+``` bash
+
+rake about                              # List versions of all Rails frameworks and the environment
+rake assets:clean[keep]                 # Remove old compiled assets
+rake assets:clobber                     # Remove compiled assets
+rake assets:environment                 # Load asset compile environment
+rake assets:precompile                  # Compile all the assets named in config.assets.precompile
+rake cache_digests:dependencies         # Lookup first-level dependencies for TEMPLATE (like messages/show or comments/_comment.html)
+rake cache_digests:nested_dependencies  # Lookup nested dependencies for TEMPLATE (like messages/show or comments/_comment.html)
+rake db:_dump                           # 
+rake db:abort_if_pending_migrations     # 
+rake db:charset                         # 
+rake db:collation                       # 
+rake db:create                          # Creates the database from DATABASE_URL or config/database.yml for the current RAILS_ENV (use db:create:all to create all databases in the config)
+rake db:create:all                      # 
+rake db:drop                            # Drops the database from DATABASE_URL or config/database.yml for the current RAILS_ENV (use db:drop:all to drop all databases in the config)
+rake db:drop:all                        # 
+rake db:fixtures:identify               # 
+rake db:fixtures:load                   # Load fixtures into the current environment's database
+rake db:forward                         # 
+rake db:load_config                     # 
+rake db:migrate                         # Migrate the database (options: VERSION=x, VERBOSE=false, SCOPE=blog)
+rake db:migrate:down                    # 
+rake db:migrate:redo                    # 
+rake db:migrate:reset                   # 
+rake db:migrate:status                  # Display status of migrations
+rake db:migrate:up                      # 
+rake db:purge                           # 
+rake db:purge:all                       # 
+rake db:reset                           # 
+rake db:rollback                        # Rolls the schema back to the previous version (specify steps w/ STEP=n)
+rake db:schema:cache:clear              # Clear a db/schema_cache.dump file
+rake db:schema:cache:dump               # Create a db/schema_cache.dump file
+rake db:schema:dump                     # Create a db/schema.rb file that is portable against any DB supported by AR
+rake db:schema:load                     # Load a schema.rb file into the database
+rake db:schema:load_if_ruby             # 
+rake db:seed                            # Load the seed data from db/seeds.rb
+rake db:setup                           # Create the database, load the schema, and initialize with the seed data (use db:reset to also drop the database first)
+rake db:structure:dump                  # Dump the database structure to db/structure.sql
+rake db:structure:load                  # Recreate the databases from the structure.sql file
+rake db:structure:load_if_sql           # 
+rake db:test:clone                      # 
+rake db:test:clone_schema               # 
+rake db:test:clone_structure            # 
+rake db:test:deprecated                 # 
+rake db:test:load                       # 
+rake db:test:load_schema                # 
+rake db:test:load_structure             # 
+rake db:test:prepare                    # 
+rake db:test:purge                      # 
+rake db:version                         # Retrieves the current schema version number
+rake default                            # 
+rake doc                                # 
+rake doc/app                            # 
+rake doc/app/created.rid                # 
+rake doc:app                            # Generate docs for the app -- also available doc:rails, doc:guides (options: TEMPLATE=/rdoc-template.rb, TITLE="Custom Title")
+rake doc:clobber                        # 
+rake doc:clobber_app                    # 
+rake doc:clobber_rails                  # 
+rake doc:guides                         # 
+rake doc:rails                          # 
+rake doc:reapp                          # 
+rake doc:rerails                        # 
+rake environment                        # 
+rake html                               # 
+rake html/created.rid                   # 
+rake log:clear                          # Truncates all *.log files in log/ to zero bytes (specify which logs with LOGS=test,development)
+rake magic                              # Magic rake task
+rake middleware                         # Prints out your Rack middleware stack
+rake no_description                     # 
+rake notes                              # Enumerate all annotations (use notes:optimize, :fixme, :todo for focus)
+rake notes:custom                       # Enumerate a custom annotation, specify with ANNOTATION=CUSTOM
+rake notes:fixme                        # 
+rake notes:optimize                     # 
+rake notes:todo                         # 
+rake rails:template                     # Applies the template supplied by LOCATION=(/path/to/template) or URL
+rake rails:templates:copy               # 
+rake rails:update                       # Update configs and some other initially generated files (or use just update:configs or update:bin)
+rake rails:update:bin                   # 
+rake rails:update:configs               # 
+rake railties:install:migrations        # 
+rake routes                             # Print out all defined routes in match order, with names
+rake secret                             # Generate a cryptographically secure secret key (this is typically used to generate a secret for cookie sessions)
+rake spec                               # Run all specs in spec directory (excluding plugin specs)
+rake spec:controllers                   # Run the code examples in spec/controllers
+rake spec:features                      # Run the code examples in spec/features
+rake spec:helpers                       # Run the code examples in spec/helpers
+rake spec:models                        # Run the code examples in spec/models
+rake spec:prepare                       # 
+rake spec:statsetup                     # 
+rake spec:views                         # Run the code examples in spec/views
+rake stats                              # Report code statistics (KLOCs, etc) from the application or engine
+rake time:zones:all                     # Displays all time zones, also available: time:zones:us, time:zones:local -- filter with OFFSET parameter, e.g., OFFSET=-6
+rake time:zones:local                   # 
+rake time:zones:us                      # 
+rake tmp                                # 
+rake tmp/cache                          # 
+rake tmp/cache/assets                   # 
+rake tmp/cache/assets/development       # 
+rake tmp/cache/assets/production        # 
+rake tmp/cache/assets/test              # 
+rake tmp/pids                           # 
+rake tmp/sessions                       # 
+rake tmp/sockets                        # 
+rake tmp:cache:clear                    # 
+rake tmp:clear                          # Clear session, cache, and socket files from tmp/ (narrow w/ tmp:sessions:clear, tmp:cache:clear, tmp:sockets:clear)
+rake tmp:create                         # Creates tmp directories for sessions, cache, sockets, and pids
+rake tmp:pids:clear                     # 
+rake tmp:sessions:clear                 # 
+rake tmp:sockets:clear                  # 
+
+```
+
+Surprise, almost three times as much!
+
+## Getting Started
+
+A Rakefile can have one of the following four appearances:
+
++ rakefile.rb
++ rakefile 
++ Rakefile
++ Rakefile.rb
+
+Mostly you will see the plain `Rakefile` version—especially if you use frameworks—but use whatever gets your blood flowing. You get going by creating a Rakefile with a `.rake` extension and then define your tasks inside. Let’s imitate the structure from one of the default tasks above:
+
+
+###### lib/tasks/some_task.rake
+
+``` ruby
+
+desc 'List versions of all Rails frameworks and the environment'
+task :about do
+ puts 'Some magic goes in here…'
+end
+
+```
+
+We provided the task with a description that not only reminds us in the future what we wanted to achieve with particular tasks, but also shows up when we run `rake -T`. Don’t get lazy on this part, it’s probably not worth it. Right below is the keyword task that defines a new task named `:about`. This can be invoked on the command line via `rake about` which does it’s magic then. `rake :about` will cause Rake to abort, not knowing `“how to build task :about”`. This is the basic setup a task will need. It offers a lot more options of course, but the overall structure is the same. 
+
+### Trace (??Flag)
+
+
+## Tasks of Interest
+
+Below is a short list of Rake tasks we should look into first.
+
++ db
++ tmp
++ doc
++ trace
++ stats
++ notes
++ about
++ secret
++ assets
++ routes
+
+
+### About
+
+### Assets
+
+### db
+Rake namespace for running migrations, create, up, down, redo, reset, version
+
+### doc
+
+### notes
+
+### routes
+
+### tmp
+
+### secret
+
+## Custom Rake tasks
