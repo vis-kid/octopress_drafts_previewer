@@ -15,6 +15,9 @@ categories: [Rake, Ruby, Ruby on Rails, Make]
 + What is Rake?
 + Task List
 + Getting Started
++ Namespace
++ Prerequisites
++ Passing Arguments
 + Tasks of Interest
 + Custom Rake Tasks
 
@@ -93,6 +96,10 @@ Shell:
 ``` bash
 
 rake -T -A
+
+#or
+
+rake -T -all
 
 ```
 
@@ -213,6 +220,17 @@ rake tmp:sockets:clear                  #
 
 Surprise, almost three times as much!
 
+## Useful flags
+
+?? -q flag for quiet output. Not so verbose for some rake tasks??
+Do not echo commands from FileUtils
+
+--silent (-s)
+Like –quiet, but also suppresses the 'in directory' announcement.
+
+## Global Rakefile
+mkdir ~/.rake
+
 ## Getting Started
 
 A Rakefile can have one of the following four appearances:
@@ -237,6 +255,87 @@ end
 ```
 
 We provided the task with a description that not only reminds us in the future what we wanted to achieve with particular tasks, but also shows up when we run `rake -T`. Don’t get lazy on this part, it’s probably not worth it. Right below is the keyword task that defines a new task named `:about`. This can be invoked on the command line via `rake about` which does it’s magic then. `rake :about` will cause Rake to abort, not knowing `“how to build task :about”`. This is the basic setup a task will need. It offers a lot more options of course, but the overall structure is the same. 
+
+## Namespace
+
+## Prerequisites
+
+task :clean do
+     puts 'Cleaning data...'
+end
+   task :seed => :clean do
+     puts 'Seeding data...'
+end
+
+
+
+
+namespace :db do
+     task :clean do
+       puts 'Cleaning data...'
+     end
+end
+   task :seed => 'db:clean' do
+     puts 'Seeding data...'
+￼end
+
+
+
+namespace :db do
+     task :clean do
+       puts 'Cleaning data...'
+     end
+     task :seed => :clean do
+       puts 'Seeding data...'
+end end
+
+
+task :task1 => [:task2, :task3]
+
+## Passing Arguments
+
+pass parameters through the environment variable hat is passed into the ENV variable in Ruby code (ENV is a hash-like accessor for environment variables, and it is available in any Ruby program). 
+like global variable inside a rakefile. no isolation
+
+task :set_title do
+     title = ENV['TITLE'] || 'Blog'
+     puts "Setting the title: #{title}"
+end
+rake set_title TITLE='My Blog'
+
+
+task :name, [:first_name, :last_name] do |t, args|
+     puts "First name is #{args.first_name}"
+     puts "Last  name is #{args.last_name}"
+end
+
+
+
+pass variable-length parameters to the task with a comma
+task :email, [:message] do |t, args|
+     puts "Message: #{args.message}"
+     puts "Recipients: #{args.extras}"
+     puts "All variables: #{args.to_a}"
+end
+rake "email[Hello Rake, ka8725@gmail.com, test@example.com]"
+
+
+
+
+The second solution is using the built-in Rake syntax—you just pass variables to each task through square braces
+when you want to pass variables to each task in isolation
+built-in Rake feature
+
+task :set_title, [:title] do |t, args|
+     args.with_defaults(:title => 'Blog')
+     puts "Setting title: #{args.title}"
+end
+rake "set_title[My Blog]"
+
+
+multiple arguements
+rake "name[Andrey,Koleshko]"
+
 
 ### Trace (??Flag)
 

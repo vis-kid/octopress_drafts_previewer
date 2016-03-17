@@ -1,0 +1,217 @@
+---
+layout: post
+title: Color Basics 101
+date: 2016-03-17 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [Design, Color Theory, Color, Visual Design, Product Design, Web Design, Frontend]
+---
+
+{% img /images/Color_101/GoetheFarbkreis.png %}
+
+## Topics
+
++ Hue
++ Tint & Shade
++ Color Wheel
++ Warm Colors
++ Cool Colors
++ Neutral Colors
++ Matching Colors
++ Emphasis
++ Consistency
++ Color Meaning
++ Color Palette
+
+## Hue
+
+Basic colors
+A color or shade that is discernable by red, green, blue, ...
+can have different variastions, different colors of red
+
+## Tint & Shade
+
+??Tint-Tone: the amount of white in a color
+??Value-Shade: the amount of black in a color
+
+Good if you wanna focus on only one or two colors
+creating variatons on that
+playing with main colors
+more options
+playing off of it
+within the same color
+vary your color but stay wihint same color choice
+
+## Color Wheel
+
+Relationships between the colors
+helps to choose color
+
+Primary colors: Red, Yellow, Blue
+You can’t mix any other colors to get them. -> are like constants if you like. fixed
+
+Secondary colors: Green, orange, purple
+are mixed from primary colors
+
+Tertiary colors 
+
+
+
+
+Two types of color:
+
+## Warm Colors
+
+Right side of the color wheel
+more attention grabbing,
+strong, engergetic, really strong, fast attention
+render problems??
+color vibrate
+
+
+## Cool Colors
+
+Green, blue, purple
+Left side of the color wheel
+Tend to fade into the background
+calm, stable, recede on page
+more comforting, stable, enriching
+usually a save bet, very popular
+lots of site online using it,
+does not jump out so much
+
+## Netural Colors
+
+not within color wheel
+supporting colors
+black, brown, white
+?? Gray scale??
+
+## Complimentary Colors
+
+oppposite on the color wheel
+like serif and sans serif in typography
+they work really well together 
+contrast well to each other
+good first step usually
+
+## Analogous Colors
+
+Right next to each other on the color wheel
+creating a realationship
+right direction for matching colors
+
+## Matching Colors
+
+Similar to choosing typefaces
+Choose one or utmost two major, design dominating colors
+A “primary” color
+Keep it simple
+Start with one dominant color
+Slowly put colors in
+Bounce other colors off of that
+Support and enhance dominant colors with supporting colors
+-> Adjust value, tone, brightness, saturation or use neutral colors
+Color scheme by bouncing off the main color
+
+## Emphasis
+
+If you use your primary color very sparsely, you can create a very effective emphasis. 
+You want to avoid washing it down too much and waste the opportunity to hightlight key design elements
+focus on elements
+works great with gray scale usually
+save it for important stuff
+very sparsely
+very dominant on the page
+pop forward
+other colors fade back that way and support main color
+
+## Consistency
+
+Keeping links the same color that do the same thing
+Keeping header colors consistent
+keeping background colors that similar
+most acitionable items can stick out-> not consistent
+mental map
+A lot more classy look achieve
+Setting expectations that you want to make easy for users to follow and understand
+
+## Color Meaning
+
+In various cultures, colors can imply different meanings or associations.
+Also evoke different feelings therefore
+Need to take that into consideration if you design for different cultures
+
++ Blue
+Confidence
+Stability
+Business like
+Trust it
+Professsional
+Honor
+Dependable
+
++ Green
+Growth
+Harmony
+Nature
+Money
+Wealth
+Growth
+Optimism
+
++ Red
+Love
+Power
+Strength
+Evil
+Danger
+Violence
+Courage
+Emergency
+Blood
+Shows off strenth
+
+Be careful about the context and meaning
+
++ Yellow
+Hope
+Joy
+Excitement
+Warning
+
+Because its so brignt and loud it screams at you
+
+
+
+White and Black can have very differnt meanings depending where you are. 
+Be careful
+
++ White
+Purity
+Cleanliness
+Innocence
+Softness
+Deity
+Royalty
+Weddings
+Positive things
+
++ Black
+Mysterious
+End
+Death
+Serious
+Conventional
+Sexy
+Sophisitcation
+Rebellious
+
+## Color Palletes
+
+On occasion steal and adapt them for your own designs
+See how designers use color pairs
+Learning through imitations is fine
+
+... Website list for color palettes
