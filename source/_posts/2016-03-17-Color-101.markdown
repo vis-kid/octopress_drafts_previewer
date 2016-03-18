@@ -8,10 +8,11 @@ published: true
 categories: [Design, Color Theory, Color, Visual Design, Product Design, Web Design, Frontend]
 ---
 
-{% img /images/Color_101/GoetheFarbkreis.png %}
+{% img /images/Color-101/GoetheFarbkreis.png %}
 
 ## Topics
 
++ Color?
 + Hue
 + Tint & Shade
 + Color Wheel
@@ -24,16 +25,89 @@ categories: [Design, Color Theory, Color, Visual Design, Product Design, Web Des
 + Color Meaning
 + Color Palette
 
+## Color?
+
+Color can be a very powerful “weapon” in your artistic repertoire—if yielded appropriately. On the other hand, nothing makes you look like a poser as fast as inconsidered applyance of color. Trust me, I’ve been there and in hindsight you want to kick yourself hard for not paying more attention.
+
+The topic of colors is a HUGE one—gigantic actually. We will focus on the most important aspects and terms to get you started—teaching you the lingo so to speak. 
+
+With colors there are a lot of considerations, especially if you need to think about branding. But foremost, I’d focus on making it interesting, chossing colors that have meaning and create interest.
+
+Try to avoid having muddy colors where you loose the distinct quality the colors at your disposal. On the web, you definitly want to use color to create a certain mood, vibe or whatever and also to highlight stuff that are of particuluar imoportance. As with design principles, less is more. If everything is highlighted via color, nothing sticks out and you will end up with color noice—which is the worst becaus it is not interesting at all.
+
+Color is also about the emotional and visual impact.
+
+Color creates mood, an emotional impact
+
+Colors, if used correctly, can guide viewers to what’s important. Probably the most important thing when using color on web projects.
+
+can be powerful mood changer
+
+On computers you pick colors by choosing its hue, saturation and value
+
+No light, no color. The color disappears. Without darkness, the colors disappear too.
+Light and darkness together make colors visible.
+
 ## Hue
 
-Basic colors
-A color or shade that is discernable by red, green, blue, ...
-can have different variastions, different colors of red
+{% img /images/Color-101/Hue-scale.png %}
+
+Most of the time when people talk about colors, they might actually be talking about hues. They are like basic colors or pure colors. That means it’s any color that is within the visible light spectrum. The healthy human eye can see 2.3 Mio hues. They don’t have tint or shade—meaning they lack any additions of white or black (see next section).
+So tons of different variations of reds, blues, greens and so on.
+
+Like their raw, most primitive version
 
 ## Tint & Shade
 
-??Tint-Tone: the amount of white in a color
-??Value-Shade: the amount of black in a color
+{% img /images/Color-101/tint-tone-shade.png %}
+
+Tint
+Adding white to the pure hue decreases its saturation
+
+Shade
+Adding black to the pure hue decreases its value
+
+Tint is about the amount of white in a color. When you mix a color with white you are tinting it. This leads to increased lightness of the hue the more white you add.
+
+Shade is about the amount of black in a color. When you mix a color with black you are shading it. This leads to reduced lightness of the hue the more black you add.
+
+In regards to both of the above, we are talking about tints and shades of particular hues.
+
+###### Tint-Hue-Shade Spectrum:
+
+{% img /images/Color-101/tint-shade-spectrum.png 800 %}
+
+As you can see here, in the middle is the pure hue. Towards the left direction, we add more and more white by tinting it and to the right we are shading the red with black.
+
+
+#### Value
+
+The degree of lightness or darkness of a hue
+how light or dark a hue is
+tints or shades of a hue
+
+#### Tone
+
+The tone of a hue is its relative darkness / lightness. It’s about the amount of light that is reflected by that hue. The lighter the more light get’s reflected back and the darker the more ligth gets absorbed. We speak of tone when we mix a color with gray—which means that you effectively tint and shade it because adding both white and black results in gray of course.
+
+## Chroma
+
+Chroma, the saturation, is another term we should not overlook. It’s the “colorfulness” of a hue. That funky term just translates to the intensity or brilliance of a perceived color. The chroma is defining how pure the hues is.
+
+Chroma colors are the colors that you take right off the tube when you buy colors for painting.
+
+Desaturation means the color is washed out or grayed out.
+Desaturated colors are often used as shadow colors.
+
+We reduce saturation by adding grey to it (black and white). So we would be toning the hue.
+
+Desaturate a hue by adding a complimentary color. It’s important to uderstand that we are not adding gray for this. You are creating a gray but not by adding black or white. ??Contrast of saturations
+These grays break up your saturated colors.
+Don’t want to bombard viewers with intense color saturations
+
+Blue and orange for example. Next to each other they would be very intense. If you mix these colors you have this gray tone that can separate them really well. The color stands in between those highly saturated ones.
+
+Create a barrier between the colors to percevie them separately. When you talk about masters in painting, this is one of the things they tried to master.
 
 Good if you wanna focus on only one or two colors
 creating variatons on that
@@ -43,13 +117,29 @@ playing off of it
 within the same color
 vary your color but stay wihint same color choice
 
+highly saturated colors can look incredibly fake.
+too much of it gives your eyes not much rest
+
+anchor your eyes or the viewers attention when only few parts are selectivly highly saturated
+
+The more of the opposite color you add the more you desaturate it, the less pure it becomes. It becomes more dull. We are dealing with intensity. Where both colors meet, you have your neutral color point -> brown, gray
+
+## The Grays
+
+Are a mix of the shadow colors, which is the desaturated version by mixing it with its complimentary color, and mixing the shadow color with white.
+
 ## Color Wheel
 
+!!!We get a color wheel by taking the spectrum of light and through connecting both ends to a circle.
 Relationships between the colors
+The color wheel can easily tell you how to create the biggest color contrast possible
+The color wheel is not so much of a scientific thing but more how our brain works—maybe even emotional in terms of contrast and what respsones color awake. By scientifially, I mean there are not opposite colors in that regard—that’s only in our brains or in the concepts we put together to organize / distinguish colors.
 helps to choose color
 
 Primary colors: Red, Yellow, Blue
 You can’t mix any other colors to get them. -> are like constants if you like. fixed
+Can not be made by mixing ohter colors
+Are used to create all other colors
 
 Secondary colors: Green, orange, purple
 are mixed from primary colors
@@ -63,11 +153,16 @@ Two types of color:
 
 ## Warm Colors
 
+
 Right side of the color wheel
 more attention grabbing,
 strong, engergetic, really strong, fast attention
 render problems??
 color vibrate
+active colors
+
+You can also have a cold red and a warm red
+But you can also have warm blue and cold blue for example
 
 
 ## Cool Colors
@@ -80,27 +175,75 @@ more comforting, stable, enriching
 usually a save bet, very popular
 lots of site online using it,
 does not jump out so much
+passive colors
 
 ## Netural Colors
 
+Neutral colors taking two complimentary paris
+get gray or brown neutral
+on the other side is saturation
+neturals bind everything together
+provide a break from the intensity of the bright colors
+bright colors attract the eye
+neutrals provide interest and variation
+combined with saturated colors, neutrals recede while saturated come forward, at you.
+neutrals are very versatile
+they are part of a great color vocabulary
+subtle, subtle colors
+they create a balance in your work
+if everything is shouting, I mean highly saturated, pure color, nothing is focused. Seems also really flat
+build up with mostly neutral tones. then decide where the focus is and where the eye is supposed to be attracted to. that’s where you put the saturated tones
+Tone everything down, don’t make it so bright
+Everything bright seems childish and amateurish
 not within color wheel
 supporting colors
 black, brown, white
 ?? Gray scale??
 
-## Complimentary Colors
+## Color Harmonies
+
+Some color look better together than others. Probably a term that comes from musical harmonies.
+
+### Monochromatic
+easy
+one color
+single subjects
+details of image focus
+
+### Analogous Colors
+
+Adjacent on the color wheel
+Easy on the eyes
+Peaceful, comfortable mood -> often seen in nature
+Right next to each other on the color wheel
+creating a realationship
+right direction for matching colors
+
+### Triadic Colors
+
+Equally distant on the wheel
+Hard to get right
+More of an advanced combination
+Good for cartoon and surreal scenes
+Can imply playfulness
+
+### Complimentary Colors
+
+Opposing each other on the wheel
+Very popular combination
+“Naturally” pleasing to the eye
+Don’t use them equally -> decide on one dominant color -> generally the weaker color (-> the colder color more??)
+Red and green especially popular
+
 
 oppposite on the color wheel
 like serif and sans serif in typography
 they work really well together 
+About color contrast as well
 contrast well to each other
 good first step usually
 
-## Analogous Colors
-
-Right next to each other on the color wheel
-creating a realationship
-right direction for matching colors
+There are more variations but this should give you a great start for now.
 
 ## Matching Colors
 
@@ -142,6 +285,7 @@ Setting expectations that you want to make easy for users to follow and understa
 In various cultures, colors can imply different meanings or associations.
 Also evoke different feelings therefore
 Need to take that into consideration if you design for different cultures
+These are bit silly in my opinion but it’s nevertheless good to have seen these associations and commit them to memory. Everybody sees colors differently. Maybe for we stuff where you  don’t have to mix a ton of colors to create skin tons for example this is alright, but imagine useing these guidelines when you paint a stilleben with a vase of flowers in front of an open window looking out to a farm. It would be silly to think about all these color associations, no?
 
 + Blue
 Confidence
@@ -183,6 +327,12 @@ Warning
 
 Because its so brignt and loud it screams at you
 
++ Purple
+Magic
+Luxury
+Royal
+Expensive (was expensive in the past)
+
 
 
 White and Black can have very differnt meanings depending where you are. 
@@ -215,3 +365,10 @@ See how designers use color pairs
 Learning through imitations is fine
 
 ... Website list for color palettes
+
+## Color Relativity
+
+We were talking about cooler and warmer colors but it’s a bit more relative that that. Color can appear that way in reltation to another. Colors can look warmer or colder depending on the enviroment they are in. Our human eye is a bit foolish that way.
+
+{% img /images/Color-101/color-relativity.png %}
+
