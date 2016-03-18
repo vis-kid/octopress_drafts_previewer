@@ -18,18 +18,23 @@ categories: [Rake, Ruby, Ruby on Rails, Make]
 + Namespace
 + Prerequisites
 + Passing Arguments
++ Global Rakefile
 + Tasks of Interest
 + Custom Rake Tasks
 
 ## What is Rake?
 
-Rake de facto replaced the Unix utility 'make' as a Ruby build tool. A build tool like Rake is a tool for automating tasks of various kinds—a software for managing tasks basically. It is often used for administraion taks in Rails—which is where you most likely have run into it before—but its use cases are plenty. Some people write their ebooks in Markdown and have Rake tasks set up that convert the files in question to intermediate HTML files which then in turn get converted into ebook formats for example.
+Thanks to Rails, Rake has become a de facto standard as a Ruby build tool and it’s super popular in the Ruby community. Very early, the team behind Rails decided to use Rake as a the builder for Rails itself which meant that in the past when you downloaded Rails you also needed a copy of Rake. That way it exposed Rake to a lot of people. A little later it was included into Ruby (1.9) itself.
 
-What makes Rake really powerful is that these tasks can relate to one another and can be built on top of each other. Also, since it is written in Ruby, you can write any Ruby code for your tasks. Wanna use Ruby libraries in your Rake tasks? No problem! It’s a beautiful tool really! Fun fact, it is the most downloaded Ruby Gem, approaching 100 Mio downloads. So definitely something in your tool belt that you should pay a little more attention to. It was conceived by the late [Jim Weirich](https://en.wikipedia.org/wiki/Jim_Weirich), a well known and beloved developer, speaker and contributor to the Ruby ecosystem. RIP!
+Rake de facto replaced the Unix utility 'make' as a build tool in Ruby land. A build tool like Rake is handy for automating tasks of various kinds—a software for managing tasks basically. It is often used for administraion tasks in Rails—which is where you most likely have run into it so far—but its use cases are plenty. Some people write their ebooks in Markdown and have set up Rake tasks that convert the relevant files to intermediate HTML files which then in turn get converted into ebook formats for example. Saves a lot of trouble to use Rake for that.
+
+What makes Rake really powerful is that these tasks can relate to one another and can be built on top of each other. Also, since it is written in Ruby, you can write any Ruby code for your tasks. Want to use Ruby libraries in your Rake tasks? No problem! Fun fact, it is the most downloaded Ruby Gem, approaching 100 Mio downloads. So definitely something in your tool belt that you should pay a little more attention to. It was conceived by the late [Jim Weirich](https://en.wikipedia.org/wiki/Jim_Weirich), a well known and beloved developer, speaker and contributor to the Ruby ecosystem. It’s a beautiful tool really, thanks Jim! RIP!
+
+?? Jim needed something more dynamic
 
 ## Task List
 
-Let’s start with a list of tasks that Rails has to offer right out of the box. I bet you are a bit surprised of what’s available if you haven’t checked before. In the relevant directory of your app or your Rakefile, you can list them by typing the following into a shell:
+Let’s start with a list of tasks that Rails offers right out of the box. I bet you are a bit surprised of what’s available if you haven’t checked before. In the relevant directory of your app or your Rakefile, you can list them by typing the following into a shell:
 
 ``` bash
 
@@ -89,7 +94,7 @@ rake tmp:create                         # Creates tmp directories for sessions, 
 
 ```
 
-The output is suprisingly plenty in a Rails app, isn’t it? A lot more than the usual `rake db:migrate` or `rake routes` that we are so familiar with and run multiple times on a daily basis. On the left you see the various tasks and on the right you see what is optionally provided as a description to every rake task. If you want to see the complete list, which among others also includes tasks that lack a description you need to add an additional flag.
+The output is suprisingly plenty in a Rails app, isn’t it? You can find alot more handy tasks than the usual `rake db:migrate` or `rake routes` that we are so familiar with—and run multiple times on a daily basis. On the left you, see the various tasks and on the right what is optionally provided as a description to every rake task. If you want to see the complete list, which among others also includes tasks that lack a description, you need to add an additional flag.
 
 Shell:
 
@@ -218,7 +223,7 @@ rake tmp:sockets:clear                  #
 
 ```
 
-Surprise, almost three times as much!
+Surprise, almost three times as much! Take a look at them, play around if you like but commit the highlights to memory for later usage in the future. Might prevent you from reinventing the wheel checking the tasks to see what’s out there already.
 
 ## Useful flags
 
@@ -228,8 +233,6 @@ Do not echo commands from FileUtils
 --silent (-s)
 Like –quiet, but also suppresses the 'in directory' announcement.
 
-## Global Rakefile
-mkdir ~/.rake
 
 ## Getting Started
 
@@ -254,43 +257,199 @@ end
 
 ```
 
-We provided the task with a description that not only reminds us in the future what we wanted to achieve with particular tasks, but also shows up when we run `rake -T`. Don’t get lazy on this part, it’s probably not worth it. Right below is the keyword task that defines a new task named `:about`. This can be invoked on the command line via `rake about` which does it’s magic then. `rake :about` will cause Rake to abort, not knowing `“how to build task :about”`. This is the basic setup a task will need. It offers a lot more options of course, but the overall structure is the same. 
+For the complete Ruby newbies among you and for people coming from bracket-heavy languages, this is how it would look with parentheses.
+
+``` ruby
+
+desc('List versions of all Rails frameworks and the environment')
+  task(:about) do
+    puts('Some magic goes in here…')
+  end
+end
+
+```
+
+Looks very weird btw. Just loose the extra parenthesis, nobody writes tasks this way.
+
+We provided a named task `:about` with a description that not only reminds us in the future what we wanted to achieve with particular tasks, but also shows up when we run `rake -T`. Don’t get lazy on this part, it’s probably not worth it. Right below is the keyword task that defines a new task named `:about`. This can be invoked on the command line via `rake about` which does it’s magic then. `rake :about` will cause Rake to abort, not knowing `“how to build task :about”`. Via the `do end` block, we have a lamda and its body specifies what the task does. This is the basic setup a task will need. It offers a lot more options of course, but the overall structure is the same. 
+
+### invoke & execute
+
+Sometimes you might want to execute some defined task from your `Task` class manually. For this purpose, you have two methods of the `Rake::Task` class: `execute` and `invoke`.
+
+``` ruby
+
+Rake::Task['make_stuff_happen'].invoke
+Rake::Task['make_stuff_happen'].execute
+
+```
+
+With the `Rake::Task['make_stuff_happen']` code, we got the `make_stuff_happen` rake task to execute. It returns an instance of the `Rake::Task` class and then, we are able to run any method on it that is available.
 
 ## Namespace
 
+A very cool feature is the ability to namespace your tasks. You probably have done this dozens of times already. When you run `rake db:migrate`, you have made use of the `db` namespace for example. You invoke the task be separating it with a colon `:` from the namespace. It’s a handy way to organize your tasks in a rake file and keep them logically separated. Multiple namespaces like `rake time:zones:all` are fine btw.
+
+Other examples include:
+
+``` bash
+
+rake db:drop 
+rake db:seed
+rake log:clear
+rake spec:views
+rake spec:models  
+rake spec:helpers 
+rake spec:features
+rake db:rollback
+rake db:schema:load  
+rake assets:precompile 
+rake db:migrate:status
+
+```
+
+##### Some Rakefile
+
+``` ruby
+
+namespace :db do
+  desc 'Migrating some stuff'
+    task :migrate do
+      ...
+  end
+end
+
+```
+
+This is the basic setup. In reality it’s much more complicated and can even be nested multiple times. Have a quick peek at the Rails codebase and see for yourself how `rake db:migrate` is [implemented](https://github.com/rails/rails/blob/e3a476dba8ad3a016ee6e20c242c81bb7480f6e3/activerecord/lib/active_record/railties/databases.rake#L77). Don’t feel bad if it’s over your head. Just look around, try to discern how it’s structured and move on for now.
+
+
 ## Prerequisites
 
-task :clean do
-     puts 'Cleaning data...'
+Another strategy to organize your tasks and to keep them DRY is using prerequisites for executing a task. It’s like a dependency that has to run first before the actual task starts its job. That way you can build up complex tasks—as complex as you need. But I would recommend not getting too clever and to keep it as simple as possible—and as easy to understand as possible.
+
+###### Some Rakefile
+
+``` ruby
+
+task :stop_megalomaniac do
+  puts 'Lots of smart talk, car chases and guns fired'
 end
-   task :seed => :clean do
-     puts 'Seeding data...'
+
+task :bond_saves_the_day => :stop_psychotic_megalomaniac do
+  puts 'Lots of Dom Pérignon, oysters and bond girl business'
 end
 
+```
 
+If you want to rely on multiple tasks, you just stick them into an array. The order in which you place them matters of course.
 
+``` ruby
 
-namespace :db do
-     task :clean do
-       puts 'Cleaning data...'
-     end
+task :get_mr_wolf do
+  puts "You ain’t got no problem Jules, I’m on it! Go in there and chill them out and wait for the wolf who should be coming directly!"
 end
-   task :seed => 'db:clean' do
-     puts 'Seeding data...'
-￼end
 
+task :figure_out_bonnie_situation do
+  puts "If I was informed correctly, the clock is ticking. Is that right Jimmy?"
+end
 
+task :calm_down_jimmy do
+  puts "Jimmy, do me a favor, will you? I smelled some coffee back there. Would you make me a cup?"
+end
 
-namespace :db do
-     task :clean do
-       puts 'Cleaning data...'
-     end
-     task :seed => :clean do
-       puts 'Seeding data...'
-end end
+task :get_vince_vega_in_line do
+  puts "Come again? Get it straight buster. I’m not here to say please! I’m here to tell you what to do!"
+end
 
+task :clean_car do
+  puts "I need you two fellas to take those cleaning products and clean the inside of the car. I’m talking fast, fast, fast!"
+end
 
-task :task1 => [:task2, :task3]
+task :clean_crew do
+  puts "Jim, the soap! O.K. gentlemen, you both been to county before I’m sure. Here it comes!"
+end
+
+task :get_rid_of_evidence_at_monster_joes do
+  puts "So what’s with the outfits? You guys are going to a Volleyball game or something?"
+end
+
+task :drive_into_the_sunrise do
+  puts "Call me Winston!"
+end
+
+task :solve_bonnie_situation => [:get_mr_wolf, :calm_down_jimmy, :figure_out_bonnie_situation, :get_vince_vega_in_line, :clean_car, :clean_crew, :get_rid_of_evidence_at_monster_joes, :drive_into_the_sunrise]  do
+  puts "You know, I’d go for breakfast. Feel like having breakfast with me?"
+end
+
+```
+
+If you run the rake task that depends on the other we’ll get the following output:
+
+###### Shell
+
+``` bash
+
+$ rake solve_bonnie_situation
+You ain’t got no problem Jules, I’m on it! Go in there and chill them out and wait for the wolf who should be coming directly!
+Jimmy, do me a favor, will you? I smelled some coffee back there. Would you make me a cup?
+If I was informed correctly, the clock is ticking. Is that right Jimmy?
+Come again? Get it straight buster. I’m not here to say please! I’m here to tell you what to do!
+I need you two fellas to take those cleaning products and clean the inside of the car. I’m talking fast, fast, fast!
+Jim, the soap! O.K. gentlemen, you both been to county before I’m sure. Here it comes! 
+So what’s with the outfits? You guys are going to a Volleyball game or something?
+Call me Winston!
+You know, I’d go for breakfast. Feel like having breakfast with me?
+
+```
+
+The order in which you define your rake tasks has no effect on the output—only the order in which you place the prerequisite tasks in the array for task dependencies. Also, please use the hashrocket `=>` syntax for this.
+
+A long list of dependenices might be a code smell but if you have to deal with something longer, we can clean it up by encapsulting it inside a method which we then pass as prerequisite.
+
+``` ruby
+
+def mr_wolf_tasks 
+  [:get_mr_wolf, :calm_down_jimmy, :figure_out_bonnie_situation, :get_vince_vega_in_line, :clean_car, :clean_crew, :get_rid_of_evidence_at_monster_joes, :drive_into_the_sunrise] 
+end
+
+...
+
+task :solve_bonnie_situation => mr_wolf_tasks do
+  puts 'You know, I’d go for breakfast. Feel like having breakfast with me?'
+end
+
+```
+
+In the context of prerequsites, one thing to keep in mind though is that you only need to mention a namespace if you are outside the relevant one.
+
+###### Some Rakefile
+
+``` bash
+
+namespace :marsellus_wallace do
+  task :call_winston_wolf do
+    ...
+  end
+end
+
+task :solve_bonnie_situation => 'marsellus_wallace:call_winston_wolf' do
+  ...
+end
+
+namespace :marsellus_wallace do
+  task :call_winston_wolf do
+    ...
+  end
+
+  task :solve_bonnie_situation => :call_winston_wolf do
+    ...
+  end
+end
+
+```
+
+Important though, in case you do need to mention the namespace, you have to pass the prerequsite as a string ```=> 'marsellus_wallace:call_winston_wolf'```.
 
 ## Passing Arguments
 
@@ -339,6 +498,33 @@ rake "name[Andrey,Koleshko]"
 
 ### Trace (??Flag)
 
+## Global Rakefile
+mkdir ~/.rake
+
+Organizing rake files. Global Rakefile that imports rakefiles
+lots of tasks are better split up into multiple files -> Rails
+
+rakelib folder
+
+Files with the *.rake extensions are included in the Rakefile automatically
+
+$ mkdir rakelib
+$ cat > rakelib/clean.rake
+task :clean do
+  puts 'Cleaning...'
+end
+^D
+$ cat > Rakefile
+task :default => :clean ^D
+$ rake
+Cleaning...
+
+
+
+It's possible to include other Ruby files or Rakefiles to describe a current Rakefile
+It can be achieved by a standard require Ruby statement
+
+Fortunately, Rake provides us with a tool to resolve this issue—the import method.
 
 ## Tasks of Interest
 
@@ -373,4 +559,6 @@ Rake namespace for running migrations, create, up, down, redo, reset, version
 
 ### secret
 
-## Custom Rake tasks
+## Rails Custom Rake Tasks
+
+You can create these custom rake tasks with the bin/rails generate task command.
