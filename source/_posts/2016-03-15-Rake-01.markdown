@@ -15,12 +15,10 @@ categories: [Rake, Ruby, Ruby on Rails, Make]
 + What is Rake?
 + Task List
 + Getting Started
-+ Namespace
++ Namespaces
 + Prerequisites
 + Passing Arguments
-+ Global Rakefile
 + Tasks of Interest
-+ Custom Rake Tasks
 
 ## What is Rake?
 
@@ -29,8 +27,6 @@ Thanks to Rails, Rake has become a de facto standard as a Ruby build tool and it
 Rake de facto replaced the Unix utility 'make' as a build tool in Ruby land. A build tool like Rake is handy for automating tasks of various kinds—a software for managing tasks basically. It is often used for administraion tasks in Rails—which is where you most likely have run into it so far—but its use cases are plenty. Some people write their ebooks in Markdown and have set up Rake tasks that convert the relevant files to intermediate HTML files which then in turn get converted into ebook formats for example. Saves a lot of trouble to use Rake for that.
 
 What makes Rake really powerful is that these tasks can relate to one another and can be built on top of each other. Also, since it is written in Ruby, you can write any Ruby code for your tasks. Want to use Ruby libraries in your Rake tasks? No problem! Fun fact, it is the most downloaded Ruby Gem, approaching 100 Mio downloads. So definitely something in your tool belt that you should pay a little more attention to. It was conceived by the late [Jim Weirich](https://en.wikipedia.org/wiki/Jim_Weirich), a well known and beloved developer, speaker and contributor to the Ruby ecosystem. It’s a beautiful tool really, thanks Jim! RIP!
-
-?? Jim needed something more dynamic
 
 ## Task List
 
@@ -225,15 +221,6 @@ rake tmp:sockets:clear                  #
 
 Surprise, almost three times as much! Take a look at them, play around if you like but commit the highlights to memory for later usage in the future. Might prevent you from reinventing the wheel checking the tasks to see what’s out there already.
 
-## Useful flags
-
-?? -q flag for quiet output. Not so verbose for some rake tasks??
-Do not echo commands from FileUtils
-
---silent (-s)
-Like –quiet, but also suppresses the 'in directory' announcement.
-
-
 ## Getting Started
 
 A Rakefile can have one of the following four appearances:
@@ -335,7 +322,7 @@ Rake::Task['make_stuff_happen'].execute
 
 With the `Rake::Task['make_stuff_happen']` code, we got the `make_stuff_happen` rake task to execute. It returns an instance of the `Rake::Task` class and then, we are able to run any method on it that is available.
 
-## Namespace
+## Namespaces
 
 A very cool feature is the ability to namespace your tasks. You probably have done this dozens of times already. When you run `rake db:migrate`, you have made use of the `db` namespace for example. You invoke the task be separating it with a colon `:` from the namespace. It’s a handy way to organize your tasks in a rake file and keep them logically separated. Multiple namespaces like `rake time:zones:all` are fine btw.
 
