@@ -130,6 +130,13 @@ Are a mix of the shadow colors, which is the desaturated version by mixing it wi
 
 ## Color Wheel
 
+The three dark colors, dark spectrum -> secondary colors?
+The three light colors, light spectrum -> primary colors?
+Goethe incoroprated both light and dark spectra in his color wheel, he called it the harmonic color wheel -> which we use today
+Green forms the base of Goethes color wheel. It’s the blend of the two primary colors yellow and blue
+Magenta forms the top of the color wheel. It arises as a blend of red and violet
+
+
 !!!We get a color wheel by taking the spectrum of light and through connecting both ends to a circle.
 Relationships between the colors
 The color wheel can easily tell you how to create the biggest color contrast possible
@@ -176,6 +183,10 @@ usually a save bet, very popular
 lots of site online using it,
 does not jump out so much
 passive colors
+
+
+Golden aera
+Feeling blue
 
 ## Netural Colors
 
