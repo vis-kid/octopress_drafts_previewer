@@ -245,6 +245,55 @@ A Rakefile can have one of the following four appearances:
 
 Mostly you will see the plain `Rakefile` version—especially if you use frameworks—but use whatever gets your blood flowing. You get going by creating a Rakefile with a `.rake` extension and then define your tasks inside. Let’s imitate the structure from one of the default tasks above:
 
+### Custom Rakefile Organization
+
+Rails makes this incredibly easy. It has a Rakefile in the root of your app. It contains the following:
+
+###### Rakefile
+
+``` ruby
+
+require File.expand_path('../config/application', __FILE__)
+
+Rails.application.load_tasks
+
+```
+
+When you have a lot of custom tasks, it makes more sense to split them into discrete `.rake` files and place them in `lib/tasks`. The Rakefile above just loads them but the `lib` directory is a better logical home for the tasks. There is even a Rails generator to automate part of the process. If you type:
+
+###### Shell
+
+``` bash
+
+rails generate some_task
+
+=> create lib/tasks/some_task.rake
+
+```
+
+You will get a Rakefile placed automatically in the right directory. Even the task is already set up for you. Nice! In other project when you are not using Rails you just need to create a `rakelib` directory and place your Rakefiles in there—preferably with `.rake` file extensions. Then create a file called `Rakefile` and all these files are already at your disposal.
+
+###### Some Rakefile
+
+``` ruby
+
+require './whatever.rb'
+
+```
+
+If you need to include other Ruby files or Rakefiles it can easily be achieved by a standard `require` statement.
+
+###### Some Rakefile
+
+``` ruby
+
+import 'whatever.rb'
+
+```
+
+Rake provides us with another way to do this—the `import` method. This can be used in any line of the Rakefile. This one will help when you run into trouble because the required file was loaded before the Rakefile finished and blew up therefore. The imported file on the other hand will always load after the Rakefile.
+
+### Rake Task Anatomy
 
 ###### lib/tasks/some_task.rake
 
@@ -557,35 +606,6 @@ end
 
 When you pass in more arguments than you have defined in your task, you can simply access them via `args`. `args.extras` shows displays an array of all the additionally passed in parameters. `args.to_a` shows you all the parameters—in an array as well of course.
 
-### Trace (??Flag)
-
-## Global Rakefile
-mkdir ~/.rake
-
-Organizing rake files. Global Rakefile that imports rakefiles
-lots of tasks are better split up into multiple files -> Rails
-
-rakelib folder
-
-Files with the *.rake extensions are included in the Rakefile automatically
-
-$ mkdir rakelib
-$ cat > rakelib/clean.rake
-task :clean do
-  puts 'Cleaning...'
-end
-^D
-$ cat > Rakefile
-task :default => :clean ^D
-$ rake
-Cleaning...
-
-
-
-It's possible to include other Ruby files or Rakefiles to describe a current Rakefile
-It can be achieved by a standard require Ruby statement
-
-Fortunately, Rake provides us with a tool to resolve this issue—the import method.
 
 ## Tasks of Interest
 
@@ -620,6 +640,3 @@ Rake namespace for running migrations, create, up, down, redo, reset, version
 
 ### secret
 
-## Rails Custom Rake Tasks
-
-You can create these custom rake tasks with the bin/rails generate task command.
