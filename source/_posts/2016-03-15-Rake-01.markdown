@@ -591,17 +591,16 @@ end
 
 ```
 
-When you pass in more arguments than you have defined in your task, you can simply access them via `args`. `args.extras` shows displays an array of all the additionally passed in parameters. `args.to_a` shows you all the parameters—in an array as well of course.
+When you pass in more arguments than you have defined in your task, you can simply access them via `args`. `args.extras` shows displays an array of all the additionally passed in parameters. ```args.to_a``` shows you all the parameters—in an array as well of course.
 
 
 ## Tasks of Interest
 
-Below is a short list of Rake tasks we should look into first.
+Below is a short list of Rake tasks that come with Rails we should look into:
 
 + db
-+ tmp
 + doc
-+ trace
++ tmp
 + stats
 + notes
 + about
@@ -609,21 +608,150 @@ Below is a short list of Rake tasks we should look into first.
 + assets
 + routes
 
-
-### About
-
-### Assets
-
 ### db
-Rake namespace for running migrations, create, up, down, redo, reset, version
+
+Below are a couple of useful tasks under the `db` namespace for running Active Record migrations:
+
++ `rake db:version` prints the current version of the schema. The output looks something like this:
+
+``` bash
+
+Current version: 20160129135912
+
+```
+
++ `rake  db:migrate` runs the last migration(s) of course—those which haven’t run yet. You can also pass it a specific migration to run.
+
+###### Shell
+
+``` bash
+
+rake db:migrate VERSION=20080906120000
+
+```
+
++ `rake db:create` creates your database. If defaults to the development and test databases.
+
+``` bash
+
+db/development.sqlite3
+db/test.sqlite3
+
+```
+
++ `rake db:test:prepare makes sure that migrations that are already run on your development database is also run for your test database. If the test database’s schema would be out of sync with your development database, it would not be very useful.
+
++ `rake db:drop:all` drops both test and development databases by default.
+
++ `rake db:migrate:up`, `rake db:migrate:down` runs the `up` and `down` methods for the migration in question.
+
++ `rake db:redo` ensures that the migration is reversible. It runs `rake db:down` first and then `rake db:up`.
+
++ `rake db:rollback` undos the last migration.
+
++ `rake db:drop` drops by the development and test databases by default.
+
++ `rake db:reset` drops the databases first and sets them up again by loading the schema and seeding the database.
 
 ### doc
 
-### notes
++ `rake doc:app` generates documentation under `doc/app`. Pretty cool!
 
-### routes
++ `rake doc:rails` generates an API documentation under `doc/api`. Handy if you are offline I guess.
 
 ### tmp
 
+The `tmp` directory in root is the file for temporary files, most prominently files for sessions and cache.`rake tmp:create` sets you up with everything you need to deal with temporary files. `rake tmp:cache:clear` clears the `tmp/cache` directory. `rake tmp:sessions:clear` clears the `tmp/sessions` directory.
+
+### stats
+
+`rake stats` gives you a nice overview of your app.
+
+``` bash
+
++----------------------+-------+-------+---------+---------+-----+-------+
+| Name                 | Lines |   LOC | Classes | Methods | M/C | LOC/M |
++----------------------+-------+-------+---------+---------+-----+-------+
+| Controllers          |    89 |    69 |       6 |      18 |   3 |     1 |
+| Helpers              |    13 |    13 |       0 |       1 |   0 |    11 |
+| Models               |    89 |    54 |       6 |       7 |   1 |     5 |
+| Mailers              |     0 |     0 |       0 |       0 |   0 |     0 |
+| Javascripts          |    25 |     0 |       0 |       0 |   0 |     0 |
+| Libraries            |     0 |     0 |       0 |       0 |   0 |     0 |
+| Controller specs     |    99 |    81 |       0 |       0 |   0 |     0 |
+| Feature specs        |    14 |    11 |       0 |       0 |   0 |     0 |
+| Helper specs         |    45 |    12 |       0 |       0 |   0 |     0 |
+| Model specs          |    10 |     8 |       0 |       0 |   0 |     0 |
+| View specs           |    60 |    48 |       0 |       0 |   0 |     0 |
++----------------------+-------+-------+---------+---------+-----+-------+
+| Total                |   444 |   296 |      12 |      26 |   2 |     9 |
++----------------------+-------+-------+---------+---------+-----+-------+
+  Code LOC: 136     Test LOC: 160     Code to Test Ratio: 1:1.2
+
+```
+
+### notes
+
+You can leave notes in your code. You can prefix them with `TODO`, `FIXME`, `OPTIMIZE`.
+
+###### Some Ruby file
+
+``` ruby
+
+# FIXME Something to fix here
+class Agent < ActiveRecord::Base
+  belongs_to :operation
+  belongs_to :mission
+
+...
+
+```
+
+When you run `rake notes` you get a list of all these notes in your code. 
+
+###### Shell
+
+``` bash
+
+app/models/agent.rb:
+  * [1] [FIXME] Something to fix here
+
+```
+
+You even get a detailed list where you find them—the line number `[Line Number]` is included too. Awesome, right?
+
+### about
+
+`rake about` gives you an overview of version numbers for 
+
++ Rails
++ Ruby
++ RubyGems
++ Database adapter
++ Schema version
++ Middleware
++ Application root
+
+and lots of other useful information.
+
 ### secret
 
+If you are paranoid about your session key, `rake secret` will generate a new pseudo-random key for you. The output in the shell looks like this:
+
+``` bash
+
+b40a74b94cd93fed370fd4f8f9333633c03990b7d9128383511de5240acf3fa6b6b07127e875814fdadb32f1aa44d69c4e82592b0ce97f763ea216a21e61881d
+
+```
+
+### assets
+
+`rake assets:precompile` let’s you precompile your assets under `public/assets`. If you want to get rid of older assets, just run `rake assets:clean`. Finally, running `rake assets:clobber` deletes the whole `public/assets` directory.
+
+### routes
+
+`rake routes` might be the most important one. It shows you all the routes in your app.
+
+## Final Thoughts
+
+Writing Rake tasks without knowing what’s going on under the hood gets boring pretty quickly. This article was a little warmup and introduction for people who wanted to look into Rake for the first time. I hope it covered all the basics without being too dry—after all, Rake is super dope and all, but at the same time, it’s maybe not the sexiest of toys. This basic knowledge of Rake though should give you all you need to get dangerous and expand your knowledge of Rake tasks that are at your disposal.
