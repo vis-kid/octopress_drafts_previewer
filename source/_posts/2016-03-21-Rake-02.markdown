@@ -1,0 +1,126 @@
+---
+layout: post
+title: Rake Basics 02
+date: 2016-03-21 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [Rake, Ruby, Ruby on Rails, Make]
+---
+
+{% img /images/Rake/Victory-Garden-cropped.jpg 500 %}
+
+## Topics
+
++ Default Task
++ The Task Object
++ File Tasks
++ Directory Method ?? Task
++ File Utilities
++ Trace Flag
+
+## Default Task
+
+
+## File Tasks
+
+In Rake you will work a lot of the time with files. No suprise that somebody recognized that pattern and created file tasks for your convenience.
+
+Transform files from one type to another is a common task. Converting markdown to HTML files, converting HTML files into ebook formats, JPG images to PNG images, compiling source code, building static pages or just changing file extension and many more options are at your disposal.
+
+We could do all of this manually but this is tedious of course. Writing code for tasks like this is much more elegant.
+
+Using file tasks is not much differnt to “regular” tasks. Adding descriptions and prerequisites are no problem for file tasks to handle.
+
+The name you specify is basically your target file, the file that you want to have crated. It might feel weird at first, no worries!
+
+Rakes checks if the target file exists and if so, if the timestamp is older than the prerequisite files. Rake will run the file if the timestamp is older than the prerequisites or if the file does not exist yet. That is very handy if you need to handle more than a couple of files. Which is cool because you won’t rebuild a ton of files just because you changed one in a collection.
+
+With the target file named, you are telling Rake how to output this file—how to build it using the prerequisite file(s) that already exist. Input-output.
+
+## ?? What is the task object in Rake??
+???One thing that's different with this task is that we pass the task object itself as a parameter into the closure - that's what the |t| is doing. We can now refer to the task object in the closure and call methods on it. I do this to avoid duplicating the names of the files. I can get the name of the task (which is the output file) with t.name. Similarly I can get the list of prerequisites with t.prerequisites.
+???
+
+###### Some Rakefile
+
+``` ruby
+
+desc 'Change some file extension'
+file 'some_file.new_extension' => 'some_file.old_extension' do
+  mv 'some_file.old_extension', 'some_file.new_extension'
+end
+
+```
+
+In case you are wondering about the `mv` command, we could have used `sh mv ...` to execute a Shell command from within a Rake task. Lucky for us, Rake uses a module called `FileUtils` that makes Shell command stuff like this a lot less verbose.
+
+###### Shell
+
+``` bash
+
+$rake some_file.new_extension
+
+=> mv some_file.old_extension some_file.new_extension
+
+```
+
+We need the `some_file.old_extension` to exist for this to work—which makes sense as a dependency of course. Without it, Rake wouldn’t know how to continue—it can’t create the new file out of thin air after all. The prerequisite is basically the source file. 
+
+If you don’t change the source files, Rake won’t run this task more than once if exectuted multiple times. Rakes keeps track of changes to the timestamps and only executes when they have been altered.
+
+The interesting part to note is the nomenclature. `'some_file.new_extension'` is called a task.
+
+Rake just does what you tell it to. If you make a mistake with your file extensions, Rake won’t complain.
+
+It will even show up in your list of Rake tasks (`rake -T`)
+
+## Directory Method ?? Task
+
+In Rake you have a handy way to define directory without using `mkdir`. It’s especially handy when you need to build up nested directories. That can be a pain if you need to build up a directory structure via multiple file tasks that have tons of prerequisites for the directory structure. Applause for the `directory` method!
+
+###### Some Rakefile
+
+``` ruby
+
+directory 'mi6/q/special_gadgets'
+
+```
+
+This creates the directories in question without much fuzz. What might not be obvious right away is the fact that you can depend on it like any other rake task—as a prerequisite. Thanks Jim, that makes life easy! 
+
+``` ruby
+
+directory 'mi6/q/special_gadgets'
+desc 'Change some file extension'
+file 'some_file.new_extension' => 'mi6/q/special_gadgets' do
+  cp 'some_file.old_extension', 'mi6/q/special_gadgets/'
+end
+
+```
+
+``` ruby
+
+directory 'mi6/q/special_gadgets'
+
+task :transfer_secret_research => 'mi6/q/special_gadgets' do
+  cp 'secret_list.md', 'mi6/q/special_gadgets/secret_list.md'
+end
+
+```
+
+Rake things about all the things to build as  tasks.
+
+## Useful Flags
+
+### --trace Trace Flag
+
+Handy for debugging
+
+### -P Flag
+
+Shows list of prerequisites
+
+## File Utilities
+
+??a bevy of simple unix-like commands for file operations such as cp, mv, rm, etc.?
