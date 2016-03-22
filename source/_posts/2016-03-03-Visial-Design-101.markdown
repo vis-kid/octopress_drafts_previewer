@@ -109,7 +109,7 @@ Emphasis is all about focal points. The less you have, the stronger their emphas
 
 ###### Establishing a strong contrast with content or design elements around is another way to go. Although this site is a bit busy, Dropbox makes a great job at highlighting the action the user is supposed to make. Visually, there is nothing standing in the way that blocks the user from focusing on signing up. The strongest emphasis is on the blue buttons that clearly stand out from the rest in the viewport. This design has good visual balance too—even better if they’d go with only one blue button.
 
-My approach these days is simple: one or two emphasised elements in a particular viewport should be enough to guide the user’s attention to the most important elements on the page. Deciding on which elements is maybe more difficult than it sounds like. You not only want to create interest among your users but also drive the attention where needed—fast and easily. Ask yourself, what is really so crucial to be grabbing the users focus first. Choose wisely and don’t annoy users with your decisions!
+My approach these days is simple: one or two emphasized elements in a particular viewport should be enough to guide the user’s attention to the most important elements on the page. Deciding on which elements is maybe more difficult than it sounds like. You not only want to create interest among your users but also drive the attention where needed—fast and easily. Ask yourself, what is really so crucial to be grabbing the users focus first. Choose wisely and don’t annoy users with your decisions!
 
 {% img /images/Design_101/Visual_Design/Figure-Ground/wooden-keyboard.png %}
 
@@ -121,7 +121,7 @@ My approach these days is simple: one or two emphasised elements in a particular
 
 {% img /images/Design_101/Visual_Design/Figure-Ground/craft-email.png %}
 
-###### [Craft](http://www.invisionapp.com/craft) by Invision has made a nice landing page where they elegantly emphasised the input field for email addresses. Hard to get lost on this page. The name of the product sticks out nicely as well. The distinction between background and foreground is especially skilled and playful.
+###### [Craft](http://www.invisionapp.com/craft) by Invision has made a nice landing page where they elegantly emphasized the input field for email addresses. Hard to get lost on this page. The name of the product sticks out nicely as well. The distinction between background and foreground is especially skilled and playful.
 
 ## Figure Ground Relationship
 
@@ -135,7 +135,7 @@ When our early ancestors were hunting, gathering or whatever, it often was of vi
 
 {% img /images/Design_101/Visual_Design/Figure-Ground/zappka.png %}
 
-###### Here we have a very prominent background image that takes a lot of attention. Should convey some sort of emotional response I guess. Nevertheless, the button to take action is cleverly placed and its color is emphasised nicely into the foreground. (http://zappka.com/)
+###### Here we have a very prominent background image that takes a lot of attention. Should convey some sort of emotional response I guess. Nevertheless, the button to take action is cleverly placed and its color is emphasized nicely into the foreground. (http://zappka.com/)
 
 Another issue might be that our eyes and brains are not super fast at processing a lot of information at the same time which leads to prioritizing what we need to focus on first. This is no rocket science of course, but having this knowledge at the back of your head definitely helps placing pieces of the design puzzle more effectively.
 
@@ -171,7 +171,7 @@ Hierarchy is all about visual importance and is sort of a cousin to emphasis in 
 
 ###### This screenshot of the Reddit index page is maybe not the best example of well crafted design—especially in the sense of establishing a clear and strong hierarchy. Reddit is one of these cases where the success of the site and design are not closely related I feel. It has an authentic ring to it, by being messy I mean, but I often wish their user experience would be enhanced by working more on their design. Wouldn’t need much to establish a better visual hierarchy.
 
-As we covered before, you don’t want things to look equally important. That way your viewer would have a harder time to digest your content. Instead create various level of importance that emphasise the overall structure of your composition. One strategy that works pretty much always is: the bigger the size, the bigger the importance. These differences in size or whatever should be significant differences only, avoid going overboard. After you achieved a basic hierarchy through size and spacing, you can bring color to the mix. This can help emphasize certain elements even more. If you work the other way around, starting with color, you make your job unnecessarily harder—or at least less effective.
+As we covered before, you don’t want things to look equally important. That way your viewer would have a harder time to digest your content. Instead create various level of importance that emphasize the overall structure of your composition. One strategy that works pretty much always is: the bigger the size, the bigger the importance. These differences in size or whatever should be significant differences only, avoid going overboard. After you achieved a basic hierarchy through size and spacing, you can bring color to the mix. This can help emphasize certain elements even more. If you work the other way around, starting with color, you make your job unnecessarily harder—or at least less effective.
 
 {% img /images/Design_101/Visual_Design/Hierarchy/github-trending.png %}
 
@@ -271,7 +271,7 @@ What exactly is considered white space? It’s unmarked, negative or empty space
 
 ###### Here the excellent use of white space creates a strong and elegant emphasis on this new product. There are a couple of principles put to work successfully, but white space is playing the strongest role to make this design work so well.
 
-Site with proper white space usually appear a bit lighter or more airy. In that regard, it also leads to a composition that is more digestable. Lesser whitespace can result in looking cheap—which can be a desired effect of course. I’m sure you have seen displays of luxury products and realized that they focus your attention by applying a ton of whitespace. It’s not so much about luxury vs cheap, but often, higher priced or valued products make good use of this principle. It’s another technique that you can use to lead a viewer from element to element.
+Sites with proper white space usually appear a bit lighter or more airy. In that regard, it also leads to a composition that is more digestable. Lesser whitespace can result in looking cheap—which can be a desired effect of course. I’m sure you have seen displays of luxury products and realized that they focus your attention by applying a ton of whitespace. It’s not so much about luxury vs cheap, but often, higher priced or valued products make good use of this principle. It’s another technique that you can use to lead a viewer from element to element.
 
 {% img /images/Design_101/Visual_Design/WhiteSpace/foundersuite.png %}
 
@@ -295,7 +295,7 @@ Keep in mind that you want to achieve differentiation though space. This lets yo
 
 ## Balance
 
-More often that not, you want all elements, or at least the most emphasised ones on a page to have optical equilibrium. Avoid having elements that look heavier than the rest! Balance is all about keeping visual weight in check. We like to look at things that are balanced around a vertical axis—a Rohrschach test image basically. Nothing wrong with that. This is a safe pattern to follow—very formal and ordered. If you can break that balance masterfully though, create a bit of a tension or surprise, maybe to highlight some part, your design might appear more dynamic and interesting.
+More often that not, you want all elements, or at least the most emphasized ones on a page to have optical equilibrium. Avoid having elements that look heavier than the rest! Balance is all about keeping visual weight in check. We like to look at things that are balanced around a vertical axis—a Rohrschach test image basically. Nothing wrong with that. This is a safe pattern to follow—very formal and ordered. If you can break that balance masterfully though, create a bit of a tension or surprise, maybe to highlight some part, your design might appear more dynamic and interesting.
 
 {% img /images/Design_101/Visual_Design/Balance/blockhead-balance-01.png %}
 
@@ -313,7 +313,7 @@ When you play with visual balance, all the design tools are at your disposal: si
 
 {% img /images/Design_101/Visual_Design/Balance/dropbox-balance-02.png %}
 
-Asymetrcial balance can be considered more friendly and conveys a design that appears more playful and dynamic. Not that I’m a Dropbox fan boy or something, but in terms of design they are making skillful use of every design principle in the book and achieve an overall quality that can be admired.
+Asymmetrical balance can be considered more friendly and conveys a design that appears more playful and dynamic. Not that I’m a Dropbox fan boy or something, but in terms of design they are making skillful use of every design principle in the book and achieve an overall quality that can be admired.
 
 {% img /images/Design_101/Visual_Design/Balance/dropbox-balance-03.png %}
 
