@@ -46,28 +46,25 @@ In Rails, the default task is supposed to run your tests. Your guess is as good 
 
 ## File Tasks
 
-Tasks that you execute on files and directories.
+As the name might suggest, they are tasks that you execute on files (and directories). They have a few tricks up their sleeves though. Rake will of course work a lot of the time with files. No surprise that somebody recognized that pattern and created specialized file tasks for your convenience—especially for the simple reason to avoid duplication or waste processing capabilities.
 
-In Rake you will work a lot of the time with files. No suprise that somebody recognized that pattern and created file tasks for your convenience.
+Transforming files from one type to another is a very common task. The sources are your dependencies and the task names is what follows the `file` keyword. Converting markdown to HTML files, converting HTML files into ebook formats, JPG images to PNG images, compiling source code, building static pages or just changing file extensions and many more options are at your disposal. We could do all of this manually but this is tedious and ineffective of course. Writing code for this is much more elegant and scalable.
 
-Transform files from one type to another is a common task. Converting markdown to HTML files, converting HTML files into ebook formats, JPG images to PNG images, compiling source code, building static pages or just changing file extension and many more options are at your disposal.
+Using file tasks is not much different from “regular” tasks. They will also show up if you ask for a list of Rake tasks via `rake -T`. In fact, Rake treats all tasks equally—except `multitask` a bit. Adding descriptions and prerequisites are no problem for file tasks to handle as well. Actually, prerequisites are a necessity for mentioning source files before they get processed.
 
-We could do all of this manually but this is tedious of course. Writing code for tasks like this is much more elegant.
+###### Some Rakefile
 
-Using file tasks is not much differnt to “regular” tasks. Adding descriptions and prerequisites are no problem for file tasks to handle.
+``` ruby
 
-The name you specify is basically your target file, the file that you want to have crated. It might feel weird at first, no worries!
+file 'mi6/q/gadgets/secret_list.md' => 'mi6/research/secret_list.md' do
+  cp 'mi6/research/secret_list.md', 'mi6/q/gadgets/secret_list.md'
+end
 
-Rakes checks if the target file exists and if so, if the timestamp is older than the prerequisite files. Rake will run the file if the timestamp is older than the prerequisites or if the file does not exist yet. That is very handy if you need to handle more than a couple of files. Which is cool because you won’t rebuild a ton of files just because you changed one in a collection.
+```
 
-With the target file named, you are telling Rake how to output this file—how to build it using the prerequisite file(s) that already exist. Input-output.
+The name for your file task is basically your target file, the file that you want to have created. The prerequisite is the source file that is needed for the task. Inside the block you are telling Rake how to create the wanted output—how to build it using the prerequisite file(s) that already exist. Input-output. For example, this could be a shell command using the `pandoc` tool that transforms Markdown files into HTML files. The applications for file tasks are more than plenty. The syntax though might feel a little weird at first, I get it.
 
-?? In contrast to regular File tasks, regular Rake tasks are always run—they don’t check for any timestamps or other changes.
-
-FileTask includes time based dependencies which means that it checks the timestamps and is only rebuilt if the dependency has a newer timestamp.
-
-File tasks about sources and task names
-The sources are your dependencies and the task names is what follows the `file` keyword
+Rakes first checks if the target file exists and if so, if the timestamp is older than the prerequisite files—a time based dependency. Rake will run the file task if the timestamp is older than the prerequisites or if the file does not exist yet. That is very handy if you need to handle more than a couple of files—which is especially cool because you won’t need to rebuild a ton of files just because you changed a single one in a collection. In contrast to that, regular Rake tasks are always run—they don’t check any timestamps or other changes—unless you make them so of course.
 
 ## ?? What is the task object in Rake??
 ???One thing that's different with this task is that we pass the task object itself as a parameter into the closure - that's what the |t| is doing. We can now refer to the task object in the closure and call methods on it. I do this to avoid duplicating the names of the files. I can get the name of the task (which is the output file) with t.name. Similarly I can get the list of prerequisites with t.prerequisites.
