@@ -199,6 +199,73 @@ end
 
 As you can see here, Rake is very consistent and thinks about all the things to build as tasks. Thanks Jim, that makes life easy!
 
+## Rules
+
+Rules can help us to reduce duplications when we deal with tasks—especially with file tasks. Instead of instructing Rake to execute tasks on particular files like `somefile.markdown`, we can teach Rake to execute these tasks on a certain kind of file—like a pattern or blueprint. Transforming a set of files instead of single ones is a much more versatile and DRY approach. Tasks like these scale much better when we define a pattern for files that share similar characteristics.
+
+
+###### Some Rakefile
+
+``` ruby
+
+file "quartermaster_gadgets.html" => "quartermaster_gadgets.markdown" do
+  sh "pandoc -s quartermaster_gadgets.markdown -o quartermaster_gadgets.html"
+end
+
+```
+
+As you can see, having a bunch of files would be tedious to maintain that way. Yes, we can write our own script where we  keep a list of files in an array and iterate over it but we can do better—much better actually. Another unwanted side effect would be that every time we run such a script, all HTML files get rebuilt—even if they haven’t changed at all. A large list of files would make you wait a lot longer or take up a lot more resources than necessary. We don’t need any extra code to take care of multiple files. Rake does a better, more efficient job in that department since it only executes its file tasks or rules when the file was touched in the meantime.
+
+###### Some Rakefile
+
+``` ruby
+
+rule ".html" => ".markdown" do |t|
+  sh "pandoc -s #{t.source} -o #{t.name}"
+end
+
+```
+
+When we define a rule like the above, we have a mechanism in place for transforming any file with a `.markdown` extension into an `.html` file. With rules, Rake is first looking for a task for a specific file like ```quartermaster_gadgets.html```. But when it can’t find one, it is using the plain `.html` rule to look for a source that could achieve successful execution. That way you don’t have to create long list of files but only use a general “rule” that defines how to handle certain file tasks. Pretty awesome!
+
+### Task Object
+
+In the rule above, we were making use of the task object. We can pass it as a block argument into the closure and call methods on it. As with file tasks, rules are all about task sources, its dependencies—a markdown file for example—and its task name. From within rules’ body in the block (and file tasks) we have access to the tasks name and source. We can extract information from that argument passed—the name through `t.name` and its source—aka file source—via `t.source`. Above we could avoid duplicating the names of the files and generalize a pattern instead. Similarly we could get the list of prerequisites / dependencies with `t.prerequisites`.
+
+Talking of dependencies, they can function like a list to be iterated. No need to create a separate `each` loop if you play your cards right. 
+
+``` ruby 
+
+task :html => %W[quartermaster_gadgets.html, research_gadgets.html]
+
+rule ".html" => ".md" do |t|
+  sh "pandoc -s #{t.source} -o #{t.name}"
+end
+
+```
+
+As you can see, we didn’t need to manually iterate over the list of articles, we simply put Rake to work and used the dependencies—which is a lot simpler and clean.
+
+What is even cooler for DRYing stuff up is that rules can take a proc object—an anonymous function object, a lambda basically—as a prerequisite. That means that instead of only a single pattern as a prerequisite, we can pass something more dynamic that let’s us cast a net of patterns that catches more than one single fish. For example, rules for `.markdown` and `.md` files. They would have the same body of the rule but only a different pattern as prerequisite. It’s like defining a new File task for every object returned by the proc object. Another way to work with rules is regular expressions of course. You pass a pattern as a dependency and if you got a match, the file task can be executed. Sweet options, no?
+
+``` ruby
+
+some_markdown_list = [...]
+
+detect_source = proc do |html_file_name|
+  some_markdown_list.detect { |markdown_source| markdown_source.ext == html_file_name.ext }
+end
+
+rule '.html' => detect_source do |t|
+  sh "pandoc -s #{t.source} -o #{t.name}"
+end
+
+```
+
+### Difference Of Procs And Lambdas
+
+If you are new to lambda land or haven’t figured it out completely yet, here is a small refresher. Procs are objects you can pass around that can be executed later—so are lambdas. Both are Proc objects btw. The difference is subtle and comes down to the arguments that are passed into them. Lambdas check the number of arguments and can blow up with an `ArgumentError` for that reason—procs don’t care. The other difference is in regards to their handling of return statements. Procs get out of the scope where the proc was being executed. Lambdas just exit the lambda scope and continue to trigger the next code that is in line so to speak. Not super important here but I thought for the newbies among you, it can’t hurt either.
+
 ## Useful Flags
 
 ### --trace Trace Flag
@@ -208,68 +275,6 @@ Handy for debugging
 ### -P Flag
 
 Shows list of prerequisites
-
-
-## Rules
-
-Rules can help us to reduce duplications when we deal with ??files ?? tasks??
-
-Instead of instructing Rake to execute tasks on particular files like somefile.markdown, we can teach Rake to execute these tasks on a certain kind of file—which is much more versatile and DRY. It scales better too. We achieve that by defining a pattern for tasks that share similar characteristics which can be DRYd up.
-
-
-With rules, rake is first looking for a rule for a specific file like `article01.html`. But when it didn’t find that it was using the plain `.html` rule to look for a source that could achieve successful execution. That way you don’t have to create long list of files but only use a general “rule” how to build certain file tasks. Pretty awesome!
-
-Converting markdown to HTML files for example can be tedious without using Rake because when you write a script that iterates over a list or articles you have to specify each article plus every time you run the script, all HTML files get rebuilt—even if they haven’t changed at all. A large list of tiles would make you a lot longer or take up a lot more resources than necessary. Rake does a better, more efficient job in that department since it only executes its file tasks or rules when the file was touched in the meantime.
-
-As with file tasks, rules are all about task sources, its dependencies—a markdown file for example—and its task name. From within rules’ body in the block (and file tasks) we have access to the tasks name and source.
-
-Rules are built exactly the same as tasks and file tasks—same structure, same idea. The dependency for rules is a pattern though. What is even cooler for DRYing stuff up is that rules can take a proc object—an anonymous function object, a lambda basically—as a prerequisite. That means that instead of only a single pattern as a prerequisite, we can pass something more dynamic that let’s us cast a net of patterns that catches more than one single fish. -> rules for `.markdown` and `.md` files. They would have the same body of the rule but only a different pattern as prerequisite. Dynamic prerequisites! Ruby is sweet, no?
-
-It’s almost like defining a new File task for every object returned by the proc object.
-
-
-!!! difference proc lambda useful here??
-
-???
-``` ruby
-
-detect_file = proc do |task_name|
-     articles.detect { |article| article.ext == task_name.ext }
-end
-   rule '.html' => detect_file do |t|
-     sh "pandoc -s #{t.source} -o #{t.name}"
-end
-
-```
-
-The proc object yields the option ```task_name```
-
-### ?? What is the task object in Rake??
-
-???One thing that's different with this task is that we pass the task object itself as a parameter into the closure - that's what the |t| is doing. We can now refer to the task object in the closure and call methods on it. I do this to avoid duplicating the names of the files. I can get the name of the task (which is the output file) with t.name. Similarly I can get the list of prerequisites with t.prerequisites.
-???
-
-
-Instead of defining 5 different file tasks for five different files—or iterating over a list of five different files—you create a rule that addresses all these files that end with a certain file extension. You define a pattern instead of a list of files.
-
-Rules are special Rake tasks which can help is to better deal with file tasks that have some similarities but are duplications of each other—like a file task for `.png` and `.jpg` file or the classic `.md` and `.markdown` duplication. A rule basically defines how to deal with a certain kind of file. For example, a rule for generating an HTML file from a Markdown file. If Rake stumbles of a file task that wants it to build an HTML file, it knows that it needs to rely on a Markdown source file and then executes the conversion  in the lambda block of this task. You could also say it’s sort of a blueprint to deal with certain files. Execute a file task for file X with extension Y and you need file Z as a prerequisite and then execute some conversion or whatever.
-
-Another way to work with rules is regular expressions of course. You pass a pattern as a dependency and if you got a match, the file task can be executed.
-
-Dependencies can work function like a list to be iterated on their own. No need to create a separate each loop if you play your cards right. 
-
-``` ruby 
-
-task :html => %W[article01.html, article02.html, article03.html]
-
-rule ".html" => ".md" do |t|
-  sh "pandoc -o #{t.name} #{t.source}"
-end
-
-```
-
-As you can see, we didn’t need to manually iterate over the list of articles, we simply used the dependency which is a lot more simple and clean.
-
 
 ### Tracing Rules
 
