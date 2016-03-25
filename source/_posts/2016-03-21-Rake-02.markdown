@@ -172,9 +172,9 @@ This updates the timestamp of a file if they exists—if not, it gets created.
 
 Let’s you check if two files are the same.
 
-## Directory Method ?? Task
+## Directory Method
 
-In Rake you have a handy way to define directory without using `mkdir`. It’s especially handy when you need to build up nested directories. That can be a pain if you need to build up a directory structure via multiple file tasks that have tons of prerequisites for the directory structure. Applause for the `directory` method!
+In Rake you have a handy way to define directory without using `mkdir` or ```mkdir_p```. It’s especially handy when you need to build up nested directories. A folder tree can be a pain if you need to build up a directory structure via multiple file tasks that have tons of prerequisites for the directory structure. Think of the `directory` method as a folder task.
 
 ###### Some Rakefile
 
@@ -184,29 +184,20 @@ directory 'mi6/q/special_gadgets'
 
 ```
 
-This creates the directories in question without much fuzz. What might not be obvious right away is the fact that you can depend on it like any other rake task—as a prerequisite. Thanks Jim, that makes life easy! 
+This creates the directories in question without much fuzz. What might not be obvious right away is the fact that you can depend on it like any other rake task—as a prerequisite. Just make sure the name of the file task, its name, includes the directory that you depend on.
 
 ``` ruby
 
-directory 'mi6/q/special_gadgets'
-desc 'Change some file extension'
-file 'some_file.new_extension' => 'mi6/q/special_gadgets' do
-  cp 'some_file.old_extension', 'mi6/q/special_gadgets/'
+directory 'mi6/q/gadgets'
+
+desc 'Transfer secret research gadgets'
+file 'mi6/q/gadgets/gadget_list.md' => 'mi6/q/gadgets' do
+  cp 'gadget_list.md', 'mi6/q/special_gadgets/secret_gadget_list.md'
 end
 
 ```
 
-``` ruby
-
-directory 'mi6/q/special_gadgets'
-
-task :transfer_secret_research => 'mi6/q/special_gadgets' do
-  cp 'secret_list.md', 'mi6/q/special_gadgets/secret_list.md'
-end
-
-```
-
-Rake things about all the things to build as  tasks.
+As you can see here, Rake is very consistent and thinks about all the things to build as tasks. Thanks Jim, that makes life easy!
 
 ## Useful Flags
 
