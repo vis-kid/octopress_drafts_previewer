@@ -51,10 +51,10 @@ Light and darkness together make colors visible.
 
 {% img /images/Color-101/Hue-scale.png %}
 
-Most of the time when people talk about colors, they might actually be talking about hues. They are like basic colors or pure colors. That means it’s any color that is within the visible light spectrum. The healthy human eye can see 2.3 Mio hues. They don’t have tint or shade—meaning they lack any additions of white or black (see next section).
+Most of the time when people talk about colors, they are actually talking about hues which are the basic, pure colors. That means any color that is within the visible light spectrum. The healthy human eye can see 2.3 Mio hues. These don’t have tint or shade—which means they lack any additions of white or black (see next section).
 So tons of different variations of reds, blues, greens and so on.
 
-Like their raw, most primitive version
+For our work with colors in design, they represent starting points, like raw, most primitive versions we need to leave behind to avoid looking amateurish or childish. Did you ever notice that cartoons for kids like to use these colors for their characters? Not a big surprise I guess. You can make use of this of course if you go for a certain look but most of the time childish is not what works too well on the web. 
 
 ## Tint & Shade
 
