@@ -27,23 +27,22 @@ categories: [Design, Color Theory, Color, Visual Design, Product Design, Web Des
 
 ## Color?
 
-Color can be a very powerful “weapon” in your artistic repertoire—if yielded appropriately. On the other hand, nothing makes you look like a poser as fast as inconsidered applyance of color. Trust me, I’ve been there and in hindsight you want to kick yourself hard for not paying more attention.
+Without light there is no color right? Well, actually without “darkness” there is no color either. Huh? I know, sounds strange at first but without darkness, colors disappear as well. Do we need to know stuff like this when we pick colors on our computers—choosing its hue, saturation and value? Probably not! Could color theory blow your mind every once in a while and make you a more effective web designer and therefore communicator? Absolutely! In terms of colors we all have a ton of opinions and emotions but often people have not a clear idea what they are actually doing. Going with your gut is fine of course but having a theoretic basis to build upon makes you much more effective as a design person. Art school is not something most people spend a significant time of their lives, but you don’t need to spend years to bend color to our needs. So let’s get you up to speed.
 
-The topic of colors is a HUGE one—gigantic actually. We will focus on the most important aspects and terms to get you started—teaching you the lingo so to speak. 
+With colors there are a lot of considerations you wouldn’t expect right away. A little bit of a warning, it can be a rabbit hole you never get out of—and we are not even talking about branding and stuff. To compensate for that, I propose that first and foremost, you might focus on making it interesting for your users while making reasonable and effective choices that support your design. This seems like a manageable goal for color newbies. I realize this sounds super puffy, but subjectivity is not something that you can shake off when talking about colors. Let’s just say that we can agree that choosing colors that have meaning and create interest is a good place to start.
 
-With colors there are a lot of considerations, especially if you need to think about branding. But foremost, I’d focus on making it interesting, chossing colors that have meaning and create interest.
+Color can be a very powerful “weapon” in your artistic or creative repertoire—if yielded appropriately of course. On the other hand, nothing makes you look like a poser as fast as ill considered appliance of color. Trust me, I’ve been there and in hindsight you want to kick yourself hard for not paying more attention. For our designs, color is about the emotional and visual impact. If used correctly, they can guide viewers to what’s important and adds emphasis if you don’t overdo it. I guess it’s fair to say that this is probably the most important thing when using color on web projects. A secondary concern is that you can establish a certain mood, an emotional impact that takes branding ideas even further. This whole topic is a HUGE one—gigantic actually. We will focus on the most important aspects and terms to get you started.
 
-Try to avoid having muddy colors where you loose the distinct quality the colors at your disposal. On the web, you definitly want to use color to create a certain mood, vibe or whatever and also to highlight stuff that are of particuluar imoportance. As with design principles, less is more. If everything is highlighted via color, nothing sticks out and you will end up with color noice—which is the worst becaus it is not interesting at all.
 
-Color is also about the emotional and visual impact.
 
-Color creates mood, an emotional impact
 
-Colors, if used correctly, can guide viewers to what’s important. Probably the most important thing when using color on web projects.
+
+???
+Try to avoid having muddy colors where you loose the distinct quality the colors at your disposal. On the web, you definitely want to use color to create a certain mood, vibe or whatever and also to highlight stuff that are of particular importance. As with design principles, less is more. If everything is highlighted via color, nothing sticks out and you will end up with color noice—which is the worst becaus it is not interesting at all.
+??
 
 can be powerful mood changer
 
-On computers you pick colors by choosing its hue, saturation and value
 
 No light, no color. The color disappears. Without darkness, the colors disappear too.
 Light and darkness together make colors visible.
