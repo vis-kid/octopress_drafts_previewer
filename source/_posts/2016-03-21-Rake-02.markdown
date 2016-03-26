@@ -268,34 +268,96 @@ If you are new to lambda land or haven’t figured it out completely yet, here i
 
 ## Useful Flags
 
-### --trace Trace Flag
++ `--rules`
 
-Handy for debugging
+Shows you how Rake tries to apply rules—a trace for rules. Invaluable if you deal with a couple of rules and run into bugs.
 
-### -P Flag
+###### Shell
 
-Shows list of prerequisites
+``` text
 
-### Tracing Rules
-
-Rake.application.options.trace_rules = true
-in Rakefile itself
-enabling this option tells Rake to show us trace information about rules in the rake file for tasks executed. Remeber `rake --trace`
-
-``` bash
-
-rake --trace
+»$ rake quartermaster_gadgets.html --rules
+Attempting Rule quartermaster_gadgets.html => quartermaster_gadgets.md
+(quartermaster_gadgets.html => quartermaster_gadgets.md ... EXIST)
+pandoc -s quartermaster_gadgets.md -o quartermaster_gadgets.html
 
 ```
 
-Now we we not only get a list of task invocations but also about which rules were attempted to be executed. For the file targets it shows how to attempt to execute the rule via it’s source dependency. If it fails along they way, you will be able to exactly pinpoint which rule for which file caused the trouble. Without that option enabled, this failure would be hard to see and catch.
++ `-t`
+
+Remember the `solve_bonnie_situation` task from article one? If we add this flag running this Rake task, we turn on tracing. We also get a backtrace if we run into errors. This is certainly handy for debugging.
+
+###### Shell
+
+``` text
+
+»$ rake solve_bonnie_situation -t
+** Invoke solve_bonnie_situation (first_time)
+** Invoke get_mr_wolf (first_time)
+** Execute get_mr_wolf
+You ain’t got no problem Jules, I’m on it! Go in there and chill them out and wait for the wolf who should be coming directly!
+** Invoke calm_down_jimmy (first_time)
+** Execute calm_down_jimmy
+Jimmy, do me a favor, will you? I smelled some coffee back there. Would you make me a cup?
+** Invoke figure_out_bonnie_situation (first_time)
+** Execute figure_out_bonnie_situation
+If I was informed correctly, the clock is ticking. Is that right Jimmy?
+** Invoke get_vince_vega_in_line (first_time)
+** Execute get_vince_vega_in_line
+Come again? Get it straight buster. I’m not here to say please! I’m here to tell you what to do!
+** Invoke clean_car (first_time)
+** Execute clean_car
+I need you two fellas to take those cleaning products and clean the inside of the car. I’m talking fast, fast, fast!
+** Invoke clean_crew (first_time)
+** Execute clean_crew
+Jim, the soap! O.K. gentlemen, you both been to county before I’m sure. Here it comes!
+** Invoke get_rid_of_evidence_at_monster_joes (first_time)
+** Execute get_rid_of_evidence_at_monster_joes
+So what’s with the outfits? You guys are going to a Volleyball game or something?
+** Invoke drive_into_the_sunrise (first_time)
+** Execute drive_into_the_sunrise
+Call me Winston!
+** Execute solve_bonnie_situation
+You know, I’d go for breakfast. Feel like having breakfast with me?
+
+```
+
+### Tracing Rules
+
+Setting ```Rake.application.options.trace_rules = true``` in a Rakefile itself tells Rake to show us trace information about rules when we run a task. This is cool because when we run a trace via `rake -t`, with a single flag, we get all the debugging information we need. We not only get a list of task invocations but can also see which rules were applied—or attempted.
+
++ `-P`
+
+Shows list of prerequisites for all tasks. Here we use again the `solve_bonnie_situation` task. Ommiting output for other tasks, this would be its singled out output:
+
+###### Shell
+
+``` text
+
+»$ rake solve_bonnie_situation -P
+...
+rake solve_bonnie_situation
+    get_mr_wolf
+    calm_down_jimmy
+    figure_out_bonnie_situation
+    get_vince_vega_in_line
+    clean_car
+    clean_crew
+    get_rid_of_evidence_at_monster_joes
+    drive_into_the_sunrise
+...
+
+```
+
++ `-m`
+
+Runs tasks as multitasks.
 
 ## Parallel Tasks
 
 The task method executes all tasks in sequence, one after the other. It’s a safe bet if your code is in order but it is also slower. If speed is important for some task, we can help a little by multi threading tasks. Also, keep in mind that the sequential approach is the better option.
 
 Let me introduce you to the `multitask` method. This can help you to speed things up a bit—after all, we have multiple cores on most of modern computers, so let’s make us of them. Of course you can always achieve the speed boosts by writing good, solid code that lacks any fat but running tasks in parallel can certainly give you something extra in that regard. There are pitfalls though which we will also cover.
-
 
 ``` ruby
 
