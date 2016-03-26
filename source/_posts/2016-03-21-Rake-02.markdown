@@ -328,7 +328,7 @@ Setting ```Rake.application.options.trace_rules = true``` in a Rakefile itself t
 
 + `-P`
 
-Shows list of prerequisites for all tasks. Here we use again the `solve_bonnie_situation` task. Ommiting output for other tasks, this would be its singled out output:
+Shows list of prerequisites for all tasks. Here we use again the `solve_bonnie_situation` task. Omiting output for other tasks, this would be its singled out output:
 
 ###### Shell
 
@@ -348,6 +348,8 @@ rake solve_bonnie_situation
 ...
 
 ```
+
+If you are curious, run `rake -P`. Pretty interesting output.
 
 + `-m`
 
