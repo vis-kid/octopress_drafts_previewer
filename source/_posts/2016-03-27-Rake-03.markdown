@@ -1,0 +1,15 @@
+---
+layout: post
+title: Rake Basics 03
+date: 2016-03-27 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [Rake, Ruby, Ruby on Rails, Make]
+---
+
+{% img /images/Rake/Victory-Garden-cropped.jpg 500 %}
+
+## Topics
+
++ Disclaimer
