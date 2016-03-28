@@ -12,4 +12,344 @@ categories: [Rake, Ruby, Ruby on Rails, Make]
 
 ## Topics
 
-+ Disclaimer
++ Passing Arguments
++ Pathmap
++ FileList
++ Clean
++ Clobber
+
+## Passing Arguments
+
+You have two options to pass arguments to Rake tasks. One by using Bash variables or by making use of Rake’s syntax itself.
+
+### ENV Variable
+
+In case you haven’t played with Bash before—or Bash sounds like gobbledegook to you—let’s take five and start from the beginning. Bash in your shell offers two sorts of variables, global aka environment variables and local ones. Both are written in uppercase. The environment variables are global ones, which means they are available in all shells and not vanish when you close one—unlike local Bash variables which are only available in the current shell. Environment variables can contain data that can be used by multiple applications and are often used as a handy way to share configuration settings. In contrast to that, local Bash variables are just that, local. In our context of using Rake, you have the ability to access both via Ruby and in effect pass variables from the command line.
+
+### FYI
+
+Just as a little aside, if you type `env` or `ENV` in your shell, you’ll get access to a whole bunch of environment variables. I redacted the list, but for a better understanding of what environment variables are and what they include, I encourage you to run it for yourselves.
+
+###### Shell
+
+``` bash
+
+env
+
+```
+
+###### Output
+
+``` bash
+
+TERM_PROGRAM=Apple_Terminal
+TERM=screen-256color
+SHELL=/bin/bash
+TMUX=/private/var/folders/4z/3np9k5ks62b1xpbn_w_lmrgh0000gr/T/tmux-504/default,4146,0
+EDITOR=vim
+LANG=en_US.UTF-8
+TMUX_PANE=%1
+is_vim=echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?x?)(diff)?$"
+...
+...
+...
+
+```
+
+If you want to see a list of local Bash variables you can run `set`.
+
+###### Shell
+
+``` bash
+
+( set -o posix ; set ) | less
+
+```
+
+The `set` command gives you a lot more output but the above shows you the relevant bits right away.
+
+### Ruby’s ENV Class Method
+
+Ruby offers a way to use environment and local Bash variables alike via a hash-like accessor. For our needs, when we pass a variable to a Rake task, it’s gonna be a local Bash variable which you can find in the list of variables running `set` or a variation of it. Ruby can read it out using `ENV['VARIABLE']`.
+
+###### Shell
+
+``` bash
+
+rake prepare_book BOOKTITLE='Confessions of a unicorn'
+
+```
+
+What I want to make clear though is that this variable won’t get added to the ENV list that your system uses—the stuff that you saw calling `env` from the shell. To add it to that list, you would need to `export` it. This is another [story](http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_02.html), but I thought I should make this clear.
+
+
+###### Some Rakefile
+
+``` ruby
+
+task :prepare_book do
+  book_title = ENV['BOOKTITLE'] || 'Working Title'
+  puts "Do something with the #{book_title}"
+end
+
+```
+
+In this task definition you can see how we prepared to accept or incorporate the variable passed to the task invocation. Ruby’s `ENV[BASHVARIABLE]` does all the heavy lifting. If `BOOKTITLE` would have been a global environment variable though, we could have accessed it inside this task definition as well with this syntax.
+
+### Rake Parameter Syntax
+
+The second approach is using pure Rake syntax. You simply pass variables into square braces. That approach is better and you can keep things more isolated. Why involve Bash if Rake is perfectly capable of handling this? Plus you don’t have any Bash variables floating around that way. If you want to pass multiple arguments into a task, it’s a lot more elegant as well.
+
+###### Shell
+
+``` bash
+
+rake "create_mi6_agent[James, Bond, 007]"
+
+```
+
+###### Some Rakefile
+
+``` ruby
+
+task :create_mi6_agent, [:first_name, :last_name, :number] do |t, args|
+  puts "Number #{args.number} is commander #{args.first_name} #{args.last_name}."
+end
+
+```
+
+When you pass in more arguments than you have defined in your task, you can simply access them via `args`. `args.extras` displays an array of all the additionally passed in parameters. ```args.to_a``` shows you all the parameters—in an array as well of course.
+
+
+Rake is a task execution engine
+
+## FileList
+
+FileList is like a specilized Ruby Array this is focused on processing lists of files. They are super powerful. Needing lists of files to process is very common for build tools and making it easy or elegant to deal with them is one of the strengths of Rake.
+
+Easy to have clean list of files without much fuzz.
+
+Finding a bunch of files and iterating over them to apply transformations
+
+Collecting a large array of filenames together. 
+
+Exclusions are very neat and useful. For example filter out temporary files, backup files from editors, Git files, certain directories are unneeded.
+
+Exclusion rules
+Files that you don’t want in your build.
+
+
+
+FileList is lazy, it doesn’t grab files until you need them
+If you have a bunch of file lists, they behave very sane and smart. The ones that don’t get actively used are taking it easy without hitting the file system. It’s more efficient that way.
+
+Create thumbs from images
+
+``` ruby
+
+FileList['images/*.png']
+
+```
+
+
+You give it a glob and every filename that matches that patterns gets collected into the FileList. This is an array that hanldes file names.
+
+``` ruby
+
+FileList['images/*.png', 'images/*.jpg']
+
+FileList['images/**/*.png']
+all directories beneath where you are starting
+
+FileList['images/**/*.{png, jpg}']
+
+```
+
+The reulting list of files is an array with file names and is dependent on a pattern for the files needed.
+
+You can inlcude files into a FileList
+
+``` ruby
+
+FL = FileList['*.png']
+FL.include('*.jpg)
+
+```
+
+You can exclude files as well
+
+Collecting files for your tasks is not complicated in Rake. Instead of defining collections fo files yourself—and also updating this list—we let Rake be in charge of that. We have powerful tools at our disposal to filter lists as straighforward or as sophisticated as we need. Regular expressions are just the tip of the iceberg—although very handy of course. And let’s not forget that Rake has an eye on the timestamp of our files and filters out files that don’t need to be involved when they are up to date.
+
+``` ruby
+
+articles = Rake::FileList.new('**/*.md', '**/*.markdown') do |files|
+  files.exclude('~*')
+  files.exclude(/^temp.+\//)
+  files.exclude do |file|
+    File.zero?(file)
+  end
+end
+
+```
+
+Rake::FileList class
+~~~Its initializer accepted the list of file masks;
+
+we can feed its initializer a list of files that we want the FileList to collect for us.
+
+we can filter that even more by excluding certain files or directories.
+
+## Pathmap
+
+Secrete weapon of Rake, shows its true power
+
+One method that tackles all the various tasks that having to do with mapping one list of files to a different list of files
+
+makes it easy to translate between lists. Tweaks entries to your needs. as if they existed with a differnt directory or with different file extension
+
+pass it a block for modifying files
+
+
+
+Is a FileList methods that applies strings to list of filenames.
+
+``` ruby
+
+IMAGES = FileList['images/*.png']
+THUMBS = IMAGES.pathmap('thumbs/%n-thumbs%x')
+
+```
+
+works on list of files
+
+~~~powertool for munging file names
+
+
+Multiple FileList arrays and .zip them together and iterate over them
+
+``` ruby
+
+.pathmap("%{^images, thumbs}d ...
+
+
+```
+
+simple substituation command
+every directory that begins with images should be replaced with thumbs
+
+
+## CLEAN & CLOBBER
+
+Optional modules  clean clobber
+
+special file lists 
+
+add lists of files to be deleted to these global file lists
+
+In build scripts you are generating files, final pdf files or whatever with a lot of intermediate files
+
+Sometimes you want to rebuild everthing and wipe everything out old information and to get a brand new build of something
+
+You need a way to delete all the files that were generated while keeping the source files that are needed.
+You could manually write Rake tasks yourself to solve this but both CLEAN and CLOBBER solves this for you without reinventing the wheel.
+Easy for these lists to get out of date when you solve this manually.
+
+CLEAN and CLOBBER give you a central place
+run rake clean and it removes every sigle file in that list
+run rake clobber
+
+HTML files are intermediate files. The pdf files are the final target files, your deliverable.
+Typically you would add the HTML file to the CLEAN list and the pdf file to the CLOBBER list
+
+CLEAN leaves the final files around but gets rid of all the intermediate files
+CLOBBER get rid of everthing that was generated and leave project source files around
+
+
+
+
+
+
+
+## Clean
+
+?? require 'rake/clean'
+
+When is a good time to clean??
+Before you build your Gem
+You don’t want any of the intermediate files.
+
+Intermediate files
+clean them up because we don’t need them
+
+``` ruby
+
+CLEAN.include(SOMEFILELIST, 'thumbs')
+
+```
+
+## Clobber
+
+
+When is a good time to clobber??
+
+``` ruby
+
+CLOBBER.include(SOMEFILELIST, 'finalthumbs')
+
+```
+
+?? require 'rake/clean'
+
+~~~Should return project to a pristine state
+Gets rid of intermediate files and final generated files
+
+## Rake Dos & No-Nos
+
+Rake is smart about doing the minimal amount possible. So should you then
+
+Rake at its essence, is a task, break it down to its component pieces and specify what needs to be done in order to bigger tasks.
+
+Don’t forget to create smart dependencies
+
+Getting dependecies right and declaring them right is the most important step in Rake
+
+Break up your Rakefile into component pieces. Rails makes this very easy for you if you make use of tasks/lib. Or make a directory called `rakelib` and build your Rake components in there. Rake loads the Rakefile and rakelib/*.rake files automatically.
+
+Use namespaces for potentially conflcting task names.
+especially if you have Rakefiles that are coming from different sources
+
+task :go_to_store
+
+namespace :apple do
+  task :go_to_store
+
+For file manipulations, make use of FileUtils and stay away from shell file manipulations. It’s a bit dirty when Rake makes them directly available to you.
+You can set a verbose: false flag to avoid having all this output in the shell
+
+You can run ruby commands wihtin Rake files
+
+task :some_task do
+  ruby 'ruby_program.rb'
+end
+
+Use rules if you have a lot of files instead of dynamically generated tasks
+
+` rake -P` will list all of them btw. With tons of file tasks, this list becomes stupid long. Above all, it is lacking elegance that way. You haven’t reduced the patten to its core yet. Most importantly, this will make reuse easier while being DRY of course.
+
+## Tips
+
+User --dry-run
+See thte log what they are doing. Just do the logging without the file operations
+show you all the file operations it would do but actually don’t do them
+
+Make use of Ruby methods for more complex stuff
+encapsulation and proper OOP
+
+rake -T buy
+
+search rake tasks with buy
+matches the name and not the description
+
+rake -W boil_water
+where is task defined
+only with documented tasks??
