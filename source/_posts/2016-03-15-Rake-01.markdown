@@ -17,7 +17,6 @@ categories: [Rake, Ruby, Ruby on Rails, Make]
 + Getting Started
 + Namespaces
 + Prerequisites
-+ Passing Arguments
 + Tasks of Interest
 
 ## What is Rake?
@@ -493,108 +492,6 @@ end
 Important to note though, in case you do need to mention the namespace, you have to pass the prerequsite as a string ```=> 'marsellus_wallace:call_winston_wolf'```.
 
 Of course the examples above are goofy and not real life examples, but the intention was to show you how prerequisites work and how you’d put them together while they depend on each other.
-
-## Passing Arguments
-
-You have two options to pass arguments to Rake tasks. One by using Bash variables or by making use of Rake’s syntax itself.
-
-### ENV Variable
-
-In case you haven’t played with Bash before—or Bash sounds like gobbledegook to you—let’s take five and start from the beginning. Bash in your shell offers two sorts of variables, global aka environment variables and local ones. Both are written in uppercase. The environment variables are global ones, which means they are available in all shells and not vanish when you close one—unlike local Bash variables which are only available in the current shell. Environment variables can contain data that can be used by multiple applications and are often used as a handy way to share configuration settings. In contrast to that, local Bash variables are just that, local. In our context of using Rake, you have the ability to access both via Ruby and in effect pass variables from the command line.
-
-### FYI
-
-Just as a little aside, if you type `env` or `ENV` in your shell, you’ll get access to a whole bunch of environment variables. I redacted the list, but for a better understanding of what environment variables are and what they include, I encourage you to run it for yourselves.
-
-###### Shell
-
-``` bash
-
-env
-
-```
-
-###### Output
-
-``` bash
-
-TERM_PROGRAM=Apple_Terminal
-TERM=screen-256color
-SHELL=/bin/bash
-TMUX=/private/var/folders/4z/3np9k5ks62b1xpbn_w_lmrgh0000gr/T/tmux-504/default,4146,0
-EDITOR=vim
-LANG=en_US.UTF-8
-TMUX_PANE=%1
-is_vim=echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?x?)(diff)?$"
-...
-...
-...
-
-```
-
-If you want to see a list of local Bash variables you can run `set`.
-
-###### Shell
-
-``` bash
-
-( set -o posix ; set ) | less
-
-```
-
-The `set` command gives you a lot more output but the above shows you the relevant bits right away.
-
-### Ruby’s ENV Class Method
-
-Ruby offers a way to use environment and local Bash variables alike via a hash-like accessor. For our needs, when we pass a variable to a Rake task, it’s gonna be a local Bash variable which you can find in the list of variables running `set` or a variation of it. Ruby can read it out using `ENV['VARIABLE']`.
-
-###### Shell
-
-``` bash
-
-rake prepare_book BOOKTITLE='Confessions of a unicorn'
-
-```
-
-What I want to make clear though is that this variable won’t get added to the ENV list that your system uses—the stuff that you saw calling `env` from the shell. To add it to that list, you would need to `export` it. This is another [story](http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_02.html), but I thought I should make this clear.
-
-
-###### Some Rakefile
-
-``` ruby
-
-task :prepare_book do
-  book_title = ENV['BOOKTITLE'] || 'Working Title'
-  puts "Do something with the #{book_title}"
-end
-
-```
-
-In this task definition you can see how we prepared to accept or incorporate the variable passed to the task invocation. Ruby’s `ENV[BASHVARIABLE]` does all the heavy lifting. If `BOOKTITLE` would have been a global environment variable though, we could have accessed it inside this task definition as well with this syntax.
-
-### Rake Parameter Syntax
-
-The second approach is using pure Rake syntax. You simply pass variables into square braces. That approach is better and you can keep things more isolated. Why involve Bash if Rake is perfectly capable of handling this? Plus you don’t have any Bash variables floating around that way. If you want to pass multiple arguments into a task, it’s a lot more elegant as well.
-
-###### Shell
-
-``` bash
-
-rake "create_mi6_agent[James, Bond, 007]"
-
-```
-
-###### Some Rakefile
-
-``` ruby
-
-task :create_mi6_agent, [:first_name, :last_name, :number] do |t, args|
-  puts "Number #{args.number} is commander #{args.first_name} #{args.last_name}."
-end
-
-```
-
-When you pass in more arguments than you have defined in your task, you can simply access them via `args`. `args.extras` displays an array of all the additionally passed in parameters. ```args.to_a``` shows you all the parameters—in an array as well of course.
 
 ## Tasks of Interest
 
