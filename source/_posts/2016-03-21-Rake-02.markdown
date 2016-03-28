@@ -16,7 +16,7 @@ categories: [Rake, Ruby, Ruby on Rails, Make]
 + Default Task
 + The Task Object
 + File Tasks
-+ Directory Method ?? Task
++ Directory Method
 + File Utilities
 + Rules
 + Trace Flag
@@ -24,11 +24,19 @@ categories: [Rake, Ruby, Ruby on Rails, Make]
 
 ## Disclaimer
 
-I want to approach this topic from a more general point of view. This is not an article that shows you a list of Rake tasks with clever solutions that are ready to be copy&pasted without much afterthought. It’s more intended to be a look under the hood while being newbie-friendly and also interesting to people who haven’t yet played much with Rake besides the obvious Rake tasks in Rails. It’s the understanding of the tool and what if offers that yields a higher return I think. I hope you don’t mind. To me, covering the principles is more valuable—and more approachable to beginners—and it’s up to you what you do with it in your own applications.
+I want to approach this topic from a more general point of view. This is not an article that shows you a list of Rake tasks with clever solutions that are ready to be copy&pasted without much afterthought. It’s more intended to be a look under the hood while being newbie-friendly and also interesting to people who just haven’t yet played much with Rake besides the obvious Rake tasks in Rails. It’s the understanding of the tool and what if offers that yields a higher return I think. I hope you don’t mind. To me, covering the principles is more valuable—and more approachable to beginners—and it’s up to you what you do with it in your own applications.
 
 ## Default Task
 
 I’m sure you have at least heard the term previously somewhere. But what is a default task really? It’s nothing magic, but let’s get this one out of the way quickly. When you run `rake` without any additional name for a rake task, the default task get’s executed.
+
+###### Shell
+
+``` bash
+
+rake
+
+```
 
 ###### Some Rakefile
 
@@ -45,11 +53,11 @@ In Rails, the default task is supposed to run your tests. Your guess is as good 
 
 ## File Tasks
 
-As the name might suggest, they are tasks that you execute on files (and directories). They have a few tricks up their sleeves though. Rake will of course work a lot of the time with files. No surprise that somebody recognized that pattern and created specialized file tasks for your convenience—especially for the simple reason to avoid duplication or waste processing capabilities.
+As the name might suggest, they are tasks that you execute on files (and directories). They have a few tricks up their sleeves though. Rake will of course work a lot of the time with files. No surprise that somebody recognized that pattern and created specialized file tasks for your convenience—especially for the simple reason to avoid duplication or wasting processing capabilities.
 
 Transforming files from one type to another is a very common task. The sources are your dependencies and the task names is what follows the `file` keyword. Converting markdown to HTML files, converting HTML files into ebook formats, JPG images to PNG images, compiling source code, building static pages or just changing file extensions and many more options are at your disposal. We could do all of this manually but this is tedious and ineffective of course. Writing code for this is much more elegant and scalable.
 
-Using file tasks is not much different from “regular” tasks. They will also show up if you ask for a list of Rake tasks via `rake -T`. In fact, Rake treats all tasks equally—except `multitask` a bit. Adding descriptions and prerequisites are no problem for file tasks to handle as well. Actually, prerequisites are a necessity for mentioning source files before they get processed.
+Using file tasks is not much different from “regular” tasks. They will also show up if you ask for a list of Rake tasks via `rake -T`. In fact, Rake treats all tasks equally—except `multitask` a bit. Adding descriptions and prerequisites are no problem for file tasks to handle as well. Actually, prerequisites are a necessity for mentioning source files before they get processed. We need the source to exist for this to work—which makes sense as a dependency of course. Without it, Rake wouldn’t know how to continue—it can’t create the new file out of thin air after all.
 
 ###### Some Rakefile
 
@@ -61,33 +69,11 @@ end
 
 ```
 
-The name for your file task is basically your target file, the file that you want to have created. The prerequisite is the source file that is needed for the task. Inside the block you are telling Rake how to create the wanted output—how to build it using the prerequisite file(s) that already exist. Input-output. For example, this could be a shell command using the `pandoc` tool that transforms Markdown files into HTML files. The applications for file tasks are more than plenty. The syntax though might feel a little weird at first, I get it.
+The name for your file task is basically your target file, the file that you want to have created. The prerequisite is the source file that is needed for the task. Inside the block, you are telling Rake how to create the desired output—how to build it using the prerequisite file(s) that already exist. Input-output. For example, this could be a shell command using the `pandoc` tool that transforms Markdown files into HTML files. The applications for file tasks are more than plenty. The syntax though might feel a little weird at first. I get it.
 
-Rakes first checks if the target file exists and if so, if the timestamp is older than the prerequisite files—a time based dependency. Rake will run the file task if the timestamp is older than the prerequisites or if the file does not exist yet. That is very handy if you need to handle more than a couple of files—which is especially cool because you won’t need to rebuild a ton of files just because you changed a single one in a collection. In contrast to that, regular Rake tasks are always run—they don’t check any timestamps or other changes—unless you make them so of course.
-
-
-If you don’t change the source files, Rake won’t run this task more than once if exectuted multiple times. Rakes keeps track of changes to the timestamps and only executes when they have been altered.
-
-The interesting part to note is the nomenclature. `'some_file.new_extension'` is called a task.
-
-Rake just does what you tell it to. If you make a mistake with your file extensions, Rake won’t complain.
-
-It will even show up in your list of Rake tasks (`rake -T`)
-
-We need the `some_file.old_extension` to exist for this to work—which makes sense as a dependency of course. Without it, Rake wouldn’t know how to continue—it can’t create the new file out of thin air after all. The prerequisite is basically the source file. 
-
+Rakes first checks if the target file exists and if so, if the timestamp is older than the prerequisite files—a time based dependency. Rake will run the file task if the timestamp is older than the prerequisites or if the file does not exist yet. That is very handy if you need to handle more than a couple of files—which is especially cool because you won’t need to rebuild a ton of files just because you changed a single one in a collection for example. In contrast to that, regular Rake tasks are always run—they don’t check any timestamps or other changes—unless you make them so of course.
 
 ## File Utilities
-
-###### Shell
-
-``` bash
-
-$rake some_file.new_extension
-
-=> mv some_file.old_extension some_file.new_extension
-
-```
 
 ###### Some Rakefile
 
@@ -100,7 +86,17 @@ end
 
 ```
 
-In case you are wondering about the `cp` method in the previous example or the above `mv` command, let’s talk about file utilities. We could have used `sh mv ...` to execute a Shell command from within a Rake task. Lucky for us we can use a module that makes Shell command stuff like this a lot less verbose. `FileUtils` is a Ruby module with lots of unixy commands for file operations: 
+###### Shell
+
+``` bash
+
+$rake some_file.new_extension
+
+=> mv some_file.old_extension some_file.new_extension
+
+```
+
+In case you are wondering about the `cp` method in the previous example or the above `mv` command, let’s talk about file utilities. We could have used `sh mv ...` to execute a Shell command from within a Rake task. Lucky for us, we can use a module that makes Shell command stuff like this a lot less verbose and platform independent. `FileUtils` is a Ruby module with lots of unixy commands for file operations: 
 
 + rm 
 + cp 
@@ -108,7 +104,7 @@ In case you are wondering about the `cp` method in the previous example or the a
 + mkdir
 + and so on…
 
-These will help you write cleaner Rake tasks that are also less verbose. If reinventing the wheel is not your thing, FileUtils will be a useful companion dealing with files. Often Rake is all you need, but every once in a while, you’ll be really glad this handy module got your back. RakeUtils extended this module slightly for your convenience. Let’s have a look at a list of what’s at your disposal and then zoom in on a few particular ones that might be of interest to you:
+If reinventing the wheel is not your thing, FileUtils will be a useful companion dealing with files. Often Rake is all you need, but every once in a while, you’ll be really glad this handy module got your back. RakeUtils extended this module slightly for your convenience. Let’s have a look at a list of what’s at your disposal and then zoom in on a few particular ones that might be of interest to you:
 
 ``` text
 
@@ -146,7 +142,7 @@ touch(list, options)
 
 Although I assume that you are a newbie, I also assume that you have played with Rails before and that you know the very basic Unix utilities—stuff like `mv`, `cd`, `pwd`, `mkdir` and stuff. If not, do your homework and come back. 
 
-In your Rakefiles you can use these methods right out of the box. And to not cause misunderstandings, this is a Ruby layer that ‘imitates’ these Unix commands and which you can use in your Rakefiles without any prefixes like `sh`—for executing a Shell command. Btw, the `options` you see in the list above mean a hash `{}` of options. Let’s look at a few interesting ones that might come in handy writing file tasks:
+In your Rakefiles you can use these methods right out of the box. And to not cause misunderstandings, this is a Ruby layer that ‘imitates’ these Unix commands and which you can use in your Rakefiles without any prefixes like `sh`—for executing a Shell command. Btw, the `options` you see in the list above mean a hash `{}` of options. Let’s look at a few interesting commands that might come in handy writing file tasks:
 
 + `sh`
 
@@ -154,7 +150,7 @@ This let’s you execute shell commands from within your Ruby files.
 
 + `cd` 
 
-This is a very basic one but there is something cool about this command though. If you provie `cd` with a block, it changes the current directory to it’s destination, does its business as defined in the block and then returns back to the previous working directory to continue. Hmm, neat actually!
+This is a very basic one but there is something cool about this command though. If you provie `cd` with a block, it changes the current directory to it’s destination, does its business as defined in the block and then returns back to the previous working directory to continue. Neat actually!
 
 + ```cp_r```
 
@@ -162,11 +158,11 @@ Let’s you copy files and directories recursively in bulk.
 
 + ```mkdir_p``` 
 
-Creates a target directory and all its specified parents. Lucky for us, we have the `directory` method in Rake which is even more convenient and don’t need it.
+Creates a target directory and all its specified parents. Lucky for us, we have the `directory` method in Rake which is even more convenient and therefore don’t need it.
 
 + `touch`
 
-This updates the timestamp of a file if they exists—if not, it gets created.
+This updates the timestamp of a file if it exists—if not, it gets created.
 
 + `identical?`
 
@@ -174,7 +170,7 @@ Let’s you check if two files are the same.
 
 ## Directory Method
 
-In Rake you have a handy way to define directory without using `mkdir` or ```mkdir_p```. It’s especially handy when you need to build up nested directories. A folder tree can be a pain if you need to build up a directory structure via multiple file tasks that have tons of prerequisites for the directory structure. Think of the `directory` method as a folder task.
+In Rake you have a handy way to define directories without using `mkdir` or ```mkdir_p```. It’s especially handy when you need to build up nested directories. A folder tree can be a pain if you need to build up a directory structure via multiple file tasks that have tons of prerequisites for the directory structure. Think of the `directory` method as a folder task.
 
 ###### Some Rakefile
 
@@ -184,7 +180,7 @@ directory 'mi6/q/special_gadgets'
 
 ```
 
-This creates the directories in question without much fuzz. What might not be obvious right away is the fact that you can depend on it like any other rake task—as a prerequisite. Just make sure the name of the file task, its name, includes the directory that you depend on.
+This creates the directories in question without much fuzz. What might not be obvious right away is the fact that you can depend on it like any other rake task—as a prerequisite. Just make sure the name of the file task, its name, includes the directory that you depend on. If multiple tasks depend on it, it will still get created only once.
 
 ``` ruby
 
@@ -201,8 +197,7 @@ As you can see here, Rake is very consistent and thinks about all the things to 
 
 ## Rules
 
-Rules can help us to reduce duplications when we deal with tasks—especially with file tasks. Instead of instructing Rake to execute tasks on particular files like `somefile.markdown`, we can teach Rake to execute these tasks on a certain kind of file—like a pattern or blueprint. Transforming a set of files instead of single ones is a much more versatile and DRY approach. Tasks like these scale much better when we define a pattern for files that share similar characteristics.
-
+Rules can help us to reduce duplications when we deal with tasks—file tasks actually. Instead of instructing Rake to execute tasks on particular files like `somefile.markdown`, we can teach Rake to execute these tasks on a certain kind of file—like a pattern or blueprint. Transforming a set of files instead of single ones is a much more versatile and DRY approach. Tasks like these scale much better when we define a pattern for files that share similar characteristics.
 
 ###### Some Rakefile
 
@@ -220,17 +215,17 @@ As you can see, having a bunch of files would be tedious to maintain that way. Y
 
 ``` ruby
 
-rule ".html" => ".markdown" do |t|
-  sh "pandoc -s #{t.source} -o #{t.name}"
+rule ".html" => ".markdown" do |rule|
+  sh "pandoc -s #{rule.source} -o #{rule.name}"
 end
 
 ```
 
 When we define a rule like the above, we have a mechanism in place for transforming any file with a `.markdown` extension into an `.html` file. With rules, Rake is first looking for a task for a specific file like ```quartermaster_gadgets.html```. But when it can’t find one, it is using the plain `.html` rule to look for a source that could achieve successful execution. That way you don’t have to create long list of files but only use a general “rule” that defines how to handle certain file tasks. Pretty awesome!
 
-### Task Object
+## Task Object
 
-In the rule above, we were making use of the task object. We can pass it as a block argument into the closure and call methods on it. As with file tasks, rules are all about task sources, its dependencies—a markdown file for example—and its task name. From within rules’ body in the block (and file tasks) we have access to the tasks name and source. We can extract information from that argument passed—the name through `t.name` and its source—aka file source—via `t.source`. Above we could avoid duplicating the names of the files and generalize a pattern instead. Similarly we could get the list of prerequisites / dependencies with `t.prerequisites`.
+In the rule above, we were making use of the task object—in this case of a rule object to be even more precise.. We can pass it as a block argument into the closure and call methods on it. As with file tasks, rules are all about task sources, its dependencies—a markdown file for example—and its task name. From within rules’ body in the block (and file tasks), we have access to the rules’ name and source. We can extract information from that argument passed—the name through `rule.name` and its source—aka file source—via `rule.source`. Above we could avoid duplicating the names of the files and generalize a pattern instead. Similarly we could get the list of prerequisites / dependencies with `rules.prerequisites`. For file tasks or any other task, the same applies of course.
 
 Talking of dependencies, they can function like a list to be iterated. No need to create a separate `each` loop if you play your cards right. 
 
@@ -238,8 +233,8 @@ Talking of dependencies, they can function like a list to be iterated. No need t
 
 task :html => %W[quartermaster_gadgets.html, research_gadgets.html]
 
-rule ".html" => ".md" do |t|
-  sh "pandoc -s #{t.source} -o #{t.name}"
+rule ".html" => ".md" do |r|
+  sh "pandoc -s #{r.source} -o #{r.name}"
 end
 
 ```
@@ -256,17 +251,19 @@ detect_source = proc do |html_file_name|
   some_markdown_list.detect { |markdown_source| markdown_source.ext == html_file_name.ext }
 end
 
-rule '.html' => detect_source do |t|
-  sh "pandoc -s #{t.source} -o #{t.name}"
+rule '.html' => detect_source do |r|
+  sh "pandoc -s #{r.source} -o #{r.name}"
 end
 
 ```
 
 ### Difference Of Procs And Lambdas
 
-If you are new to lambda land or haven’t figured it out completely yet, here is a small refresher. Procs are objects you can pass around that can be executed later—so are lambdas. Both are Proc objects btw. The difference is subtle and comes down to the arguments that are passed into them. Lambdas check the number of arguments and can blow up with an `ArgumentError` for that reason—procs don’t care. The other difference is in regards to their handling of return statements. Procs get out of the scope where the proc was being executed. Lambdas just exit the lambda scope and continue to trigger the next code that is in line so to speak. Not super important here but I thought for the newbies among you, it can’t hurt either.
+If you are new to lambda land or haven’t figured it out completely yet, here is a small refresher. Procs are objects you can pass around that can be executed later—so are lambdas. Both are Proc objects btw. The difference is subtle and comes down to the arguments that are passed into them. Lambdas check the number of arguments and can blow up with an `ArgumentError` for that reason—procs don’t care. The other difference is in regards to their handling of return statements. Procs get out of the scope where the proc object was being executed. Lambdas just exit the lambda scope and continue to trigger the next code that is in line so to speak. Not super important here but I thought for the newbies among you, it can’t hurt either.
 
 ## Useful Flags
+
+This is a short list of flags that you can pass to rake tasks.
 
 + `--rules`
 
@@ -276,7 +273,7 @@ Shows you how Rake tries to apply rules—a trace for rules. Invaluable if you d
 
 ``` text
 
-»$ rake quartermaster_gadgets.html --rules
+$ rake quartermaster_gadgets.html --rules
 Attempting Rule quartermaster_gadgets.html => quartermaster_gadgets.md
 (quartermaster_gadgets.html => quartermaster_gadgets.md ... EXIST)
 pandoc -s quartermaster_gadgets.md -o quartermaster_gadgets.html
@@ -285,13 +282,13 @@ pandoc -s quartermaster_gadgets.md -o quartermaster_gadgets.html
 
 + `-t`
 
-Remember the `solve_bonnie_situation` task from article one? If we add this flag running this Rake task, we turn on tracing. We also get a backtrace if we run into errors. This is certainly handy for debugging.
+Remember the `solve_bonnie_situation` task from article one? Let’s add this flag to this Rake task and turn on tracing. We also get a backtrace if we run into errors. This is certainly handy for debugging.
 
 ###### Shell
 
 ``` text
 
-»$ rake solve_bonnie_situation -t
+$ rake solve_bonnie_situation -t
 ** Invoke solve_bonnie_situation (first_time)
 ** Invoke get_mr_wolf (first_time)
 ** Execute get_mr_wolf
@@ -328,13 +325,13 @@ Setting ```Rake.application.options.trace_rules = true``` in a Rakefile itself t
 
 + `-P`
 
-Shows list of prerequisites for all tasks. Here we use again the `solve_bonnie_situation` task. Omiting output for other tasks, this would be its singled out output:
+Shows list of prerequisites for all tasks. Here we use again the `solve_bonnie_situation` task. Omitting output for other tasks, this would be its singled out output:
 
 ###### Shell
 
 ``` text
 
-»$ rake solve_bonnie_situation -P
+$ rake solve_bonnie_situation -P
 ...
 rake solve_bonnie_situation
     get_mr_wolf
@@ -357,16 +354,16 @@ Runs tasks as multitasks.
 
 ## Parallel Tasks
 
-Let me introduce you to the `multitask` method. This can help you to speed things up a bit—after all, we have multiple cores on most of modern computers, so let’s make us of them. Of course you can always achieve the speed boosts by writing good, solid code that lacks any fat but running tasks in parallel can certainly give you something extra in that regard. There are pitfalls though which we will also cover.
+Let me introduce you to the `multitask` method. This can help you to speed things up a bit—after all, we have multiple cores on most of modern computers, so let’s make us of them. Of course you can always achieve the speed boosts by writing solid code that lacks any fat but running tasks in parallel can certainly give you something extra in that regard. There are pitfalls though which we will also cover.
 
-The task method executes all tasks in sequence, one after the other. It’s a safe bet if your code is in order but it is also slower. If speed is important for some task, we can help a little by multi-threading tasks. Keep in mind though that the sequential approach is the better option under some circumstances.
+The tasks we executed so far run all tasks in sequence, one after the other. It’s a safe bet if your code is in order but it is also slower. If speed is important for some task, we can help a little by multi-threading tasks. Keep in mind though that the sequential approach is the better option under some circumstances.
 
 Let’s say we have three Rake tasks that need to run as a prerequisite in order to execute a fourth one. These are four threads basically. In the bigger picture of things, when you run multiple applications—or to be more specific, processes—at once, the same idea is at work.
 
 ``` ruby
 
- multitask :shoot_bond_movie => [:shoot_car_chase, :shoot_love_scene, :shoot_final_confrontation] do
-     puts "Principal photography is done and we can start editing."
+multitask :shoot_bond_movie => [:shoot_car_chase, :shoot_love_scene, :shoot_final_confrontation] do
+  puts "Principal photography is done and we can start editing."
 end
 
 ```
@@ -400,3 +397,7 @@ end
 ```
 
 Both `shoot_car_chase` and `shoot_final_confrontation` tasks depend on `prepare_italy_set` to finish first—which is only run once btw. We can use that mechanism to predict the order when running tasks in parallel. Don’t just trust the order of execution if it’s somehow important to your task.
+
+## Final Thoughts
+
+Well, I guess you are now fully equipped to write some serious Rake business. Making proper use of this tool will hopefully make your lives as Ruby developers even more joyful. In this second article, I hope I could convey what a simple but marvelous tool Rake really is. It was created by a true master of his craft.  We all owe Jim Weirich tremendous respect for coming up with this elegant build tool. The Ruby community is certainly not quite the same since he passed away. Jim’s legacy is clearly here to stay though. Another giant we are privileged to build upon.
