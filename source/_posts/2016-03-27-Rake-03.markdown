@@ -120,71 +120,55 @@ end
 
 When you pass in more arguments than you have defined in your task, you can simply access them via `args`. `args.extras` displays an array of all the additionally passed in parameters. ```args.to_a``` shows you all the parameters—in an array as well of course.
 
-
-Rake is a task execution engine
-
 ## FileList
 
-FileList is like a specilized Ruby Array this is focused on processing lists of files. They are super powerful. Needing lists of files to process is very common for build tools and making it easy or elegant to deal with them is one of the strengths of Rake.
+In previous examples we have been collecting lists of files that need some transformation. That’s tedious, right? FileList is one of those niceties that makes Rake a powerful tool. It’s just too easy to define a glob pattern for the files you need and have it automatically be up to date when you add or delete files from that destination. With that at our disposal, filtering lists can be as straightforward or as sophisticated as we need. Regular expressions are just the tip of the iceberg—although very handy of course. And let’s not forget that Rake has an eye on the timestamp of our files and filters out files that don’t need to be involved when they are up to date.
 
-Easy to have clean list of files without much fuzz.
-
-Finding a bunch of files and iterating over them to apply transformations
-
-Collecting a large array of filenames together. 
-
-Exclusions are very neat and useful. For example filter out temporary files, backup files from editors, Git files, certain directories are unneeded.
-
-Exclusion rules
-Files that you don’t want in your build.
-
-
-
-FileList is lazy, it doesn’t grab files until you need them
-If you have a bunch of file lists, they behave very sane and smart. The ones that don’t get actively used are taking it easy without hitting the file system. It’s more efficient that way.
-
-Create thumbs from images
+###### Some Rakefile
 
 ``` ruby
 
-FileList['images/*.png']
+image_list = FileList['images/*.png']
+
+=> ["images/jim-weirich.png", "images/zen-rake.png"]
 
 ```
 
+Managing these files by hand is one sure way to build on sand. And of course, Rake checks the timestamps of this list as well and rebuilds only files that are out of date. A FileList is lazy as well. It doesn’t grab files until you need them. If you have a bunch of file lists, they behave very sane and smart because of that. The lists that don’t get actively used are taking it easy without hitting the file system. It’s more efficient that way.
 
-You give it a glob and every filename that matches that patterns gets collected into the FileList. This is an array that hanldes file names.
+
+As you can see below, you can provide multiple glob patterns for the list as well.
+
+###### Some Rakefile
 
 ``` ruby
 
-FileList['images/*.png', 'images/*.jpg']
+image_list = FileList['images/*.png', 'images/*.jpg']
 
-FileList['images/**/*.png']
-all directories beneath where you are starting
-
-FileList['images/**/*.{png, jpg}']
+=> ["images/happy-jim.jpg", "images/jim-weirich.png", "images/zen-rake.png"]
 
 ```
 
-The reulting list of files is an array with file names and is dependent on a pattern for the files needed.
+Needing lists of files to process is very common for build tools and making it easy or elegant to deal with them is one of the strengths of Rake. FileList makes your Rakefile smaller, smarter and capable of handling an arbitrary number of files that you don’t need to manage. You can leave Rake in charge. So what is a FileList exactly?  Think of it as an array of files that match the given pattern and is finding a bunch of files for you to iterate over and to apply transformations. It’s a specialized Ruby Array this is focused on processing lists of files—storing them as strings.
 
-You can inlcude files into a FileList
+With large sets of files, exclusions are very neat and useful. For example, if we want to filter out temporary files, backup files from editors, Git files, or certain directories that are unneeded. In short, exclusion rules are for files that you don’t want in your build.
 
 ``` ruby
 
-FL = FileList['*.png']
-FL.include('*.jpg)
+articles = Rake::FileList.new('_posts/**/*.{markdown, md}') do |files|
+  files.exclude('/_posts/drafts/*.{markdown, md}')
+end
 
+=> ["_posts/published/2016/2016-02-02-some-article.md", "_posts/published/2015/2015-12-12-another-article.markdown"] 
 ```
 
-You can exclude files as well
-
-Collecting files for your tasks is not complicated in Rake. Instead of defining collections fo files yourself—and also updating this list—we let Rake be in charge of that. We have powerful tools at our disposal to filter lists as straighforward or as sophisticated as we need. Regular expressions are just the tip of the iceberg—although very handy of course. And let’s not forget that Rake has an eye on the timestamp of our files and filters out files that don’t need to be involved when they are up to date.
+We can pass the files of the FileList along via its initializer which accepts a list of file masks which are processes any exclusions within the block. We can simplify the list of file extensions via `{markdown, md}` to keep things DRY. Also, you can chain these exclusions as much as you need to. Here we could even conveniently check if the files included in the FileList are empty (`zero?`) and exclude these from the array that way.
 
 ``` ruby
 
-articles = Rake::FileList.new('**/*.md', '**/*.markdown') do |files|
-  files.exclude('~*')
-  files.exclude(/^temp.+\//)
+articles = Rake::FileList.new('_posts/**/*.md') do |files|
+  files.exclude('/_posts/drafts/*.{markdown, md}')
+  files.exclude('_posts/~*')
   files.exclude do |file|
     File.zero?(file)
   end
@@ -192,16 +176,53 @@ end
 
 ```
 
-Rake::FileList class
-~~~Its initializer accepted the list of file masks;
+We are basically providing multiple glob patterns for collecting only files we need into the FileList. For whatever reason, you can also go the opposite way and include files into a FileList.
 
-we can feed its initializer a list of files that we want the FileList to collect for us.
+``` ruby
 
-we can filter that even more by excluding certain files or directories.
+FL = FileList['images/*.png']
+FL.include('images/private/*.jpg)
+
+```
 
 ## Pathmap
 
-Secrete weapon of Rake, shows its true power
+Secrete weapon of Rake, shows its true power by enabling you to manipulate file paths
+
+Let’s change some simple extensions. 
+~~~
+```
+"/projects/worldDominationSecrets.xml".ext("html")
+# => '/projects/worldDominationSecrets.html'
+```
+~~~
+
+This is just scratching the surface though. `pathmap` has lots of useful markers that let you be more creative.
+
+Here’s a list:
+
++ `%d`
+
++ `%p` -- The complete path.
+
++ `%f` -- The base file name of the path, with its file extension, but without any directories.
+
++ `%n` -- The file name of the path without its file extension.
+
++ `%d` -- The directory list of the path.
+
++ `%x` -- The file extension of the path. An empty string if there is no extension.
+
++ `%X` -- Everything but the file extension.
+
++ `%s` -- The alternate file separator if defined, otherwise use the standard file separator.
+
++ `%%` -- A percent sign.
+
+
+require 'rake/clean' library gives you access to two tasks
+
+
 
 One method that tackles all the various tasks that having to do with mapping one list of files to a different list of files
 
@@ -240,6 +261,24 @@ every directory that begins with images should be replaced with thumbs
 
 ## CLEAN & CLOBBER
 
+require 'rake/clean' library gives you access to two tasks
+
+FileList is not only handy for prepping files that are to be transformed. They make it also easy to collect files that you want to have cleaned after you are done with your tasks. CLEAN and CLOBBER are actually FileLists as well—they just have two very specific jobs to handle.
+
+These two tasks are dumb of course and you need to feed them file lists via `include` that you want to disappear.
+
+~~~
+require 'rake/clean'
+CLEAN.include('*.tmp')
+CLOBBER.include('*.tmp', 'build/*')
+~~~
+
+Clobber removes everything in the clean list and the clobber list
+
+Not putting everything in a clean task is handy because you can differentiate what you want to keep around more elegantly.
+
+These are handy when you want to clean up generated files, backup files
+
 Optional modules  clean clobber
 
 special file lists 
@@ -272,7 +311,8 @@ CLOBBER get rid of everthing that was generated and leave project source files a
 
 ## Clean
 
-?? require 'rake/clean'
+require 'rake/clean' library
+
 
 When is a good time to clean??
 Before you build your Gem
@@ -289,6 +329,7 @@ CLEAN.include(SOMEFILELIST, 'thumbs')
 
 ## Clobber
 
+?? Clean is a prerequisite to clobber?
 
 When is a good time to clobber??
 
@@ -336,6 +377,9 @@ Use rules if you have a lot of files instead of dynamically generated tasks
 
 ` rake -P` will list all of them btw. With tons of file tasks, this list becomes stupid long. Above all, it is lacking elegance that way. You haven’t reduced the patten to its core yet. Most importantly, this will make reuse easier while being DRY of course.
 
+Collecting files for your tasks is not complicated in Rake. Instead of defining collections fo files yourself—and also updating this list—we let Rake be in charge of that. 
+
+
 ## Tips
 
 User --dry-run
@@ -353,3 +397,10 @@ matches the name and not the description
 rake -W boil_water
 where is task defined
 only with documented tasks??
+
+## Final Thoughts
+
+
+Rake is a task execution engine
+
+I’ll leave you with a nice [video](http://www.infoq.com/interviews/jim-weirich-discusses-rake) interview where Jim Weirich discusses Rake.
