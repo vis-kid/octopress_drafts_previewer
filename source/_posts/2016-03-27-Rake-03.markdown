@@ -16,6 +16,7 @@ categories: [Rake, Ruby, Ruby on Rails, Make]
 + FileList
 + Pathmap
 + Clean & Clobber
++ For The Road
 
 ## Passing Arguments
 
@@ -360,59 +361,83 @@ We are not putting everything in a clean task because it’s handy that you can 
 
 Why do we care about these build files? Sometimes you want to rebuild everthing and wipe out everything old to get a brand new build of something. Therefore you need a way to delete all the files that were generated while keeping the source files that are needed for the build—most often files that are under version control. It’s easy for these lists to get out of date when you solve this manually. Therefore handling them like our good old friend FileList makes this process much more effective.
 
-## Rake Dos & No-Nos
+## For The Road
 
-Rake is smart about doing the minimal amount possible. So should you then
++ Components 
 
-Rake at its essence, is a task, break it down to its component pieces and specify what needs to be done in order to bigger tasks.
+Rake, at its essence, is a managing tasks of course. Break them down to its most useful component pieces and specify what needs to be done in order to create bigger tasks. Think OOP! Break up your Rakefile into component pieces. Rails makes this very easy for you if you make use of `tasks/lib`. In other projects you can create a directory called `rakelib` and build your Rake components in there. Rake loads the Rakefile and ```rakelib/*.rake``` files automatically.
 
-Don’t forget to create smart dependencies
++ Using `rake --dry-run`
 
-Getting dependecies right and declaring them right is the most important step in Rake
+If you need to run a task that is potentially destructive in some sense and you want to rather check first what this task would do you can sort of sandbox the task. You will see the log what they are doing without the file operations.
 
-Break up your Rakefile into component pieces. Rails makes this very easy for you if you make use of tasks/lib. Or make a directory called `rakelib` and build your Rake components in there. Rake loads the Rakefile and rakelib/*.rake files automatically.
++ KISS
 
-Use namespaces for potentially conflcting task names.
-especially if you have Rakefiles that are coming from different sources
+Keep it simple! Rake is smart about doing the minimal amount possible. So should you. The nice thing about Rake I think is that provides a great DSL without giving you much rope to harm yourself.
 
-task :go_to_store
++ Namespaces
 
-namespace :apple do
-  task :go_to_store
+Namespaces are cheap and keep you from running into conflicting task names. This is especially important if you have Rakefiles that are coming from different sources—and from multiple developers.
 
-For file manipulations, make use of FileUtils and stay away from shell file manipulations. It’s a bit dirty when Rake makes them directly available to you.
-You can set a verbose: false flag to avoid having all this output in the shell
+``` ruby
 
-You can run ruby commands wihtin Rake files
+task :fight_bad_dude do
+
+end
+
+namespace :bond do
+  task :fight_bad_dude
+end
+
+```
+
++ File manipulations
+
+Make use of FileUtils and stay away from shell file manipulations. It’s a bit dirty when Rake makes them directly available to you.
+
++ Ruby commands
+
+You can run ruby commands within Rake files. That might come in handy every once in a while.
+
+``` ruby
 
 task :some_task do
   ruby 'ruby_program.rb'
 end
 
-Use rules if you have a lot of files instead of dynamically generated tasks
+```
 
-` rake -P` will list all of them btw. With tons of file tasks, this list becomes stupid long. Above all, it is lacking elegance that way. You haven’t reduced the patten to its core yet. Most importantly, this will make reuse easier while being DRY of course.
++ Dynamically generated tasks
 
-Collecting files for your tasks is not complicated in Rake. Instead of defining collections fo files yourself—and also updating this list—we let Rake be in charge of that. 
+Use rules if you have a lot of files instead of dynamically generated tasks. Why? Run ` rake -P` and you will get a list all of them. That can get out of hand very, very quickly. Besides that, not using rules is lacking elegance as well because you might haven’t reduced the patten to its core yet. Most importantly, this will make reuse easier while being DRY of course.
 
++ Lists
 
-## Tips
+Instead of defining collections fo files yourself—and also updating this list—we let Rake be in charge of that. As we have seen, collecting files for your tasks is not at all complicated in Rake. 
 
-User --dry-run
-See thte log what they are doing. Just do the logging without the file operations
-show you all the file operations it would do but actually don’t do them
++ Ruby
 
-Make use of Ruby methods for more complex stuff
-encapsulation and proper OOP
+Make use of Ruby methods for more complex stuff. Just because we are writing code in Rake files should not prevent us from proper encapsulation and OOP.
 
-rake -T buy
++ Searching tasks
 
-search rake tasks with buy
-matches the name and not the description
+###### Shell
 
-rake -W boil_water
-where is task defined
-only with documented tasks??
+``` bash
+
+rake -T secret_service_agent
+
+```
+
+This for example will search for rake tasks with “secret_service_agent” in it. It matches the name but not the description.
+
+``` bash
+
+rake -W create_mi6_agent
+
+```
+
+This shows us where the task `create_mi6_agent` is defined.
 
 ## Final Thoughts
 
