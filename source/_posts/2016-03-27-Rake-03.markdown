@@ -13,10 +13,9 @@ categories: [Rake, Ruby, Ruby on Rails, Make]
 ## Topics
 
 + Passing Arguments
-+ Pathmap
 + FileList
-+ Clean
-+ Clobber
++ Pathmap
++ Clean & Clobber
 
 ## Passing Arguments
 
@@ -342,88 +341,24 @@ Here for example we are taking a list of images and map them to new filenames by
 
 ## CLEAN & CLOBBER
 
-require 'rake/clean' library gives you access to two tasks
+We want to be able to return a project to a pristine state. For that matter, a FileList is not only handy for prepping files that are to be transformed, they make it also easy to collect files that you want to have cleaned after you are done with your tasks. CLEAN and CLOBBER are actually FileLists as well—they just have two very specific jobs to handle—Deletion.
 
-FileList is not only handy for prepping files that are to be transformed. They make it also easy to collect files that you want to have cleaned after you are done with your tasks. CLEAN and CLOBBER are actually FileLists as well—they just have two very specific jobs to handle.
+###### Some Rakefile
 
-These two tasks are dumb of course and you need to feed them file lists via `include` that you want to disappear.
+``` ruby
 
-~~~
 require 'rake/clean'
-CLEAN.include('*.tmp')
-CLOBBER.include('*.tmp', 'build/*')
-~~~
 
-Clobber removes everything in the clean list and the clobber list
-
-Not putting everything in a clean task is handy because you can differentiate what you want to keep around more elegantly.
-
-These are handy when you want to clean up generated files, backup files
-
-Optional modules  clean clobber
-
-special file lists 
-
-add lists of files to be deleted to these global file lists
-
-In build scripts you are generating files, final pdf files or whatever with a lot of intermediate files
-
-Sometimes you want to rebuild everthing and wipe everything out old information and to get a brand new build of something
-
-You need a way to delete all the files that were generated while keeping the source files that are needed.
-You could manually write Rake tasks yourself to solve this but both CLEAN and CLOBBER solves this for you without reinventing the wheel.
-Easy for these lists to get out of date when you solve this manually.
-
-CLEAN and CLOBBER give you a central place
-run rake clean and it removes every sigle file in that list
-run rake clobber
-
-HTML files are intermediate files. The pdf files are the final target files, your deliverable.
-Typically you would add the HTML file to the CLEAN list and the pdf file to the CLOBBER list
-
-CLEAN leaves the final files around but gets rid of all the intermediate files
-CLOBBER get rid of everthing that was generated and leave project source files around
-
-
-
-
-
-
-
-## Clean
-
-require 'rake/clean' library
-
-
-When is a good time to clean??
-Before you build your Gem
-You don’t want any of the intermediate files.
-
-Intermediate files
-clean them up because we don’t need them
-
-``` ruby
-
-CLEAN.include(SOMEFILELIST, 'thumbs')
+CLEAN.include('*.intermediate_files')
+CLOBBER.include('*.intermediate_files', 'built_files/*')
 
 ```
 
-## Clobber
+These two tasks are dumb of course and you need to feed them file lists via our handy `include`. When you run `rake clean` or `rake clobber` these collected files will disappear. Since this is an optional module, you need to require it first in your Rakefile. The nice thing about CLEAN and CLOBBER is that it gives you a central place to handle cleaning your build files. Sure, you could manually write Rake tasks yourself to hanlde this but both CLEAN and CLOBBER solves this for you without reinventing the wheel.
 
-?? Clean is a prerequisite to clobber?
+We are not putting everything in a clean task because it’s handy that you can differentiate between intermediate and build files. Let’s say we needed to create HTML files in order to create final pdf versions of our Markdown files. We would include the HTML files into our `CLEAN` list. Both the HTML and the final pdf files would go into `CLOBBER`. Conceptually, the CLOBBER list is supposed to remove everything in both lists.
 
-When is a good time to clobber??
-
-``` ruby
-
-CLOBBER.include(SOMEFILELIST, 'finalthumbs')
-
-```
-
-?? require 'rake/clean'
-
-~~~Should return project to a pristine state
-Gets rid of intermediate files and final generated files
+Why do we care about these build files? Sometimes you want to rebuild everthing and wipe out everything old to get a brand new build of something. Therefore you need a way to delete all the files that were generated while keeping the source files that are needed for the build—most often files that are under version control. It’s easy for these lists to get out of date when you solve this manually. Therefore handling them like our good old friend FileList makes this process much more effective.
 
 ## Rake Dos & No-Nos
 
