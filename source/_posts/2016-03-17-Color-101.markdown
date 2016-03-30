@@ -78,79 +78,34 @@ The tone of a hue is its relative darkness / lightness. It’s about the amount 
 
 ## Value
 
-A lot of the great paintings we admire in art history were done by artists that were masters at tonal contrast.
+Value is the lightness or darkness of a hue. Values are very, very crucial for professional results. In a way, they are much more important to get correct than choosing a hue. When we say something is bright or dark, we are talking about the value of a hue. This tells us how close it is to its lightest or darkest version. A value scale is like a gray scale for a particular hue.
 
-gray scale
+{% img /images/Color-101/color-schemes-monochromatic.png 600 %}
 
-works nice if you work monochromatically, meaning with one color or hue.
+The sections on the scale are called steps. They are significant color steps that can be clearly distinguished by being significantly lighter or darker than the next step. If you apply these values you achieve better tonal contrast by using realistic lights and shades. The end result is more vibrant, interesting and looks simply a lot more professional.
 
-The lights and shades of a hue??
-
-monochrome, it goes from light to dark
-
-The relative shades of an object
-
-if you bring tonal contrast in, light and shade, more vibrant, interesting and professional result
-
-
-Variations of depth are created by gradual values changes.
-
-When we talk about something is bright or dark, we are talking about the value of a hue. This tells us how close it is to 
-
-Value is the lightness or darkness of a hue In paintings, color changes can be achieved very effectively by adding black or white. Artists set up simple gray scales for consistency in their work.
-
-{% img /images/Color-101/color-scale.png %}
-
-A value scale is like a gray scale for a particular hue.
-
-{% img /images/Color-101/color-schemes-monochromatic.png %}
-
-Values are very, very important
-They are much more important to get correct than color
-
-The sections on the scale are called steps. They are significant color steps that can be clearly distinguished by being significantly lighter or darker than the next step 
-
-Every color has its own inherent range of values
-
-{% img /images/Color-101/color-values-mirrored.png %}
-
-Value is in the low gray-scale range, the value is very dark
-Yellow on the other hand is in the high-range
-
-Blue has a larger range, from dark to light
-
-Color is only what’s surrounding it
-
-Always start with some color on the page
-The other colors are in relation to that
-
-IN general you want more desaturated tones,  pure hues are immature
-
-
-With pencil you are drawing with values only and you can achieve a beautiful image with values only. darks and lights
-
-{% img /images/Color-101/ART_VALUE_SCALE.png %}
-
-
-Grayscale aka value scale
-refers to the range of lightness and darkness, the lightest light to the darkest dark
-
-The tints or shades of a hue define a degree of lightness or darkness of a hue.
-
+A lot of the great paintings we admire in art history were done by artists that were masters at subtle tonal contrast via proper use of value scales. They achieved variations of depth by gradual value changes of a limited number of hues. As you can see from the image below, a simple gray scale is all you need to establish enough tonal contrast for painting effectively. A few tinted highlights, are few dark shades and a lot of medium values that define the majority of the painting.
 
 {% img /images/Color-101/Odin_disguised_as_a_Traveller_value_scale.png %}
 
-The values does not change when you have color on
+Of course this works not only with gray scales but with monochromatic colors as well—meaning with one hue. Think of it as the lights and shades of a hue.
 
-{% img /images/Color-101/Andreas_Achenbach_Clearing_Up—Coast_of_Sicily_Walters-grayed-out.png %}
 
 {% img /images/Color-101/Andreas_Achenbach_Clearing_Up—Coast_of_Sicily_Walters.jpg %}
 
-why do we care?
-values are a way to render a two-dimensional image on paper, browsers or a canvas to let it appear three-dimensional—what people call more alive or vibrant. In contrast to flat colors that fail to achieve this effect.
+You can see how effective this scale is by desaturating the painting. The values do not change when you gray out the color. The lightest lights and the darkest darks still define an effective range.
 
+{% img /images/Color-101/Andreas_Achenbach_Clearing_Up—Coast_of_Sicily_Walters-grayed-out.png %}
 
-monochromatic, different values of a hue. differnt types of a hue if you will
+Interestingly, every color has its own inherent range of values. Some have a bigger range than others. Red for example has a more limited range compared to a blue hue for example.
+
+{% img /images/Color-101/color-values-mirrored.png 400 %}
+
+Red is in the low gray-scale range, the value is very dark. Yellow on the other hand is in the high-range. Green and violet also have a larger range going from dark to light.
+
+Why do we care? Values are a way to render a two-dimensional on any canvas and let it appear three-dimensional using the relative shades of a hue. This is what people call more alive or vibrant. In contrast to flat colors that fail to achieve this effect. This is why you want in general more desaturated tones, pure hues are little help with that and look immature on top of that.
+
+A good tip is to start with only one hue and develop a value scale for your website. You can use various values for highlighting areas and other that recede gently in the background—all while staying simple and classy. There are tons of super nice monochromatic sites on the web from which we can learn. 
 
 ## Chroma
 
@@ -440,6 +395,8 @@ Expensive (was expensive in the past)
   ... Website list for color palettes
 
 ## Color Relativity
+
+Color is only what’s surrounding it
 
   We were talking about cooler and warmer colors but it’s a bit more relative that that. Color can appear that way in reltation to another. Colors can look warmer or colder depending on the enviroment they are in. Our human eye is a bit foolish that way.
 
