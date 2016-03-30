@@ -187,77 +187,158 @@ FL.include('images/private/*.jpg)
 
 ## Pathmap
 
-Secrete weapon of Rake, shows its true power by enabling you to manipulate file paths
+Secrete weapon of Rake, shows its true power by enabling you to manipulate file paths. It can be called on a list of files via FileList or on single files as well. Don’t forget that it works on strings though—since it’s part of an extension of Ruby’s `String` class.
 
-Let’s change some simple extensions. 
-~~~
+Let’s play with a simple file and change a simple extension. We could do this with the handy `ext` method of course.
+ 
+##### Some Ruby file
+
+``` ruby
+
+"/mi6/q/secret_gadgets.xml".ext("html")
+
+# => '/mi6/q/secret_gadgets.html'
+
 ```
-"/projects/worldDominationSecrets.xml".ext("html")
-# => '/projects/worldDominationSecrets.html'
+
+The `ext` method let’s us replace a file extension rather easily.  Let’s see what we can do with this file when we play around with `pathmap` though. I think that’s the best way to show you what it has in store for you. We can achieve the same thing like this.
+
+##### Some Rakefile
+
+``` ruby
+
+"/mi6/q/secret_gadgets.xml".pathmap('%X.html')
+
+# => '/mi6/q/secret_gadgets.html'
+
 ```
-~~~
 
-This is just scratching the surface though. `pathmap` has lots of useful markers that let you be more creative.
+As you can see, this is a bit more elegant since we are using a pattern instead. We provide `pathmap` with a specification of what we need from that string via `%X`.
 
-Here’s a list:
++ `%X` 
+
+Using this we get everything but the file extension. Then we simply add the extension we need. This is just scratching the surface though. `pathmap` has lots of useful markers that let you be more creative. File path manipulations couldn’t be any easier with this. 
+
++ `%p`
+
+If you need the complete path.
+
+``` ruby
+
+"/mi6/q/secret_gadgets.xml".pathmap('%p')
+
+# => "mi6/q/secret_gadgets.xml"
+
+```
+
++ `%f`
+
+If you just need the name of a given path. No directories but with the file extension.
+
+``` ruby
+
+"/mi6/q/secret_gadgets.xml".pathmap('%f')
+
+# => "secret_gadgets.xml"
+
+```
+
++ `%n`
+
+If you need file name of a given path without its file extension.
+
+``` ruby
+
+"/mi6/q/secret_gadgets.xml".pathmap('%n')
+
+# => "secret_gadgets"
+
+```
 
 + `%d`
 
-+ `%p` -- The complete path.
-
-+ `%f` -- The base file name of the path, with its file extension, but without any directories.
-
-+ `%n` -- The file name of the path without its file extension.
-
-+ `%d` -- The directory list of the path.
-
-+ `%x` -- The file extension of the path. An empty string if there is no extension.
-
-+ `%X` -- Everything but the file extension.
-
-+ `%s` -- The alternate file separator if defined, otherwise use the standard file separator.
-
-+ `%%` -- A percent sign.
-
-
-require 'rake/clean' library gives you access to two tasks
-
-
-
-One method that tackles all the various tasks that having to do with mapping one list of files to a different list of files
-
-makes it easy to translate between lists. Tweaks entries to your needs. as if they existed with a differnt directory or with different file extension
-
-pass it a block for modifying files
-
-
-
-Is a FileList methods that applies strings to list of filenames.
+If you need just the list of directories of a given path.
 
 ``` ruby
 
-IMAGES = FileList['images/*.png']
-THUMBS = IMAGES.pathmap('thumbs/%n-thumbs%x')
+"/mi6/q/secret_gadgets.xml".pathmap('%d')
+
+# => "mi6/q"
 
 ```
 
-works on list of files
++ `%x`
 
-~~~powertool for munging file names
-
-
-Multiple FileList arrays and .zip them together and iterate over them
+Extracts only the file extension.
 
 ``` ruby
 
-.pathmap("%{^images, thumbs}d ...
+"/mi6/q/secret_gadgets.xml".pathmap('%x')
 
+# => ".xml"
 
 ```
 
-simple substituation command
-every directory that begins with images should be replaced with thumbs
++ `%s`
 
+Shows you the file separator only.
+
+``` ruby
+
+"/mi6/q/secret_gadgets.xml".pathmap('%s')
+
+# => "/"
+
+```
+
++ `%nd`
+
+If you need to specify a specific number of directories that you need. Handy for deeply nested file structures.
+
+``` ruby
+
+"/mi6/q/secret_gadgets.xml".pathmap('%1d')
+
+# => "mi6"
+
+```
+
+``` ruby
+
+"/mi6/q/secret_gadgets.xml".pathmap('%2d')
+
+# => "mi6/q"
+
+```
+
+You  can also approach it from the reverse order by using a minus.
+
+``` ruby
+
+"/mi6/q/secret_gadgets.xml".pathmap('%-2d')
+
+# => "mi6/q"
+
+```
+
+``` ruby
+
+"/mi6/q/secret_gadgets.xml".pathmap('%-1d')
+
+# => "q"
+
+```
+
+As you can see, this one little method tackles all the various needs you can have with mapping one list of files to a different list of files. Attach it to a FileList and the magic kicks in. It really is a power tool for munging file names.
+
+``` ruby
+
+images = FileList['images/*.png']
+thumbs = images.pathmap('thumbs/%n-thumbs%x')
+
+```
+
+Here for example we are taking a list of images and map them to new filenames by extracting the filenames, adding a `-thumbs` suffix plus the extracted file extension while putting them in a `thumbs` directory. I’m sure you will find very good use for `pathmap`.
 
 ## CLEAN & CLOBBER
 
