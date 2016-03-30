@@ -49,6 +49,8 @@ Light and darkness together make colors visible.
 
 ## Hue
 
+A hue is any color on the color wheel.
+
 {% img /images/Color-101/Hue-scale.png %}
 
 Most of the time when people talk about colors, they are actually talking about hues which are the basic, pure colors. That means any color that is within the visible light spectrum. The healthy human eye can see 2.3 Mio hues. These don’t have tint or shade—which means they lack any additions of white or black (see next section).
@@ -56,21 +58,11 @@ So tons of different variations of reds, blues, greens and so on.
 
 For our work with colors in design, they represent starting points, like raw, most primitive versions we need to leave behind to avoid looking amateurish or childish. Did you ever notice that cartoons for kids like to use these colors for their characters? Not a big surprise I guess. You can make use of this of course if you go for a certain look but most of the time childish is not what works too well on the web. 
 
-## Tint & Shade
+## Tint, Shade & Tone
 
-{% img /images/Color-101/tint-tone-shade.png %}
+We are talking about tints and shades of particular hues. Tint is about the amount of white in a color. When you mix a color with white you are tinting it. This leads to increased lightness of the hue the more white you add. Adding white to the pure hue decreases its saturation. They make the hue less intense. 
 
-Tint
-Adding white to the pure hue decreases its saturation
-
-Shade
-Adding black to the pure hue decreases its value
-
-Tint is about the amount of white in a color. When you mix a color with white you are tinting it. This leads to increased lightness of the hue the more white you add.
-
-Shade is about the amount of black in a color. When you mix a color with black you are shading it. This leads to reduced lightness of the hue the more black you add.
-
-In regards to both of the above, we are talking about tints and shades of particular hues.
+Shade on the other hand is about the amount of black in a color. When you mix a color with black you are shading it. This leads to reduced lightness of the hue the more black you add. This results in a rich, often darker more intense color due to the overpowering nature of black pigments. Many blacks change the characteristics of a hue—even through small amounts. Therefore they should be used sparingly.
 
 ###### Tint-Hue-Shade Spectrum:
 
@@ -78,33 +70,104 @@ In regards to both of the above, we are talking about tints and shades of partic
 
 As you can see here, in the middle is the pure hue. Towards the left direction, we add more and more white by tinting it and to the right we are shading the red with black.
 
+We speak of creating tones when we mix a hue with gray—which means that you effectively tint and shade it because adding both white and black results in some sort of gray of course. Tones can be lighter or darker than the original hue—depending on the amount of white and black added. They will also appear less saturated and intense than the original hue. Tones can reveal subtle and complex qualities in a hue. They are closer to the way we see the “real” world.
 
-#### Value
+{% img /images/Color-101/tint-tone-shade.png %}
 
-The degree of lightness or darkness of a hue
-how light or dark a hue is
-tints or shades of a hue
+The tone of a hue is its relative darkness / lightness. It’s about the amount of light that is reflected by that hue. The lighter the more light get’s reflected back and the darker the more light gets absorbed. 
 
-#### Tone
+## Value
 
-The tone of a hue is its relative darkness / lightness. It’s about the amount of light that is reflected by that hue. The lighter the more light get’s reflected back and the darker the more ligth gets absorbed. We speak of tone when we mix a color with gray—which means that you effectively tint and shade it because adding both white and black results in gray of course.
+A lot of the great paintings we admire in art history were done by artists that were masters at tonal contrast.
+
+gray scale
+
+works nice if you work monochromatically, meaning with one color or hue.
+
+The lights and shades of a hue??
+
+monochrome, it goes from light to dark
+
+The relative shades of an object
+
+if you bring tonal contrast in, light and shade, more vibrant, interesting and professional result
+
+
+Variations of depth are created by gradual values changes.
+
+When we talk about something is bright or dark, we are talking about the value of a hue. This tells us how close it is to 
+
+Value is the lightness or darkness of a hue In paintings, color changes can be achieved very effectively by adding black or white. Artists set up simple gray scales for consistency in their work.
+
+{% img /images/Color-101/color-scale.png %}
+
+A value scale is like a gray scale for a particular hue.
+
+{% img /images/Color-101/color-schemes-monochromatic.png %}
+
+Values are very, very important
+They are much more important to get correct than color
+
+The sections on the scale are called steps. They are significant color steps that can be clearly distinguished by being significantly lighter or darker than the next step 
+
+Every color has its own inherent range of values
+
+{% img /images/Color-101/color-values-mirrored.png %}
+
+Value is in the low gray-scale range, the value is very dark
+Yellow on the other hand is in the high-range
+
+Blue has a larger range, from dark to light
+
+Color is only what’s surrounding it
+
+Always start with some color on the page
+The other colors are in relation to that
+
+IN general you want more desaturated tones,  pure hues are immature
+
+
+With pencil you are drawing with values only and you can achieve a beautiful image with values only. darks and lights
+
+{% img /images/Color-101/ART_VALUE_SCALE.png %}
+
+
+Grayscale aka value scale
+refers to the range of lightness and darkness, the lightest light to the darkest dark
+
+The tints or shades of a hue define a degree of lightness or darkness of a hue.
+
+
+{% img /images/Color-101/Odin_disguised_as_a_Traveller_value_scale.png %}
+
+The values does not change when you have color on
+
+{% img /images/Color-101/Andreas_Achenbach_Clearing_Up—Coast_of_Sicily_Walters-grayed-out.png %}
+
+{% img /images/Color-101/Andreas_Achenbach_Clearing_Up—Coast_of_Sicily_Walters.jpg %}
+
+why do we care?
+values are a way to render a two-dimensional image on paper, browsers or a canvas to let it appear three-dimensional—what people call more alive or vibrant. In contrast to flat colors that fail to achieve this effect.
+
+
+monochromatic, different values of a hue. differnt types of a hue if you will
 
 ## Chroma
 
-Chroma, the saturation, is another term we should not overlook. It’s the “colorfulness” of a hue. That funky term just translates to the intensity or brilliance of a perceived color. The chroma is defining how pure the hues is.
+Everything added from the opposite of the color wheel will desaturate the hue
 
-Chroma colors are the colors that you take right off the tube when you buy colors for painting.
+Chroma, the saturation, is another term we should not overlook. It’s the “colorfulness” of a hue. That funky term just translates to the intensity or brilliance of a perceived color. The chroma is defining how pure the hues is. When you buy colors for painting, chromas are the colors that you take right off the tube. In constrast to that, desaturation means that the color is washed out or grayed out. These colors are often used as shadow colors.
 
-Desaturation means the color is washed out or grayed out.
-Desaturated colors are often used as shadow colors.
+Remember to desaturate a hue by adding a complimentary color. It’s important to understand that we are not adding gray for this. In effect you are creating a gray but not by adding black or white. These grays are used by paintrs to break up saturated colors. Why is that a good idea? You don’t want to bombard viewers with intense color saturations everywhere—quite the contrary.
 
-We reduce saturation by adding grey to it (black and white). So we would be toning the hue.
+Take blue and orange for example. Next to each other they would be very intense. If you mix these colors you have this gray tone that can separate them really well. The color stands in between those highly saturated ones.
 
-Desaturate a hue by adding a complimentary color. It’s important to uderstand that we are not adding gray for this. You are creating a gray but not by adding black or white. ??Contrast of saturations
-These grays break up your saturated colors.
-Don’t want to bombard viewers with intense color saturations
+###### “Impression, soleil levant” by Claude Monet
 
-Blue and orange for example. Next to each other they would be very intense. If you mix these colors you have this gray tone that can separate them really well. The color stands in between those highly saturated ones.
+{% img /images/Color-101/Claude_Monet,_Impression.jpg %}
+
+
+More vibrancy, more life.
 
 Create a barrier between the colors to percevie them separately. When you talk about masters in painting, this is one of the things they tried to master.
 
@@ -162,223 +225,223 @@ Two types of color:
 
 Right side of the color wheel
 more attention grabbing,
-strong, engergetic, really strong, fast attention
-render problems??
-color vibrate
-active colors
+     strong, engergetic, really strong, fast attention
+     render problems??
+     color vibrate
+     active colors
 
-You can also have a cold red and a warm red
-But you can also have warm blue and cold blue for example
+     You can also have a cold red and a warm red
+     But you can also have warm blue and cold blue for example
 
 
 ## Cool Colors
 
-Green, blue, purple
-Left side of the color wheel
-Tend to fade into the background
-calm, stable, recede on page
-more comforting, stable, enriching
-usually a save bet, very popular
-lots of site online using it,
-does not jump out so much
-passive colors
+     Green, blue, purple
+     Left side of the color wheel
+     Tend to fade into the background
+     calm, stable, recede on page
+     more comforting, stable, enriching
+     usually a save bet, very popular
+     lots of site online using it,
+     does not jump out so much
+     passive colors
 
 
-Golden aera
-Feeling blue
+     Golden aera
+     Feeling blue
 
 ## Netural Colors
 
-Neutral colors taking two complimentary paris
-get gray or brown neutral
-on the other side is saturation
-neturals bind everything together
-provide a break from the intensity of the bright colors
-bright colors attract the eye
-neutrals provide interest and variation
-combined with saturated colors, neutrals recede while saturated come forward, at you.
-neutrals are very versatile
-they are part of a great color vocabulary
-subtle, subtle colors
-they create a balance in your work
-if everything is shouting, I mean highly saturated, pure color, nothing is focused. Seems also really flat
-build up with mostly neutral tones. then decide where the focus is and where the eye is supposed to be attracted to. that’s where you put the saturated tones
-Tone everything down, don’t make it so bright
-Everything bright seems childish and amateurish
-not within color wheel
-supporting colors
-black, brown, white
-?? Gray scale??
+     Neutral colors taking two complimentary paris
+     get gray or brown neutral
+     on the other side is saturation
+     neturals bind everything together
+     provide a break from the intensity of the bright colors
+     bright colors attract the eye
+     neutrals provide interest and variation
+     combined with saturated colors, neutrals recede while saturated come forward, at you.
+     neutrals are very versatile
+     they are part of a great color vocabulary
+     subtle, subtle colors
+     they create a balance in your work
+     if everything is shouting, I mean highly saturated, pure color, nothing is focused. Seems also really flat
+     build up with mostly neutral tones. then decide where the focus is and where the eye is supposed to be attracted to. that’s where you put the saturated tones
+     Tone everything down, don’t make it so bright
+     Everything bright seems childish and amateurish
+     not within color wheel
+     supporting colors
+     black, brown, white
+     ?? Gray scale??
 
 ## Color Harmonies
 
-Some color look better together than others. Probably a term that comes from musical harmonies.
+     Some color look better together than others. Probably a term that comes from musical harmonies.
 
 ### Monochromatic
-easy
-one color
-single subjects
-details of image focus
+     easy
+     one color
+     single subjects
+     details of image focus
 
 ### Analogous Colors
 
-Adjacent on the color wheel
-Easy on the eyes
-Peaceful, comfortable mood -> often seen in nature
-Right next to each other on the color wheel
-creating a realationship
-right direction for matching colors
+     Adjacent on the color wheel
+     Easy on the eyes
+     Peaceful, comfortable mood -> often seen in nature
+     Right next to each other on the color wheel
+     creating a realationship
+     right direction for matching colors
 
 ### Triadic Colors
 
-Equally distant on the wheel
-Hard to get right
-More of an advanced combination
-Good for cartoon and surreal scenes
-Can imply playfulness
+     Equally distant on the wheel
+     Hard to get right
+     More of an advanced combination
+     Good for cartoon and surreal scenes
+     Can imply playfulness
 
 ### Complimentary Colors
 
-Opposing each other on the wheel
-Very popular combination
-“Naturally” pleasing to the eye
+     Opposing each other on the wheel
+     Very popular combination
+  “Naturally” pleasing to the eye
 Don’t use them equally -> decide on one dominant color -> generally the weaker color (-> the colder color more??)
-Red and green especially popular
+  Red and green especially popular
 
 
-oppposite on the color wheel
-like serif and sans serif in typography
-they work really well together 
-About color contrast as well
-contrast well to each other
-good first step usually
+  oppposite on the color wheel
+  like serif and sans serif in typography
+  they work really well together 
+  About color contrast as well
+  contrast well to each other
+  good first step usually
 
-There are more variations but this should give you a great start for now.
+  There are more variations but this should give you a great start for now.
 
 ## Matching Colors
 
-Similar to choosing typefaces
-Choose one or utmost two major, design dominating colors
-A “primary” color
-Keep it simple
-Start with one dominant color
-Slowly put colors in
-Bounce other colors off of that
-Support and enhance dominant colors with supporting colors
--> Adjust value, tone, brightness, saturation or use neutral colors
-Color scheme by bouncing off the main color
+  Similar to choosing typefaces
+  Choose one or utmost two major, design dominating colors
+  A “primary” color
+  Keep it simple
+  Start with one dominant color
+  Slowly put colors in
+  Bounce other colors off of that
+  Support and enhance dominant colors with supporting colors
+  -> Adjust value, tone, brightness, saturation or use neutral colors
+  Color scheme by bouncing off the main color
 
 ## Emphasis
 
-If you use your primary color very sparsely, you can create a very effective emphasis. 
-You want to avoid washing it down too much and waste the opportunity to hightlight key design elements
-focus on elements
-works great with gray scale usually
-save it for important stuff
-very sparsely
-very dominant on the page
-pop forward
-other colors fade back that way and support main color
+  If you use your primary color very sparsely, you can create a very effective emphasis. 
+  You want to avoid washing it down too much and waste the opportunity to hightlight key design elements
+  focus on elements
+  works great with gray scale usually
+  save it for important stuff
+  very sparsely
+  very dominant on the page
+  pop forward
+  other colors fade back that way and support main color
 
 ## Consistency
 
-Keeping links the same color that do the same thing
-Keeping header colors consistent
-keeping background colors that similar
-most acitionable items can stick out-> not consistent
-mental map
-A lot more classy look achieve
-Setting expectations that you want to make easy for users to follow and understand
+  Keeping links the same color that do the same thing
+  Keeping header colors consistent
+  keeping background colors that similar
+  most acitionable items can stick out-> not consistent
+  mental map
+  A lot more classy look achieve
+  Setting expectations that you want to make easy for users to follow and understand
 
 ## Color Meaning
 
-In various cultures, colors can imply different meanings or associations.
-Also evoke different feelings therefore
-Need to take that into consideration if you design for different cultures
-These are bit silly in my opinion but it’s nevertheless good to have seen these associations and commit them to memory. Everybody sees colors differently. Maybe for we stuff where you  don’t have to mix a ton of colors to create skin tons for example this is alright, but imagine useing these guidelines when you paint a stilleben with a vase of flowers in front of an open window looking out to a farm. It would be silly to think about all these color associations, no?
+  In various cultures, colors can imply different meanings or associations.
+  Also evoke different feelings therefore
+  Need to take that into consideration if you design for different cultures
+  These are bit silly in my opinion but it’s nevertheless good to have seen these associations and commit them to memory. Everybody sees colors differently. Maybe for we stuff where you  don’t have to mix a ton of colors to create skin tons for example this is alright, but imagine useing these guidelines when you paint a stilleben with a vase of flowers in front of an open window looking out to a farm. It would be silly to think about all these color associations, no?
 
-+ Blue
-Confidence
-Stability
-Business like
-Trust it
-Professsional
-Honor
-Dependable
+  + Blue
+  Confidence
+  Stability
+  Business like
+  Trust it
+  Professsional
+  Honor
+  Dependable
 
-+ Green
-Growth
-Harmony
-Nature
-Money
-Wealth
-Growth
-Optimism
+  + Green
+  Growth
+  Harmony
+  Nature
+  Money
+  Wealth
+  Growth
+  Optimism
 
-+ Red
-Love
-Power
-Strength
-Evil
-Danger
-Violence
-Courage
-Emergency
-Blood
-Shows off strenth
+  + Red
+  Love
+  Power
+  Strength
+  Evil
+  Danger
+  Violence
+  Courage
+  Emergency
+  Blood
+  Shows off strenth
 
-Be careful about the context and meaning
+  Be careful about the context and meaning
 
-+ Yellow
-Hope
-Joy
-Excitement
-Warning
+  + Yellow
+  Hope
+  Joy
+  Excitement
+  Warning
 
-Because its so brignt and loud it screams at you
+  Because its so brignt and loud it screams at you
 
-+ Purple
-Magic
-Luxury
-Royal
+  + Purple
+  Magic
+  Luxury
+  Royal
 Expensive (was expensive in the past)
 
 
 
-White and Black can have very differnt meanings depending where you are. 
-Be careful
+  White and Black can have very differnt meanings depending where you are. 
+  Be careful
 
-+ White
-Purity
-Cleanliness
-Innocence
-Softness
-Deity
-Royalty
-Weddings
-Positive things
+  + White
+  Purity
+  Cleanliness
+  Innocence
+  Softness
+  Deity
+  Royalty
+  Weddings
+  Positive things
 
-+ Black
-Mysterious
-End
-Death
-Serious
-Conventional
-Sexy
-Sophisitcation
-Rebellious
+  + Black
+  Mysterious
+  End
+  Death
+  Serious
+  Conventional
+  Sexy
+  Sophisitcation
+  Rebellious
 
 ## Color Palletes
 
-On occasion steal and adapt them for your own designs
-See how designers use color pairs
-Learning through imitations is fine
+  On occasion steal and adapt them for your own designs
+  See how designers use color pairs
+  Learning through imitations is fine
 
-... Website list for color palettes
+  ... Website list for color palettes
 
 ## Color Relativity
 
-We were talking about cooler and warmer colors but it’s a bit more relative that that. Color can appear that way in reltation to another. Colors can look warmer or colder depending on the enviroment they are in. Our human eye is a bit foolish that way.
+  We were talking about cooler and warmer colors but it’s a bit more relative that that. Color can appear that way in reltation to another. Colors can look warmer or colder depending on the enviroment they are in. Our human eye is a bit foolish that way.
 
 {% img /images/Color-101/color-relativity.png %}
 
