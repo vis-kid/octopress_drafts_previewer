@@ -441,7 +441,4 @@ This shows us where the task `create_mi6_agent` is defined.
 
 ## Final Thoughts
 
-
-Rake is a task execution engine
-
-I’ll leave you with a nice [video](http://www.infoq.com/interviews/jim-weirich-discusses-rake) interview where Jim Weirich discusses Rake.
+Rake is a powerful task management and execution engine. Open Source Software at its best if you ask me. At first I was really surprised to learn how many downloads it amassed over the last couple of years. That this little build tool is the most popular Gem and has almost 100 Mio downloads seems crazy. But when you look deeper into what it has to offer it becomes crystal clear in a jiffy what a master software writer Jim Weirich really was. A true Ruby hero we should admire for his work, legacy and passion. I’ll leave you with a nice [video](http://www.infoq.com/interviews/jim-weirich-discusses-rake) interview where Jim discusses Rake. There are tons of other videos of his talks available online. Go watch all of them!
