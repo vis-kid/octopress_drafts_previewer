@@ -20,7 +20,7 @@ categories: [Rake, Ruby, Ruby on Rails, Make]
 
 ## Passing Arguments
 
-You have two options to pass arguments to Rake tasks. One by using Bash variables or by making use of Rake’s syntax itself.
+You have two options to pass arguments into Rake tasks. One by using Bash variables or by making use of Rake’s syntax itself.
 
 ### ENV Variable
 
@@ -122,7 +122,9 @@ When you pass in more arguments than you have defined in your task, you can simp
 
 ## FileList
 
-In previous examples we have been collecting lists of files that need some transformation. That’s tedious, right? FileList is one of those niceties that makes Rake a powerful tool. It’s just too easy to define a glob pattern for the files you need and have it automatically be up to date when you add or delete files from that destination. With that at our disposal, filtering lists can be as straightforward or as sophisticated as we need. Regular expressions are just the tip of the iceberg—although very handy of course. And let’s not forget that Rake has an eye on the timestamp of our files and filters out files that don’t need to be involved when they are up to date.
+In previous examples we have been manually collecting lists of files that need some transformation. That’s tedious, right? `FileList` is one of those niceties that makes Rake a powerful tool. It’s just too easy to define a glob pattern for the files you need and have it automatically be up to date when you add or delete files from that destination. With that at our disposal, filtering lists can be as straightforward or as sophisticated as we need. Regular expressions are just the tip of the iceberg—although very handy of course.
+
+Needing lists of files to process is very common for build tools and making it easy to deal with them is one of the strengths of Rake. FileList makes your Rakefile smaller, smarter and capable of handling an arbitrary number of files that you don’t need to manage. You can leave Rake in charge. So what is a FileList exactly?  Think of it as an array of files that match the given pattern. It’s a specialized Ruby Array that is focused on processing lists of files—storing them as strings. Once collected, they are ready for you to iterate over and to apply transformations.
 
 ###### Some Rakefile
 
@@ -134,8 +136,7 @@ image_list = FileList['images/*.png']
 
 ```
 
-Managing these files by hand is one sure way to build on sand. And of course, Rake checks the timestamps of this list as well and rebuilds only files that are out of date. A FileList is lazy as well. It doesn’t grab files until you need them. If you have a bunch of file lists, they behave very sane and smart because of that. The lists that don’t get actively used are taking it easy without hitting the file system. It’s more efficient that way.
-
+Managing these files by hand is one sure way to build on sand. And of course, Rake checks the timestamps of this list and rebuilds only files that are out of date. A FileList is lazy as well. It doesn’t grab files until they are needed. If you have a bunch of file lists, they behave very sane and smart because of that. The lists that don’t get actively used are taking it easy without hitting the file system. It’s more efficient that way.
 
 As you can see below, you can provide multiple glob patterns for the list as well.
 
@@ -149,9 +150,7 @@ image_list = FileList['images/*.png', 'images/*.jpg']
 
 ```
 
-Needing lists of files to process is very common for build tools and making it easy or elegant to deal with them is one of the strengths of Rake. FileList makes your Rakefile smaller, smarter and capable of handling an arbitrary number of files that you don’t need to manage. You can leave Rake in charge. So what is a FileList exactly?  Think of it as an array of files that match the given pattern and is finding a bunch of files for you to iterate over and to apply transformations. It’s a specialized Ruby Array this is focused on processing lists of files—storing them as strings.
-
-With large sets of files, exclusions are very neat and useful. For example, if we want to filter out temporary files, backup files from editors, Git files, or certain directories that are unneeded. In short, exclusion rules are for files that you don’t want in your build.
+With large sets of files, exclusions come in very handy. For example, if we want to filter out temporary files, backup files from editors, Git files, or certain directories that are unneeded. In short, exclusion rules are for files that you don’t want in your build.
 
 ``` ruby
 
@@ -162,7 +161,7 @@ end
 => ["_posts/published/2016/2016-02-02-some-article.md", "_posts/published/2015/2015-12-12-another-article.markdown"] 
 ```
 
-We can pass the files of the FileList along via its initializer which accepts a list of file masks which are processes any exclusions within the block. We can simplify the list of file extensions via `{markdown, md}` to keep things DRY. Also, you can chain these exclusions as much as you need to. Here we could even conveniently check if the files included in the FileList are empty (`zero?`) and exclude these from the array that way.
+We can pass the files of the FileList through its initializer which accepts a list of file masks. You process any exclusions within the block. We simplified the list of desired file extensions via `{markdown, md}` to keep things DRY. Also, you can chain these exclusions as much as you need to. Here we could even conveniently check if the files included in the FileList are empty (`zero?`) and exclude these from the array that way.
 
 ``` ruby
 
@@ -187,7 +186,7 @@ FL.include('images/private/*.jpg)
 
 ## Pathmap
 
-Secrete weapon of Rake, shows its true power by enabling you to manipulate file paths. It can be called on a list of files via FileList or on single files as well. Don’t forget that it works on strings though—since it’s part of an extension of Ruby’s `String` class.
+It’s the secret weapon of Rake and shows its true power by enabling you to manipulate file paths. It can be called on a list of files via FileList or on single files as well. Don’t forget that it works on strings though. It’s part of an extension of Ruby’s `String` class.
 
 Let’s play with a simple file and change a simple extension. We could do this with the handy `ext` method of course.
  
@@ -213,7 +212,7 @@ The `ext` method let’s us replace a file extension rather easily.  Let’s see
 
 ```
 
-As you can see, this is a bit more elegant since we are using a pattern instead. We provide `pathmap` with a specification of what we need from that string via `%X`.
+As you can see, this is a bit more elegant. We provide `pathmap` with a specification of what we need from that string via `%`.
 
 + `%X` 
 
@@ -293,7 +292,7 @@ Shows you the file separator only.
 
 + `%nd`
 
-If you need to specify a specific number of directories that you need. Handy for deeply nested file structures.
+If you want to specify a specific number of directories that you need. Handy for deeply nested file structures.
 
 ``` ruby
 
@@ -311,7 +310,7 @@ If you need to specify a specific number of directories that you need. Handy for
 
 ```
 
-You  can also approach it from the reverse order by using a minus.
+You can also approach it in the reverse order by using a minus.
 
 ``` ruby
 
@@ -355,25 +354,25 @@ CLOBBER.include('*.intermediate_files', 'built_files/*')
 
 ```
 
-These two tasks are dumb of course and you need to feed them file lists via our handy `include`. When you run `rake clean` or `rake clobber` these collected files will disappear. Since this is an optional module, you need to require it first in your Rakefile. The nice thing about CLEAN and CLOBBER is that it gives you a central place to handle cleaning your build files. Sure, you could manually write Rake tasks yourself to hanlde this but both CLEAN and CLOBBER solves this for you without reinventing the wheel.
+These two tasks are dumb of course and you need to feed them file lists via our handy `include`. When you run `rake clean` or `rake clobber` these collected files will disappear. Since this is an optional module, you need to require it first in your Rakefile. The nice thing about CLEAN and CLOBBER is that it gives you a central place to handle cleaning your build files. Sure, you could manually write Rake tasks yourself to handle this but both CLEAN and CLOBBER solves it for you without reinventing the wheel.
 
-We are not putting everything in a clean task because it’s handy that you can differentiate between intermediate and build files. Let’s say we needed to create HTML files in order to create final pdf versions of our Markdown files. We would include the HTML files into our `CLEAN` list. Both the HTML and the final pdf files would go into `CLOBBER`. Conceptually, the CLOBBER list is supposed to remove everything in both lists.
+We are not putting everything in a clean task because it’s handy that you can differentiate between intermediate and build files. Let’s say we needed to create HTML files in order to create final PDF versions of our Markdown files. We would include the HTML files into our `CLEAN` list. Both the `.html` and the final `.pdf` files would go into `CLOBBER`. Conceptually, the CLOBBER list is supposed to remove everything in both lists.
 
-Why do we care about these build files? Sometimes you want to rebuild everthing and wipe out everything old to get a brand new build of something. Therefore you need a way to delete all the files that were generated while keeping the source files that are needed for the build—most often files that are under version control. It’s easy for these lists to get out of date when you solve this manually. Therefore handling them like our good old friend FileList makes this process much more effective.
+Why do we care about these build files? Sometimes you want to rebuild everything and wipe out old files to get a brand new build. Therefore you need a way to delete all the files that were generated while keeping the source files that are needed for the build—most often files that are under version control. It’s easy for these lists to get out of date when you solve this manually. Therefore handling them like our good old friend FileList makes this process much more effective.
 
 ## For The Road
 
 + Components 
 
-Rake, at its essence, is a managing tasks of course. Break them down to its most useful component pieces and specify what needs to be done in order to create bigger tasks. Think OOP! Break up your Rakefile into component pieces. Rails makes this very easy for you if you make use of `tasks/lib`. In other projects you can create a directory called `rakelib` and build your Rake components in there. Rake loads the Rakefile and ```rakelib/*.rake``` files automatically.
+Rake, at its essence, is a managing tasks of course. Break them down to its most useful component pieces and build them up in order to create bigger tasks. Think OOP! The same goes for your files. Rails makes this very easy for you via `tasks/lib`. In other projects, you can create a directory called `rakelib` and build your Rake components in there. Rake loads the Rakefile and ```rakelib/*.rake``` files automatically.
 
 + Using `rake --dry-run`
 
-If you need to run a task that is potentially destructive in some sense and you want to rather check first what this task would do you can sort of sandbox the task. You will see the log what they are doing without the file operations.
+If you need to run a task that is potentially destructive in some sense and you want to rather check first what this task would do, you can sort of sandbox the task. You will see the log what they are doing without the file operations.
 
 + KISS
 
-Keep it simple! Rake is smart about doing the minimal amount possible. So should you. The nice thing about Rake I think is that provides a great DSL without giving you much rope to harm yourself.
+Keep it simple! Rake is smart about doing the minimal amount possible. So should you. The nice thing about Rake is that it provides a great DSL without giving you much rope to harm yourself by reinventing the wheel needlessly.
 
 + Namespaces
 
@@ -382,22 +381,24 @@ Namespaces are cheap and keep you from running into conflicting task names. This
 ``` ruby
 
 task :fight_bad_dude do
-
+  ...
 end
 
 namespace :bond do
   task :fight_bad_dude
+    ...
+  end
 end
 
 ```
 
 + File manipulations
 
-Make use of FileUtils and stay away from shell file manipulations. It’s a bit dirty when Rake makes them directly available to you.
+Make use of FileUtils and stay away from shell file manipulations inside your tasks. It’s a bit dirty when Rake makes them already directly available to you.
 
 + Ruby commands
 
-You can run ruby commands within Rake files. That might come in handy every once in a while.
+You can run Ruby files within Rake files. That might come in handy every once in a while.
 
 ``` ruby
 
@@ -409,15 +410,15 @@ end
 
 + Dynamically generated tasks
 
-Use rules if you have a lot of files instead of dynamically generated tasks. Why? Run ` rake -P` and you will get a list all of them. That can get out of hand very, very quickly. Besides that, not using rules is lacking elegance as well because you might haven’t reduced the patten to its core yet. Most importantly, this will make reuse easier while being DRY of course.
+Use rules if you have a lot of files instead of dynamically generated tasks. Why? Run ` rake -P` and you will get a list all of them. That can get out of hand very, very quickly. Besides that, not using rules is often simply lacking elegance. You might haven’t reduced the patten to its core yet. Most importantly, this will make reuse easier while being DRY of course.
 
 + Lists
 
-Instead of defining collections fo files yourself—and also updating this list—we let Rake be in charge of that. As we have seen, collecting files for your tasks is not at all complicated in Rake. 
+Instead of defining collections for files yourself—and also updating this list—we rather let Rake be in charge of that. As we have seen, collecting files for your tasks is not at all complicated in Rake. 
 
 + Ruby
 
-Make use of Ruby methods for more complex stuff. Just because we are writing code in Rake files should not prevent us from proper encapsulation and OOP.
+Make use of Ruby methods for more complex stuff. Extract methods for reuse wherever you can. Just because we are writing code in Rake files should not prevent us from proper encapsulation and OOP.
 
 + Searching tasks
 
@@ -429,7 +430,7 @@ rake -T secret_service_agent
 
 ```
 
-This for example will search for rake tasks with “secret_service_agent” in it. It matches the name but not the description.
+This for example will search for rake tasks with “secret_service_agent” in it. It matches the task name but not the description.
 
 ``` bash
 
@@ -441,4 +442,4 @@ This shows us where the task `create_mi6_agent` is defined.
 
 ## Final Thoughts
 
-Rake is a powerful task management and execution engine. Open Source Software at its best if you ask me. At first I was really surprised to learn how many downloads it amassed over the last couple of years. That this little build tool is the most popular Gem and has almost 100 Mio downloads seems crazy. But when you look deeper into what it has to offer it becomes crystal clear in a jiffy what a master software writer Jim Weirich really was. A true Ruby hero we should admire for his work, legacy and passion. I’ll leave you with a nice [video](http://www.infoq.com/interviews/jim-weirich-discusses-rake) interview where Jim discusses Rake. There are tons of other videos of his talks available online. Go watch all of them!
+Rake is a powerful task management and execution engine. Open Source Software at its best if you ask me. At first, I was really surprised to learn how many downloads it amassed over the last couple of years. That this little build tool is the most popular Gem to date and has almost 100 Mio downloads seems crazy. But when you look deeper into what it has to offer it becomes crystal clear in a jiffy what a master software writer Jim Weirich really was. A true Ruby hero we all should admire for his work, legacy and passion. I’ll leave you with a nice [video](http://www.infoq.com/interviews/jim-weirich-discusses-rake) interview where Jim discusses Rake. There are tons of other videos of his talks available online. Go watch all of them!
