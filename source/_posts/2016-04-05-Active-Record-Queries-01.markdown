@@ -115,7 +115,7 @@ Under the hood, you are providing a new limit for the number you provide.
 
 ``` sql
 
-SELECT * FROM spectreagents ORDER BY spectreagents.id ASC LIMIT 3
+SELECT * FROM spectreagents ORDER BY spectreagents.id ASC LIMIT 10
 
 ```
 
@@ -129,11 +129,58 @@ bond = Agent.find_by(last_name: 'Bond')
 
 ```
 
-
-
-
 ## Multiple Objects
+
+Obviously we often need collection of objects and iterate over them with some agenda. Retrieving a single object or a selected few by hand is nice but more often than not, we want Active Record to retrieve objects in batches. Showing users lists of all kinds is the bread and butter for most Rails apps. What we need is a powerful tool with a convenient API to collect these objects for us—hopefully in a manner that let’s us avoid writing the involved SQL ourselves.
+
++ `all`
+
+``` ruby
+
+mi6_agents = Agents.all
+
+```
+
+This method is handy for relatively small collections of objects. Try to imagine doing this on a collection of all Twitter users. No, not a good idea. What we want instead is a more fine tuned approach for larger table sizes. Fetching the entire table is not gonna scale! Why? Because we would not only ask for a bunch of objects, we would also need to build one object per row in this table and put them into an array in memory. I hope this does not sound like a good idea—not even to the very beginners among you. Don’t, please!
+
+So what’s the solution for this? Batches! We are dividing these collections into batches that are easier on your memory for processing. Woohoo! Let’s have a look at `find_each` and `find_in_batches`. Both are similar but behave differently in how they yield objects into the block. They accept an option to regulate the batch size. The default is 1000.
+
++ `find_each`
+
+``` ruby
+
+NewRecruit.find_each do |recruit|
+  recruit.start_hellweek
+end
+
+```
+
+In this case, we retrieve a default batch of 1000 new recruits, yield them to the block and send them to hell week—one by one. Because batches are slizing up collections, we can also tell them where to start via `:start`. Let’s say we wanna process 3000 possible recruits in one go and want to start at 4000.
+
+``` ruby
+
+NewRecruit.find_each(start: 4000, batch_size: 3000) do |recruit|
+  recruit.start_hellweek
+end
+
+```
+
+To reiterate, we first retrieve a batch of 3000 Ruby objects and then send them into the block. `start` let’s us specify the id of records where we want to start fetching this batch.
+
++ `find_in_batches`
+
+This one yields its batch as an array to the block—it passes it on to another object that prefers to deal with collections.
+
+``` ruby
+
+NewRecruit.find_in_batches(start: 2700, batch_size: 1350) do |recruits|
+  field_kitchen.prepare_food(recruits)
+end
+
+```
+
 ## Conditions
+
 ## Ordering
 ## Limits
 ## Joining Tables
