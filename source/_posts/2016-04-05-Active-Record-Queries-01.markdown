@@ -17,11 +17,15 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 + Conditions
 + Ordering
 + Limits
++ Includes
 + Joining Tables
 + Eager Loading
 + Scopes
 + Dynamic Finders
 + SQL Finders
+
+
+Explain basic SELECT and FROM somewhere!!!
 
 The article should actually be called “Rails Active Record Queries” but I wanted something shorter.
 
@@ -181,9 +185,97 @@ end
 
 ## Conditions
 
++ `where`
+
+We need to start with `where` before we continue further. Through that we can specify conditions that limit the number of records returned by our queries—a filter for “where” to retrieve records from in the database. If you have played with SQL `WHERE` clauses then you might just feel right at home—same thing with a Ruby wrapper. In SQL, this allows us to specify which table row we want to affect, basically where it meets some sort of criteria. This is an optional clause btw. In the raw SQL below, we select only recruits that are orphans via `WHERE`. 
+
+Select specific row from a table.
+
+``` sql
+
+SELECT * FROM Recruits
+WHERE FamilyStatus = 'Orphan';
+
+```
+
+Via `where` you can specify conditions with strings, hashes or arrays. Putting all of this together, Active Record let’s you filter for such conditions like this:
+
+``` ruby
+
+promising_candidates = Recruit.where("family_status = 'orphan'")
+
+```
+
+Pretty neat, right? I wanna mention that this is still a find operation—we just specify how we wanna filter this list right away. From the list of all recruits, this will return a filtered list of orphaned candidates. This example is a string condition. Stay away from pure string conditions since they are not considered safe due to their vulnerability to SQL injections.
+
+### Argument Safety
+
+In the example above, we put the `orphan` variable into the string with the conditions. This is considered bad practice and unsafe. We need to escape the variable to avoid this security vulnerablility. You should read up about SQL injection if this is total news to you—your database might depend on it. The `?` will be replaced as the condition value by the next value in the argument list. So the question mark is a placeholder basically.
+
+``` ruby
+
+promising_candidates = Recruit.where("family_status = ?", 'orphan'")
+
+```
+
+You can also specify multiple conditions with multiple `?` and chain them together. In a real life scenario we would use a params hash like this for example:
+
+``` ruby
+
+promising_candidates = Recruit.where("family_status = ?", params[:recruits])
+
+```
+
+If you have a large number of variable conditions you should use key/value placeholder conditions.
+
+``` ruby
+
+promising_candidates = Recruit.where(
+                        "family_status = :preferred_status 
+                         AND iq >= :required_iq
+                         AND charming = :lady_killer",
+                         { preferred_status: 'orphan', 
+                           required_iq: 140,
+                           lady_killer: true
+                           }
+                         )
+
+```
+
+The example above is silly of course but it clearly shows its benefits of the placeholder notation. The hash notation in general is definitely the more readable one.
+
+``` ruby
+
+promising_candidates = Recruit.where(family_status: 'orphan')
+
+promising_candidates = Recruit.where('charming': true)
+
+```
+
+As you can see, you can go with symbols or strings—up to you. Let’s close this section with ranges and negative conditions via NOT.
+
+``` ruby
+
+promising_candidates = Recruit.where(birtday: (1994-01-01..2000-01-01))
+
+```
+
+Two dots and you can establish any range you need.
+
+``` ruby
+
+promising_candidates = Recruit.where.not(basic_character: 'coward')
+
+```
+
+You can tuck on a `not` onto the where to filter all cowards and get only results that don’t have that specific, unwanted attribute. Under the hood, this will initiate a `NOT` SQL query.
+
 ## Ordering
 ## Limits
+## Includes
 ## Joining Tables
+
+Instead of multiple queries we can do it in a single query.
 ## Eager Loading
 ## Scopes
 ## Dynamic Finders
