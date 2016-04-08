@@ -271,6 +271,23 @@ promising_candidates = Recruit.where.not(basic_character: 'coward')
 You can tuck on a `not` onto the where to filter all cowards and get only results that don’t have that specific, unwanted attribute. Under the hood, this will initiate a `NOT` SQL query.
 
 ## Ordering
+
+To not bore you to death with it, let’s make this a quick one.
+
+``` ruby
+
+candidates = Recruit.order(:date_of_birth)
+
+```
+
+``` ruby
+
+candidates = Recruit.order(:date_of_birth, :desc)
+
+```
+
+Apply `:asc` or `:desc` to sort it accordingly. That’s basically it, let’s move on!
+
 ## Limits
 ## Includes
 ## Joining Tables
