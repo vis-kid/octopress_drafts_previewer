@@ -27,6 +27,8 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 
 Explain basic SELECT and FROM somewhere!!!
 
+If you haven’t played with SQL before, I’ll try my best to introduce you to the very basics and hopefull wet your appetitite to hunt down some useful tutorials that get you up to speed more ..
+
 The article should actually be called “Rails Active Record Queries” but I wanted something shorter.
 
 Active Record keeps you from writing these raw SQL statements yourself.
@@ -289,6 +291,40 @@ candidates = Recruit.order(:date_of_birth, :desc)
 Apply `:asc` or `:desc` to sort it accordingly. That’s basically it, let’s move on!
 
 ## Limits
+
+You can reduce the number of returned records to a specific number. As mentioned before, most of the time you won’t need all records returned. The example below will give you the first five recruits in the database—the first five ids.
+
+``` ruby
+
+five_candidates = Recruit.limit(5)
+
+```
+
+If you have ever wondered how pagination works under the hood, `limit` and `offset`—in conjunction—do the hard work. `limit` can stand on its own, but `offset` depends on the former.
+Setting an offset is mostly useful for pagination and let’s you skip your desired number of rows in the database. Page two of a list of candidates could be looked up like this:
+
+``` ruby
+
+Recruit.limit(20).offset(20)
+
+```
+
+The SQL would look like this:
+
+``` sql
+
+SELECT * FROM recruits LIMIT 20 OFFSET 20
+
+```
+
+Again, we are selecting all columns from the `Recruit` database model, limit the records returned to 20 Ruby objects of Class Recruit and jump over the first twenty. Instead of the wildcard `*` for all columns—attributes on the model—we could just return their names as well.
+
+``` sql
+
+SELECT first_name, last_name FROM recruits LIMIT 20 OFFSET 20
+
+```
+
 ## Includes
 ## Joining Tables
 
