@@ -17,7 +17,7 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 + Conditions
 + Ordering
 + Limits
-+ Group
++ Group & Having
 + Includes
 + Joining Tables
 + Eager Loading
@@ -326,7 +326,7 @@ SELECT first_name, last_name FROM recruits LIMIT 20 OFFSET 20
 
 ```
 
-## Group
+## Group & Having
 
 Let’s say we want a list of recruits that are grouped by their IQs. In SQL this could look something like this.
 
@@ -367,6 +367,75 @@ There we go, we got seven possible recruits with an IQ of 130 and only one with 
 => { 130=>7, 134=>4, 135=>3, 138=>2, 140=>1, 141=>1 }
 
 ```
+
+We can specify this group even more by using `HAVING`—sort of a filter for the groups. In that sense, `having` is a sort of `WHERE` clause for `GROUP`. In other words, `having` is dependent on also using `group`.
+
+``` ruby
+
+Recruit.having('iq > ?', 134).group(:iq)
+
+```
+
+``` sql 
+
+SELECT "recruits".* FROM "recruits" GROUP BY "recruits"."iq" HAVING iq > '134'
+
+```
+
+As you can see, this helps us filter down that ist quite easy. We now grouped or candidates into lists of people that have a minimum IQ of 135. Let’s count them to get some stats:
+
+``` ruby
+
+Recruit.having('iq > ?', 134).group(:iq).count
+
+```
+
+``` sql
+
+SELECT COUNT(*) AS count_all, iq AS iq FROM "recruits" GROUP BY "recruits"."iq" HAVING iq > '134'
+
+```
+
+``` bash
+
+=> { 135=>3, 138=>2, 140=>1, 141=>1 }
+
+```
+
+We could also mix and match these and see for example which candidates who have IQs higher than 140 are tied up in relationships or not. 
+
+``` ruby
+
+Recruit.having('iq > ?', 140).group(:family_status)
+
+```
+
+``` sql 
+
+SELECT "recruits".* FROM "recruits" GROUP BY "recruits"."family_status" HAVING iq > '140'
+
+```
+
+Counting these groups is now all too easy:
+
+``` ruby
+
+Recruit.having('iq > ?', 140).group(:family_status).count
+
+```
+
+``` sql
+
+SELECT COUNT(*) AS count_all, family_status AS family_status FROM "recruits" GROUP BY "recruits"."family_status" HAVING iq > '140'
+
+```
+
+``` bash
+
+{ "married"=>2, "single"=>1 }
+
+```
+
 
 
 ## Includes
