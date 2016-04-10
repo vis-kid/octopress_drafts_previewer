@@ -17,6 +17,7 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 + Conditions
 + Ordering
 + Limits
++ Group
 + Includes
 + Joining Tables
 + Eager Loading
@@ -317,13 +318,56 @@ SELECT * FROM recruits LIMIT 20 OFFSET 20
 
 ```
 
-Again, we are selecting all columns from the `Recruit` database model, limit the records returned to 20 Ruby objects of Class Recruit and jump over the first twenty. Instead of the wildcard `*` for all columns—attributes on the model—we could just return their names as well.
+Again, we are selecting all columns from the `Recruit` database model, limit the records returned to 20 Ruby objects of Class Recruit and jump over the first twenty. Instead of the wildcard ```*``` for all columns—attributes on the model—we could just return their names as well.
 
 ``` sql
 
 SELECT first_name, last_name FROM recruits LIMIT 20 OFFSET 20
 
 ```
+
+## Group
+
+Let’s say we want a list of recruits that are grouped by their IQs. In SQL this could look something like this.
+
+``` sql
+
+SELECT * FROM recruits GROUP BY iq
+
+```
+
+This would get you a list where you’ll see which possible recruits have an IQ of let’s say 120 then another group of say 140 and so on—whatever their IQs are and how many would fall under a specific number. So when two recruits would have the same IQ of 130, they would be grouped together. Another list could be grouped by possible candidates that suffer from claustrophobia, fear of heights or who are medically not fit for diving. The Active Record query would simply look like this:
+
+``` ruby
+
+Candidate.group(:iq)
+
+```
+
+When we count the number of candidates we get back a very useful hash.
+
+``` ruby
+
+Candidate.group(:iq).count
+
+```
+
+The resulting SQL would look like this. The important piece is the `GROUP BY` part. As you can see, we use the candidates table object get their ids. What you can also observe from this simple example is how much more convenient the Active Record statements read and write. Imagine doing this by hand on more extravagant examples. Sure, sometimes you have to but all the time is clearly a pain we can be glad to be able to avoid.
+
+``` sql
+
+SELECT COUNT(*) AS count_all, iq AS iq FROM "candidates" GROUP BY "candidates"."iq"
+
+```
+
+There we go, we got seven possible recruits with an IQ of 130 and only one with 141.
+
+``` bash
+
+=> { 130=>7, 134=>4, 135=>3, 138=>2, 140=>1, 141=>1 }
+
+```
+
 
 ## Includes
 ## Joining Tables
