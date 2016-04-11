@@ -436,9 +436,40 @@ SELECT COUNT(*) AS count_all, family_status AS family_status FROM "recruits" GRO
 
 ```
 
+## Includes and Eager Loading
+
+This one includes more than one database table to work with and might be the most important section to take away. It boils down to instead of doing multiple queries for information that is spread over multiple tables, `includes` tries to minimize these to its minimum. The key concept behind this is called “eager loading” and means that we are loading associated objects when we do a find.
+
+If we would do it by iterating over a collection of objects and then try to access its associated records from another table, we would run into an issue that is called “N + 1 query problem”. For example, for each `agent.handler` in a collection of agents, we would fire separate queries for both agents and their handlers. That is what we need to avoid since this does not scale at all. Instead, we do the following:
+
+``` ruby
+
+agents = Agent.includes(:handlers)
+
+```
+
+If we would iterate now over such a collection of agents—discounting that we didn’t limit the number of records returned for now—we would end up with two queries instead of possibly a gazillion. 
 
 
-## Includes
+
+
+``` sql
+
+SELECT "agents".* FROM "agents"
+SELECT "handlers".* FROM "handlers" WHERE "handlers"."id" IN (1, 2)
+
+```
+
+This agent has two handlers and when we now ask the agent object for its handlers, no additional database queries need to be fired. We can take this a step further of course and eager load multiple associated table records. If we would need to load not only handlers but also the agent’s associated missions for whatever reason, we could use `includes` like this.
+
+``` ruby
+
+agents = Agent.includes(:handlers, :missions)
+
+```
+
+Simple! Just be careful about using singular and plural for the includes. They depend on your model associations. A ```has_many``` associations uses plural while a ```belongs_to``` or a ```has_one``` needs the singular version of course. If you need, you can also tuck on a `where` clause for specifying additional conditions but the preferred way of specifying conditions for associated tables that are eager loaded is by using `joins` instead. 
+
 ## Joining Tables
 
 Instead of multiple queries we can do it in a single query.
