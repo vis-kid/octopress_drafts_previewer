@@ -472,8 +472,67 @@ Simple! Just be careful about using singular and plural for the includes. They d
 
 ## Joining Tables
 
-Instead of multiple queries we can do it in a single query.
-## Eager Loading
+Joining tables is another tool that let’s you avoid sending too many unnecessary queries down the pipeline. A common scenario is joining two tables with a single query that return some sort of combined records. `joins` is another finder method of Active Record that lets you—in SQL terms—`JOIN` tables. These queries can return records combined from multiple tables—not just two. You get a virtual table that combines records from two ore more tables. This is pretty rad when you compare that to firing all kinds of queries for each table instead. There are a few different approaches what kind of data overlap you can get with this approach. 
+
+The inner join is the default modus operandi for `join`. This matches all the results that match a certain id and its representation as a foreign key from another object / table. In the example below, put simply: give me all missions where the mission’s `id` shows up as ```mission_id``` in an agents table for example. ```"agents"."mission_id" = "missions"."id"```. Inner joins exclude relationships that don’t exist.
+
+``` ruby
+
+Mission.joins(:agents)
+
+```
+
+
+So we are matching missions and their accompanying agents—in a single query! Sure, we could get the missions first, iterate over them one by one and ask for its agents. But then we would go back to our dreadful “N + 1 query problem”. No, thank you! What’s also nice about this approach is that we won’t get any nil cases with inner joins, we only get records return that match their ids to its foreign keys. If we need to find missions for example that lack any agents, we would need an outer join instead.
+
+You can also join multiple associated tables of course.
+
+``` ruby
+
+Mission.joins(:agents, :expenses, :handlers)
+
+```
+
+And of course, you can add onto these where clauses to specify your finder even more. If you are new to SQL, try to follow along and make sense of these simple queries. Below we are looking only for missions that are executed by James Bond and only the agent that belongs to the mission 'Moonraker' in the second example.
+
+``` ruby
+
+Mission.joins(:agents).where( agents: { name: 'James Bond' })
+
+```
+
+``` sql
+
+SELECT "missions".* FROM "missions" INNER JOIN "agents" ON "agents"."mission_id" = "missions"."id" WHERE "agents"."name" = ?  [["name", "James"]]
+
+```
+
+``` ruby
+
+Agent.joins(:mission).where( missions: { mission_name: 'Moonraker' })
+
+```
+
+``` sql
+
+SELECT "agents".* FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id" WHERE "missions"."mission_name" = ?  [["mission_name", "Moonraker"]]
+
+```
+
+With `joins` you also have to pay attention to singular and plural use of your model associations. Because my `Mission` class ```has_many :agents``` we can use the plural. On the other hand, the `Agent` class ```belongs_to :mission```, only the singular version works without blowing up. Simple, but important to know why. The `where` part is simpler. Since you are scanning for multiple rows in the table that fulfill a certain condition, the plural form makes always sense.
+
+The outer join is the more inclusive join version since it will match all records from the joined tables, even if some of these relationships don’t exist yet. Say agents without a mission or missions without quartermasters and such. Because this approach is not as exclusive as inner joins, you will get a bunch of nils here and there. This can be informative in some cases of course but inner joins is usually what we are looking for more often. For this to work for now, we’ll need to write a bit more SQL ourselves.
+
+``` ruby
+
+Agent.joins("LEFT OUTER JOIN missions ON missions.id = agents.mission_id").where(missions: { id: nil })  
+
+```
+
+Rails 5 will let us use a specialized method called `left_outer_joins` instead for such cases. Finally!
+
 ## Scopes
+
+
 ## Dynamic Finders
 ## SQL Finders
