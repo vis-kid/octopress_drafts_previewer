@@ -533,6 +533,84 @@ Rails 5 will let us use a specialized method called `left_outer_joins` instead f
 
 ## Scopes
 
+Scopes are a handy way to extract common query needs into well named methods of your own. That way they are a bit easier to pass around and also possibly easier to understand—if others have to work with your code or if you need to revisit certain queries in the future. You can define them for focused models and for their associations as well. The sky is the limit really—`joins`, `includes`, `where` are all fair game! Since scopes also return `ActiveRecord::Relations` objects you can chain them and call other scopes on top of them without hesitation. Extracting scopes like that and chaining them for more complex queries is something very handy and makes longer ones all the more readable.
+
+Scopes are defined via the “stabby lambda” syntax:
+
+``` ruby
+
+class Mission < ActiveRecord::Base
+  has_many: agents
+
+  scope :successful, -> { where(mission_complete: true) }
+end
+
+Mission.successful
+
+```
+
+``` ruby
+
+class Agent < ActiveRecord::Base
+  belongs_to :mission
+
+  scope :licenced_to_kill, -> { where(licence_to_kill: true) }
+  scope :womanizer,        -> { where(womanizer: true) }
+  scope :gambler,          -> { where(gambler: true) } 
+
+end
+
+Agent.licenced_to_kill.womanizer.gambler
+
+```
+
+###### SQL:
+
+``` sql
+
+SELECT "agents".* FROM "agents" WHERE "agents"."licence_to_kill" = ? AND "agents"."womanizer" = ? AND "agents"."gambler" = ?  [["licence_to_kill", "t"], ["womanizer", "t"], ["gambler", "t"]]
+
+```
+
+As you can see from the example above, finding James Bond is much nicer when you can just chain scopes together. That way you can mix and match various queries and stay DRY at the same time. If you need scopes via associations they are at your disposal as well:
+
+``` ruby
+
+Mission.last.agents.licenced_to_kill.womanizer.gambler
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT  "missions".* FROM "missions"  ORDER BY "missions"."id" DESC LIMIT 1
+SELECT "agents".* FROM "agents" WHERE "agents"."mission_id" = ? AND "agents"."licence_to_kill" = ? AND "agents"."womanizer" = ? AND "agents"."gambler" = ?  [["mission_id", 33], ["licence_to_kill", "t"], ["womanizer", "t"], ["gambler", "t"]]
+
+```
+
+You can also redefine the ```default_scope``` for when you are looking at something like `Mission.all`.
+
+``` ruby
+
+class Mission < ActiveRecord::Base
+
+  default_scope { where status: "In progress" }
+
+end
+
+Mission.all
+
+```
+
+###### SQL
+
+``` sql
+
+ SELECT "missions".* FROM "missions" WHERE "missions"."status" = ?  [["status", "In progress"]]
+
+```
+
 
 ## Dynamic Finders
 ## SQL Finders
