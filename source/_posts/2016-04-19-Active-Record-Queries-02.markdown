@@ -1,0 +1,223 @@
+---
+layout: post
+title: Queries in Rails 02
+date: 2016-04-19 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
+---
+
+{% img /images/Rails-Queries/holmes-ruby.png 400 %}
+
+## Topics
+
++ Includes & Eager Loading
++ Joining Tables
++ Eager Loading
++ Scopes
++ Custom SQL
+
+
+## Includes & Eager Loading
+
+These queries include more than one database table to work with and might be the most important to take away from this article. It boils down to this: instead of doing multiple queries for information that is spread over multiple tables, `includes` tries to minimize these to a minimum. The key concept behind this is called “eager loading” and means that we are loading associated objects when we do a find.
+
+If we would do that by iterating over a collection of objects and then try to access its associated records from another table, we would run into an issue that is called “N + 1 query problem”. For example, for each `agent.handler` in a collection of agents, we would fire separate queries for both agents and their handlers. That is what we need to avoid since this does not scale at all. Instead, we do the following:
+
+###### Rails
+
+``` ruby
+
+agents = Agent.includes(:handlers)
+
+```
+
+If we would iterate now over such a collection of agents—discounting that we didn’t limit the number of records returned for now—we would end up with two queries instead of possibly a gazillion. 
+
+###### SQL
+
+``` sql
+
+SELECT "agents".* FROM "agents"
+SELECT "handlers".* FROM "handlers" WHERE "handlers"."id" IN (1, 2)
+
+```
+
+This one agent in the list has two handlers and when we now ask the agent object for its handlers, no additional database queries need to be fired. We can take this a step further of course and eager load multiple associated table records. If we would need to load not only handlers but also the agent’s associated missions for whatever reason, we could use `includes` like this.
+
+###### Rails
+
+``` ruby
+
+agents = Agent.includes(:handlers, :missions)
+
+```
+
+Simple! Just be careful about using singular and plural versions for the includes. They depend on your model associations. A ```has_many``` associations uses plural while a ```belongs_to``` or a ```has_one``` needs the singular version of course. If you need, you can also tuck on a `where` clause for specifying additional conditions but the preferred way of specifying conditions for associated tables that are eager loaded is by using `joins` instead. 
+
+## Joining Tables
+
+Joining tables is another tool that let’s you avoid sending too many unnecessary queries down the pipeline. A common scenario is joining two tables with a single query that returns some sort of combined records. `joins` is just another finder method of Active Record that lets you—in SQL terms—`JOIN` tables. These queries can return records combined from multiple tables—not just two and you get a virtual table that combines records from two ore more tables. This is pretty rad when you compare that to firing all kinds of queries for each table instead. There are a few different approaches what kind of data overlap you can get with this approach. 
+
+The inner join is the default modus operandi for `join`. This matches all the results that match a certain id and its representation as a foreign key from another object / table. In the example below, put simply: give me all missions where the mission’s `id` shows up as ```mission_id``` in an agent’s table. ```"agents"."mission_id" = "missions"."id"```. Inner joins exclude relationships that don’t exist.
+
+###### Rails
+
+``` ruby
+
+Mission.joins(:agents)
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "missions".* FROM "missions" INNER JOIN "agents" ON "agents"."mission_id" = "mission"."id"
+
+```
+
+So we are matching missions and their accompanying agents—in a single query! Sure, we could get the missions first, iterate over them one by one and ask for its agents. But then we would go back to our dreadful “N + 1 query problem”. No, thank you! What’s also nice about this approach is that we won’t get any nil cases with inner joins, we only get records returned that match their ids to foreign keys in associated tables. If we need to find missions for example that lack any agents, we would need an outer join instead.
+
+You can also join multiple associated tables of course.
+
+###### Rails
+
+``` ruby
+
+Mission.joins(:agents, :expenses, :handlers)
+
+```
+
+And of course, you can add onto these `where` clauses to specify your finders even more. Below we are looking only for missions that are executed by James Bond and only the agent that belongs to the mission 'Moonraker' in the second example.
+
+###### Rails
+
+``` ruby
+
+Mission.joins(:agents).where( agents: { name: 'James Bond' })
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "missions".* FROM "missions" INNER JOIN "agents" ON "agents"."mission_id" = "missions"."id" WHERE "agents"."name" = ?  [["name", "James"]]
+
+```
+
+###### Rails
+
+``` ruby
+
+Agent.joins(:mission).where( missions: { mission_name: 'Moonraker' })
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "agents".* FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id" WHERE "missions"."mission_name" = ?  [["mission_name", "Moonraker"]]
+
+```
+
+With `joins` you also have to pay attention to singular and plural use of your model associations. Because my `Mission` class ```has_many :agents``` we can use the plural. On the other hand, the `Agent` class ```belongs_to :mission```, only the singular version works without blowing up. Simple, but important to not overlook. The `where` part is simpler. Since you are scanning for multiple rows in the table that fulfill a certain condition, the plural form makes always sense.
+
+The outer join is the more inclusive join version since it will match all records from the joined tables, even if some of these relationships don’t exist yet. Say agents without a mission or missions without quartermasters and such. Because this approach is not as exclusive as inner joins, you will get a bunch of nils here and there. This can be informative in some cases of course but inner joins is usually what we are looking for. For this to work, we’ll need to write a bit more SQL ourselves—for now. Rails 5 will let us use a specialized method called `left_outer_joins` instead for such cases. Finally!
+
+###### Rails
+
+``` ruby
+
+Agent.joins("LEFT OUTER JOIN missions ON missions.id = agents.mission_id").where(missions: { id: nil })  
+```
+
+
+## Scopes
+
+Scopes are a handy way to extract common query needs into well named methods of your own. That way they are a bit easier to pass around and also possibly easier to understand—if others have to work with your code or if you need to revisit certain queries in the future. You can define them for single models but use them for their associations as well. The sky is the limit really—`joins`, `includes`, `where` are all fair game! Since scopes also return `ActiveRecord::Relations` objects you can chain them and call other scopes on top of them without hesitation. Extracting scopes like that and chaining them for more complex queries is something very handy and makes longer ones all the more readable.
+
+Scopes are defined via the “stabby lambda” syntax:
+
+###### Rails
+
+``` ruby
+
+class Mission < ActiveRecord::Base
+  has_many: agents
+
+  scope :successful, -> { where(mission_complete: true) }
+end
+
+Mission.successful
+
+```
+
+``` ruby
+
+class Agent < ActiveRecord::Base
+  belongs_to :mission
+
+  scope :licenced_to_kill, -> { where(licence_to_kill: true) }
+  scope :womanizer,        -> { where(womanizer: true) }
+  scope :gambler,          -> { where(gambler: true) } 
+
+end
+
+Agent.licenced_to_kill.womanizer.gambler
+
+```
+
+###### SQL:
+
+``` sql
+
+SELECT "agents".* FROM "agents" WHERE "agents"."licence_to_kill" = ? AND "agents"."womanizer" = ? AND "agents"."gambler" = ?  [["licence_to_kill", "t"], ["womanizer", "t"], ["gambler", "t"]]
+
+```
+
+As you can see from the example above, finding James Bond is much nicer when you can just chain scopes together. That way you can mix and match various queries and stay DRY at the same time. If you need scopes via associations they are at your disposal as well:
+
+``` ruby
+
+Mission.last.agents.licenced_to_kill.womanizer.gambler
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT  "missions".* FROM "missions"  ORDER BY "missions"."id" DESC LIMIT 1
+SELECT "agents".* FROM "agents" WHERE "agents"."mission_id" = ? AND "agents"."licence_to_kill" = ? AND "agents"."womanizer" = ? AND "agents"."gambler" = ?  [["mission_id", 33], ["licence_to_kill", "t"], ["womanizer", "t"], ["gambler", "t"]]
+
+```
+
+You can also redefine the ```default_scope``` for when you are looking at something like `Mission.all`.
+
+``` ruby
+
+class Mission < ActiveRecord::Base
+
+  default_scope { where status: "In progress" }
+
+end
+
+Mission.all
+
+```
+
+###### SQL
+
+``` sql
+
+ SELECT "missions".* FROM "missions" WHERE "missions"."status" = ?  [["status", "In progress"]]
+
+```
+
+## Custom SQL
+
+Last but not least, you can write your own custom SQL via ```find_by_sql```. If you are confident enough in your own SQL-Fu and need some custom calls to the database, this method might come in very handy at times. But this is another story. Just don’t forget to check for Active Record wrapper methods first and avoid reinventing the wheell where Rails tries to meet you more than half way.
