@@ -16,6 +16,7 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 + Joining Tables
 + Eager Loading
 + Scopes
++ Aggregations
 + Custom SQL
 
 
@@ -217,6 +218,207 @@ Mission.all
  SELECT "missions".* FROM "missions" WHERE "missions"."status" = ?  [["status", "In progress"]]
 
 ```
+
+## Aggregations
+
+This section is not so much advanced in terms of the involved understanding but you will need them more often than not in scenarios that can be considered a bit more advanced than your average finder—like `.all`, `first`, `find_by_id` or whatever. Filtering based on basic calculations for example is most likely something that newbies don’t get in touch with right away. What are we looking at exactly here?:
+
++ `sum`
++ `minimum`
++ `maximum`
++ `average`
++ `count`
+
+Easy peasy, right? The cool thing is that instead of looping through a returned collection of objects to do these calculations, we can let Active Record do all this work for us and return these results with the queries—in one query preferably. Nice, huh?
+
++ `count`
+
+##### Rails
+
+``` ruby
+
+Mission.count
+
+# => 24
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT COUNT(*) FROM "missions"
+
+```
+
++ `average`
+
+###### Rails
+
+``` ruby
+
+Agent.average(:number_of_gadgets).to_f
+
+# => 3.5
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT AVG("agents"."number_of_gadgets") FROM "agents"
+
+```
+
+Since we now know how we can make use of `joins`, we can take this one step further and only ask for the average of gadgets the agents have on a particular mission for example.
+
+###### Rails
+
+``` ruby
+
+Agent.joins(:mission).where(missions: {name: 'Average Mission'}).average(:number_of_gadgets).to_f
+
+# => 3.4
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT AVG("agents"."number_of_gadgets") FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id" WHERE "missions"."name" = ?  [["name", "Average Mission"]]
+
+```
+
+Grouping these average number of gadgets by mission’s names becomes trivial at that point.
+
+###### Rails
+
+``` ruby
+
+Agent.joins(:mission).group('missions.name').average(:number_of_gadgets)
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT AVG("agents"."number_of_gadgets") AS average_number_of_gadgets, missions.name AS missions_name FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id" GROUP BY missions.name
+
+```
+
++ `sum`
+
+###### Rails
+
+``` ruby
+
+Agent.sum(:number_of_gadgets) 
+
+Agent.where(licence_to_kill: true).sum(:number_of_gadgets) 
+
+Agent.where.not(licence_to_kill: true).sum(:number_of_gadgets)
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT SUM("agents"."number_of_gadgets") FROM "agents"
+
+SELECT SUM("agents"."number_of_gadgets") FROM "agents" WHERE "agents"."licence_to_kill" = ?  [["licence_to_kill", "t"]]
+
+SELECT SUM("agents"."number_of_gadgets") FROM "agents" WHERE ("agents"."licence_to_kill" != ?)  [["licence_to_kill", "t"]]
+
+```
+
++ `maximum`
+
+###### Rails
+
+``` ruby
+
+Agent.maximum(:number_of_gadgets)
+
+Agent.where(licence_to_kill: true).maximum(:number_of_gadgets) 
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT MAX("agents"."number_of_gadgets") FROM "agents"
+
+SELECT MAX("agents"."number_of_gadgets") FROM "agents" WHERE "agents"."licence_to_kill" = ?  [["licence_to_kill", "t"]]
+
+```
+
++ `minimum`
+
+###### Rails
+
+``` ruby
+
+Agent.minimum(:iq)
+
+Agent.where(licence_to_kill: true).minimum(:iq) 
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT MIN("agents"."iq") FROM "agents"
+
+SELECT MIN("agents"."iq") FROM "agents" WHERE "agents"."licence_to_kill" = ?  [["licence_to_kill", "t"]]
+
+```
+
+### Attention!
+
+All of these aggregation methods are not letting you chain on other stuff—they are terminal. The order is important to do calculations. We don’t get an ActiveRecord::Relation object back from these operations which makes the music stop at that point—we get a hash or numbers instead. The examples below won’t work:
+
+###### Rails
+
+``` ruby
+
+Agent.maximum(:number_of_gadgets).where(licence_to_kill: true)
+
+Agent.sum(:number_of_gadgets).where.not(licence_to_kill: true)
+
+Agent.joins(:mission).average(:number_of_gadgets).group('missions.name')
+
+```
+
+### Grouped
+
+If you want the calculations broken down and sorted into logical groups, you should make use of a GROUP clause and not do this in Ruby. What I mean by that is you should avoid iterating over a group which produces potentially tons of queries.
+
+###### Rails
+
+``` ruby
+
+Agent.joins(:mission).group('missions.name').average(:number_of_gadgets)
+
+# => { "Moonraker"=> 4.4, "Octopussy"=> 4.9 }
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT AVG("agents"."number_of_gadgets") AS average_number_of_gadgets, missions.name AS missions_name FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id" GROUP BY missions.name
+
+```
+
+This example finds all the agents that are grouped to a particular mission and returns the average number of gadgets along the way—in a single query! Yup! Same goes for the calculations as well of course. In this case it really makes more sense to let SQL do the work and not use the convenience of the Rails API. The number of queries we fire for these aggregations is just too important.
+
 
 ## Custom SQL
 
