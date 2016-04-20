@@ -337,7 +337,13 @@ This technique let’s you create a possibly stronger visual imprint on the view
 
 {% img /images/Design_101/Visual_Design/Closure/closure-example-list.jpeg %}
 
+{% img /images/Design_101/Visual_Design/Closure/Paramount-Pictures.png %}
+
 The pattern-seeking human brain seems to operate by filling in missing pieces into familiar forms. It does not work well with things that are unfamiliar to us. Experience is necessary to invoke this mental trigger. Supposedly our minds are doing this on a vast scale with our everyday perception. It might even be a vital mechanism of how we construct our realities. Because we can’t fully sense what is going on around us, we cope by interpolating what’s out there—sort of I guess. This filling of the blanks let’s us focus on what’s important and probably go on with our business without being too much distracted by everything going on. Visual design learned to “exploit” that mechanism of our brain via closures. I’m not a psychologist, but this is the best description that I can come up with that summarizes all that I learned about this over time.
+
+{% img /images/Design_101/Visual_Design/Closure/Medusa.png 250 %}
+
+{% img /images/Design_101/Visual_Design/Closure/Eaton.png 150 %}
 
 {% img /images/Design_101/Visual_Design/Closure/fedex.png %}
 
@@ -350,6 +356,14 @@ If that really leaves the viewer with a more ingrained impression or relationshi
 {% img /images/Design_101/Visual_Design/Closure/usa-network.gif %}
 
 {% img /images/Design_101/Visual_Design/Closure/closure-v.png %}
+
+{% img /images/Design_101/Visual_Design/Closure/GitHub-Mark.png %}
+
+ Take GitHub for example. The logo they use on the page is a black circle—which attracts the eye just by its basic shape btw—and which has their Octocat as a closure inside. It works pefectly! Even at a small size, you can identify their mascot easily and placed in the navbar, it serves as a visual anchor that appears unpretentious and restrained. A closure can help with getting unnecessary details out of the way, form a stronger impression and create an elegant vibe that can appear timeless if done right.
+
+{% img /images/Design_101/Visual_Design/Closure/GitHub-Logo-Navbar.png %}
+
+So how does all of this tie into designing for the web? Well, it rarely does to be frank. It really is mostly useful for designing icons and logos which are of course an important part for designing on the web but don’t play a huge role in the overall composition. That being said, if applied successfully and if it fits the branding of the project, it can leave a sublime and memorable impression on the user. I decided to add this section because it is so fundamental to visual design that not mentioning it felt out of place. Closures won’t affect your day-to-day design work all that much though—except when you specialize in icons and logos of course.
 
 ## Final thoughts
 
