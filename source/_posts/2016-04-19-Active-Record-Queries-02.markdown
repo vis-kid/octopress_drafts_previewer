@@ -19,6 +19,7 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 + Aggregations
 + Custom SQL
 
+In this second article we’ll try to dive a little deeper into Active Record queries in Rails. If you are still new to SQL I’ll still add examples that are simple enough that you can tag along and pick up the syntax as we go. That being said, it would definitely help if you run through a quick SQL tutorial before you come back to continue to read. Otherwise, take your time to understand the SQL queries we used and I hope that by the end of this series it won’t feel intimidating anymore. Most of it is really straightforward but the syntax is a bit weird if you just started out with coding—especially in Ruby. Hang in there, it’s no rocket science!
 
 ## Includes & Eager Loading
 
