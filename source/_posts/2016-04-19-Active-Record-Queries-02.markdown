@@ -17,6 +17,7 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 + Eager Loading
 + Scopes
 + Aggregations
++ Dynamic Finders
 + Custom SQL
 
 In this second article we’ll try to dive a little deeper into Active Record queries in Rails. If you are still new to SQL I’ll still add examples that are simple enough that you can tag along and pick up the syntax as we go. That being said, it would definitely help if you run through a quick SQL tutorial before you come back to continue to read. Otherwise, take your time to understand the SQL queries we used and I hope that by the end of this series it won’t feel intimidating anymore. Most of it is really straightforward but the syntax is a bit weird if you just started out with coding—especially in Ruby. Hang in there, it’s no rocket science!
@@ -419,6 +420,50 @@ SELECT AVG("agents"."number_of_gadgets") AS average_number_of_gadgets, missions.
 ```
 
 This example finds all the agents that are grouped to a particular mission and returns a hash with the calculated average number of gadgets as its values—in a single query! Yup! Same goes for the other calculations as well of course. In this case it really makes more sense to let SQL do the work and not use the convenient Rails API. The number of queries we fire for these aggregations is just too important.
+
+## Dynamic Finders
+
+For every attribute on your models, say `name`, `email_address` `favorite_gadget` and so on, Active Record lets you use very readable finder methods that are dynamically created for you. Sounds cryptic, I know but it doesn’t mean anything other than `find_by_id` or `find_by_favorite_gadget`. The `find_by` part is standard and Active Record just tucks on the name of the attribute for you. You can even get to add an `!` if you want that finder to raise an error if not found. The sick part is, you can even chain these dynamic finder methods together. Just like this:
+
+###### Rails
+
+``` ruby
+
+Agent.find_by_name('James Bond')
+
+Agent.find_by_name_and_licence_to_kill('James Bond', true)
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT  "agents".* FROM "agents" WHERE "agents"."name" = ? LIMIT 1  [["name", "James Bond"]]
+
+SELECT  "agents".* FROM "agents" WHERE "agents"."name" = ? AND "agents"."licence_to_kill" = ? LIMIT 1  [["name", "James Bond"], ["licence_to_kill", "t"]]
+
+```
+
+Of course you can go nuts with this but I feel like it looses its charm and usefullness if you go beyond two attributes:
+
+###### Rails
+
+``` ruby
+
+Agent.find_by_name_and_licence_to_kill_and_womanizer_and_gambler_and_number_of_gadgets('James Bond', true, true, true, 3)
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT  "agents".* FROM "agents" WHERE "agents"."name" = ? AND "agents"."licence_to_kill" = ? AND "agents"."womanizer" = ? AND "agents"."gambler" = ? AND "agents"."number_of_gadgets" = ? LIMIT 1  [["name", "James Bond"], ["licence_to_kill", "t"], ["womanizer", "t"], ["gambler", "t"], ["number_of_gadgets", 3]]
+
+```
+
+In this example it is nevertheless nice to see how it works under the hood. Every new `_and_` adds an SQL `AND` operator to logically tie the attributes together. Overall, the main benefit of dynamic finders is its readability—tucking on too many dynamic attributes looses that advantage quickly though. I rarely use this, maybe mostly when I play around in the console, but it’s definitely good to know that Rails offers this neat little trickery.
 
 ## Custom SQL
 
