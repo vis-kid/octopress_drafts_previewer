@@ -18,6 +18,7 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 + Scopes
 + Aggregations
 + Dynamic Finders
++ Specific Fields
 + Custom SQL
 
 In this second article we’ll try to dive a little deeper into Active Record queries in Rails. If you are still new to SQL I’ll still add examples that are simple enough that you can tag along and pick up the syntax as we go. That being said, it would definitely help if you run through a quick SQL tutorial before you come back to continue to read. Otherwise, take your time to understand the SQL queries we used and I hope that by the end of this series it won’t feel intimidating anymore. Most of it is really straightforward but the syntax is a bit weird if you just started out with coding—especially in Ruby. Hang in there, it’s no rocket science!
@@ -464,6 +465,57 @@ SELECT  "agents".* FROM "agents" WHERE "agents"."name" = ? AND "agents"."licence
 ```
 
 In this example it is nevertheless nice to see how it works under the hood. Every new `_and_` adds an SQL `AND` operator to logically tie the attributes together. Overall, the main benefit of dynamic finders is its readability—tucking on too many dynamic attributes looses that advantage quickly though. I rarely use this, maybe mostly when I play around in the console, but it’s definitely good to know that Rails offers this neat little trickery.
+
+## Specific Fields
+
+Active Record gives you the option to return objects that are a bit more focused around the attributes they carry. Usually, if not specified otherwise, the query will ask for all the fields in a row via ```*``` (```SELECT  "agents".*```) and then Active Record builds Ruby objects with the complete set of attributes. However, you can `select` only specific fields that should be returned by the query and limit the number of attributes your Ruby objects needs to “carry around”.
+
+###### Rails
+
+``` ruby
+
+Agent.select("name") 
+
+=> #<ActiveRecord::Relation [#<Agent 7: nil, name: "James Bond">, #<Agent id: 8, name: "Q">, ...]>
+
+``` 
+
+###### SQL
+
+``` sql
+
+SELECT "agents"."name" FROM "agents"
+
+```
+
+###### Rails
+
+``` ruby
+
+Agent.select("number, favorite_gadget") 
+
+=> #<ActiveRecord::Relation [#<Agent id: 7, number: '007', favorite_gadget: 'Walther PPK'>, #<Agent id: 8, name: "Q", favorite_gadget: 'Broom Radio'>, ... ]>
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "agents"."number", "agents"."favorite_gadget" FROM "agents"
+
+```
+As you can see, the objects returned will just have the selected attributes plus their ids of course—that is a given with any object. It makes no difference if you use strings like above or symbols—the query will be the same. A word of caution, if you try to access fields on the object that you haven’t selected in your queries, you will receive a `MissingAttributeError`. Since the `id` will be automatically provided for you anyway, you can ask for the id without selecting it though.
+
+###### Rails
+
+``` ruby
+
+Agent.select(:number_of_kills)
+
+Agent.select(:name, :licence_to_kill)
+
+```
 
 ## Custom SQL
 
