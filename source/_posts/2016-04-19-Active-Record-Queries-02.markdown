@@ -418,8 +418,7 @@ SELECT AVG("agents"."number_of_gadgets") AS average_number_of_gadgets, missions.
 
 ```
 
-This example finds all the agents that are grouped to a particular mission and returns the average number of gadgets along the way—in a single query! Yup! Same goes for the calculations as well of course. In this case it really makes more sense to let SQL do the work and not use the convenience of the Rails API. The number of queries we fire for these aggregations is just too important.
-
+This example finds all the agents that are grouped to a particular mission and returns a hash with the calculated average number of gadgets as its values—in a single query! Yup! Same goes for the other calculations as well of course. In this case it really makes more sense to let SQL do the work and not use the convenient Rails API. The number of queries we fire for these aggregations is just too important.
 
 ## Custom SQL
 
