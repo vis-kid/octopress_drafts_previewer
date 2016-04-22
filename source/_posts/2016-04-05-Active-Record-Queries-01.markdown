@@ -303,7 +303,7 @@ As you can see, you can go with symbols or strings—up to you. Let’s close th
 
 ``` ruby
 
-promising_candidates = Recruit.where(birtday: ('1994-01-01'..'2000-01-01'))
+promising_candidates = Recruit.where(birthday: ('1994-01-01'..'2000-01-01'))
 
 ```
 
@@ -505,6 +505,6 @@ SELECT COUNT(*) AS count_all, family_status AS family_status FROM "recruits" GRO
 
 ```
 
-## Final Thougts
+## Final Thoughts
 
 I hope this was a useful first look at what Active Record has to offer to make your querying efforts as readable and convenient as possible. Overall I’d say it is an excellent wrapper that keeps you from writing SQL by hand for most of the time. In the next article we’ll look into a couple more involved finders and expand on what we learned so far.
