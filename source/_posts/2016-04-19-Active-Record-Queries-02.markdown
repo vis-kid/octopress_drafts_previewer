@@ -569,3 +569,7 @@ We can write class methods that encapsulate the SQL inside a Here document. That
 Since this is supposed to be newbie-friendly and not a SQL tutorial per se, I kept the example very minimalistic for a reason. The technique for way more complex queries is quite the same though. It’s easy to imagine having a custom SQL query in there that stretches beyond ten lines of code. Go as nuts as you need to—reasonably! It can be a life saver. A word about the syntax here. The `SQL` part is just an identifier here to mark the beginning and end of the string.
 
 I bet you won’t need this method all that much—let’s hope! It definitely has its place and Rails land wouldn’t be the same without it—in the rare cases that you will absolutely wanna fine tune your own SQL with it.
+
+## Final Thoughts
+
+I hope you got a bit more comfortable writing queries and reading the ol’ dreaded raw SQL. Most of the topics we covered in this article are essential to write queries that deal with more complex business logic. Take your time to understand these and play a bit around with queries in the console. I’m pretty sure that when you leave tutorial land behind, sooner or later your Rails cred will rise significantly if you work on your first real life projects and need to craft your own custom queries. If you are still a bit shy of the topic I’d say, simply have fun with it—it really is no rocket science!
