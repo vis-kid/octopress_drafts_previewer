@@ -520,3 +520,52 @@ Agent.select(:name, :licence_to_kill)
 ## Custom SQL
 
 Last but not least, you can write your own custom SQL via ```find_by_sql```. If you are confident enough in your own SQL-Fu and need some custom calls to the database, this method might come in very handy at times. But this is another story. Just don’t forget to check for Active Record wrapper methods first and avoid reinventing the wheell where Rails tries to meet you more than half way.
+
+###### Rails
+
+``` ruby
+
+Agent.find_by_sql("SELECT * FROM agents")
+
+Agent.find_by_sql("SELECT name, licence_to_kill FROM agents") 
+
+```
+
+Unsurprisingly, this results in:
+
+###### SQL
+
+``` sql
+
+SELECT * FROM agents
+
+SELECT name, licence_to_kill FROM agents
+
+```
+
+Since scopes and your own class methods can be used interchangeably for your custom finder needs, we can take this one step further for more complex SQL queries. 
+
+###### Rails
+
+``` ruby
+
+class Agent < ActiveRecord::Base
+
+  ...
+
+  def self.find_agent_names
+    query = <<-SQL
+      SELECT name
+      FROM agents
+    SQL
+
+    self.find_by_sql(query)
+  end
+end
+
+```
+We can write class methods that encapsulate the SQL inside a Here document. That lets us write multi-line strings in a very readable fashion and then store that SQL string inside a variable which we can reuse and pass into ```find_by_sql```. That way we don’t plaster tons of query code inside the method call. If you have more than one place to use this query, it’s DRY as well.
+
+Since this is supposed to be newbie-friendly and not a SQL tutorial per se, I kept the example very minimalistic for a reason. The technique for way more complex queries is quite the same though. It’s easy to imagine having a custom SQL query in there that stretches beyond ten lines of code. Go as nuts as you need to—reasonably! It can be a life saver. A word about the syntax here. The `SQL` part is just an identifier here to mark the beginning and end of the string.
+
+I bet you won’t need this method all that much—let’s hope! It definitely has its place and Rails land wouldn’t be the same without it—in the rare cases that you will absolutely wanna fine tune your own SQL with it.
