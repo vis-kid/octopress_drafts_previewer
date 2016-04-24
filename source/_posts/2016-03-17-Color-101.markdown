@@ -48,19 +48,15 @@ For our work with colors in design, they represent starting points, like raw or 
 
 Hues don’t have tint or shade—which means they lack any additions of white or black. That’s why We are talking about tints and shades of particular hues. Tint is about the amount of white in a color. When you mix a color with white you are tinting it. This leads to increased lightness of the hue the more white you add. Adding white to the pure hue decreases its saturation. They make the hue less intense. 
 
-Shade on the other hand is about the amount of black in a color. When you mix a color with black you are shading it. This leads to reduced lightness of the hue the more black you add. This results in a rich, often darker more intense color due to the overpowering nature of black pigments. Many blacks change the characteristics of a hue—even through small amounts. Therefore they should be used sparingly.
+Shade on the other hand is about the amount of black in a color. When you mix a color with black you are shading it. This leads to reduced lightness of the hue the more black you add. This results in a rich, often darker more intense color due to the overpowering nature of black pigments. Many blacks change the characteristics of a hue—even through small amounts. Therefore they should be used sparingly. As you can see below, in the middle is the pure hue. Towards the left direction, we add more and more white by tinting it and to the right we are shading the red with black.
 
 ###### Tint-Hue-Shade Spectrum:
 
 {% img /images/Color-101/tint-shade-spectrum.png 800 %}
 
-As you can see here, in the middle is the pure hue. Towards the left direction, we add more and more white by tinting it and to the right we are shading the red with black.
-
-We speak of creating tones when we mix a hue with gray—which means that you effectively tint and shade it because adding both white and black results in some sort of gray of course. Tones can be lighter or darker than the original hue—depending on the amount of white and black added. They will also appear less saturated and intense than the original hue. Tones can reveal subtle and complex qualities in a hue. They are closer to the way we see the “real” world.
+The “tone” of a hue is its relative darkness / lightness. It’s about the amount of light that is reflected by that hue. The lighter the more light get’s reflected back and the darker the more light gets absorbed. We speak of creating tones when we mix a hue with gray—which means that you effectively tint and shade it because adding both white and black results in some sort of gray of course. Tones can be lighter or darker than the original hue—depending on the amount of white and black added. They will also appear less saturated and intense than the original hue. Tones can reveal subtle and complex qualities in a hue. They are closer to the way we see the “real” world.
 
 {% img /images/Color-101/tint-tone-shade.png %}
-
-The tone of a hue is its relative darkness / lightness. It’s about the amount of light that is reflected by that hue. The lighter the more light get’s reflected back and the darker the more light gets absorbed. 
 
 ## Value
 
