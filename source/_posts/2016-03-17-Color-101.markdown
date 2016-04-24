@@ -66,12 +66,11 @@ Value is the lightness or darkness of a hue. Values are very, very crucial for p
 
 The sections on the scale are called steps. They are significant color steps that can be clearly distinguished by being significantly lighter or darker than the next step. If you apply these values you achieve better tonal contrast by using realistic lights and shades. The end result is more vibrant, interesting and looks simply a lot more professional.
 
-A lot of the great paintings we admire in art history were done by artists that were masters at subtle tonal contrast via proper use of value scales. They achieved variations of depth by gradual value changes of a limited number of hues. As you can see from the image below, a simple gray scale is all you need to establish enough tonal contrast for painting effectively. A few tinted highlights, are few dark shades and a lot of medium values that define the majority of the painting.
+A lot of the great paintings we collectively admire in art history were done by artists that were masters at subtle tonal contrast via proper use of value scales. They achieved variations of depth by gradual value changes of a limited number of hues. As you can see from the image below, a simple gray scale is all you need to establish enough tonal contrast for painting effectively. A few tinted highlights, are few dark shades and a lot of medium values that define the majority of the painting.
 
 {% img /images/Color-101/Odin_disguised_as_a_Traveller_value_scale.png %}
 
 Of course this works not only with gray scales but with monochromatic colors as well—meaning with one hue. Think of it as the lights and shades of a hue.
-
 
 {% img /images/Color-101/Andreas_Achenbach_Clearing_Up—Coast_of_Sicily_Walters.jpg %}
 
@@ -79,15 +78,13 @@ You can see how effective this scale is by desaturating the painting. The values
 
 {% img /images/Color-101/Andreas_Achenbach_Clearing_Up—Coast_of_Sicily_Walters-grayed-out.png %}
 
-Interestingly, every color has its own inherent range of values. Some have a bigger range than others. Red for example has a more limited range compared to a blue hue for example.
+Interestingly, every color has its own inherent range of values. Some have a bigger range than others. Red for example has a more limited range compared to a blue hue for example. Red is in the low gray-scale range, the value is very dark. Yellow on the other hand is in the high-range. Green, violet and blue have the largest range going from dark to light.
 
 {% img /images/Color-101/color-values-mirrored.png 400 %}
 
-Red is in the low gray-scale range, the value is very dark. Yellow on the other hand is in the high-range. Green and violet also have a larger range going from dark to light.
+Why do we care? Values are an effective way to render a two-dimensional depiction on any canvas and let it appear three-dimensional using the relative shades of a hue. This is what people call more alive or vibrant—in contrast to flat colors that fail to achieve this effect. This is why you want in general more desaturated tones, pure hues are of little help in that regard and look immature on top of that. A good tip is to start with only one hue and develop a value scale for your website. You can use various values for highlighting areas and other that recede gently in the background—all while staying simple and classy.
 
-Why do we care? Values are a way to render a two-dimensional on any canvas and let it appear three-dimensional using the relative shades of a hue. This is what people call more alive or vibrant. In contrast to flat colors that fail to achieve this effect. This is why you want in general more desaturated tones, pure hues are little help with that and look immature on top of that.
-
-A good tip is to start with only one hue and develop a value scale for your website. You can use various values for highlighting areas and other that recede gently in the background—all while staying simple and classy. There are tons of super nice monochromatic sites on the web from which we can learn. 
+Or think of iconic black and white photographs of the last 50 years or so. The often have a wide range of steps on the gray-scale and create a stronger, more interesting contrast—ranging from very dark blacks to very bright whites. Amateurs often end up with flat black and white images because they are unaware of the need to make them more vibrant with a broader gray-scale.  
 
 ## Chroma
 
