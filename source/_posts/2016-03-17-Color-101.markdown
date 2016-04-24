@@ -39,14 +39,14 @@ A hue is any color on the color wheel.
 
 {% img /images/Color-101/Hue-scale.png %}
 
-Most of the time when people talk about colors, they are actually talking about hues which are the basic, pure colors. That means any color that is within the visible light spectrum. The healthy human eye can see 2.3 Mio hues. These don’t have tint or shade—which means they lack any additions of white or black (see next section).
+A lot of the time when people talk about colors, they are actually talking about hues—which are the basic, “pure” colors. That means any color that is within the visible light spectrum. The healthy human eye can see 2.3 Mio hues. 
 So tons of different variations of reds, blues, greens and so on.
 
-For our work with colors in design, they represent starting points, like raw, most primitive versions we need to leave behind to avoid looking amateurish or childish. Did you ever notice that cartoons for kids like to use these colors for their characters? Not a big surprise I guess. You can make use of this of course if you go for a certain look but most of the time childish is not what works too well on the web. 
+For our work with colors in design, they represent starting points, like raw or the most primitive versions. In our designs, we mostly need to leave these behind to avoid looking amateurish or childish. Did you ever notice that cartoons for kids like to use these colors for their characters? Not a big surprise I guess. You can make use of this of course if you go for a certain look but most of the time childish is not what works too well on the web. 
 
 ## Tint, Shade & Tone
 
-We are talking about tints and shades of particular hues. Tint is about the amount of white in a color. When you mix a color with white you are tinting it. This leads to increased lightness of the hue the more white you add. Adding white to the pure hue decreases its saturation. They make the hue less intense. 
+Hues don’t have tint or shade—which means they lack any additions of white or black. That’s why We are talking about tints and shades of particular hues. Tint is about the amount of white in a color. When you mix a color with white you are tinting it. This leads to increased lightness of the hue the more white you add. Adding white to the pure hue decreases its saturation. They make the hue less intense. 
 
 Shade on the other hand is about the amount of black in a color. When you mix a color with black you are shading it. This leads to reduced lightness of the hue the more black you add. This results in a rich, often darker more intense color due to the overpowering nature of black pigments. Many blacks change the characteristics of a hue—even through small amounts. Therefore they should be used sparingly.
 
