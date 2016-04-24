@@ -14,7 +14,9 @@ categories: [Design, Color Theory, Color, Visual Design, Product Design, Web Des
 
 + Color?
 + Hue
-+ Tint & Shade
++ Tint, Shade & Tone
++ Value
++ Saturation / Chroma
 + Color Wheel
 + Warm Colors
 + Cool Colors
@@ -86,39 +88,20 @@ Why do we care? Values are an effective way to render a two-dimensional depictio
 
 Or think of iconic black and white photographs of the last 50 years or so. The often have a wide range of steps on the gray-scale and create a stronger, more interesting contrast—ranging from very dark blacks to very bright whites. Amateurs often end up with flat black and white images because they are unaware of the need to make them more vibrant with a broader gray-scale.  
 
-## Chroma
+## Saturation / Chroma
 
-Everything added from the opposite of the color wheel will desaturate the hue
+The saturation, also called Chroma, is another term we should not overlook. It’s the “colorfulness” or purity of a hue. These funky terms just translates to the intensity or brilliance of a perceived color. The chroma is defining how pure the hues is. When you buy colors for painting, chromas are the colors that you take right off the tube. In constrast to that, desaturated colors are washed out or grayed out. These colors are often used as shadow colors of various degrees. A completely desaturated color is gray.
 
-Chroma, the saturation, is another term we should not overlook. It’s the “colorfulness” of a hue. That funky term just translates to the intensity or brilliance of a perceived color. The chroma is defining how pure the hues is. When you buy colors for painting, chromas are the colors that you take right off the tube. In constrast to that, desaturation means that the color is washed out or grayed out. These colors are often used as shadow colors.
+Remember to desaturate a hue by adding a complimentary color. Everything added from the opposite of the color wheel will desaturate the hue very effectively—very artistically some might say. The more of the opposite color you add the more you desaturate it—the less pure it becomes. It gets more dull. In all of this, We are still dealing with intensity. Where both colors meet, you have your neutral color point—brown or gray. It’s important to understand that we are not adding gray for this. In effect you are creating a gray but not by adding black or white. These grays are used by painters to break up saturated colors. Why is that a good idea? The answer is actually very practical: you don’t want to bombard viewers with intense color saturations everywhere—quite on the contrary. Highly saturated colors can look incredibly fake and cheap as well. Too much of it gives your eyes not much chance to rest—and also nothing to really focus on—more of a visual noise.
 
-Remember to desaturate a hue by adding a complimentary color. It’s important to understand that we are not adding gray for this. In effect you are creating a gray but not by adding black or white. These grays are used by paintrs to break up saturated colors. Why is that a good idea? You don’t want to bombard viewers with intense color saturations everywhere—quite the contrary.
-
-Take blue and orange for example. Next to each other they would be very intense. If you mix these colors you have this gray tone that can separate them really well. The color stands in between those highly saturated ones.
+Take blue and orange for example. Next to each other they would be very intense. If you mix these colors you have this gray tone that can separate their more saturated applications really well. This new color stands in between those highly saturated ones and create a more visually pleasing experience by applying more realistic colors. As fluffy as this sounds, it has more vibrancy, more life. This creates a barrier between the colors that is more mature in technique. When you talk about masters in painting, this is one of the things they tried to get a firm grip on.
 
 ###### “Impression, soleil levant” by Claude Monet
 
 {% img /images/Color-101/Claude_Monet,_Impression.jpg %}
 
+It’s good if you wanna focus on only one or two colors and create variatons from them by mixing their desaturated versions with their complimentary colors. That way, you have a lot of options within the same color. You can vary your color but stay within the same color hue(s). Also, you are more easily able to anchor your viewer’s eyes or their attention when only few parts are selectivly highly saturated. In the image above, it is hard to not look at the sun, no? It really jumps out like that.
 
-More vibrancy, more life.
-
-Create a barrier between the colors to percevie them separately. When you talk about masters in painting, this is one of the things they tried to master.
-
-Good if you wanna focus on only one or two colors
-creating variatons on that
-playing with main colors
-more options
-playing off of it
-within the same color
-vary your color but stay wihint same color choice
-
-highly saturated colors can look incredibly fake.
-too much of it gives your eyes not much rest
-
-anchor your eyes or the viewers attention when only few parts are selectivly highly saturated
-
-The more of the opposite color you add the more you desaturate it, the less pure it becomes. It becomes more dull. We are dealing with intensity. Where both colors meet, you have your neutral color point -> brown, gray
 
 ## The Grays
 
@@ -383,6 +366,11 @@ Color is only what’s surrounding it
 
 ## Final Thoughts
 
+can be powerful mood changer
+
 Try to avoid having muddy colors where you loose the distinct quality the colors at your disposal. On the web, you definitely want to use color to create a certain mood, vibe or whatever and also to highlight stuff that are of particular importance. As with design principles, less is more. If everything is highlighted via color, nothing sticks out and you will end up with color noise—which is the worst becaus it is not interesting at all.
 
-can be powerful mood changer
+Color is an insanely deep rabbit hole. Don’t get lost in it too much! You have a lifetime to to achieve probably only a fraction of an understanding. Take it easy and have fun!
+
+
+
