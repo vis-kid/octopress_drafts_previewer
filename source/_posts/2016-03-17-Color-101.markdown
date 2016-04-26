@@ -23,6 +23,8 @@ categories: [Design, Color Theory, Color, Visual Design, Product Design, Web Des
 + Cool Colors
 + Neutral Colors
 + Matching Colors
++ Monochromatic
++ Types of Color
 + Emphasis
 + Consistency
 + Color Meaning
@@ -211,63 +213,19 @@ Imagine if we would have tons of saturated colors here. It would be much harder 
 The three light colors, light spectrum -> primary colors?
 Goethe incorporated both light and dark spectra in his color wheel, he called it the harmonic color wheel -> which we use today
 
-## Color Harmonies
+## Monochromatic
 
-     Some color look better together than others. Probably a term that comes from musical harmonies.
+I should also quickly mention what you need to know about monochromatic color choices. Remember this fellow from above? 
 
-### Monochromatic
-     easy
-     one color
-     single subjects
-     details of image focus
+{% img /images/Color-101/tint-shade-spectrum.png 800 %}
 
-### Analogous Colors
+This is a monochromatic color scale of a red hue. To the right it is more and more shaded while it’s more and more tinted to the left. For your work, this is one approach that is not only very easy usually, it can also be very effective using only one main hue and it’s variations. The example below is a great example of using a monochrome approach effectively.
 
-     Adjacent on the color wheel
-     Easy on the eyes
-     Peaceful, comfortable mood -> often seen in nature
-     Right next to each other on the color wheel
-     creating a realationship
-     right direction for matching colors
+###### Screenshot
 
-### Triadic Colors
+{% img /images/Color-101/Screenshots/Monochrome-Boom.png %}
 
-     Equally distant on the wheel
-     Hard to get right
-     More of an advanced combination
-     Good for cartoon and surreal scenes
-     Can imply playfulness
-
-### Complimentary Colors
-
-     Opposing each other on the wheel
-     Very popular combination
-  “Naturally” pleasing to the eye
-Don’t use them equally -> decide on one dominant color -> generally the weaker color (-> the colder color more??)
-  Red and green especially popular
-
-
-  oppposite on the color wheel
-  like serif and sans serif in typography
-  they work really well together 
-  About color contrast as well
-  contrast well to each other
-  good first step usually
-
-  There are more variations but this should give you a great start for now.
-
-## Matching Colors
-
-  Similar to choosing typefaces
-  Choose one or utmost two major, design dominating colors
-  A “primary” color
-  Keep it simple
-  Start with one dominant color
-  Slowly put colors in
-  Bounce other colors off of that
-  Support and enhance dominant colors with supporting colors
-  -> Adjust value, tone, brightness, saturation or use neutral colors
-  Color scheme by bouncing off the main color
+[Boom](http://boom.aero/)
 
 ## Emphasis
 
