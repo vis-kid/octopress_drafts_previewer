@@ -102,38 +102,36 @@ Take blue and orange for example. Next to each other they would be very intense.
 
 It’s good if you wanna focus on only one or two colors and create variatons from them by mixing their desaturated versions with their complimentary colors. That way, you have a lot of options within the same color. You can vary your color but stay within the same color hue(s). Also, you are more easily able to anchor your viewer’s eyes or their attention when only few parts are selectivly highly saturated. In the image above, it is hard to not look at the sun, no? It really jumps out like that.
 
-
-## The Grays
-
-Are a mix of the shadow colors, which is the desaturated version by mixing it with its complimentary color, and mixing the shadow color with white.
-
 ## Color Wheel
 
-The three dark colors, dark spectrum -> secondary colors?
-The three light colors, light spectrum -> primary colors?
-Goethe incoroprated both light and dark spectra in his color wheel, he called it the harmonic color wheel -> which we use today
-Green forms the base of Goethes color wheel. It’s the blend of the two primary colors yellow and blue
-Magenta forms the top of the color wheel. It arises as a blend of red and violet
+We get a color wheel by taking the spectrum of light and then connect both ends to a circle. It’s really helpful in telling us the relationships between the colors. How so? For starters, the color wheel can easily tell you how to create the biggest color contrast possible for a particular choice. This is often very useful when you decide on a color palette for your project. 
 
+{% img /images/Color-101/GoetheFarbkreis.png %}
 
-!!!We get a color wheel by taking the spectrum of light and through connecting both ends to a circle.
-Relationships between the colors
-The color wheel can easily tell you how to create the biggest color contrast possible
-The color wheel is not so much of a scientific thing but more how our brain works—maybe even emotional in terms of contrast and what respsones color awake. By scientifially, I mean there are not opposite colors in that regard—that’s only in our brains or in the concepts we put together to organize / distinguish colors.
-helps to choose color
+The color wheel we are going to cover here is based on the Red-Yellow-Blue (RYB) color model. This one is derived from how painters created their color mixtures—via subtractive color mixing. It’s mostly used in art and design these days. It predates the scientific color theory—which we won’t cover in this article—that relies on cyan, magenta and yellow (CMY) as its primary colors and achieve a bigger subset of colors with it. What we are going to use is the traditional “artist’s” color wheel.
 
-Primary colors: Red, Yellow, Blue
-You can’t mix any other colors to get them. -> are like constants if you like. fixed
-Can not be made by mixing ohter colors
-Are used to create all other colors
+This color wheel is not so much of a scientific thing but more a representation of how our brain works—maybe even how we respond emotionally in terms of what responses colors awake—maybe also very much influenced by centuries of art history. By scientifically, I mean there are no opposite colors in that regard—that’s only in our brains or in the concepts we put together to organize / distinguish colors. It’s definitely helpful for choosing color though.
 
-Secondary colors: Green, orange, purple
-are mixed from primary colors
+### Primary Colors: Red, Yellow, Blue
 
-Tertiary colors 
+{% img /images/Color-101/GoetheFarbkreis-Primary-Colors.png %}
 
+They are used to create all other colors—therefore primary. You can’t mix any other colors to get them. In that way, they are like constants if you will—they are fixed. This is certainly a good starting point and everything you need to know about primary colors for now. That being said, I also want to mention that this was the assumption of many color theorists in the past. In reality, with paint or ink for example, you can only mix a limited range of colors which does not match the complete range a healthy human eye can perceive. What we’re talking about here is a certain complete subset of colors, also called a gamut. So, a grain of salt is in order here.
 
+### Secondary Colors: Green, Orange, Purple
 
+{% img /images/Color-101/GoetheFarbkreis-Secondary-Colors.png %}
+
+These colors are mixed by combining primary colors. In Goethe’s color wheel above, green forms the base. It’s the blend of the two primary colors yellow and blue. Orange is a mix of yellow and red while purple is a mixed with red and blue. Tertiary colors take this idea further and mixes primary with secondary colors—again mixing colors that lie next to each other on the wheel. After finishing this declination you get:
+
++ amber: yellow-orange
++ vermilion: red-orange
++ magenta: red-purple
++ violet: blue-purple
++ teal: blue-green
++ chartreuse: yellow-green
+
+Note that the secondary color follows the primary color in this notation. Easier to remember I guess.
 
 Two types of color:
 
