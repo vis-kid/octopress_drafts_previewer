@@ -252,23 +252,41 @@ If you use your dominant color very sparsely, you can create a very effective em
 In the example above, it is very hard to not notice the buttons that let you buy this item. Nothing is in the way of guiding the eye quickly to the interface item that facilitates the users main action—or viewed from the other perspective, the interface item that closes the sales tunnel. All while using the main color that the company is identifies with as a brand. Simple and effective! And no nonsense in the way.
 
 
-## Consistency
-
-  Keeping links the same color that do the same thing
-  Keeping header colors consistent
-  keeping background colors that similar
-  most acitionable items can stick out-> not consistent
-  mental map
-  A lot more classy look achieve
-  Setting expectations that you want to make easy for users to follow and understand
-
-###### Screenshot
+## Color Consistency
+Once you establish a mental map of colors for your users, it is important to not break it—or if you break it, do it skillfully and with a certain purpose. For example, Keeping links the same color when they do the same thing is immensely crucial—especially if you have tons of content on a page. Alsl, keeping header colors consistent makes you look good and gives the user something to anchor their journey. Keeping background colors similar can be very effective as well. This is not something that does a lot of harm when ignored but can tie things together nicely. It definitely has good chances of looking more classy that way. The most important piece in all of this is that you are setting expectations for your users, and that you want to make easy for users to follow and understand where the journey is going.
+t
 
 {% img /images/Color-101/Screenshots/Etsy-consistency.png %}
 
 [Pattern](https://www.etsy.com/pattern)
 
-## Color Meaning
+Pattern is a new product by [Etsy](https://www.etsy.com/) and it does a real great job at using color consistently. Even the image of the desk with the books and stuff expands elegantly on their branding color and stays within this range of fuzzy, warm colors. The gray-ish wall in the background gives a perfect backdrop to bring attention to the site’s main call to action. It clear speaks “ETSY” without screaming right in your faces. Double thumbs up!
+
+Overall, Etsy did a great job at being consistent with color as well on their main page—but they also dropped the ball here and there in that regard a bit I think. I think it’s fair to say that there is room to create more cohesion by using color more consistently within their main pages—especially with backgrounds. Feels like a low hanging fruit and wasted opportunity to brand more effectively. Take a look for yourself, you be the judge of that: 
+
+###### Etsy Screenshots Incoming
+
+{% img /images/Color-101/Screenshots/Etsy-01.png %}
+
+{% img /images/Color-101/Screenshots/Etsy-02.png %}
+
+{% img /images/Color-101/Screenshots/Etsy-03.png %}
+
+{% img /images/Color-101/Screenshots/Etsy-04.png %}
+
+{% img /images/Color-101/Screenshots/Etsy-05.png %}
+
+{% img /images/Color-101/Screenshots/Etsy-06.png %}
+
+{% img /images/Color-101/Screenshots/Etsy-07.png %}
+
+{% img /images/Color-101/Screenshots/Etsy-08.png %}
+
+{% img /images/Color-101/Screenshots/Etsy-09.png %}
+
+{% img /images/Color-101/Screenshots/Etsy-10.png %}
+
+##Color Meaning
 
   In various cultures, colors can imply different meanings or associations.
   Also evoke different feelings therefore
