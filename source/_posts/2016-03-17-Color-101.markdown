@@ -18,6 +18,7 @@ categories: [Design, Color Theory, Color, Visual Design, Product Design, Web Des
 + Value
 + Saturation / Chroma
 + Color Wheel
++ Types of Color
 + Warm Colors
 + Cool Colors
 + Neutral Colors
@@ -133,60 +134,37 @@ These colors are mixed by combining primary colors. In Goethe’s color wheel ab
 
 Note that the secondary color follows the primary color in this notation. Easier to remember I guess.
 
-Two types of color:
+## Types of color
 
-## Warm Colors
+###### Newer representation of the RYB color wheel:
 
+{% img /images/Color-101/New-color-wheel2.png %}
 
-Right side of the color wheel
-more attention grabbing,
-     strong, engergetic, really strong, fast attention
-     render problems??
-     color vibrate
-     active colors
+### Warm Colors
 
-     You can also have a cold red and a warm red
-     But you can also have warm blue and cold blue for example
+Warm colors, which are represented by the right side of the color wheel.
+They are more attention grabbing, energetic, really strong—at least in our usual perception. Don’t forget these are very human attributes that have nothing to do with the phenomenon of light. These colors can grab our attention really fast and are considered very active.
 
+### Cool Colors
 
-## Cool Colors
+The left side on the other hand represent cool colors. These are more comforting and stable. They also tend to fade to the background of a composition easily and don’t “jump out” that much. So they are considered more passive in nature. I think of it this way: On the web, t’s all about quick perceptions and in this regard about colors that don’t not raise any “red” flags (pun intended) among your users.
 
-     Green, blue, purple
-     Left side of the color wheel
-     Tend to fade into the background
-     calm, stable, recede on page
-     more comforting, stable, enriching
-     usually a save bet, very popular
-     lots of site online using it,
-     does not jump out so much
-     passive colors
+This left side of the color wheel is very popular among popular websites these days. Just take a look at the Facebooks and Twitters out there and you will find a plethora of well-known projects making these colors intrinsic to their color palettes. Why? Because web projects always have to fight the disadvantage of not being physical where a personal connection can be made more easily and more speedy. Websites that cater to a gazillion people need to appear stable, trustworthy, relaxing and calm—even comforting. These are all things that the cooler types of color can help you with. 
+
+### Neutral Colors
+
+Black, white and brown are considered neutral. In that sense, they are supporting “colors”. If applied right, these neutrals can bind everything together—like in the Monet painting above. They provide a break from the intensity of the brighter, more intense colors which attract the eye more easily. In that sense, neutrals are the foundation of interest and variation—like your spaghetti with tomato sauce and meatballs. The spaghettis are the neutral binder in all of this.
+
+The neutrals recede to the background when you bring more saturated colors into the mix. In every great color vocabulary, they play an important part because they help you to create a skillful balance in your work. Just imagine if everything is shouting color-wise. That wouldn’t be very effective and we would again end up with color “noise”. Neutrals are your secret weapon to create a sharp focus where needed. In practical terms, this means that you build up your composition with mostly neutral tones and then decide where the focus is and where the eye is supposed to be attracted to. That’s where the saturated tones come into play.
 
 
-     Golden aera
-     Feeling blue
 
-## Netural Colors
 
-     Neutral colors taking two complimentary paris
-     get gray or brown neutral
-     on the other side is saturation
-     neturals bind everything together
-     provide a break from the intensity of the bright colors
-     bright colors attract the eye
-     neutrals provide interest and variation
-     combined with saturated colors, neutrals recede while saturated come forward, at you.
-     neutrals are very versatile
-     they are part of a great color vocabulary
-     subtle, subtle colors
-     they create a balance in your work
-     if everything is shouting, I mean highly saturated, pure color, nothing is focused. Seems also really flat
-     build up with mostly neutral tones. then decide where the focus is and where the eye is supposed to be attracted to. that’s where you put the saturated tones
-     Tone everything down, don’t make it so bright
-     Everything bright seems childish and amateurish
-     not within color wheel
-     supporting colors
-     black, brown, white
-     ?? Gray scale??
+
+
+???The three dark colors, dark spectrum -> secondary colors?
+The three light colors, light spectrum -> primary colors?
+Goethe incorporated both light and dark spectra in his color wheel, he called it the harmonic color wheel -> which we use today
 
 ## Color Harmonies
 
