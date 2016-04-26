@@ -109,7 +109,7 @@ We get a color wheel by taking the spectrum of light and then connect both ends 
 
 {% img /images/Color-101/GoetheFarbkreis.png %}
 
-The color wheel we are going to cover here is based on the Red-Yellow-Blue (RYB) color model. This one is derived from how painters created their color mixtures—via subtractive color mixing. It’s mostly used in art and design these days. It predates the scientific color theory—which we won’t cover in this article—that relies on cyan, magenta and yellow (CMY) as its primary colors and achieve a bigger subset of colors with it. What we are going to use is the traditional “artist’s” color wheel.
+What we are going to use is the traditional “artist’s” color wheel which is based on the Red-Yellow-Blue (RYB) color model. This one is derived from how painters created their color mixtures—via subtractive color mixing. It’s mostly used in art and design these days. It predates the scientific color theory—which we won’t cover in this article—that relies on cyan, magenta and yellow (CMY) as its primary colors. It achieves a bigger subset of colors than the RYB color model. 
 
 This color wheel is not so much of a scientific thing but more a representation of how our brain works—maybe even how we respond emotionally in terms of what responses colors awake—maybe also very much influenced by centuries of art history. By scientifically, I mean there are no opposite colors in that regard—that’s only in our brains or in the concepts we put together to organize / distinguish colors. It’s definitely helpful for choosing color though.
 
