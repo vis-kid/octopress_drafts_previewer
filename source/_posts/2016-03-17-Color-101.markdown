@@ -241,21 +241,16 @@ This is a monochromatic color scale of a red hue. To the right it is more and mo
 
 ## Emphasis
 
-  If you use your primary color very sparsely, you can create a very effective emphasis. 
-  You want to avoid washing it down too much and waste the opportunity to hightlight key design elements
-  focus on elements
-  works great with gray scale usually
-  save it for important stuff
-  very sparsely
-  very dominant on the page
-  pop forward
-  other colors fade back that way and support main color
+If you use your dominant color very sparsely, you can create a very effective emphasis. You want to avoid inflating it too much and waste the opportunity to hightlight key design elements with it—save it for for the “cherry on top”. Use it to focus on elements that are really crucial to communicating the most important pieces of information. This “primary” color of your palette works usually great with a gray scale—black and white included—because it fades back easily and supports the main color effectively.
 
 ###### Screenshot
 
 {% img /images/Color-101/Screenshots/Emphasis.png %}
 
-[RIF6](https://rif6.com/) only highlights ...
+[RIF6](https://rif6.com/) only highlights the key items for a successful business transaction.
+
+In the example above, it is very hard to not notice the buttons that let you buy this item. Nothing is in the way of guiding the eye quickly to the interface item that facilitates the users main action—or viewed from the other perspective, the interface item that closes the sales tunnel. All while using the main color that the company is identifies with as a brand. Simple and effective! And no nonsense in the way.
+
 
 ## Consistency
 
