@@ -140,6 +140,24 @@ We can take this idea further and mix primary with secondary colors—again by b
 
 Note that the secondary color follows the primary color in this notation. Easier to remember I guess.
 
+### Analogous Colors
+
+{% img /images/Color-101/Analogue-Color-Wheel.png %}
+
+Analogous colors are simply adjacent on the color wheel, right next to each other. They form a simple relationship and are usually very easy on the eyes and can create a peaceful, comfortable mood. How so? Most likely because this color combination can often be seen in nature.
+
+### Complimentary Colors
+
+{% img /images/Color-101/Complimentary-Color-Wheel.png %}
+
+On the color wheel, they are opposing each other. Complimentary colors are a very popular combination, they seem to please the eyes “naturally”. Red and green are especially popular. But keep in mind to no use them equally and decide on one dominant color. Generally the weaker color should be used more widespread and stronger one to accentuation. Think of color combinations like this of matching and serif and sans-serif typefaces. A balance is really important here. They are also able to create the strongest color contrast for each hue.
+
+### Triadic Colors
+
+{% img /images/Color-101/Triadic-Color-Wheel.png %}
+
+No, it’s not about the Chinese Mafia, these colors are only placed equally distant on the color wheel. They are a bit more of an advanced combination and using these is a bit hard for beginners to get right I think—but don’t let me stop you. The more you practice, etc, etc… They are often good for cartoons and surreal scenes and can imply a certain playfulness. 
+
 ## Types of color
 
 ###### Newer representation of the RYB color wheel:
