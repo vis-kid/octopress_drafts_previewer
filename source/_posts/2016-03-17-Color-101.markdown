@@ -49,6 +49,12 @@ So tons of different variations of reds, blues, greens and so on.
 
 For our work with colors in design, they represent starting points, like raw or the most primitive versions. In our designs, we mostly need to leave these behind to avoid looking amateurish or childish. Did you ever notice that cartoons for kids like to use these colors for their characters? Not a big surprise I guess. You can make use of this of course if you go for a certain look but most of the time childish is not what works too well on the web. 
 
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/Cartoon-Effect.png %}
+
+[Envoy Passport](https://envoy.com/passport/) uses this cartoon-ish, playful style to its advantage here. You can see that the colors are very flat and not very sophisticated. But they are using this style here to convey an impression or an idea that would have been harder to depict without imitating artwork for kids.
+
 ## Tint, Shade & Tone
 
 Hues don’t have tint or shade—which means they lack any additions of white or black. That’s why We are talking about tints and shades of particular hues. Tint is about the amount of white in a color. When you mix a color with white you are tinting it. This leads to increased lightness of the hue the more white you add. Adding white to the pure hue decreases its saturation. They make the hue less intense. 
@@ -96,6 +102,12 @@ Or think of iconic black and white photographs of the last 50 years or so. The o
 The saturation, also called Chroma, is another term we should not overlook. It’s the “colorfulness” or purity of a hue. These funky terms just translates to the intensity or brilliance of a perceived color. The chroma is defining how pure the hues is. When you buy colors for painting, chromas are the colors that you take right off the tube. In constrast to that, desaturated colors are washed out or grayed out. These colors are often used as shadow colors of various degrees. A completely desaturated color is gray.
 
 Remember to desaturate a hue by adding a complimentary color. Everything added from the opposite of the color wheel will desaturate the hue very effectively—very artistically some might say. The more of the opposite color you add the more you desaturate it—the less pure it becomes. It gets more dull. In all of this, We are still dealing with intensity. Where both colors meet, you have your neutral color point—brown or gray. It’s important to understand that we are not adding gray for this. In effect you are creating a gray but not by adding black or white. These grays are used by painters to break up saturated colors. Why is that a good idea? The answer is actually very practical: you don’t want to bombard viewers with intense color saturations everywhere—quite on the contrary. Highly saturated colors can look incredibly fake and cheap as well. Too much of it gives your eyes not much chance to rest—and also nothing to really focus on—more of a visual noise.
+
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/Visual-Noise.png %}
+
+When a site like [UXDESIGNER.TOP](http://www.uxdesigner.top/), somehow dedicated to UX, errors in this way, it is doubly sad to see to be honest. Doesn’t look too good, does it? It has all sorts of issues but first of all, this color mess does not make it easy to establish a simple hierarchy that guides the viewer. Bad UX! 
 
 Take blue and orange for example. Next to each other they would be very intense. If you mix these colors you have this gray tone that can separate their more saturated applications really well. This new color stands in between those highly saturated ones and create a more visually pleasing experience by applying more realistic colors. As fluffy as this sounds, it has more vibrancy, more life. This creates a barrier between the colors that is more mature in technique. When you talk about masters in painting, this is one of the things they tried to get a firm grip on.
 
@@ -239,6 +251,12 @@ This is a monochromatic color scale of a red hue. To the right it is more and mo
   pop forward
   other colors fade back that way and support main color
 
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/Emphasis.png %}
+
+[RIF6](https://rif6.com/) only highlights ...
+
 ## Consistency
 
   Keeping links the same color that do the same thing
@@ -248,6 +266,12 @@ This is a monochromatic color scale of a red hue. To the right it is more and mo
   mental map
   A lot more classy look achieve
   Setting expectations that you want to make easy for users to follow and understand
+
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/Etsy-consistency.png %}
+
+[Pattern](https://www.etsy.com/pattern)
 
 ## Color Meaning
 
@@ -265,6 +289,12 @@ This is a monochromatic color scale of a red hue. To the right it is more and mo
   Honor
   Dependable
 
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/Blue.png %}
+
+[Sorted](http://staysorted.co/)
+
   + Green
   Growth
   Harmony
@@ -273,6 +303,13 @@ This is a monochromatic color scale of a red hue. To the right it is more and mo
   Wealth
   Growth
   Optimism
+
+
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/Green.png %}
+
+[Zpotdrop](https://zpotdrop.com/)
 
   + Red
   Love
@@ -286,6 +323,12 @@ This is a monochromatic color scale of a red hue. To the right it is more and mo
   Blood
   Shows off strenth
 
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/Red.png %}
+
+The site for the [SpeedX Leopard](https://speedx.com/smartbike/product/en/leopard/)
+
   Be careful about the context and meaning
 
   + Yellow
@@ -296,11 +339,23 @@ This is a monochromatic color scale of a red hue. To the right it is more and mo
 
   Because its so brignt and loud it screams at you
 
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/Yellow.png %}
+
+[FamilyInSafe](https://familyinsafe.com/)
+
   + Purple
   Magic
   Luxury
   Royal
-Expensive (was expensive in the past)
+
+
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/Purple.png %}
+
+Funny that [Bootstrap](http://getbootstrap.com/), a popular Open Source project is using purple in a total different context very successfully. I guess Open Source projects have more wiggle room and follow different rules sometimes. Awesome!
 
 
 
@@ -317,6 +372,10 @@ Expensive (was expensive in the past)
   Weddings
   Positive things
 
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/White.png %}
+
   + Black
   Mysterious
   End
@@ -327,7 +386,19 @@ Expensive (was expensive in the past)
   Sophisitcation
   Rebellious
 
-## Color Palletes
+
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/Impossible-Black.png %}
+
+[Impossible](https://us.impossible-project.com/)
+
+
+use one color, slowly put in your color.one dominant color and find one supporting color at most
+you can also add neutral colors for support. This makes the dominant color to pop out more strongly. Like with the example with Monet on top.
+
+
+## Color Pallets
 
   On occasion steal and adapt them for your own designs
   See how designers use color pairs
