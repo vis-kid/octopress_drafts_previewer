@@ -151,17 +151,38 @@ Note that the secondary color follows the primary color in this notation. Easier
 Warm colors, which are represented by the right side of the color wheel.
 They are more attention grabbing, energetic, really strong—at least in our usual perception. Don’t forget these are very human attributes that have nothing to do with the phenomenon of light. These colors can grab our attention really fast and are considered very active.
 
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/Warm-Colors.png %}
+
+[SmartBribe](http://www.smartbribe.com/)
+
+Of course you can make warm colors work but I’m showing you here an example that fails pretty hard at establishing trust, safety and confidence by blasting you with a ton of warm colors. On top of that, they did a bad job at establishing good emphasis on their main action. Their email subscribe button has the same color as the background and fades into it. It could have been much more subtle and effective if only the button was using a warm color to stand out more clearly and if the background was not using such an array of active colors. Here it might alarm the user more than anything else. Definitely not something that you wanna do when you try to get people’s email addresses or wanna spam them.
+
 ### Cool Colors
 
-The left side on the other hand represent cool colors. These are more comforting and stable. They also tend to fade to the background of a composition easily and don’t “jump out” that much. So they are considered more passive in nature. I think of it this way: On the web, t’s all about quick perceptions and in this regard about colors that don’t not raise any “red” flags (pun intended) among your users.
+The left side on the other hand represent cool colors. These are more comforting and stable. They also tend to fade to the background of a composition easily and don’t “jump out” that much. So they are considered more passive in nature. I think of it this way: On the web, it’s all about quick perceptions and in this regard, you need colors that don’t raise any “red” flags (pun intended) among your users.
 
-This left side of the color wheel is very popular among popular websites these days. Just take a look at the Facebooks and Twitters out there and you will find a plethora of well-known projects making these colors intrinsic to their color palettes. Why? Because web projects always have to fight the disadvantage of not being physical where a personal connection can be made more easily and more speedy. Websites that cater to a gazillion people need to appear stable, trustworthy, relaxing and calm—even comforting. These are all things that the cooler types of color can help you with. 
+This left side of the color wheel is very popular among popular websites these days. Just take a look at the Facebooks and Twitters out there and you will find a plethora of well-known projects making these colors intrinsic to their color palettes. Why? Because web projects always have to fight the disadvantage of not being physical location where a personal and trustworthy connection can be made more easily and more speedy. Websites that cater to a gazillion people need to appear stable, trustworthy, relaxing and calm—even comforting. These are all things that the cooler types of color can help you with. 
+
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/Cool-Colors.png %}
 
 ### Neutral Colors
 
-Black, white and brown are considered neutral. In that sense, they are supporting “colors”. If applied right, these neutrals can bind everything together—like in the Monet painting above. They provide a break from the intensity of the brighter, more intense colors which attract the eye more easily. In that sense, neutrals are the foundation of interest and variation—like your spaghetti with tomato sauce and meatballs. The spaghettis are the neutral binder in all of this.
+Black, white, gray and brown are considered neutral. In that sense, they are supporting “colors”. If applied right, these neutrals can bind everything together—like in the Monet painting above. They provide a break from the intensity of the brighter, more intense colors which attract the eye more easily. In that sense, neutrals are the foundation of interest and variation—like your spaghetti with tomato sauce and meatballs. The spaghettis are the neutral binder in all of this.
 
 The neutrals recede to the background when you bring more saturated colors into the mix. In every great color vocabulary, they play an important part because they help you to create a skillful balance in your work. Just imagine if everything is shouting color-wise. That wouldn’t be very effective and we would again end up with color “noise”. Neutrals are your secret weapon to create a sharp focus where needed. In practical terms, this means that you build up your composition with mostly neutral tones and then decide where the focus is and where the eye is supposed to be attracted to. That’s where the saturated tones come into play.
+
+###### Screenshot
+
+{% img /images/Color-101/Screenshots/Neutral-Color.png %}
+
+[Cinebody](http://www.cinebody.com/).
+
+Imagine if we would have tons of saturated colors here. It would be much harder for the preorder buttons to stick out. Since they are at the core of their business, they need to be highly accentuated to not get lost while users spend their attention deficits on a site. The white and gray areas recede to the background and let the few color accentuations pop right out. It’s hard to get lost here if you have healthy eyesight.
+
 
 
 
