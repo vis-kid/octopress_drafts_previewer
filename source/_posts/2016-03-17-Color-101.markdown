@@ -117,13 +117,19 @@ This color wheel is not so much of a scientific thing but more a representation 
 
 {% img /images/Color-101/GoetheFarbkreis-Primary-Colors.png %}
 
-They are used to create all other colors—therefore primary. You can’t mix any other colors to get them. In that way, they are like constants if you will—they are fixed. This is certainly a good starting point and everything you need to know about primary colors for now. That being said, I also want to mention that this was the assumption of many color theorists in the past. In reality, with paint or ink for example, you can only mix a limited range of colors which does not match the complete range a healthy human eye can perceive. What we’re talking about here is a certain complete subset of colors, also called a gamut. So, a grain of salt is in order here.
+They are used to create all other colors and are therefore called primary. You can’t mix any other colors to get them. In that way, they are like constants if you will—they are fixed. This is certainly a good starting point and everything you need to know about primary colors for now. That being said, I also want to mention that this was the assumption of many color theorists in the past. In reality, with paint or ink for example, you can only mix a limited range of colors which does not match the complete range a healthy human eye can perceive. What we’re talking about here is a certain complete subset of colors, also called a gamut. So, a grain of salt is in order here.
 
 ### Secondary Colors: Green, Orange, Purple
 
 {% img /images/Color-101/GoetheFarbkreis-Secondary-Colors.png %}
 
-These colors are mixed by combining primary colors. In Goethe’s color wheel above, green forms the base. It’s the blend of the two primary colors yellow and blue. Orange is a mix of yellow and red while purple is a mixed with red and blue. Tertiary colors take this idea further and mixes primary with secondary colors—again mixing colors that lie next to each other on the wheel. After finishing this declination you get:
+These colors are mixed by combining primary colors. In Goethe’s color wheel above, green forms the base. It’s the blend of the two primary colors yellow and blue. Orange is a mix of yellow and red while purple is a mixed with red and blue.
+
+### Tertiary Colors
+
+{% img /images/Color-101/Tertiary-colors-star.png 500 %}
+
+We can take this idea further and mix primary with secondary colors—again by blending colors that lie next to each other on the wheel. After finishing this declination you get:
 
 + amber: yellow-orange
 + vermilion: red-orange
