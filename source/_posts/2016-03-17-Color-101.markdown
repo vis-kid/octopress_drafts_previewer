@@ -286,21 +286,15 @@ Overall, Etsy did a great job at being consistent with color as well on their ma
 
 {% img /images/Color-101/Screenshots/Etsy-10.png %}
 
-##Color Meaning
+## Color Meanings
 
-  In various cultures, colors can imply different meanings or associations.
-  Also evoke different feelings therefore
-  Need to take that into consideration if you design for different cultures
-  These are bit silly in my opinion but it’s nevertheless good to have seen these associations and commit them to memory. Everybody sees colors differently. Maybe for we stuff where you  don’t have to mix a ton of colors to create skin tons for example this is alright, but imagine useing these guidelines when you paint a stilleben with a vase of flowers in front of an open window looking out to a farm. It would be silly to think about all these color associations, no?
+In various cultures, colors can imply different meanings or associations. Not surprising I guess. Therefore they also evoke different feelings which we should not underestimate when we work on projects that span many, many cultural zones. For avoiding misunderstandings and for effective communication, we need to take this into consideration.
+  
+Below are a few of common meanings colors are supposed to be attached to them. They are bit silly in my opinion but it’s nevertheless good to have seen these associations and commit them to memory. But let’s not forget, everybody sees colors differently. There is definitely a line to be drawn in your work, imagine using such guidelines when you paint a still life—a vase with flowers in front of an open window looking out to a farm. It would be bananas to think about all these color associations, no?
 
-  + Blue
-  Confidence
-  Stability
-  Business like
-  Trust it
-  Professsional
-  Honor
-  Dependable
+### Blue
+
+Blue speaks confidence, stability and business like no other color. When you look on the internets, it’s an understatement to say that it’s pretty popular. It also implies trust and profressionlism. Honor and being dependable is right up there as well. The (blue) sky is the limit! 
 
 ###### Screenshot
 
@@ -308,15 +302,9 @@ Overall, Etsy did a great job at being consistent with color as well on their ma
 
 [Sorted](http://staysorted.co/)
 
-  + Green
-  Growth
-  Harmony
-  Nature
-  Money
-  Wealth
-  Growth
-  Optimism
+### Green
 
+Green implies growth, harmony, nature, wealth, optimism and money of course. 
 
 ###### Screenshot
 
@@ -324,33 +312,19 @@ Overall, Etsy did a great job at being consistent with color as well on their ma
 
 [Zpotdrop](https://zpotdrop.com/)
 
-  + Red
-  Love
-  Power
-  Strength
-  Evil
-  Danger
-  Violence
-  Courage
-  Emergency
-  Blood
-  Shows off strenth
+## Red
+
+Obviously love is a major association with red, but power, eroticism and strength go with it as well. What makes it a bit tricky to work with is that it can also imply danger, blood, evil and a state of emergency. Courage swings with it maybe too—that’s what “they” say at least. Be careful about the context and meaning with this one since it can evoke very powerful connotations that are negative.
 
 ###### Screenshot
 
 {% img /images/Color-101/Screenshots/Red.png %}
 
-The site for the [SpeedX Leopard](https://speedx.com/smartbike/product/en/leopard/)
+The site for the [SpeedX Leopard](https://speedx.com/smartbike/product/en/leopard/) uses red very clever. It enhances the color of the bike-strength everybody!—itself, but only sparingly to highlight the call to action. Plastering red all over the place would not appear nearly as classy.
 
-  Be careful about the context and meaning
+## Yellow
 
-  + Yellow
-  Hope
-  Joy
-  Excitement
-  Warning
-
-  Because its so brignt and loud it screams at you
+Yellow symbolizes hope, joy, the sun, excitement but also warnings. Because it is so bright, it can “scream” really loud at you. Most of the time, that’s not what we need. In the example below, less would have been more I think. For a project that has “safe” in its name, yellow might not have been the best of choices.
 
 ###### Screenshot
 
@@ -358,47 +332,27 @@ The site for the [SpeedX Leopard](https://speedx.com/smartbike/product/en/leopar
 
 [FamilyInSafe](https://familyinsafe.com/)
 
-  + Purple
-  Magic
-  Luxury
-  Royal
+## Purple
 
+The good ol’ color of royalty. Not my cup of tea but this color is used to convey the idea of luxury, magic and all that jazz. Interestingly, I feel punk goes with it as well. The association with royalty and luxury probably  stems from the expensive nature purple had in the past. It was difficult to produce—some story that involves tons of tiny snails and such—and therefore only the peeps highest in the social food chain were able to afford it. Nowadays, this is not a concern anymore of course. Thank god, queens, kings and all these fellas need different stuff to look funky these days—poor snails!
 
 ###### Screenshot
 
 {% img /images/Color-101/Screenshots/Purple.png %}
 
-Funny that [Bootstrap](http://getbootstrap.com/), a popular Open Source project is using purple in a total different context very successfully. I guess Open Source projects have more wiggle room and follow different rules sometimes. Awesome!
+Funny that [Bootstrap](http://getbootstrap.com/), a highly popular Open Source project, is using purple in a total different context very successfully. I guess Open Source projects have more wiggle room and adhere to different physics. Awesome!
 
+## White
 
-
-  White and Black can have very differnt meanings depending where you are. 
-  Be careful
-
-  + White
-  Purity
-  Cleanliness
-  Innocence
-  Softness
-  Deity
-  Royalty
-  Weddings
-  Positive things
+This one is another tricky item in the list. It can convey purity, cleanliness, softness, sophistication, elegance, deity, weddings, royalty and positivity in general. In other cultures it can also be clearly be identified with death and tragedy. White and Black can have very different meanings depending where you are. Watch out!
 
 ###### Screenshot
 
 {% img /images/Color-101/Screenshots/White.png %}
 
-  + Black
-  Mysterious
-  End
-  Death
-  Serious
-  Conventional
-  Sexy
-  Sophisitcation
-  Rebellious
+## Black
 
+Last, but not least, the good ol’ mysterious, sexy and sophisticated black. Why so serious black? Because it can also associate “The End”, death and evil. On top of that, it is rebellious as well.
 
 ###### Screenshot
 
@@ -406,10 +360,7 @@ Funny that [Bootstrap](http://getbootstrap.com/), a popular Open Source project 
 
 [Impossible](https://us.impossible-project.com/)
 
-
-use one color, slowly put in your color.one dominant color and find one supporting color at most
-you can also add neutral colors for support. This makes the dominant color to pop out more strongly. Like with the example with Monet on top.
-
+I think by now, you get the point that I think these color meanings are a bit silly. Up to you! Do your research when you work on a project, especially if it reaches people outside your cultural understanding, but have lots of salt ready to go with it. Most of all, have fun and let your creative juices flow! Designing strictly by the book is dead boring anyway—and one sure way to kill the mood for sure. 
 
 ## Color Pallets
 
