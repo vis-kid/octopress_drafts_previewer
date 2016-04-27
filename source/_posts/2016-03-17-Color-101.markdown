@@ -18,17 +18,14 @@ categories: [Design, Color Theory, Color, Visual Design, Product Design, Web Des
 + Value
 + Saturation / Chroma
 + Color Wheel
-+ Types of Color
-+ Warm Colors
-+ Cool Colors
-+ Neutral Colors
 + Matching Colors
 + Monochromatic
 + Types of Color
++ Matching Colors
 + Emphasis
-+ Consistency
-+ Color Meaning
-+ Color Palette
++ Color Consistency
++ Color Meanings
++ Color Relativity
 
 ## Color?
 
@@ -172,7 +169,7 @@ On the color wheel, they are opposing each other. Complimentary colors are a ver
 
 No, it’s not about the Chinese Mafia, these colors are only placed equally distant on the color wheel. They are a bit more of an advanced combination and using these is a bit hard for beginners to get right I think—but don’t let me stop you. The more you practice, etc, etc… They are often good for cartoons and surreal scenes and can imply a certain playfulness. 
 
-## Types of color
+## Types of Color
 
 ###### Newer representation of the RYB color wheel:
 
