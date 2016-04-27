@@ -372,19 +372,19 @@ I think by now, you get the point that I think these color meanings are a bit si
 
 ## Color Relativity
 
-Color is only what’s surrounding it
-
-  We were talking about cooler and warmer colors but it’s a bit more relative that that. Color can appear that way in reltation to another. Colors can look warmer or colder depending on the enviroment they are in. Our human eye is a bit foolish that way.
+Let me just mention something real quick before we head out. Color is highly influenced by what’s surrounding it. At some point, We were talking about cooler and warmer colors but it’s a bit more relative than that. Colors can appear that way in relation to each other. They can look warmer or colder depending on the environment they are in. Our human eye is a bit foolish that way. See how the colors below influence each other and how the gray border of the inner squares appears differently within each spectrum. That’s what is called color relativity.
 
 {% img /images/Color-101/color-relativity.png %}
 
-## Final Thoughts
+In some extreme examples colors can look completely different and fool the human eye big time:
 
-can be powerful mood changer
+{% img /images/Color-101/color-relativity-checkers.png %}
 
-Try to avoid having muddy colors where you loose the distinct quality the colors at your disposal. On the web, you definitely want to use color to create a certain mood, vibe or whatever and also to highlight stuff that are of particular importance. As with design principles, less is more. If everything is highlighted via color, nothing sticks out and you will end up with color noise—which is the worst becaus it is not interesting at all.
+Believe it or not, squares ‘A’ and ‘B’ are actually of the same color. Wanna see proof huh?
 
-Color is an insanely deep rabbit hole. Don’t get lost in it too much! You have a lifetime to to achieve probably only a fraction of an understanding. Take it easy and have fun!
+{% img /images/Color-101/color-relativity-checkers2.png %}
+
+Happy now? Use your favorite color picker if you like. Food for thought for on the road…
 
 
 
