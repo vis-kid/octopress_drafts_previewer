@@ -212,6 +212,11 @@ The neutrals recede to the background when you bring more saturated colors into 
 
 Imagine if we would have tons of saturated colors here. It would be much harder for the preorder buttons to stick out. Since they are at the core of their business, they need to be highly accentuated to not get lost while users spend their attention deficits on a site. The white and gray areas recede to the background and let the few color accentuations pop right out. It’s hard to get lost here if you have healthy eyesight.
 
+## Matching Colors
+
+A word about bringing various colors together before we move on. As I indicated, it really can be a bit similar to choosing typefaces. Try to choose one or utmost two major colors for your design. You have lots of variations to play with like that. Adjusting value, tone, brightness, saturation or use neutral colors, etc… If you don’t go nuts with tons of colors, you will achieve a much more coherent and professional result—one that also ties the whole piece together more meaningfully and elegant.
+
+Start with one color, bounce other colors off of that and see how far you can take it. You can create real classy color schemes by bouncing off the main color intelligently. When you start to choose color, keep things simple and slowly put colors into your designs. Even better if you start with a simple gray-scale and wait a bit before you bring color to the equation. Play with light and darkness in your early approaches. For highlighting certain parts—that are most likely somehow important to your business logic—use the dominant colors sparingly while letting the supporting colors do the background work.
 
 
 
@@ -247,7 +252,6 @@ If you use your dominant color very sparsely, you can create a very effective em
 [RIF6](https://rif6.com/) only highlights the key items for a successful business transaction.
 
 In the example above, it is very hard to not notice the buttons that let you buy this item. Nothing is in the way of guiding the eye quickly to the interface item that facilitates the users main action—or viewed from the other perspective, the interface item that closes the sales tunnel. All while using the main color that the company is identifies with as a brand. Simple and effective! And no nonsense in the way.
-
 
 ## Color Consistency
 Once you establish a mental map of colors for your users, it is important to not break it—or if you break it, do it skillfully and with a certain purpose. For example, Keeping links the same color when they do the same thing is immensely crucial—especially if you have tons of content on a page. Alsl, keeping header colors consistent makes you look good and gives the user something to anchor their journey. Keeping background colors similar can be very effective as well. This is not something that does a lot of harm when ignored but can tie things together nicely. It definitely has good chances of looking more classy that way. The most important piece in all of this is that you are setting expectations for your users, and that you want to make easy for users to follow and understand where the journey is going.
