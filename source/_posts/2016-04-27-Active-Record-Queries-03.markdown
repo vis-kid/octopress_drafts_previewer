@@ -12,6 +12,184 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 
 ## Topics
 
-+ Includes & Eager Loading
++ Associations & Scopes
 
 In this last piece we are going to look a bit deeper into queries and try to play with a few more advanced scenarios. If you are new to Active Record queries and SQL, I recommend that you take a look at my previous two articles before you continue. This one might be hard to swallow without the knowledge that I was building up so far. Up to you of course. On the flip side, this article is not gonna be as long as the other ones if you just wanna look at these advanced use cases. Let’s dig in! 
+
+Writing some of the SQL and integrate it with your Active Record code. You should have now at least have a basic SQL knowledge and understand what Active Record does and what it offers in terms of queries. We will cover relationships of Active Record models a bit more in this article but I try to stay away from examples that could be too confusing for programming newbies. Before you move forward, stuff like the example below should not cause any confusion: 
+
+###### Rails
+
+``` ruby
+
+Mission.last.agents.where(name: 'James Bond')
+
+```
+
+## Associations & Scopes
+
+Let’s reiterate. We can query Active Record models but right away, assocications are also fair game for queries and we can chain all these thingies. So far so good. I briefly mentioned that we can pack them into neat and handy scopes in your models as well.
+
+###### Rails
+
+``` ruby
+
+class Agent < ActiveRecord::Base
+
+  belongs_to :mission
+
+  scope :find_bond,        -> { where(name: 'James Bond') }
+  scope :licenced_to_kill, -> { where(licence_to_kill: true) }
+  scope :womanizer,        -> { where(womanizer: true) }
+  scope :gambler,          -> { where(gambler: true) } 
+
+end
+
+# => Agent.find_bond
+# => Agent.licenced_to_kill
+# => Agent.womanizer
+# => Agent.gambler
+
+# => Mission.last.agents.find_bond
+# => Mission.last.agents.licenced_to_kill
+# => Mission.last.agents.womanizer
+# => Mission.last.agents.gambler
+
+```
+
+
+What you can also do is pack them into your own class methods and be done with it. Scopes are not iffy or anything I think—although people mention it as being a bit magic here and here—, but since class methods achieve the same thing, I’d opt for that.
+
+###### Rails
+
+``` ruby
+
+class Agent < ActiveRecord::Base
+
+  belongs_to :mission
+
+  def self.find_bond
+    where(name: 'James Bond')
+  end
+
+  def self.licenced_to_kill
+    where(licence_to_kill: true)
+  end
+
+  def self.womanizer
+    where(womanizer: true)
+  end
+
+  def self.gambler
+    where(gambler: true)
+  end
+
+end
+
+# => Agent.find_bond
+# => Agent.licenced_to_kill
+# => Agent.womanizer
+# => Agent.gambler
+
+# => Mission.last.agents.find_bond
+# => Mission.last.agents.licenced_to_kill
+# => Mission.last.agents.womanizer
+# => Mission.last.agents.gambler
+
+```
+
+These class methods read just the same and you don’t need to stab anybody with a lambda. Whatever works best for your you or your team, up to you what API you wanna use here. Just don’t mix and match them and stick with once choice!
+
+Both versions let you easily chain these methods inside another class method for example:
+
+###### Rails
+
+``` ruby
+
+class Agent < ActiveRecord::Base
+
+  belongs_to :mission
+
+  scope :licenced_to_kill, -> { where(licence_to_kill: true) }
+  scope :womanizer,        -> { where(womanizer: true) }
+
+  def self.find_licenced_to_kill_womanizer
+    womanizer.licenced_to_kill
+  end
+
+end
+
+# => Agent.find_licenced_to_kill_womanizer
+
+# => Mission.last.agents.find_licenced_to_kill_womanizer
+
+```
+
+###### Rails
+
+``` ruby
+
+class Agent < ActiveRecord::Base
+
+  belongs_to :mission
+
+  def self.licenced_to_kill
+    where(licence_to_kill: true)
+  end
+
+  def self.womanizer
+    where(womanizer: true)
+  end
+
+  def self.find_licenced_to_kill_womanizer
+    womanizer.licenced_to_kill
+  end
+
+end
+
+# => Agent.find_licenced_to_kill_womanizer
+
+# => Mission.last.agents.find_licenced_to_kill_womanizer
+
+```
+
+Let’s take this one little step further—stay with me. We can use a lambda in associations itself to define a certain scope. Looks a bit weird at first but they can be pretty handy. That makes it possible to call these lambdas right on your associtaions. Pretty cool and highly readable with shorter methods chaining going on. Be aware of coupling these models too tight though.
+
+###### Rails
+
+``` ruby
+
+class Mission < ActiveRecord::Base
+
+  has_many :double_o__agents,
+    -> { where(licence_to_kill: true) },
+    class_name: "Agent"
+
+end
+
+# => Mission.double_o_agents
+
+```
+
+Tell me this isn’t cool somehow! Not for everyday use but cool to have I guess. A word about the syntax, since we strayed from naming conventions and used something more expressive using ```double_o_agents```, we need to mention the class name to not confuse Rails.
+
+You can of course have both `Agent` associtaions in place—the usual and your custom one—and Rails won’t complain.
+
+###### Rails
+
+``` ruby
+
+class Mission < ActiveRecord::Base
+
+  has_many :agents
+
+  has_many :double_o__agents,
+    -> { where(licence_to_kill: true) },
+    class_name: "Agent"
+
+end
+
+# => Mission.agents
+# => Mission.double_o_agents
+
+```
