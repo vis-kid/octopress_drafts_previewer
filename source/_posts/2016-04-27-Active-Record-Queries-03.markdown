@@ -13,6 +13,7 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 ## Topics
 
 + Associations & Scopes
++ Slimmer Joins
 
 In this last piece we are going to look a bit deeper into queries and try to play with a few more advanced scenarios. If you are new to Active Record queries and SQL, I recommend that you take a look at my previous two articles before you continue. This one might be hard to swallow without the knowledge that I was building up so far. Up to you of course. On the flip side, this article is not gonna be as long as the other ones if you just wanna look at these advanced use cases. Let’s dig in! 
 
@@ -193,3 +194,60 @@ end
 # => Mission.double_o_agents
 
 ```
+
+## Slimmer Joins
+
+When you query the database for records and you need not all of the data, you can choose to specify what exactly you want returned. Why? Because the attributes returned to Active Record will eventually be built into new Ruby Objects. This would be one strategy to avoid memory bloat in your Rails app.
+s
+
+###### Rails
+
+``` ruby
+
+class Mission < ActiveRecord::Base
+
+  has_many :agents
+
+end
+
+class Agent < ActiveRecord::Base
+
+  belongs_to :mission
+
+end
+
+
+```
+
+###### Rails
+
+``` ruby
+
+Agent.all.joins(:mission)
+
+```
+
+``` sql
+
+SELECT "agents".* FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id"
+
+```
+
+So this query returns a list of agents from the database to Active Record—which then in turn sets out to build Ruby objects out of it. The `mission` data is available since the data from these rows are joined onto the rows of the agent’s data. That means, the joined data is available during the query but will not get returned to Active Record. So you will have this data to perfom calculations for example. It’s especially cool because you can make use of data that does also not get sent back to your app. Less attributes that need to get built into Ruby objects—that take up memory—can be a big win. In general, think about sending only the absolute necessary rows and columns back that you need. That way you avoid bloat quite a bit.
+
+###### Rails
+
+``` ruby
+
+Agent.all.joins(:mission).where(missions: { objective: "Saving the world" })
+
+```
+
+Just a quick aside about the syntax here, because we are not querying the `Agent` table via `where` here, but the joined `:mission` table, we need to specify that we are looking for specific `missions` in our `WHERE` clause.
+
+``` sql
+
+SELECT "agents".* FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id" WHERE "missions"."objective" = ?  [["objective", "Saving the world"]]
+
+```
+
