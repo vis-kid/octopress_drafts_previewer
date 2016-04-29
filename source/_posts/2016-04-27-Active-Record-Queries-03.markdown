@@ -251,3 +251,102 @@ SELECT "agents".* FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agen
 
 ```
 
+## Merge
+
+When we want to combine a query on agents and their associated missions that have a specific scope that is defined by you.
+
+
+We can take two ActiveRecord::Relation objects and can merge their conditions. Sure, no biggie but `merge` is useful if you want to use a certain scope while using an association. In other words, what we can do with `merge` is filter by a named scope on the joined model. In one of the previous examples we used class methods to define such named scopes ourselves.
+
+###### Rails
+
+``` ruby
+
+class Mission < ActiveRecord::Base
+  has_many :agents
+
+  def self.dangerous
+    where(enemy: "Ernst Stavro Blofeld")
+  end
+end
+
+class Agent < ActiveRecord::Base
+
+  belongs_to :mission
+
+end
+
+```
+
+``` ruby
+
+Agent.joins(:mission).merge(Mission.dangerous)
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "agents".* FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id" WHERE "missions"."enemy" = ?  [["enemy", "Ernst Stavro Blofeld"]]
+
+```
+
+When we encapsulate what a ```dangerous``` mission is within the `Mission` model, we can now also tuck it on a `join` via `merge`. So moving the logic of such conditions to the relevant model where it belongs is one the one side a nice technique to achieve looser coupling—we don’t want our Active Record models to know a lot of details about each other—and on the other hand, it gives you a nice APi in your joins without blowing up in your face. The example below without merge would not work without an error:
+
+###### Rails
+
+``` ruby
+
+Agent.all.merge(Mission.dangerous)
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "agents".* FROM "agents" WHERE "missions"."enemy" = ?  [["enemy", "Ernst Stavro Blofeld"]]
+
+```
+
+When we now merge on an ActiveRecord::Relation object for our missions onto our agents then the database doesn’t know which missions we are talking about. We need to make the association we need clear and join the mission data first—or SQL gets confused.
+
+One last cherry on top. We encapsulate this even better by involving the agents as well: 
+
+###### Rails
+
+``` ruby
+
+class Mission < ActiveRecord::Base
+  has_many :agents
+
+  def self.dangerous
+    where(enemy: "Ernst Stavro Blofeld")
+  end
+end
+
+class Agent < ActiveRecord::Base
+  belongs_to :mission
+
+  def self.double_o_engagements
+    joins(:mission).merge(Mission.dangerous)
+  end
+end
+```
+
+``` ruby
+
+Agent.double_o_engagements
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "agents".* FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id" WHERE "missions"."enemy" = ?  [["enemy", "Ernst Stavro Blofeld"]]
+
+```
+
+That’s some sweet cherry in my book. Encapsulation, proper OOP and great readability. Jackpot!
