@@ -14,6 +14,7 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 
 + Associations & Scopes
 + Slimmer Joins
++ Merge
 
 In this last piece we are going to look a bit deeper into queries and try to play with a few more advanced scenarios. If you are new to Active Record queries and SQL, I recommend that you take a look at my previous two articles before you continue. This one might be hard to swallow without the knowledge that I was building up so far. Up to you of course. On the flip side, this article is not gonna be as long as the other ones if you just wanna look at these advanced use cases. Let’s dig in! 
 
@@ -350,3 +351,9 @@ SELECT "agents".* FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agen
 ```
 
 That’s some sweet cherry in my book. Encapsulation, proper OOP and great readability. Jackpot!
+
+## Final Thoughts
+
+Getting Active Record to write efficient SQL for you is one of the main skills you should take away from this mini-series. For that it is necessary that you not only understand how to play with Active Record but the underlying SQL is of equal importance. Yes, SQL can be boring, tedious to read and not elegant looking, but don’t forget that Rails wraps Active Record around SQL and you should not neglect understanding this vital piece of technology—just because Rails makes it very easy most of the time to not care. Effeciency is crucial for database queries, especially if you build something for larger audiences and traffic. Therefore 
+
+Also, if you get Active Record to write SQL for you, you will get code that is compliant with whatever database it supports. Meaning that the queries will be stable across databases.
