@@ -1,0 +1,19 @@
+---
+layout: post
+title: Grids 101
+date: 2016-04-30 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [Design, Grids, Visual Design, Product Design, Web Design, Frontend]
+---
+
+{% img /images/Color-101/GoetheFarbkreis.png %}
+
+## Topics
+
++ Color?
+
+## Terminology
+
+
