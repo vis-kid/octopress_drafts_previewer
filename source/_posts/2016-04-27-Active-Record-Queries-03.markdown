@@ -352,6 +352,157 @@ SELECT "agents".* FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agen
 
 That’s some sweet cherry in my book. Encapsulation, proper OOP and great readability. Jackpot!
 
+## has_many
+
+So above we have seen ```belongs_to``` in action a lot. Let’s view this from another perspective and bring secret service sections into the mix:
+
+###### Rails
+
+``` ruby
+
+class Section < ActiveRecord::Base
+  has_many :agents
+end
+
+class Mission < ActiveRecord::Base
+  has_many :agents
+end
+
+class Agent < ActiveRecord::Base
+  belongs_to :mission
+  belongs_to :section
+end
+
+```
+
+So in this scenario, agents would not only have a ```mission_id``` but also a ```section_id```. So far so good. Let’s find all sections with agents with a specific mission—so sections that have some sort of mission going on.
+
+###### Rails
+
+``` ruby
+
+Section.joins(:agents)
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "sections".* FROM "sections" INNER JOIN "agents" ON "agents"."section_id" = "sections."id"
+
+```
+
+Did you notice something? A small detail is different. The foreign keys are flipped. Here we are requesting a list of sections but use foreign keys like this: ```"agents"."section_id" = "sections."id"```. In other words, We are looking for a foreign key from a table we are joining. On the other hand, our joins via a ```belongs_to``` association looked like this:
+
+###### Rails
+
+``` ruby
+
+Agent.joins(:mission)
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "agents".* FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id"
+
+```
+
+Here the foreign keys were mirrored: ```"missions"."id" = "agents"."mission_id"```.
+and are looking for the foreign key from the table we are starting.
+
+Going back to your ```has_many``` scenario, we now would get a list of sections that are repeated because they have multiple agents in each section of course. So for each agent column that gets joined on, we get a row for this section / section_id—in short, we are duplicating rows basically.
+
+To make this even more dizzy, let’s bring missions into the mix as well.
+
+###### Rails
+
+
+``` ruby
+
+Section.joins(agents: :mission)
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "sections".* FROM "sections" INNER JOIN "agents" ON "agents"."section_id" = "sections"."id" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id"
+
+```
+
+Check out the two `INNER JOIN` parts. Still with me? We are kinda “reaching” through agents to their missions from the agent’s section. Yeah, stuff for fun headaches, I know. What we get are missions that indirectly associate with a ceratain section. As a result, we can new columns joined on but the number of rows is still the same that gets returned by this query. What gets sent back to Active Record—resulting in builing new Ruby objects—is also still the list of sections. So when we have multiple missions going on with multiple agents, we would get duplicated rows for our section again. Let’s filter this some more:
+
+###### Rails
+
+``` ruby
+
+Section.joins(agents: :mission).where(missions: { enemy: "Ernst Stavro Blofeld" })
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "sections".* FROM "sections" INNER JOIN "agents" ON "agents"."section_id" = "sections"."id" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id" WHERE "missions"."enemy" = 'Ernst Stavro Blofeld'
+
+```
+
+Now we only get sections returned that are involved in missions where Ernst Stavro Blofeld is the involved enemy. Kosmopolitan as some super villains might think of themselves, they could operate in more than one section—say section A and C, the United Sates and Canada respectively. If we have multiple agents in a given section who are working on the same mission to stop Blofeld or whatever, we would agin have repeated rows returned to us into Active Record. Let’s be a bit more distinct about it:
+
+###### Rails
+
+``` ruby
+
+Section.joins(agents: :mission).where(missions: { enemy: "Ernst Stavro Blofeld" }).distinct
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT DISTINCT "sections".* FROM "sections" INNER JOIN "agents" ON "agents"."section_id" = "sections"."id" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id" WHERE "missions"."enemy" = 'Ernst Stavro Blofeld'
+
+```
+
+What this gives us is the number of sections that Blowfeld tries operates out—that are known of—which has agents active in missions with him as an enemy. As a final step, let’s do some refactoring again. We extract this into a nice “little” class method on `class Section`:
+
+###### Rails
+
+``` ruby
+
+class Section < ActiveRecord::Base
+  has_many :agents
+
+  def self.critical
+    joins(agents: :mission).where(missions: { enemy: "Ernst Stavro Blofeld" }).distinct
+  end
+end
+
+class Mission < ActiveRecord::Base
+  has_many :agents
+end
+
+class Agent < ActiveRecord::Base
+  belongs_to :mission
+  belongs_to :section
+end
+
+```
+
+You can refactor this even more and split up the reponsibilities to achieve looser coupling, but let’s move on for now.
+
+
+
+
+say there are multiple missions going on in section A, the United States for example. Popular breeding ground for super villains and their shady business.
+
 ## Final Thoughts
 
 Getting Active Record to write efficient SQL for you is one of the main skills you should take away from this mini-series. For that it is necessary that you not only understand how to play with Active Record but the underlying SQL is of equal importance. Yes, SQL can be boring, tedious to read and not elegant looking, but don’t forget that Rails wraps Active Record around SQL and you should not neglect understanding this vital piece of technology—just because Rails makes it very easy most of the time to not care. Effeciency is crucial for database queries, especially if you build something for larger audiences and traffic. Therefore 
