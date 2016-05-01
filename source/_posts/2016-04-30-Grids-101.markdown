@@ -16,4 +16,88 @@ categories: [Design, Grids, Visual Design, Product Design, Web Design, Frontend]
 
 ## Terminology
 
+A grid can create an invisible structure, a skelleton of your design if you will. They are invisible lines that your design elements can be placed upon and tied together in an overall structure that supports your composition. This helps you to create alignment and consistency in a much more effective manner than just winging it and going with your gut. If exectuted well, your designs will appear thoughtful, organized, neat and structurally sound.
 
+Good alignment shouldn’t be loud and screamy I think. It should almost go unnoticed by your users. Less is more, too clever and you risk of distracting the user from their primary goal: searching for specific content and digesting it. That should be your primary goal—not showing off how nifty you can be with your design skills, or worse, reinventing the wheel to proof a point.
+
+A lack of alignment on the other hand is very noticeable and creates a sloppy impression. This might very well result in a lack of trust of the users who consumes your design—unless the lack of alignment is something you are going for and want to use on purpose for whatever reason of course. For emphasis you can of course break the grid and its alignment to highlight certain design elements.
+
+Balanced layouts and therefore a balanced grid often feels more comfortable than the opposite—especially overly complicated layouts. Just be careful to not play it safe all the time and risk looking too boring.
+
+When to use a grid? Always
+Always a goo reason
+
+Helps with balance, hierarchy and alignment and consistency
+
+complaints about constraints - fosters creativity
+
+mental model of site and individual pages
+
+rhytm of your page and
+
+keep it simple, easier to maintain and to build within
+
+
+
+
+
++ Unit
+is the basic building block. Grid is made up of multiple units
+
++ Gutter
+The gutter separates the units, between each unit. it gives the grid some breathing room through this micro whitespace
+
++ Column
+Multiple units and gutters together form a column. Its the space to logically and strategically group particular content.
+
++ Field
++ Rule of thirds
+When people talk about “magic intersections” that help you place pieces that make for more pleasant designs, I urge you to take a breath and consider the potential for nonsensical nonsense in these words. I’m sure it is easy to just drink the cool aid, especially since it’s so easy to follow, but nothing about these things are mathematically or biologically special in any way—and definitely not magical. Just look at the myriad of photos that are considered classics and how few really adhere to the exact placement of these intersections. Sure, a lot will come close, but more due the common sense in using basic compositional guidelines like balance, whitespace, alignment that adjusted to the content on the artwork. 
+
+And also, it’s just a theory after all. People believed for a long time that the divine proportions of the golden mean mean anything special, divine and especially pleasing. But on the other hand,there have been experiments that question these “pre-modern” assumptions and had no special effects on people tested. The final verdict is still out on these issues I guess—and might be for a long time—but nonting should hinder us in keeping an open mind to question these passed down assumptions and go beyond magical thinking. For a while it made sense to me for example that the golden mean might be super pleasing to us humans because in nature we are well surrouned by it, but then again, the evidence does not look unquestionably convincing. Maybe, maybe not. But this is not something I wanna take for granted and build upon. Myself asidde, the questions is, would you wanna? Whatever your decision is with all of this is totally up to you, I opt for not fooling myself and going the easy route of hearsay
+
+And don’t forget that we all don’t perceive the world the same way visually. We are all different. We are not machines that adhere to some mathemetically precise point of view when looking at the world. And, let’s not forget, there are plenty of people among your users who will simply not give a damn about all of this. Aligned on magical intersections or not, they couldn’t care less. If you are lucky, they will care for the substance and this is what you should always go for. Make something useful, something with soul that provices meaning and value. I mean look at Reddit. Does it look like they care about magical intersections?
+
+Yes, they are good guidelines—or can be at least—and when it fits and “aligns” with the image, design or whatever great, but don’t take it too seriously. Break the rules whenever it makes sense and ignore magical thinking! Do what feels right and go with your gut within the guidelines and techniques that you learn for your design work. “Nothing is true, everything is permitted” in design—to cite the often misunderstood Nietzsche. Philosophically this can be rightfully argued to death but in design, it represents a firm guideline to explore your creatvity without “magic” restrictions. If you view these magic intersections from that point of view, they look pretty silly, pretty fast. Go crazy, break the rules, have some fun and if you are lucky, find new frontiers! 
+
+Sorts of grids:
+ 
++ 12 unit grid:
+Is your friend. Is is very versatile and easy to use.
+easy way to get started and it starts nicely into three and four columns which are flexible enough to handle all sorts of content easily. They can be symmetricalor asymetrical which gives you plenty of options to either play it safe or to create some dynamic layouts that go beyond simple symmetry.
+
+Alignment
+Axial alignment: is about grid lines that tie various contents together
+You want to have multiple design elemnts aligned on your axis of your columns. You want to create a strong axix that a user can use for orientation and for guiding his eyes and actions like a visual anchor. This creates strong relationships that bind your work together and build up cohesion.
+
++ 4 column grid (12 unit grid)
+Benefits. simple, balanced and also dependable. It is very symetrical
+It is dependable and easy to use as a grid system
+You can use multiple columns for each section and combine them together. Which goes for any grid system of course. Often you need a main section for the main content and then a sidebar for secondary concerns
+
+Each column here spans three units
+
+Breaking out of the grid to create emphasis can be either massively improving your design and highlighting essential pieces or it can also look really, well, dumb.
+
++ 3 column grid ( 12 unit grid) 
+A bit more involved since it is an asymetrical grid. you need to be smarter about finding balance. asymetrical in this case is considereate more active and more skillful. Can and should be questioned of course!
+
+Each column here spans four units
+
++ 6 column grid ( 12 unit grid)
+It’s is even more challenging than the 3 column grid
+It splits up each column of a 3 column grid into two columns. This provides you with a few more options and oopportunity to fine tune smaller details.
+
+
+
+You can also combine grids within your designs. That why a 12 unit grid system is very handy because it easily allows you to combine a 3 and 4 column grid neatly. Combintations like this can help you to play with the content and provide you even more options to arrange your information more flexibly.
+
+
+
+visual interest
+hierarchy
+
+
+
+
+Rhytm of the grid
