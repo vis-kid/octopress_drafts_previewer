@@ -60,6 +60,8 @@ agents = Agent.includes(:handlers, :missions)
 
 Simple! Just be careful about using singular and plural versions for the includes. They depend on your model associations. A ```has_many``` associations uses plural while a ```belongs_to``` or a ```has_one``` needs the singular version of course. If you need, you can also tuck on a `where` clause for specifying additional conditions but the preferred way of specifying conditions for associated tables that are eager loaded is by using `joins` instead. 
 
+One thing to keep in mind about eager loading is that the data that will be added on will be sent back in full to Active Record—which in turn build Ruby objects including these attributes. This is in contrast to “simply” joining the data, where you will get a virtual result that you can use for calculations for example and will be less memory draining than includes.
+
 ## Joining Tables
 
 Joining tables is another tool that let’s you avoid sending too many unnecessary queries down the pipeline. A common scenario is joining two tables with a single query that returns some sort of combined records. `joins` is just another finder method of Active Record that lets you—in SQL terms—`JOIN` tables. These queries can return records combined from multiple tables—not just two and you get a virtual table that combines records from two ore more tables. This is pretty rad when you compare that to firing all kinds of queries for each table instead. There are a few different approaches what kind of data overlap you can get with this approach. 
