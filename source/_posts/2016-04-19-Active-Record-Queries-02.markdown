@@ -21,7 +21,7 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 + Specific Fields
 + Custom SQL
 
-In this second article we’ll try to dive a little deeper into Active Record queries in Rails. If you are still new to SQL I’ll still add examples that are simple enough that you can tag along and pick up the syntax as we go. That being said, it would definitely help if you run through a quick SQL tutorial before you come back to continue to read. Otherwise, take your time to understand the SQL queries we used and I hope that by the end of this series it won’t feel intimidating anymore. Most of it is really straightforward but the syntax is a bit weird if you just started out with coding—especially in Ruby. Hang in there, it’s no rocket science!
+In this second article we’ll try to dive a little deeper into Active Record queries in Rails. In case you are still new to SQL, I’ll still add examples that are simple enough that you can tag along and pick up the syntax a bit as we go. That being said, it would definitely help if you run through a quick SQL tutorial before you come back to continue to read. Otherwise, take your time to understand the SQL queries we used and I hope that by the end of this series it won’t feel intimidating anymore. Most of it is really straightforward but the syntax is a bit weird if you just started out with coding—especially in Ruby. Hang in there, it’s no rocket science!
 
 ## Includes & Eager Loading
 
@@ -54,19 +54,19 @@ This one agent in the list has two handlers and when we now ask the agent object
 
 ``` ruby
 
-agents = Agent.includes(:handlers, :missions)
+agents = Agent.includes(:handlers, :mission)
 
 ```
 
 Simple! Just be careful about using singular and plural versions for the includes. They depend on your model associations. A ```has_many``` associations uses plural while a ```belongs_to``` or a ```has_one``` needs the singular version of course. If you need, you can also tuck on a `where` clause for specifying additional conditions but the preferred way of specifying conditions for associated tables that are eager loaded is by using `joins` instead. 
 
-One thing to keep in mind about eager loading is that the data that will be added on will be sent back in full to Active Record—which in turn build Ruby objects including these attributes. This is in contrast to “simply” joining the data, where you will get a virtual result that you can use for calculations for example and will be less memory draining than includes.
+One thing to keep in mind about eager loading is that the data that will be added on will be sent back in full to Active Record—which in turn builds Ruby objects including these attributes. This is in contrast to “simply” joining the data, where you will get a virtual result that you can use for calculations for example and will be less memory draining than includes.
 
 ## Joining Tables
 
-Joining tables is another tool that let’s you avoid sending too many unnecessary queries down the pipeline. A common scenario is joining two tables with a single query that returns some sort of combined records. `joins` is just another finder method of Active Record that lets you—in SQL terms—`JOIN` tables. These queries can return records combined from multiple tables—not just two and you get a virtual table that combines records from two ore more tables. This is pretty rad when you compare that to firing all kinds of queries for each table instead. There are a few different approaches what kind of data overlap you can get with this approach. 
+Joining tables is another tool that let’s you avoid sending too many unnecessary queries down the pipeline. A common scenario is joining two tables with a single query that returns some sort of combined record. `joins` is just another finder method of Active Record that lets you—in SQL terms—`JOIN` tables. These queries can return records combined from multiple tables and you get a virtual table that combines records from these tables. This is pretty rad when you compare that to firing all kinds of queries for each table instead. There are a few different approaches what kind of data overlap you can get with this approach. 
 
-The inner join is the default modus operandi for `join`. This matches all the results that match a certain id and its representation as a foreign key from another object / table. In the example below, put simply: give me all missions where the mission’s `id` shows up as ```mission_id``` in an agent’s table. ```"agents"."mission_id" = "missions"."id"```. Inner joins exclude relationships that don’t exist.
+The inner join is the default modus operandi for `joins`. This matches all the results that match a certain id and its representation as a foreign key from another object / table. In the example below, put simply: give me all missions where the mission’s `id` shows up as ```mission_id``` in an agent’s table. ```"agents"."mission_id" = "missions"."id"```. Inner joins exclude relationships that don’t exist.
 
 ###### Rails
 
@@ -84,9 +84,7 @@ SELECT "missions".* FROM "missions" INNER JOIN "agents" ON "agents"."mission_id"
 
 ```
 
-So we are matching missions and their accompanying agents—in a single query! Sure, we could get the missions first, iterate over them one by one and ask for its agents. But then we would go back to our dreadful “N + 1 query problem”. No, thank you! What’s also nice about this approach is that we won’t get any nil cases with inner joins, we only get records returned that match their ids to foreign keys in associated tables. If we need to find missions for example that lack any agents, we would need an outer join instead.
-
-You can also join multiple associated tables of course.
+So we are matching missions and their accompanying agents—in a single query! Sure, we could get the missions first, iterate over them one by one and ask for its agents. But then we would go back to our dreadful “N + 1 query problem”. No, thank you! What’s also nice about this approach is that we won’t get any nil cases with inner joins, we only get records returned that match their ids to foreign keys in associated tables. If we need to find missions for example that lack any agents, we would need an outer join instead. Since this involves currently to write your own `OUTER JOIN` SQL, we will look into this in the last article. Back to standard joins, you can also join multiple associated tables of course.
 
 ###### Rails
 
@@ -96,7 +94,7 @@ Mission.joins(:agents, :expenses, :handlers)
 
 ```
 
-And of course, you can add onto these `where` clauses to specify your finders even more. Below we are looking only for missions that are executed by James Bond and only the agent that belongs to the mission 'Moonraker' in the second example.
+And you can add onto these some `where` clauses to specify your finders even more. Below we are looking only for missions that are executed by James Bond and only the agents that belong to the mission 'Moonraker' in the second example.
 
 ###### Rails
 
@@ -110,7 +108,7 @@ Mission.joins(:agents).where( agents: { name: 'James Bond' })
 
 ``` sql
 
-SELECT "missions".* FROM "missions" INNER JOIN "agents" ON "agents"."mission_id" = "missions"."id" WHERE "agents"."name" = ?  [["name", "James"]]
+SELECT "missions".* FROM "missions" INNER JOIN "agents" ON "agents"."mission_id" = "missions"."id" WHERE "agents"."name" = ?  [["name", "James Bond"]]
 
 ```
 
@@ -130,13 +128,11 @@ SELECT "agents".* FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agen
 
 ```
 
-With `joins` you also have to pay attention to singular and plural use of your model associations. Because my `Mission` class ```has_many :agents``` we can use the plural. On the other hand, the `Agent` class ```belongs_to :mission```, only the singular version works without blowing up. Simple, but important to not overlook. The `where` part is simpler. Since you are scanning for multiple rows in the table that fulfill a certain condition, the plural form makes always sense.
+With `joins` you also have to pay attention to singular and plural use of your model associations. Because my `Mission` class ```has_many :agents```, we can use the plural. On the other hand, the `Agent` class ```belongs_to :mission```, only the singular version works without blowing up. Important little detail. The `where` part is simpler. Since you are scanning for multiple rows in the table that fulfill a certain condition, the plural form makes always sense.
 
 ## Scopes
 
-Scopes are a handy way to extract common query needs into well named methods of your own. That way they are a bit easier to pass around and also possibly easier to understand—if others have to work with your code or if you need to revisit certain queries in the future. You can define them for single models but use them for their associations as well. The sky is the limit really—`joins`, `includes`, `where` are all fair game! Since scopes also return `ActiveRecord::Relations` objects you can chain them and call other scopes on top of them without hesitation. Extracting scopes like that and chaining them for more complex queries is something very handy and makes longer ones all the more readable.
-
-Scopes are defined via the “stabby lambda” syntax:
+Scopes are a handy way to extract common query needs into well named methods of your own. That way they are a bit easier to pass around and also possibly easier to understand—if others have to work with your code or if you need to revisit certain queries in the future. You can define them for single models but use them for their associations as well. The sky is the limit really—`joins`, `includes`, `where` are all fair game! Since scopes also return `ActiveRecord::Relations` objects, you can chain them and call other scopes on top of them without hesitation. Extracting scopes like that and chaining them for more complex queries is something very handy and makes longer ones all the more readable. Scopes are defined via the “stabby lambda” syntax:
 
 ###### Rails
 
@@ -160,8 +156,12 @@ class Agent < ActiveRecord::Base
   scope :licenced_to_kill, -> { where(licence_to_kill: true) }
   scope :womanizer,        -> { where(womanizer: true) }
   scope :gambler,          -> { where(gambler: true) } 
-
 end
+
+# Agent.gambler
+# Agent.womanizer
+# Agent.licenced_to_kill
+# Agent.womanizer.gambler
 
 Agent.licenced_to_kill.womanizer.gambler
 
@@ -175,7 +175,7 @@ SELECT "agents".* FROM "agents" WHERE "agents"."licence_to_kill" = ? AND "agents
 
 ```
 
-As you can see from the example above, finding James Bond is much nicer when you can just chain scopes together. That way you can mix and match various queries and stay DRY at the same time. If you need scopes via associations they are at your disposal as well:
+As you can see from the example above, finding James Bond is much nicer when you can just chain scopes together. That way you can mix and match various queries and stay DRY at the same time. If you need scopes via associations, they are at your disposal as well:
 
 ``` ruby
 
@@ -197,9 +197,7 @@ You can also redefine the ```default_scope``` for when you are looking at someth
 ``` ruby
 
 class Mission < ActiveRecord::Base
-
   default_scope { where status: "In progress" }
-
 end
 
 Mission.all
@@ -216,13 +214,13 @@ Mission.all
 
 ## Aggregations
 
-This section is not so much advanced in terms of the involved understanding but you will need them more often than not in scenarios that can be considered a bit more advanced than your average finder—like `.all`, `first`, `find_by_id` or whatever. Filtering based on basic calculations for example is most likely something that newbies don’t get in touch with right away. What are we looking at exactly here?:
+This section is not so much advanced in terms of the involved understanding but you will need them more often than not in scenarios that can be considered a bit more advanced than your average finder—like `.all`, `.first`, `.find_by_id` or whatever. Filtering based on basic calculations for example is most likely something that newbies don’t get in touch with right away. What are we looking at exactly here?:
 
 + `sum`
++ `count`
 + `minimum`
 + `maximum`
 + `average`
-+ `count`
 
 Easy peasy, right? The cool thing is that instead of looping through a returned collection of objects to do these calculations, we can let Active Record do all this work for us and return these results with the queries—in one query preferably. Nice, huh?
 
@@ -272,7 +270,7 @@ Since we now know how we can make use of `joins`, we can take this one step furt
 
 ``` ruby
 
-Agent.joins(:mission).where(missions: {name: 'Average Mission'}).average(:number_of_gadgets).to_f
+Agent.joins(:mission).where(missions: {name: 'Moonraker'}).average(:number_of_gadgets).to_f
 
 # => 3.4
 
@@ -282,11 +280,11 @@ Agent.joins(:mission).where(missions: {name: 'Average Mission'}).average(:number
 
 ``` sql
 
-SELECT AVG("agents"."number_of_gadgets") FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id" WHERE "missions"."name" = ?  [["name", "Average Mission"]]
+SELECT AVG("agents"."number_of_gadgets") FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agents"."mission_id" WHERE "missions"."name" = ?  [["name", "Moonraker"]]
 
 ```
 
-Grouping these average number of gadgets by mission’s names becomes trivial at that point.
+Grouping these average number of gadgets by mission’s names becomes trivial at that point. See more about grouping below:
 
 ###### Rails
 
@@ -412,11 +410,11 @@ SELECT AVG("agents"."number_of_gadgets") AS average_number_of_gadgets, missions.
 
 ```
 
-This example finds all the agents that are grouped to a particular mission and returns a hash with the calculated average number of gadgets as its values—in a single query! Yup! Same goes for the other calculations as well of course. In this case it really makes more sense to let SQL do the work and not use the convenient Rails API. The number of queries we fire for these aggregations is just too important.
+This example finds all the agents that are grouped to a particular mission and returns a hash with the calculated average number of gadgets as its values—in a single query! Yup! Same goes for the other calculations as well of course. In this case it really makes more sense to let SQL do the work. The number of queries we fire for these aggregations is just too important.
 
 ## Dynamic Finders
 
-For every attribute on your models, say `name`, `email_address` `favorite_gadget` and so on, Active Record lets you use very readable finder methods that are dynamically created for you. Sounds cryptic, I know but it doesn’t mean anything other than `find_by_id` or `find_by_favorite_gadget`. The `find_by` part is standard and Active Record just tucks on the name of the attribute for you. You can even get to add an `!` if you want that finder to raise an error if not found. The sick part is, you can even chain these dynamic finder methods together. Just like this:
+For every attribute on your models, say `name`, `email_address` `favorite_gadget` and so on, Active Record lets you use very readable finder methods that are dynamically created for you. Sounds cryptic, I know but it doesn’t mean anything other than `find_by_id` or `find_by_favorite_gadget`. The `find_by` part is standard and Active Record just tucks on the name of the attribute for you. You can even get to add an `!` if you want that finder to raise an error if nothing can be found. The sick part is, you can even chain these dynamic finder methods together. Just like this:
 
 ###### Rails
 
@@ -460,7 +458,7 @@ In this example it is nevertheless nice to see how it works under the hood. Ever
 
 ## Specific Fields
 
-Active Record gives you the option to return objects that are a bit more focused around the attributes they carry. Usually, if not specified otherwise, the query will ask for all the fields in a row via ```*``` (```SELECT  "agents".*```) and then Active Record builds Ruby objects with the complete set of attributes. However, you can `select` only specific fields that should be returned by the query and limit the number of attributes your Ruby objects needs to “carry around”.
+Active Record gives you the option to return objects that are a bit more focused about the attributes they carry. Usually, if not specified otherwise, the query will ask for all the fields in a row via ```*``` (```SELECT  "agents".*```) and then Active Record builds Ruby objects with the complete set of attributes. However, you can `select` only specific fields that should be returned by the query and limit the number of attributes your Ruby objects needs to “carry around”.
 
 ###### Rails
 
@@ -497,7 +495,7 @@ Agent.select("number, favorite_gadget")
 SELECT "agents"."number", "agents"."favorite_gadget" FROM "agents"
 
 ```
-As you can see, the objects returned will just have the selected attributes plus their ids of course—that is a given with any object. It makes no difference if you use strings like above or symbols—the query will be the same. A word of caution, if you try to access fields on the object that you haven’t selected in your queries, you will receive a `MissingAttributeError`. Since the `id` will be automatically provided for you anyway, you can ask for the id without selecting it though.
+As you can see, the objects returned will just have the selected attributes plus their ids of course—that is a given with any object. It makes no difference if you use strings like above or symbols—the query will be the same.
 
 ###### Rails
 
@@ -509,9 +507,11 @@ Agent.select(:name, :licence_to_kill)
 
 ```
 
+A word of caution, if you try to access attributes on the object that you haven’t selected in your queries, you will receive a `MissingAttributeError`. Since the `id` will be automatically provided for you anyway, you can ask for the id without selecting it though.
+
 ## Custom SQL
 
-Last but not least, you can write your own custom SQL via ```find_by_sql```. If you are confident enough in your own SQL-Fu and need some custom calls to the database, this method might come in very handy at times. But this is another story. Just don’t forget to check for Active Record wrapper methods first and avoid reinventing the wheell where Rails tries to meet you more than half way.
+Last but not least, you can write your own custom SQL via ```find_by_sql```. If you are confident enough in your own SQL-Fu and need some custom calls to the database, this method might come in very handy at times. But this is another story. Just don’t forget to check for Active Record wrapper methods first and avoid reinventing the wheel where Rails tries to meet you more than half way.
 
 ###### Rails
 
@@ -556,11 +556,10 @@ class Agent < ActiveRecord::Base
 end
 
 ```
-We can write class methods that encapsulate the SQL inside a Here document. That lets us write multi-line strings in a very readable fashion and then store that SQL string inside a variable which we can reuse and pass into ```find_by_sql```. That way we don’t plaster tons of query code inside the method call. If you have more than one place to use this query, it’s DRY as well.
 
-Since this is supposed to be newbie-friendly and not a SQL tutorial per se, I kept the example very minimalistic for a reason. The technique for way more complex queries is quite the same though. It’s easy to imagine having a custom SQL query in there that stretches beyond ten lines of code. Go as nuts as you need to—reasonably! It can be a life saver. A word about the syntax here. The `SQL` part is just an identifier here to mark the beginning and end of the string.
+We can write class methods that encapsulate the SQL inside a Here document. This lets us write multi-line strings in a very readable fashion and then store that SQL string inside a variable which we can reuse and pass into ```find_by_sql```. That way we don’t plaster tons of query code inside the method call. If you have more than one place to use this query, it’s DRY as well.
 
-I bet you won’t need this method all that much—let’s hope! It definitely has its place and Rails land wouldn’t be the same without it—in the rare cases that you will absolutely wanna fine tune your own SQL with it.
+Since this is supposed to be newbie-friendly and not a SQL tutorial per se, I kept the example very minimalistic for a reason. The technique for way more complex queries is quite the same though. It’s easy to imagine having a custom SQL query in there that stretches beyond ten lines of code. Go as nuts as you need to—reasonably! It can be a life saver. A word about the syntax here. The `SQL` part is just an identifier here to mark the beginning and end of the string. I bet you won’t need this method all that much—let’s hope! It definitely has its place and Rails land wouldn’t be the same without it—in the rare cases that you will absolutely wanna fine tune your own SQL with it.
 
 ## Final Thoughts
 
