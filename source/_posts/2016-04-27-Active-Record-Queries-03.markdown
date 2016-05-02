@@ -15,6 +15,7 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 + Associations & Scopes
 + Slimmer Joins
 + Merge
++ Custom Joins
 
 In this last piece we are going to look a bit deeper into queries and try to play with a few more advanced scenarios. If you are new to Active Record queries and SQL, I recommend that you take a look at my previous two articles before you continue. This one might be hard to swallow without the knowledge that I was building up so far. Up to you of course. On the flip side, this article is not gonna be as long as the other ones if you just wanna look at these advanced use cases. Let’s dig in! 
 
@@ -498,13 +499,105 @@ end
 
 You can refactor this even more and split up the reponsibilities to achieve looser coupling, but let’s move on for now.
 
+## Custom Joins 
 
+Most of the time you can rely on Active Record writing the SQL that you want for you. That means that you stay in Ruby land and don’t need to worry about database details all too much. But sometimes you need to poke a hole into SQL land and do your own thing. For example, if you need to use a `LEFT` join and break out of Active Record’s usual behaviour of doing an `INNER` join by default. `joins` is a little window to write your own custom SQL if needed as well. You open it, plug in your custom query code, close the “window” and can continue to add on Active Record query methods.
 
+Let’s demonstrate this with an example that involves gadgets. Let’s say a typical agent usually ```has_many``` gadgets and we want to find agents that are not equipped with any fancy gadgetary to help them in the field. A usual join would not yield good results since we are actually interested in `nil`, or `null` in SQL land, values of these spy toys.
 
-say there are multiple missions going on in section A, the United States for example. Popular breeding ground for super villains and their shady business.
+###### Rails
+
+``` ruby
+
+class Mission < ActiveRecord::Base
+  has_many :agents
+end
+
+class Agent < ActiveRecord::Base
+  belongs_to :mission
+  has_many   :gadgets
+end
+
+class Gadget < ActiveRecord::Base
+  belongs_to :agent
+end
+
+```
+
+When we do a `joins` operation we will get only agents returned that are already equipped with gadgets because the ```agent_id``` on these gadgets are not nil. This is the expected behaviour of a default inner join. The inner joins builds upon a match on both sides and returns only rows of data that matches this condition. A non-existent gadget with a `nil` value for an agent who owns it does not match that criteria. 
+
+###### Rails
+
+``` ruby
+
+Agent.joins(:gadgets)
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "agents".* FROM "agents" INNER JOIN "gadgets" ON "gadgets"."agent_id" = "agents"."id"
+
+```
+
+We are on the other hand looking for schmuck agents that are in dire need of some love from the quartermaster. Your first guess might have looked like the following:
+
+###### Rails
+
+``` ruby
+
+Agent.joins(:gadgets).where(gadgets: {agent_id: nil})  
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "agents".* FROM "agents" INNER JOIN "gadgets" ON "gadgets"."agent_id" = "agents"."id" WHERE "gadgets"."agent_id" IS NULL
+
+```
+
+Not bad, but as you can see from the SQL output, it does not play along and still insists on the default `INNER JOIN`. That’s a scenario where we need an `OUTER` join, because one side of our “equation” is missing so to speak. We are looking for results for gadgets that don’t exist—more precise, for agents without gadgets. Usually, when we passed a symbol to Active Record in a join, it was expecting an association. With a string passed in on the other hand, it expects it to be an actual fragment of SQL code—a part of your query.
+
+###### Rails
+
+``` ruby
+
+Agent.joins("LEFT OUTER JOIN gadgets ON gadgets.agent_id = agents.id").where(gadgets: {agent_id: nil})
+
+```
+
+###### SQL
+
+```sql
+
+SELECT "agents".* FROM "agents" LEFT OUTER JOIN gadgets ON gadgets.agent_id = agents.id WHERE "gadgets"."agent_id" IS NULL
+
+```
+
+Or, if you are curious about lazy agents without missions—hanging possibly in Barbodos or wherever—our custom join would look like this:
+
+###### Rails
+
+``` ruby
+
+Agent.joins("LEFT OUTER JOIN missions ON missions.id = agents.mission_id").where(missions: { id: nil })  
+
+```
+
+###### SQL
+
+``` sql
+
+SELECT "agents".* FROM "agents" LEFT OUTER JOIN missions ON missions.id = agents.mission_id WHERE "missions"."id" IS NULL
+
+```
+
+The outer join is the more inclusive join version since it will match all records from the joined tables, even if some of these relationships don’t exist yet. Because this approach is not as exclusive as inner joins, you will get a bunch of nils here and there. This can be informative in some cases of course but inner joins are nevetheless usually what we are looking for. Rails 5 will let us use a specialized method called `left_outer_joins` instead for such cases. Finally! One little thing for the road: keep these peeping holes into SQL land as small as possible if you can. You will do everybody—including your future self—a tremendous favor.
 
 ## Final Thoughts
-
-Getting Active Record to write efficient SQL for you is one of the main skills you should take away from this mini-series. For that it is necessary that you not only understand how to play with Active Record but the underlying SQL is of equal importance. Yes, SQL can be boring, tedious to read and not elegant looking, but don’t forget that Rails wraps Active Record around SQL and you should not neglect understanding this vital piece of technology—just because Rails makes it very easy most of the time to not care. Effeciency is crucial for database queries, especially if you build something for larger audiences and traffic. Therefore 
 
 Getting Active Record to write efficient SQL for you is one of the main skills you should take away from this mini-series for beginners. That way you will also get code that is compliant with whatever database it supports—meaning that the queries will be stable across databases. It is necessary that you not only understand how to play with Active Record but the underlying SQL is of equal importance. Yes, SQL can be boring, tedious to read and not elegant looking, but don’t forget that Rails wraps Active Record around SQL and you should not neglect understanding this vital piece of technology—just because Rails makes it very easy to not care most of the time. Effeciency is crucial for database queries, especially if you build something for larger audiences with heavy traffic. Now go out on the internets and find some more material on SQL to get it out of your system—once and for all!
