@@ -132,16 +132,6 @@ SELECT "agents".* FROM "agents" INNER JOIN "missions" ON "missions"."id" = "agen
 
 With `joins` you also have to pay attention to singular and plural use of your model associations. Because my `Mission` class ```has_many :agents``` we can use the plural. On the other hand, the `Agent` class ```belongs_to :mission```, only the singular version works without blowing up. Simple, but important to not overlook. The `where` part is simpler. Since you are scanning for multiple rows in the table that fulfill a certain condition, the plural form makes always sense.
 
-The outer join is the more inclusive join version since it will match all records from the joined tables, even if some of these relationships don’t exist yet. Say agents without a mission or missions without quartermasters and such. Because this approach is not as exclusive as inner joins, you will get a bunch of nils here and there. This can be informative in some cases of course but inner joins is usually what we are looking for. For this to work, we’ll need to write a bit more SQL ourselves—for now. Rails 5 will let us use a specialized method called `left_outer_joins` instead for such cases. Finally!
-
-###### Rails
-
-``` ruby
-
-Agent.joins("LEFT OUTER JOIN missions ON missions.id = agents.mission_id").where(missions: { id: nil })  
-```
-
-
 ## Scopes
 
 Scopes are a handy way to extract common query needs into well named methods of your own. That way they are a bit easier to pass around and also possibly easier to understand—if others have to work with your code or if you need to revisit certain queries in the future. You can define them for single models but use them for their associations as well. The sky is the limit really—`joins`, `includes`, `where` are all fair game! Since scopes also return `ActiveRecord::Relations` objects you can chain them and call other scopes on top of them without hesitation. Extracting scopes like that and chaining them for more complex queries is something very handy and makes longer ones all the more readable.
