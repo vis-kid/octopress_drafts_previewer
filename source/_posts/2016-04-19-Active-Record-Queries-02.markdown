@@ -14,7 +14,6 @@ categories: [Rails, Active Record, Queries, Ruby, Ruby on Rails]
 
 + Includes & Eager Loading
 + Joining Tables
-+ Eager Loading
 + Scopes
 + Aggregations
 + Dynamic Finders
