@@ -29,7 +29,7 @@ categories: [Design, Color Theory, Color, Visual Design, Product Design, Web Des
 
 ## Color?
 
-Without light there is no color right? Well, actually without “darkness” there is no color either. Huh? I know, sounds strange at first but without darkness, colors disappear as well. Do we need to know stuff like this when we pick colors on our computers—choosing its hue, saturation and value? Probably not! Could color theory blow your mind every once in a while and make you a more effective web designer and therefore a better “communicator”? Absolutely! In terms of colors we all have a ton of opinions and emotions but often people have not a clear idea what they are actually doing. Going with your gut is fine of course but having a theoretic basis to build upon makes you much more effective as a design person. Art school is not something most people spend a significant time of their lives at, but you don’t need to spend years to bend colors to our needs. So let’s get you up to speed.
+Without light there is no color right? Well, actually without “darkness” there is no color either. Huh? I know, sounds strange at first but without darkness, colors disappear as well. Do we need to know stuff like this when we pick colors on our computers—choosing its hue, saturation and value? Probably not! Could color theory blow your mind every once in a while and make you a more effective web designer and therefore a better “communicator”? Absolutely! In terms of colors, we all have a ton of opinions and emotions but often people have not a clear idea what they are actually doing. Going with your gut is fine of course but having a theoretic basis to build upon makes you much more effective as a design person. Art school is not something most people spend a significant time of their lives at, but you don’t need to spend years to bend colors to our needs. So let’s get you up to speed.
 
 With colors there are a lot of considerations you wouldn’t expect right away. A little bit of a warning, it can be a rabbit hole you never get out of—and we are not even talking about branding and stuff. To compensate for that, I propose that first and foremost, you might focus on making it interesting for your users while making reasonable and effective choices that support your design. This seems like a manageable goal for color newbies. I realize this sounds super puffy, but subjectivity is not something that you can shake off when talking about colors. Let’s just say that we can agree that choosing colors that have meaning and create interest is a good place to start.
 
@@ -44,7 +44,7 @@ A hue is any color on the color wheel.
 A lot of the time when people talk about colors, they are actually talking about hues—which are the basic, “pure” colors. That means any color that is within the visible light spectrum. The healthy human eye can see 2.3 Mio hues. 
 So tons of different variations of reds, blues, greens and so on.
 
-For our work with colors in design, they represent starting points, like raw or the most primitive versions. In our designs, we mostly need to leave these behind to avoid looking amateurish or childish. Did you ever notice that cartoons for kids like to use these colors for their characters? Not a big surprise I guess. You can make use of this of course if you go for a certain look but most of the time childish is not what works too well on the web. 
+For our work with colors in design, they represent starting points, like raw or the most primitive versions. In our designs, we mostly need to leave these behind to avoid looking amateurish or childish. Did you ever notice that cartoons for kids like to use these colors for their characters? Not a big surprise I guess. You can make use of this of course if you go for a certain look but most of the time, childish is not what works too well on the web. 
 
 ###### Screenshot
 
@@ -54,7 +54,7 @@ For our work with colors in design, they represent starting points, like raw or 
 
 ## Tint, Shade & Tone
 
-Hues don’t have tint or shade—which means they lack any additions of white or black. That’s why We are talking about tints and shades of particular hues. Tint is about the amount of white in a color. When you mix a color with white you are tinting it. This leads to increased lightness of the hue the more white you add. Adding white to the pure hue decreases its saturation. They make the hue less intense. 
+Hues don’t have tint or shade—which means they lack any additions of white or black. That’s why we are talking about tints and shades of particular hues. Tint is about the amount of white in a color. When you mix a color with white you are tinting it. This leads to increased lightness of the hue the more white you add. Adding white to the pure hue decreases its saturation. They make the hue less intense. 
 
 Shade on the other hand is about the amount of black in a color. When you mix a color with black you are shading it. This leads to reduced lightness of the hue the more black you add. This results in a rich, often darker more intense color due to the overpowering nature of black pigments. Many blacks change the characteristics of a hue—even through small amounts. Therefore they should be used sparingly. As you can see below, in the middle is the pure hue. Towards the left direction, we add more and more white by tinting it and to the right we are shading the red with black.
 
@@ -62,19 +62,19 @@ Shade on the other hand is about the amount of black in a color. When you mix a 
 
 {% img /images/Color-101/tint-shade-spectrum.png 800 %}
 
-The “tone” of a hue is its relative darkness / lightness. It’s about the amount of light that is reflected by that hue. The lighter the more light get’s reflected back and the darker the more light gets absorbed. We speak of creating tones when we mix a hue with gray—which means that you effectively tint and shade it because adding both white and black results in some sort of gray of course. Tones can be lighter or darker than the original hue—depending on the amount of white and black added. They will also appear less saturated and intense than the original hue. Tones can reveal subtle and complex qualities in a hue. They are closer to the way we see the “real” world.
+We speak of creating tones when we mix a hue with gray—which means that you effectively tint and shade it because adding both white and black results in some sort of gray of course. Tones can be lighter or darker than the original hue—depending on the amount of white and black added. They will also appear less saturated and intense than the original hue. Tones can reveal subtle and complex qualities in a hue and are closer representations to the way we see the “real” world.
 
 {% img /images/Color-101/tint-tone-shade.png %}
 
 ## Value
 
-Value is the lightness or darkness of a hue. Values are very, very crucial for professional results. In a way, they are much more important to get correct than choosing a hue. When we say something is bright or dark, we are talking about the value of a hue. This tells us how close it is to its lightest or darkest version. A value scale is like a gray scale for a particular hue.
+Value is the lightness or darkness of a hue. Values are very, very crucial for professional results. In a way, they are much more important to get correct than choosing a hue. When we say some color is brighter or darker, like a dark red or something, we are talking about the value of a hue. This tells us how close it is to its lightest or darkest version. A value scale is like a gray scale for a particular hue.
 
 {% img /images/Color-101/color-schemes-monochromatic.png 600 %}
 
 The sections on the scale are called steps. They are significant color steps that can be clearly distinguished by being significantly lighter or darker than the next step. If you apply these values you achieve better tonal contrast by using realistic lights and shades. The end result is more vibrant, interesting and looks simply a lot more professional.
 
-A lot of the great paintings we collectively admire in art history were done by artists that were masters at subtle tonal contrast via proper use of value scales. They achieved variations of depth by gradual value changes of a limited number of hues. As you can see from the image below, a simple gray scale is all you need to establish enough tonal contrast for painting effectively. A few tinted highlights, are few dark shades and a lot of medium values that define the majority of the painting.
+A lot of the great paintings we collectively admire in art history were done by artists that were masters at subtle tonal contrast via proper use of value scales. They achieved variations of depth by gradual value changes of a limited number of hues. As you can see from the image below, a simple gray scale is all you need to establish enough tonal contrast for painting effectively. A few tinted highlights, a few dark shades and a lot of values in between define the majority of the painting.
 
 {% img /images/Color-101/Odin_disguised_as_a_Traveller_value_scale.png %}
 
@@ -82,29 +82,37 @@ Of course this works not only with gray scales but with monochromatic colors as 
 
 {% img /images/Color-101/Andreas_Achenbach_Clearing_Up—Coast_of_Sicily_Walters.jpg %}
 
-You can see how effective this scale is by desaturating the painting. The values do not change when you gray out the color. The lightest lights and the darkest darks still define an effective range.
+You can see how effective this scale is by desaturating the painting. The values do not change when you gray out the color. The lightest lights and the darkest darks still define an effective range to produce an image that does not loose its artistic qualities.
 
 {% img /images/Color-101/Andreas_Achenbach_Clearing_Up—Coast_of_Sicily_Walters-grayed-out.png %}
 
-Interestingly, every color has its own inherent range of values. Some have a bigger range than others. Red for example has a more limited range compared to a blue hue for example. Red is in the low gray-scale range, the value is very dark. Yellow on the other hand is in the high-range. Green, violet and blue have the largest range going from dark to light.
+Or think of iconic black and white photographs of the last 50 years or so. The often have a wide range of steps on the gray-scale and create a stronger, more interesting contrast—ranging from very dark blacks to very bright whites. Amateurs often end up with flat black and white images because they are unaware of the need to make them more vibrant with a broader gray-scale.  
+
+{% img /images/Color-101/CheHigh.jpg 600 %}
+
+Interestingly, every color has its own inherent range of values. Some have a bigger range than others. Red for example has a more limited range compared to a blue hue for example. Red is in the low gray-scale range, the value is very dark. Yellow on the other hand is in the high-range. Green, violet and blue have the largest range going from dark to light in a few more steps.
 
 {% img /images/Color-101/color-values-mirrored.png 400 %}
 
-Why do we care? Values are an effective way to render a two-dimensional depiction on any canvas and let it appear three-dimensional using the relative shades of a hue. This is what people call more alive or vibrant—in contrast to flat colors that fail to achieve this effect. This is why you want in general more desaturated tones, pure hues are of little help in that regard and look immature on top of that. A good tip is to start with only one hue and develop a value scale for your website. You can use various values for highlighting areas and other that recede gently in the background—all while staying simple and classy.
+Why do we care? Values are an effective way to render a two-dimensional depiction on any canvas and let it appear three-dimensional using the relative shades of a hue. This is what people call more alive or vibrant—in contrast to flat colors that fail to achieve this effect. This is why you want in general more desaturated tones, pure hues are of little help in that regard and look immature on top of that. A good tip is to start with only one hue and develop a value scale for your website. You can use values for highlighting particular areas and others that recede gently in the background—all while staying within the same hue. Simple and classy.
 
-Or think of iconic black and white photographs of the last 50 years or so. The often have a wide range of steps on the gray-scale and create a stronger, more interesting contrast—ranging from very dark blacks to very bright whites. Amateurs often end up with flat black and white images because they are unaware of the need to make them more vibrant with a broader gray-scale.  
+{% img /images/Color-101/Screenshots/netlife-research.png %}
+
+[Netlife Research](http://netliferesearch.com/)
 
 ## Saturation / Chroma
 
-The saturation, also called Chroma, is another term we should not overlook. It’s the “colorfulness” or purity of a hue. These funky terms just translates to the intensity or brilliance of a perceived color. The chroma is defining how pure the hues is. When you buy colors for painting, chromas are the colors that you take right off the tube. In constrast to that, desaturated colors are washed out or grayed out. These colors are often used as shadow colors of various degrees. A completely desaturated color is gray.
+The saturation, also called chroma, is another concept we should not overlook. It’s the “colorfulness” or purity of a hue. These funky terms just translate down to the intensity or brilliance of a perceived color. The chroma is defining how pure the hue is. When you buy colors for painting, chromas are the colors that you take right off the tube. In constrast to that, desaturated colors are washed out or grayed out and are often used as shadow colors of various degrees. A completely desaturated color is gray.
 
-Remember to desaturate a hue by adding a complimentary color. Everything added from the opposite of the color wheel will desaturate the hue very effectively—very artistically some might say. The more of the opposite color you add the more you desaturate it—the less pure it becomes. It gets more dull. In all of this, We are still dealing with intensity. Where both colors meet, you have your neutral color point—brown or gray. It’s important to understand that we are not adding gray for this. In effect you are creating a gray but not by adding black or white. These grays are used by painters to break up saturated colors. Why is that a good idea? The answer is actually very practical: you don’t want to bombard viewers with intense color saturations everywhere—quite on the contrary. Highly saturated colors can look incredibly fake and cheap as well. Too much of it gives your eyes not much chance to rest—and also nothing to really focus on—more of a visual noise.
+You desaturate a hue by adding a complimentary color. Everything added from the opposite of the color wheel will desaturate the hue very effectively—very artistically some might say. The more of the opposite color you add the more you desaturate it—the less pure it becomes. It gets more dull. In all of this, We are still dealing with intensity. Where both colors meet, you have your neutral color point—brown or gray. It’s important to understand that we are not adding gray for this. In effect you are creating a gray but not by adding black or white. These grays are used by painters to break up saturated colors.
+
+Why is that a good idea? The answer is actually very practical: you don’t want to bombard viewers with intense color saturations everywhere—quite on the contrary. Highly saturated colors can look incredibly fake and cheap. Too much of it gives your eyes not much chance to rest—and also nothing to really focus on—more of a visual noise.
 
 ###### Screenshot
 
 {% img /images/Color-101/Screenshots/Visual-Noise.png %}
 
-When a site like [UXDESIGNER.TOP](http://www.uxdesigner.top/), somehow dedicated to UX, errors in this way, it is doubly sad to see to be honest. Doesn’t look too good, does it? It has all sorts of issues but first of all, this color mess does not make it easy to establish a simple hierarchy that guides the viewer. Bad UX! 
+When a site like [UXDESIGNER.TOP](http://www.uxdesigner.top/), somehow dedicated to UX, errors in this way, it is doubly sad to see to be honest. Doesn’t look too good, does it? It has all sorts of issues, but first of all, this color mess does not make it easy to establish a simple hierarchy that guides the viewer. Bad UX! 
 
 Take blue and orange for example. Next to each other they would be very intense. If you mix these colors you have this gray tone that can separate their more saturated applications really well. This new color stands in between those highly saturated ones and create a more visually pleasing experience by applying more realistic colors. As fluffy as this sounds, it has more vibrancy, more life. This creates a barrier between the colors that is more mature in technique. When you talk about masters in painting, this is one of the things they tried to get a firm grip on.
 
@@ -112,7 +120,7 @@ Take blue and orange for example. Next to each other they would be very intense.
 
 {% img /images/Color-101/Claude_Monet,_Impression.jpg %}
 
-It’s good if you wanna focus on only one or two colors and create variatons from them by mixing their desaturated versions with their complimentary colors. That way, you have a lot of options within the same color. You can vary your color but stay within the same color hue(s). Also, you are more easily able to anchor your viewer’s eyes or their attention when only few parts are selectivly highly saturated. In the image above, it is hard to not look at the sun, no? It really jumps out like that.
+It’s a good idea to focus on only one or two colors and create variations from. I’m talking about mixing its desaturated versions with their complimentary colors. That way, you have a lot of options within the same color. You vary your color but stay within the same color hue(s). That way you are also more easily able to anchor your viewer’s eyes or their attention when only few parts are selectively highly saturated. In the image above, it is hard to not look at the sun, no? It really jumps out like that.
 
 ## Color Wheel
 
@@ -120,9 +128,9 @@ We get a color wheel by taking the spectrum of light and then connect both ends 
 
 {% img /images/Color-101/GoetheFarbkreis.png %}
 
-What we are going to use is the traditional “artist’s” color wheel which is based on the Red-Yellow-Blue (RYB) color model. This one is derived from how painters created their color mixtures—via subtractive color mixing. It’s mostly used in art and design these days. It predates the scientific color theory—which we won’t cover in this article—that relies on cyan, magenta and yellow (CMY) as its primary colors. It achieves a bigger subset of colors than the RYB color model. 
+This color wheel is not so much of a scientific thing but more a representation of how our brain works—also how we might respond emotionally—in terms of what reactions colors awake. Scientifically, there are no opposite colors in the color spectrum for example—that’s only in our brains or in the concepts we put together to organize / distinguish colors. It’s definitely helpful for choosing color though. These perceptions are not only fueled by our own biology but also very much influenced by centuries of art history and can vary significantly among various cultures of course. 
 
-This color wheel is not so much of a scientific thing but more a representation of how our brain works—also how we respond emotionally in terms of what reactions colors awake. By scientifically, I mean there are no opposite colors in that regard—that’s only in our brains or in the concepts we put together to organize / distinguish colors. It’s definitely helpful for choosing color though. These perceptions are not only fueled by our own biology but also very much influenced by centuries of art history and can vary significantly among various cultures of course. 
+What we are going to use is the traditional “artist’s” color wheel which is based on the Red-Yellow-Blue (RYB) color model. This one is derived from how painters created their color mixtures—via subtractive color mixing. It’s mostly used in art and design these days. It predates the scientific color theory—which we won’t cover in this article—that relies on cyan, magenta and yellow (CMY) as its primary colors. It achieves a bigger subset of colors than the RYB color model. 
 
 ### Primary Colors: Red, Yellow, Blue
 
@@ -140,14 +148,14 @@ These colors are mixed by combining primary colors. In Goethe’s color wheel ab
 
 {% img /images/Color-101/Tertiary-colors-star.png 500 %}
 
-We can take this idea further and mix primary with secondary colors—again by blending colors that lie next to each other on the wheel. After finishing this declination you get:
+We can take this idea further and mix primary with secondary colors—again by blending colors that lie next to each other on the wheel. After finishing this declination you get the following:
 
-+ amber: yellow-orange
-+ vermilion: red-orange
-+ magenta: red-purple
-+ violet: blue-purple
-+ teal: blue-green
-+ chartreuse: yellow-green
++ Chartreuse: yellow-green
++ Amber: yellow-orange
++ Vermilion: red-orange
++ Magenta: red-purple
++ Violet: blue-purple
++ Teal: blue-green
 
 Note that the secondary color follows the primary color in this notation. Easier to remember I guess.
 
@@ -155,19 +163,19 @@ Note that the secondary color follows the primary color in this notation. Easier
 
 {% img /images/Color-101/Analogue-Color-Wheel.png %}
 
-Analogous colors are simply adjacent on the color wheel, right next to each other. They form a simple relationship and are usually very easy on the eyes and can create a peaceful, comfortable mood. How so? Most likely because this color combination can often be seen in nature.
+Analogous colors are adjacent on the color wheel, right next to each other. They form a simple relationship and are usually very easy on the eyes and can create a peaceful, comfortable mood. How so? Most likely because this color combination can often be seen in nature.
 
 ### Complimentary Colors
 
 {% img /images/Color-101/Complimentary-Color-Wheel.png %}
 
-On the color wheel, they are opposing each other. Complimentary colors are a very popular combination, they seem to please the eyes “naturally”. Red and green are especially popular. But keep in mind to no use them equally and decide on one dominant color. Generally the weaker color should be used more widespread and stronger one to accentuation. Think of color combinations like this of matching and serif and sans-serif typefaces. A balance is really important here. They are also able to create the strongest color contrast for each hue.
+On the color wheel, complimentary colors are opposing each other. Complimentary colors are a very popular combination, they seem to please the eyes “naturally”. Red and green are especially popular. But keep in mind to no use them equally and decide on one dominant color. Generally the weaker color should be used more widespread and the stronger one for accentuation. Think of color combinations like matching serif and sans-serif typefaces. A balance is really important here. Complimentary colors are also able to create the strongest color contrast for each hue.
 
 ### Triadic Colors
 
 {% img /images/Color-101/Triadic-Color-Wheel.png %}
 
-No, it’s not about the Chinese Mafia, these colors are only placed equally distant on the color wheel. They are a bit more of an advanced combination and using these is a bit hard for beginners to get right I think—but don’t let me stop you. The more you practice, etc, etc… They are often good for cartoons and surreal scenes and can imply a certain playfulness. 
+No, it’s not about the Chinese Mafia, these colors are only placed equidistant on the color wheel. They are a bit more of an advanced combination and using these is a bit hard for beginners to get right I think—but don’t let me stop you. The more you practice, etc, etc… They are often good for cartoons and surreal scenes and can imply a certain playfulness. 
 
 ## Types of Color
 
@@ -192,7 +200,7 @@ Of course you can make warm colors work but I’m showing you here an example th
 
 The left side on the other hand represent cool colors. These are more comforting and stable. They also tend to fade to the background of a composition easily and don’t “jump out” that much. So they are considered more passive in nature. I think of it this way: On the web, it’s all about quick perceptions and in this regard, you need colors that don’t raise any “red” flags (pun intended) among your users.
 
-This left side of the color wheel is very popular among popular websites these days. Just take a look at the Facebooks and Twitters out there and you will find a plethora of well-known projects making these colors intrinsic to their color palettes. Why? Because web projects always have to fight the disadvantage of not being physical location where a personal and trustworthy connection can be made more easily and more speedy. Websites that cater to a gazillion people need to appear stable, trustworthy, relaxing and calm—even comforting. These are all things that the cooler types of color can help you with. 
+This left side of the color wheel is very popular among popular websites these days. Just take a look at the Facebooks and Twitters out there and you will find a plethora of well-known projects making these colors intrinsic to their color palettes. Why? Because web projects always have to fight the disadvantage of not being a physical location where a personal and trustworthy connection can be made more easily and more speedy. Websites that cater to a gazillion people need to appear stable, trustworthy, relaxing and calm—even comforting. These are all things that the cooler types of color can help you with. 
 
 ###### Screenshot
 
@@ -214,18 +222,9 @@ Imagine if we would have tons of saturated colors here. It would be much harder 
 
 ## Matching Colors
 
-A word about bringing various colors together before we move on. As I indicated, it really can be a bit similar to choosing typefaces. Try to choose one or utmost two major colors for your design. You have lots of variations to play with like that. Adjusting value, tone, brightness, saturation or use neutral colors, etc… If you don’t go nuts with tons of colors, you will achieve a much more coherent and professional result—one that also ties the whole piece together more meaningfully and elegant.
+Before we move on, a word about bringing various colors together. As I indicated, it really can be a bit similar to choosing typefaces. Try to choose one or utmost two major colors for your design. You have lots of variations to play with like that. Adjusting value, tone, brightness, saturation or use neutral colors, etc… If you don’t go nuts with tons of colors, you will achieve a much more coherent and professional result—one that also ties the whole piece together more meaningfully and elegant.
 
 Start with one color, bounce other colors off of that and see how far you can take it. You can create real classy color schemes by bouncing off the main color intelligently. When you start to choose color, keep things simple and slowly put colors into your designs. Even better if you start with a simple gray-scale and wait a bit before you bring color to the equation. Play with light and darkness in your early approaches. For highlighting certain parts—that are most likely somehow important to your business logic—use the dominant colors sparingly while letting the supporting colors do the background work.
-
-
-
-
-
-
-???The three dark colors, dark spectrum -> secondary colors?
-The three light colors, light spectrum -> primary colors?
-Goethe incorporated both light and dark spectra in his color wheel, he called it the harmonic color wheel -> which we use today
 
 ## Monochromatic
 
@@ -233,7 +232,7 @@ I should also quickly mention what you need to know about monochromatic color ch
 
 {% img /images/Color-101/tint-shade-spectrum.png 800 %}
 
-This is a monochromatic color scale of a red hue. To the right it is more and more shaded while it’s more and more tinted to the left. For your work, this is one approach that is not only very easy usually, it can also be very effective using only one main hue and it’s variations. The example below is a great example of using a monochrome approach effectively.
+This is a monochromatic color scale of a red hue. To the right it is more and more shaded while it’s more and more tinted to the left. Using only one main hue and it’s variations for your work, is one approach that is not only very easy usually, it can also be very effective . Below is a great example of using a monochrome approach effectively.
 
 ###### Screenshot
 
@@ -249,21 +248,18 @@ If you use your dominant color very sparsely, you can create a very effective em
 
 {% img /images/Color-101/Screenshots/Emphasis.png %}
 
-[RIF6](https://rif6.com/) only highlights the key items for a successful business transaction.
-
-In the example above, it is very hard to not notice the buttons that let you buy this item. Nothing is in the way of guiding the eye quickly to the interface item that facilitates the users main action—or viewed from the other perspective, the interface item that closes the sales tunnel. All while using the main color that the company is identifies with as a brand. Simple and effective! And no nonsense in the way.
+[RIF6](https://rif6.com/) only highlights the key items for a successful business transaction. In this example it is very hard to not notice the buttons that let you buy this item. Nothing is in the way of guiding the eye quickly to the interface item that facilitates the users main action—or viewed from the other perspective, the interface item that closes the sales tunnel. All while using the main color that the company is identifies with as a brand. Simple and effective! And no nonsense in the way.
 
 ## Color Consistency
-Once you establish a mental map of colors for your users, it is important to not break it—or if you break it, do it skillfully and with a certain purpose. For example, Keeping links the same color when they do the same thing is immensely crucial—especially if you have tons of content on a page. Alsl, keeping header colors consistent makes you look good and gives the user something to anchor their journey. Keeping background colors similar can be very effective as well. This is not something that does a lot of harm when ignored but can tie things together nicely. It definitely has good chances of looking more classy that way. The most important piece in all of this is that you are setting expectations for your users, and that you want to make easy for users to follow and understand where the journey is going.
-t
+Once you establish a mental map of colors for your users, it is important to not break it—or if you break it, do it skillfully and with a certain purpose. For example, Keeping links the same color when they do the same thing is immensely crucial—especially if you have tons of content on a page. Also, keeping header colors consistent makes you look good and gives the user something to anchor their journey. Keeping background colors similar can be very effective as well. This is not something that does a lot of harm when ignored but can tie things together nicely. It definitely has good chances of looking more classy that way. The most important piece in all of this is that you are setting expectations for your users, and that you want to make it easy for users to follow and understand where the journey is going.
 
 {% img /images/Color-101/Screenshots/Etsy-consistency.png %}
 
 [Pattern](https://www.etsy.com/pattern)
 
-Pattern is a new product by [Etsy](https://www.etsy.com/) and it does a real great job at using color consistently. Even the image of the desk with the books and stuff expands elegantly on their branding color and stays within this range of fuzzy, warm colors. The gray-ish wall in the background gives a perfect backdrop to bring attention to the site’s main call to action. It clear speaks “ETSY” without screaming right in your faces. Double thumbs up!
+Pattern is a new product by [Etsy](https://www.etsy.com/) and it does a real great job at using color consistently. Even the image of the desk with the books and stuff expands elegantly on their brand color and stays within this range of fuzzy, warm colors. The gray-ish wall in the background gives a perfect backdrop to bring attention to the site’s main call to action. It clearly speaks “ETSY” without screaming right in your faces. Double thumbs up!
 
-Overall, Etsy did a great job at being consistent with color as well on their main page—but they also dropped the ball here and there in that regard a bit I think. I think it’s fair to say that there is room to create more cohesion by using color more consistently within their main pages—especially with backgrounds. Feels like a low hanging fruit and wasted opportunity to brand more effectively. Take a look for yourself, you be the judge of that: 
+Overall, Etsy did a great job at being consistent with color as well on their main page—but they also dropped the ball a bit here and there. I think it’s fair to say that there is room to create more cohesion by using color more consistently within their main pages—especially in regards to backgrounds. Feels like a low hanging fruit and wasted opportunity to brand more effectively. Take a look for yourself, you be the judge: 
 
 ###### Etsy Screenshots Incoming
 
@@ -289,13 +285,13 @@ Overall, Etsy did a great job at being consistent with color as well on their ma
 
 ## Color Meanings
 
-In various cultures, colors can imply different meanings or associations. Not surprising I guess. Therefore they also evoke different feelings which we should not underestimate when we work on projects that span many, many cultural zones. For avoiding misunderstandings and for effective communication, we need to take this into consideration.
+In various cultures, colors can imply different meanings or associations. Not surprising I guess. Therefore, they also evoke different feelings which we should not underestimate when we work on projects that span many, many cultural zones. For avoiding misunderstandings and for effective communication, we need to take this into consideration.
   
-Below are a few of common meanings colors are supposed to be attached to them. They are bit silly in my opinion but it’s nevertheless good to have seen these associations and commit them to memory. But let’s not forget, everybody sees colors differently. There is definitely a line to be drawn in your work, imagine using such guidelines when you paint a still life—a vase with flowers in front of an open window looking out to a farm. It would be bananas to think about all these color associations, no?
+Below are a few of common meanings that colors are supposed to have attached to them. They are bit silly in my opinion but it’s nevertheless good to have seen these associations and commit them to memory. But let’s not forget, everybody sees colors differently. There is definitely a line to be drawn in your work, imagine using such guidelines when you paint a still life—a vase with flowers in front of an open window looking out to a farm. It would be bananas to think about all these color associations, no?
 
 ### Blue
 
-Blue speaks confidence, stability and business like no other color. When you look on the internets, it’s an understatement to say that it’s pretty popular. It also implies trust and profressionlism. Honor and being dependable is right up there as well. The (blue) sky is the limit! 
+Blue speaks confidence, stability and business like no other color. When you look on the internets, it’s an understatement to say that it’s pretty popular. It also implies trust and professionlism. Honor and being dependable is right up there as well. The (blue) sky is the limit! 
 
 ###### Screenshot
 
@@ -325,7 +321,7 @@ The site for the [SpeedX Leopard](https://speedx.com/smartbike/product/en/leopar
 
 ## Yellow
 
-Yellow symbolizes hope, joy, the sun, excitement but also warnings. Because it is so bright, it can “scream” really loud at you. Most of the time, that’s not what we need. In the example below, less would have been more I think. For a project that has “safe” in its name, yellow might not have been the best of choices.
+Yellow symbolizes hope, joy, the sun, excitement but also warnings. Because it is so bright, it can “scream” really loud at you. Most of the time, that’s not what we need. In the example below, less would have been more I think. For a project that has “safe” and “family” in its name, yellow might not have been the best of choices.
 
 ###### Screenshot
 
@@ -335,13 +331,13 @@ Yellow symbolizes hope, joy, the sun, excitement but also warnings. Because it i
 
 ## Purple
 
-The good ol’ color of royalty. Not my cup of tea but this color is used to convey the idea of luxury, magic and all that jazz. Interestingly, I feel punk goes with it as well. The association with royalty and luxury probably  stems from the expensive nature purple had in the past. It was difficult to produce—some story that involves tons of tiny snails and such—and therefore only the peeps highest in the social food chain were able to afford it. Nowadays, this is not a concern anymore of course. Thank god, queens, kings and all these fellas need different stuff to look funky these days—poor snails!
+The good ol’ color of royalty. Not my cup of tea but this color is used to convey the idea of luxury, magic and all that jazz. Interestingly, I feel punk goes with it as well. The association with royalty and luxury probably  stems from the expensive nature purple had in the past. It was difficult to produce—some story that involves tons of tiny snails and such—and therefore only the peeps highest in the social food chain were able to afford it. Nowadays, this is not a concern anymore of course. Queens, kings and all these fellas need different stuff to look funky these days—safer for these snails anyways!
 
 ###### Screenshot
 
 {% img /images/Color-101/Screenshots/Purple.png %}
 
-Funny that [Bootstrap](http://getbootstrap.com/), a highly popular Open Source project, is using purple in a total different context very successfully. I guess Open Source projects have more wiggle room and adhere to different physics. Awesome!
+Funny that [Bootstrap](http://getbootstrap.com/), a highly popular Open Source project, is using purple in a totally different context very successfully. I guess Open Source projects have more wiggle room and adhere to different physics. Awesome!
 
 ## White
 
@@ -353,7 +349,7 @@ This one is another tricky item in the list. It can convey purity, cleanliness, 
 
 ## Black
 
-Last, but not least, the good ol’ mysterious, sexy and sophisticated black. Why so serious black? Because it can also associate “The End”, death and evil. On top of that, it is rebellious as well.
+Last, but not least, the good ol’ mysterious, sexy and sophisticated black. Why so serious black? Because it can also associate with “The End”, death and evil. On top of that, it is rebellious as well.
 
 ###### Screenshot
 
@@ -361,12 +357,12 @@ Last, but not least, the good ol’ mysterious, sexy and sophisticated black. Wh
 
 [Impossible](https://us.impossible-project.com/)
 
-I think by now, you get the point that I think these color meanings are a bit silly. Up to you! Do your research when you work on a project, especially if it reaches people outside your cultural understanding, but have lots of salt ready to go with it. Most of all, have fun and let your creative juices flow! Designing strictly by the book is dead boring anyway—and one sure way to kill the mood for sure. 
+I think by now, you get the point why I think these color meanings are a bit silly. Up to you! Do your research when you work on a project, especially if it reaches people outside your cultural comfort zone, but have lots of salt ready to go with it. Most of all, have fun and let your creative juices flow! Designing strictly by the book is dead boring anyway—and one sure way to kill the mood for sure. 
 
 
 ## Color Relativity
 
-Let me just mention something real quick before we head out. Color is highly influenced by what’s surrounding it. At some point, We were talking about cooler and warmer colors but it’s a bit more relative than that. Colors can appear that way in relation to each other. They can look warmer or colder depending on the environment they are in. Our human eye is a bit foolish that way. See how the colors below influence each other and how the gray border of the inner squares appears differently within each spectrum. That’s what is called color relativity.
+Let me just mention something real quick before we head out. Color is highly influenced by what’s surrounding it. At some point, we were talking about cooler and warmer colors but it’s a bit more relative than that. Colors can appear that way in relation to each other. They can look warmer or cooler depending on the environment they are in. Our human eye is a bit foolish that way. See how the colors below influence each other and how the gray border of the inner squares appears differently within each spectrum. That’s what is called color relativity.
 
 {% img /images/Color-101/color-relativity.png %}
 
@@ -384,4 +380,4 @@ Happy now? Use your favorite color picker if you like. Food for thought for on t
 
 Color can be a powerful mood changer. Use this to your advantage or to your demise. This is really up to you because it is a mighty weapon to wield. Take your time to learn more and don’t get frustrated by the sheer scale in front of you. On the web, you definitely want to use color to create a certain mood, vibe or whatever and also to highlight stuff that are of particular importance. As with design principles, less is more. If everything is highlighted via color, nothing sticks out and you will end up with an unfavourable signal-to-noise ratio—which is the worst because it is not interesting at all.
 
-Look into color palettes from other designers on the web. There are tons of sites dedicated to collect palettes for reuse. As someone put it somewhere so eloquently, on occasion, steal! Learning through imitations is just fine. Run with the color choices from somebody else’s work that you like and see how far you can take it. Learn as you go, have fun and be aware that color is an insanely deep, deep rabbit hole that needs some serious commitment. Once sucked in, it will spaghettify you like a black whole and never let you out! Don’t get lost in all that color theory at once though! You have a lifetime to to achieve probably only a fraction of a complete understanding. Take it easy and enjoy the ride! The cool part is that once you opened your eyes to the whole topic, you will literally see the world through a different lens.
+Look into color palettes from other designers on the web. There are tons of sites dedicated to collect palettes for reuse. As someone, somewhere put it so eloquently: “on occasion, steal!” Learning through imitations is just fine. Run with the color choices from somebody else’s work that you like and see how far you can take it. Learn as you go, have fun and be aware that color is an insanely deep, deep rabbit hole that needs some serious commitment. Once sucked in, it will spaghettify you like a black whole and never let you out! Don’t get lost in all that color theory at once though! You have a lifetime to achieve probably only a fraction of a complete understanding. Take it easy and enjoy the ride! The cool part is that once you opened your eyes to this whole topic, you will see the world through a different lens.
