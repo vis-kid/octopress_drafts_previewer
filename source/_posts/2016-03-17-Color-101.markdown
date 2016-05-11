@@ -309,7 +309,7 @@ Green implies growth, harmony, nature, wealth, optimism and money of course.
 
 [Zpotdrop](https://zpotdrop.com/)
 
-## Red
+### Red
 
 Obviously love is a major association with red, but power, eroticism and strength go with it as well. What makes it a bit tricky to work with is that it can also imply danger, blood, evil and a state of emergency. Courage swings with it maybe too—that’s what “they” say at least. Be careful about the context and meaning with this one since it can evoke very powerful connotations that are negative.
 
@@ -319,7 +319,7 @@ Obviously love is a major association with red, but power, eroticism and strengt
 
 The site for the [SpeedX Leopard](https://speedx.com/smartbike/product/en/leopard/) uses red very clever. It enhances the color of the bike-strength everybody!—itself, but only sparingly to highlight the call to action. Plastering red all over the place would not appear nearly as classy.
 
-## Yellow
+### Yellow
 
 Yellow symbolizes hope, joy, the sun, excitement but also warnings. Because it is so bright, it can “scream” really loud at you. Most of the time, that’s not what we need. In the example below, less would have been more I think. For a project that has “safe” and “family” in its name, yellow might not have been the best of choices.
 
@@ -329,7 +329,7 @@ Yellow symbolizes hope, joy, the sun, excitement but also warnings. Because it i
 
 [FamilyInSafe](https://familyinsafe.com/)
 
-## Purple
+### Purple
 
 The good ol’ color of royalty. Not my cup of tea but this color is used to convey the idea of luxury, magic and all that jazz. Interestingly, I feel punk goes with it as well. The association with royalty and luxury probably  stems from the expensive nature purple had in the past. It was difficult to produce—some story that involves tons of tiny snails and such—and therefore only the peeps highest in the social food chain were able to afford it. Nowadays, this is not a concern anymore of course. Queens, kings and all these fellas need different stuff to look funky these days—safer for these snails anyways!
 
@@ -339,7 +339,7 @@ The good ol’ color of royalty. Not my cup of tea but this color is used to con
 
 Funny that [Bootstrap](http://getbootstrap.com/), a highly popular Open Source project, is using purple in a totally different context very successfully. I guess Open Source projects have more wiggle room and adhere to different physics. Awesome!
 
-## White
+### White
 
 This one is another tricky item in the list. It can convey purity, cleanliness, softness, sophistication, elegance, deity, weddings, royalty and positivity in general. In other cultures it can also be clearly be identified with death and tragedy. White and Black can have very different meanings depending where you are. Watch out!
 
@@ -347,7 +347,7 @@ This one is another tricky item in the list. It can convey purity, cleanliness, 
 
 {% img /images/Color-101/Screenshots/White.png %}
 
-## Black
+### Black
 
 Last, but not least, the good ol’ mysterious, sexy and sophisticated black. Why so serious black? Because it can also associate with “The End”, death and evil. On top of that, it is rebellious as well.
 
@@ -358,7 +358,6 @@ Last, but not least, the good ol’ mysterious, sexy and sophisticated black. Wh
 [Impossible](https://us.impossible-project.com/)
 
 I think by now, you get the point why I think these color meanings are a bit silly. Up to you! Do your research when you work on a project, especially if it reaches people outside your cultural comfort zone, but have lots of salt ready to go with it. Most of all, have fun and let your creative juices flow! Designing strictly by the book is dead boring anyway—and one sure way to kill the mood for sure. 
-
 
 ## Color Relativity
 
