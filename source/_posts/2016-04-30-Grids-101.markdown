@@ -73,7 +73,7 @@ Columns of content form fields that are horizontal divisions of pages. It’s no
 
 The rule of thirds is sort of a mini grid and says that when you place content on certain lines that divide whatever content into thirds, it will be more pleasing to the human eye. This is very often used in photography for example. Although this might be a good starting point and often gets you in the right ballpark, I’d suggest to take this with a grain of salt.
 
-{% img /images/Grids-101/Rivertree_thirds_md.gif %}
+{% img /images/Grids-101/Rule-of-Thirds.jpg 500 %}
 
 When people talk about “magic intersections” that are supposed to help you place design elements, I’d urge you to take a breath and consider the potential for fluff. It’s easy to just drink the cool aid, especially since it’s not hard to follow this “rule”, but nothing about this seems mathematically or biologically special in any way—and it’s definitely not magical. Just look at the myriad of photos that are considered classics and how few really adhere to the exact placement of these intersections. Sure, a lot will come close, but more due the common sense in using basic compositional guidelines like balance, whitespace, alignment that were adjusted to the content of the artwork. Plus, it’s just a theory after all.
 
@@ -107,18 +107,27 @@ The main benefits of a four column grids are its simplicity, that it’s balance
 
 {% img /images/Grids-101/renderings/10.png %}
 
+[Form](http://www.form.de/)
+
 {% img /images/Grids-101/renderings/06.png %}
+
+[Harvard Design Magazine](http://www.harvarddesignmagazine.org/issues/40)
 
 {% img /images/Grids-101/renderings/22.png %}
 
+[Etsy](https://www.etsy.com/press)
+
 {% img /images/Grids-101/renderings/14.png %}
 
+[Wallpaper](http://www.wallpaper.com/video)
+
 {% img /images/Grids-101/renderings/05.png %}
+
+[marie claire](http://www.marieclaire.com/politics/)
 
 Breaking out of the grid to create emphasis can be either massively improving your design and highlighting essential pieces or it can also look really, well, dumb.
 
 ### 3 Column Grid
-
 
 With this grid, each column here spans four units. This variation is a bit more involved since it is an asymmetrical grid. You need to be smarter about finding balance in your design. Asymmetrical layouts like these are often considered  more active and more skillful. That can and should be questioned of course!
 
@@ -126,13 +135,23 @@ With this grid, each column here spans four units. This variation is a bit more 
 
 {% img /images/Grids-101/renderings/13.png %}
 
+[Wallpaper](http://www.wallpaper.com/)
+
 {% img /images/Grids-101/renderings/16.png %}
+
+[Kickstarter](https://www.kickstarter.com/projects/ekkowifi/hub-by-ekko-the-first-hi-fi-wi-fi-hub-for-headphon)
 
 {% img /images/Grids-101/renderings/18.png %}
 
+[Kickstarter](https://www.kickstarter.com/happening)
+
 {% img /images/Grids-101/renderings/11.png %}
 
+[Wallpaper](http://www.wallpaper.com/)
+
 {% img /images/Grids-101/renderings/09.png %}
+
+[WIRED](http://www.wired.com/category/design/)
 
 ### 6 Column Grid
 
@@ -142,7 +161,11 @@ This one is even more challenging than the 3 column grid. It splits up each colu
 
 {% img /images/Grids-101/renderings/6-column-grid-red.png %}
 
+[Wallpaper](http://www.wallpaper.com/)
+
 {% img /images/Grids-101/renderings/6-column-grid.png %}
+
+[Kickstarter](https://www.kickstarter.com/happening)
 
 ### Combinations
 
@@ -150,19 +173,35 @@ You can also combine grids within your designs. That why a 12 unit grid system i
 
 {% img /images/Grids-101/renderings/12-unit-grid.png %}
 
+[Etsy](etsy.com)
+
 {% img /images/Grids-101/renderings/23.png %}
+
+[Etsy](etsy.com)
 
 {% img /images/Grids-101/renderings/21.png %}
 
+[Etsy](etsy.com)
+
 {% img /images/Grids-101/renderings/24.png %}
+
+[Etsy](etsy.com)
 
 {% img /images/Grids-101/renderings/28.png %}
 
+[Etsy](etsy.com)
+
 {% img /images/Grids-101/renderings/29.png %}
+
+[Etsy](etsy.com)
 
 {% img /images/Grids-101/renderings/30.png %}
 
+[BBC](http://www.bbc.com/)
+
 {% img /images/Grids-101/renderings/31.png %}
+
+[BBC](http://www.bbc.com/)
 
 ## Emphasis
 
@@ -172,11 +211,19 @@ Balanced and simple layouts often feel more comfortable than overly complicated 
 
 {% img /images/Grids-101/renderings/11.png %}
 
+[Wallpaper](http://www.wallpaper.com/video)
+
 {% img /images/Grids-101/renderings/14.png %}
+
+[Wallpaper](http://www.wallpaper.com/video)
 
 {% img /images/Grids-101/renderings/24.png %}
 
+[Etsy](etsy.com)
+
 {% img /images/Grids-101/renderings/10.png %}
+
+[Form](http://www.form.de/)
 
 But you need to be careful, breaking the rhythm of your grid too often results in a layout that looks broken or overemphasizes too many parts and nothing sticks out anymore.
 
@@ -186,7 +233,7 @@ If you are successful then your grid will help with building a mental model of y
 
 Let’s look again at a few examples of how Etsy but this time let’s focus how they use grids to support their different content needs and how they mix them up from page to page. In my opinion, they did a great job at keeping some sort of consistency that creates a unified impression that ties the pages together neatly. Thereby, they guide the user through the content and the user kinda knows what to expect. The mental map is sound and no surprises ahead that can derail the user experience structurally.
 
-###### Screenshots
+###### Etsy Screenshots
 
 {% img /images/Grids-101/renderings/21.png %}
 
