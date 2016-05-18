@@ -8,7 +8,7 @@ published: true
 categories: [Rails, RSpec, TDD, BDD, Testing, Test-Driven-Development Ruby, Ruby on Rails]
 ---
 
-{% img /images/Rails-Queries/holmes-ruby.png 400 %}
+{% img /images/RSpec/RSpec-Testing-Red-with-Logo.jpg %}
 
 ## Topics
 
