@@ -14,8 +14,9 @@ categories: [Rails, RSpec, TDD, BDD, Testing, Test-Driven-Development Ruby, Ruby
 
 + What’s The Point?
 + RSpec?
-+ Syntax
++ Getting Started
 + Running Tests
++ Basic Syntax
 + Organizing Tests
 
 ## What’s The Point?
@@ -44,6 +45,7 @@ Let’s get back at the purpose of testing. Is testing useful for writing better
 + They have a positive effect on your design. To me, understanding this part turned on a light bulb and made me really appreciate the whole testing thing. When you write your implementations around very focused test scenarios, your code will most likely turn out to be much more compartmentalized and modular. Since we are all friends of DRY—“Don’t repeat yourself!”—and as little coupling between components in your app as possible, this a simple but effective discipline to achieve systems which are designed well from the ground up. This aspect is the most important benefit I think. Yes, the other ones are pretty awesome as well, but when tests also result in apps which quality is better due to a refined design, I’d say Jackpot! 
 
 
+gg
 
 
 
@@ -120,9 +122,7 @@ create  spec/rails_helper.rb
 
 ```
 
-What this does is setting up the basic structure for your RSpec tests within rails. As you can see from the output above, this generator initialized a `spec` directory with a few files that you will need later. The `.rspec` file is a configuration file that we won’t need to manipulate for now. Just wanted to let you know what you have in front of you. The other files are self-explanatory but I want to mention their differences. `spec_helper.rb` is for specs that don’t depend on Rails, `rails_helper.rb` on the other hand do depend on it. Both of these files will be required on top of your spec files—above your actual tests.
-
-When you generate a model via 
+What this does is setting up the basic structure for your RSpec tests within rails. As you can see from the output above, this generator initialized a `spec` directory with a few files that you will need later. The `.rspec` file is a configuration file that we won’t need to manipulate for now. Just wanted to let you know what you have in front of you. The other files are self-explanatory but I want to mention their differences. `spec_helper.rb` is for specs that don’t depend on Rails, `rails_helper.rb` on the other hand do depend on it. What is not obvious is that one of these files need to be required on top of your spec files (test files) in order to run your tests. Let’s have a quick look! When you generate a model via: 
 
 ###### Terminal
 
@@ -156,4 +156,86 @@ require 'rails_helper'
 
 ```
 
-So with this setup, you can test your Rails app, so your models for example and RSpec will not get confused about model classes used in Rails. Requiring ```spec_helper.rb``` on the other hand, will throw an error if you write tests that include business logic from your Rails app. In that scenario, RSpec would not know what you are talking about when you want to test some Rails model for example. So long story super short, ```spec_helper``` does not load Rails—that’s it! Let’s move on!
+So with this setup, you can test your Rails app, your models for example, and RSpec will not get confused about model classes used in Rails. This is necessary to require whenever you need stuff like `ActiveRecord`, `ApplicationController` and so on. So this is your normal scenario and therefore should be your fist logical choice as a beginner.
+
+Requiring ```spec_helper.rb``` on the other hand, will throw an error if you write tests that include business logic from your Rails app. In that scenario, RSpec would not know what you are talking about when you want to test some Rails model for example. So long story super short, ```spec_helper``` does not load Rails—that’s it! Of course you can go wild with configurations, but this is nothing I want you to be concerned about right now. Let’s focus on the basics, how to run tests and the syntax. The should suffice for starters. Let’s move on!
+
+## Running Tests
+
+You are ready to run your tests. RSpec requires your test files to have a specific suffix like ```_spec``` to understand which files to run. If you use a generator, this is not a concern actually but if you want to write your test files on your own, this is how they need to end. So you will need to put a file like ```your_first_test_spec.rb``` in your `spec` directory. Using the generator for creating a dummy model already provided us with ```spec/models/dummy_model_spec.rb```. Not bad! One thing left to do before the tests are ready: 
+
+###### Terminal
+
+```
+
+rake db:migrate
+rake db:test:prepare
+
+```
+
+These commands ran your migration for the dummy model we generated above—plus sets up the test database with that model as well. Now we actually run the test:
+
+###### Terminal
+
+``` bash
+
+rake
+
+```
+
+The `rake` command will run all your tests, the complete test suite. Usually you should use this command when you have finished some feature and want to exercise the whole test suite.
+
+###### Output
+
+``` bash
+
+*
+
+Pending: (Failures listed here are expected and do not affect your suite's status)
+
+1) DummyModel add some examples to (or delete) /Users/vis_kid/projects/rspec-test-app/rspec-dummy/spec/models/dummy_model_spec.rb
+   # Not yet implemented
+   # ./spec/models/dummy_model_spec.rb:4
+
+Finished in 0.00083 seconds (files took 1.94 seconds to load)
+1 example, 0 failures, 1 pending
+
+```
+
+Congratulations! You just ran your first RSpec test. Not that bad, was it? Of course this was a dummy test for now—with dummy test code generated by Rails. The more focused version of running your tests—you have actually a lot more options than only that—is to run an individual file for example. Like this for example:
+
+###### Terminal
+
+``` bash
+
+bundle exec rspec spec/models/dummy_model_spec.rb
+
+```
+
+This will only run a single test file instead of the whole test suite. With larger applications that depend on a large amount of test files, this will become a real time saver. But in terms of saving time and test specificity, this is only scratching the surface to be frank. I think we will cover more of how to shave off significant amount of times while testing in the third article in this series. Let’s see how far we get!
+
+The other way to exercise the whole test suite is by simply running `rspec`—with or without `bundle exec`, depending on your setup.
+###### Terminal
+
+``` bash
+
+bundle exec rspec
+
+```
+
+One more thing I should mention before we move on, you can also run only a specific subset of tests. Say you only want to run all of your tests for your model code:
+
+###### Terminal
+
+``` bash
+
+bundle exec rspec spec/models
+
+```
+
+Easy as that!
+
+## Basic Syntax
+
+
+When you write your individual tests, you want to make it do the simplest thing possible. Highly focused tests are really key. You want to design your application via very simple steps and then follow the errors your test suite is providing you with. Only implement what is necessary to get the app green. Not more, not less! That’s the “driven” part in Test-driven development. Your work is guided by the needs of your tests.
