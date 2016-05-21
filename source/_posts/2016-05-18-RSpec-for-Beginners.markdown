@@ -51,4 +51,109 @@ Let’s get back at the purpose of testing. Is testing useful for writing better
 
 
 
+It boils down to money
 
+Business goals. Want to make sure the apps behaves in a certain way, in an expected way. Tests can make sure to a pretty high degree that the way users interact with your app is functioning and avoiding bug scenarios that you were able to foresee. Tests check that your application works they way you designed it—and that it continues to work after you introduced modifications. This is especially important when your test suite informs you about failing scenarios about implementations of your app that might be old and therefore not exactly at the back of your brain anymore and not considered while you introduced some new functionality. In short, it helps to keep your app healthy and avoids introducing tons of bugs.
+
+Another goal that is important is in respect to the quality of your code itself. The software you write should be easy to understand for other developers—as much as possible at least. Your tests can really help to convey the functionality and intent of your application—and not only to other members on a team but to your future self as well. If you don’t touch a certain section of your code for quite a while, it will really be handy to refresh your memory of how and why you wrote a piece of software with the documentation that a tool such as RSpec provides. So this is the part where tests fulfill the additional role of acting as documentation—and RSpec does this really well, exceptionally actually.
+
+Since your code will always change, refactoring your code will and should always be part of developing your software. And since change is so baked into this process, you need to make sure that these changes don’t generate unexpected side effects in surprising places. The test suite gives you a pretty tight-knit security net to feel more comfortable and free to refactor with gusto. This aspect, next to the design benefits TDD can provide you with, is my favorite benefit a test suite can help you with. Modifying and extending your code is such an essential component of innovating on your already released “product” that you need a tool that gives you as much freedom as possible with that process. I’m not sure if people who are critical of writing an extensive test suite are much concerned about this aspect.
+
+Validating that you are writing code that works
+
+And write code faster in later stages because the feedback from the test suite will give you feedback about your failures, bugs and limitations. Much faster than a human can test of course.
+
+Writing only code that is necessary, and not more, is maybe an underestimated side effect that TDD can provide you with. 
+
+In your apps, especially if it has grown  significantly, you want to be able to trust your software. 100% code coverage sounds a lot sweeter when you have a site that is a couple of years old and touched by hundreds of developers. Being able to trust the new code you introduce and build on top is one of the blisses of software development that money can’t buy.
+
+RSpec is mostly useful on the Unit Test level, testing the finer details and the business logic of your app. That means testing the internals like models and controllers of your app. Tests that cover your views or feature tests which simulate more complete user flows like purchasing an item, will not be the focus that RSpec is made for. RSpec does not make use of a web driver—like Capybara does for example—that simulates a users interactions with an actual site or a representation of it.
+
+## Getting Started
+
+``` ruby
+
+rails new your_app -T
+
+```
+
+`-T` let’s you skip Test Unit, the testing framework that comes with Rails
+
+###### Gemfile
+
+``` ruby
+
+group :development, :test do
+
+gem 'rspec-rails'
+
+end
+
+```
+
+###### Terminal
+
+``` bash
+
+bundle
+
+```
+
+After that we need to run a generator that comes with RSpec:
+
+###### Terminal
+
+``` bash
+
+rails generate rspec:install
+
+```
+
+###### Output
+
+``` bash
+
+create  .rspec
+create  spec
+create  spec/spec_helper.rb
+create  spec/rails_helper.rb
+
+```
+
+What this does is setting up the basic structure for your RSpec tests within rails. As you can see from the output above, this generator initialized a `spec` directory with a few files that you will need later. The `.rspec` file is a configuration file that we won’t need to manipulate for now. Just wanted to let you know what you have in front of you. The other files are self-explanatory but I want to mention their differences. `spec_helper.rb` is for specs that don’t depend on Rails, `rails_helper.rb` on the other hand do depend on it. Both of these files will be required on top of your spec files—above your actual tests.
+
+When you generate a model via 
+
+###### Terminal
+
+``` bash 
+
+rails generate model dummy_model name:string
+
+```
+
+###### Output
+
+``` bash
+
+invoke  active_record
+create    db/migrate/20160521004127_create_dummy_models.rb
+create    app/models/dummy_model.rb
+invoke    rspec
+create    spec/models/dummy_model_spec.rb
+
+```
+
+for example, then your specs will automatically have ```require 'rails_helper'``` by default on top of your spec files. 
+
+###### spec/models/dummy_model_spec.rb
+
+``` ruby
+
+require 'rails_helper'
+
+...
+
+```
+
+So with this setup, you can test your Rails app, so your models for example and RSpec will not get confused about model classes used in Rails. Requiring ```spec_helper.rb``` on the other hand, will throw an error if you write tests that include business logic from your Rails app. In that scenario, RSpec would not know what you are talking about when you want to test some Rails model for example. So long story super short, ```spec_helper``` does not load Rails—that’s it! Let’s move on!
