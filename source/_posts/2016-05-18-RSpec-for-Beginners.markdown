@@ -17,6 +17,7 @@ categories: [Rails, RSpec, TDD, BDD, Testing, Test-Driven-Development Ruby, Ruby
 + Getting Started
 + Running Tests
 + Basic Syntax
++ Generators
 + Organizing Tests
 
 ## What’s The Point?
@@ -239,3 +240,173 @@ Easy as that!
 
 
 When you write your individual tests, you want to make it do the simplest thing possible. Highly focused tests are really key. You want to design your application via very simple steps and then follow the errors your test suite is providing you with. Only implement what is necessary to get the app green. Not more, not less! That’s the “driven” part in Test-driven development. Your work is guided by the needs of your tests.
+
+## Generators
+
+Let’s also have a quick look at what generators are provided by RSpec for you. You have already seen one when we used `rails generate rspec:install`. This little fella made setting up RSpec for us quick and easy. What else do we have?
+
++ `rspec:model`
+
+Want to have another dummy model spec?
+
+
+###### Terminal
+
+``` bash
+
+rails generate rspec:model another_dummy_model
+
+```
+
+###### Output
+
+``` bash
+
+create  spec/models/another_dummy_model_spec.rb
+
+```
+
+Quick, isn’t it? Or a new spec for a controller test for example:
+
++ `rspec:controller`
+
+###### Terminal
+
+``` bash
+
+rails generate rspec:controller dummy_controller
+
+```
+
+###### Output
+
+``` bash
+
+spec/controllers/dummy_controller_controller_spec.rb
+
+```
+
++ `rspec:view`
+
+Same works for views of course. We won’t be testing any views like that though. Specs for views give you the least bang for the buck and it is totally sufficient in probably almost any scenario to inderectly test your views via feature tests. Feature tests is not a specialty of RSpec per se and more suited to another article on its own. That being said, if you are curious, check out [Capybara](http://jnicklas.github.io/capybara/), which is an excellent tool for that kind of thing and let’s you test whole flows that exercise the whole app together. Therefore a feature tests because it can test multiple parts of your app coming together, exercising complete featureswhile simulating the browser experience—a user who pays for multiple items in a shopping cart for example.
+
++ rspec:helper
+
+The same generator strategy let’s us also place a helper without much fuzz.
+
+###### Terminal
+
+``` bash
+
+rails generate rspec:helper dummy_helper
+
+```
+
+###### Output
+
+``` bash
+
+create  spec/helpers/dummy_helper_helper_spec.rb
+
+```
+
+The double ```helper_helper``` part was not an accident. When we give it a more “meaningful” name, you will see that RSpec just attaches ```_helper``` on its own.
+
+###### Terminal
+
+``` bash
+
+rails generate rspec:helper important_stuff
+
+```
+
+###### Output
+
+``` bash
+
+create  spec/helpers/important_stuff_helper_spec.rb
+
+```
+
+### A Word About Helpers
+
+No, this directory is not a place to hord your precious helper methods that come up while refactoring your tests. These would go under `spec/support` actually. `spec/helpers` is for the tests that you should write for your view helpers—a helper like `set_date` would be a common example. Yes, complete test coverage of your code should also include these helper methods. Just because the often seem small and trivial doesn’t mean that we should overlook them or ignore their potential for bugs we wanna catch. The more complex the helper actually turns out, the more reason you should have to write a `helper_spec` for it!
+
+Just in case you start playing around with it right away, keep in mind that you need to run your helper methods on a `helper` object when you write your helper tests in order to work. So they can only be exposed using this object. Something like this:
+
+###### Some Helper Spec
+
+``` ruby
+
+...
+
+describe '#set_date' do
+
+...
+
+  helper.set_date
+
+...
+
+end
+ 
+...
+
+```
+
+You can use the same kind of generators for feature specs, integration specs and mailer specs. These are out of our scope for today but you can commit them to memory for future use:
+
++ rspec:mailer
++ rspec:feature
++ rspec:integration
+
+### The Little Differences
+
+All these specs are ready to go and you can add your tests in there right away. Let’s have a tiny look at a difference between specs though:
+
+###### spec/models/dummy_model_spec.rb
+
+``` ruby
+require 'rails_helper'
+
+RSpec.describe DummyModel, type: :model do
+  pending "add some examples to (or delete) #{__FILE__}"
+end
+
+```
+
+###### spec/controllers/dummy_controller_controller_spec.rb
+
+``` ruby
+
+require 'rails_helper'
+
+RSpec.describe DummyControllerController, type: :controller do
+end
+
+```
+
+###### spec/helpers/dummy_helper_helper_spec.rb
+
+``` ruby
+
+require 'rails_helper'
+
+RSpec.describe DummyHelperHelper, type: :helper do
+  pending "add some examples to (or delete) #{__FILE__}"
+end
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+These sorts of helpers in RSpec, not surprisingly as everywhere else, help you to encapsulate and therefore reuse arbitrary methods that you will maybe need all over the place. `/helpers` is a nice home for this sort of stuff and keeps your spec files cleaner and more DRY. The other thing such helpers support is readability. When you don’t have to focus on repeated implementation details of some frequently ocurring setup or whatever, you can package them up into a nicely readable helper method and store it in a single “authoritive” place among other helpers. That let’s you and other focus about the details of the actual scenario under test and get’s non-relevant stuff out of the way. Be careful not to hide important implementation details that are necessary to understand each test. Too clever abstractions that invite so-called mystery guests for example can bite you in the long run. 
