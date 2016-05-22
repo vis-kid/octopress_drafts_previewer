@@ -144,7 +144,7 @@ create    spec/models/dummy_model_spec.rb
 
 ```
 
-for example, then your specs will automatically have ```require 'rails_helper'``` by default on top of your spec files. 
+Not only will Rails have created the associated `_spec.rb` files for you, your specs will also automatically have ```require 'rails_helper'``` by default on top of your spec files. That means you are ready to go, right away. 
 
 ###### spec/models/dummy_model_spec.rb
 
