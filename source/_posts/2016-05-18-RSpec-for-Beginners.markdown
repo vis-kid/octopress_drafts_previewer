@@ -439,10 +439,9 @@ Now comes the hard part, what to test and how. In my opinion this is the aspect 
 
 On the other hand, if—like so many others out there—you are teaching yourself this stuff, patience will be key. Reading all the books and articles certainly get you in the right direction, but I feel like testing needs a lot of more advanced puzzle pieces in place in order for you to make complete sense and maybe even more important, before you feel comfortable with it. The “good” news is that this is not unusual and we all have been kinda there. Perserverance is important. You can do this! It’s no rocket science but it will take a while until you can view the process of writing an application from the other way around, from the perspective of tests I mean. For now, keep pushing, have fun, make mistakes, write apps, copy tutorials and what not until the light bulb goes off.
 
+## Final Thoughts
 
-
-
-
+When you write your individual tests, you want to make it do the simplest thing possible. Highly focused tests are really key. You want to design your application via very simple steps and then follow the errors your test suite is providing you with. Only implement what is necessary to get the app green. Not more, not less! That’s the “driven” part in Test-driven development. Your work is guided by the needs of your tests.
 
 
 
