@@ -17,6 +17,7 @@ categories: [Rails, RSpec, TDD, BDD, Testing, Test-Driven-Development Ruby, Ruby
 + Getting Started
 + Running Tests
 + Basic Syntax
++ The Four Phases Of Tests
 + The Hard Part About Testing
 
 ## What’s The Point?
@@ -355,49 +356,82 @@ end
 
 You can use the same kind of generators for feature specs, integration specs and mailer specs. These are out of our scope for today but you can commit them to memory for future use:
 
-+ rspec:mailer
-+ rspec:feature
-+ rspec:integration
+## Four Phases Of A Test
 
-### The Little Differences
+Best practices in testing recommends that we compose our tests in four distinctive phases:
 
-All these specs are ready to go and you can add your tests in there right away. Let’s have a tiny look at a difference between specs though:
++ Test setup
++ Test exercise
++ Test verification
++ Test teardown
 
-###### spec/models/dummy_model_spec.rb
+
+These four phases are mostly for readability and to give your tests a ...??? structure. It’s a so called testing pattern, basically a practice that the community widely agreed upon to be useful and recommended. This whole topic is a deep rabbit whole, so know that I’ll leave out a bunch to not confuse and to not spend a parapgraph that has the length of a whole article.
+
++ Setup
+
+During setup you prepare the scenario under which the test is supposed to run. In most cases this will include data that you set up to be ready for some kind of exercise. Little tip: don’t overcomplicate things and set up only the miniumm amount necessary to make the test work.
 
 ``` ruby
-require 'rails_helper'
 
-RSpec.describe DummyModel, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+agent = Agent.create(name: 'James Bond')
+mission = Mission.create(name: 'Moonraker', status: 'Green')
+
+```
+
++ Exercise
+
+This part actually runs the thing that you want to test in this spec. Could be as simple as:
+
+``` ruby
+
+status = mission.agent_status
+
+```
+
++ Verify
+
+Now you verify if your assertion about the test is being met or not. So you test the system against your own expectations.
+
+``` ruby
+
+expect(status).not_to eq 'MIO')
+
+```
+
++ Teardown
+
+The framework takes care of memory and database cleaning issues—a reset basically. Nothing for you to handle at this point. The goal is to get back a pristine state to run new tests without any surprises from the currently running ones.
+
+Let’s see what this would mean in our concrete example:
+
+###### Some Spec
+
+``` ruby
+
+describe Agent, '#favorite_gadget' do
+
+  it 'returns one item, the favorite gadget of the agent ' do
+
+  # Setup
+    agent = Agent.create(name: 'James Bond')
+    q = Quartermaster.create(name: 'Q') 
+    q.technical_briefing(agent)
+
+  # Exercise    
+    favorite_gadget = agent.favorite_gadget
+
+  # Verify
+    expect(favorite_gadget).to eq 'Walther PPK' 
+
+  # Teardown is for now mostly handled by RSpec itself
+  end
+
 end
 
 ```
 
-###### spec/controllers/dummy_controller_controller_spec.rb
-
-``` ruby
-
-require 'rails_helper'
-
-RSpec.describe DummyControllerController, type: :controller do
-end
-
-```
-
-###### spec/helpers/dummy_helper_helper_spec.rb
-
-``` ruby
-
-require 'rails_helper'
-
-RSpec.describe DummyHelperHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
-end
-
-```
-
-
+As you can see, in this example here we separated the exercise and verify phases clearly from each other whilst in the other dummy examples above, `expect(agent.favorite_gadget).to eq 'Walther PKK` mixed both phases together. Both are valid scenarios and have their place. The newlines help additionally to visually separate how the test is structured.
 
 ## The Hard Thing About Testing
 
