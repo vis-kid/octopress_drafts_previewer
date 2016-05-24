@@ -17,6 +17,8 @@ categories: [Rails, RSpec, TDD, BDD, Testing, Test-Driven-Development Ruby, Ruby
 + Getting Started
 + Running Tests
 + Basic Syntax
++ Four Phases Of Tests
++ The Hard Think About Testing
 
 ## What’s The Point?
 
