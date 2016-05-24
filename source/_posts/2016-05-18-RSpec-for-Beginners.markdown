@@ -17,8 +17,7 @@ categories: [Rails, RSpec, TDD, BDD, Testing, Test-Driven-Development Ruby, Ruby
 + Getting Started
 + Running Tests
 + Basic Syntax
-+ Generators
-+ Organizing Tests
++ The Hard Part About Testing
 
 ## What’s The Point?
 
@@ -399,6 +398,12 @@ end
 ```
 
 
+
+## The Hard Thing About Testing
+
+Now comes the hard part, what to test and how. In my opinion this is the aspect of testing that is most confusing to newcomers. And understandably so! You are new to the language and framework and often don’t even know yet what you don’t know. How do you write tests for that? Very good question. I’ll be very frank, you don’t—most likely—and you won’t for quite a while. Getting comfortable with this stuff takes a while. When you have a mentor or attend some bootcamp and such you have the opportunity to directly learn from experienced people. In that case, your progress in this department will be different of course.
+
+On the other hand, if—like so many others out there—you are teaching yourself this stuff, patience will be key. Reading all the books and articles certainly get you in the right direction, but I feel like testing needs a lot of more advanced puzzle pieces in place in order for you to make complete sense and maybe even more important, before you feel comfortable with it. The “good” news is that this is not unusual and we all have been kinda there. Perserverance is important. You can do this! It’s no rocket science but it will take a while until you can view the process of writing an application from the other way around, from the perspective of tests I mean. For now, keep pushing, have fun, make mistakes, write apps, copy tutorials and what not until the light bulb goes off.
 
 
 
