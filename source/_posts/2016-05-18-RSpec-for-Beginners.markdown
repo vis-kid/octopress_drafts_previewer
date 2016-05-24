@@ -17,8 +17,6 @@ categories: [Rails, RSpec, TDD, BDD, Testing, Test-Driven-Development Ruby, Ruby
 + Getting Started
 + Running Tests
 + Basic Syntax
-+ The Four Phases Of Tests
-+ The Hard Part About Testing
 
 ## What’s The Point?
 
@@ -238,123 +236,162 @@ Easy as that!
 
 ## Basic Syntax
 
+I recommend that we start with the bare basics and look into a few more options that RSpec provides in the next two articles. Let’s have a look at the basic structure of a test and dive into more advanced waters when we got this one out of the way.
 
-When you write your individual tests, you want to make it do the simplest thing possible. Highly focused tests are really key. You want to design your application via very simple steps and then follow the errors your test suite is providing you with. Only implement what is necessary to get the app green. Not more, not less! That’s the “driven” part in Test-driven development. Your work is guided by the needs of your tests.
++ `describe`
 
-## Generators
+This will be your bread and butter because it organizes your specs. Within you can reference strings or classes themselves:
 
-Let’s also have a quick look at what generators are provided by RSpec for you. You have already seen one when we used `rails generate rspec:install`. This little fella made setting up RSpec for us quick and easy. What else do we have?
-
-+ `rspec:model`
-
-Want to have another dummy model spec?
-
-
-###### Terminal
-
-``` bash
-
-rails generate rspec:model another_dummy_model
-
-```
-
-###### Output
-
-``` bash
-
-create  spec/models/another_dummy_model_spec.rb
-
-```
-
-Quick, isn’t it? Or a new spec for a controller test for example:
-
-+ `rspec:controller`
-
-###### Terminal
-
-``` bash
-
-rails generate rspec:controller dummy_controller
-
-```
-
-###### Output
-
-``` bash
-
-spec/controllers/dummy_controller_controller_spec.rb
-
-```
-
-+ `rspec:view`
-
-Same works for views of course. We won’t be testing any views like that though. Specs for views give you the least bang for the buck and it is totally sufficient in probably almost any scenario to inderectly test your views via feature tests. Feature tests is not a specialty of RSpec per se and more suited to another article on its own. That being said, if you are curious, check out [Capybara](http://jnicklas.github.io/capybara/), which is an excellent tool for that kind of thing and let’s you test whole flows that exercise the whole app together. Therefore a feature tests because it can test multiple parts of your app coming together, exercising complete featureswhile simulating the browser experience—a user who pays for multiple items in a shopping cart for example.
-
-+ rspec:helper
-
-The same generator strategy let’s us also place a helper without much fuzz.
-
-###### Terminal
-
-``` bash
-
-rails generate rspec:helper dummy_helper
-
-```
-
-###### Output
-
-``` bash
-
-create  spec/helpers/dummy_helper_helper_spec.rb
-
-```
-
-The double ```helper_helper``` part was not an accident. When we give it a more “meaningful” name, you will see that RSpec just attaches ```_helper``` on its own.
-
-###### Terminal
-
-``` bash
-
-rails generate rspec:helper important_stuff
-
-```
-
-###### Output
-
-``` bash
-
-create  spec/helpers/important_stuff_helper_spec.rb
-
-```
-
-### A Word About Helpers
-
-No, this directory is not a place to hord your precious helper methods that come up while refactoring your tests. These would go under `spec/support` actually. `spec/helpers` is for the tests that you should write for your view helpers—a helper like `set_date` would be a common example. Yes, complete test coverage of your code should also include these helper methods. Just because the often seem small and trivial doesn’t mean that we should overlook them or ignore their potential for bugs we wanna catch. The more complex the helper actually turns out, the more reason you should have to write a `helper_spec` for it!
-
-Just in case you start playing around with it right away, keep in mind that you need to run your helper methods on a `helper` object when you write your helper tests in order to work. So they can only be exposed using this object. Something like this:
-
-###### Some Helper Spec
+###### Some Spec
 
 ``` ruby
 
-...
-
-describe '#set_date' do
-
-...
-
-  helper.set_date
-
-...
+describe User do
 
 end
- 
-...
+
+describe 'Some string' do
+
+end
 
 ```
 
-You can use the same kind of generators for feature specs, integration specs and mailer specs. These are out of our scope for today but you can commit them to memory for future use:
+`describe` sections are the basic building blocks to organize your tests into logical, coherent groups to test. Basically a scope for different parts of your application that you want to test.
+
+###### Some Spec
+
+``` ruby
+
+
+describe User do
+  ...
+end
+
+describe Guest do
+  ...
+end
+
+describe Attacker do
+  ...
+end
+
+```
+
+A good tip is to tighten your scope even more. Since some classes will grow quite significantly, it’s not a good idea to have all the methods you want to test for one class in a single `describe` block. You can create multiple of these blocks of course and focus them around instance or class methods instead. To make your intent more clear, all you need is to provide the class name with an extra string that references the method you want to test.
+
+###### Some Spec
+
+``` ruby
+
+describe Agent, '#favorite_gadget' do
+  ...
+end
+
+describe Agent, '#favorite_gun' do
+  ...
+end
+
+describe Agent, '.gambler' do
+  ...
+end
+
+```
+
+That way you get the best of both worlds. You encapsulate related tests in their representative groups while keeping things focused and at a decent size. For users very new to Ruby land, I should mention that that `#` simply refernces an instance method while the dot `.` is reserved for class methods. Because they are inside of strings, they have no technical implications here but they signal your intent to other developers and your future self. Don’t forget the comma after the class name, won’t work without it! In a minute, when you get to `expect` I’ll show you why this approach is super convenient.
+
++ `it`
+
+Within the scope of `describe` groups, we use another scope of `it` blocks. These are made for the actual examples under test. If you want to test the instance method `#favorite_gadget` on the `Agent` class, it would look like this:
+
+###### Some Spec
+
+``` ruby
+
+describe Agent, '#favorite_gadget' do
+
+  it 'returns one item, the favorite gadget of the agent ' do
+    ...
+  end
+
+end
+
+```
+
+The string that you provide to the `it` block works as the main documentation for your test. Within it, you specify exactly what kind of behaviour you want or expect from the method in question. My recommendation is to not go overboard and be too verbose about it but at the same time to not be overly cryptic and confuse others with overly smart descriptions. Think about what the smallest and simplest implementation of this part of the puzzle can and should accomplish. The better you write this part, the better the overall documentation for your app will end up. Don’t rush this part just because it’s a string that can’t do any damage—at least not on the surface.
+
++ `expect()`
+
+Now we’re getting more to the heart of things. This method let’s you verify the part of the system you want to test. Let’s go back to our previous example and see it in (limited) action:
+
+###### Some Spec
+
+``` ruby
+
+describe Agent, '#favorite_gadget' do
+
+  it 'returns one item, the favorite gadget of the agent ' do
+    expect(agent.favorite_gadget).to eq 'Walther PPK' 
+  end
+
+end
+
+```
+
+`expect()` is the “new” assertion syntax of RSpec. Previously we used `should` instead. Different story, but I wanted to mention it in case you run into it. `expect()` expects that you provide it with the object under test and exercise whatever method under test on it. Finally, you write the asserted outcome on the right side. You have the option to go the positive or negative route with `.to eq` or `.not_to eq` for example. Up to you, you can always turn the logic around, every way it suits best your needs. Let’s run this nonsensical test and focus on the output that we got as a result of our test setup:
+
+###### Terminal
+
+``` bash
+
+rspec spec/models/agent_spec.rb
+
+``` 
+
+###### Output
+
+``` bash
+
+Failures:
+
+  1) Agent#favorite_gadget returns one item, the favorite gadget of the agent 
+     Failure/Error: expect(agent.favorite_gadget).to eq 'Walther PPK'
+
+```
+
+Reads pretty nice, doesn’t it? **"Agent#favorite_gadget returns one item, the favorite gadget of the agent"** tells you all you need to know:
+
++ The class involved
++ The method under test
++ The expected outcome
+
+If we would have left of the string that describes the method in the describe block then the output would be a lost less clear and readable:
+
+###### Some Spec
+
+``` ruby
+
+describe Agent do
+
+  it 'returns one item, the favorite gadget of the agent ' do
+    expect(agent.favorite_gadget).to eq 'Walther PPK' 
+  end
+
+end
+
+```
+
+###### Output
+
+``` bash
+
+Failures:
+
+  1) Agent returns one item, the favorite gadget of the agent 
+     Failure/Error: expect(agent.favorite_gadget).to eq 'Walther PPK'
+
+```
+
+Sure there are other ways to circumvent this, passing this info via your `it` block for example, but the other appraoch is just simple and works. Whatever makes your blood flow of course!
 
 ## Four Phases Of A Test
 
