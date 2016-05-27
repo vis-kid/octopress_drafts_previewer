@@ -1,0 +1,24 @@
+---
+layout: post
+title: Typography 101
+date: 2016-05-27 04:29:10 +0100
+comments: true
+sharing: true
+published: true 
+categories: [Design, Grids, Visual Design, Product Design, Web Design, Frontend]
+---
+
+{% img /images/Grids-101/1857_chicago_cropped.gif %}
+
+## Topics
+
++ 
+
+95 % web design is 95 percent
+
+when you take away all of the typo of most websites, they basically implode. There is no web design without type. So why not get good at it and improve your web design skills by applying typogrography skills which have been handed down to use by the type world and graphic designers.
+
+At first, web design tried to follow a lot of the ideas of graphic design, especially how books, magazines and newspapers were layed out and designed. These days, the design for the web has matured a lot and does not follow these ideas as close as they used to. Designers adjusted the their designs to the needs of the new medium but also realized that they can go further in some areas because we are talking about a digital medium that has different options. Responsive design is one example where design clearly matured over the print world in many, many ways. The flip side is, that this has also led to more complexity—which also seems to be ever increasing. To me, this does not sound threatening. Quite on the contrary, I feel this is very exciting and the possibilities are not only growing but the options today are vast and cool already. The web has grown up obviously—quite a bit—and the future seems bright!
+
+Type helps you better than anything else to convey your message. Sure, graphics can support and enhance that, icons too, but communicating with users on the web happens mostly via the written word—in contrast to the advertising world, where images and graphics can convery whole stories a lot easier, even without using much written language at all. But on the web, we are talking about pages, sites and most of all interfaces. Dealing with mostly graphical elements for these media turned out to be difficult, often ineffective, ambiguous and not fit for the mass market. I’m sure we all have seen pages which are more on the experiemntal side, which heavily use graphical language—excluding type—to accomplish some design goal but imagine a project like Facebook, Twitter or even Google going in that direction. I think it’s pretty much a sure bet that this would be a disaster—a huge one. So, type is king on the web. Like it or hate it, but ignoring it, is not an option.
+
