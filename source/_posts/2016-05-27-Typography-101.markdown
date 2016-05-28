@@ -12,7 +12,13 @@ categories: [Design, Grids, Visual Design, Product Design, Web Design, Frontend]
 
 ## Topics
 
-+ 
++ Typogrophic Anatomy
++ Typefaces & Fonts
++ Readability
++ Baseline Grid
+
+
++ What is a type foundry?
 
 95 % web design is 95 percent
 
