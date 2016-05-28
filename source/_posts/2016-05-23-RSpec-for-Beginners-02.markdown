@@ -13,6 +13,7 @@ categories: [Rails, RSpec, TDD, BDD, Testing, Test-Driven-Development Ruby, Ruby
 ## Topics
 
 + Generators
++ Tags
 
 ## Generators
 
@@ -179,7 +180,70 @@ You can also use this metadata for filering in your specs. Say you have a before
 
 For bigger test suites, this might come in very handy one day. You can filter which focused group of tests you want to run—instead of executing the whole suite which might take a while. Your options extend beyond the three tagging options above of course.
 
+## Tags
 
+When you amass a bigger test suite over time, it won’t just be enough to run tests in certain folders to run RSpec tests quickly and efficiently. What you want to able to is run tests that belong together but might be spread across multiple directories. Tagging to the rescue! Don’t get me wrong, organizing your tests smartly in your folders is key as well, but tagging let’s take this just a bit further.
+
+You are giving your tests some metadata as symbols like “:wip”, “:checkout” or whatever fits your needs.  When you run these focused groups of tests you simply specify that RSpec should ignore running other tests this time by providing a flag with the name of the tags.
+
+###### Some Spec File
+
+``` ruby
+
+describe Agent, :wip do
+
+  it 'is a mess right now' do
+    expect(agent.favorite_gadgets).to eq 'Unknown'
+  end
+
+end
+
+```
+
+###### Terminal
+
+``` bash
+
+rspec --tag wip
+
+```
+
+###### Output
+
+``` bash
+
+Failures:
+
+  1) Agent is a mess right now
+       Failure/Error: expect(agent.favorite_gadgets).to eq 'Unknown'
+
+...
+
+```
+
+You could also run all kinds of tests and ignore a bunch of groups that are tagged a certain way. You just provide a tilde (~) in front of the tag name and RSpec is happy to ignore these tests.
+
+###### Terminal
+
+``` bash
+
+rspec --tag ~wip
+
+```
+
+Running multiple tags synchronously is not a problem either:
+
+###### Terminal
+
+``` bash
+
+rspec --tag wip --tag checkout
+
+rspec --tag ~wip --tag checkout
+
+```
+
+As you can see above, you can mix and match them at will. The syntax is not perfect, repeating `--tag` is maybe not ideal, but hey, it’s not biggie either! Yes all of this is a bit more extra work and mental overhead when you compose the specs, but on the flip side, it really provides you with a powerful ability to slice up your test suite on demand. On bigger projects it can save you a ton of time that way.
 
 ## Final Thoughts
 
