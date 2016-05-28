@@ -12,8 +12,150 @@ categories: [Rails, RSpec, TDD, BDD, Testing, Test-Driven-Development Ruby, Ruby
 
 ## Topics
 
++ Callbacks
 + Generators
 + Tags
+
+## Callbacks
+
+In case you are not aware about callbacks yet, let me give you a brief heads up. Callbacks is code that is run at certain specific points in the life cycle of code. In terms or Rails this would mean that you have code that is being run before objects are created, updated, destroyed etc. In the context of RSpec, it’s the life cycle of tests being run. That simply means that you can specify hooks that should be run before each test is run in the spec file, after all thats in that context have been executed or simply around each test. There are a few more fine-grained options available but I recommend we avoid getting lost in the details with them. First things first:
+
++ `before(:each)`
+
+This callback is run before each test example.
+
+###### Some Spec file
+
+``` ruby
+
+describe Agent, '#favorite_gadget' do
+
+  before(:each) do
+    @gagdet = Gadget.create(name: 'Walther PPK')
+  end
+
+  it 'returns one item, the favorite gadget of the agent ' do
+    agent = Agent.create(name: 'James Bond')
+    agent.favorite_gadgets << @gadget
+
+    expect(agent.favorite_gadgets).to eq 'Walther PPK'
+  end
+
+  ...
+
+end
+
+```
+
+Let’s say you would need a certain gadget for every test you run in a certain scope. Before let’s you extract this into a before block and prepares this little snippet for you conveniently. When you set up data that way, you have to use instance variables of course to have access to among various scopes.
+
+
+### Attention!
+
+Don’t let yourself blind by convenience in this example. Just because you can do this kinda stuff does not mean you should. I want to avoid going into AntiPattern territory and confuse the hell out of you, but on the other hand I wanted to avoid showing you examples without explaining the downsides to these simple dummy exercises. In the example above, it would be much more expressive if you set up the needed objects on a test-by-test basis. Especially on larger spec files, you can quickly loose sight of these little connections and make it harder for others to piece together these puzzles.
+
++ `before(:all)`
+
+This before block runs only once before all the other examples in a spec file.
+###### Some Spec file
+
+``` ruby
+
+describe Agent, '#enemy' do
+
+  before(:all) do
+    @main_villain = Villain.create(name: 'Ernst Stavro Blofeld')
+    @mission = Mission.create(name: 'Moonraker')
+    @mission.villains << @main_villain
+  end
+
+  it 'returns the main enemy Bond has to face in his mission' do
+    agent = Agent.create(name: 'James Bond')
+    @mission.agents << agent
+
+    expect(agent.enemy).to eq 'Ernst Stavro Blofeld'
+  end
+
+  ...
+
+end
+
+```
+
+When you remember the four phases of test, before blocks sometimes are helpful in setting something up for you that needs to repeated on a regular basis.
+
+
+`after(:each)` and `after(:all)` have the same behaviour but are simply run after your tests have been executed. After is often used for cleaning up your files for example. But I think it’s a bit early to address that. So commit it to memory, tknow that it’s there in case you start to need it and let’s move on to explore other, more basic things.
+
+All of these callbacks can be places strategically to fit your needs. Place them in any `describe` block scope that you need to run them—they don’t have to necessarily be placed on top of your spec file. They can easily be nested  way inside your specs. 
+
+###### Some Spec file
+
+``` ruby
+
+describe Agent, :nested do
+  before(:each) do
+    @mission = Mission.create(name: 'Moonraker')
+  end
+
+  describe '#enemy' do 
+    before(:each) do
+      @main_villain = Villain.create(name: 'Ernst Stavro Blofeld')
+      @mission.villains << @main_villain
+    end
+
+    describe 'with associated mission' do
+      it 'returns the main enemy Bond has to face in his mission' do
+        @agent = Agent.create(name: 'James Bond')
+        @mission.agents << @agent
+  
+        expect(@agent.enemy).to eq 'Ernst Stavro Blofeld'
+      end
+    end 
+
+    describe 'without associated mission' do
+      it 'returns negative mission assignment statement' do
+        @agent = Agent.create(name: 'Some schmuck')
+
+        expect(@agent.enemy).to eq 'No mission assigned'
+      end
+    end
+  end
+
+  describe '#aborted_missions' do
+    ...
+  end
+
+  describe '#double_o_missions' do
+    ...
+  end
+end
+
+```
+
+As you can observe, you can place callback blocks at any scope to your liking, go as deep as you need. The code in the callback will be executed within the scope of any describe block scope. But a little bit of advice: if you feel the need of nesting too much and things seem to get a little bit messy and complicated, rethink your approach and consider how you could simplify the tests and its setup. KISS! Keep it simple, stupid.
+
+Also, pay attention how nice this reads when we force these tests to fail:
+
+###### Output
+
+``` ruby
+
+Failures:
+
+  1) Agent#enemy with associated mission returns the main enemy Bond has to face in his mission
+     Failure/Error: expect(@agent.enemy).to eq 'Ernst Stavro Blofeld'
+     
+       expected: "Ernst Stavro Blofeld"
+            got: "Blofeld"
+
+2) Agent#enemy without associated mission returns negative mission assignment statement
+     Failure/Error: expect(@agent.enemy).to eq 'No mission assigned'
+     
+       expected: "No mission assigned"
+            got: "Mission assigned"
+
+```
 
 ## Generators
 
@@ -253,3 +395,11 @@ As you can see above, you can mix and match them at will. The syntax is not perf
 
 
 These sorts of helpers in RSpec, not surprisingly as everywhere else, help you to encapsulate and therefore reuse arbitrary methods that you will maybe need all over the place. `/helpers` is a nice home for this sort of stuff and keeps your spec files cleaner and more DRY. The other thing such helpers support is readability. When you don’t have to focus on repeated implementation details of some frequently ocurring setup or whatever, you can package them up into a nicely readable helper method and store it in a single “authoritive” place among other helpers. That let’s you and other focus about the details of the actual scenario under test and get’s non-relevant stuff out of the way. Be careful not to hide important implementation details that are necessary to understand each test. Too clever abstractions that invite so-called mystery guests for example can bite you in the long run. 
+
+
+
+
+
+
+
+
