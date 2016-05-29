@@ -8,7 +8,7 @@ published: true
 categories: [Design, Grids, Visual Design, Product Design, Web Design, Frontend]
 ---
 
-{% img /images/Grids-101/1857_chicago_cropped.gif %}
+{% img /images/Typography-101/Typographia.png %}
 
 ## Topics
 
