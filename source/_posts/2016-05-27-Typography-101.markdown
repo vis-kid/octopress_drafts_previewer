@@ -91,3 +91,101 @@ Kerning is referred to as the varying micro white space between individual lette
 ### Letter Spacing / Tracking
 
 Refers to the consistent spacing between all of the letters in a group. It does not target individual letters like kerning does, but it’s rather a uniform adjustment that spans across the entire affected text passage. If results in more or less density and texture. When you use larger pieces of text for title for example, a little bit of negative letter spacing can go a long way. You don’t want to create the impression that the text is drifting apart. As with kerning, when typefaces are designed to be consumed at smaller font sizes, the letter spacing might need these little nudges since the original kerning was considered differently. 
+
+## Typographic Classifications
+
+### Serif
+
+Serifs are called the little extensions at the end of each letter.
+
+###### Screenshot
+
+They were conceived to look like hand-written text. ?? Venice / Italics??
+The look more old school and classic but you can also make them look very modern. Depending on the context you apply Serif text.
+
+
+### Sans-Serif
+
+Sans-Serifs started to get popular in the 1920s and got rid of all the extra Serif parts. They were designed to look modern, industrial and machine-made. They were ideal for the advertisement industry. Since you can place more text in the same space—Serif extensions take up more space of course—they were considered more economical as well.
+
+?? Display typefaces??
+
+## Punctuations
+
+### Quotes
+
+Use real quotes. Period! The other “quotes” most people are carelessly using are straight quotes—which are actually used for inches and feet—and are also called “dumb quotes”. You don’t wanna use that, don’t you? Apostrophes and single quotes also have their real counterpart. Yes, you need to do some finger kung-fu on your keyboard to get them, but you are making yourself look bad and inexperienced if you ignore them.
+
+### Ellipsis
+
+Ellipsis refers to the three dots that can easily be mistaken as three single periods. The difference is that they have more spacing between each period. ?? use for??
+
+If you use extra space to the left and right is up to you to decide. There is no standard for it at the moment.
+
+You use it when you want to omit stuff—words, phrases,lines, paragraphs or parts of quotes. It’s sort of a placeholder indicating that you left out some text. That way it helps getting right to the point, not sweating unimportant details.
+
+I know, these punctuation thingies don’t sound all too dashing, but this basic knowledge  of their use should be important for you if you like designing with good typography. On the one hand, it might seem trivial to have three sorts of dashes you can choose from because they look really similar, but on the other hand, a lot of care and consideration has been poured into these over the years and at least we should respect the work of designers who came long before us and on which typographical work we can easily build or work today. Paying attention to these little details is a little price to pay for standing on the shoulders of giants.
+
+### Hyphen
+
+No spaces around hyphens
+
+The hyphen is used for justification ??
+
+Their main purpose is to link words together: fine-art, 8-year-old 
+
+They are your only choice for prefixes and suffixes as well.
+
+If you wanna spell out a word, a hyphen can be used as well. T-U-T-S
+
+Spanning time and distance is also part of their repository:
+03:45-04:00 p.m.
+1938-1945
+
+For ranges like this, you can also you the en dash.
+
+### En Dash
+
+The en dash has its name from the length of the lowercase letter “n”. It is a little bit longer than a hyphen and is used for ranges of values, to imply relationships like master–student or can emphasize.
+
+### Em Dash
+
+The em dash is again a little bit longer, the size of the lowercase letter “m”. They should be used to emphasise a pause of thought and indicate that a sentence is unfinished.
+
+
+Both dashes are a little bit thinner than a hyphen usually.
+Please don’t just use two hyphens for stuff that en or em dashes are made for.
+
+Both versions of dashes don’t require an extra space around them.
+
+## Choosing Typefaces
+
+We have tons of typefaces to choose from these days. And not only that, we have tons of services that wanna help us with that. It can take a while to get a sense what’s out there actually. But to me, that is entirely a good thing. A few years ago the options were a lot more limited and that was not a good thing. Web typography has come a long way, not only in terms of the ecosystem but in terms of what browsers let you do these days. 
+
+When you decide on which typefaces you wanna go with, considerations are plenty! I’d recommend that you first of all focus on the readability and style that you want to convey in your designs. The tone and the message are also important since type has a huge influence through its various characteristics. If you can manage to do that, you will set yourself apart from the rest of the herd pretty significantly.
+
+In the end, readability trumps everything though, especially for body copy. Headers can be a bit more expressive and creative. Since they only represent short bursts or text and are bigger usually, their readability can’t be that much compromised.
+
+### Pairing Typefaces
+
+
+Make sure that you create good contrast between the paired choices. Typefaces that look too similar can end up looking confusing and affect your visual hierarchy negatively. Bigger typefaces also have the benefit of so many options to vary this one typeface that you can only use one typeface without looking boring. That might be the easiest approach when you start out. There are so many weights and variations, that you will hardly shoot yourself in the foot. Pairing a Sans-Serif with a Serif typeface can easily lead to a good and interesting contrast that you can use to your advantage—stylistically.
+
+But keep in mind, that you should use them consistently. You should not switch up the typeface for body copy and headers all over the place. Decide which one is best for readability and which one is best for conveying a style while grabbing the readers attention and stick to that. Otherwise you will make it harder for users to navigate your page because you failed at providing a subliminal mental map with your typography for your site. Worse, if users are confused and have a hard time to actually read what’s on a page.
+
+Also, some type designers created Serif and Sans-Serif versions of a typeface which are supposed to work together nicely. When the type designer herself considered the pair, it’s really hard to go wrong when they kind of paired the typefaces for you already. Will this always work? Of course not. But it’s good to know when you look for new typefaces if they have a matching one with fitting contrast backed in from the start.
+
+On occasion steal. When you find combinations that you like, try them out yourself.
+
+## Hierarchy
+
+It is important that you convey a strong hierarchy within your typography? Why? Because as we established at the beginning of this piece, your type on the page make for roughly 95% percent of your design. If you have weak hierarchy within your texts, you won’t have a snowballs chance in hell to create strong hierarchy in your overall design. Here are a few ways to strengthen your work in that department:
+
++ Color
++ Size
++ White Space
++ Weight
++ Italics
++ Strong contrast within paired typefaces
+
+Keep in mind that all of the above only shine if you use them consistently. If you change it up too much, your hierarchy will be weakened significantly. If all of this is complete news to you, I’d head over to my article about visual design principles to get you up to speed. All of the aforementioned will make a lot more sense then.
