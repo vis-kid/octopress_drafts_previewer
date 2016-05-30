@@ -12,9 +12,283 @@ categories: [Rails, RSpec, TDD, BDD, Testing, Test-Driven-Development Ruby, Ruby
 
 ## Topics
 
++ Matchers
 + Callbacks
 + Generators
 + Tags
+
+## Matchers
+
+So this is gonna approach the heart of things. RSpec provides you with a ton of so-called matchers. These are your bread and butter when you write your expectations. So far you have seen `.to eq` and `.not_to eq`. But there is a much bigger arsenal to write your specs. You can test to raise errors, for truthy and falsy values or even for specific classes for example. Let’s run down a few options to get you started:
+
++ `.to eq`
++ `.not_to eq` 
+
+This tests for equivalence.
+
+###### Some Spec
+
+``` ruby
+
+...
+
+it 'some clever description' do
+  expect(agent.enemy).to eq 'Ernst Stavro Blofeld'
+  expect(agent.enemy).not_to eq 'Winnie Pooh'
+end
+
+...
+
+```
+
+### Attention!
+
+To keep things short, I packed two expect statements within one `it` block. It is good practice though to test only a single thing per test. This keeps things a lot more focused and your tests will end up less brittle when you change things.
+
++ ```.to be_truthy```
++ ```.to be true```
+
+###### Some Spec
+
+``` ruby
+
+...
+
+it 'some clever description' do
+  expect(agent.hero?).to be_truthy
+  expect(enemy.megalomaniac?).to be true
+end
+
+...
+
+```
+
+The difference is that ```be_truthy``` is true when it’s not `nil` or `false`. So it will pass if the result is neither of these two—kinda “true-like”. ``` to be true``` on the other hand only accepts a value that is ```true``` and nothing else.
+
++ ```.to be_falsy```
++ ```.to be false```
+
+###### Some Spec
+
+``` ruby
+
+...
+
+it 'some clever description' do
+  expect(agent.coward?).to be_falsy
+  expect(enemy.megalomaniac?).to be false
+end
+
+...
+
+```
+
+Similar to the two examples above, ```.to be_falsy``` expects either a `false` or a `nil` value and `to be false` will only do a direct comparison on `false`.
+
++ ```.to be_nil```
++ ```.to_not be_nil```
+
+And last but not least, this tests exactly for `nil` itself. I spare you the example.
+
++ `.to match()`
+
+I hope you already had the pleasure of looking into regular expressions. If not, this is a sequence of characters with which you can define a pattern that you put between two forward slashes to search strings. A regex can be very handy if you want to look for broader patterns that you could generalize in such an expression.
+
+###### Some Spec
+
+``` ruby
+
+...
+
+it 'some clever description' do
+  expect(agent.number.to_i).to match(/\d{3}/)
+end
+
+...
+
+```
+
+Suppose we would be dealing with agents like James Bond, 007, who are assigned three digit numbers, then we could test for it this way—primitively of course.
+
++ `>`
++ `<`
++ `<=`
++ `>=`
+
+Comparisons come in handy more often than one might think. I assume the examples below itself cover what you need to know.
+
+###### Some Spec
+
+``` ruby
+
+...
+
+it 'some clever description' do
+  agent = Agent.create(name: 'James Bond', number: '007')
+
+  expect(agent.number).to be < quartermaster.number
+  expect(agent.number).to be > m.number
+  expect(agent.kill_count).to be >= 25 
+  expect(quartermaster.number_of_gadgets).to be <= 5
+end
+
+...
+
+```
+
+Now, we are getting somewhere less boring. You can also test for classes and types:
+
++ ```.to be_an_instance_of```
++ ```.to be_a```
++ ```.to be_an```
+
+###### Some Spec
+
+``` ruby
+
+...
+
+it 'some clever description' do
+  mission = Mission.create(name: 'Moonraker')
+  agent = Agent.create(name: 'James Bond')
+  mission.agents << agent
+
+  expect(@mission.agents).not_to be_an_instance_of(Agent)
+  expect(@mission.agents).to be_a(ActiveRecord::Associations::CollectionProxy)
+end
+
+...
+
+```
+
+In the dummy example above you can see that a list of agents that are associated with a mission are not of class `Agent` but of `ActiveRecord::Associations::CollectionProxy`. What you should take away from this one is that we can easily test for classes themselves while staying highly expressive. ```.to be_a``` and ```.to be_an``` do one and the same. You have both options available to keep things readable.
+
+Testing for errors is also massively easy in RSpec. If you are super fresh to Rails and not sure yet which errors the framework can throw at you, you might not feel the need to use these—of course, makes total sense. At a later stage in your development, you will find them very handy though. You have four ways to deal with them:
+
++ ```.to raise_error```
+
+This is the most generic way. Whatever error is raised will be cast in your net.
+
++ ```.to raise_error(ErrorClass)```
+
+That way you can specify which class the error exactly should come from.
+
++ ```.to raise_error(ErrorClass, "Some error message")```
+
+This is even more fine grained since you not only mention the class of the error but a specific message that should be thrown with the error)
+
++ ```.to raise_error("Some error message)```
+
+Or you just mention the error message itself without the error class. The expect part needs to be written a little bit different though, we need to wrap the part under text in a code block itself:
+
+###### Some Spec
+
+``` ruby
+
+...
+
+it 'some clever description' do
+  agent = Agent.create(name: 'James Bond')
+
+  expect{agent.lady_killer?}.to raise_error(NoMethodError)
+  expect{double_agent.name}.to raise_error(NameError)
+  expect{double_agent.name}.to raise_error("Error: No double agents around")
+  expect{double_agent.name}.to raise_error(NameError, "Error: No double agents around")
+end
+
+...
+
+```
+
++ ```.to start_with```
++ ```.to end_with```
+
+Since we often deal with collections when building web apps, it’s nice to have a tool to peek into them. Here we added two agents, Q and James Bond and just wanted to know who comes first and last in the collection of agents for a particular mission—here Moonraker.
+
+###### Some Agent Spec
+
+``` ruby
+
+...
+
+it 'some clever description' do
+  moonraker = Mission.create(name: 'Moonraker')
+  bond = Agent.create(name: 'James Bond')
+  q = Agent.create(name: 'Q')
+  moonraker.agents << bond
+  moonraker.agents << q
+ 
+  expect(moonraker.agents).to start_with(bond)
+  expect(moonraker.agents).to end_with(q)
+end
+
+..
+
+```
+
++ `.to include`
+
+This one is also helpful to check the contents of collections.
+
+###### Some Agent Spec
+
+``` ruby
+
+...
+
+it 'some clever description' do
+  mission = Mission.create(name: 'Moonraker')
+  bond = Agent.create(name: 'James Bond')
+  mission.agents << bond
+ 
+  expect(mission.agents).to include(bond)
+end
+
+...
+
+```
+
++ predicate matchers
+
+These predicate matchers are a feature of RSpec to dynamically create matchers for you. If you have predicate methods in your models for example (ending with a question mark), then RSpec knows that it should build matchers for you that you can use in your tests. In the example below, we want to test if an agent has gone crazy:
+
+###### Agent Model
+
+``` ruby
+
+class Agent < ActiveRecord::Base
+  belongs_to :mission
+
+  def bond?
+    name == 'James Bond' && number == '007' && gambler == true
+  end
+
+  ...
+
+end
+
+```
+
+Now, we can use this in our specs like so:
+
+###### Some Agent Spec
+
+``` ruby
+
+...
+
+it 'some clever description' do
+  agent = Agent.create(name: 'James Bond')
+
+  expect(agent).to be_bond
+end
+
+...
+
+```
+
+RSpec let’s us use the the method name without the question mark—to form a better syntax I suppose. Cool, ain’t it?
+
 
 ## Callbacks
 
