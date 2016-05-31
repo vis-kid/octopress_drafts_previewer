@@ -12,10 +12,56 @@ categories: [Rails, RSpec, TDD, BDD, Testing, Test-Driven-Development Ruby, Ruby
 
 ## Topics
 
++ Let
++ Subjects
 + Matchers
 + Callbacks
 + Generators
 + Tags
+
+## Let
+
+`let` and `let!` might look like variables at first, but they are actually helper methods. The first one is lazily evaluated, which means that it is only run and evaluated when a spec actually uses it and the other let with the bang(!) is run regardless of being used by a spec or not. Both versions are memoized and their values will be cached within the same example scope.
+
+###### Some Spec File
+
+``` ruby
+
+describe Mission, '#prepare', :let do
+  let(:mission)  { Mission.create(name: 'Moonraker') }
+  let!(:bond)    { Agent.create(name: 'James Bond') }
+
+  it 'adds agents to a mission' do
+    mission.prepare(bond)
+    expect(mission.agents).to include bond
+  end
+end
+
+```
+
+The bang version that is not lazily evaluated can be time consuming and therefore costly if it becomes your fancy new friend. Why? Because it will set up this data for each test in question no matter what and might eventually end up being one of these nasty things that slow down your test suite significantly.
+
+You should know this feature of RSpec since `let` is widely known and used. That being said, the next article will show you some issues with it that you should be aware off. Use these helper methods with caution or at least in small doses for now.
+
+## Subjects
+
+RSpec offers you to declare the subject under test very explicitly. There are better solutions for this and we will discuss the downsides of this approach in the next article when I show a few things you generally want to avoid. But for now, let’s have a look at what `subject` can do for you:
+
+###### Some Spec File
+
+``` ruby
+
+describe Agent, '#status' do
+  subject { Agent.create(name: 'Bond')  }
+
+  it 'returns the agents status' do
+    expect(subject.status).not_to be 'MIA'
+  end
+end
+
+```
+
+This approach can on the one hand help you with reducing code duplication, having a protagonist declared once in a certain scope but it can also lead to something called a mystery guest. This simply means that we might end up in a situation where we user data for one of our test scenarios but have not idea anymore where it actually comes from and what it is comprised of. More on that in the next article.
 
 ## Matchers
 
