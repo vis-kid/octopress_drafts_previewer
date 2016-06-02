@@ -66,13 +66,19 @@ We will go over some of the most important anatomic features of type. The stuff 
 
 ### Baseline
 
+{% img /images/Typography-101/baseline-01.png %}
+
 The baseline is where most of the letters are placed upon.
 
 ### Median
 
+{% img /images/Typography-101/median.png %}
+
 The median on the other hand is the line where most lowercase letters end.
 
 ### X-Height
+
+{% img /images/Typography-101/x-height.png %}
 
 The space between the baseline and the median is what we call x-height. Most of the time it represents the height of the lowercase letter of an “x”—therefore its name. The more x-height a font offers, the more readable it will end up usually. Why? Because most of the text we read in the western world is comprised of lowercase letters. A lot of the small distinctions that help us identify individual letters and quickly build them up to words to convey meaning are comprised in this little x-height zone. That also means that this extra space gives a font a bit more opportunity to let its character shine through.
 
@@ -80,17 +86,25 @@ I guess it makes sense that if you have a small x-height, the eyes has less deta
 
 ### Ascender
 
+{% img /images/Typography-101/Typographic_ascenders.png %}
+
 The ascender is that part that stretches above the median.
 
 ### Descender
+
+{% img /images/Typography-101/Typographic_descenders.png %}
 
 This part of a letter extends below the baseline.
 
 ### Counter
 
+{% img /images/Typography-101/counters.png %}
+
 Counters are areas that are partially or fully enclosed. Think of an “o” or an “a”. The “a” for example has two counters—one that is partically and one that is fully enclosed. Typefaces with larger counters are usually also good for readability because the details have more room to be explicitly shown. So look for typefaces with large x-heights or larger counters if you are interested in giving users a good reading experience.
 
 ### Line Height
+
+{% img /images/Typography-101/line-height.png %}
 
 This is the space between two consequent baselines. In print, this is very important to create a consistent vertical rhythm, the baseline grid. This is somewhat of a mini grid system for type on a page. On the web, the line-height that browsers render does not play ball and does not allow us to easily achieve this kind of typographical grid system. The vertical rhythm would be nice because you can place every piece of type on a consistent grid that goes down the page. The overall effect is very pleasing and we are probably all used to it from reading books.
 
@@ -102,13 +116,19 @@ On the web, this tends out to be a tiresome practice to achieve and not worth pu
 
 ### Line Length / Measure
 
+{% img /images/Typography-101/measure.png %}
+
 Both mean the same thing. It consists of the number of characters on a single line of text. A good measure on for designs on the web lie between 60–85 characters. Line length and line height are somewhat symbiotic and depend on each other. The more line length a paragraph needs, the more line height should be incorporated. The same advice about your instincts applies here as well. If it looks too cramped or too stretchy, adjust it until it readable and “feels” right. Obviously you will need experience to achieve good results when you follow your gut a bit—but math is only getting you so far.
 
 ### Kerning
 
+{% img /images/Typography-101/Kerning2.png %}
+
 Kerning is referred to as the varying micro white space between individual letters. This is differently adjusted by the type designer, complying with the needs of each letter. A lowercase “o” might occupy lesser space and a lowercase “t’ for example. On the web this is tedious to adjust while the practice of kerning is very prevalent in the print industry. On the web, this involves unreasonable amounts of JavaScript or span wrappers that are not really scalable. For titles and logotypes you can go that route and you sometimes even need to do that. Lots of typefaces that are designed for smaller sizes tend to need a bit of extra kerning when you display them at bigger font sizes. On the other hand, there are also typefaces that are designed for exactly that scenario and have the appropriate kerning already baked in. Display fonts??
 
 ### Letter Spacing / Tracking
+
+{% img /images/Typography-101/Letter-spacing.png 600 %}
 
 Refers to the consistent spacing between all of the letters in a group. It does not target individual letters like kerning does, but it’s rather a uniform adjustment that spans across the entire affected text passage. If results in more or less density and texture. When you use larger pieces of text for title for example, a little bit of negative letter spacing can go a long way. You don’t want to create the impression that the text is drifting apart. As with kerning, when typefaces are designed to be consumed at smaller font sizes, the letter spacing might need these little nudges since the original kerning was considered differently. 
 
