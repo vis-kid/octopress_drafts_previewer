@@ -16,6 +16,7 @@ categories: [Design, Grids, Visual Design, Product Design, Web Design, Frontend]
 + Typefaces & Fonts
 + Typographic Classifications
 + Typographic Anatomy
++ Spacings
 + Punctuations
 + Hierarchy
 + Choosing Typefaces
@@ -183,7 +184,9 @@ http://cssdesignawards.com/woty/
 
 ## Typographic Anatomy
 
-We will go over some of the most important anatomic features of type. The stuff that is really good to know and useful if you have conversations about it. But I feel like I should mention that you don’t need to deep dive on all of these just to become dangerous at type. It’s good to know, for sure, but there are more important things to memorize I think. Obviously, obsessive type nerds might find it funny if you are unaware of terminals and stuff, but honestly who gives a damn—much bigger fish to fry and it’s not always about the technical details. It’s what you do, what you achieve when you put typefaces at “work”. So my advice is simple, understand and memorize the basics, have fun, play around with the typefaces and soak it in over time. There is nothing wrong with not knowing every single detail about type anatomy!
+We will go over some of the most important anatomic features of type. The stuff that is really good to know and useful if you have conversations about type. But I feel like I should mention that you don’t need to deep dive on all of these features just to become dangerous at this. It’s good to know, for sure, but there are more important things to memorize I think. Obviously, obsessive type nerds might find it funny if you are unaware of “terminals” and stuff, but honestly who gives a damn—much bigger fish to fry. Plus, it’s not always about the technical details. Being a “technician” in this regard is maybe not that important.
+
+Your job is to get creative with the typefaces themselves, not recite every minute detail of how they are composed. It’s all about what you do, what you achieve when you put typefaces to “work”. So my advice is simple, understand and memorize the basics, have fun, play around with the typefaces and soak it in over time. There is nothing wrong with not knowing every single detail about type anatomy! On the other hand, maybe I’m overly pragmatic about this. You decide!
 
 ### Baseline
 
@@ -195,15 +198,15 @@ The baseline is where most of the letters are placed upon.
 
 {% img /images/Typography-101/median.png %}
 
-The median on the other hand is the line where most lowercase letters end.
+The median on the other hand is the line where most lowercase letters end, where they terminate.
 
 ### X-Height
 
 {% img /images/Typography-101/x-height.png %}
 
-The space between the baseline and the median is what we call x-height. Most of the time it represents the height of the lowercase letter of an “x”—therefore its name. The more x-height a font offers, the more readable it will end up usually. Why? Because most of the text we read in the western world is comprised of lowercase letters. A lot of the small distinctions that help us identify individual letters and quickly build them up to words to convey meaning are comprised in this little x-height zone. That also means that this extra space gives a font a bit more opportunity to let its character shine through.
+The space between the baseline and the median is what we call x-height. Most of the time it represents the height of the lowercase letter “x”—therefore its name. The more x-height a font offers, the more readable it will end up usually. Why? Because most of the text we read in the western world is comprised of lowercase letters. So a lot of the characteristics of words are expressed in lowercase—all the small distinctions that help us identify individual letters and quickly build them up to words. All these little identifiers are heavily comprised in this little x-height zone—not only, but the lion’s share for sure.
 
-I guess it makes sense that if you have a small x-height, the eyes has less detail or less information to quickly make sense of letters and put them in context. Sure you can always read letter by letter and piece the info together like that, but most of us tend to read in jumps and consume letters a lot more subconsciously.So more x-height is good for body copy because long paraphraphs of text can get tiresome if the eyes have to work a lot to decypher the alphabet. Sections like titles where you will generally user bigger font sizes and shorter amounts of text anyway, can get away with less than optial x-heights. In that case you can make use of more artistic choices that convery maybe a certain mood or character without affecting the reading experience of your users too badly.
+ This extra space gives a font a bit more opportunity to let its character shine through. I guess it makes sense that if you have a small x-height, the eyes has less detail or less information to quickly make sense of letters and put them in the context of words. Sure you can always read letter by letter and piece the info together like that, but most of us tend to read in jumps and consume letters a lot faster and also more subconsciously. So more x-height is good for body copy because long paragraphs of text can get tiresome if the eyes have to work harder to decipher the alphabet. Sections like titles where you will generally user bigger font sizes and shorter amounts of text anyway, can get away with less than optimal x-heights. You have more room for artistic choices that imply maybe a certain mood or character without affecting the reading experience of your users too badly.
 
 ### Ascender
 
@@ -219,15 +222,21 @@ This part of a letter extends below the baseline.
 
 ### Counter
 
+Counters are areas that are partially or fully enclosed. Think of an “o” or an “a”. The “a” for example has two counters—one that is partially and one that is fully enclosed. Typefaces with larger counters are usually also good for readability because the details have more room to be explicitly shown. So look for typefaces with large x-heights and larger counters if you are interested in giving users a good reading experience.
+
 {% img /images/Typography-101/counters.png %}
 
-Counters are areas that are partially or fully enclosed. Think of an “o” or an “a”. The “a” for example has two counters—one that is partically and one that is fully enclosed. Typefaces with larger counters are usually also good for readability because the details have more room to be explicitly shown. So look for typefaces with large x-heights or larger counters if you are interested in giving users a good reading experience.
+## Spacings
 
 ### Line Height
 
 {% img /images/Typography-101/line-height.png %}
 
-This is the space between two consequent baselines. In print, this is very important to create a consistent vertical rhythm, the baseline grid. This is somewhat of a mini grid system for type on a page. On the web, the line-height that browsers render does not play ball and does not allow us to easily achieve this kind of typographical grid system. The vertical rhythm would be nice because you can place every piece of type on a consistent grid that goes down the page. The overall effect is very pleasing and we are probably all used to it from reading books.
+This is the space between two consequent baselines. In print, this is very important to create a consistent vertical rhythm—the baseline grid. This is somewhat of a mini grid system for type on a page. On the web, the line-height that browsers render does not play ball and does not allow us to easily achieve this kind of typographical grid system. The vertical rhythm would be nice because you can place every piece of type on a consistent grid that goes down the page. The overall effect is very pleasing and we are probably all used to it from reading books.
+
+###### Baseline Grid
+
+{% img /images/Typography-101/screenshots/baseline-grid.jpg %}
 
 A good line height on the web for paragraphs of text usually lies between 1.3–1.6em. Titles can and should be a bit tighter. This is a good starting point to achieve rather nice readability. Trust your gut and try out various line heights until you achieve a visually pleasing result. This is not so much about precise math. For shorter paragraphs that don’t span as much over a page, you can apply lesser line height than for longer spanning paragraphs. But again, every typeface needs its own height to breath appropriately. A good benchmark to keep in mind is that you want to be able to jump to the start of the next line rather easily. You don’t want users to burden with some sort of mental overhead by needing to look hard where they should continue when they reach the end of a line of text.
 
