@@ -144,6 +144,8 @@ Serifs are called the little extensions, decorative details, at the end of some 
 
 Serif typefaces are the oldest we will discuss in this article. It’s not an exact science but arguments can be made that they go back as early as Romans carving letters into stones, using the Latin alphabet. There is also one interesting theory that says that they are a result of using chisels when carving stones and were an artistic choice due to the tools used to create a better end result. 
 
+{% img /images/Typography-101/screenshots/mailchimp-paper-buddy.png %}
+
 ###### Screenshot
 
 {% img /images/Typography-101/screenshots/latino-type-serifs.png %}
@@ -184,6 +186,11 @@ Sans-Serifs started to get popular in the 1920s and got rid of all the extra Ser
 
 {% img /images/Typography-101/screenshots/cool-hunting-omakase.png %}
 
+{% img /images/Typography-101/screenshots/sans-serif-medium-com.png %}
+
+https://medium.com/@TypeEd/choosing-and-pairing-typefaces-for-cookbooks-dd19dabb1e9e#.obfdjp9f2
+
+{% img /images/Typography-101/screenshots/webflow-com-about.png %}
 
 ?? Display typefaces??
 
@@ -205,7 +212,11 @@ Slab serifs are similar to serifs but are much thicker and more attention-grabbi
 
 ###### Screenshot
 
+{% img /images/Typography-101/screenshots/everywhere-is.png %}
+
 {% img /images/Typography-101/screenshots/proday.png %}
+
+{% img /images/Typography-101/screenshots/flowhub-io.png %}
 
 ### Script Typefaces
 
@@ -217,9 +228,12 @@ These typefaces emulate the look of hand-written text. The varying thickness and
 
 {% img /images/Typography-101/screenshots/paravel-landing.png %}
 
-###### Screenshot
-
 {% img /images/Typography-101/screenshots/script-type-02.png %}
+
+{% img /images/Typography-101/screenshots/femmebot-github-io.png %}
+
+http://femmebot.github.io/google-type/
+
 
 ### Monospace Typefaces
 
@@ -227,13 +241,28 @@ As the name suggests, each letter and punctuation occupies the same horizontal w
 
 {% img /images/Typography-101/Proportional-vs-monospace-v4.jpg %}
 
+###### Screenshot
+
+{% img /images/Typography-101/screenshots/thenextcentury.png %}
+
+http://sandri.me/thenextcentury/
+
+{% img /images/Typography-101/screenshots/cssdesignawards-com.png %}
+
+http://cssdesignawards.com/woty/
+
+
 ## Punctuations
 
-### Quotes
+### Quotation Marks
+
+{% img /images/Typography-101/Dumb_quotes_vs_curly_quotes.jpg 400 %}
 
 Use real quotes. Period! The other “quotes” most people are carelessly using are straight quotes—which are actually used for inches and feet—and are also called “dumb quotes”. You don’t wanna use that, don’t you? Apostrophes and single quotes also have their real counterpart. Yes, you need to do some finger kung-fu on your keyboard to get them, but you are making yourself look bad and inexperienced if you ignore them.
 
 ### Ellipsis
+
+{% img /images/Typography-101/ellipsis.png %}
 
 Ellipsis refers to the three dots that can easily be mistaken as three single periods. The difference is that they have more spacing between each period. ?? use for??
 
@@ -244,6 +273,8 @@ You use it when you want to omit stuff—words, phrases,lines, paragraphs or par
 I know, these punctuation thingies don’t sound all too dashing, but this basic knowledge  of their use should be important for you if you like designing with good typography. On the one hand, it might seem trivial to have three sorts of dashes you can choose from because they look really similar, but on the other hand, a lot of care and consideration has been poured into these over the years and at least we should respect the work of designers who came long before us and on which typographical work we can easily build or work today. Paying attention to these little details is a little price to pay for standing on the shoulders of giants.
 
 ### Hyphen
+
+{% img /images/Typography-101/dashes.png %}
 
 No spaces around hyphens
 
@@ -274,30 +305,6 @@ Both dashes are a little bit thinner than a hyphen usually.
 Please don’t just use two hyphens for stuff that en or em dashes are made for.
 
 Both versions of dashes don’t require an extra space around them.
-
-## Choosing Typefaces
-
-We have tons of typefaces to choose from these days. And not only that, we have tons of services that wanna help us with that. It can take a while to get a sense what’s out there actually. But to me, that is entirely a good thing. A few years ago the options were a lot more limited and that was not a good thing. Web typography has come a long way, not only in terms of the ecosystem but in terms of what browsers let you do these days. 
-
-When you decide on which typefaces you wanna go with, considerations are plenty! I’d recommend that you first of all focus on the readability and style that you want to convey in your designs. The tone and the message are also important since type has a huge influence through its various characteristics. If you can manage to do that, you will set yourself apart from the rest of the herd pretty significantly.
-
-In the end, readability trumps everything though, especially for body copy. Headers can be a bit more expressive and creative. Since they only represent short bursts or text and are bigger usually, their readability can’t be that much compromised.
-
-### Pairing Typefaces
-
-
-
-Make sure that you create good contrast between the paired choices. Typefaces that look too similar can end up looking confusing and affect your visual hierarchy negatively. Bigger typefaces also have the benefit of so many options to vary this one typeface that you can only use one typeface without looking boring. That might be the easiest approach when you start out. There are so many weights and variations, that you will hardly shoot yourself in the foot. Pairing a Sans-Serif with a Serif typeface can easily lead to a good and interesting contrast that you can use to your advantage—stylistically.
-
-But keep in mind, that you should use them consistently. You should not switch up the typeface for body copy and headers all over the place. Decide which one is best for readability and which one is best for conveying a style while grabbing the readers attention and stick to that. Otherwise you will make it harder for users to navigate your page because you failed at providing a subliminal mental map with your typography for your site. Worse, if users are confused and have a hard time to actually read what’s on a page.
-
-Also, some type designers created Serif and Sans-Serif versions of a typeface which are supposed to work together nicely. When the type designer herself considered the pair, it’s really hard to go wrong when they kind of paired the typefaces for you already. Will this always work? Of course not. But it’s good to know when you look for new typefaces if they have a matching one with fitting contrast backed in from the start.
-
-If you pair two typefaces, you want to have stronger visual differences between the two. Keep it subtle if you want, but it should be at least noticeable—even to the fast eye. In that regard, pairing two sans serifs or two serifs turns out to be tricky and does not achieve contrast that good.
-
-While you look for visual distinctions, you also want to watch out for some sort of common trait. Something that can bind the two different typefaces together. Their visual structure, the way their letters are designed could share common ideas. That ties them together even more skillfully. A similar structure or geometric design will help with that.
-
-On occasion steal. When you find combinations that you like, try them out yourself.
 
 ## Hierarchy
 
@@ -353,6 +360,8 @@ It is important that you convey a strong hierarchy within your typography? Why? 
 
 {% img /images/Typography-101/screenshots/hierarchy-pairing-contrast-trent-walton.png %}
 
+{% img /images/Typography-101/screenshots/stuntbox-com.png %}
+
 Keep in mind that all of the above only shine if you use them consistently. If you change it up too much, your hierarchy will be weakened significantly. If all of this is complete news to you, I’d head over to my article about visual design principles to get you up to speed. All of the aforementioned will make a lot more sense then.
 
 ###### Screenshot
@@ -360,6 +369,47 @@ Keep in mind that all of the above only shine if you use them consistently. If y
 {% img /images/Typography-101/screenshots/hierarchy-contrast-pairing-jason-santa-maria-02.png %}
 
 {% img /images/Typography-101/screenshots/hierarchy-contrast-pairing-jason-santa-maria.png %}
+
+## Choosing Typefaces
+
+We have tons of typefaces to choose from these days. And not only that, we have tons of services that wanna help us with that. It can take a while to get a sense what’s out there actually. But to me, that is entirely a good thing. A few years ago the options were a lot more limited and that was not a good thing. Web typography has come a long way, not only in terms of the ecosystem but in terms of what browsers let you do these days. 
+
+When you decide on which typefaces you wanna go with, considerations are plenty! I’d recommend that you first of all focus on the readability and style that you want to convey in your designs. The tone and the message are also important since type has a huge influence through its various characteristics. If you can manage to do that, you will set yourself apart from the rest of the herd pretty significantly.
+
+In the end, readability trumps everything though, especially for body copy. Headers can be a bit more expressive and creative. Since they only represent short bursts or text and are bigger usually, their readability can’t be that much compromised.
+
+### Pairing Typefaces
+
+###### Screenshot
+
+{% img /images/Typography-101/screenshots/kitchensinkstudios-com.png %}
+
+Make sure that you create good contrast between the paired choices. Typefaces that look too similar can end up looking confusing and affect your visual hierarchy negatively. Bigger typefaces also have the benefit of so many options to vary this one typeface that you can only use one typeface without looking boring. That might be the easiest approach when you start out. There are so many weights and variations, that you will hardly shoot yourself in the foot. Pairing a Sans-Serif with a Serif typeface can easily lead to a good and interesting contrast that you can use to your advantage—stylistically.
+
+{% img /images/Typography-101/screenshots/hansonwu-com.png %}
+
+But keep in mind, that you should use them consistently. You should not switch up the typeface for body copy and headers all over the place. Decide which one is best for readability and which one is best for conveying a style while grabbing the readers attention and stick to that. Otherwise you will make it harder for users to navigate your page because you failed at providing a subliminal mental map with your typography for your site. Worse, if users are confused and have a hard time to actually read what’s on a page.
+
+
+###### Screenshot
+
+{% img /images/Typography-101/screenshots/bengoodyear-com.png %}
+
+Also, some type designers created Serif and Sans-Serif versions of a typeface which are supposed to work together nicely. When the type designer herself considered the pair, it’s really hard to go wrong when they kind of paired the typefaces for you already. Will this always work? Of course not. But it’s good to know when you look for new typefaces if they have a matching one with fitting contrast backed in from the start.
+
+###### Screenshot
+
+{% img /images/Typography-101/screenshots/adayinbigdata-com.png %}
+
+If you pair two typefaces, you want to have stronger visual differences between the two. Keep it subtle if you want, but it should be at least noticeable—even to the fast eye. In that regard, pairing two sans serifs or two serifs turns out to be tricky and does not achieve contrast that good.
+
+###### Screenshot
+
+{% img /images/Typography-101/screenshots/rianvdm-exposure-co.png %}
+
+While you look for visual distinctions, you also want to watch out for some sort of common trait. Something that can bind the two different typefaces together. Their visual structure, the way their letters are designed could share common ideas. That ties them together even more skillfully. A similar structure or geometric design will help with that.
+
+On occasion steal. When you find combinations that you like, try them out yourself.
 
 
 ## Final Thoughts
