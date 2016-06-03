@@ -12,14 +12,16 @@ categories: [Design, Grids, Visual Design, Product Design, Web Design, Frontend]
 
 ## Topics
 
-+ Typographic Anatomy
++ 95%
 + Typefaces & Fonts
 + Typographic Classifications
-+ Readability
-+ Baseline Grid
++ Typographic Anatomy
++ Punctuations
++ Hierarchy
++ Choosing Typefaces
 
 
-+ What is a type foundry?
+## 95%
 
 95 % web design is 95 percent
 
@@ -32,6 +34,7 @@ when you take away all of the typo of most websites, they basically implode. The
 
 {% img /images/Typography-101/screenshots/95-percent-without.png %}
 
+All the logos and icons in the world are lost without the context of type. All the reason to give typography your full attention.
 
 At first, web design tried to follow a lot of the ideas of graphic design, especially how books, magazines and newspapers were layed out and designed. These days, the design for the web has matured a lot and does not follow these ideas as close as they used to. Designers adjusted the their designs to the needs of the new medium but also realized that they can go further in some areas because we are talking about a digital medium that has different options. Responsive design is one example where design clearly matured over the print world in many, many ways. The flip side is, that this has also led to more complexity—which also seems to be ever increasing. To me, this does not sound threatening. Quite on the contrary, I feel this is very exciting and the possibilities are not only growing but the options today are vast and cool already. The web has grown up obviously—quite a bit—and the future seems bright!
 
@@ -59,78 +62,6 @@ Typefaces are collections of letters, numbers and punctuations that form a set f
 This is somewhat of a subset of a typeface. It’s a character set of a particular typeface in one particular size. Bodoni bold 9 point would be a font. The other use of the word font applies to font files which render the typefaces at various sizes.
 
 Typefaces are usually made up of multiple fonts.
-
-## Typographic Anatomy
-
-We will go over some of the most important anatomic features of type. The stuff that is really good to know and useful if you have conversations about it. But I feel like I should mention that you don’t need to deep dive on all of these just to become dangerous at type. It’s good to know, for sure, but there are more important things to memorize I think. Obviously, obsessive type nerds might find it funny if you are unaware of terminals and stuff, but honestly who gives a damn—much bigger fish to fry and it’s not always about the technical details. It’s what you do, what you achieve when you put typefaces at “work”. So my advice is simple, understand and memorize the basics, have fun, play around with the typefaces and soak it in over time. There is nothing wrong with not knowing every single detail about type anatomy!
-
-### Baseline
-
-{% img /images/Typography-101/baseline-01.png %}
-
-The baseline is where most of the letters are placed upon.
-
-### Median
-
-{% img /images/Typography-101/median.png %}
-
-The median on the other hand is the line where most lowercase letters end.
-
-### X-Height
-
-{% img /images/Typography-101/x-height.png %}
-
-The space between the baseline and the median is what we call x-height. Most of the time it represents the height of the lowercase letter of an “x”—therefore its name. The more x-height a font offers, the more readable it will end up usually. Why? Because most of the text we read in the western world is comprised of lowercase letters. A lot of the small distinctions that help us identify individual letters and quickly build them up to words to convey meaning are comprised in this little x-height zone. That also means that this extra space gives a font a bit more opportunity to let its character shine through.
-
-I guess it makes sense that if you have a small x-height, the eyes has less detail or less information to quickly make sense of letters and put them in context. Sure you can always read letter by letter and piece the info together like that, but most of us tend to read in jumps and consume letters a lot more subconsciously.So more x-height is good for body copy because long paraphraphs of text can get tiresome if the eyes have to work a lot to decypher the alphabet. Sections like titles where you will generally user bigger font sizes and shorter amounts of text anyway, can get away with less than optial x-heights. In that case you can make use of more artistic choices that convery maybe a certain mood or character without affecting the reading experience of your users too badly.
-
-### Ascender
-
-{% img /images/Typography-101/Typographic_ascenders.png %}
-
-The ascender is that part that stretches above the median.
-
-### Descender
-
-{% img /images/Typography-101/Typographic_descenders.png %}
-
-This part of a letter extends below the baseline.
-
-### Counter
-
-{% img /images/Typography-101/counters.png %}
-
-Counters are areas that are partially or fully enclosed. Think of an “o” or an “a”. The “a” for example has two counters—one that is partically and one that is fully enclosed. Typefaces with larger counters are usually also good for readability because the details have more room to be explicitly shown. So look for typefaces with large x-heights or larger counters if you are interested in giving users a good reading experience.
-
-### Line Height
-
-{% img /images/Typography-101/line-height.png %}
-
-This is the space between two consequent baselines. In print, this is very important to create a consistent vertical rhythm, the baseline grid. This is somewhat of a mini grid system for type on a page. On the web, the line-height that browsers render does not play ball and does not allow us to easily achieve this kind of typographical grid system. The vertical rhythm would be nice because you can place every piece of type on a consistent grid that goes down the page. The overall effect is very pleasing and we are probably all used to it from reading books.
-
-A good line height on the web for paragraphs of text usually lies between 1.3–1.6em. Titles can and should be a bit tighter. This is a good starting point to achieve rather nice readability. Trust your gut and try out various line heights until you achieve a visually pleasing result. This is not so much about precise math. For shorter paragraphs that don’t span as much over a page, you can apply lesser line height than for longer spanning paragraphs. But again, every typeface needs its own height to breath appropriately. A good benchmark to keep in mind is that you want to be able to jump to the start of the next line rather easily. You don’t want users to burden with some sort of mental overhead by needing to look hard where they should continue when they reach the end of a line of text.
-
-In the end, typefaces can be very different from each other and need individual tweaks that can’t be determined by generalized numbers. Varying degrees of line height affect the color of your text. That means that tighter line heights look darker since the micro white space between lines of text gets reduced—and vice versa of course. Finding that balance of text that looks coherent, light and readable is your goal while adjusting this measure. You definitely want to avoid having too tight line height where the text becomes visually darker and the lines can seem to almost crash into each other. Lines of body copy that seem to float apart and create an incoherent sea of text is the other extreme to avoid. Read the text, use real text not dummy ipsum and see how it feels. Is it a good reading experience? This should be on top of your mind—always!
-
-On the web, this tends out to be a tiresome practice to achieve and not worth pursuing all that much—unless you are going for some typographical project that imitates print or something. Also, considering responsive environments makes applying baseline grids even less appealing. In the end it most likely is not worth the bang for the buck and can only achieved with significant efforts. The future might provide more effective and more convenient solutions for course. Let’s see! If you wanna do the math and have a good reason to create a baseline grid on the web then go for it. Otherwise, your time might be better invested in more pragmatic matters.
-
-### Line Length / Measure
-
-{% img /images/Typography-101/measure.png %}
-
-Both mean the same thing. It consists of the number of characters on a single line of text. A good measure on for designs on the web lie between 60–85 characters. Line length and line height are somewhat symbiotic and depend on each other. The more line length a paragraph needs, the more line height should be incorporated. The same advice about your instincts applies here as well. If it looks too cramped or too stretchy, adjust it until it readable and “feels” right. Obviously you will need experience to achieve good results when you follow your gut a bit—but math is only getting you so far.
-
-### Kerning
-
-{% img /images/Typography-101/Kerning2.png %}
-
-Kerning is referred to as the varying micro white space between individual letters. This is differently adjusted by the type designer, complying with the needs of each letter. A lowercase “o” might occupy lesser space and a lowercase “t’ for example. On the web this is tedious to adjust while the practice of kerning is very prevalent in the print industry. On the web, this involves unreasonable amounts of JavaScript or span wrappers that are not really scalable. For titles and logotypes you can go that route and you sometimes even need to do that. Lots of typefaces that are designed for smaller sizes tend to need a bit of extra kerning when you display them at bigger font sizes. On the other hand, there are also typefaces that are designed for exactly that scenario and have the appropriate kerning already baked in. Display fonts??
-
-### Letter Spacing / Tracking
-
-{% img /images/Typography-101/Letter-spacing.png 600 %}
-
-Refers to the consistent spacing between all of the letters in a group. It does not target individual letters like kerning does, but it’s rather a uniform adjustment that spans across the entire affected text passage. If results in more or less density and texture. When you use larger pieces of text for title for example, a little bit of negative letter spacing can go a long way. You don’t want to create the impression that the text is drifting apart. As with kerning, when typefaces are designed to be consumed at smaller font sizes, the letter spacing might need these little nudges since the original kerning was considered differently. 
 
 ## Typographic Classifications
 
@@ -251,6 +182,79 @@ http://sandri.me/thenextcentury/
 
 http://cssdesignawards.com/woty/
 
+
+
+## Typographic Anatomy
+
+We will go over some of the most important anatomic features of type. The stuff that is really good to know and useful if you have conversations about it. But I feel like I should mention that you don’t need to deep dive on all of these just to become dangerous at type. It’s good to know, for sure, but there are more important things to memorize I think. Obviously, obsessive type nerds might find it funny if you are unaware of terminals and stuff, but honestly who gives a damn—much bigger fish to fry and it’s not always about the technical details. It’s what you do, what you achieve when you put typefaces at “work”. So my advice is simple, understand and memorize the basics, have fun, play around with the typefaces and soak it in over time. There is nothing wrong with not knowing every single detail about type anatomy!
+
+### Baseline
+
+{% img /images/Typography-101/baseline-01.png %}
+
+The baseline is where most of the letters are placed upon.
+
+### Median
+
+{% img /images/Typography-101/median.png %}
+
+The median on the other hand is the line where most lowercase letters end.
+
+### X-Height
+
+{% img /images/Typography-101/x-height.png %}
+
+The space between the baseline and the median is what we call x-height. Most of the time it represents the height of the lowercase letter of an “x”—therefore its name. The more x-height a font offers, the more readable it will end up usually. Why? Because most of the text we read in the western world is comprised of lowercase letters. A lot of the small distinctions that help us identify individual letters and quickly build them up to words to convey meaning are comprised in this little x-height zone. That also means that this extra space gives a font a bit more opportunity to let its character shine through.
+
+I guess it makes sense that if you have a small x-height, the eyes has less detail or less information to quickly make sense of letters and put them in context. Sure you can always read letter by letter and piece the info together like that, but most of us tend to read in jumps and consume letters a lot more subconsciously.So more x-height is good for body copy because long paraphraphs of text can get tiresome if the eyes have to work a lot to decypher the alphabet. Sections like titles where you will generally user bigger font sizes and shorter amounts of text anyway, can get away with less than optial x-heights. In that case you can make use of more artistic choices that convery maybe a certain mood or character without affecting the reading experience of your users too badly.
+
+### Ascender
+
+{% img /images/Typography-101/Typographic_ascenders.png %}
+
+The ascender is that part that stretches above the median.
+
+### Descender
+
+{% img /images/Typography-101/Typographic_descenders.png %}
+
+This part of a letter extends below the baseline.
+
+### Counter
+
+{% img /images/Typography-101/counters.png %}
+
+Counters are areas that are partially or fully enclosed. Think of an “o” or an “a”. The “a” for example has two counters—one that is partically and one that is fully enclosed. Typefaces with larger counters are usually also good for readability because the details have more room to be explicitly shown. So look for typefaces with large x-heights or larger counters if you are interested in giving users a good reading experience.
+
+### Line Height
+
+{% img /images/Typography-101/line-height.png %}
+
+This is the space between two consequent baselines. In print, this is very important to create a consistent vertical rhythm, the baseline grid. This is somewhat of a mini grid system for type on a page. On the web, the line-height that browsers render does not play ball and does not allow us to easily achieve this kind of typographical grid system. The vertical rhythm would be nice because you can place every piece of type on a consistent grid that goes down the page. The overall effect is very pleasing and we are probably all used to it from reading books.
+
+A good line height on the web for paragraphs of text usually lies between 1.3–1.6em. Titles can and should be a bit tighter. This is a good starting point to achieve rather nice readability. Trust your gut and try out various line heights until you achieve a visually pleasing result. This is not so much about precise math. For shorter paragraphs that don’t span as much over a page, you can apply lesser line height than for longer spanning paragraphs. But again, every typeface needs its own height to breath appropriately. A good benchmark to keep in mind is that you want to be able to jump to the start of the next line rather easily. You don’t want users to burden with some sort of mental overhead by needing to look hard where they should continue when they reach the end of a line of text.
+
+In the end, typefaces can be very different from each other and need individual tweaks that can’t be determined by generalized numbers. Varying degrees of line height affect the color of your text. That means that tighter line heights look darker since the micro white space between lines of text gets reduced—and vice versa of course. Finding that balance of text that looks coherent, light and readable is your goal while adjusting this measure. You definitely want to avoid having too tight line height where the text becomes visually darker and the lines can seem to almost crash into each other. Lines of body copy that seem to float apart and create an incoherent sea of text is the other extreme to avoid. Read the text, use real text not dummy ipsum and see how it feels. Is it a good reading experience? This should be on top of your mind—always!
+
+On the web, this tends out to be a tiresome practice to achieve and not worth pursuing all that much—unless you are going for some typographical project that imitates print or something. Also, considering responsive environments makes applying baseline grids even less appealing. In the end it most likely is not worth the bang for the buck and can only achieved with significant efforts. The future might provide more effective and more convenient solutions for course. Let’s see! If you wanna do the math and have a good reason to create a baseline grid on the web then go for it. Otherwise, your time might be better invested in more pragmatic matters.
+
+### Line Length / Measure
+
+{% img /images/Typography-101/measure.png %}
+
+Both mean the same thing. It consists of the number of characters on a single line of text. A good measure on for designs on the web lie between 60–85 characters. Line length and line height are somewhat symbiotic and depend on each other. The more line length a paragraph needs, the more line height should be incorporated. The same advice about your instincts applies here as well. If it looks too cramped or too stretchy, adjust it until it readable and “feels” right. Obviously you will need experience to achieve good results when you follow your gut a bit—but math is only getting you so far.
+
+### Kerning
+
+{% img /images/Typography-101/Kerning2.png %}
+
+Kerning is referred to as the varying micro white space between individual letters. This is differently adjusted by the type designer, complying with the needs of each letter. A lowercase “o” might occupy lesser space and a lowercase “t’ for example. On the web this is tedious to adjust while the practice of kerning is very prevalent in the print industry. On the web, this involves unreasonable amounts of JavaScript or span wrappers that are not really scalable. For titles and logotypes you can go that route and you sometimes even need to do that. Lots of typefaces that are designed for smaller sizes tend to need a bit of extra kerning when you display them at bigger font sizes. On the other hand, there are also typefaces that are designed for exactly that scenario and have the appropriate kerning already baked in. Display fonts??
+
+### Letter Spacing / Tracking
+
+{% img /images/Typography-101/Letter-spacing.png 600 %}
+
+Refers to the consistent spacing between all of the letters in a group. It does not target individual letters like kerning does, but it’s rather a uniform adjustment that spans across the entire affected text passage. If results in more or less density and texture. When you use larger pieces of text for title for example, a little bit of negative letter spacing can go a long way. You don’t want to create the impression that the text is drifting apart. As with kerning, when typefaces are designed to be consumed at smaller font sizes, the letter spacing might need these little nudges since the original kerning was considered differently. 
 
 ## Punctuations
 
