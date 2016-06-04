@@ -232,35 +232,35 @@ Counters are areas that are partially or fully enclosed. Think of an “o” or 
 
 {% img /images/Typography-101/line-height.png %}
 
-This is the space between two consequent baselines. In print, this is very important to create a consistent vertical rhythm—the baseline grid. This is somewhat of a mini grid system for type on a page. On the web, the line-height that browsers render does not play ball and does not allow us to easily achieve this kind of typographical grid system. The vertical rhythm would be nice because you can place every piece of type on a consistent grid that goes down the page. The overall effect is very pleasing and we are probably all used to it from reading books.
+This is the space between two consequent baselines. In print, it’s very important to create a consistent vertical rhythm—the baseline grid—a mini grid system for type on a page. On the web, the line-height that browsers render does not play ball and does not allow us to easily achieve this kind of typographical grid system. Vertical rhythm would be nice because you can place every piece of type on a consistent grid that goes down the page. The overall effect is very pleasing and we are probably all used to it from reading books and such.
 
 ###### Baseline Grid
 
 {% img /images/Typography-101/screenshots/baseline-grid.jpg %}
 
-A good line height on the web for paragraphs of text usually lies between 1.3–1.6em. Titles can and should be a bit tighter. This is a good starting point to achieve rather nice readability. Trust your gut and try out various line heights until you achieve a visually pleasing result. This is not so much about precise math. For shorter paragraphs that don’t span as much over a page, you can apply lesser line height than for longer spanning paragraphs. But again, every typeface needs its own height to breath appropriately. A good benchmark to keep in mind is that you want to be able to jump to the start of the next line rather easily. You don’t want users to burden with some sort of mental overhead by needing to look hard where they should continue when they reach the end of a line of text.
+On the web, this tends out to be tiresome to achieve and not worth pursuing all that much—unless you are going for some typographical project that imitates print or something. Also, considering responsive environments makes applying baseline grids even less appealing. In the end, it most likely is not worth the bang for the buck and can only achieved with significant efforts. The future might provide more effective and more convenient solutions for course. Let’s see! If you wanna do the math and have a good reason to create a baseline grid on the web then go for it. Otherwise, your time might be better invested in more pragmatic matters.
 
-In the end, typefaces can be very different from each other and need individual tweaks that can’t be determined by generalized numbers. Varying degrees of line height affect the color of your text. That means that tighter line heights look darker since the micro white space between lines of text gets reduced—and vice versa of course. Finding that balance of text that looks coherent, light and readable is your goal while adjusting this measure. You definitely want to avoid having too tight line height where the text becomes visually darker and the lines can seem to almost crash into each other. Lines of body copy that seem to float apart and create an incoherent sea of text is the other extreme to avoid. Read the text, use real text not dummy ipsum and see how it feels. Is it a good reading experience? This should be on top of your mind—always!
+A good line height for paragraphs on the web usually lies between 1.3–1.6em. Titles can and should be a bit tighter. This is a good starting point to achieve rather nice readability. Trust your gut and try out various line heights until you achieve a visually pleasing result. It’s not so much about precise math. For shorter paragraphs that don’t span as much, you can apply less line height. But again, every typeface needs its own height to breath appropriately. A good benchmark to keep in mind is that you want to be able to jump to the start of the next line rather easily. You don’t want to burden users with some sort of mental overhead, needing to look hard where they should continue to read when they reach the end of a line of text.
 
-On the web, this tends out to be a tiresome practice to achieve and not worth pursuing all that much—unless you are going for some typographical project that imitates print or something. Also, considering responsive environments makes applying baseline grids even less appealing. In the end it most likely is not worth the bang for the buck and can only achieved with significant efforts. The future might provide more effective and more convenient solutions for course. Let’s see! If you wanna do the math and have a good reason to create a baseline grid on the web then go for it. Otherwise, your time might be better invested in more pragmatic matters.
+In the end, typefaces can be very different from each other and need individual tweaks that can’t be determined by generalized numbers. Varying degrees of line height affect the color of your text. That means that tighter line heights look darker since the micro white space between lines of text gets reduced—and vice versa of course. Finding a balance so that text that looks coherent, light and readable is your goal while adjusting this measure. You definitely want to avoid having too tight line height where the text becomes visually darker or lines that seem to almost crash into each other. Lines of body copy that seem to float apart and create an incoherent sea of text is the other extreme to avoid. Read the text, use real text not dummy ipsum and see how it feels. Is it a good reading experience? This should be on top of your mind—always!
 
 ### Line Length / Measure
 
 {% img /images/Typography-101/measure.png %}
 
-Both mean the same thing. It consists of the number of characters on a single line of text. A good measure on for designs on the web lie between 60–85 characters. Line length and line height are somewhat symbiotic and depend on each other. The more line length a paragraph needs, the more line height should be incorporated. The same advice about your instincts applies here as well. If it looks too cramped or too stretchy, adjust it until it readable and “feels” right. Obviously you will need experience to achieve good results when you follow your gut a bit—but math is only getting you so far.
+Both mean the same thing. It consists of the number of characters on a single line of text. A good measure for designs on the web lies between 60–85 characters. Line length and line height are somewhat symbiotic and depend on each other. The more line length a paragraph needs, the more line height should be incorporated. The same advice about your instincts applies here as well. If it looks too cramped or too stretchy, adjust it until it’s readable and “feels” right. Obviously you will need experience to achieve good results when you follow your gut—math is only getting you so far.
 
 ### Kerning
 
 {% img /images/Typography-101/Kerning2.png %}
 
-Kerning is referred to as the varying micro white space between individual letters. This is differently adjusted by the type designer, complying with the needs of each letter. A lowercase “o” might occupy lesser space and a lowercase “t’ for example. On the web this is tedious to adjust while the practice of kerning is very prevalent in the print industry. On the web, this involves unreasonable amounts of JavaScript or span wrappers that are not really scalable. For titles and logotypes you can go that route and you sometimes even need to do that. Lots of typefaces that are designed for smaller sizes tend to need a bit of extra kerning when you display them at bigger font sizes. On the other hand, there are also typefaces that are designed for exactly that scenario and have the appropriate kerning already baked in. Display fonts??
+Kerning is referred to as adjusting the varying micro white space between individual letters. This is differently conceived by every type design, complying with the needs of each letter. A lowercase “o” might occupy lesser space and a lowercase “t’ for example. On the web this is tedious to adjust while the practice of kerning is very prevalent in the print industry. On the web, this involves unreasonable amounts of JavaScript or span wrappers that are not really scalable. For titles and logotypes you can go that route and you sometimes even need to do that. Lots of typefaces that are designed for smaller sizes tend to need a bit of extra kerning when you display them at bigger font sizes. On the other hand, there are also typefaces that are designed for exactly that scenario and have the appropriate kerning already baked in.
 
 ### Letter Spacing / Tracking
 
 {% img /images/Typography-101/Letter-spacing.png 600 %}
 
-Refers to the consistent spacing between all of the letters in a group. It does not target individual letters like kerning does, but it’s rather a uniform adjustment that spans across the entire affected text passage. If results in more or less density and texture. When you use larger pieces of text for title for example, a little bit of negative letter spacing can go a long way. You don’t want to create the impression that the text is drifting apart. As with kerning, when typefaces are designed to be consumed at smaller font sizes, the letter spacing might need these little nudges since the original kerning was considered differently. 
+This refers to the consistent spacing between all of the letters in a group. It does not target individual letters like kerning, but it’s rather a uniform adjustment that spans across the entire affected text passage. It results in more or less density and texture. When you use larger pieces of text, for titles for example, a little bit of negative letter spacing can go a long way. You don’t want to create the impression that the text is drifting apart. As with kerning, when typefaces are designed to be consumed at smaller font sizes, the letter spacing might need these little nudges since the original kerning was considered differently.
 
 ## Punctuations
 
@@ -268,67 +268,53 @@ Refers to the consistent spacing between all of the letters in a group. It does 
 
 {% img /images/Typography-101/Dumb_quotes_vs_curly_quotes.jpg 400 %}
 
-Use real quotes. Period! The other “quotes” most people are carelessly using are straight quotes—which are actually used for inches and feet—and are also called “dumb quotes”. You don’t wanna use that, don’t you? Apostrophes and single quotes also have their real counterpart. Yes, you need to do some finger kung-fu on your keyboard to get them, but you are making yourself look bad and inexperienced if you ignore them.
+Use real quotes. Period! The other “quotes” that are used by most people are actually straight quotes—which should be used for inches and feet.They are also called “dumb quotes”—not something you wanna use. Apostrophes and single quotes also have their real counterpart. Yes, you need to do some finger kung-fu on your keyboard to get them, but you are making yourself look bad and inexperienced if you ignore them.
 
 ### Ellipsis
 
 {% img /images/Typography-101/ellipsis.png %}
 
-Ellipsis refers to the three dots that can easily be mistaken as three single periods. The difference is that they have more spacing between each period. ?? use for??
-
-If you use extra space to the left and right is up to you to decide. There is no standard for it at the moment.
-
-You use it when you want to omit stuff—words, phrases,lines, paragraphs or parts of quotes. It’s sort of a placeholder indicating that you left out some text. That way it helps getting right to the point, not sweating unimportant details.
-
-I know, these punctuation thingies don’t sound all too dashing, but this basic knowledge  of their use should be important for you if you like designing with good typography. On the one hand, it might seem trivial to have three sorts of dashes you can choose from because they look really similar, but on the other hand, a lot of care and consideration has been poured into these over the years and at least we should respect the work of designers who came long before us and on which typographical work we can easily build or work today. Paying attention to these little details is a little price to pay for standing on the shoulders of giants.
+An ellipsis refers to the three dots that can easily be mistaken as three single periods. The difference is that they have more spacing between each period. You can use extra space to the left and right, up to you to decide. There is no standard for it at the moment. You use it when you want to omit stuff—words, phrases,lines, paragraphs or parts of quotes. It’s sort of a placeholder indicating that you left out some text. That way it helps getting right to the point.
 
 ### Hyphen
 
 {% img /images/Typography-101/dashes.png %}
 
-No spaces around hyphens
+There is no need for extra spaces around hyphens. Their main purpose is to link words together, like fine-art, 8-year-old and such. They are your only choice for prefixes and suffixes as well. You should also use them if you wanna spell out a word: T-U-T-S. Spanning time and distance is also part of their repository:
 
-The hyphen is used for justification ??
++ 03:45-04:00 p.m.
++ 1938-1945
 
-Their main purpose is to link words together: fine-art, 8-year-old 
-
-They are your only choice for prefixes and suffixes as well.
-
-If you wanna spell out a word, a hyphen can be used as well. T-U-T-S
-
-Spanning time and distance is also part of their repository:
-03:45-04:00 p.m.
-1938-1945
-
-For ranges like this, you can also you the en dash.
+For these ranges you can also you the en dash.
 
 ### En Dash
 
-The en dash has its name from the length of the lowercase letter “n”. It is a little bit longer than a hyphen and is used for ranges of values, to imply relationships like master–student or can emphasize.
+The en dash has its name from the length of the lower-case letter “n”. It is a little bit longer than a hyphen and is used for ranges of values as well as for implying relationships like master–student. Or for emphasis.
 
 ### Em Dash
 
-The em dash is again a little bit longer, the size of the lowercase letter “m”. They should be used to emphasise a pause of thought and indicate that a sentence is unfinished.
+The em dash is again a little bit longer, the size of the upper-case letter “m”. They should be used to emphasise a pause of thought and indicate that a sentence is unfinished. Both dashes can appear a little bit thinner than a hyphen—usually. Please don’t just use two hyphens for stuff that en or em dashes are made for. Also, both versions of dashes don’t require an extra space around them.
 
-
-Both dashes are a little bit thinner than a hyphen usually.
-Please don’t just use two hyphens for stuff that en or em dashes are made for.
-
-Both versions of dashes don’t require an extra space around them.
+I know, these punctuation thingies don’t sound all too dashing, but this basic knowledge of how to use them properly should be important for you if you like designing with good typography in mind. It also might seem trivial to have three sorts of dashes you can choose from because they look really similar, but on the other hand, a lot of care and consideration has been poured into these over the years and at least we should respect the work of designers who came long before us. It is their hard work and pioneering that makes it so easy to build upon today. Let’s pay some respect to their work. Paying attention to these details is a small price to pay for standing on the shoulders of giants.
 
 ## Hierarchy
 
-###### Screenshot
+###### Screenshots
 
 {% img /images/Typography-101/screenshots/hierarchy-trent-alton.png %}
 
 {% img /images/Typography-101/screenshots/typologic.png %}
 
-It is important that you convey a strong hierarchy within your typography? Why? Because as we established at the beginning of this piece, your type on the page make for roughly 95% percent of your design. If you have weak hierarchy within your texts, you won’t have a snowballs chance in hell to create strong hierarchy in your overall design. Here are a few ways to strengthen your work in that department:
+It is important that you convey a strong hierarchy within your typography? Why? Because as we established at the beginning of this piece, the type on the page make for roughly 95% percent of your design. If you have weak hierarchy within your texts, you won’t have a snowballs chance in hell to create strong hierarchy in your overall design.
+
+Typography offers you multiple ways to give your users visual anchors to navigate your site the way you want them to. Through emphasis you can let them know what is most important and what they should pay attention to first. Here are a few ways to strengthen your work in that department:
+
 
 ### Color
 
-###### Screenshot
+If you don’t have much color on a page it is very easy to guide the eye towards it. As always, less is more. Because the examples below only used it sparingly the effect is very strong—even without increasing the size or additional white space. That way it can look very elegant.
+
+###### Screenshots
 
 {% img /images/Typography-101/screenshots/color-hierarchy.png %}
 
@@ -336,7 +322,9 @@ It is important that you convey a strong hierarchy within your typography? Why? 
 
 ### Size
 
-###### Screenshot
+Increasing the font size always works of course. The eyes register something more easily if it sticks out in size and the reader assumes it’s more important. The thing I like about varying font sizes is that you can easily create visual “anchors” the reader can use to jump around on a page. The only caveat is that you really need to be consistent with the use of font sizes for particular elements. You can not change it up at will all over the place. That would most likely weaken your designs much more than having uniform sized text.
+
+###### Screenshots
 
 {% img /images/Typography-101/screenshots/hierarchy-size.png %}
 
@@ -344,11 +332,18 @@ It is important that you convey a strong hierarchy within your typography? Why? 
 
 ### White Space
 
-###### Screenshot
+White space is the most powerful ingredient that can make you look either very elegant or very inexperienced. You should give important typographical elements room to breath. If they are surrounded by empty space they are emphasised simply by that. White space is a whole nother topic which I covered in my article about visual design basics. One question often comes up: how much white space does one need? Well, the answer sounds douchy but it would be: “just enough”. For now my advice would be to err on the flip side and rather give it too much white space than too little. Newcomers seem to shy away a bit from using much space between elements. In print this can be costly, but on the web you get this stuff for free. Play around, watch out what other designers come up with and steal on occasion. No magic and no rocket science though. Just a little experience is all you need—eventually you will develop a good gut measure. 
+
+###### Screenshots
+
+{% img /images/Typography-101/screenshots/zen-garden.png %}
+http://www.csszengarden.com/218/
 
 {% img /images/Typography-101/screenshots/hierarchy-whitespace-trent-walton.png %}
 
 ### Weight
+
+If you have big typeface families you will have lots of options to choose your weights. In many of the examples above you can observe various weights for different purposes at work. For me, this is not something I jump to right away and usually try the other tools to create hierarchy first. But this is a matter of taste, whatever works best for you and your designs.
 
 ###### Screenshot
 
@@ -358,7 +353,11 @@ It is important that you convey a strong hierarchy within your typography? Why? 
 
 {% img /images/Typography-101/screenshots/weight-dropbox-about.png %}
 
+In the screenshot from the Dropbox about page you can see that the names have a different weight than their titles. A very basic technique for creating emphasis. Me personally would have probably increased the font size since there is enough space for even long names. The hierarchy would have been even stronger that way.
+
 ### Italics
+
+Similar to the arguments about pure weight, italics can also strengthen the hierarchy. Due to its different look it can stand out, even if you don’t increase its size, change its color or weight. I would not use it for other than secondary or tertiary kinds of information in running text. The example below makes good use of it for displaying the address. It sticks out a bit but not too much. This whole example has real great hierarchy and the italics part just adds to it.
 
 ###### Screenshot
 
@@ -366,19 +365,19 @@ It is important that you convey a strong hierarchy within your typography? Why? 
 
 ### Strong contrast within paired typefaces
 
-###### Screenshot
+When you choose more than one typeface for your work—avoid choosing more than two btw—it becomes critical that these typefaces themselves create some sort of hierarchy where they are on the one hand easily distinguishable from each other and on the other hand not too unrelated. Sounds hard, I know, in fact it really is. We all gotta deal with it. But there are a few good guidelines that make it not that crazy when living in a world with a gazillion typefaces. The next chapter brings you up to speed on this one.
+
+###### Screenshots
 
 {% img /images/Typography-101/screenshots/hierarchy-pairing-contrast-trent-walton.png %}
 
 {% img /images/Typography-101/screenshots/stuntbox-com.png %}
 
-Keep in mind that all of the above only shine if you use them consistently. If you change it up too much, your hierarchy will be weakened significantly. If all of this is complete news to you, I’d head over to my article about visual design principles to get you up to speed. All of the aforementioned will make a lot more sense then.
-
-###### Screenshot
-
 {% img /images/Typography-101/screenshots/hierarchy-contrast-pairing-jason-santa-maria-02.png %}
 
 {% img /images/Typography-101/screenshots/hierarchy-contrast-pairing-jason-santa-maria.png %}
+
+Keep in mind that all of the above only shine if you use them consistently. If you change it up too much, your hierarchy will be weakened significantly. If all of this is complete news to you, I’d head over to my article about visual design principles to get you up to speed. All of the aforementioned will make a lot more sense after that.
 
 ## Choosing Typefaces
 
