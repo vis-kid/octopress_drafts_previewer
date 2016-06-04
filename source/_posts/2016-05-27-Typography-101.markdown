@@ -365,7 +365,7 @@ Similar to the arguments about pure weight, italics can also strengthen the hier
 
 ### Strong contrast within paired typefaces
 
-When you choose more than one typeface for your work—avoid choosing more than two btw—it becomes critical that these typefaces themselves create some sort of hierarchy where they are on the one hand easily distinguishable from each other and on the other hand not too unrelated. Sounds hard, I know, in fact it really is. We all gotta deal with it. But there are a few good guidelines that make it not that crazy when living in a world with a gazillion typefaces. The next chapter brings you up to speed on this one.
+When you choose more than one typeface for your work—avoid choosing more than two btw—it becomes critical that these typefaces themselves create some sort of hierarchy through strong enough contrast. On the one hand they should be easily distinguishable from each other and on the other hand also not too unrelated. Sounds hard, I know, in fact it really is. We all gotta deal with it. But there are a few good guidelines that make it not that crazy when living in a world with a gazillion typefaces. The next chapter brings you up to speed on this one.
 
 ###### Screenshots
 
@@ -381,11 +381,11 @@ Keep in mind that all of the above only shine if you use them consistently. If y
 
 ## Choosing Typefaces
 
-We have tons of typefaces to choose from these days. And not only that, we have tons of services that wanna help us with that. It can take a while to get a sense what’s out there actually. But to me, that is entirely a good thing. A few years ago the options were a lot more limited and that was not a good thing. Web typography has come a long way, not only in terms of the ecosystem but in terms of what browsers let you do these days. 
+We have tons of typefaces to choose from these days. And not only that, we have tons of services that wanna help us with that. It can take a while to get a sense what’s out there actually. But to me, that is entirely a good thing. A few years ago the options were a lot more limited and that was not better either. Web typography has come a long way, not only in terms of the ecosystem but in terms of what browsers let you do these days. 
 
-When you decide on which typefaces you wanna go with, considerations are plenty! I’d recommend that you first of all focus on the readability and style that you want to convey in your designs. The tone and the message are also important since type has a huge influence through its various characteristics. If you can manage to do that, you will set yourself apart from the rest of the herd pretty significantly.
+When you decide which typefaces you wanna go with, considerations are plenty! I’d recommend that you first of all focus on the readability and style that you want to convey in your designs. The tone and the message are also important since type has a huge influence on this through its various characteristics that often represent more than “just” time periods. If you can manage to do all that, you will set yourself apart from the rest of the herd pretty significantly.
 
-In the end, readability trumps everything though, especially for body copy. Headers can be a bit more expressive and creative. Since they only represent short bursts or text and are bigger usually, their readability can’t be that much compromised.
+In the end, readability trumps everything though—especially for body copy. Obviously, headers can be a bit more expressive and creative since they only represent short bursts or text and are usually bigger. Their readability can’t be that that easily compromised.
 
 ### Pairing Typefaces
 
@@ -393,34 +393,32 @@ In the end, readability trumps everything though, especially for body copy. Head
 
 {% img /images/Typography-101/screenshots/kitchensinkstudios-com.png %}
 
-Make sure that you create good contrast between the paired choices. Typefaces that look too similar can end up looking confusing and affect your visual hierarchy negatively. Bigger typefaces also have the benefit of so many options to vary this one typeface that you can only use one typeface without looking boring. That might be the easiest approach when you start out. There are so many weights and variations, that you will hardly shoot yourself in the foot. Pairing a Sans-Serif with a Serif typeface can easily lead to a good and interesting contrast that you can use to your advantage—stylistically.
+Make sure that you create good contrast between the paired choices. Typefaces that look too similar can end up looking confusing and affect your visual hierarchy negatively. Bigger typeface families also have the benefit of having tons of options to vary this one typeface. That way you can only use one typeface without looking boring. That might be the easiest approach when you start out. There are so many weights and variations that you will hardly shoot yourself in the foot too bad. If you wanna go further than that then pairing a sans serif with a serif typeface is the best place to start—the most reasonable actually. This can lead to a stronger and more interesting contrast that you can use to your advantage—stylistically.
 
 {% img /images/Typography-101/screenshots/hansonwu-com.png %}
 
-But keep in mind, that you should use them consistently. You should not switch up the typeface for body copy and headers all over the place. Decide which one is best for readability and which one is best for conveying a style while grabbing the readers attention and stick to that. Otherwise you will make it harder for users to navigate your page because you failed at providing a subliminal mental map with your typography for your site. Worse, if users are confused and have a hard time to actually read what’s on a page.
-
+But keep in mind, that you should use these choices consistently. Avoid switching up the typefaces for body copy and headers all over the place. Decide which one is best for readability and which one is best for conveying a style while grabbing the readers attention and stick to that. Otherwise you will make it harder for users to navigate your page because you failed at providing a subliminal mental map for your site through your typography. Worse, if users are confused and have a hard time to actually read what’s on a page.
 
 ###### Screenshot
 
 {% img /images/Typography-101/screenshots/bengoodyear-com.png %}
 
-Also, some type designers created Serif and Sans-Serif versions of a typeface which are supposed to work together nicely. When the type designer herself considered the pair, it’s really hard to go wrong when they kind of paired the typefaces for you already. Will this always work? Of course not. But it’s good to know when you look for new typefaces if they have a matching one with fitting contrast backed in from the start.
+Some type designers created serif and sans serif versions of a typeface. These are supposed to work together neatly. When the type designer herself considered the pair, it’s really hard to go wrong when they kind of paired the typefaces already for you. Will this always work? Of course not! But it’s good to know when you look for new typefaces. When they have a matching sibling you might find a fitting contrast baked in from the start.
 
 ###### Screenshot
 
 {% img /images/Typography-101/screenshots/adayinbigdata-com.png %}
 
-If you pair two typefaces, you want to have stronger visual differences between the two. Keep it subtle if you want, but it should be at least noticeable—even to the fast eye. In that regard, pairing two sans serifs or two serifs turns out to be tricky and does not achieve contrast that good.
+If you pair two typefaces, you want to have strong visual differences between the two—but in my mind only strong enough. Going overboard does not do the trick for me. Keep it subtle if you want, but it should be at least noticeable—even to the fast eye. In that regard, pairing two sans serifs or two serifs turns out to be tricky and does not achieve contrast that good.
 
 ###### Screenshot
 
 {% img /images/Typography-101/screenshots/rianvdm-exposure-co.png %}
 
-While you look for visual distinctions, you also want to watch out for some sort of common trait. Something that can bind the two different typefaces together. Their visual structure, the way their letters are designed could share common ideas. That ties them together even more skillfully. A similar structure or geometric design will help with that.
-
-On occasion steal. When you find combinations that you like, try them out yourself.
-
+While you look for visual distinctions, you also want to watch out for some sort of common trait. Something that can bind the two different typefaces together. Their visual structure, the way their letters are designed could share common ideas. Similar counters and similar skeletons of their overall letters for example. That ties them together even more skillfully. A similar structure or geometric design will help with that for sure. On occasion steal! When you find combinations that you like, try them out yourself and see what you can do with them. Learning through imitating the work of others is fine. At some point you won’t be that exciting anymore and hunting for your next new typeface becomes a lot more exhilarating than building upon the creative choices of others. That’s where the fun begins actually. Hope to see you on the other side!
 
 ## Final Thoughts
 
-A true ideal for your decisions with typography does not exist. In many matters it is very subjective and depending on which typeface you are working with. Take these ideas with a grain of salt and see them as starting point. Knowing common-sense limits is a good thing though. After you educated yourself some more about typography, you will run into many websites that obviously didn’t spend any time considering these guidelines that were handed down to us over many generations and will look a lot weaker because of that. It’s not magic to create better websites with good type but it’s rather surprising how many projects ignore these basic skills and muddy the waters for their readers.
+Typography lacks hard laws to guide your decisions. To me that is a good thing though. In many regards, typography is very subjective but readability might be the one constant you should always focus on first and foremost. Take all these ideas and concepts above with a grain of salt and see them as starting points for your own creative explorations. Rules would be boring anyway. Knowing some common-sense and agreed upon limits is a good thing though. Maybe attend a letterpress workshop in your area and learn a bit about print design. Decide on a handful of typefaces and get to know them intimately by overusing them for a while.
+
+After you have educated yourself some more about typography, you will run into many websites that obviously didn’t spend any time considering these guidelines. You will learn that there is a lot of room to infuse the web with better typography. It is such a great tool to enhance communication and I feel it is culturally precious knowledge that was handed down to us over many generations of hard work and explorations. It’s fantastic how you can influence the tone of written language with it. Overall, it’s not magic to create better websites with good type and it’s rather surprising how many projects ignore these basic skills and muddy the waters for their readers. You can do better than that!
