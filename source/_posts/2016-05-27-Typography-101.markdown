@@ -21,7 +21,6 @@ categories: [Design, Grids, Visual Design, Product Design, Web Design, Frontend]
 + Hierarchy
 + Choosing Typefaces
 
-
 ## 95%
 
 95 % of web design is typography! When you strip away all of the type of most websites, they basically implode. More or less, there is no web design without type. So why not get good at it and improve your web design skills by applying solid typography? There is a rich world full of letters to explore, a world which has been handed down to use by generations of creative people working with graphic design and type designers. Another amazing rabbit hole to dive into.
@@ -31,6 +30,8 @@ At first, web design naturally tried to follow a lot of the ideas of graphic des
 ###### Screenshots
 
 {% img /images/Typography-101/screenshots/95-percent.png %}
+
+[Paravel](http://paravelinc.com/work/) 
 
 {% img /images/Typography-101/screenshots/95-percent-without.png %}
 
@@ -44,6 +45,8 @@ Type is more effective than anything else to convey your message on the web. Sur
 
 {% img /images/Typography-101/screenshots/dropbox-marketing.png %}
 
+[Dropbox](https://www.dropbox.com/)
+
 This example from Dropbox also shows that the graphics alone don’t achieve the same level of communication and are ambiguous at best.
 
 I’m sure we all have seen pages which are more on the experimental side, which heavily use graphical language—excluding type—to accomplish some design goal. But imagine a project like Facebook, Twitter or even Google going in that direction. I think it’s pretty much a sure bet that this would be a disaster—a huge one. So, type is king on the web. Like it or hate it, but ignoring it is not an option.
@@ -51,6 +54,8 @@ I’m sure we all have seen pages which are more on the experimental side, which
 ## Typefaces & Fonts
 
 {% img /images/Typography-101/A_Specimen_by_William_Caslon.jpg %}
+
+[Caslon](https://en.wikipedia.org/wiki/Caslon)
 
 ### Typefaces
 
@@ -60,11 +65,10 @@ Typefaces are collections of letters, numbers and punctuations that form sets of
 
 {% img /images/Typography-101/screenshots/Gotham-typeface.png %}
 
-http://www.typography.com/fonts/gotham/styles/
-
 ### Fonts
 
 This is somewhat of a subset of a typeface. It’s a character set of a particular typeface in one particular size, weight and style. Didot Light Roman 24pt (point) would be a font. Typefaces are usually made up of multiple fonts.
+
 ###### Didot Font
 
 {% img /images/Typography-101/screenshots/Didot-light-roman.png %}
@@ -87,9 +91,15 @@ Serif typefaces are the oldest we will discuss in this article. It’s not an ex
 
 {% img /images/Typography-101/screenshots/mailchimp-paper-buddy.png %}
 
+[MailChimp](http://mailchimp.com/paper-buddy/)
+
 {% img /images/Typography-101/screenshots/latino-type-serifs.png %}
 
+[Latinotype](http://www.latinotype.com/100)
+
 {% img /images/Typography-101/screenshots/pana-com.png %}
+
+[Pana](https://pana.com/)
 
 Serifs are considered easier to read and are therefore often used for longer pieces of text like body copy. The evidence on that seems a bit inconclusive though. Nevertheless, this argument often comes up. They look more old school and classic but you can also make them look very modern. Depending on the context you apply serif text.
 
@@ -97,11 +107,15 @@ Serifs are considered easier to read and are therefore often used for longer pie
 
 {% img /images/Typography-101/screenshots/nyt-body-copy.png %}
 
+[The New York Times](http://www.nytimes.com/pages/technology/index.html)
+
 They are nevertheless an excellent choice for headers as well of course:
 
 ###### Screenshot Washington Post
 
 {% img /images/Typography-101/screenshots/washington-post-landing.png %}
+
+[The Washington Post](https://www.washingtonpost.com/)
 
 ###### The headers the Washington Post uses are a nice example of using a serif to convey a certain style of tradition and quality while the sans-serif body copy makes it look modern while being highly readable.
 
@@ -115,17 +129,23 @@ These typefaces lack the serif extensions.
 
 {% img /images/Typography-101/screenshots/sans-serif-soil.png %}
 
+[Project Soli](https://atap.google.com/soli/)
+
 Sans serifs started to get popular in the 1920s and got rid of all the extra serif bits and pieces. They were designed to look modern, industrial and machine-made and were ideal for the advertisement industry. Since you can place more text in the same space—serif extensions take up more space of course—they were considered more economical as well.
 
 ###### Screenshot
 
 {% img /images/Typography-101/screenshots/cool-hunting-omakase.png %}
 
+[Cool Hunting Omakase](http://omakase.coolhunting.com/)
+
 {% img /images/Typography-101/screenshots/sans-serif-medium-com.png %}
 
-https://medium.com/@TypeEd/choosing-and-pairing-typefaces-for-cookbooks-dd19dabb1e9e#.obfdjp9f2
+[Medium](https://medium.com/@TypeEd/choosing-and-pairing-typefaces-for-cookbooks-dd19dabb1e9e#.bxnpinwgs)
 
 {% img /images/Typography-101/screenshots/webflow-com-about.png %}
+
+[Webflow](https://webflow.com/about)
 
 ### Semi Serif Typefaces
 
@@ -134,6 +154,8 @@ They incorporate both characteristics of serif and sans serif typefaces.
 ###### Screenshot
 
 {% img /images/Typography-101/screenshots/semi-serif-latino-type.png %}
+
+[Latinotype](http://www.latinotype.com/56)
 
 ### Slab Serif Typefaces
 
@@ -145,9 +167,15 @@ Slab serifs are similar to serifs but are much thicker and more attention-grabbi
 
 {% img /images/Typography-101/screenshots/everywhere-is.png %}
 
+[Everywhere.is](http://everywhere.is/)
+
 {% img /images/Typography-101/screenshots/proday.png %}
 
+[Proday](http://proday.co/)
+
 {% img /images/Typography-101/screenshots/flowhub-io.png %}
+
+[Flowhub](https://flowhub.io/)
 
 ### Script Typefaces
 
@@ -159,12 +187,15 @@ These typefaces often emulate the look of hand-written text. The varying thickne
 
 {% img /images/Typography-101/screenshots/paravel-landing.png %}
 
+[Paravel](http://paravelinc.com/work/) 
+
 {% img /images/Typography-101/screenshots/script-type-02.png %}
+
+[Foster Type](http://fostertype.com/)
 
 {% img /images/Typography-101/screenshots/femmebot-github-io.png %}
 
-http://femmebot.github.io/google-type/
-
+[Femmebot](http://femmebot.github.io/google-type/)
 
 ### Monospace Typefaces
 
@@ -176,11 +207,11 @@ As the name suggests, each letter and punctuation occupies the same horizontal w
 
 {% img /images/Typography-101/screenshots/thenextcentury.png %}
 
-http://sandri.me/thenextcentury/
+[The Next Century](http://sandri.me/thenextcentury/)
 
 {% img /images/Typography-101/screenshots/cssdesignawards-com.png %}
 
-http://cssdesignawards.com/woty/
+[CSSDA](http://cssdesignawards.com/woty/)
 
 ## Typographic Anatomy
 
@@ -303,12 +334,15 @@ I know, these punctuation thingies don’t sound all too dashing, but this basic
 
 {% img /images/Typography-101/screenshots/hierarchy-trent-alton.png %}
 
+[Trent Walton](http://trentwalton.com/2016/02/26/atomic-classification/)
+
 {% img /images/Typography-101/screenshots/typologic.png %}
+
+[Typologic](http://www.typologic.nl/)
 
 It is important that you convey a strong hierarchy within your typography? Why? Because as we established at the beginning of this piece, the type on the page make for roughly 95% percent of your design. If you have weak hierarchy within your texts, you won’t have a snowballs chance in hell to create strong hierarchy in your overall design.
 
 Typography offers you multiple ways to give your users visual anchors to navigate your site the way you want them to. Through emphasis you can let them know what is most important and what they should pay attention to first. Here are a few ways to strengthen your work in that department:
-
 
 ### Color
 
@@ -318,7 +352,11 @@ If you don’t have much color on a page it is very easy to guide the eye toward
 
 {% img /images/Typography-101/screenshots/color-hierarchy.png %}
 
+[Paravel](http://paravelinc.com/about/) 
+
 {% img /images/Typography-101/screenshots/hierarchy-color-02.png %}
+
+[Dropbox](https://www.dropbox.com/news)
 
 ### Size
 
@@ -328,7 +366,11 @@ Increasing the font size always works of course. The eyes register something mor
 
 {% img /images/Typography-101/screenshots/hierarchy-size.png %}
 
+[Typeterrance](http://typeterrance.com/blog/)
+
 {% img /images/Typography-101/screenshots/hierarchy-size-dropbox.png %}
+
+[Dropbox](https://www.dropbox.com/business)
 
 ### White Space
 
@@ -337,9 +379,12 @@ White space is the most powerful ingredient that can make you look either very e
 ###### Screenshots
 
 {% img /images/Typography-101/screenshots/zen-garden.png %}
-http://www.csszengarden.com/218/
+
+[CSS Zen Garden](http://www.csszengarden.com/218/)
 
 {% img /images/Typography-101/screenshots/hierarchy-whitespace-trent-walton.png %}
+
+[Trent Walton](http://trentwalton.com/2012/02/02/redefined/)
 
 ### Weight
 
@@ -349,9 +394,13 @@ If you have big typeface families you will have lots of options to choose your w
 
 {% img /images/Typography-101/screenshots/latino-type-weights.png %}
 
+[Latinotype](http://www.latinotype.com/111)
+
 ###### Screenshot
 
 {% img /images/Typography-101/screenshots/weight-dropbox-about.png %}
+
+[Dropbox](https://www.dropbox.com/about)
 
 In the screenshot from the Dropbox about page you can see that the names have a different weight than their titles. A very basic technique for creating emphasis. Me personally would have probably increased the font size since there is enough space for even long names. The hierarchy would have been even stronger that way.
 
@@ -363,6 +412,8 @@ Similar to the arguments about pure weight, italics can also strengthen the hier
 
 {% img /images/Typography-101/screenshots/tdc-org.png %}
 
+[The Type Directors Club](https://www.tdc.org/events/category/salons/)
+
 ### Strong contrast within paired typefaces
 
 When you choose more than one typeface for your work—avoid choosing more than two btw—it becomes critical that these typefaces themselves create some sort of hierarchy through strong enough contrast. On the one hand they should be easily distinguishable from each other and on the other hand also not too unrelated. Sounds hard, I know, in fact it really is. We all gotta deal with it. But there are a few good guidelines that make it not that crazy when living in a world with a gazillion typefaces. The next chapter brings you up to speed on this one.
@@ -371,11 +422,19 @@ When you choose more than one typeface for your work—avoid choosing more than 
 
 {% img /images/Typography-101/screenshots/hierarchy-pairing-contrast-trent-walton.png %}
 
+[Trent Walton](http://trentwalton.com/2013/12/11/work-life/)
+
 {% img /images/Typography-101/screenshots/stuntbox-com.png %}
+
+[Stuntbox](http://stuntbox.com/)
 
 {% img /images/Typography-101/screenshots/hierarchy-contrast-pairing-jason-santa-maria-02.png %}
 
+[Jason Santa Maria](http://jasonsantamaria.com/articles/ditching-twitter)
+
 {% img /images/Typography-101/screenshots/hierarchy-contrast-pairing-jason-santa-maria.png %}
+
+[Jason Santa Maria](http://jasonsantamaria.com/articles/)
 
 Keep in mind that all of the above only shine if you use them consistently. If you change it up too much, your hierarchy will be weakened significantly. If all of this is complete news to you, I’d head over to my article about visual design principles to get you up to speed. All of the aforementioned will make a lot more sense after that.
 
@@ -393,9 +452,13 @@ In the end, readability trumps everything though—especially for body copy. Obv
 
 {% img /images/Typography-101/screenshots/kitchensinkstudios-com.png %}
 
+[Kitchen Sink Studios](http://www.kitchensinkstudios.com/work/frances/)
+
 Make sure that you create good contrast between the paired choices. Typefaces that look too similar can end up looking confusing and affect your visual hierarchy negatively. Bigger typeface families also have the benefit of having tons of options to vary this one typeface. That way you can only use one typeface without looking boring. That might be the easiest approach when you start out. There are so many weights and variations that you will hardly shoot yourself in the foot too bad. If you wanna go further than that then pairing a sans serif with a serif typeface is the best place to start—the most reasonable actually. This can lead to a stronger and more interesting contrast that you can use to your advantage—stylistically.
 
 {% img /images/Typography-101/screenshots/hansonwu-com.png %}
+
+[Hanson Wu](http://hansonwu.com/#/work/how_to_order_eggs)
 
 But keep in mind, that you should use these choices consistently. Avoid switching up the typefaces for body copy and headers all over the place. Decide which one is best for readability and which one is best for conveying a style while grabbing the readers attention and stick to that. Otherwise you will make it harder for users to navigate your page because you failed at providing a subliminal mental map for your site through your typography. Worse, if users are confused and have a hard time to actually read what’s on a page.
 
@@ -403,17 +466,23 @@ But keep in mind, that you should use these choices consistently. Avoid switchin
 
 {% img /images/Typography-101/screenshots/bengoodyear-com.png %}
 
+[Ben Goodyear](http://bengoodyear.com/)
+
 Some type designers created serif and sans serif versions of a typeface. These are supposed to work together neatly. When the type designer herself considered the pair, it’s really hard to go wrong when they kind of paired the typefaces already for you. Will this always work? Of course not! But it’s good to know when you look for new typefaces. When they have a matching sibling you might find a fitting contrast baked in from the start.
 
 ###### Screenshot
 
 {% img /images/Typography-101/screenshots/adayinbigdata-com.png %}
 
+[adayinbigdata.com](http://adayinbigdata.com/)
+
 If you pair two typefaces, you want to have strong visual differences between the two—but in my mind only strong enough. Going overboard does not do the trick for me. Keep it subtle if you want, but it should be at least noticeable—even to the fast eye. In that regard, pairing two sans serifs or two serifs turns out to be tricky and does not achieve contrast that good.
 
 ###### Screenshot
 
 {% img /images/Typography-101/screenshots/rianvdm-exposure-co.png %}
+
+[Exposure](https://rianvdm.exposure.co/running-high)
 
 While you look for visual distinctions, you also want to watch out for some sort of common trait. Something that can bind the two different typefaces together. Their visual structure, the way their letters are designed could share common ideas. Similar counters and similar skeletons of their overall letters for example. That ties them together even more skillfully. A similar structure or geometric design will help with that for sure. On occasion steal! When you find combinations that you like, try them out yourself and see what you can do with them. Learning through imitating the work of others is fine. At some point you won’t be that exciting anymore and hunting for your next new typeface becomes a lot more exhilarating than building upon the creative choices of others. That’s where the fun begins actually. Hope to see you on the other side!
 
