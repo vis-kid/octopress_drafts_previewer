@@ -14,6 +14,8 @@ categories: [Rails, RSpec, TDD, BDD, Testing, Test-Driven-Development Ruby, Ruby
 ## Spring Preloader
 
 + Test Speed
++ Database Bottlenecks
++ Spring Preloader
 
 ## Test Speed
 
@@ -22,6 +24,23 @@ The test speed is important for a couple of reasons. You want to be able to quic
 That might not sound that bad at first but this is not a trivial issue. One of the main benefits of a test suite is that it guides the design of your application—to me this is probably the biggest win from TDD. Longer test makes this part pretty much impossible because it’s very likely that you won’t run them to not break your flow. Speedy tests guarantee that you have no reason not to run your tests.
 
 You can see this process as a dialogue between you and the test suite. If this conversation gets too slow it’s really painful to continue. When your code editor offers the possibility to also run your tests you should definitely make use of this feature. This will dramatically increase the speed and improve your workflow. Switching every time between your editor and a shell to run your tests gets old very quickly. But since these articles are targeted at newbie programmers I don’t expect you to set up your tools like this right away. There are other ways you can improve this process without needing to tinker with your editor right away. It’s good to know though and I recommend making this part of your workflow.
+
+Also, be aware that you already learned how to slice your tests and that you don’t need to run the full test suite all the time. You can easily run single files or even single `it` blocks—all within a capable code editor without ever leaving it for the terminal. You can focus the test on the line under test for example. That feels like magic to be frank, it never gets boring.
+
+Listening to your tests is pretty important—at least if you are on board with TDD and have been drinking the cool aid for a while—and fast test suites make it a lot more reasonable to pay attention to where the tests are guiding you.
+
+## Database Bottlenecks
+
+Writing too much to the database—often very unnecessarily—is one sure way to quickly slow down your test suite. In many test scenarios you can fake out the setup data that you need to prepare a test and the data that is directly under test. You don’t need to hit the database for all of that most of the time. Try to get away not hitting the database as much as possible and also not set up too much data if you don’t need it at all. This will prove very effective to not create slow test suites over time. In other words, choose your dependencies wisely and see what is the smallest amount of data that get’s your tests to pass.
+
+I don’t want to go into any more specifics on this for now, it’s probably a bit too early in your trajectory to talk about stubs, spies, fakes and stuff. Confusing you here with such advanced concepts seems counterproductive and you will run into these soon enough. Just be aware that avoiding to hit the database bites a big chunk out of your slow test suite and focus for now to wrap your head around the bigger picture with RSpec and testing.
+
+
+Use the database as little as possible. This can be hard because you need to learn even more tools and techniques to achieve that but it is essential to grow test suites that are reasonably fast—fast enough to really run your tests frequently.
+
+You also want to test everything only once if possible. Don’t retest the same thing over and over again. This mostly happens by accident and / or bad design decisions. If you started to have tests that are slow, this is an easy place to look for refactorings to get a speed boost.
+
+The majority of your tests should also be on the Unit level, testing your models. Integration tests which tests whole workflows, bringing together a bunch of components and test them synchronously and thereby imitating the users behaviour to a degree, should be the smallest part of your testing pyramid.
 
 ## Spring Preloader
 
