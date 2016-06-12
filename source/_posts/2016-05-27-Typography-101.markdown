@@ -109,7 +109,7 @@ Serifs are considered easier to read and are therefore often used for longer pie
 
 [The New York Times](http://www.nytimes.com/pages/technology/index.html)
 
-They are nevertheless an excellent choice for headers as well of course:
+Serifs are nevertheless an excellent choice for headers as well of course:
 
 ###### Screenshot Washington Post
 
