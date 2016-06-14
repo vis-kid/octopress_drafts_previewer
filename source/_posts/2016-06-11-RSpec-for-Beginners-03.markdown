@@ -205,21 +205,64 @@ Another issue is that you will need to test a lot of different variations, diffe
 
 Save things like `before`, `after` and its variations for special occasions and don’t use it all the time, all over the place. See it as one of the big guns you pull out for meta stuff. Cleaning up your data is a good example that is too meta for each individual test to deal with. You want to extract that of course.
 
++ subject & its
+
+
 ## Mystery Guests
 
 Often you put the `let` stuff at the top of a file and hide away these details from other tests that use them going down the file. You want to have the relevant information and data as close as possible to the part where you actually exercise the test—not miles away. In the end, it feels like too much rope to hang yourself because `let` introduces widely shared fixtures. That basically breaks down to dummy test data whoose scope is not tight enough. This easily leads to one major smell called “mystery guest”. That means that you have test data showing up out of nowhere or is simply being assumed. You will often need to hunt them down first to understand a test—especially if some time has passed since you wrote the code or if you are new to a codebase. It is much more effective to define your test data inline exactly where you need it—in the setup of a particular test and not in a much broader scope.
 
-Yes, your tests might not end up being super DRY all the time in that regard, but this is a little price to pay for being more expressive and easier to understand I think. Sure there are exceptions, but they should really be merely applied to exceptional circumstances after you exhausted options pure Ruby offers right away. With a mystery guest you have to find out where data comes from, why it matters and what its specifics really are. Not seeing the implementation details in a particular test itself just makes your live harder than it needs to. I mean do what you feel like if you work on your own projects, but when other developers are involved, it would be nicer to think about making their experience with your code as smooth as possible. As with many things of course, the essential stuff lies in the details and you don’t want to keep yourself and others in the dark about those. Readability, succinctness and the convenience of `let` should not come at the cost of loosing clarity of implementation details and misdirection.
+###### Agent Spec
 
+``` ruby
+
+...
+
+...
+
+...
+
+describe Agent, '#print_favorite_gadget' do
+  it 'prints out the agents name, rank and favorite gadget' do
+    expect(agent.print_favorite_gadget).to eq('Commander Bond has a thing for Aston Martins')
+  end
+end
+
+```
+
+When you look at this it reads quite nice right? It is succinct, a one-liner, pretty clean no? Let’s not fool ourselves. This test does not tell us much about the `agent` in question and it does not tell us the whole story. The implementation details are important but we are not seeing any of it. The agent seems to have been created some place else and we’d have to hunt it down first in order to fully understand what’s going on here. So it maybe looks elegant on the surface but it comes with a hefty price.
+
+Yes, your tests might not end up being super DRY all the time in that regard, but this is a little price to pay for being more expressive and easier to understand I think. Sure there are exceptions, but they should really be merely applied to exceptional circumstances after you exhausted options pure Ruby offers right away. With a mystery guest you have to find out where data comes from, why it matters and what its specifics really are. Not seeing the implementation details in a particular test itself just makes your live harder than it needs to. I mean do what you feel like if you work on your own projects, but when other developers are involved, it would be nicer to think about making their experience with your code as smooth as possible. As with many things of course, the essential stuff lies in the details and you don’t want to keep yourself and others in the dark about those. Readability, succinctness and the convenience of `let` should not come at the cost of loosing clarity of implementation details and misdirection. You want each individual test to tell the full story and provide all the context to understand it right away.
 
 ## Inline Code
 
 Long story short, you want to have tests that are easy to read and easier to reason about—on a test-by-test-basis. Try to specify everything you need in the actual test—and not more than that. This kind of waste starts to “smell” just like any other sort of junk. That also implies that you should add the details you need for specific tests as late as possible—when you create test data overall, within the actual scenario and not some place remote. The suggested use of `let` offers a different kind of convenience that seems to oppose this idea.
 
-It would be nice if `let` lets you set up barebones test data that you can enhance on a need to know basis in each specific test, but this is not how `let` is rolling. That is how we use factories via Factory Girl these days. I will spare you the details, especially since I have written a few pieces about it already. Here is my article about what Factory Girl has to offer if you are already curious about that. It is written for developers without tons of experience as well.
+Let’s have another go with the previous example and implement it whout the mystery guest issue. In the solution below we’ll find all the relevant info for the test inline. We can stay right in this spec if it fails and don’t need to look for additional info some place else.
 
+###### Agent Spec
 
-Write inline code.
+``` ruby
+
+...
+
+...
+
+...
+
+describe Agent, '#print_favorite_gadget' do
+  it 'prints out the agents name, rank and favorite gadget' do
+    agent = Agent.new(name: 'James Bond', rank: 'Commander', favorite_gadget: 'Aston Martin')
+
+    expect(agent.print_favorite_gadget).to eq('Commander Bond has a thing for Aston Martins')
+  end
+end
+
+```
+
+It would be nice if `let` lets you set up barebones test data that you can enhance on a need to know basis in each specific test, but this is not how `let` is rolling. That is how we use factories via [Factory Girl](https://github.com/thoughtbot/factory_girl) these days. I will spare you the details, especially since I have written a few pieces about it already. Here is my newbie-tailored articles [101](https://code.tutsplus.com/articles/factory-girl-101--cms-25087), [201](https://code.tutsplus.com/articles/factory-girl-201--cms-25171) about what Factory Girl has to offer—if you are already curious about that. It is written for developers without tons of experience as well.
+
+Let’s look at another simple example that makes good use of supporting test data that is set up inline:
 
 ###### Agent Spec
 
@@ -241,7 +284,6 @@ end
 As you can see, we have all the information this tests need in one place and don’t need to hunt down any specifics some place else. As mentioned, this is not the best strategy for DRY code. The payoff is good though. Clarity and readability outweighs this little bit or repetitive code by a long shot—especially in large codebases.
 
 For example, say you write some new, seemingly unrelated feature and suddenly this tests starts to fail as collateral damage and you haven’t touched this spec file in ages. Do you think you will be happy if you need to decypher the setup components first before you can understand and fix this failing test before you can continue with a completely different feature you are working on? I think not! You want to get out of this “unrelated” speac asap and get back to finishing the other feature. When you find all the test data right there where your tests tells you where it fails, you increase your chances by a long shot of fixing this quickly wihtout “downloading” a completely differnt part of the app into your brain.
-
 
 ## Extract Methods
 
