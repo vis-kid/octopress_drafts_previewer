@@ -12,60 +12,18 @@ categories: [Rails, RSpec, TDD, BDD, Testing, Test-Driven-Development Ruby, Ruby
 
 ## Topics
 
++ Matchers
 + Let
 + Subjects
-+ Matchers
 + Callbacks
 + Generators
 + Tags
 
-## Let
-
-`let` and `let!` might look like variables at first, but they are actually helper methods. The first one is lazily evaluated, which means that it is only run and evaluated when a spec actually uses it and the other let with the bang(!) is run regardless of being used by a spec or not. Both versions are memoized and their values will be cached within the same example scope.
-
-###### Some Spec File
-
-``` ruby
-
-describe Mission, '#prepare', :let do
-  let(:mission)  { Mission.create(name: 'Moonraker') }
-  let!(:bond)    { Agent.create(name: 'James Bond') }
-
-  it 'adds agents to a mission' do
-    mission.prepare(bond)
-    expect(mission.agents).to include bond
-  end
-end
-
-```
-
-The bang version that is not lazily evaluated can be time consuming and therefore costly if it becomes your fancy new friend. Why? Because it will set up this data for each test in question no matter what and might eventually end up being one of these nasty things that slow down your test suite significantly.
-
-You should know this feature of RSpec since `let` is widely known and used. That being said, the next article will show you some issues with it that you should be aware off. Use these helper methods with caution or at least in small doses for now.
-
-## Subjects
-
-RSpec offers you to declare the subject under test very explicitly. There are better solutions for this and we will discuss the downsides of this approach in the next article when I show a few things you generally want to avoid. But for now, let’s have a look at what `subject` can do for you:
-
-###### Some Spec File
-
-``` ruby
-
-describe Agent, '#status' do
-  subject { Agent.create(name: 'Bond')  }
-
-  it 'returns the agents status' do
-    expect(subject.status).not_to be 'MIA'
-  end
-end
-
-```
-
-This approach can on the one hand help you with reducing code duplication, having a protagonist declared once in a certain scope but it can also lead to something called a mystery guest. This simply means that we might end up in a situation where we user data for one of our test scenarios but have not idea anymore where it actually comes from and what it is comprised of. More on that in the next article.
+In the first article we have spent quite a lot of time trying to answer the “why?” of testing. I suggest we get right back to the “how?” and spare us any more context. We covered that part extensively already. Let’s see what else RSpec has to offer that you as a beginner can handle right away.
 
 ## Matchers
 
-So this is gonna approach the heart of things. RSpec provides you with a ton of so-called matchers. These are your bread and butter when you write your expectations. So far you have seen `.to eq` and `.not_to eq`. But there is a much bigger arsenal to write your specs. You can test to raise errors, for truthy and falsy values or even for specific classes for example. Let’s run down a few options to get you started:
+So this is gonna approach the heart of things. RSpec provides you with a ton of so-called matchers. These are your bread and butter when you write your expectations. So far you have seen `.to eq` and `.not_to eq`. But there is a much bigger arsenal to write your specs. You can test to raise errors, for truthy and falsy values or even for specific classes. Let’s run down a few options to get you started:
 
 + `.to eq`
 + `.not_to eq` 
@@ -154,14 +112,14 @@ end
 
 ```
 
-Suppose we would be dealing with agents like James Bond, 007, who are assigned three digit numbers, then we could test for it this way—primitively of course.
+Suppose we would be dealing with agents like James Bond, 007, who are assigned three digit numbers, then we could test for it this way—primitively here of course.
 
 + `>`
 + `<`
 + `<=`
 + `>=`
 
-Comparisons come in handy more often than one might think. I assume the examples below itself cover what you need to know.
+Comparisons come in handy more often than one might think. I assume the examples below will cover what you need to know.
 
 ###### Some Spec
 
@@ -170,7 +128,7 @@ Comparisons come in handy more often than one might think. I assume the examples
 ...
 
 it 'some clever description' do
-  agent = Agent.create(name: 'James Bond', number: '007')
+  ...
 
   expect(agent.number).to be < quartermaster.number
   expect(agent.number).to be > m.number
@@ -207,9 +165,9 @@ end
 
 ```
 
-In the dummy example above you can see that a list of agents that are associated with a mission are not of class `Agent` but of `ActiveRecord::Associations::CollectionProxy`. What you should take away from this one is that we can easily test for classes themselves while staying highly expressive. ```.to be_a``` and ```.to be_an``` do one and the same. You have both options available to keep things readable.
+In the dummy example above you can see that a list of agents that are associated with a mission are not of class `Agent` but of `ActiveRecord::Associations::CollectionProxy`. What you should take away from this one is that we can easily test for classes themselves while staying highly expressive. ```.to be_a``` and ```.to be_an``` do one and the same thing. You have both options available to keep things readable.
 
-Testing for errors is also massively easy in RSpec. If you are super fresh to Rails and not sure yet which errors the framework can throw at you, you might not feel the need to use these—of course, makes total sense. At a later stage in your development, you will find them very handy though. You have four ways to deal with them:
+Testing for errors is also massively convenient in RSpec. If you are super fresh to Rails and not sure yet which errors the framework can throw at you, you might not feel the need to use these—of course, makes total sense. At a later stage in your development, you will find them very handy though. You have four ways to deal with them:
 
 + ```.to raise_error```
 
@@ -296,14 +254,13 @@ end
 
 + predicate matchers
 
-These predicate matchers are a feature of RSpec to dynamically create matchers for you. If you have predicate methods in your models for example (ending with a question mark), then RSpec knows that it should build matchers for you that you can use in your tests. In the example below, we want to test if an agent has gone crazy:
+These predicate matchers are a feature of RSpec to dynamically create matchers for you. If you have predicate methods in your models for example (ending with a question mark), then RSpec knows that it should build matchers for you that you can use in your tests. In the example below, we want to test if an agent is James Bond:
 
 ###### Agent Model
 
 ``` ruby
 
 class Agent < ActiveRecord::Base
-  belongs_to :mission
 
   def bond?
     name == 'James Bond' && number == '007' && gambler == true
@@ -324,9 +281,15 @@ Now, we can use this in our specs like so:
 ...
 
 it 'some clever description' do
-  agent = Agent.create(name: 'James Bond')
+  agent = Agent.create(name: 'James Bond', number: '007', gambler: true)
 
   expect(agent).to be_bond
+end
+
+it 'some clever description' do
+  agent = Agent.create(name: 'James Bond')
+
+  expect(agent).not_to be_bond
 end
 
 ...
@@ -335,10 +298,53 @@ end
 
 RSpec let’s us use the the method name without the question mark—to form a better syntax I suppose. Cool, ain’t it?
 
+## Let
+
+`let` and `let!` might look like variables at first, but they are actually helper methods. The first one is lazily evaluated, which means that it is only run and evaluated when a spec actually uses it and the other let with the bang(!) is run regardless of being used by a spec or not. Both versions are memoized and their values will be cached within the same example scope.
+
+###### Some Spec File
+
+``` ruby
+
+describe Mission, '#prepare', :let do
+  let(:mission)  { Mission.create(name: 'Moonraker') }
+  let!(:bond)    { Agent.create(name: 'James Bond') }
+
+  it 'adds agents to a mission' do
+    mission.prepare(bond)
+    expect(mission.agents).to include bond
+  end
+end
+
+```
+
+The bang version that is not lazily evaluated can be time consuming and therefore costly if it becomes your fancy new friend. Why? Because it will set up this data for each test in question, no matter what, and might eventually end up being one of these nasty things that slow down your test suite significantly.
+
+You should know this feature of RSpec since `let` is widely known and used. That being said, the next article will show you some issues with it that you should be aware off. Use these helper methods with caution or at least in small doses for now.
+
+## Subjects
+
+RSpec offers you to declare the subject under test very explicitly. There are better solutions for this and we will discuss the downsides of this approach in the next article when I show a few things you generally want to avoid. But for now, let’s have a look at what `subject` can do for you:
+
+###### Some Spec File
+
+``` ruby
+
+describe Agent, '#status' do
+  subject { Agent.create(name: 'Bond')  }
+
+  it 'returns the agents status' do
+    expect(subject.status).not_to be 'MIA'
+  end
+end
+
+```
+
+This approach can on the one hand help you with reducing code duplication, having a protagonist declared once in a certain scope but it can also lead to something called a mystery guest. This simply means that we might end up in a situation where we use data for one of our test scenarios but have no idea anymore where it actually comes from and what it is comprised of. More on that in the next article.
 
 ## Callbacks
 
-In case you are not aware about callbacks yet, let me give you a brief heads up. Callbacks is code that is run at certain specific points in the life cycle of code. In terms or Rails this would mean that you have code that is being run before objects are created, updated, destroyed etc. In the context of RSpec, it’s the life cycle of tests being run. That simply means that you can specify hooks that should be run before each test is run in the spec file, after all thats in that context have been executed or simply around each test. There are a few more fine-grained options available but I recommend we avoid getting lost in the details with them. First things first:
+In case you are not aware about callbacks yet, let me give you a brief heads up. Callbacks are run at certain specific points in the life cycle of code. In terms of Rails this would mean that you have code that is being run before objects are created, updated, destroyed etc. In the context of RSpec, it’s the life cycle of tests being run. That simply means that you can specify hooks that should be run before or after each test is being run in the spec file for example—or simply around each test. There are a few more fine-grained options available but I recommend we avoid getting lost in the details for now. First things first:
 
 + `before(:each)`
 
@@ -358,7 +364,7 @@ describe Agent, '#favorite_gadget' do
     agent = Agent.create(name: 'James Bond')
     agent.favorite_gadgets << @gadget
 
-    expect(agent.favorite_gadgets).to eq 'Walther PPK'
+    expect(agent.favorite_gadget).to eq 'Walther PPK'
   end
 
   ...
@@ -367,12 +373,11 @@ end
 
 ```
 
-Let’s say you would need a certain gadget for every test you run in a certain scope. Before let’s you extract this into a before block and prepares this little snippet for you conveniently. When you set up data that way, you have to use instance variables of course to have access to among various scopes.
-
+Let’s say you would need a certain gadget for every test you run in a certain scope. `before` let’s you extract this into a block and prepares this little snippet for you conveniently. When you set up data that way, you have to use instance variables of course to have access to it among various scopes.
 
 ### Attention!
 
-Don’t let yourself blind by convenience in this example. Just because you can do this kinda stuff does not mean you should. I want to avoid going into AntiPattern territory and confuse the hell out of you, but on the other hand I wanted to avoid showing you examples without explaining the downsides to these simple dummy exercises. In the example above, it would be much more expressive if you set up the needed objects on a test-by-test basis. Especially on larger spec files, you can quickly loose sight of these little connections and make it harder for others to piece together these puzzles.
+Don’t get fooled by convenience in this example. Just because you can do this kinda stuff does not mean you should. I want to avoid going into AntiPattern territory and confuse the hell out of you, but on the other hand I want to explain the downsides to these simple dummy exercises a bit as well. In the example above, it would be much more expressive if you set up the needed objects on a test-by-test basis. Especially on larger spec files, you can quickly loose sight of these little connections and make it harder for others to piece together these puzzles.
 
 + `before(:all)`
 
@@ -402,20 +407,21 @@ end
 
 ```
 
-When you remember the four phases of test, before blocks sometimes are helpful in setting something up for you that needs to repeated on a regular basis.
+When you remember the four phases of test, before blocks sometimes are helpful in setting something up for you that needs to be repeated on a regular basis—probably stuff that is a bit more meta in nature.
 
 
-`after(:each)` and `after(:all)` have the same behaviour but are simply run after your tests have been executed. After is often used for cleaning up your files for example. But I think it’s a bit early to address that. So commit it to memory, tknow that it’s there in case you start to need it and let’s move on to explore other, more basic things.
+`after(:each)` and `after(:all)` have the same behaviour but are simply run after your tests have been executed. `after` is often used for cleaning up your files for example. But I think it’s a bit early to address that. So commit it to memory, know that it’s there in case you start needing it and let’s move on to explore other, more basic things.
 
-All of these callbacks can be places strategically to fit your needs. Place them in any `describe` block scope that you need to run them—they don’t have to necessarily be placed on top of your spec file. They can easily be nested  way inside your specs. 
+All of these callbacks can be placed strategically to fit your needs. Place them in any `describe` block scope that you need to run them—they don’t have to necessarily be placed on top of your spec file. They can easily be nested way inside your specs. 
 
 ###### Some Spec file
 
 ``` ruby
 
-describe Agent, :nested do
+describe Agent do
   before(:each) do
     @mission = Mission.create(name: 'Moonraker')
+    @bond = Agent.create(name: 'James Bond', number: '007')
   end
 
   describe '#enemy' do 
@@ -424,30 +430,29 @@ describe Agent, :nested do
       @mission.villains << @main_villain
     end
 
-    describe 'with associated mission' do
-      it 'returns the main enemy Bond has to face in his mission' do
-        @agent = Agent.create(name: 'James Bond')
-        @mission.agents << @agent
+    describe 'Double 0 Agent with associated mission' do
+      it 'returns the main enemy the agent has to face in his mission' do
+        @mission.agents << @bond
   
-        expect(@agent.enemy).to eq 'Ernst Stavro Blofeld'
+        expect(@bond.enemy).to eq 'Ernst Stavro Blofeld'
       end
     end 
 
-    describe 'without associated mission' do
-      it 'returns negative mission assignment statement' do
-        @agent = Agent.create(name: 'Some schmuck')
+    describe 'Low-level agent with associated mission' do
+      it 'returns no info about the main villain involved' do
+        some_schmuck = Agent.create(name: 'Some schmuck', number: '1024')
+        @mission.agents << some_schmuck
 
-        expect(@agent.enemy).to eq 'No mission assigned'
+        expect(some_schmuck.enemy).to eq 'That’s above your paygrade!'
       end
     end
-  end
 
-  describe '#aborted_missions' do
     ...
-  end
 
-  describe '#double_o_missions' do
     ...
+
+    ...
+
   end
 end
 
@@ -463,17 +468,17 @@ Also, pay attention how nice this reads when we force these tests to fail:
 
 Failures:
 
-  1) Agent#enemy with associated mission returns the main enemy Bond has to face in his mission
-     Failure/Error: expect(@agent.enemy).to eq 'Ernst Stavro Blofeld'
+  1) Agent#enemy Double 0 Agent with associated mission returns the main enemy the agent has to face in his mission
+     Failure/Error: expect(@bond.enemy).to eq 'Ernst Stavro Blofeld'
      
        expected: "Ernst Stavro Blofeld"
             got: "Blofeld"
 
-2) Agent#enemy without associated mission returns negative mission assignment statement
-     Failure/Error: expect(@agent.enemy).to eq 'No mission assigned'
+  2) Agent#enemy Low-level agent with associated mission returns no info about the main villain involved
+     Failure/Error: expect(some_schmuck.enemy).to eq 'That’s above your paygrade!'
      
-       expected: "No mission assigned"
-            got: "Mission assigned"
+       expected: "That’s above your paygrade!"
+            got: "Blofeld"
 
 ```
 
