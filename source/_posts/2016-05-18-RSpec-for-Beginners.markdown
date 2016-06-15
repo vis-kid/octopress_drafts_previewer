@@ -71,9 +71,7 @@ rails new your_app -T
 ``` ruby
 
 group :development, :test do
-
-gem 'rspec-rails'
-
+  gem 'rspec-rails'
 end
 
 ```
@@ -107,7 +105,13 @@ create  spec/rails_helper.rb
 
 ```
 
-What this does is setting up the basic structure for your RSpec tests within rails. As you can see from the output above, this generator initialized a `spec` directory with a few files that you will need later. The `.rspec` file is a configuration file that we won’t need to manipulate for now. Just wanted to let you know what you have in front of you. The other files are self-explanatory but I want to mention their differences. `spec_helper.rb` is for specs that don’t depend on Rails, `rails_helper.rb` on the other hand do depend on it. What is not obvious is that one of these files need to be required on top of your spec files (test files) in order to run your tests. Let’s have a quick look! When you generate a model via: 
+What this does is set up the basic structure for your RSpec tests within Rails. As you can see from the output above, this generator initialized a `spec` directory with a few files that you will need later. The `.rspec` file is a configuration file that we won’t need to manipulate for now. Just wanted to let you know what you have in front of you. The other files are self-explanatory but I wanted to mention their differences.
+
++ `spec_helper.rb` is for specs that don’t depend on Rails.
+
++ `rails_helper.rb` on the other hand is for specs that do depend on it.
+
+What is not obvious is that one of these files need to be required on top of your spec files (test files) in order to run your tests. Let’s have a quick look! When you generate a model via: 
 
 ###### Terminal
 
@@ -143,11 +147,11 @@ require 'rails_helper'
 
 So with this setup, you can test your Rails app, your models for example, and RSpec will not get confused about model classes used in Rails. This is necessary to require whenever you need stuff like `ActiveRecord`, `ApplicationController` and so on. So this is your normal scenario and therefore should be your fist logical choice as a beginner.
 
-Requiring ```spec_helper.rb``` on the other hand, will throw an error if you write tests that include business logic from your Rails app. In that scenario, RSpec would not know what you are talking about when you want to test some Rails model for example. So long story super short, ```spec_helper``` does not load Rails—that’s it! Of course you can go wild with configurations, but this is nothing I want you to be concerned about right now. Let’s focus on the basics, how to run tests and the syntax. The should suffice for starters. Let’s move on!
+Requiring ```spec_helper.rb``` on the other hand, will throw an error if you write tests that include business logic from your Rails app. In that scenario, RSpec would not know what you are talking about when you want to test some Rails model for example. So long story super short, ```spec_helper``` does not load Rails—that’s it! Of course you can go wild with configurations, but this is nothing I want you to be concerned about right now. Let’s focus on the basics, how to run tests and the syntax. That should suffice for starters. Let’s move on!
 
 ## Running Tests
 
-You are ready to run your tests. RSpec requires your test files to have a specific suffix like ```_spec``` to understand which files to run. If you use a generator, this is not a concern actually but if you want to write your test files on your own, this is how they need to end. So you will need to put a file like ```your_first_test_spec.rb``` in your `spec` directory. Using the generator for creating a dummy model already provided us with ```spec/models/dummy_model_spec.rb```. Not bad! One thing left to do before the tests are ready: 
+You are ready to run your tests. RSpec requires your test files to have a specific suffix like ```_spec``` to understand which files to run. If you use a generator, this is not a concern actually but if you want to write test files on your own, this is how they need to end. So you will need to put a file like ```your_first_test_spec.rb``` in your `spec` directory. Using the generator for creating a dummy model already provided us with ```spec/models/dummy_model_spec.rb```. Not bad! One thing left to do before the tests are ready: 
 
 ###### Terminal
 
@@ -226,7 +230,7 @@ I recommend that we start with the bare basics and look into a few more options 
 
 + `describe`
 
-This will be your bread and butter because it organizes your specs. Within you can reference strings or classes themselves:
+This will be your bread and butter because it organizes your specs. You can reference strings or classes themselves:
 
 ###### Some Spec
 
@@ -283,7 +287,7 @@ end
 
 ```
 
-That way you get the best of both worlds. You encapsulate related tests in their representative groups while keeping things focused and at a decent size. For users very new to Ruby land, I should mention that that `#` simply refernces an instance method while the dot `.` is reserved for class methods. Because they are inside of strings, they have no technical implications here but they signal your intent to other developers and your future self. Don’t forget the comma after the class name, won’t work without it! In a minute, when you get to `expect` I’ll show you why this approach is super convenient.
+That way you get the best of both worlds. You encapsulate related tests in their representative groups while keeping things focused and at a decent size. For users very new to Ruby land, I should mention that that `#` simply references an instance method while the dot `.` is reserved for class methods. Because they are inside of strings, they have no technical implications here but they signal your intent to other developers and your future self. Don’t forget the comma after the class name—it won’t work without it! In a minute, when we get to `expect` I’ll show you why this approach is super convenient.
 
 + `it`
 
@@ -303,11 +307,11 @@ end
 
 ```
 
-The string that you provide to the `it` block works as the main documentation for your test. Within it, you specify exactly what kind of behaviour you want or expect from the method in question. My recommendation is to not go overboard and be too verbose about it but at the same time to not be overly cryptic and confuse others with overly smart descriptions. Think about what the smallest and simplest implementation of this part of the puzzle can and should accomplish. The better you write this part, the better the overall documentation for your app will end up. Don’t rush this part just because it’s a string that can’t do any damage—at least not on the surface.
+The string that you provide to the `it` block works as the main documentation for your test. Within it, you specify exactly what kind of behavior you want or expect from the method in question. My recommendation is to not go overboard and be too verbose about it but at the same time to not be overly cryptic and confuse others with overly smart descriptions. Think about what the smallest and simplest implementation of this part of the puzzle can and should accomplish. The better you write this part, the better the overall documentation for your app will be. Don’t rush this part because it’s just a string that can’t do any damage—at least not on the surface.
 
 + `expect()`
 
-Now we’re getting more to the heart of things. This method let’s you verify the part of the system you want to test. Let’s go back to our previous example and see it in (limited) action:
+Now we’re getting more to the heart of things. This method let’s you verify / falsify the part of the system you want to test. Let’s go back to our previous example and see it in (limited) action:
 
 ###### Some Spec
 
@@ -323,7 +327,7 @@ end
 
 ```
 
-`expect()` is the “new” assertion syntax of RSpec. Previously we used `should` instead. Different story, but I wanted to mention it in case you run into it. `expect()` expects that you provide it with the object under test and exercise whatever method under test on it. Finally, you write the asserted outcome on the right side. You have the option to go the positive or negative route with `.to eq` or `.not_to eq` for example. Up to you, you can always turn the logic around, every way it suits best your needs. Let’s run this nonsensical test and focus on the output that we got as a result of our test setup:
+`expect()` is the “new” assertion syntax of RSpec. Previously we used `should` instead. Different story, but I wanted to mention it in case you run into it. `expect()` expects that you provide it with an object and exercise whatever method under test on it. Finally, you write the asserted outcome on the right side. You have the option to go the positive or negative route with `.to eq` or `.not_to eq` for example (`eq` being short for equal of course). Up to you, you can always turn the logic around—whatever suits best your needs. Let’s run this nonsensical test and focus on the output that we got as a result of our test setup:
 
 ###### Terminal
 
@@ -350,7 +354,7 @@ Reads pretty nice, doesn’t it? **"Agent#favorite_gadget returns one item, the 
 + The method under test
 + The expected outcome
 
-If we would have left of the string that describes the method in the describe block then the output would be a lost less clear and readable:
+If we would have left off the string that describes the method in the `describe` block then the output would be a lot less clear and readable:
 
 ###### Some Spec
 
@@ -377,7 +381,7 @@ Failures:
 
 ```
 
-Sure there are other ways to circumvent this, passing this info via your `it` block for example, but the other appraoch is just simple and works. Whatever makes your blood flow of course!
+Sure there are other ways to circumvent and deal with this, passing this info via your `it` block for example, but the other appraoch is just simple and works. Whatever makes your blood flow of course!
 
 ## Four Phases Of A Test
 
@@ -388,17 +392,16 @@ Best practices in testing recommends that we compose our tests in four distincti
 + Test verification
 + Test teardown
 
-
-These four phases are mostly for readability and to give your tests a ...??? structure. It’s a so called testing pattern, basically a practice that the community widely agreed upon to be useful and recommended. This whole topic is a deep rabbit whole, so know that I’ll leave out a bunch to not confuse and to not spend a parapgraph that has the length of a whole article.
+These four phases are mostly for readability and to give your tests a conventional structure I suppose. It’s a so called testing pattern, basically a practice that the community widely agreed upon to be useful and recommended. This whole patterns topic is a deep rabbit whole, so know that I’ll leave out a bunch to not confuse the beginners among you to death. 
 
 + Setup
 
-During setup you prepare the scenario under which the test is supposed to run. In most cases this will include data that you set up to be ready for some kind of exercise. Little tip: don’t overcomplicate things and set up only the miniumm amount necessary to make the test work.
+During setup you prepare the scenario under which the test is supposed to run. In most cases this will include data needed to be ready for some kind of exercise. Little tip: don’t overcomplicate things and set up only the miniumm amount necessary to make the test work.
 
 ``` ruby
 
 agent = Agent.create(name: 'James Bond')
-mission = Mission.create(name: 'Moonraker', status: 'Green')
+mission = Mission.create(name: 'Moonraker', status: 'Briefed')
 
 ```
 
@@ -418,7 +421,7 @@ Now you verify if your assertion about the test is being met or not. So you test
 
 ``` ruby
 
-expect(status).not_to eq 'MIO')
+expect(status).not_to eq 'MIA')
 
 ```
 
@@ -426,7 +429,7 @@ expect(status).not_to eq 'MIO')
 
 The framework takes care of memory and database cleaning issues—a reset basically. Nothing for you to handle at this point. The goal is to get back a pristine state to run new tests without any surprises from the currently running ones.
 
-Let’s see what this would mean in our concrete example:
+Let’s see what this would mean in a dummy example:
 
 ###### Some Spec
 
@@ -454,20 +457,19 @@ end
 
 ```
 
-As you can see, in this example here we separated the exercise and verify phases clearly from each other whilst in the other dummy examples above, `expect(agent.favorite_gadget).to eq 'Walther PKK` mixed both phases together. Both are valid scenarios and have their place. The newlines help additionally to visually separate how the test is structured.
+As you can see, in this example we separated the exercise and verify phases clearly from each other whilst in the other dummy examples above, `expect(agent.favorite_gadget).to eq 'Walther PKK` we mixed both phases together. Both are valid scenarios and have their place. Also, the newlines help to visually separate how the test is structured.
 
 ## The Hard Thing About Testing
 
-Now comes the hard part, what to test and how. In my opinion this is the aspect of testing that is most confusing to newcomers. And understandably so! You are new to the language and framework and often don’t even know yet what you don’t know. How do you write tests for that? Very good question. I’ll be very frank, you don’t—most likely—and you won’t for quite a while. Getting comfortable with this stuff takes a while. When you have a mentor or attend some bootcamp and such you have the opportunity to directly learn from experienced people. In that case, your progress in this department will be different of course.
+Now comes the hard part, what to test and how. In my opinion this is the aspect of testing that is most confusing to newcomers—and understandably so! You are new to the language and framework and often don’t even know yet what you don’t know. How do you write tests for that? Very good question. I’ll be very frank, you don’t—most likely—and you won’t for quite a while. Getting comfortable with this stuff takes a while. When you have a mentor or attend some bootcamp and such you have the opportunity to directly learn from experienced people. In that case, your progress in this department will be different of course.
 
-On the other hand, if—like so many others out there—you are teaching yourself this stuff, patience will be key. Reading all the books and articles certainly get you in the right direction, but I feel like testing needs a lot of more advanced puzzle pieces in place in order for you to make complete sense and maybe even more important, before you feel comfortable with it. The “good” news is that this is not unusual and we all have been kinda there. Perserverance is important. You can do this! It’s no rocket science but it will take a while until you can view the process of writing an application from the other way around, from the perspective of tests I mean. For now, keep pushing, have fun, make mistakes, write apps, copy tutorials and what not until the light bulb goes off.
+On the other hand, if—like so many others out there—you are teaching yourself this stuff, patience will be key. Reading all the books and articles certainly get you in the right direction, but I feel like testing needs a lot of more advanced puzzle pieces in place in order for you to make complete sense and maybe even more important, before you feel comfortable with it. The “good” news is that this is not unusual and we all have been kinda there. Perserverance is important. You can do this, it’s no rocket science but it will take a while until you can write an application effectively from the other way around, from the perspective of tests I mean. For now, keep pushing, have fun, make mistakes, write apps, copy tutorials and what not until the light bulb goes off.
 
 ## Final Thoughts
 
-When you write your individual tests, you want to make it do the simplest thing possible. Highly focused tests are really key. You want to design your application via very simple steps and then follow the errors your test suite is providing you with. Only implement what is necessary to get the app green. Not more, not less! That’s the “driven” part in Test-driven development. Your work is guided by the needs of your tests.
-
-
-
-
-
-These sorts of helpers in RSpec, not surprisingly as everywhere else, help you to encapsulate and therefore reuse arbitrary methods that you will maybe need all over the place. `/helpers` is a nice home for this sort of stuff and keeps your spec files cleaner and more DRY. The other thing such helpers support is readability. When you don’t have to focus on repeated implementation details of some frequently ocurring setup or whatever, you can package them up into a nicely readable helper method and store it in a single “authoritive” place among other helpers. That let’s you and other focus about the details of the actual scenario under test and get’s non-relevant stuff out of the way. Be careful not to hide important implementation details that are necessary to understand each test. Too clever abstractions that invite so-called mystery guests for example can bite you in the long run. 
+When you write your individual tests, you want to make its objects do the
+simplest thing possible to achieve your goal—highly focused tests are really
+key. You want to design your application via very simple steps and then follow
+the errors your test suite is providing you with. Only implement what is
+necessary to get the app green. Not more, not less! That’s the “driven” part in
+Test-driven development. Your work is guided by the needs of your tests.
