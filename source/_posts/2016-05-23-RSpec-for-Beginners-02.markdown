@@ -710,9 +710,7 @@ As you can see above, you can mix and match them at will. The syntax is not perf
 
 ## Final Thoughts
 
+What you learned so far should equip you with the absolute basics to play with tests on your own—a survival kit for beginners. And really do play and make mistakes as much as you can. Take RSpec and the whole test-driven thingie for a spin and don’t expect to write quality tests right away. There are still a couple of pieces missing before you will feel comfortable and before you will be effective with it. For me personally this was a bit frustrating in the beginning because it was hard to see how to test something that I haven’t yet implemented and something that I didn’t fully understand how it would behave. 
 
-
-
-
-
+Testing really proves if you understood a framework like Rails and know how the pieces fit together. When you write tests you will need to be able to write expectations for how a framework should behave. That is not easy if you started out with all of this. Dealing with multiple domain specific languages, here RSpec and Rails for example, plus learning the Ruby API can be confusing as hell. Don’t feel bad if the learning curve seems daunting, it will get easier if you stick with it. Making this light bulb go off won’t happen over night, but to me it was very much worth the effort.
 
