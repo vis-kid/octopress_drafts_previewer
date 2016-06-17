@@ -410,7 +410,7 @@ end
 When you remember the four phases of test, before blocks sometimes are helpful in setting something up for you that needs to be repeated on a regular basis—probably stuff that is a bit more meta in nature.
 
 
-`after(:each)` and `after(:all)` have the same behaviour but are simply run after your tests have been executed. `after` is often used for cleaning up your files for example. But I think it’s a bit early to address that. So commit it to memory, know that it’s there in case you start needing it and let’s move on to explore other, more basic things.
+`after(:each)` and `after(:all)` have the same behavior but are simply run after your tests have been executed. `after` is often used for cleaning up your files for example. But I think it’s a bit early to address that. So commit it to memory, know that it’s there in case you start needing it and let’s move on to explore other, more basic things.
 
 All of these callbacks can be placed strategically to fit your needs. Place them in any `describe` block scope that you need to run them—they don’t have to necessarily be placed on top of your spec file. They can easily be nested way inside your specs. 
 
@@ -531,7 +531,7 @@ spec/controllers/dummy_controller_controller_spec.rb
 
 Same works for views of course. We won’t be testing any views like that though. Specs for views give you the least bang for the buck and it is totally sufficient in probably almost any scenario to inderectly test your views via feature tests. Feature tests is not a specialty of RSpec per se and more suited to another article on its own. That being said, if you are curious, check out [Capybara](http://jnicklas.github.io/capybara/), which is an excellent tool for that kind of thing. It let’s you test whole flows that exercise multiple parts of your app coming together—testing complete features while simulating the browser experience. For example, a user who pays for multiple items in a shopping cart.
 
-+ rspec:helper
++ `rspec:helper`
 
 The same generator strategy let’s us also place a helper without much fuzz.
 
