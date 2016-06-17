@@ -197,7 +197,7 @@ They should not be considered AntiPatterns—things to avoid straight away—but
 
 Having a lot of `let` references can seem very convenient at first—especially because they DRY things up quite a bit. It seems like a reasonably good extraction at first to have them at the top of your files for example. On the other hand, they can easily give you a hard time understanding your own code if you visit specific tests some significant amount of time later. Not having the data set up within your `let` blocks does not aid the understanding of your tests too much. That is not as trivial as it may sound at first, especially if other developers are involved who need to read your work as well.
 
-This sort of confusion becomes a lot more expensive the more developers are involved. It’s not only time consuming if you have to hunt down `let` references over and over again, it is also stupid because it would have been avoidable with very little effort. Clarity is king, no doubt about it. Another argument to keep this data inline is that your test suite will be less brittle. You don’t want to build a house of cards that becomes more instable with every `let` that is hiding away details from each test. You probably learned that using global variables is not a good idea. In that sense, `let` is semi global within your spec files.
+This sort of confusion becomes a lot more expensive the more developers are involved. It’s not only time consuming if you have to hunt down `let` references over and over again, it is also stupid because it would have been avoidable with very little effort. Clarity is king, no doubt about it. Another argument to keep this data inline is that your test suite will be less brittle. You don’t want to build a house of cards that becomes more unstable with every `let` that is hiding away details from each test. You probably learned that using global variables is not a good idea. In that sense, `let` is semi global within your spec files.
 
 Another issue is that you will need to test a lot of different variations, different states for similar scenarios. You will soon run out of reasonably named `let` statements to cover all the different versions you might need—or end up with a haystack of tons of similar named state variations. When you set the data up in every test directly, you don’t have that problems. Local variables are cheap, highly readable and don’t mess with other scopes—they can be even more expressive because you don’t need to consider tons of other tests that might have a problem with a particular name. You want to avoiding creating another DSL on top of the framework that everybody needs to decipher for each test that is using `let`. I hope that feels very much like a waste of everybody’s time.
 
@@ -280,7 +280,7 @@ end
 
 As you can see, we have all the information this tests need in one place and don’t need to hunt down any specifics some place else. It tells a story and is not obscure. As mentioned, this is not the best strategy for DRY code. The payoff is good though. Clarity and readability outweighs this little bit or repetitive code by a long shot—especially in large codebases.
 
-For example, say you write some new, seemingly unrelated feature and suddenly this tests starts to fail as collateral damage and you haven’t touched this spec file in ages. Do you think you will be happy if you need to decypher the setup components first before you can understand and fix this failing test before you can continue with a completely different feature you are working on? I think not! You want to get out of this “unrelated” speac asap and get back to finishing the other feature. When you find all the test data right there where your tests tells you where it fails, you increase your chances by a long shot of fixing this quickly wihtout “downloading” a completely differnt part of the app into your brain.
+For example, say you write some new, seemingly unrelated feature and suddenly this tests starts to fail as collateral damage and you haven’t touched this spec file in ages. Do you think you will be happy if you need to decypher the setup components first before you can understand and fix this failing test before you can continue with a completely different feature you are working on? I think not! You want to get out of this “unrelated” spec asap and get back to finishing the other feature. When you find all the test data right there where your tests tells you where it fails, you increase your chances by a long shot of fixing this quickly without “downloading” a completely different part of the app into your brain.
 
 ## Extract Methods
 
@@ -319,7 +319,6 @@ describe Agent, '#current_status' do
     bond = build_agent_on_vacation('James Bond', 'On vacation')
 
     expect(bond.current_status).to eq ('Commander Bond is on vacation, probably in the Bahamas')
-
   end
 
   it 'speculates about the an quartermasters’s choice of destination if status is vacation' do
@@ -331,14 +330,13 @@ describe Agent, '#current_status' do
   def build_agent_on_vacation(name, status)
     Agent.new(name: name, status: status, section: '00', licence_to_kill: true)
   end
-  
 end
 
 ```
 
 Now our extracted method takes care of the `section` and ```licence_to_kill``` stuff and thereby does not distract us from the essentials of the test. Of course this is a dummy example but you can scale its complexity as as much as you need. The strategy does not change. It is a very simple refactoring technique—that’s why I introduce it this early—but one of the most effective one. Also, it makes it almost a no-brainer to avoid the extraction tools RSpecs offers.
 
-What you should also pay attention to is how expressive these helper methods can be without paying any price to 
+What you should also pay attention to is how expressive these helper methods can be without paying any extra price.
 
 ## Final Thoughts
 
