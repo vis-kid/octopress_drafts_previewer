@@ -12,25 +12,21 @@ categories: [Rails, RSpec, Ruby, Ruby on Rails, Asset Pipeline, Sass, CSS, JS, J
 
 ## Topics
 
-+ Test Speed
++ Asset Pipeline?
++ Organization
++ Using The Pipeline
 
-Concatentate, minify, compress
-JS, CSS assets
+## Asset Pipeline?
 
-Write in other languages like CoffeeScript, Slim, Haml, Sass
+What does the Asset Pipeline have to offer? Despite the fancy name, it’s relatively easy to break down what it can do for you. The main thing it takes care for you is concatenation, minification and preprocessing of assets that are written in higher-level languages like CoffeeScript or Sass for example. That can bring not only a boost in quality and speed but also in convenience. In this regard we could talk about convenience over configuration.
 
-Sprockts Extraction
-Not a core functionality since Rails 4
+The other thing that should not be underestimated is organization. The pipleline offers a solid frame to place your assets. On smaller projects this might not seem that important, sure, but bigger projects might not recover easily from going in the wrong direction on subjects like this. Sure it’s not the best example in the world, but just imagine a project like Facebook or Twitter having shitty organized assets for their CSS and JS. Not that hard to imagine that this would breed trouble, big time, and that peeps who have to work and build on such a basis have not an easy time to love their jobs.
 
-Enabled by default though
+As with many things in Rails, there is a conventional approach of how to handle assets. This makes it easier to onboard new people and to avoid having developers and designers being too obsessed with bringing their own dough to the party. When you join a neww team, you want to be able to get up to speed quickly and hit the the ground running. Needing to figure out the special sauce of how other peeps organized their assets is not exactly helpful with that. In extreme cases this can even be regarded wasteful or even burning money unnecessarily—but let’s not get too dramatic here.
 
-Skip pipeline when you initiate project
+The Asset Pipeline is not exactly news to people in the business but for beginners it can be a little tricky to figure it out right away. Developers don’t exactly spend a ton of time on front-end stuff, especially when they start out they are busy with lots of moving parts that have nothing to do with HTML, CSS or the often bashed JS bits—no offense JS, I got no beef with you these days.
 
-Rails 4 makes a couple of decisions for you though. It adds gems for Sass, CoffeeScript and compression
-
-Setting asset compression methods
-
-## Why Asset Pipeline?
+So this article is for the beginners among you and I recommend taking a look at the pipeline right away and get a good grip on this topic right away—even if you won’t expect to work much on markup or front-endy things much in the future. It’s kind of an essential aspect in Rails and not that huge of a deal to figure out quickly. Plus your team members, especially designers who spend half their lives in these directories will put less funny stuff in your coffee if you have some common ground where you meet half way.
 
 ### Concatenation & Compression?
 
