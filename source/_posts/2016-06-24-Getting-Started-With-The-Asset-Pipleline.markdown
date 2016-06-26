@@ -30,13 +30,11 @@ So this article is for the beginners among you and I recommend taking a look at 
 
 ### Concatenation & Compression?
 
-Reduce number of requests for rendering pages
+Why do we need that stuff? Long story short, you want your apps to load faster. Period! Anything that helps with that is welcome. Well, of course you can get away without optmizing for that but it has too many advantages that one simply can’t ignore. Compressing file sizes and concatenating multiple asset files into one “master” file that is downloaded by a client like a browser is also not that much work. It is mostly handled by the pipleline anyway.
 
-Faster loading of your apps
+Reducing the number of requests for rendering pages is very efffective at speeding up the rendering of pages. Instead of having maybe 10, 20, 50 or whatever number of requests before the browser is finished getting your assets you could potentially only have one for each CSS and JS assets. That is not only nice, this was a game changer at some point. These kinds of improvements in web development should not be neglected because we are dealing with miliseconds as a unit. Lots of requests can add up pretty substantially. And after all, the user experience is what matters most for successful projects. Having users who need to wait just a little bit extra before they can see content on your page can be a massive dealbreaker.
 
-Sprockets concatentates, it collects all your CSS and JS files into master files. So you end up with only one file for each which means only one request for each CSS and JS files—instead of one request for each of your possibly myriad of asset files.
-
-Minification is cool because it gets rid of unnecessary stuff in your files. Whitespace and comments basically. This is not made for human readability but for machine consumption. The files will end up looking cryptic and hard to read but its still all valid CSS and JS code—just without any excess whitespace to make it readable and understandable for humans. Web browsers don’t need that formating though and that let’s us optimize these assets for downloading and rendering.
+Minification is cool because it gets rid of unnecessary stuff in your files. Whitespace and comments basically. These compressed files are not made with human readability in mind but for machine consumption. The files will end up looking a bit cryptic and hard to read but its still all valid CSS and JS code—just without any excess whitespace to make it readable and understandable for humans. The JS compression is a bit more involved though. Web browsers don’t need that formating and that let’s us optimize these assets for downloading and rendering web pages and their behaviour.
 
 ### Higher-Level Languages
 
