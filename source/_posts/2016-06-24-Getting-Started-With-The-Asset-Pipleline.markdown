@@ -113,10 +113,66 @@ I prefer it the indendet syntax but to be fair, whitespace sensitive Sass syntax
 
 ### Slim & Haml
 
-Similar arguements were made for something like Haml and Slim. Both let you write markup much more reduced—no closing tags and cool abbreviations for tagnames and such—and result in shorter bursts of markup that is meant to be easier to skim and read. Me personally, I’m not a huge fan of Haml, never was, but Slim is not only fancy and convenient, it is also very smart. For Ruby people, something I would definitely recommend trying out.  
+Similar arguements can be made about the benefits of something like Slim and Haml for writing more compact HTML code. Both let you write markup much more reduced—no closing tags and cool abbreviations for tagnames and such. This results in shorter bursts of markup that is meant to be easier to skim and read. Me personally, I’m not a huge fan of Haml, never was, but Slim is not only fancy and convenient, it is also very smart. For peeps who like the indented Sass syntax it’s something I would definitely recommend to try out. Let’s have a quick look:
 
-?? Example
+###### Slim
 
+``` Haml
+
+#content
+  .left.column
+    h2 Welcome to our site!
+    p= print_information
+  .right.column
+    = render :partial => "sidebar"
+
+```
+
+###### Haml
+
+``` Haml
+
+#content
+  .left.column
+    %h2 Welcome to our site!
+    %p= print_information
+  .right.column
+    = render :partial => "sidebar"
+
+```
+
+And both result in the following ERB-enhanced HTML in Rails:
+
+``` html
+
+<div id="content">
+  <div class="left column">
+    <h2>Welcome to our site!</h2>
+    <p>
+      <%= print_information %>
+    </p>
+  </div>
+  <div class="right column">
+    <%= render :partial => "sidebar" %>
+  </div>
+</div>
+
+
+```
+
+The difference on the surface are not that big but I never quite got why Haml wants me to write all these extra `%` to prepend tags. Slim found a solution that got rid of these and therefore I salute you! The other differences are under the hood and are not within the scope of this piece today. Just wanted to whet your appetite.
+
+As you can see, both preprocessors reduce the amount you need to write significantly. Yes, you need to learn another language and it reads a bit weird at first but at the same timeI feel the removal of so much clutter is totally worth it. Also, once you know how to write ERB-flavored HTML, you will be able to pick up any of these preprocessors rather quickly. No rocket science—same goes for Sass btw.
+
+There are two handy gems for using either of them in Rails. Do yourself a favor and check them out when you are tired of writing all these tiresome opening / closing tags.
+
+``` ruby
+
+gem "slim-rails"
+
+gem "haml-rails"
+
+```
 ### CoffeeScript
 
 The short arguemnt for working with CoffeeScript was that it helped to overcome some shortcomings that JS was carrying around. Especially for people coming from Ruby who preferred to write JS in a Ruby-like manner, CoffeeScript was quite popular for a while. Not sure how adoption rates are these days, it seems to have slowed down a bit but it is still supported by default by Rails.
