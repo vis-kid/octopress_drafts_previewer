@@ -13,10 +13,10 @@ categories: [Rails, RSpec, Ruby, Ruby on Rails, Asset Pipeline, Sass, CSS, JS, J
 ## Topics
 
 + Asset Pipeline?
++ Organization
 + Concatenation & Compression?
 + Higher-Level Languages
 + MD5 Fingerprinting?
-+ Organization
 + Using The Pipeline
 
 ## Asset Pipeline?
@@ -30,6 +30,101 @@ As with many things in Rails, there is a conventional approach of how to handle 
 The Asset Pipeline is not exactly news to people in the business but for beginners it can be a little tricky to figure it out right away. Developers don’t exactly spend a ton of time on front-end stuff, especially when they start out they are busy with lots of moving parts that have nothing to do with HTML, CSS or the often bashed JS bits—no offense JS, I got no beef with you these days.
 
 So this article is for the beginners among you and I recommend taking a look at the pipeline right away and get a good grip on this topic right away—even if you won’t expect to work much on markup or front-endy things much in the future. It’s kind of an essential aspect in Rails and not that huge of a deal to figure out quickly. Plus your team members, especially designers who spend half their lives in these directories will put less funny stuff in your coffee if you have some common ground where you meet half way.
+
+## Organization
+
+You have three options to place your assets. These divisions are more of the logical kind and don’t represent any technical restrictions or limitations. You can place assets in any of them and see the same results. But for smarter organization, you should have a good reason to place content at their proper place.
+
++ `app/assets`
+
+``` bash
+
+app/assets/
+├── images
+├── javascripts
+│   └── application.js
+└── stylesheets
+    └── application.css
+
+```
+
+The `app/assets` folder is for assets that are specifically for this particular app. Images, JS and CSS files that are sort of tailor made for a particular project. 
+
++ `lib/assets`
+
+``` bash
+
+lib/assets/
+
+```
+
+The `lib/assets` folder on the other hand is the home for your own code that you can reuse from project to project—things that you yourself might have extracted and can take from project to project—assets that you can share between applications. 
+
++ `vendor/assets`
+
+``` bash
+
+vendor/assets/
+├── javascripts
+└── stylesheets
+
+```
+
+`vendor/assets` is another step more outward. It’s the home for assets that you reused from other, external source. Plugins and frameworks from third parties.
+
+
+
+These are the three locations that Sprockets will look for assets. Within the above directories, you are expected to place your assets within `/images`, `/stylesheets` and `/javascripts` folders. But this is more of a conventional thing, any assets withing the ```*/assets``` folders will be traversed. You can also add subdirectories as needed, Rails won’t complain and precompilethese files anyway.
+
+Search path inspection via `rails console`:
+
+```bash
+
+Rails.application.config.assets.paths
+
+```
+
+What you will get returned is an array with all the assets that are available and found by Sprockets.
+
+``` bash
+
+=> ["/Users/example-user/projects/test-app/app/assets/images", "/Users/example-user/projects/test-app/app/assets/javascripts", "/Users/example-user/projects/test-app/app/assets/stylesheets", "/Users/example-user/projects/test-app/vendor/assets/javascripts", "/Users/example-user/projects/test-app/vendor/assets/stylesheets", "/usr/local/lib/ruby/gems/2.3.0/gems/turbolinks-2.5.3/lib/assets/javascripts", "/usr/local/lib/ruby/gems/2.3.0/gems/jquery-rails-4.1.1/vendor/assets/javascripts", "/usr/local/lib/ruby/gems/2.3.0/gems/coffee-rails-4.1.1/lib/assets/javascripts"]
+
+```
+
+The nice thing about all of this is easy to miss. It’s the aspect of having conventions. That means that developers—and designers as well actually—can all have certain expectations wehre to look for files. When someone new joins a project, they have a good idea how to navigate a project and where to put new work. That is not only convenient, but it can also be a huge time saver and prevents not so good ideas from reinventing the wheel all the time. Yes, convention over configuration can sound a bit boring at times, not that exciting in a way, but it is powerful stuff nontheless. It keeps us focused on what matters, the work itself and good team collaboration.
+
+The assets paths mentioned so far aren’t set in stone though. You can add custom paths as well. You need to go to `config/application.rb` and add custom paths that you want to be recognized by Rails. Let’s take a look how we would add a ```custom_folder```.
+
+###### config.application.rb
+
+``` ruby
+
+module TestApp
+  class Application < Rails::Application
+    config.assets.paths << Rails.root.join("custom_folder")
+  end
+end
+
+```
+
+When you now check the search path again, you will find your custom folder being part of the search path for the asset pipeline. Btw, it will now be the last object placed in the array:
+
+###### Terminal
+
+``` bash
+
+Rails.application.config.assets.paths
+
+```
+
+###### Output
+
+``` bash
+
+["/Users/example-user/projects/test-app/app/assets/images", "/Users/example-user/projects/test-app/app/assets/javascripts", "/Users/example-user/projects/test-app/app/assets/stylesheets", "/Users/example-user/projects/test-app/vendor/assets/javascripts", "/Users/example-user/projects/test-app/vendor/assets/stylesheets", "/usr/local/lib/ruby/gems/2.3.0/gems/turbolinks-2.5.3/lib/assets/javascripts", "/usr/local/lib/ruby/gems/2.3.0/gems/jquery-rails-4.1.1/vendor/assets/javascripts", "/usr/local/lib/ruby/gems/2.3.0/gems/coffee-rails-4.1.1/lib/assets/javascripts", #<Pathname:/Users/example-user/projects/test-app/custom_folder>]
+
+```
 
 ## Concatenation & Compression?
 
