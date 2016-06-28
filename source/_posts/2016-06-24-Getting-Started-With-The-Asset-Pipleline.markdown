@@ -47,9 +47,69 @@ You might have heard about them already but as a beginner might not be up to spe
 
 ### Sass
 
-Sass for example is much more potent than pure CSS. It let’s you write smarter stylesheets that have a few programming tools backed in. So you can declare variables, functions, mixins, easily import partials and lots of other stuff that programmers wanted to have available playing with styles. Also, Sass let’s you avoid writing all these silly curly braces and semicolons that lazy devs like to avoid. To be fair, the indented, whitespace sensitive Sass syntax is less popular than the SCSS syntax that is closer to CSS, but both have the same programming tricks up their sleeves. It can simply make the process of writing your styles much more pleasant and effective.
+Sass stands for ”Syntactically Awesome Style Sheets” and is much more potent than pure CSS. It let’s us write smarter stylesheets that have a few programming tools baked in. What are we talking about here exactly? You can declare variables, nest rules, write functions, create mixins, easily import partials and lots of other stuff that programmers wanted to have available playing with styles. It’s a pretty rich tool by now and is also excellent for organzing stylesheets—for big projects I would even call it essential. These days, I’m not sure if I wouldn’t stay away from a large app that isn’t using a tool like Sass—whatever non-Ruby centric frameworks have to offer.
 
-?? Example
+For your current concerns, there are two syntax versions of Sass you need to know about. The Sassy CSS version, aka SCSS, is the more widely adopted one. It stays closer to plain CSS but offers all the fancy extensions developers and designers came to love playing with stylesheets. It uses the `.scss` file extension and looks like this:
+
+###### SCSS
+
+``` Sass
+
+#main p {
+  color: #00ff00;
+  width: 97%;
+
+  .redbox {
+    background-color: #ff0000;
+    color: #000000;
+  }
+}
+
+```  
+
+Visually, it’s not that different than CSS—that’s why it is the more popular choice, especially among designers I think. One of the really cool and handy aspects of SCSS, and Sass in general is the nesting aspect. The indented syntax, the Sass syntax that has the `.sass` file extension, let’s you avoid to deal with all these silly curly braces and semicolons that lazy devs like to avoid. How does it do that? Without the brackets, Sass uses indentation, white space essentially, to separate its properties. It’s pretty rad and looks really cool too. To see the differences, I’ll show you both versions.
+
+###### SCSS
+
+``` Sass
+
+#main {
+  color: blue;
+  font-size: 0.3em;
+
+  a {
+    font: {
+      weight: bold;
+      family: serif;
+    }
+    &:hover {
+      background-color: #eee;
+    }
+  }
+}
+
+```
+
+###### Sass
+
+``` Sass
+
+#main
+  color: blue
+  font-size: 0.3em
+
+  a
+    font:
+      weight: bold
+      family: serif
+    &:hover
+      background-color: #eee
+
+``` 
+
+Pretty nice and compact huh? But you can see that both versions need processing before it turns into valid CSS that browsers can understand. If you would hit browers with something like Sass, they would have no idea what’s going on.
+
+I prefer it the indendet syntax but to be fair, whitespace sensitive Sass syntax is less popular than the SCSS syntax which is closer to CSS. Both have the same programming tricks up their sleeves though and are excellent in making the process of writing your styles much more pleasant and effective. Lucky for us that Rails and the Asset Pipeline makes it so easy to work with either of these—pretty much out of the box.
 
 ### Slim & Haml
 
