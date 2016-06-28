@@ -175,11 +175,57 @@ gem "haml-rails"
 ```
 ### CoffeeScript
 
-The short arguemnt for working with CoffeeScript was that it helped to overcome some shortcomings that JS was carrying around. Especially for people coming from Ruby who preferred to write JS in a Ruby-like manner, CoffeeScript was quite popular for a while. Not sure how adoption rates are these days, it seems to have slowed down a bit but it is still supported by default by Rails.
+CoffeeScript is a programming language like any other but it sort of has that Ruby flavor of writing your JavaScript. Through preprocessing, it compiles into plain old JavaScript that browsers can deal with. The short argument for working with CoffeeScript was that it helped to overcome some shortcomings that JS was carrying around. The documentation says that it aims at exposing the “good parts of JavaScript in a simple way”. Fair enough but lets have a quick look at a short example to see what we’re dealing with:
 
-?? Example
+###### JavaScript
 
+``` javascript
 
+$( document ).ready(function(){
+    var $on = 'section';
+    $($on).css({
+      'background':'none',
+      'border':'none',
+      'box-shadow':'none'
+    });
+}); 
+
+```
+
+In CoffeeScript, this fella would look like this:
+
+###### CoffeeScript
+
+``` javascript
+
+$(document).ready ->
+  $on = 'section'
+  $($on).css
+    'background': 'none'
+    'border': 'none'
+    'box-shadow': 'none'
+  return
+
+```
+
+Reads just a tad nicer without all the curlies and semicolons, no? CoffeeScript tries to take care of some of the annoying bits in JavaScript, lets you type less, makes the code a bit more readable, offers a friendlier syntax than JS and deals more pleasantly with writing classes. Defining classes was especially for people coming from Ruby not the biggest plus when they had to deal with it in JavaScript. CoffeeScript took a similar approach than Ruby and gives you a nice piece of syntactic sugar for it.
+
+###### Class
+
+``` javascript
+
+class Agent
+  constructor: (@firstName, @lastName) ->
+
+  name: ->
+    "#{@first_name} #{@last_name}"
+
+  introduction: (name) ->
+    "My name is #{@last_name},  #{name}"
+
+```
+
+This language was quite popular in Ruby land for a while. Not sure how adoption rates are these days, it seems to have slowed down a bit but it is still supported by default by Rails. With ES6, JavaScript now also supports classes—one big reason to maybe not use CoffeeScript and play with plain JS instead. I think CoffeeScript still reads nicer but a lot of the less cosmetic reasons to use it have been addressed with ES6 these days. I think it’s still a good reason to give it a shot but that is not what you came for here. Just wanted to give you another appetizer and provide a little bit of context why the Asset Pipeline offers you to work in CoffeeScript out of the box.
 
 ### MD5 Fingerprinting?
 
